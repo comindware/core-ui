@@ -1,14 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 19.03.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
+//@flow
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
@@ -17,7 +7,7 @@ const defaultOptions = () => ({
     delay: 300
 });
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         _.extend(this.options, defaultOptions(), options || {});
         this.model = new Backbone.Model({
@@ -42,6 +32,12 @@ export default Marionette.ItemView.extend({
 
     onRender() {
         this.ui.clear.toggle(!!this.ui.input.val());
+    },
+
+    focus() {
+        if (this.isRendered()) {
+            this.ui.input.focus();
+        }
     },
 
     __search() {

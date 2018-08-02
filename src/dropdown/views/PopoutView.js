@@ -1,20 +1,10 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { $, Handlebars } from 'lib';
+// @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
 import BlurableBehavior from '../utils/BlurableBehavior';
-
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
-import WrapperView from './WrapperView';
 
 const WINDOW_BORDER_OFFSET = 10;
 
@@ -28,7 +18,7 @@ const classes = {
     FLOW_RIGHT: 'popout__flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'anchor'
+    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
 };
 
 const popoutFlow = {
@@ -85,7 +75,7 @@ const defaultOptions = {
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
  * @constructor
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -114,7 +104,7 @@ const defaultOptions = {
  *                                       The panel grows to the left.</li></ul>
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
+export default Marionette.View.extend({
     initialize(options) {
         _.defaults(this.options, defaultOptions);
         helpers.ensureOption(options, 'buttonView');
@@ -166,16 +156,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
+        this.button = new this.options.buttonView(this.options.buttonViewOptions);
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
             this.triggerMethod(...args);
         });
-        this.buttonRegion.show(this.button);
+        this.showChildView('buttonRegion', this.button);
 
         if (!this.options.customAnchor) {
-            this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+            this.getRegion('buttonRegion').$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
         }
 
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
@@ -215,6 +205,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             height: window.innerHeight,
             width: window.innerWidth
         };
+
         const anchorRect = $anchorEl.offset();
         anchorRect.height = $anchorEl.outerHeight();
         anchorRect.width = $anchorEl.outerWidth();
@@ -224,13 +215,15 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            left: '',
-            right: ''
-        };
+        const css: {
+            left?: number,
+            right?: number
+        } = {};
+
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
                 const leftCenter = anchorRect.left + anchorRect.width / 2;
+
                 if (leftCenter < WINDOW_BORDER_OFFSET) {
                     css.left = WINDOW_BORDER_OFFSET;
                 } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
@@ -242,6 +235,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             }
             case popoutFlow.LEFT: {
                 const anchorRightCenter = viewport.width - (anchorRect.left + anchorRect.width / 2);
+
                 if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
                     css.right = WINDOW_BORDER_OFFSET;
                 } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
@@ -297,7 +291,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
 
         // panel positioning
-        let top;
+        let top = 0;
         switch (direction) {
             case popoutDirection.UP:
                 top = anchorRect.top - panelRect.height;
@@ -317,9 +311,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top = WINDOW_BORDER_OFFSET;
         }
 
-        const css = {
-            top,
-            bottom: ''
+        const css: {
+            top: number,
+            bottom?: number
+        } = {
+            top
         };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
@@ -343,9 +339,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         panelRect.height = $panelEl.outerHeight();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            top: '',
-            bottom: ''
+        const css: {
+            top?: number,
+            bottom?: number
+        } = {
+            top: 0
         };
 
         // calculate vertical position
@@ -376,7 +374,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
 
         // panel positioning
-        let top;
+        let top = 0;
         switch (direction) {
             case popoutDirection.UP:
                 top = anchorRect.top + anchorRect.height / 2 - panelRect.height;
@@ -421,10 +419,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            left: '',
-            right: ''
-        };
+        const css = {};
 
         let displacement = this.options.displacement;
         switch (displacement) {
@@ -482,11 +477,18 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     __isNestedInButton(testedEl) {
-        return this.el === testedEl || $.contains(this.el, testedEl);
+        return this.el === testedEl || this.el.contains(testedEl);
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+        const palet = document.getElementsByClassName('sp-container')[0];
+
+        return (
+            WindowService.get(this.popupId)
+                .map(x => x.el)
+                .some(el => el === testedEl || el.contains(testedEl)) ||
+            (palet && palet.contains(testedEl))
+        ); //Color picker custom el container
     },
 
     __handleBlur() {
@@ -519,7 +521,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);
@@ -529,20 +531,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.$el.addClass(classes.OPEN);
 
-        const wrapperView = new WrapperView({
-            view: this.panelView,
-            className: 'popout__wrp'
-        });
-        this.popupId = WindowService.showTransientPopup(wrapperView, {
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
             fadeBackground: this.options.fade,
             hostEl: this.el
         });
         if (this.options.displacement) {
-            this.__adjustDisplacementVerticalPosition(wrapperView.$el);
-            this.__adjustDisplacementHorizontalPosition(wrapperView.$el);
+            this.__adjustDisplacementVerticalPosition(this.panelView.$el);
+            this.__adjustDisplacementHorizontalPosition(this.panelView.$el);
         } else {
-            this.__adjustDirectionPosition(wrapperView.$el);
-            this.__adjustFlowPosition(wrapperView.$el);
+            this.__adjustDirectionPosition(this.panelView.$el);
+            this.__adjustFlowPosition(this.panelView.$el);
         }
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
@@ -563,7 +561,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+        if (!this.isOpen || !document.body.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);
@@ -576,7 +574,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.stopListening(GlobalEventService);
 
         this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose) {
+        if (this.options.renderAfterClose && !this.isDestroyed) {
             this.render();
         }
     }

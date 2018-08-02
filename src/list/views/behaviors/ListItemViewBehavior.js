@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 import { helpers } from 'utils';
 
 /*
@@ -30,25 +21,16 @@ import { helpers } from 'utils';
     2. (!) Be sure that the text you set into html is escaped.
 */
 
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
+const eventBubblingIgnoreList = ['before:render',
+'render',
+'dom:refresh',
+'before:show',
+'show',
+'before:destroy',
+'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
-        helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
         this.__debounceClickHandle = _.debounce(this.__handleDebouncedClick, 300, true);
     },
 
@@ -56,7 +38,9 @@ export default Marionette.Behavior.extend({
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         highlighted: '__handleHighlighting',
-        unhighlighted: '__handleUnhighlighting'
+        unhighlighted: '__handleUnhighlighting',
+        pointed: '__handlePointedOn',
+        unpointed: '__handlePointedOff'
     },
 
     events: {
@@ -90,10 +74,18 @@ export default Marionette.Behavior.extend({
     },
 
     __handleSelection() {
-        this.$el.addClass('selected');
+        this.getOption('selectOnCursor') !== false && this.$el.addClass('selected');
     },
 
     __handleDeselection() {
+        this.getOption('selectOnCursor') !== false && this.$el.removeClass('selected');
+    },
+
+    __handlePointedOn() {
+        this.$el.addClass('selected');
+    },
+
+    __handlePointedOff() {
         this.$el.removeClass('selected');
     },
 
@@ -101,13 +93,12 @@ export default Marionette.Behavior.extend({
         const model = this.view.model;
         if (model.selected) {
             model.deselect();
-        } else {
-            const selectFn = this.getOption('multiSelect')
-                ? model.collection.select
-                : model.collection.selectSmart || model.collection.select;
-            if (selectFn) {
-                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
-            }
+            return;
+        }
+
+        const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
+        if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
         }
     }
 });

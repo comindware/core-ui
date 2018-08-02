@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListCanvasView from 'demoPage/views/ListCanvasView';
 
 export default function() {
@@ -22,84 +22,55 @@ export default function() {
     // 2. Create columns
     const columns = [
         {
-            id: 'textCell',
-            cellView: core.list.cellFactory.getTextCellView(),
-            viewModel: new Backbone.Model({ displayText: 'TextCell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
-            sorting: 'asc'
+            key: 'textCell',
+            type: 'String',
+            title: 'Text Cell',
+            sorting: 'desc'
         },
         {
-            id: 'numberCell',
-            cellView: core.list.cellFactory.getNumberCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
-            sorting: 'asc',
-            filterView: core.nativeGrid.filterViewFactory.getFilterViewByType()
+            key: 'numberCell',
+            type: 'Double',
+            title: 'Number Cell'
         },
         {
-            id: 'dateTimeCell',
-            cellView: core.list.cellFactory.getDateTimeCellView(),
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell'),
-            filterView: core.nativeGrid.filterViewFactory.getFilterViewByType()
+            key: 'dateTimeCell',
+            type: 'DateTime',
+            title: 'DateTime Cell'
         },
         {
-            id: 'durationCell',
-            cellView: core.list.cellFactory.getDurationCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Duration Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell')
+            key: 'durationCell',
+            type: 'Duration',
+            title: 'Duration Cell'
         },
         {
-            id: 'booleanCell',
-            cellView: core.list.cellFactory.getBooleanCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell')
+            key: 'booleanCell',
+            type: 'Boolean',
+            title: 'Boolean Cell'
         },
         {
-            id: 'referenceCell',
-            cellView: core.list.cellFactory.getReferenceCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Reference Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'referenceCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'referenceCell')
+            key: 'referenceCell',
+            type: 'Instance',
+            title: 'Reference Cell'
         },
         {
-            id: 'enumCell',
-            cellView: core.list.cellFactory.getEnumCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Enum Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'enumCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'enumCell')
-        },
-        {
-            id: 'documentCell',
-            cellView: core.list.cellFactory.getDocumentCellView(),
-            viewModel: new Backbone.Model({ displayText: 'Document Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'documentCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'documentCell')
+            key: 'documentCell',
+            type: 'Document',
+            title: 'Document Cell'
         }
     ];
 
-    // 3. Create VirtualCollection
-    const collection = new core.collections.VirtualCollection();
-    collection.reset(dataArray);
-
     // 4. Create grid
-    const bundle = core.list.factory.createDefaultGrid({
+    const gridView = core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
             childHeight: 40,
             useDefaultRowView: true
         },
-        collection
+        collection: dataArray
     });
 
     // 7. Show created views
     return new ListCanvasView({
-        content: bundle.gridView,
-        scrollbar: bundle.scrollbarView
+        content: gridView
     });
 }

@@ -1,13 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/17/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
 const windowEventList = [
     {
         name: 'click',
@@ -32,6 +22,10 @@ const windowEventList = [
     {
         name: 'resize',
         capture: false
+    },
+    {
+        name: 'load',
+        capture: false
     }
 ];
 
@@ -51,6 +45,7 @@ const globalEventService = /** @lends module:core.services.GlobalEventService */
         this.__windowEvents.forEach(x => {
             window.addEventListener(x.name, x.handler, x.capture);
         });
+        this.listenTo(this, 'window:load', () => this.pageLoaded = true);
     },
 
     onDestroy() {

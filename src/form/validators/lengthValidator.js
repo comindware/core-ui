@@ -1,17 +1,8 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 /*eslint-disable*/
 
-import 'lib';
 import LocalizationService from '../../services/LocalizationService';
-import formRepository from '../formRepository';
 
-formRepository.validators.length = function(options) {
+export default function(options) {
     options = _.extend({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
@@ -39,5 +30,3 @@ formRepository.validators.length = function(options) {
         }
     };
 };
-
-export default formRepository.validators.length;

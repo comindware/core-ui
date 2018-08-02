@@ -1,21 +1,14 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -32,24 +25,20 @@ const pathResolver = {
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    const svgSpritesFile = `${__dirname}/../dist/themes/main/sprites.svg`;
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
-module.exports = (options = { env: 'production' }) => {
-    const DEVELOPMENT = options.env === 'development';
-    const PRODUCTION = options.env === 'production';
+module.exports = () => {
+    const PRODUCTION = process.argv.includes('-p');
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
     return {
-        cache: true,
+        mode: PRODUCTION ? 'production' : 'development',
         entry: {
-            app: ['./public/index'],
-            vendor: [
-                'comindware/core'
-            ]
+            app: ['./public/index']
         },
         devtool: 'source-map',
         output: {
@@ -59,67 +48,66 @@ module.exports = (options = { env: 'production' }) => {
         },
         module: {
             rules: [
-                (PRODUCTION ? {
-                    test: /\.css$/,
-                    loader: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: [{
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        }, {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                plugins: () => [
-                                    autoprefixer({
-                                        browsers: ['last 2 versions']
-                                    }),
-                                    cssnano()
-                                ]
-                            }
-                        }]
-                    })
-                } : {
-                    test: /\.css$/,
-                    use: [{
-                        loader: 'style-loader'
-                    }, {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            plugins: [
-                                autoprefixer({
-                                    browsers: ['last 2 versions']
-                                })
-                            ]
-                        }
-                    }]
-                }), {
+                PRODUCTION
+                    ? {
+                          test: /\.css$/,
+                          use: [
+                              MiniCssExtractPlugin.loader,
+                              'css-loader',
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: () => {
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          });
+                                          cssnano();
+                                      }
+                                  }
+                              }
+                          ]
+                      }
+                    : {
+                          test: /\.css$/,
+                          use: [
+                              {
+                                  loader: 'style-loader'
+                              },
+                              {
+                                  loader: 'css-loader',
+                                  options: {
+                                      sourceMap: true
+                                  }
+                              },
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: [
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          })
+                                      ]
+                                  }
+                              }
+                          ]
+                      },
+                {
                     test: /core\.js$/,
                     enforce: 'pre',
                     loader: 'source-map-loader'
-                }, {
+                },
+                {
                     test: /\.js$/,
                     loader: 'babel-loader',
-                    include: [
-                        pathResolver.source()
-                    ],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.source('app/cases')
-                    ],
+                    include: [pathResolver.source()],
+                    exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
-                        presets: ['env'],
-                        plugins: ['transform-runtime']
+                        presets: ['env']
                     }
-                }, {
+                },
+                {
                     test: /\.eot(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -128,7 +116,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-eot'
                     }
-                }, {
+                },
+                {
                     test: /\.ttf(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -137,7 +126,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-ttf'
                     }
-                }, {
+                },
+                {
                     test: /\.woff(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -146,7 +136,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff'
                     }
-                }, {
+                },
+                {
                     test: /\.woff2(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -155,7 +146,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff2'
                     }
-                }, {
+                },
+                {
                     test: /\.svg(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -164,33 +156,30 @@ module.exports = (options = { env: 'production' }) => {
                         limit: GRAPHICS_LIMIT,
                         mimetype: 'image/svg+xml'
                     }
-                }, {
+                },
+                {
                     test: /\.(png|jpe?g|gif).*$/,
                     loader: 'url-loader',
                     options: {
                         limit: GRAPHICS_LIMIT
                     }
-                }]
+                }
+            ]
         },
         plugins: [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                __DEV__: DEVELOPMENT
-            }),
+            /*new CleanWebpackPlugin([pathResolver.client()], {
+                verbose: false,
+                exclude: ['localization']
+            }),*/
             new HtmlWebpackPlugin({
+                filename: 'index.html',
                 template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
                 hash: PRODUCTION,
-                filename: 'index.html',
-                svgSprites: readSpritesFile(),
                 inject: 'body',
-                chunks: ['vendor', 'app'],
+                chunks: ['app'],
                 minify: {
                     collapseWhitespace: false
                 }
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                minChunks: Infinity
             }),
             new WebpackPwaManifest({
                 name: 'Comindware business application platform',
@@ -198,24 +187,70 @@ module.exports = (options = { env: 'production' }) => {
                 background_color: '#ffffff',
                 display: 'standalone',
                 theme_color: '#0575bd',
-                orientation: 'landscape-secondary'
+                orientation: 'landscape-secondary',
+                icons: [
+                    {
+                        src: 'public/styles/icons/icon-72x72.png',
+                        sizes: '72x72',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-96x96.png',
+                        sizes: '96x96',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-128x128.png',
+                        sizes: '128x128',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-144x144.png',
+                        sizes: '144x144',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-152x152.png',
+                        sizes: '152x152',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-192x192.png',
+                        sizes: '192x192',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-384x384.png',
+                        sizes: '384x384',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png'
+                    }
+                ]
+            }),
+            new MiniCssExtractPlugin({
+                filename: '[name].css'
+            }),
+            new webpack.optimize.ModuleConcatenationPlugin(),
+            new GenerateSW({
+                swDest: pathResolver.client('sw.js'),
+                clientsClaim: true,
+                skipWaiting: true,
+                importWorkboxFrom: 'local',
+                directoryIndex: './index.html'
             }),
             new CopyWebpackPlugin([
-                { from: './serviceWorker.js' }
-            ], { copyUnmodified: true }),
-            new CleanWebpackPlugin([ pathResolver.client() ], {
-                verbose: false,
-                exclude: ['localization']
-            }),
-            new ExtractTextPlugin('[name].css'),
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.optimize.ModuleConcatenationPlugin()
+                {
+                    from: `${__dirname}/../dist/themes`,
+                    to: pathResolver.client('themes')
+                }
+            ])
         ],
         resolve: {
-            modules: [
-                pathResolver.source(),
-                pathResolver.node_modules()
-            ],
+            modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'comindware/core': `${__dirname}/../dist/core.js`,
                 prism: `${__dirname}/public/lib/prism/prism.js`,

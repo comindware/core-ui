@@ -1,17 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 9/9/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
-'use strict';
-
-import { Handlebars, $ } from 'lib';
+//@flow
 import template from '../templates/PopupStack.hbs';
 
 const classes = {
@@ -21,7 +8,7 @@ const classes = {
 
 const POPUP_ID_PREFIX = 'popup-region-';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.__stack = [];
         this.__forceFadeBackground = false;
@@ -41,10 +28,16 @@ export default Marionette.LayoutView.extend({
         }
 
         const popupId = _.uniqueId(POPUP_ID_PREFIX);
-        const regionEl = $(`<div data-popup-id="${popupId}" class="js-core-ui__global-popup-region">`);
+        const regionEl = document.createElement('div');
+        regionEl.setAttribute('data-popup-id', popupId);
+        regionEl.classList.add('js-core-ui__global-popup-region');
+
+        let parentPopup;
         let parentPopupId = null;
+
         if (hostEl) {
-            parentPopupId = $(hostEl).closest('.js-core-ui__global-popup-region').data('popup-id') || null;
+            parentPopup = hostEl.closest && hostEl.closest('.js-core-ui__global-popup-region');
+            parentPopupId = parentPopup ? parentPopup.getAttribute('popup-id') : null;
         }
         const config = {
             view,
@@ -65,17 +58,19 @@ export default Marionette.LayoutView.extend({
         }
 
         this.$el.append(regionEl);
-        this.addRegion(popupId, { el: regionEl });
+        this.addRegion(popupId, {
+            el: regionEl
+        });
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {
             const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
             if (lastFaded) {
-                lastFaded.regionEl.removeClass(classes.POPUP_FADE);
+                lastFaded.regionEl.classList.remove(classes.POPUP_FADE);
             } else {
                 this.__toggleFadedBackground(true);
             }
-            regionEl.addClass(classes.POPUP_FADE);
+            regionEl.classList.add(classes.POPUP_FADE);
         }
 
         this.__stack.push(config);
@@ -97,7 +92,7 @@ export default Marionette.LayoutView.extend({
             // Important: we collect only logical children because another popup might have been opened at the same level already.
             // e.g.: focus-blur events (usually focus comes first) - one popup is opened on focus and the previous one is closed on blur.
             if (this.__stack.includes(popupDef)) {
-                targets = [ popupDef ];
+                targets = [popupDef];
                 const handleChildren = pId => {
                     const children = this.__stack.filter(x => x.parentPopupId === pId);
                     targets.push(...children);
@@ -115,7 +110,7 @@ export default Marionette.LayoutView.extend({
             this.__removeTransientPopups();
             const topMostNonTransient = _.last(this.__stack);
             if (topMostNonTransient) {
-                targets = [ topMostNonTransient ];
+                targets = [topMostNonTransient];
             }
         }
         targets.reverse().forEach(pd => {
@@ -124,21 +119,24 @@ export default Marionette.LayoutView.extend({
 
         const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
         if (lastFaded) {
-            lastFaded.regionEl.addClass(classes.POPUP_FADE);
+            lastFaded.regionEl.classList.add(classes.POPUP_FADE);
         } else {
             this.__toggleFadedBackground(this.__forceFadeBackground);
         }
     },
 
     __removeTransientPopups() {
-        this.__stack.filter(x => x.options.transient).reverse().forEach(popupDef => {
-            this.__removePopup(popupDef);
-        });
+        this.__stack
+            .filter(x => x.options.transient)
+            .reverse()
+            .forEach(popupDef => {
+                this.__removePopup(popupDef);
+            });
     },
 
     __removePopup(popupDef) {
         this.removeRegion(popupDef.popupId);
-        popupDef.regionEl.remove();
+        this.el.removeChild(popupDef.regionEl);
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
         this.trigger('popup:close', popupDef.popupId);
     },
@@ -149,6 +147,10 @@ export default Marionette.LayoutView.extend({
             return [];
         }
         return this.__stack.slice(index).map(x => x.view);
+    },
+
+    getStack() {
+        return this.__stack;
     },
 
     fadeBackground(fade) {

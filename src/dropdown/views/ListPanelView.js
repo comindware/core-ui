@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
+// @flow
 /**
  * @name ListPanelView
  * @memberof module:core.dropdown.views

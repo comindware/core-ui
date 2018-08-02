@@ -1,7 +1,7 @@
-
+// @flow
 import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
-import DropdownEditor from './DropdownEditorView';
+import DatalistEditorView from './DatalistEditorView';
 import LocalizationService from '../../services/LocalizationService';
 
 const defaultOptions = {
@@ -24,7 +24,6 @@ export default NewExpressionEditorView.extend({
 
     template: Handlebars.compile(template),
 
-
     regions: {
         typeContainer: '.js-new-expression-type-container',
         valueContainer: '.js-new-expression-value-container',
@@ -43,7 +42,7 @@ export default NewExpressionEditorView.extend({
         template: '.js-new-expression-template-container'
     },
 
-    onShow() {
+    onAttach() {
         this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
 
         this.__showValueEditor();
@@ -64,12 +63,14 @@ export default NewExpressionEditorView.extend({
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
-        this.templateEditor = new DropdownEditor(_.extend(this.options.templateEditorOptions, {
-            value: this.value.type === valueTypes.template ? this.value.value : null,
-        }));
+        this.templateEditor = new DatalistEditorView(
+            _.extend(this.options.templateEditorOptions, {
+                value: this.value.type === valueTypes.template ? this.value.value : null
+            })
+        );
 
         this.listenTo(this.templateEditor, 'change', this.__updateEditorValue);
-        this.templateContainer.show(this.templateEditor);
+        this.showChildView('templateContainer', this.templateEditor);
     },
 
     __updateEditorState() {

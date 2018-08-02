@@ -1,24 +1,20 @@
-
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    let rootRegion;
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     describe('ButtonView', () => {
         it('should set text', () => {
             const button = new core.layout.Button({
                 text: 'Button text',
-                handler: () => { }
+                handler: () => {}
             });
 
-            rootRegion.show(button);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(button);
 
-            expect(button.$('.layout__button-view-text').html()).toEqual('Button text');
+            expect(button.$('.btn__text').html()).toEqual('Button text');
         });
 
         it('should trigger callback on button press', done => {
@@ -32,7 +28,10 @@ describe('Components', () => {
                 }
             });
 
-            rootRegion.show(button);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(button);
 
             button.$el.click();
 

@@ -1,21 +1,11 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 11.06.2015
- * Copyright: 2009-2015 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
-import formRepository from '../formRepository';
-
-export default formRepository.validators.systemName = config => {
-    const options = _.extend({
-        type: 'invalidIdentifier',
-        message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.SYSTEMNAME')
-    }, config);
+export default config => {
+    const options = _.extend(
+        {
+            type: 'invalidIdentifier',
+            message: Localizer.get('CORE.FORM.VALIDATION.SYSTEMNAME')
+        },
+        config
+    );
 
     return function systemName(value) {
         options.value = value;

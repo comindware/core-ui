@@ -1,11 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/3/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+//@flow
 export const objectPropertyTypes = {
     STRING: 'String',
     BOOLEAN: 'Boolean',
@@ -21,6 +14,15 @@ export const objectPropertyTypes = {
     ENUM: 'Enum'
 };
 
+export const presentingComponentsTypes = {
+    form: 'form',
+    popup: 'popup',
+    group: 'group',
+    field: 'field',
+    tab: 'tab'
+};
+
 export default {
-    objectPropertyTypes
+    objectPropertyTypes,
+    presentingComponentsTypes
 };

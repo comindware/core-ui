@@ -1,35 +1,64 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/4/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { moment, numeral } from 'lib';
-import numeralRu from 'numeral/locales/ru';
-import numeralEn from 'numeral/locales/en-gb';
-import numeralDe from 'numeral/locales/de';
-
-numeral.locale('en', numeralEn);
-numeral.locale('de', numeralDe);
-numeral.locale('ru', numeralRu);
-
+//@flow
 const global = window;
 const defaultLangCode = 'en';
 
-export default global.Localizer = {
-    initialize(options) {
+type locOpt = {
+    langCode?: string,
+    timeZone?: string,
+    localizationMap?: Object
+};
+
+type LocalizationService = {
+    initialize: locOpt => void,
+
+    langCode?: string,
+
+    timeZone?: string,
+
+    thousandsSeparatorSymbol?: string,
+
+    decimalSymbol?: string,
+
+    localizationMap?: Object,
+
+    get(locId: string): string,
+
+    tryGet(locId: string): ?string,
+
+    resolveLocalizedText(localizedText: Object): string
+};
+
+const service: LocalizationService = {
+    initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
 
-        moment.tz.setDefault(this.timeZone);
+        const formattedNumber = new Intl.NumberFormat(this.langCode, {
+            minimumFractionDigits: 2
+        }).format(1000);
+
+        this.thousandsSeparatorSymbol = formattedNumber.slice(1, 2);
+        this.decimalSymbol = formattedNumber.slice(-3, -2);
+
+        //TODO remove this then server start to return full date
+        const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
+        const unpacked = {
+            name: 'Custom/CMW',
+            abbrs: ['CMWC', 'CMWC'],
+            offsets: [offset, offset],
+            untils: [-1988164200000, null]
+        };
+        moment.tz.add(moment.tz.pack(unpacked));
+
+        moment.tz.setDefault('Custom/CMW');
+        //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
+        //End of hack
+
         moment.locale(this.langCode);
-        numeral.locale(this.langCode);
     },
 
-    get(locId) {
+    get(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -43,7 +72,7 @@ export default global.Localizer = {
         return text;
     },
 
-    tryGet(locId) {
+    tryGet(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -54,7 +83,7 @@ export default global.Localizer = {
         return text;
     },
 
-    resolveLocalizedText(localizedText) {
+    resolveLocalizedText(localizedText: Object) {
         if (!localizedText) {
             return '';
         }
@@ -62,3 +91,5 @@ export default global.Localizer = {
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
     }
 };
+
+export default (global.Localizer = service);

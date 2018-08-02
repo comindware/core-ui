@@ -1,14 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 8/25/2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+//@flow
 import GalleryWindowView from './views/GalleryWindowView';
 
 const classes = {
@@ -25,11 +15,11 @@ export default Marionette.Object.extend({
     },
 
     bindReqres() {
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandler('close', this.__closeGallery, this);
-        this.reqres.setHandler('image:get', this.__getImage, this);
+        this.reqres = Backbone.Radio.channel(_.uniqueId('attachC'));
+        this.reqres.reply('close', this.__closeGallery, this);
+        this.reqres.reply('image:get', this.__getImage, this);
     },
-    
+
     showGallery(model) {
         if (this.__isImage(model)) {
             this.view = new GalleryWindowView({
@@ -38,7 +28,7 @@ export default Marionette.Object.extend({
                 model
             });
             this.__togglePopupRegion(true);
-            window.application.popupRegion.show(this.view);
+            Core.services.WindowService.showPopup(this.view);
             return false;
         }
         return true;
@@ -46,7 +36,7 @@ export default Marionette.Object.extend({
 
     __closeGallery() {
         this.__togglePopupRegion(false);
-        window.application.popupRegion.empty();
+        Core.services.WindowService.closePopup();
     },
 
     __getImage(model) {
@@ -55,16 +45,16 @@ export default Marionette.Object.extend({
             return this.imagesBuffer[modelId];
         }
         this.view.setLoading(true);
-        const image = $(document.createElement('img'));
-        image.addClass(classes.IMAGE);
-        image.attr('src', model.get('url'));
-        image.load(() => {
+        const image = document.createElement('img');
+        image.classList.add(classes.IMAGE);
+        image.setAttribute('src', model.get('url'));
+        image.addEventListener('load', () => {
             this.view.setLoading(false);
         });
         this.imagesBuffer[modelId] = image;
         return image;
     },
-    
+
     __togglePopupRegion(show) {
         window.application.ui.popupRegion.toggleClass(classes.HIDDEN, !show);
     },

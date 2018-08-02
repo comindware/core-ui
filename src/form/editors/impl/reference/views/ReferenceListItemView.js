@@ -1,28 +1,24 @@
-
-import { Handlebars } from 'lib';
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
 
 const classes = {
-    BASE: 'multiselect-i',
     SELECTED: 'editor_checked'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className() {
-        return `dd-list__i${this.options.showCheckboxes ? ' dev_dd-list__i_with_checkbox' : ''}`;
+        return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior,
-            multiSelect: true
-        }
-    },
+    behaviors: [{
+        behaviorClass: list.views.behaviors.ListItemViewBehavior,
+        multiSelect: true,
+        selectOnCursor: false
+    }],
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
             showCheckboxes: this.options.showCheckboxes

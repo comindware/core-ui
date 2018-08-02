@@ -1,10 +1,9 @@
-
-import template from './templates/membersSplitEditor.hbs';
-import MemberSplitController from './impl/membersSplit/controller/MemberSplitController';
+// @flow
+import template from './templates/membersSplitPanelEditor.html';
+import MembersSplitController from './impl/membersSplit/controller/MembersSplitController';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
-import LocalizationService from '../../services/LocalizationService';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
@@ -12,48 +11,66 @@ const defaultOptions = () => ({
     displayText: '',
     hideUsers: false,
     hideGroups: false,
-    maxQuantitySelected: undefined,
+    hideToolbar: false,
+    maxQuantitySelected: null,
     allowRemove: true,
     title: '',
-    itemsToSelectText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
-    selectedItemsText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
-    searchPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
-    emptyListText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
+    itemsToSelectText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
+    selectedItemsText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
+    searchPlaceholder: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
+    emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST'),
+    users: undefined,
+    groups: undefined,
+    showMode: null,
+    cacheService: undefined,
+    getDisplayText: null
 });
 
-export default formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
+export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        const defOps = _.extend(defaultOptions(), {
-            users: options.schema.cacheService.GetUsers().map(user => ({
-                id: user.Id,
-                name: (user.Text || user.Username),
-                abbreviation: user.abbreviation,
-                userpicUri: user.userpicUri,
-                type: 'users'
-            })),
-            groups: options.schema.cacheService.GetGroups().map(group => ({
-                id: group.id,
-                name: group.name,
-                type: 'groups'
-            }))
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
+
+        const defOps = Object.assign(defaultOptions(), {
+            users:
+                options.users ||
+                options.cacheService.GetUsers().map(user => ({
+                    id: user.Id,
+                    name: user.Text || user.Username,
+                    abbreviation: user.abbreviation,
+                    userpicUri: user.userpicUri,
+                    type: 'users'
+                })),
+            groups:
+                options.groups ||
+                options.cacheService.GetGroups().map(group => ({
+                    id: group.id,
+                    name: group.name,
+                    type: 'groups'
+                }))
         });
 
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
-        const value = this.getValue();
-        this.options.selected = typeof value === 'string' ? [value] : value;
+        this.options.selected = this.getValue();
 
-        this.controller = new MemberSplitController(this.options);
-        this.controller.on('popup:ok', () => {
-            this.__value(this.options.selected, true);
-            this.__updateEditor();
-        });
+        this.controller = new MembersSplitController(this.options);
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.on('popup:ok', () => {
+                this.__value(this.options.selected, true);
+            });
+        }
     },
+
+    className: 'member-split',
 
     focusElement: null,
 
     attributes: {
         tabindex: 0
+    },
+
+    regions: {
+        splitPanelRegion: '.js-split-panel-region'
     },
 
     ui: {
@@ -65,13 +82,12 @@ export default formRepository.editors.MembersSplit = BaseLayoutEditorView.extend
         'click @ui.membersEditor': '__showPopup'
     },
 
-    className: 'members-editor',
-
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
-            displayText: this.options.displayText
+            displayText: this.options.displayText,
+            showButton: this.getOption('showMode') === 'button'
         };
     },
 
@@ -79,22 +95,73 @@ export default formRepository.editors.MembersSplit = BaseLayoutEditorView.extend
         this.__value(value, false);
     },
 
+    onRender() {
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.initItems();
+
+            this.showChildView('splitPanelRegion', this.controller.view);
+        }
+    },
+
+    reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
+        this.options.users = users;
+        this.options.groups = groups;
+        this.controller.fillInModel();
+        this.controller.initItems();
+    },
+
     __showPopup() {
         if (!this.getEnabled()) {
             return;
         }
+        this.options.selected = this.getValue();
         this.controller.initItems();
-        WindowService.showPopup(this.controller.view);
+
+        const popup = new Core.layout.Popup({
+            size: {
+                width: '980px',
+                height: '700px'
+            },
+            header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
+            buttons: [
+                {
+                    id: 'close',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                    customClass: 'btn-small btn-outline',
+                    handler: () => {
+                        this.controller.cancelMembers();
+                        Core.services.WindowService.closePopup();
+                    }
+                },
+                {
+                    id: 'save',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                    customClass: 'btn-small',
+                    handler: () => {
+                        this.controller.updateMembers();
+                        this.__value(this.options.selected, true);
+                        Core.services.WindowService.closePopup();
+                    }
+                }
+            ],
+            content: this.controller.view
+        });
+
+        WindowService.showPopup(popup);
     },
 
-    __updateEditor() {
-        this.ui.membersText.text(this.options.displayText);
+    __updateText() {
+        this.ui.membersText.text(this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {
+        if (this.getOption('showMode') === 'button') {
+            this.__updateText();
+        }
         this.value = value;
+
         if (triggerChange) {
             this.__triggerChange();
         }
     }
-});
+}));

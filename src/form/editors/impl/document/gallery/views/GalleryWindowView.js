@@ -1,14 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 8/25/2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+//@flow
 import { helpers } from 'utils';
 import template from '../templates/galleryWindow.html';
 import LoadingView from './LoadingView';
@@ -17,7 +7,7 @@ const classes = {
     GALLERY_WINDOW: 'js-gallery-window galleryWindow'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;
@@ -49,10 +39,11 @@ export default Marionette.LayoutView.extend({
     },
 
     setLoading(visible) {
+        const loadingRegion = this.getRegion('loadingRegion');
         if (visible) {
-            this.loadingRegion.show(new LoadingView());
+            loadingRegion.show(new LoadingView());
         } else {
-            this.loadingRegion.reset();
+            loadingRegion.reset();
         }
     },
 

@@ -1,6 +1,8 @@
-
+﻿// @flow
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
+import 'spectrum-colorpicker';
+import colorPicker from './templates/colorPicker.hbs';
 
 /**
  * @name ColorPickerView
@@ -13,48 +15,76 @@ import formRepository from '../formRepository';
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
- * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
- * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
- * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
- * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
-    template: false,
+export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
+    template: Handlebars.compile(colorPicker),
 
-    tagName: 'input',
-
-    events: {
-        change: '__change'
+    ui: {
+        hexcolor: '.hexcolor',
+        colorpicker: '.colorpicker'
     },
 
-    attributes() {
-        return {
-            type: 'color'
-        };
+    events: {
+        change: '__change',
+        'change @ui.colorpicker': '__changedColorPicker',
+        'change @ui.hexcolor': '__changedHex',
+        'click .js-clear-button': '__clear'
+    },
+
+    className: 'editor editor_color',
+
+    __changedHex() {
+        this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
+    },
+
+    __changedColorPicker() {
+        this.ui.hexcolor.val(this.ui.colorpicker.val());
     },
 
     __change() {
-        this.__value(this.el.value, false, true);
+        this.__value(this.ui.colorpicker.val(), false, true);
     },
 
     __clear() {
-        this.__value(null, true, true);
+        this.__value(null, false, true);
+        this.ui.hexcolor.val(null);
+        this.ui.colorpicker.spectrum('set', null);
         this.focus();
         return false;
     },
 
-    setValue(value) {
+    setValue(value: String) {
         this.__value(value, true, false);
     },
 
-    onRender() {
+    onAttach() {
         const value = this.getValue() || '';
-        this.el.value = value;
+        this.ui.colorpicker.spectrum({
+            color: value.toString(),
+            showInput: true,
+            allowEmpty: true,
+            showInitial: true,
+            preferredFormat: 'hex'
+        });
+        this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
     },
 
-    __value(value, updateUi, triggerChange) {
+    __setReadonly(readonly) {
+        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        if (this.getEnabled() && this.getReadonly()) {
+            this.ui.colorpicker.spectrum('disable');
+        }
+        this.ui.hexcolor.prop('readonly', readonly);
+    },
+
+    __setEnabled(enabled) {
+        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        this.ui.colorpicker.spectrum('enable');
+    },
+
+    __value(value: String, updateUi: Boolean, triggerChange: Boolean) {
         if (this.value === value) {
             return;
         }
@@ -67,5 +97,9 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         if (triggerChange) {
             this.__triggerChange();
         }
+    },
+
+    onBeforeDestroy() {
+        this.ui.colorpicker.spectrum('destroy');
     }
-});
+}));

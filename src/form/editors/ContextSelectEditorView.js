@@ -1,18 +1,7 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 11.02.2015
- * Copyright: 2009-2015 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+// @flow
 import template from './templates/contextSelectEditor.html';
-import PopoutPanelView from './impl/context/views/PopoutPanelView';
 import PopoutButtonView from './impl/context/views/PopoutButtonView';
-import ContextModel from './impl/context/models/ContextModel';
+import PopoutWrapperView from './impl/context/views/PopoutWrapperView';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import dropdownFactory from '../../dropdown/factory';
@@ -22,18 +11,19 @@ const defaultOptions = {
     context: undefined,
     propertyTypes: undefined,
     usePropertyTypes: true,
-    popoutFlow: 'left',
     allowBlank: false,
     instanceRecordTypeId: undefined
 };
 
-formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
+export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        const model = new ContextModel({
+        this.context = this.options.context;
+
+        const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
-            context: this.options.context,
+            context: this.__createTreeCollection(this.context, this.options.recordTypeId),
             propertyTypes: this.options.propertyTypes,
             usePropertyTypes: this.options.usePropertyTypes,
             instanceRecordTypeId: this.options.instanceRecordTypeId,
@@ -41,14 +31,18 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
         });
 
         this.viewModel = new Backbone.Model({
-            button: new Backbone.Model({
-                value: this.__getButtonText(this.getValue())
-            }),
+            button: new Backbone.Model(),
             panel: model
         });
+
+        this.__updateDisplayValue();
     },
 
     focusElement: null,
+
+    ui: {
+        clearButton: '.js-clear-button'
+    },
 
     attributes: {
         tabindex: 0
@@ -60,16 +54,24 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'editor context_select',
+
+    events: {
+        'click @ui.clearButton': '__clear'
+    },
+
     onRender() {
         if (!this.enabled) {
-            this.contextPopoutRegion.show(new PopoutButtonView({
-                model: this.viewModel.get('button')
-            }));
+            this.contextPopoutRegion.show(
+                new PopoutButtonView({
+                    model: this.viewModel.get('button')
+                })
+            );
             return;
         }
 
-        this.popoutView = dropdownFactory.createPopout({
-            panelView: PopoutPanelView,
+        this.popoutView = dropdownFactory.createDropdown({
+            panelView: PopoutWrapperView,
             panelViewOptions: {
                 model: this.viewModel.get('panel')
             },
@@ -77,55 +79,139 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
             buttonViewOptions: {
                 model: this.viewModel.get('button')
             },
-            popoutFlow: this.options.popoutFlow
+            autoOpen: true
         });
-        this.contextPopoutRegion.show(this.popoutView);
-        this.listenTo(this.popoutView, 'before:open', () => {
-            const model = this.viewModel.get('panel');
-            model.populateChildren();
-            model.selectPath(this.getValue());
-        });
-        this.listenTo(this.popoutView, 'element:path:select', this.__applyContext);
+
+        this.showChildView('contextPopoutRegion', this.popoutView);
+
+        this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
     },
 
     setValue(value) {
         this.__value(value, false);
     },
 
-    __value(value, triggerChange) {
+    updateContext(recordTypeId, context) {
+        const panelModel = this.viewModel.get('panel');
+
+        this.context = context;
+        panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
+
+        if (this.__isInstanceInContext(this.value)) {
+            panelModel.set('instanceTypeId', recordTypeId);
+            this.__updateDisplayValue();
+        } else {
+            this.setValue();
+        }
+
+        this.render();
+    },
+
+    __value(value, triggerChange, newValue) {
         if (this.value === value) {
             return;
         }
-        this.value = value;
+        this.value = newValue || value;
         if (triggerChange) {
             this.__triggerChange();
         }
-        this.viewModel.get('button').set('value', this.__getButtonText(value));
+
+        this.__updateDisplayValue();
     },
 
     __getButtonText(selectedItem) {
         if (!selectedItem || selectedItem === 'False') return '';
-        let instanceTypeId = this.options.recordTypeId;
 
-        const buttonText = selectedItem.map(id => {
-            let text = '';
-            this.options.context[instanceTypeId].forEach(context => {
-                if (context.id === id) {
+        const itemId = selectedItem[selectedItem.length - 1];
+        let text = '';
+
+        Object.values(this.context).forEach(value => {
+            value.forEach(context => {
+                if (context.id === itemId) {
                     text = context.name;
-                    instanceTypeId = context.instanceTypeId;
-                    return false;
                 }
             });
-            return text;
         });
 
-        return _.without(buttonText, false).join('/');
+        return text;
+    },
+
+    __isInstanceInContext(item) {
+        if (!item || item === 'False') return false;
+
+        return Object.values(this.context).find(value => value.find(context => context.id === item[item.length - 1]));
     },
 
     __applyContext(selected) {
-        this.popoutView.close();
-        this.__value(selected, true);
-    }
-});
+        const newValue = this.__collectPropertyPath(selected);
 
-export default formRepository.editors.ContextSelect;
+        this.popoutView.close();
+        this.__value(selected.get('id'), true, newValue);
+    },
+
+    __createTreeCollection(context, recordTypeId) {
+        if (!context || !context[recordTypeId]) {
+            return new Backbone.Collection();
+        }
+
+        const deepContext = _.cloneDeep(context);
+
+        Object.keys(deepContext).forEach(key => {
+            deepContext[key] = new Backbone.Collection(deepContext[key]);
+        });
+
+        Object.values(deepContext).forEach(entry =>
+            entry.forEach(innerEntry => {
+                if (innerEntry.get('type') === 'Instance') {
+                    const model = deepContext[innerEntry.get('instanceTypeId')];
+                    if (model) {
+                        innerEntry.children = new Backbone.Collection(model.toJSON());
+                        innerEntry.collapsed = true;
+                        innerEntry.children.forEach(childModel => (childModel.parent = innerEntry));
+                    }
+                }
+                delete innerEntry.id; //todo wtf
+
+                return innerEntry;
+            })
+        );
+
+        const collection = deepContext[recordTypeId];
+
+        collection.on('expand', model => {
+            model.children &&
+                model.children.forEach(child => {
+                    if (child.get('type') === 'Instance') {
+                        const newChild = deepContext[child.get('instanceTypeId')];
+
+                        if (newChild) {
+                            child.children = new Backbone.Collection(newChild.toJSON());
+                            child.collapsed = true;
+                            child.children.forEach(childModel => (childModel.parent = child));
+                        }
+                    }
+                });
+        });
+
+        return collection;
+    },
+
+    __collectPropertyPath(selectedModel, collectedPath = []) {
+        collectedPath.push(selectedModel.get('id'));
+
+        if (selectedModel.parent) {
+            return this.__collectPropertyPath(selectedModel.parent, collectedPath);
+        }
+
+        return collectedPath;
+    },
+
+    __updateDisplayValue() {
+        this.viewModel.get('button').set('value', this.__getButtonText(this.value));
+    },
+
+    __clear() {
+        this.__value(null, true);
+        return false;
+    }
+}));

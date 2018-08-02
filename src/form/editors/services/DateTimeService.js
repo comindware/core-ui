@@ -1,7 +1,8 @@
+//@flow
 import { dateHelpers } from 'utils';
 
 export default {
-    getDateDisplayValue(value, format) {
+    getDateDisplayValue(value?: string, format: string): string {
         let formattedDisplayValue;
         if (value === null) {
             formattedDisplayValue = '';
@@ -13,7 +14,7 @@ export default {
         return formattedDisplayValue;
     },
 
-    getTimeDisplayValue(value, format) {
+    getTimeDisplayValue(value?: string, format: string): string {
         let formattedValue;
         if (value === null || value === '') {
             formattedValue = '';

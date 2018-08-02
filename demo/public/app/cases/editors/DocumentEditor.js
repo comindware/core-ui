@@ -1,10 +1,15 @@
 
-import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        value: null
+        value: [
+            {
+                id: 'document.1',
+                name: 'Document 1',
+                url: 'GetDocument/1'
+            }
+        ]
     });
 
     return new CanvasView({

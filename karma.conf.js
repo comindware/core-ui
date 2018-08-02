@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/14/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 const webpackConfigFactory = require('./build/webpack.config.js');
 
 module.exports = function(config) {
@@ -19,22 +11,10 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'],
 
-        plugins: [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-phantomjs-launcher',
-            'karma-jasmine',
-            'karma-sourcemap-loader',
-            'karma-webpack',
-            'karma-coverage'
-        ],
+        plugins: [/*'karma-safari-launcher',*/ 'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'node_modules/babel-polyfill/dist/polyfill.js',
-            'tests/tests.bundle.js',
-            'dist/core.css'
-        ],
+        files: ['node_modules/babel-polyfill/dist/polyfill.js', 'tests/tests.bundle.js', 'dist/core.css'],
 
         // list of files to exclude
         exclude: [],
@@ -42,7 +22,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'tests/tests.bundle.js': [ 'webpack', 'sourcemap' ]
+            'tests/tests.bundle.js': ['webpack', 'sourcemap']
         },
 
         // test results reporter to use
@@ -53,7 +33,6 @@ module.exports = function(config) {
         // web server port
         port: 9876,
 
-        // enable / disable colors in the output (reporters and logs)
         colors: true,
 
         // level of logging
@@ -65,12 +44,16 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS', 'FirefoxHeadless'],
+        browsers: ['ChromeWithViewport', 'FirefoxHeadless' /*, 'Safari'*/],
 
         customLaunchers: {
             FirefoxHeadless: {
                 base: 'Firefox',
-                flags: [ '-headless' ]
+                flags: ['-headless']
+            },
+            ChromeWithViewport: {
+                base: 'ChromeHeadless',
+                flags: [`--window-size=${1920},${1080}`]
             }
         },
 
@@ -92,11 +75,13 @@ module.exports = function(config) {
             stats: 'minimal'
         },
 
-        rules: [{
-            test: /\.js/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        }]
+        rules: [
+            {
+                test: /\.js/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            }
+        ]
     };
 
     if (TEST_COVERAGE) {
@@ -106,11 +91,7 @@ module.exports = function(config) {
 
         result.coverageReporter = {
             dir: 'reports/',
-            reporters: [
-                { type: 'html', subdir: 'report-html' },
-                { type: 'lcov', subdir: 'report-lcov' },
-                { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
-            ],
+            reporters: [{ type: 'html', subdir: 'report-html' }, { type: 'lcov', subdir: 'report-lcov' }, { type: 'teamcity', subdir: '.', file: 'teamcity.txt' }],
             instrumenterOptions: {
                 istanbul: { noCompact: true, embedSource: true }
             }

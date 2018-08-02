@@ -32,13 +32,13 @@
 
 <http://comindware.com/text/core/form/editors/duration#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:isBeingTranslated true; l10n:originalData "Not set"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#days> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " d"; l10n:originalData " d"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#days> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "d"; l10n:originalData "d"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#hours> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " h"; l10n:originalData " h"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#hours> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "h"; l10n:originalData "h"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#minutes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " min"; l10n:originalData " m"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#minutes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "min"; l10n:originalData "m"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " s"; l10n:originalData " s"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "s"; l10n:originalData "s"].
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/days#separatorChar> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "d"; l10n:isBeingTranslated true; l10n:originalData "d"].
 
@@ -102,7 +102,7 @@
 
 <http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:isBeingTranslated true; l10n:originalData "This field is required."].
 
-<http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
+<http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/formats/datetime#daysFull> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag"; l10n:originalData "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"].
 
@@ -113,6 +113,8 @@
 <http://comindware.com/text/core/formats/datetime#monthsShort> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Jan,Feb,Mrz,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez"; l10n:originalData "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"].
 
 <http://comindware.com/text/core/formats/datetime#today> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Heute"; l10n:originalData "Today"].
+
+<http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht eingerichtet"; l10n:originalData "notSet"].
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#no> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 

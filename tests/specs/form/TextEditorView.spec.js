@@ -1,28 +1,13 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/14/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    let rootRegion;
-
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     describe('TextEditorView', () => {
         const findInput = function(view) {
-            return view.$('input');
+            return view.$('.input');
         };
 
-        it('should get focus when focus() is called', () => {
+        it('should get focus when focus() is called', done => {
             // arrange
             const model = new Backbone.Model({
                 data: 'text'
@@ -31,14 +16,17 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
 
             // act
-            view.focus();
+            view.on('dom:refresh', () => {
+                view.focus();
 
-            // assert
-            expect(findInput(view)).toBeFocused();
-            expect(view.hasFocus).toEqual(true, 'Must have focus.');
+                expect(findInput(view)).toBeFocused();
+                expect(view.hasFocus).toEqual(true, 'Must have focus.');
+                done();
+            });
+
+            window.app.getView().showChildView('contentRegion', view);
         });
 
         it('should lose focus when blur() is called', () => {
@@ -50,7 +38,8 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app.getView().showChildView('contentRegion', view);
+
             view.focus();
 
             // act
@@ -58,7 +47,7 @@ describe('Editors', () => {
 
             // assert
             expect(findInput(view)).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
+            expect(view.hasFocus).toEqual(false, "Mustn't have focus.");
         });
 
         it('should have `value` matched with initial value', () => {
@@ -70,7 +59,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const value = view.getValue();
@@ -87,7 +79,10 @@ describe('Editors', () => {
             const view = new core.form.editors.TextEditor({
                 value: expected
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const value = view.getValue();
@@ -108,10 +103,12 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
-            // act
             view.focus();
             const input = findInput(view);
             input.val(expected);
@@ -123,13 +120,15 @@ describe('Editors', () => {
         });
 
         it('should update `value` and send `change` on user change (w/o data binding).', () => {
-            // arrange
             const expected = 'text 2';
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const view = new core.form.editors.TextEditor({
                 value: 'text'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -138,13 +137,11 @@ describe('Editors', () => {
             input.val(expected);
             input.change();
 
-            // assert
             expect(view.getValue()).toEqual(expected);
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
         it('should update `value` on model change', () => {
-            // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -153,7 +150,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -179,7 +179,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -208,7 +211,10 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -233,7 +239,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -254,7 +263,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -263,7 +275,7 @@ describe('Editors', () => {
             expect(isEmpty).toEqual(false);
         });
 
-        it('should update `value` when typing if `changemode: \'keydown\'`', () => {
+        it("should update `value` when typing if `changemode: 'keydown'`", () => {
             // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
@@ -274,7 +286,10 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown'
             });
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -287,7 +302,7 @@ describe('Editors', () => {
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should clear value and trigger change event on remove button click', () => {
+        it('should clear value, dont change attribute and dont trigger change event on remove button click', () => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -299,10 +314,45 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
+            view.$el.trigger('mouseenter');
             view.$('.js-clear-button').click();
+
+            const isEmpty = view.isEmptyValue();
+            const input = findInput(view);
+
+            expect(model.get('data')).toEqual('text');
+            expect(isEmpty).toEqual(true);
+            expect(onChangeCallback).toHaveBeenCalledTimes(0);
+            expect(input.val()).toEqual('');
+        });
+
+        it('should clear attribute and value and trigger change event on remove button click and then blur()', () => {
+            const onChangeCallback = jasmine.createSpy('onChangeCallback');
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+            view.on('change', onChangeCallback);
+
+            view.$el.trigger('mouseenter');
+            view.$('.js-clear-button').click();
+            view.blur();
 
             const isEmpty = view.isEmptyValue();
             const input = findInput(view);
@@ -313,7 +363,7 @@ describe('Editors', () => {
             expect(input.val()).toEqual('');
         });
 
-        it('should be read only if flag is passed', () => {
+        it('should be readonly if flag is passed', () => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -326,7 +376,10 @@ describe('Editors', () => {
                 readonly: true
             });
 
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             const isEmpty = view.isEmptyValue();
@@ -334,7 +387,9 @@ describe('Editors', () => {
 
             expect(model.get('data')).toEqual('text');
             expect(isEmpty).toEqual(false);
-            expect(view.$('.js-clear-button')).toBeHidden();
+
+            view.trigger('mouseenter');
+            //expect(view.$el.closest('.js-clear-button')).toBeHidden();
             expect(onChangeCallback).toHaveBeenCalledTimes(0);
             expect(input.val()).toEqual('text');
             expect(input.prop('readonly')).toEqual(true);
@@ -360,9 +415,13 @@ describe('Editors', () => {
                 allowEmptyValue: false
             });
 
-            rootRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
-            expect(view.$('.js-clear-button')).toBeHidden();
+            view.trigger('mouseenter');
+            expect(view.$('.js-clear-button').length).toEqual(0);
         });
     });
 });

@@ -369,8 +369,6 @@ li.CodeMirror-hint-active {
     background: gold;
     border-top: 1px solid orange;
     border-bottom: 1px solid orange;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     opacity: .5;
 }
 
@@ -534,7 +532,7 @@ li.CodeMirror-hint-active {
 
 .dev-codemirror-maximized {
     position: fixed;
-    top: 10%;
+    top: 5%;
     left: 10%;
     width: 80%;
     height: 80%;
@@ -550,11 +548,11 @@ li.CodeMirror-hint-active {
     padding-right: 20px;
 }
 
-.dev-code-editor-field:hover .svg-icons-wrp__remove {
+.dev-code-editor-field:hover .editor__icons.icon-remove {
     visibility: visible;
 }
 
-.editor_empty.dev-code-editor-field:hover .svg-icons-wrp__remove {
+.editor_empty.dev-code-editor-field:hover .editor__icons.icon-remove {
     visibility: hidden;
 }
 
@@ -600,7 +598,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-tooltip-parameter-type {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .dev-code-editor-tooltip-parameter-name {
@@ -636,6 +634,10 @@ li.CodeMirror-hint-active {
     height: 25px;
     width: 25px;
     background: transparent no-repeat url(../images/icons-code_editor.png);
+}
+
+.dev-code-editor-toolbar_button-compile {
+    background-position: -100px -25px;
 }
 
 .dev-code-editor-toolbar_button-undo {
@@ -684,6 +686,16 @@ li.CodeMirror-hint-active {
 
 .dev-code-editor-operator:before {
     background-position:  -100px -25px;
+}
+
+.dev-code-editor-error {
+    color: #ffa5a0;
+    background: #ffa5a0;
+}
+
+.dev-code-editor-warning{
+    color: #feffa8;
+    background: #feffa8;
 }
 
 /* CodeEditor */

@@ -1,9 +1,9 @@
 
-import core from 'comindware/core';
+
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
-    const View = Marionette.LayoutView.extend({
+    const View = Marionette.View.extend({
         template: Handlebars.compile('' +
             '<input type="button" class="js-show_loading-btn" value="Show Loading"/>' +
             '<input type="button" class="js-show_loading-promise-btn" style="display:block;" value="Show Loading (Promise)"/>' +

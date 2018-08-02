@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/23/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
+// @flow
 /**
  * Конструктор Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
  * быть переданы как свойства behavior (см. документацию Marionette).
@@ -18,32 +9,34 @@ import 'lib';
  * @constructor
  * */
 
-const HighlightableBehavior = function() {
-};
+const HighlightableBehavior = function() {};
 
-Object.assign(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
-    /**
-     * Подсветить заданный текст во всех моделях.
-     * @param {String} text Текст, который необходимо подсветить.
-     * */
-    highlight(text) {
-        this.parentCollection.each(record => {
-            if (record.highlight) {
-                record.highlight(text);
-            }
-        });
-    },
+Object.assign(
+    HighlightableBehavior.prototype,
+    /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
+        /**
+         * Подсветить заданный текст во всех моделях.
+         * @param {String} text Текст, который необходимо подсветить.
+         * */
+        highlight(text) {
+            this.parentCollection.each(record => {
+                if (record.highlight) {
+                    record.highlight(text);
+                }
+            });
+        },
 
-    /**
-     * Снять подсветку во всех моделях.
-     * */
-    unhighlight() {
-        this.parentCollection.each(record => {
-            if (record.unhighlight) {
-                record.unhighlight();
-            }
-        });
+        /**
+         * Снять подсветку во всех моделях.
+         * */
+        unhighlight() {
+            this.parentCollection.each(record => {
+                if (record.unhighlight) {
+                    record.unhighlight();
+                }
+            });
+        }
     }
-});
+);
 
 export default HighlightableBehavior;

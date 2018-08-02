@@ -1,12 +1,23 @@
+// @flow
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
-export default Marionette.ItemView.extend({
-    initialize(options) {
-        this.text = options.text;
+type optionsT = {
+    text: string,
+    model?: Backbone.Model,
+    key?: string
+};
+
+export default Marionette.View.extend({
+    initialize(options: optionsT) {
+        this.text = options.text || '';
         this.key = options.key;
         if (this.model && this.key) {
             this.listenTo(this.model, `change:${this.key}`, (model, newValue) => this.$el.text(newValue));
         }
+    },
+
+    className() {
+        return this.options.class ? this.options.class : '';
     },
 
     template: false,
@@ -17,11 +28,11 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         if (this.model && this.key) {
-            this.$el.text(this.model.get(this.key));
+            this.el.innerHTML = this.model.get(this.key);
         } else {
-            this.$el.text(this.text);
+            this.el.innerHTML = this.text;
         }
     },
 

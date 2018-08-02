@@ -1,15 +1,3 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
-
 import FunctionOverloadView from './FunctionOverloadView';
 import FunctionOverloadModel from '../models/FunctionOverloadModel';
 import FunctionParametersView from '../views/FunctionParametersView';
@@ -18,12 +6,12 @@ import template from '../templates/functionTooltip.html';
 const FUNCTION_ITEM_HEIGHT = 25;
 const FUNCTIONS_MAX_ROWS = 10;
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'dev-code-editor-tooltip',
 
     regions: {
-        functionOverloadsContainer: '.js-function-overloads-container',
-        functionParametersContainer: '.js-function-parameters-container'
+        functionOverloadsRegion: '.js-function-overloads-container',
+        functionParametersRegion: '.js-function-parameters-container'
     },
 
     events: {
@@ -32,7 +20,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
+    onAttach() {
         const collection = new Backbone.Collection(this.model.get('overloads'), {
             model: FunctionOverloadModel
         });
@@ -44,12 +32,13 @@ export default Marionette.LayoutView.extend({
                 height: 'auto',
                 maxRows: FUNCTIONS_MAX_ROWS
             }
-        }).listView;
-        this.functionOverloads.on('childview:selected', child => {
-            this.functionParametersContainer.show(new FunctionParametersView(child.model));
+        });
+        this.functionOverloads.on('childview:selected', model => {
+            this.showChildView('functionParametersRegion', new FunctionParametersView({ model }));
         });
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
-        this.functionOverloadsContainer.show(this.functionOverloads);
+        this.showChildView('functionOverloadsRegion', this.functionOverloads);
+
         if (this.options.isFull) {
             collection.at(0).select();
         }

@@ -1,13 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/27/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
 import core from 'coreApi';
 
 export var UserModel = Backbone.Model.extend({});
@@ -64,13 +54,41 @@ export var dataProvider = {
         return names.map((name, i) => {
             const id = `user.${i + 1}`;
             const nameSplit = name.split(' ');
+
             return {
                 id,
                 name,
                 userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
                 abbreviation: nameSplit[0][0] + nameSplit[1][0],
                 avatarUrl: null,
-                url: `#People/${i + 1}`
+                url: `#People/${i + 1}`,
+                type: 'users'
+            };
+        });
+    },
+
+    listGroups() {
+        const names = [
+            'Kerry Group',
+            'Terry Group',
+            'Natasha Group',
+            'Doyle Group',
+            'Teresa Group',
+            'Maggie Group',
+            'Patricia Group',
+            'Carol Group',
+            'Lillie Group',
+            'Alfred Group',
+            'Nichole Group'
+        ];
+        return names.map((name, i) => {
+            const id = `group.${i + 1}`;
+            const nameSplit = name.split(' ');
+
+            return {
+                id,
+                name,
+                type: 'groups'
             };
         });
     }

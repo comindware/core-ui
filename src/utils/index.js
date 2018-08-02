@@ -1,31 +1,20 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/22/2015
- * Copyright: 2009-2016 Comindware
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import comparators_ from './comparators';
 import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
-import cookieHelpers_ from './cookieHelpers';
+import diffHelper_ from './diffHelper';
 import keyCode_ from './keyCode';
 import './handlebars/all';
-import './jquery/selector.focusable';
-import RegionBehavior_ from './marionette/RegionBehavior';
 import './codemirror';
 
-export const RegionBehavior = RegionBehavior_;
 export const comparators = comparators_;
 export const helpers = helpers_;
 export const htmlHelpers = htmlHelpers_;
 export const dateHelpers = dateHelpers_;
-export const cookieHelpers = cookieHelpers_;
 export const keyCode = keyCode_;
+export const diffHelper = diffHelper_;
 
-export default /** @lends module:core.utils */ {
+export default {
     /**
      * A set of useful comparators compatible with <code>_.sortBy()</code>.<br/><br/> The following naming convention is used:
      * <code>&lt;dataType&gt;Comparator&lt;Arguments count: 1 or 2&gt;&lt;Comparing direction: 'Asc' or 'Desc'&gt;</code>.<br/><br/>
@@ -50,15 +39,10 @@ export default /** @lends module:core.utils */ {
      * */
     dateHelpers,
     /**
-     * Methods to manipulate cookies data.
-     * @namespace
-     * */
-    cookieHelpers,
-    /**
      * Enumeration of key codes used in keyboard events.
      * @namespace
      * */
     keyCode,
 
-    RegionBehavior
+    diffHelper
 };

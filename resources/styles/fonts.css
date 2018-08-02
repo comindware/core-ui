@@ -4,7 +4,7 @@
     url('../../resources/fonts/opensans-light.woff') format("woff");
     font-weight: 300;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
 }
 @font-face {
     font-family: 'OpenSans';
@@ -12,7 +12,7 @@
     url('../../resources/fonts/opensans-regular.woff') format("woff");
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
 }
 @font-face {
     font-family: 'OpenSans';
@@ -20,21 +20,21 @@
     url('../../resources/fonts/opensans-italic.woff') format("woff");
     font-weight: 400;
     font-style: italic;
-    font-display: swap;
+    font-display: fallback;
 }
 @font-face {
     font-family: 'OpenSans';
     src: url('../../resources/fonts/opensans-semibold.woff2') format('woff2'),
     url('../../resources/fonts/opensans-semibold.woff') format("woff");
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
 }
 @font-face {
     font-family: 'OpenSans';
     src: url('../../resources/fonts/opensans-bold.woff2') format('woff2'),
     url('../../resources/fonts/opensans-bold.woff') format("woff");
-    font-weight: 600;
+    font-weight: 700;
     font-style: normal;
-    font-display: swap;
+    font-display: fallback;
 }

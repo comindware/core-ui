@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import UserService from 'services/UserService';
 
 export default /** @lends module:core.utils.htmlHelpers */ {
@@ -122,29 +113,5 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
         el.onselectstart = stopAndPreventDefault;
         el.ondragstart = stopAndPreventDefault;
-    },
-
-    /**
-     * Use jQuery <code>.offset()</code>.
-     * @deprecated
-     */
-    getDocumentPosition(rawEl) {
-        let el = rawEl;
-        if (el instanceof window.jQuery) {
-            el = el[0];
-        }
-
-        let left = 0;
-        let top = 0;
-        do {
-            if (!isNaN(el.offsetLeft)) {
-                left += el.offsetLeft;
-            }
-            if (!isNaN(el.offsetTop)) {
-                top += el.offsetTop;
-            }
-            el = el.offsetParent;
-        } while (el);
-        return { x: left, y: top };
     }
 };

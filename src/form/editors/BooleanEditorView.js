@@ -1,14 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+// @flow
 import keyCode from '../../utils/keyCode';
-import template from './templates/booleanEditor.hbs';
+import template from './templates/booleanEditor.html';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 
@@ -33,90 +25,95 @@ const classes = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-export default formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
-    initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-    },
+export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
+    {
+        initialize(options = {}) {
+            _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        },
 
-    ui: {
-        toggleButton: '.js-toggle-button',
-        displayText: '.js-display-text'
-    },
+        ui: {
+            displayText: '.js-display-text'
+        },
 
-    events: {
-        'click @ui.toggleButton': '__toggle',
-        'click @ui.displayText': '__toggle',
-        keydown: '__onKeyDown'
-    },
+        events: {
+            click: '__toggle',
+            'click @ui.displayText': '__toggle',
+            keydown: '__onKeyDown'
+        },
 
-    className: 'editor editor_checkbox',
+        className: 'editor editor_checkbox',
 
-    attributes() {
-        return {
-            title: this.options.title || null
-        };
-    },
+        attributes() {
+            return {
+                title: this.options.title || null
+            };
+        },
 
-    template: Handlebars.compile(template),
+        template: Handlebars.compile(template),
 
-    templateHelpers() {
-        return {
-            displayText: this.options.displayText,
-            displayHtml: this.options.displayHtml
-        };
-    },
+        templateContext() {
+            return {
+                displayText: this.options.displayText,
+                displayHtml: this.options.displayHtml
+            };
+        },
 
-    __toggle() {
-        if (!this.getEnabled() || this.getReadonly()) {
+        __toggle() {
+            if (!this.getEnabled() || this.getReadonly()) {
+                return false;
+            }
+            this.setValue(!this.getValue());
+            this.__triggerChange();
             return false;
+        },
+
+        onRender() {
+            this.__updateState();
+        },
+
+        setValue(value) {
+            if (this.value === value) {
+                return;
+            }
+            this.value = value;
+            this.__updateState();
+        },
+
+        isEmptyValue() {
+            return !_.isBoolean(this.getValue());
+        },
+
+        __updateState() {
+            if (this.value) {
+                this.$el.addClass(classes.CHECKED);
+                this.$el.removeClass(classes.CHECKED_SOME);
+            } else if (this.value === false || !this.options.thirdState) {
+                this.$el.removeClass(classes.CHECKED_SOME);
+                this.$el.removeClass(classes.CHECKED);
+            } else {
+                this.$el.removeClass(classes.CHECKED);
+                this.$el.addClass(classes.CHECKED_SOME);
+            }
+        },
+
+        __setReadonly(readonly) {
+            BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+            if (this.getEnabled()) {
+                this.$el.prop('tabindex', readonly ? -1 : 0);
+            }
+        },
+
+        __onKeyDown(event) {
+            if (event.ctrlKey) {
+                return;
+            }
+            if (event.keyCode === keyCode.SPACE) {
+                this.__toggle();
+                event.preventDefault();
+            }
         }
-        this.setValue(!this.getValue());
-        this.__triggerChange();
-        return false;
     },
-
-    onRender() {
-        this.__updateState();
-    },
-
-    setValue(value) {
-        if (this.value === value) {
-            return;
-        }
-        this.value = value;
-        this.__updateState();
-    },
-
-    isEmptyValue() {
-        return !_.isBoolean(this.getValue());
-    },
-
-    __updateState() {
-        if (this.value) {
-            this.$el.addClass(classes.CHECKED);
-            this.$el.removeClass(classes.CHECKED_SOME);
-        } else if (this.value === false || !this.options.thirdState) {
-            this.$el.removeClass(classes.CHECKED_SOME);
-            this.$el.removeClass(classes.CHECKED);
-        } else {
-            this.$el.removeClass(classes.CHECKED);
-            this.$el.addClass(classes.CHECKED_SOME);
-        }
-    },
-
-    __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.$el.prop('tabindex', readonly ? -1 : 0);
-        }
-    },
-
-    __onKeyDown(event) {
-        if (event.keyCode === keyCode.SPACE) {
-            this.__toggle();
-            event.preventDefault();
-        }
+    {
+        classes
     }
-}, {
-    classes
-});
+));

@@ -11,12 +11,12 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.AudioEditor.prototype */{
+export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend({
     tagName: 'audio',
 
     template: false,
 
-    templateHelpers() {
+    templateContext() {
         return Object.assign(this.options, {
             title: this.value || ''
         });
@@ -29,45 +29,50 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
         };
     },
 
-    onShow() {
+    onRender() {
         const audio: AudioNode = this.el;
         let recorder = {};
-        const $regionEl = $('<div class=\'js-button-region\'></div>');
-        this.$el.parent().append($regionEl);
+        const regionEl = document.createElement('div');
+        regionEl.className = 'js-button-region';
+        this.$el.parent().append(regionEl);
         const region = this.addRegion('js-button-region', {
-            el: $regionEl
+            el: regionEl
         });
-        region.show(new Core.layout.HorizontalLayout({
-            columns: [
-                new Core.layout.Button({
-                    text: 'Start recording',
-                    handler() {
-                        // get audio stream from user's mic
-                        navigator.mediaDevices.getUserMedia({
-                            audio: true
-                        }).then(stream => {
-                            recorder = new window.MediaRecorder(stream);
-                            // listen to dataavailable, which gets triggered whenever we have
-                            // an audio blob available
-                            recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
-                            recorder.start();
-                        });
-                    }
-                }),
-                new Core.layout.Button({
-                    text: 'Stop recording',
-                    handler() {
-                        // Stopping the recorder will eventually trigger the `dataavailable` event and we can complete the recording process
-                        recorder.stop();
-                    }
-                })
-            ]
-        }));
+        region.show(
+            new Core.layout.HorizontalLayout({
+                columns: [
+                    new Core.layout.Button({
+                        text: 'Start recording',
+                        handler() {
+                            if (navigator.mediaDevices) {
+                                navigator.mediaDevices
+                                    .getUserMedia({
+                                        audio: true
+                                    })
+                                    .then(stream => {
+                                        recorder = new window.MediaRecorder(stream);
+
+                                        recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
+                                        recorder.start();
+                                    });
+                            }
+                        }
+                    }),
+                    new Core.layout.Button({
+                        text: 'Stop recording',
+                        handler() {
+                            // Stopping the recorder will eventually trigger the `dataavailable` event and we can complete the recording process
+                            recorder.stop();
+                        }
+                    })
+                ]
+            })
+        );
     },
 
-    __onRecordingReady(e: AudioProcessingEvent, audio: AudioDestinationNode) {
+    __onRecordingReady(e, audio) {
         // e.data contains a blob representing the recording
         audio.src = URL.createObjectURL(e.data);
         audio.play();
     }
-});
+}));

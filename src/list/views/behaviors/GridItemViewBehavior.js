@@ -1,42 +1,21 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 import { helpers, htmlHelpers } from 'utils';
 
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
+const eventBubblingIgnoreList = ['before:render',
+'render',
+'dom:refresh',
+'before:show',
+'show',
+'before:destroy',
+'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(view.options, 'columns');
         helpers.ensureOption(view.options, 'gridEventAggregator');
-        helpers.ensureOption(view.options, 'internalListViewReqres');
         helpers.ensureOption(options, 'padding');
 
         this.padding = options.padding;
-        _.bindAll(this, '__handleColumnsResize');
-        this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
-
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
     },
 
     modelEvents: {
@@ -67,24 +46,8 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    onShow() {
-        this.__handleColumnsResize();
-    },
-
     __getAvailableWidth() {
         return this.$el.width() - this.padding - 1; //Magic cross browser pixel, don't remove it
-    },
-
-    __getCellElements() {
-        return this.$el.find('.js-grid-cell');
-    },
-
-    __handleColumnsResize() {
-        const cells = Array.from(this.__getCellElements());
-        this.columns.forEach((col, k) => {
-            const $cell = $(cells[k]);
-            $cell.outerWidth(col.absWidth);
-        });
     },
 
     __handleClick(e) {

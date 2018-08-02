@@ -1,17 +1,9 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars, keypress } from 'lib';
-import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapText from './iconsWraps/iconWrapText.html';
 
 const changeMode = {
     blur: 'blur',
@@ -27,7 +19,8 @@ const defaultOptions = () => ({
     maskPlaceholder: '_',
     maskOptions: {},
     showTitle: true,
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    class: undefined
 });
 
 /**
@@ -48,21 +41,23 @@ const defaultOptions = () => ({
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
-    initialize(options = {}) {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
-
+export default (formRepository.editors.Text = BaseItemEditorView.extend({
+    initialize() {
         this.placeholder = this.options.emptyPlaceholder;
     },
 
-    onShow() {
+    onAttach() {
         if (this.options.mask) {
-            this.ui.input.inputmask(Object.assign({
-                mask: this.options.mask,
-                placeholder: this.options.maskPlaceholder,
-                autoUnmask: true
-            }, this.options.maskOptions || {}));
+            this.ui.input.inputmask(
+                Object.assign(
+                    {
+                        mask: this.options.mask,
+                        placeholder: this.options.maskPlaceholder,
+                        autoUnmask: true
+                    },
+                    this.options.maskOptions || {}
+                )
+            );
         }
     },
 
@@ -73,11 +68,16 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         clearButton: '.js-clear-button'
     },
 
-    className: 'editor',
+    className() {
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defOps)), defOps);
+
+        return `${this.options.class || ''} editor`;
+    },
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return _.extend(this.options, {
             title: this.value || ''
         });
@@ -86,7 +86,9 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
-        'click @ui.clearButton': '__clear'
+        'click @ui.clearButton': '__clear',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     __keyup() {
@@ -102,8 +104,8 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     },
 
     __clear() {
-        this.__value(null, true, true);
-        this.focus();
+        this.ui.input.focus();
+        this.__value(null, true, false);
         return false;
     },
 
@@ -145,34 +147,6 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         if (this.options.showTitle) {
             this.ui.input.prop('title', value);
         }
-        // Keyboard shortcuts listener
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        if (!this.options.allowEmptyValue) {
-            this.ui.clearButton.hide();
-        } else {
-            this.ui.clearButton.show();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-    },
-
-    /**
-     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-     * [Keypress](https://dmauro.github.io/Keypress/).
-     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-     * Полный список с названиями клавиш указан в исходном файле плагина:
-     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-     * */
-    addKeyboardListener(key, callback) {
-        if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-        }
-        const keys = key.split(',');
-        _.each(keys, k => {
-            this.keyListener.simple_combo(k, callback);
-        });
     },
 
     __value(value, updateUi, triggerChange) {
@@ -201,5 +175,17 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     deselect() {
         this.ui.input.deselect();
+    },
+
+    __onMouseenter() {
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
+            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
+        }
+    },
+
+    __onMouseleave() {
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
+            this.el.removeChild(this.el.lastElementChild);
+        }
     }
-});
+}));

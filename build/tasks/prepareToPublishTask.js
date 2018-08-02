@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/30/2016
- * Copyright: 2009-2016 ApprovalMax
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF ApprovalMax
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 const fs = require('fs');
 const exec = require('child_process').exec;
 
@@ -17,7 +6,7 @@ const pathResolver = require('../pathResolver');
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 module.exports = () => {
-    exec('git tag -l 1.4.* --sort=v:refname', (err, stdout, stderr) => {
+    exec('git tag -l 1.6.* --sort=v:refname', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;

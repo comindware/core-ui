@@ -1,16 +1,7 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/10/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
-const createDemoData = function() {
+const createDemoData = function () {
     return _.times(1000, i => {
         const id = `task.${i + 1}`;
         return {
@@ -24,9 +15,9 @@ const DemoReferenceCollections = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-export default Marionette.Controller.extend({
+export default Marionette.Object.extend({
     initialize() {
-        this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
+        this.collection = list.factory.createWrappedCollection({ collection: new DemoReferenceCollections([]) });
     },
 
     fetch(options = {}) {
@@ -55,7 +46,7 @@ export default Marionette.Controller.extend({
                     this.collection.filter(null);
                 }
 
-                this.totalCount = 1000;
+                this.totalCount = 1001;
                 resolve({
                     collection: this.collection.toJSON(),
                     totalCount: this.totalCount

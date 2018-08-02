@@ -1,15 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/27/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import core from 'coreApi';
-import { dataProvider } from './testData';
-import localizationMap from 'localizationMap';
-import 'jasmine-jquery';
 
 const at = function(collection, index) {
     return collection.at ? collection.at(index) : collection[index];
@@ -38,30 +26,4 @@ export function expectToHaveSameMembers(actual, expected) {
     const actualValues = _.sortBy(_.uniq(actual), v => v);
     const expectedValues = _.sortBy(_.uniq(expected), v => v);
     expectCollectionsToBeEqual(actualValues, expectedValues);
-}
-
-export function initializeCore() {
-    setFixtures('<div id="rootRegion"></div>');
-    const regionManager = new Marionette.RegionManager();
-    regionManager.addRegions({
-        rootRegion: '#rootRegion'
-    });
-
-    const rootRegion = regionManager.get('rootRegion');
-
-    core.initialize({
-        ajaxService: {
-            ajaxMap: []
-        },
-        localizationService: {
-            langCode: 'en',
-            localizationMap,
-            warningAsError: true
-        },
-        userService: {
-            dataProvider
-        }
-    });
-
-    return rootRegion;
 }

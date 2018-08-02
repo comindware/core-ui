@@ -1,17 +1,10 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import template from './templates/field.hbs';
-import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';
 import InfoButtonView from './views/InfoButtonView';
 import TooltipPanelView from './views/TooltipPanelView';
+import ErrosPanelView from './views/ErrosPanelView';
 import formRepository from '../formRepository';
 
 const classes = {
@@ -21,23 +14,19 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options = {}) {
-        this.form = options.form;
-        this.key = options.key;
-        this.__createSchema(options.schema);
+        this.schema = options.schema;
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(this.fieldId);
-
-        this.__viewModel = new Backbone.Model({
-            helpText: this.schema.helpText,
-            errorText: null
-        });
+        this.__createEditor(options, this.fieldId, _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
+        if (this.schema.getReadonly || this.schema.getHidden) {
+            this.listenTo(this.model, 'change', this.__updateExternalChange);
+        }
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.schema.title,
             fieldId: this.fieldId
@@ -47,36 +36,33 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     regions: {
-        editorRegion: '.js-editor-region',
+        editorRegion: {
+            el: '.js-editor-region',
+            replaceElement: true
+        },
         errorTextRegion: '.js-error-text-region',
         helpTextRegion: '.js-help-text-region'
     },
 
-    onShow() {
-        this.editorRegion.show(this.editor);
-        const errorPopout = dropdown.factory.createPopout({
-            buttonView: ErrorButtonView,
-            panelView: TooltipPanelView,
-            panelViewOptions: {
-                model: this.__viewModel,
-                textAttribute: 'errorText'
-            },
-            popoutFlow: 'right',
-            customAnchor: true
-        });
-        this.errorTextRegion.show(errorPopout);
+    onRender() {
+        this.showChildView('editorRegion', this.editor);
         if (this.schema.helpText) {
+            const viewModel = new Backbone.Model({
+                helpText: this.schema.helpText,
+                errorText: null
+            });
+
             const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
                 panelView: TooltipPanelView,
                 panelViewOptions: {
-                    model: this.__viewModel,
+                    model: viewModel,
                     textAttribute: 'helpText'
                 },
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.helpTextRegion.show(infoPopout);
+            this.showChildView('helpTextRegion', infoPopout);
         }
         this.__rendered = true;
         this.setRequired(this.schema.required);
@@ -91,27 +77,41 @@ export default Marionette.LayoutView.extend({
     validate() {
         const error = this.editor.validate();
         if (error) {
-            this.setError(error.message);
+            this.setError([error]);
         } else {
             this.clearError();
         }
         return error;
     },
 
-    setError(msg) {
+    setError(errors: Array<any>): void {
         if (!this.__checkUiReady()) {
             return;
         }
+
         this.$el.addClass(classes.ERROR);
-        this.__viewModel.set('errorText', msg);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('errorTextRegion', errorPopout);
+            this.isErrorShown = true;
+        }
     },
 
-    clearError() {
+    clearError(): void {
         if (!this.__checkUiReady()) {
             return;
         }
         this.$el.removeClass(classes.ERROR);
-        this.__viewModel.set('errorText', null);
+        this.errorCollection && this.errorCollection.reset();
     },
 
     /**
@@ -170,45 +170,27 @@ export default Marionette.LayoutView.extend({
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     },
 
-    __createSchema(schema) {
-        // Resolving editor type declared as string
-        const type = _.isString(schema.type) ? formRepository.editors[schema.type] : schema.type || 'Text';
-        this.schema = Object.assign({
-            title: this.__createDefaultTitle(),
-            required: false
-        }, schema);
-        this.schema.type = type;
-    },
-
-    /*
-     * Create the default field title (label text) from the key name.
-     * (Converts 'camelCase' to 'Camel Case')
-     */
-    __createDefaultTitle() {
-        let str = this.key;
-        if (!str) {
-            return '';
+    __updateExternalChange() {
+        if (_.isFunction(this.schema.getReadonly)) {
+            this.editor.setReadonly(this.schema.getReadonly(this.model));
         }
-
-        //Add spaces
-        str = str.replace(/([A-Z])/g, ' $1');
-        //Uppercase first character
-        str = str.replace(/^./, x => x.toUpperCase());
-        return str;
+        if (_.isFunction(this.schema.getHidden)) {
+            this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
+        }
     },
 
-    __createEditor() {
-        const ConstructorFn = this.schema.type;
+    __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
-            form: this.form,
+            form: options.form,
             field: this,
-            key: this.key,
+            key: options.key,
             model: this.model,
-            id: this.__createEditorId(),
+            id: this.__createEditorId(options.key),
             value: this.options.value,
-            fieldId: this.fieldId
+            fieldId
         });
+        this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());
         });
@@ -217,23 +199,14 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    __createEditorId() {
-        if (!this.key) {
-            return null;
-        }
-
-        let id = this.key;
-
-        //Replace periods with underscores
-        id = id.replace(/\./g, '_');
-        //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
+    __createEditorId(key) {
         if (this.model) {
-            return `${this.model.cid}_${id}`;
+            return `${this.model.cid}_${key}`;
         }
-        return id;
+        return key;
     },
 
     __checkUiReady() {
-        return this.__rendered && !this.isDestroyed;
+        return this.__rendered && !this.isDestroyed();
     }
 });

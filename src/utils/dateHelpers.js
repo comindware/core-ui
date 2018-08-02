@@ -1,16 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/8/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /* Useful and general methods for work with Date and Time put here*/
 
-'use strict';
-
-import { moment } from 'lib';
 import LocalizationService from '../services/LocalizationService';
 
 const dateTimeFormats = {
@@ -181,6 +170,20 @@ export default /** @lends module:core.utils.dateHelpers */ {
             minutes: val.minutes(),
             seconds: val.seconds()
         };
+    },
+
+    dateISOToDuration(dateIsoString, options) {
+        const opt = _.defaults(options, {seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
+        const mom = moment(dateIsoString);
+        return moment.duration({
+            seconds: opt.seconds && mom.seconds(),
+            minutes: opt.minutes && mom.minutes(),
+            hours: opt.hours && mom.hours(),
+            days: opt.days && mom.days(),
+            // weeks:  mom.weeks(),
+            months: opt.months && mom.month(),
+            years: opt.years && mom.years()
+        });
     },
 
     getWeekStartDay() {

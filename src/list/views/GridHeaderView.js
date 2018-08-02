@@ -1,12 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/20/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+//@flow
+import { comparators, helpers } from 'utils';
+import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -22,16 +16,19 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @class GridHeaderView
  * @constructor
  * @description View используемый для отображения заголовка (шапки) списка
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * @param {Object} options.gridEventAggregator ?
  * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
  * */
 
-/*eslint-disable*/
+const classes = {
+    expanded: 'collapsible-btn_expanded',
+    dragover: 'dragover'
+};
 
-const GridHeaderView = Marionette.ItemView.extend({
+const GridHeaderView = Marionette.View.extend({
     initialize(options) {
         if (!options.columns) {
             throw new Error('You must provide columns definition ("columns" option)');
@@ -39,17 +36,19 @@ const GridHeaderView = Marionette.ItemView.extend({
         if (!options.gridEventAggregator) {
             throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
         }
-        if (!options.gridColumnHeaderView) {
-            throw new Error('You must provide grid column header view ("gridColumnHeaderView" option)');
-        }
 
         this.gridEventAggregator = options.gridEventAggregator;
-        this.gridColumnHeaderView = options.gridColumnHeaderView;
+        this.gridColumnHeaderView = options.gridColumnHeaderView || GridColumnHeaderView;
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
-        this.$document = $(document);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
-        this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+        this.collection = options.gridEventAggregator.collection;
+
+        this.styleSheet = options.styleSheet;
+        this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
+        this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
+        this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
+        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
+        this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
     template: Handlebars.compile(template),
@@ -57,19 +56,23 @@ const GridHeaderView = Marionette.ItemView.extend({
     className: 'grid-header',
 
     ui: {
-        gridHeaderColumn: '.grid-header-column',
-        gridHeaderColumnContent: '.grid-header-column-content-view'
+        gridHeaderColumn: '.grid-header-column'
     },
 
     events: {
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown'
+        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
+        'click .js-collapsible-button': '__toggleCollapseAll',
+        dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
+        dragleave: '__handleDragLeave',
+        drop: '__handleDrop'
     },
 
     constants: {
-        MIN_COLUMN_WIDTH: 20
+        MIN_COLUMN_WIDTH: 50
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             columns: this.columns
         };
@@ -81,21 +84,33 @@ const GridHeaderView = Marionette.ItemView.extend({
         }
         this.__columnEls = [];
 
-        this.ui.gridHeaderColumnContent.each((i, el) => {
+        this.collapsed = !this.getOption('expandOnShow');
+
+        this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
-                model: column.viewModel,
-                column
-            }));
+            const view = new this.gridColumnHeaderView(
+                Object.assign(this.gridColumnHeaderViewOptions || {}, {
+                    title: column.title,
+                    column,
+                    gridEventAggregator: this.gridEventAggregator
+                })
+            );
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
-            const childEl = view.render().el;
-            el.appendChild(childEl);
+            el.appendChild(view.render().el);
+            el.classList.add(column.columnClass);
         });
-    },
 
-    onShow() {
-        this.__handleResizeInternal();
+        if (this.options.isTree) {
+            this.__columnEls[0].el.insertAdjacentHTML(
+                'afterbegin',
+                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>&nbsp;`
+            );
+        }
+
+        // if (this.options.expandOnShow) {
+        //     this.__updateCollapseAll(false);
+        // }
     },
 
     onDestroy() {
@@ -106,31 +121,21 @@ const GridHeaderView = Marionette.ItemView.extend({
 
     updateSorting() {
         this.render();
-        this.__handleResizeInternal();
     },
 
     __handleColumnSort(sender, args) {
         const column = args.column;
-        const sorting = column.sorting;
-        let comparator;
-        this.columns.forEach(c => c.sorting = null);
-        switch (sorting) {
-            case 'asc':
-                column.sorting = 'desc';
-                comparator = column.sortDesc;
-                break;
-            case 'desc':
-                column.sorting = 'asc';
-                comparator = column.sortAsc;
-                break;
-            default:
-                column.sorting = 'asc';
-                comparator = column.sortAsc;
-                break;
+        const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
+        this.columns.forEach(c => (c.sorting = null));
+        column.sorting = sorting;
+        let comparator = sorting === 'desc' ? column.sortDesc : column.sortAsc;
+        if (!comparator) {
+            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(column.dataType || column.type, sorting), column.key);
         }
-        this.updateSorting();
-
-        this.trigger('onColumnSort', column, comparator);
+        if (comparator) {
+            this.updateSorting();
+            this.trigger('onColumnSort', column, comparator);
+        }
     },
 
     __handleDraggerMousedown(e) {
@@ -140,37 +145,29 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     __getElementOuterWidth(el) {
-        return $(el)[0].getBoundingClientRect().width;
+        return el.getBoundingClientRect().width;
     },
 
     __startDrag(e) {
-        const $dragger = $(e.target);
-        const $column = $dragger.parent();
+        const dragger = e.target;
+        const column = dragger.parentNode;
 
-        const affectedColumns = _.chain($column.nextAll()).toArray().map(el => ({
-            $el: $(el),
-            initialWidth: this.__getElementOuterWidth(el)
-        })).value();
         const draggedColumn = {
-            $el: $column,
-            initialWidth: this.__getElementOuterWidth($column),
-            index: $column.index()
+            el: column,
+            initialWidth: this.__getElementOuterWidth(column),
+            index: Array.prototype.indexOf.call(column.parentNode.children, column)
         };
-        const unaffectedWidth = _.reduce($column.prevAll(), (m, v) => m + this.__getElementOuterWidth(v), 0);
-        const fullWidth = this.__getFullWidth();
 
         this.dragContext = {
             pageOffsetX: e.pageX,
-            $dragger,
-            fullWidth,
-            unaffectedWidth,
-            draggedColumn,
-            affectedColumns,
-            maxColumnWidth: fullWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth
+            dragger,
+            draggedColumn
         };
 
-        $dragger.addClass('active');
-        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        dragger.classList.add('active');
+
+        document.addEventListener('mousemove', this.__draggerMouseMove);
+        document.addEventListener('mouseup', this.__draggerMouseUp);
     },
 
     __stopDrag() {
@@ -178,10 +175,11 @@ const GridHeaderView = Marionette.ItemView.extend({
             return;
         }
 
-        this.dragContext.$dragger.removeClass('active');
+        this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
-        this.$document.unbind('mousemove', this.__draggerMouseMove);
-        this.$document.unbind('mouseup', this.__draggerMouseUp);
+
+        document.removeEventListener('mousemove', this.__draggerMouseMove);
+        document.removeEventListener('mouseup', this.__draggerMouseUp);
     },
 
     __draggerMouseMove(e) {
@@ -190,64 +188,12 @@ const GridHeaderView = Marionette.ItemView.extend({
         }
 
         const ctx = this.dragContext;
-        let delta = e.pageX - ctx.pageOffsetX;
+        const delta = e.pageX - ctx.pageOffsetX;
+
         if (delta !== 0) {
-            const draggedColumn = ctx.draggedColumn;
-            let index = ctx.draggedColumn.index;
-            const changes = {};
+            const index = ctx.draggedColumn.index;
 
-            this.columns[index].absWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
-            delta = this.columns[index].absWidth - draggedColumn.initialWidth;
-            draggedColumn.$el.outerWidth(this.columns[index].absWidth);
-
-            var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
-            this.columns[index].width = newColumnWidthPc;
-            changes[index] = this.columns[index].absWidth;
-            index++;
-
-            const affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
-            var sumDelta = 0;
-            let sumGap = 0;
-
-            for (let i = 0; i < ctx.affectedColumns.length; i++) {
-                let c = ctx.affectedColumns[i],
-                    newColumnWidth = c.initialWidth - delta * c.initialWidth / affectedColumnsWidth;
-
-                if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
-                    sumDelta += this.constants.MIN_COLUMN_WIDTH - newColumnWidth;
-                    newColumnWidth = this.constants.MIN_COLUMN_WIDTH;
-                } else {
-                    sumGap += newColumnWidth - this.constants.MIN_COLUMN_WIDTH;
-                }
-
-                this.columns[index].absWidth = newColumnWidth;
-                index++;
-            }
-
-            let fullSum = 0;
-            index = ctx.draggedColumn.index + 1;
-            for (let i = 0; i < ctx.affectedColumns.length; i++) {
-                const c = ctx.affectedColumns[i];
-                if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-                    const delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-                    this.columns[index].absWidth -= delta;
-                }
-
-                fullSum += this.columns[index].absWidth;
-
-                if (i === ctx.affectedColumns.length - 1) {
-                    var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
-                    this.columns[index].absWidth += sumDelta;
-                }
-
-                var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
-                this.columns[index].width = newColumnWidthPc;
-                c.$el.outerWidth(this.columns[index].absWidth);
-                changes[index] = this.columns[index].absWidth;
-                index++;
-            }
-
-            this.gridEventAggregator.trigger('columnsResize');
+            this.updateColumnAndNeighbourWidths(index, delta);
         }
 
         return false;
@@ -258,44 +204,72 @@ const GridHeaderView = Marionette.ItemView.extend({
         return false;
     },
 
-    handleResize() {
-        if (this.isDestroyed) {
+    __getFullWidth() {
+        return this.el.clientWidth;
+    },
+
+    updateColumnAndNeighbourWidths(index, delta) {
+        const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
+
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
-        this.__handleResizeInternal();
-        this.gridEventAggregator.trigger('columnsResize');
+
+        this.trigger('update:width', index, newColumnWidth);
+
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+
+        this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
+        this.columns[index].width = newColumnWidth;
     },
 
-    __getFullWidth() {
-        return this.$el.parent().width() - this.getOption('checkBoxPadding');
+    __toggleCollapseAll() {
+        this.__updateCollapseAll(!this.collapsed);
+        this.gridEventAggregator.trigger('toggle:collapse:all', this.collapsed);
     },
 
-    __handleResizeInternal() {
-        const fullWidth = this.__getFullWidth();
-        // Grid header's full width
-        const columnWidth = fullWidth / this.columns.length;
-        // Default column width
-        let sumWidth = 0;
-        // Columns' sum width
+    __updateCollapseAll(collapsed) {
+        this.collapsed = collapsed;
+        this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
+    },
+    __handleDragOver(event) {
+        if (!this.collection.draggingModel) {
+            return;
+        }
+        this.collection.trigger('dragover:head', event);
+        event.preventDefault();
+    },
 
-        // Iterate all but first columns counting their sum width
-        this.ui.gridHeaderColumn.not(':first').each((i, el) => {
-            const child = $(el);
-            const col = this.columns[i + 1];
-            if (col.width) { // If column has it's custom width
-                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
-            } else {
-                col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
-            }
-            child.outerWidth(col.absWidth); // Set absolute column width
-            sumWidth += col.absWidth; // And add it to columns' sum width
-        });
-        
-        // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
-        // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
-        if (this.columns.length) {
-            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth); // Calculate remainig (or only) first column's absolute width
-            this.ui.gridHeaderColumn.first().outerWidth(this.columns[0].absWidth); // And set it
+    __handleDragEnter(event) {
+        if (!this.collection.draggingModel) {
+            return;
+        }
+        this.collection.dragoverModel = undefined;
+        this.collection.trigger('dragover:head', event);
+    },
+
+    __handleModelDragOver() {
+        this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
+    },
+
+    __handleDragLeave(event) {
+        if (!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== this.model) {
+            this.collection.trigger('dragleave:head', event);
+        }
+    },
+
+    __handleModelDragLeave() {
+        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
+    },
+
+    __handleDrop(event) {
+        this.collection.trigger('drop:head', event);
+    },
+
+    __handleModelDrop() {
+        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
+        if (this.collection.draggingModel) {
+            this.trigger('drag:drop', this.collection.draggingModel, this.model);
         }
     }
 });

@@ -10,33 +10,13 @@
 
 .dropdown__wrp {
     margin: 0;
-    font-size: 12px;
-    background: #fff;
-    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
+    background-color: #fff;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
 }
-
-.dropdown__wrp_up {
-}
-
-.dropdown__wrp_down {
-}
-
-.dropdown__wrp_up-over {
-}
-
-.dropdown__wrp_down-over {
-}
-
-.dropdown__wrp_footer {
-    padding-bottom: 38px;
-}
-
-.dropdown__wrp_right {
-    left: auto;
-    right: -10px;
+.dropdown__wrp .dropdown__wrp_list {
+    max-height: 400px;
 }
 
 /* dropdown-list */
@@ -48,9 +28,6 @@
     bottom: 0;
     left: 0;
     border-top: solid 1px #dee3e8;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .dropdown__btn {
@@ -59,15 +36,14 @@
 }
 
 .dropdown-list {
-    position: relative;
     width: 100%;
     height: 100%;
     max-height: 310px;
     padding: 1px;
     overflow: hidden;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    position: fixed;
+    background-color: white;
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
 }
 
 .dropdown-list__i {
@@ -77,13 +53,8 @@
     font-size: 13px;
     font-weight: normal;
     color: #43525d;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
@@ -115,13 +86,8 @@
     padding: 0 5px;
     display: inline-block;
     vertical-align: top;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
 
@@ -138,11 +104,12 @@
 
 
 /* dropdown list */
-.dd-list {
+
+.dropdown__wrp_reference {
     min-width: 200px;
     max-width: 100%;
     padding: 0;
-    position: relative;
+    position: fixed;
     display: flex;
     flex-direction: column;
 }
@@ -171,7 +138,7 @@
     padding: 3px 20px 3px 5px;
     line-height: 19px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -191,87 +158,56 @@
 }
 
 .dd-list__i {
-    height: 25px;
-    padding: 0 10px;
-    line-height: 25px;
-    font-size: 12px;
     font-weight: normal;
     text-align: left;
-    color: #384650;
-    overflow: hidden;
-    white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
     display: flex;
 }
-
-.dd-list__i:hover {
-    background: #f5f5f5;
+.dd-list__text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-
 .dd-list__i_group {
-    font-size: 11px;
-    font-weight: 500;
-    color: #000;
     cursor: default;
-}
-.dd-list__i_group:after {
-    content: '';
-    position: absolute;
-    top:33px;
-    left:2px;
-    right:2px;
-    height: 1px;
-    background: #b6c1ca;
-}
-
-.dd-list__i_group:hover {
-    background:transparent;
 }
 
 .dev_dd-list__i_with_checkbox {
     padding: 0 4px;
 }
 
-.dev_dd-list__i_with_checkbox .checkbox {
-    top: 6px;
-    position: relative;
-    margin-right: 5px;
+.dd-list__i_checkbox .checkbox {
+    margin-right: 6px;
+    flex-shrink: 0;
 }
 
 .dd-list__btn{
     width: 100%;
     height: 25px;
-    border-top: 1px solid #dee3e8;
     background-color: #fff;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
+    flex: 1 0 auto;
 }
 
 .reference-btn{
-    display: inline-block;
+    display: flex;
+    align-items: center;
     color: #4d4d4d;
-    font-weight: 500;
-    position: relative;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    vertical-align: middle;
-    height: 25px;
-    line-height: 24px;
-    padding-left: 22px;
 }
 
 
 .reference-btn-more{
     color: #4d4d4d;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
@@ -291,8 +227,6 @@
     margin: 0 20px;
     display: block;
     position: relative;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
     z-index: 44;
@@ -337,12 +271,7 @@
     left: 30px !important;
     color: #bcc6cf;
     cursor: text;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
@@ -384,120 +313,71 @@
 
 
 /* dropdown time list */
-.time-dropdown {
+.dropdown__wrp_time {
     max-width: 100%;
     height: 305px;
     padding: 0;
-    position: relative;
     overflow-y: auto;
 }
 .time-dropdown__i {
-    height: 25px;
-    padding: 0 10px;
-    line-height: 25px;
-    font-size: 12px;
-    font-weight: normal;
     text-align: left;
-    color: #43525d;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
-}
-
-.time-dropdown__i:hover {
-    background: #f5f5f5;
 }
 /*-----//------*/
 
-
-/* multiselect */
-.multiselect-panel{
-    min-width: 200px;
-    max-width: 100%;
-    padding: 25px 0;
-    position: relative;
-}
-.multiselect-panel__list{
-    height: 100%;
-    width: 100%;
+.dropdown__wrp_list{
     overflow-y: auto;
 }
 
-.multiselect-panel__btn{
-    width: 100%;
-    height: 25px;
-    padding: 0 12px;
-    line-height: 25px;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 500;
-    position: absolute;
-    background-color: #fff;
-}
-.multiselect-panel__btn_top{
-    top: 0;
-    border-bottom: 1px solid #dee3e8;
-    text-align: right;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.multiselect-panel__btn_bottom {
-    bottom: 0;
-    border-top: 1px solid #dee3e8;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+/* icons panel */
+.dropdown__icons{
+    width: 500px;
+    min-width: 400px !important;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
-.multiselect-panel-btn {
-    display: inline-block;
-    color: #0575bd;
-    position: relative;
-    cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.multiselect-panel-btn:hover {
-    color: #009bfe;
-}
-.multiselect-panel-btn_cancel {
-   float: right;
+.icons-panel-collection{
+    flex-grow: 1;
+    overflow: auto;
 }
 
-.multiselect-i {
-    height: 25px;
-    padding: 0 25px 0 10px;
-    line-height: 25px;
-    font-size: 12px;
+.icons-panel-head{
+    display: flex;
+    flex-wrap: wrap;
+    flex:none;
+    padding-bottom: 15px;
+}
+.icons-panel-head__title{
+    flex:0 0 50%;
+    font-size: 11px;
     font-weight: 400;
-    text-align: left;
-    color: #43525d;
-    overflow: hidden;
-    white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    position: relative;
+    color: #70787f;
+    padding: 10px 10px 3px;
+}
+.icons-panel-head__editor{
+    flex:0 0 50%;
+    padding: 0 10px;
 }
 
-.multiselect-i:hover {
-    background: #f5f5f5;
+.dropdown__icons .icons-panel-category__name {
+    margin: 0 5px 5px;
+    font-size: 13px;
 }
+/*-----//------*/
 
-.multiselect-i_selected {
-    font-weight: 500;
-    color:#000;
-}
-
-.datepicker_panel {
+.dropdown__wrp_datepicker {
     width: 220px !important;
+    height: auto;
 }
 
+.source-text {
+    display: inline-block;
+    width: 100%;
+}
 /*-----//------*/

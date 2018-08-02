@@ -1,15 +1,27 @@
 /*eslint-ignore*/
 
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
-/*eslint-ignore*/
-describe('Editors', function() {
-    beforeEach(() => {
-        this.rootRegion = initializeCore();
-    });
 
-    describe('CodeEditorView', function() {
-        //Todo test
+describe('Editors', () => {
+    describe('CodeEditorView', () => {
+        it('should initialize', () => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.CodeEditor({
+                model,
+                key: 'value',
+                autocommit: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+            // assert
+            expect(true).toBe(true);
+        });
     });
 });

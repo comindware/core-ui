@@ -1,5 +1,3 @@
-
-import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
@@ -10,16 +8,17 @@ export default function() {
     }));
 
     const model = new Backbone.Model({
-        dropdownValue: 42
+        dropdownValue: '120'
     });
 
     return new CanvasView({
-        view: new core.form.editors.ReferenceBubbleEditor({
+        view: new Core.form.editors.DatalistEditor({
             model,
             key: 'dropdownValue',
             autocommit: true,
-            collection: new Backbone.Collection(possibleItems),
-            enableSearch: true
+            collection: possibleItems,
+            createBySelect: true,
+            valueType: 'id'
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true

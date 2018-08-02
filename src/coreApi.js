@@ -1,11 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+//@flow
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
@@ -16,21 +9,21 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../resources/styles/layout-designer.css';
+import '../resources/styles/notifications.css';
+import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
 import dropdownApi from 'dropdown';
-import * as layoutApi from 'layout';
-import listApi from 'list';
-import nativeGridApi from './nativeGrid/nativeGridApi';
-import editableGridApi from 'editableGrid';
+import * as layoutApi from './layout';
 import formApi from 'form';
+import listApi from 'list';
 
 import meta_ from './Meta';
-import bootstrapper from './Bootstrapper';
 
-import Controller from 'controller/Controller';
-import Application from 'Application';
+import Controller from './controller/Controller';
+import Application from './Application';
 
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
@@ -47,6 +40,7 @@ import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import ThemeService from './services/ThemeService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -55,8 +49,13 @@ import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
 import CheckableBehavior from './models/behaviors/CheckableBehavior';
-import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import MobileService from './services/MobileService';
+
+import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
+import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
+import Toolbar from './components/toolbar/ToolbarView';
+import LayoutDesigner from './components/layoutDesigner';
+import VideoChat from './components/videoChat/VideoChat';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -89,11 +88,12 @@ const core = {
          * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
          * @namespace
          * @memberof module:core.services
-        * */
+         * */
         GlobalEventService,
         PromiseService,
         UserService,
-        MobileService
+        MobileService,
+        ThemeService
     },
     /**
      * Backbone collections of general use.
@@ -154,18 +154,6 @@ const core = {
      * */
     list: listApi,
     /**
-     * List and Grid components without data virtualization.
-     * @namespace
-     * @memberof module:core
-     * */
-    nativeGrid: nativeGridApi,
-    /**
-     * Editable grid component without data virtualization.
-     * @namespace
-     * @memberof module:core
-     * */
-    editableGrid: editableGridApi,
-    /**
      * Combines useful helper classes, functions and constants.
      * @namespace
      * @memberof module:core
@@ -177,9 +165,12 @@ const core = {
      * @memberof module:core
      * */
     meta: meta_,
-    initialize: bootstrapper.initialize.bind(bootstrapper),
     components: {
-        NavigationDrawer
+        NavigationDrawer,
+        Toolbar,
+        BreadCrumbs,
+        LayoutDesigner,
+        VideoChat
     }
 };
 
@@ -195,8 +186,5 @@ export const views = core.views;
 export const dropdown = core.dropdown;
 export const form = core.form;
 export const list = core.list;
-export const nativeGrid = core.nativeGrid;
-export const editableGrid = core.editableGrid;
 export const utils = core.utils;
 export const meta = core.meta;
-export const initialize = core.initialize;

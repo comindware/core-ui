@@ -1,17 +1,7 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+// @flow
 import template from './impl/newExpressionEditor/templates/newExpression.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import DropdownEditor from './DropdownEditorView';
+import DatalistEditorView from './DatalistEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 
@@ -42,7 +32,7 @@ const defaultOptions = {
     ontologyService: null
 };
 
-export default formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
+export default (formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
     className: 'new-expression-editor-field',
 
     regions: {
@@ -63,7 +53,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -152,20 +142,21 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         if (!this.valueTypeCollection.get(this.value.type)) {
             this.value.type = this.valueTypeCollection.at(0).id;
         }
-        this.typeEditor = new DropdownEditor({
+        this.typeEditor = new DatalistEditorView({
             collection: this.valueTypeCollection,
-            allowEmptyValue: false
+            allowEmptyValue: false,
+            valueType: 'id'
         });
         this.typeEditor.on('change', () => {
             this.__updateEditorValue();
             this.__updateEditorState();
         });
 
-        this.typeEditor.setValue(this.value.type);
         if (this.valueTypeCollection.length === 1) {
             this.ui.type.hide();
         }
-        this.typeContainer.show(this.typeEditor);
+        this.showChildView('typeContainer', this.typeEditor);
+        this.typeEditor.setValue(this.value.type);
     },
 
     __showValueEditor() {
@@ -177,19 +168,16 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
         });
 
-        let value = this.value.value;
+        const value = this.value.value;
 
-        if (Array.isArray(value) && value.length === 1) {
-            value = value[0];
-            this.options.valueEditorOptions.displayAttribute = 'name';
-        }
-
-        this.valueEditor = new this.options.valueEditor(_.extend(this.options.valueEditorOptions, {
-            value: this.value.type === valueTypes.value ? value : null
-        }));
+        this.valueEditor = new this.options.valueEditor(
+            _.extend(this.options.valueEditorOptions, {
+                value: this.value.type === valueTypes.value ? value : null
+            })
+        );
 
         this.valueEditor.on('change', this.__updateEditorValue, this);
-        this.valueContainer.show(this.valueEditor);
+        this.showChildView('valueContainer', this.valueEditor);
     },
 
     __showContextEditor() {
@@ -197,9 +185,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             return;
         }
 
-        const contextOptions = _.pick(
-            this.options.schema || this.options,
-            'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
+        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
         _.extend(contextOptions, {
             value: this.value.type === valueTypes.context ? this.value.value : null
@@ -207,7 +193,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.contextEditor = new formRepository.editors.ContextSelect(contextOptions);
         this.contextEditor.on('change', this.__updateEditorValue, this);
-        this.contextContainer.show(this.contextEditor);
+        this.showChildView('contextContainer', this.contextEditor);
 
         this.valueTypeCollection.add({
             id: valueTypes.context,
@@ -224,7 +210,6 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
         });
 
-
         const expressionEditorOptionsOptions = {
             value: this.value.type === valueTypes.expression ? this.value.value : null,
             mode: 'expression',
@@ -235,7 +220,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
         this.expressionEditor.on('change', this.__updateEditorValue, this);
-        this.expressionContainer.show(this.expressionEditor);
+        this.showChildView('expressionContainer', this.expressionEditor);
     },
 
     __showScriptEditor() {
@@ -244,7 +229,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.valueTypeCollection.add({
             id: valueTypes.script,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
         });
 
         const scriptEditorOptionsOptions = {
@@ -257,7 +242,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
         this.scriptEditor.on('change', this.__updateEditorValue, this);
-        this.scriptContainer.show(this.scriptEditor);
+        this.showChildView('scriptContainer', this.scriptEditor);
     },
 
     __updateEditorState() {
@@ -311,4 +296,4 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
                 break;
         }
     }
-});
+}));

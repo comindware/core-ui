@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-import formRepository from '../formRepository';
+/*eslint-disable*/
 
 const defaultRegExp = function(options) {
     if (!options.regexp) {
@@ -45,11 +36,9 @@ const defaultRegExp = function(options) {
     };
 };
 
-formRepository.validators.regexp = function(options) {
+export default function(options) {
     return _.wrap(defaultRegExp(options), (func, opts) => {
         const val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
 };
-
-export default formRepository.validators.regexp;

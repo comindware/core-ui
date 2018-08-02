@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/30/2016
- * Copyright: 2009-2016 ApprovalMax
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF ApprovalMax
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 const path = require('path');
 const _ = require('underscore');
 
@@ -55,5 +44,14 @@ module.exports = {
     },
     root() {
         return resolve(rootDir, null, arguments);
+    },
+    doc() {
+        return resolve(rootDir, 'doc', arguments);
+    },
+    flowTyped() {
+        return resolve(rootDir, 'flow-typed', arguments);
+    },
+    flowStubs() {
+        return resolve(rootDir, 'flow-stubs', arguments);
     }
 };

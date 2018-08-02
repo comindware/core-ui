@@ -1,21 +1,15 @@
-/**
- * Developer: Vladislav Smirnov
- * Date: 10.9.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+//@flow
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';
+import PresenterService from '../services/PresenterService';
 
 export default Marionette.Object.extend({
     constructor(options = {}) {
         const contentViewOptions = _.result(this, 'contentViewOptions') || {};
         this.contentView = this.contentView || window.application.defaultContentView;
         this.view = new this.contentView(contentViewOptions);
-        this.moduleRegion = this.view.moduleRegion;
+        this.moduleRegion = this.view.getRegion('moduleRegion');
         options.region.show(this.view); // <- this can be moved out to routing services after we get rid of old modules
         Marionette.Object.prototype.constructor.apply(this, arguments);
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
@@ -25,15 +19,29 @@ export default Marionette.Object.extend({
         this.moduleId = options.config.id;
     },
 
-    leave() {
+    leave(isCalledByUnloadEvent) {
         if (_.isFunction(this.onLeave)) {
-            return this.onLeave();
+            const moduleLeaveHandler = this.onLeave();
+
+            if (typeof moduleLeaveHandler === 'boolean') {
+                return moduleLeaveHandler;
+            }
+
+            if (isCalledByUnloadEvent) {
+                return false;
+            }
+
+            return Core.services.MessageService.showSystemMessage(moduleLeaveHandler);
         }
-        return Promise.resolve(true);
+
+        return true;
     },
 
     setLoading(isLoading) {
         this.view.setModuleLoading(isLoading);
+        if (isLoading === false) {
+            this.__onModuleReady();
+        }
     },
 
     contentViewOptions: null,
@@ -65,9 +73,7 @@ export default Marionette.Object.extend({
                 const model = new viewModel(data, { parse: true });
 
                 if (view) {
-                    const viewParams = additionalViewOptions
-                        ? Object.assign({ model }, additionalViewOptions)
-                        : { model };
+                    const viewParams = additionalViewOptions ? Object.assign({ model }, additionalViewOptions) : { model };
 
                     viewParams.viewState = this.currentState;
 
@@ -83,9 +89,7 @@ export default Marionette.Object.extend({
             const model = new viewModel();
 
             if (view) {
-                const viewParams = additionalViewOptions
-                    ? Object.assign({ model }, additionalViewOptions)
-                    : { model };
+                const viewParams = additionalViewOptions ? Object.assign({ model }, additionalViewOptions) : { model };
 
                 viewParams.currentState = callParams;
                 const presentingView = new view(viewParams);
@@ -120,8 +124,7 @@ export default Marionette.Object.extend({
         try {
             const requestFn = Ajax[params[0]][params[1]];
             if (requestFn) {
-                const functionSignature = window.ajaxMap
-                    .find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1]);
+                const functionSignature = window.ajaxMap.find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1]);
 
                 const requestType = functionSignature.httpMethod;
                 const parameters = functionSignature.parameters;
@@ -146,7 +149,7 @@ export default Marionette.Object.extend({
     async __handleViewResourceRequest(requestId, requestData) {
         const requestConfig = this.requests[requestId];
         if (requestConfig) {
-            const { data, requestType, error } = await this.__request(requestConfig, [ requestData.data ]);
+            const { data, requestType, error } = await this.__request(requestConfig, [requestData.data]);
 
             if (error === null) {
                 switch (requestType) {
@@ -182,7 +185,7 @@ export default Marionette.Object.extend({
     __applyState(callParams, parameters) {
         this.currentState = {};
 
-        parameters.forEach((param, i) => this.currentState[param.name] = callParams[i]);
+        parameters.forEach((param, i) => (this.currentState[param.name] = callParams[i]));
     },
 
     __applyCallParamsFilter(callParams, urlParams, routingAction) {
@@ -197,5 +200,11 @@ export default Marionette.Object.extend({
         }
 
         return callParams;
+    },
+
+    __onModuleReady() {
+        if (this.componentQuery) {
+            PresenterService.presentComponentSequence(this.componentQuery);
+        }
     }
 });

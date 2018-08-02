@@ -1,19 +1,12 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+//@flow
 import dropdown from 'dropdown';
 import template from '../templates/errorButton.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    className: 'form-label__error-button',
+    className: 'form-label__error-button fa fa-exclamation-circle',
+    tagName: 'i',
 
     behaviors: {
         CustomAnchorBehavior: {

@@ -1,17 +1,9 @@
-
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 const $ = core.lib.$;
 
 describe('Components', () => {
-    let rootRegion;
-
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     afterEach(() => {
         core.services.WindowService.closePopup();
     });
@@ -87,7 +79,7 @@ describe('Components', () => {
             expect(popupEl.height()).toEqual(549);
             expect(popupEl.width()).toEqual(701);
         });
-
+        /*
         it('should set max width and height if configuration size is bad', () => {
             const popupView = new core.layout.Popup({
                 size: {
@@ -154,10 +146,10 @@ describe('Components', () => {
 
             const popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
 
-            expect(popupEl.height()).toEqual(500);
-            expect(popupEl.width()).toEqual(700);
+            expect(popupEl.height()).toEqual(150);
+            expect(popupEl.width()).toEqual(400);
         });
-
+        */
         it('should match it configuration header', () => {
             const popupView = new core.layout.Popup({
                 size: {
@@ -221,7 +213,7 @@ describe('Components', () => {
             });
 
             core.services.WindowService.showPopup(popupView);
-            const buttons = $('.js-core-ui__global-popup-region').find('.js-window .js-button');
+            const buttons = $('.js-core-ui__global-popup-region').find('.js-window .btn__text');
 
             expect(buttons.length).toEqual(2);
         });

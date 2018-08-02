@@ -1,17 +1,7 @@
-/**
- * Developer: Kristina
- * Date: 01/25/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+//@flow
 import template from '../templates/uploadDocumentButton.html';
 
-export default Backbone.Marionette.ItemView.extend({
+export default Backbone.Marionette.View.extend({
     uploadUrl: '/api/UploadAttachment',
 
     options: {
@@ -29,13 +19,12 @@ export default Backbone.Marionette.ItemView.extend({
     },
 
     events: {
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick'
+        'change @ui.fileUpload': 'onSelectFiles'
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -44,10 +33,6 @@ export default Backbone.Marionette.ItemView.extend({
         if (className) {
             this.className = className;
         }
-    },
-
-    __onItemClick() {
-        this.ui.fileUpload.click();
     },
 
     onSelectFiles(e) {
@@ -65,7 +50,7 @@ export default Backbone.Marionette.ItemView.extend({
         if (!files || this.readonly) return;
 
         if (items) {
-            $.when(this._readFileEntries(items)).done(fileEntrie => {
+            Promise.resolve(this._readFileEntries(items)).then(fileEntrie => {
                 this._sendFilesToServer(fileEntrie);
             });
         } else {
@@ -76,7 +61,7 @@ export default Backbone.Marionette.ItemView.extend({
     // recursive loading of folders is currently supported only in chrome
     // promise function
     _readFileTree(itemEntry) {
-        return new Promise((resolve => {
+        return new Promise(resolve => {
             if (itemEntry.isFile) {
                 itemEntry.file(file => {
                     resolve(file);
@@ -89,29 +74,28 @@ export default Backbone.Marionette.ItemView.extend({
                     });
                 });
             }
-        }));
+        });
     },
 
     //typeof filesEntries is array of DataTransfer
     _readFileEntries(fileEntries) {
         const deferrArray = [];
-        const returnDeferr = new $.Deferred();
 
         for (let i = 0; i < fileEntries.length; i++) {
             let entry;
-            if (fileEntries[i].getAsEntry) { //Standard HTML5 API
+            if (fileEntries[i].getAsEntry) {
+                //Standard HTML5 API
                 entry = fileEntries[i].getAsEntry();
-            } else if (fileEntries[i].webkitGetAsEntry) { //WebKit implementation of HTML5 API.
+            } else if (fileEntries[i].webkitGetAsEntry) {
+                //WebKit implementation of HTML5 API.
                 entry = fileEntries[i].webkitGetAsEntry();
             }
             if (entry) {
                 deferrArray.push(this.readFileTree(entry));
             }
         }
-        $.when.apply(this, deferrArray).done(() => {
-            returnDeferr.resolve(_.flatten(arguments));
-        });
-        return returnDeferr;
+
+        return Promise.all(deferrArray).then(() => _.flatten(arguments));
     },
 
     _sendFilesToServer(files) {
@@ -162,7 +146,7 @@ export default Backbone.Marionette.ItemView.extend({
     __validate(files) {
         let ext = '';
         let fileFormat = this.options.fileFormat.toLowerCase();
-        let incorrectFileNames;
+        let incorrectFileNames = '';
 
         if (!files) {
             return false;
@@ -175,7 +159,10 @@ export default Backbone.Marionette.ItemView.extend({
         fileFormat = fileFormat.toLowerCase();
 
         for (let i = 0; i < files.length; i += 1) {
-            ext = files[i].name.split('.').pop().toLowerCase();
+            ext = files[i].name
+                .split('.')
+                .pop()
+                .toLowerCase();
             if (fileFormat.indexOf(ext) === -1) {
                 incorrectFileNames += `${files[i].name}, `;
             }

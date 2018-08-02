@@ -1,8 +1,6 @@
 
-import core from 'comindware/core';
-
 export default function() {
-    var PopupView = Marionette.ItemView.extend({
+    var PopupView = Marionette.View.extend({
         initialize(options) {
             this.index = (options && options.index) || 1;
         },
@@ -12,7 +10,7 @@ export default function() {
             '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
             '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
 
-        templateHelpers() {
+        templateContext() {
             return {
                 index: this.index
             };
@@ -36,7 +34,7 @@ export default function() {
         }
     });
 
-    const View = Marionette.ItemView.extend({
+    const View = Marionette.View.extend({
         template: Handlebars.compile('<input class="js-show__button" type="button" value="Show Popup"/>'),
 
         events: {

@@ -1,18 +1,23 @@
 .layout__horizontal-layout {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.layout__horizontal-layout > * {
+    flex: 1 1 0%;
 }
 
 .layout__horizontal-layout-list {
     height: 100%;
     display: flex;
     flex-flow: row nowrap;
-    margin: 0 -10px;
 }
 
 .layout__horizontal-layout-list-item {
-    flex: 1;
-    margin: 0 10px;
+    flex: 1 1 0%;
 }
 
 .layout__horizontal-layout-title {

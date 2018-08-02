@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 
 // Most of this steps came from 'Basic Usage' example.
@@ -23,7 +23,7 @@ export default function() {
     });
 
     // 3. Get some data (inline or by collection.fetch)
-    const collection = new ListItemCollection();
+    const collection = new ListItemCollection(undefined, { isSliding: true });
     collection.reset(_.times(1000, i => ({
         id: i + 1,
         title: `My Task ${i + 1}`
@@ -32,18 +32,14 @@ export default function() {
     // 4. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
     // - [NEW] you MUST implement onHighlighted/onUnhighlighted methods to support text highlighting while searching
-    const ListItemView = Marionette.ItemView.extend({
+    const ListView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i"><span class="js-title">{{title}}</span></div>'),
 
         ui: {
             title: '.js-title'
         },
 
-        behaviors: {
-            ListItemViewBehavior: {
-                behaviorClass: core.list.views.behaviors.ListItemViewBehavior
-            }
-        },
+        behaviors: [ core.list.views.behaviors.ListItemViewBehavior],
 
         // It's your responsibility to visualize text highlight
         onHighlighted(fragment) {
@@ -70,11 +66,11 @@ export default function() {
     });
 
     // 6. At last, create list view bundle (ListView and ScrollbarView)
-    const bundle = core.list.factory.createDefaultList({
+    const listView = core.list.factory.createDefaultList({
         collection, // Take a note that in simple scenario you can pass in
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {
-            childView: ListItemView,
+            childView: ListView,
             childHeight: 34
         }
     });
@@ -82,7 +78,6 @@ export default function() {
     // 7. Show created views in corresponding regions
     return new ListSearchCanvasView({
         search: searchBarView,
-        content: bundle.listView,
-        scrollbar: bundle.scrollbarView
+        content: listView
     });
 }

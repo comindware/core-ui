@@ -1,7 +1,7 @@
-
 export default class MobileService {
     static initialize() {
-        if (navigator.userAgent.match(/Android/i)
+        if (
+            navigator.userAgent.match(/Android/i)
             || navigator.userAgent.match(/webOS/i)
             || navigator.userAgent.match(/iPhone/i)
             || navigator.userAgent.match(/iPad/i)
@@ -12,6 +12,15 @@ export default class MobileService {
             this.isMobile = true;
         } else {
             this.isMobile = false;
+        }
+        if (
+            navigator.appName === 'Microsoft Internet Explorer'
+            || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
+            (typeof $.browser !== 'undefined' && $.browser.msie === 1)
+        ) {
+            this.isIE = true;
+        } else {
+            this.isIE = false;
         }
     }
 }

@@ -150,7 +150,7 @@
 
     function visible(element) {
         return $.expr.filters.visible(element) &&
-		!$(element).parents().andSelf().filter(function() {
+		!$(element).parents().addBack().filter(function() {
 		    return $.css(this, 'visibility') === 'hidden';
 		}).length;
     }
@@ -1246,7 +1246,7 @@
             let handle = !!(!this.options.handle || !$(this.options.handle, this.element).length);
             $(this.options.handle, this.element)
                 .find('*')
-                .andSelf()
+                .addBack()
                 .each(function() {
                     if (this == event.target) handle = true;
                 });
@@ -1958,7 +1958,7 @@
         prepareOffsets(t, event) {
             const m = $.ui.ddmanager.droppables[t.options.scope] || [];
             const type = event ? event.type : null; // workaround for #2317
-            const list = (t.currentItem || t.element).find(':data(droppable)').andSelf();
+            const list = (t.currentItem || t.element).find(':data(droppable)').addBack();
 
             droppablesLoop: for (let i = 0; i < m.length; i++) {
                 if (m[i].options.disabled || (t && !m[i].accept.call(m[i].element[0], (t.currentItem || t.element)))) continue;	//No disabled and non-accepted

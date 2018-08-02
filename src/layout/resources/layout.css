@@ -1,3 +1,3 @@
 .layout__hidden {
-    display: none;
+    display: none !important;
 }

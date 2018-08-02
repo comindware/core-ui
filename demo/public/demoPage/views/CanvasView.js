@@ -1,14 +1,15 @@
 
 import template from 'text-loader!../templates/editorCanvas.html';
-import core from 'comindware/core';
 import PresentationItemView from './PresentationItemView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.view = options.view;
     },
 
     template: Handlebars.compile(template),
+
+    className: 'editor_container',
 
     ui: {
         editorRegion: '.js-editor-region',
@@ -22,7 +23,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        this.editorRegion.show(this.view);
+        this.showChildView('editorRegion', this.view);
         if (this.options.canvasWidth) {
             this.ui.editorRegion.css('width', this.options.canvasWidth);
         }
@@ -39,7 +40,7 @@ export default Marionette.LayoutView.extend({
                     model: this.view.model
                 });
             }
-            this.modelRegion.show(presentationView);
+            this.showChildView('modelRegion', presentationView);
         }
 
         if (this.getOption('isEditor')) {
@@ -64,8 +65,10 @@ export default Marionette.LayoutView.extend({
                     }
                 ]
             });
-            this.editorModeRegion.show(editorModeView);
+            this.showChildView('editorModeRegion', editorModeView);
             this.listenTo(editorModeView, 'change', this.updateEditorModel);
+        } else {
+            this.ui.editorRegion.addClass('canvas-wrap');
         }
     },
 

@@ -1,17 +1,6 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 28.11.2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 import template from '../templates/membersToolbar.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
@@ -21,8 +10,7 @@ export default Marionette.LayoutView.extend({
     className: 'tabs tabs_columns-select',
 
     regions: {
-        listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        listRegion: '.js-list-region'
     },
 
     ui: {

@@ -1,22 +1,12 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 import template from '../templates/toolbar.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
 
     ui: {
+        compile: '.js-code-editor-compile',
         undo: '.js-code-editor-undo',
         redo: '.js-code-editor-redo',
         format: '.js-code-editor-format',
@@ -27,6 +17,7 @@ export default Marionette.LayoutView.extend({
     },
 
     triggers: {
+        'click @ui.compile': 'compile',
         'click @ui.undo': 'undo',
         'click @ui.redo': 'redo',
         'click @ui.format': 'format',
@@ -36,10 +27,16 @@ export default Marionette.LayoutView.extend({
 
     events: {
         'click @ui.maximize': '__onMaximize',
-        'click @ui.minimize': '__onMinimize',
+        'click @ui.minimize': '__onMinimize'
     },
 
-    onShow() {
+    onRender() {
+        if (this.options.editor.options.mode === 'expression') {
+            this.ui.compile.css('display', 'none');
+        }
+    },
+
+    onAttach() {
         this.ui.minimize.hide();
     },
 
@@ -48,16 +45,18 @@ export default Marionette.LayoutView.extend({
         this.ui.minimize.show();
     },
 
+    minimize() {
+        this.ui.maximize.show();
+        this.ui.minimize.hide();
+    },
+
     __onMaximize() {
-        this.ui.maximize.hide();
-        this.ui.minimize.show();
+        this.maximize();
         this.trigger('maximize');
     },
 
     __onMinimize() {
-        this.ui.maximize.show();
-        this.ui.minimize.hide();
+        this.minimize();
         this.trigger('minimize');
     }
 });
-

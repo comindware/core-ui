@@ -1,10 +1,9 @@
-import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default () => {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 1000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -12,13 +11,15 @@ export default () => {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
+            referenceCell: [{ name: 'Ref 1' }, { name: 'Ref 2' }, { name: 'Ref 3' }, { name: 'Ref 4' }],
             enumCell: { valueExplained: ['123'] },
-            documentCell: [{
-                id: `document.${i}`,
-                name: `Document ${i}`,
-                url: `GetDocument/${i}`
-            }]
+            documentCell: [
+                {
+                    id: `document.${i}`,
+                    name: `Document ${i}`,
+                    url: `GetDocument/${i}`
+                }
+            ]
         });
     }
 
@@ -26,81 +27,103 @@ export default () => {
     const columns = [
         {
             key: 'textCell',
-            type: 'String',
+            type: 'Text',
+            dataType: 'String',
             title: 'TextCell',
             required: true,
-            viewModel: new Backbone.Model({ displayText: 'TextCell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
             sorting: 'asc',
-            readonly: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'numberCell',
             type: 'Number',
+            dataType: 'Integer',
             title: 'Number Cell',
-            getReadonly: model => model.get('numberCell') % 2,
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
+            editable: true,
+            autocommit: true
         },
         {
             key: 'dateTimeCell',
             type: 'DateTime',
+            simplified: true,
+            dataType: 'DateTime',
             title: 'DateTime Cell',
-            getHidden: model => model.get('numberCell') % 2,
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell')
+            editable: true,
+            autocommit: true
         },
         {
             key: 'durationCell',
             type: 'Duration',
+            dataType: 'Duration',
             title: 'Duration Cell',
-            viewModel: new Backbone.Model({ displayText: 'Duration Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell')
+            editable: true,
+            autocommit: true
         },
         {
             key: 'booleanCell',
             type: 'Boolean',
+            dataType: 'Boolean',
             title: 'Boolean Cell',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell')
+            editable: true,
+            autocommit: true,
+            getHidden: model => model.get('numberCell') % 2
         },
         {
             key: 'documentCell',
             type: 'Document',
+            dataType: 'Document',
             title: 'Document',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'documentCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'documentCell')
+            // editable: true,
+            autocommit: true
         },
         {
             key: 'referenceCell',
-            type: 'ReferenceBubble',
+            type: 'Datalist',
+            dataType: 'Instance',
             title: 'Reference Cell',
+            simplified: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
+            editable: true,
+            autocommit: true,
+            getReadonly: model => model.get('numberCell') % 2,
         }
     ];
 
+    const collection = new Backbone.Collection(dataArray);
+
     // 3. Create grid
-    const EditableGridView = new core.editableGrid.views.EditableGridView({
+    const gridController = new core.list.controllers.GridController({
         columns,
         selectableBehavior: 'multi',
-        collection: new Backbone.Collection(dataArray),
-        title: 'Editable grid',
+        showToolbar: true,
         showSearch: true,
-        searchColumns: ['textCell']
+        showCheckbox: true,
+        showRowIndex: true,
+        collection,
+        title: 'Editable grid'
     });
+
+    const handleAction = (action, items) => {
+        switch (action.id) {
+            case 'add':
+                collection.add({
+                    textCell: 'New item'
+                });
+                break;
+            case 'delete':
+                collection.remove(items);
+                break;
+            default:
+                break;
+        }
+    };
+
+    gridController.on('execute', handleAction);
 
     // 4. Show created views
     return new CanvasView({
-        view: EditableGridView,
+        view: gridController.view,
         canvas: {
             height: '250px',
             width: '400px'

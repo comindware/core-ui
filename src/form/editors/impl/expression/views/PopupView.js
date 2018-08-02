@@ -1,17 +1,15 @@
-
 import template from '../templates/popup.html';
 
 import ExpressionView from '../views/ExpressionView';
 import ScriptView from '../views/ScriptView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.value = options.value;
         this.model = new Backbone.Model();
         this.model.set({
-            titleText: this.value.type === 'expression'
-                ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION')
-                : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
+            titleText:
+                this.value.type === 'expression' ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION') : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
         });
     },
 
@@ -49,9 +47,9 @@ export default Marionette.LayoutView.extend({
         Core.services.WindowService.closePopup();
     },
 
-    onShow() {
+    onAttach() {
         this.__createView();
         this.view.setValue(this.value.value);
-        this.contentRegion.show(this.view);
+        this.showChildView('contentRegion', this.view);
     }
 });

@@ -1,17 +1,22 @@
-
+// @flow
 import { helpers } from 'utils';
 import template from './templates/tabLayout.hbs';
 import HeaderView from './HeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
+type Tab = { view: any, id: string };
+
+type TabsList = Array<Tab>;
+
 const classes = {
     CLASS_NAME: 'layout__tab-layout',
-    PANEL_REGION: 'layout__tab-layout__panel-region'
+    PANEL_REGION: 'layout__tab-layout__panel-region',
+    HIDDEN: 'layout__tab-hidden'
 };
 
-export default Marionette.LayoutView.extend({
-    initialize(options) {
+export default Marionette.View.extend({
+    initialize(options: { tabs: TabsList }) {
         helpers.ensureOption(options, 'tabs');
 
         this.__tabsCollection = options.tabs;
@@ -42,7 +47,11 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     className() {
-        return `${classes.CLASS_NAME} ${this.getOption('bodyClass')}`;
+        const classList = [];
+        classList.push(this.getOption('bodyClass') || '');
+        classList.push(this.getOption('showMoveButtons') ? 'layout__tab-layout--move' : '');
+
+        return `${classes.CLASS_NAME} ${classList.join(' ')}`;
     },
 
     regions: {
@@ -67,31 +76,38 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         const headerView = new HeaderView({
             collection: this.__tabsCollection,
             headerClass: this.getOption('headerClass')
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
-        this.headerRegion.show(headerView);
+        this.showChildView('headerRegion', headerView);
 
         this.__tabsCollection.each(tabModel => {
-            const $regionEl = $('<div></div>').addClass(classes.PANEL_REGION);
-            this.ui.panelContainer.append($regionEl);
+            const regionEl = document.createElement('div');
+            regionEl.className = classes.PANEL_REGION;
+            this.ui.panelContainer.append(regionEl);
             const region = this.addRegion(`${tabModel.id}TabRegion`, {
-                el: $regionEl
+                el: regionEl
             });
-            region.show(tabModel.get('view'));
+            const view = tabModel.get('view');
+
+            view.on('all', (...args) => {
+                args[0] = `tab:${args[0]}`;
+                this.triggerMethod(...args);
+            });
+            region.show(view);
             tabModel.set({
                 region,
-                $regionEl
+                regionEl
             });
             this.__updateTabRegion(tabModel);
         });
         this.__updateState();
         if (this.getOption('showStepper')) {
             const stepperView = new StepperView({ collection: this.__tabsCollection });
-            this.stepperRegion.show(stepperView);
+            this.showChildView('stepperRegion', stepperView);
             this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
         }
         if (!this.getOption('showMoveButtons')) {
@@ -102,18 +118,18 @@ export default Marionette.LayoutView.extend({
 
     update() {
         Object.values(this.tabs).forEach(view => {
-            if (view.update) {
+            if (view && typeof view.update === 'function') {
                 view.update();
             }
         });
         this.__updateState();
     },
 
-    getViewById(tabId) {
+    getViewById(tabId: string) {
         return this.__findTab(tabId).get('view');
     },
 
-    selectTab(tabId) {
+    selectTab(tabId: string) {
         const tab = this.__findTab(tabId);
         if (tab.get('selected')) {
             return;
@@ -135,13 +151,13 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    setEnabled(tabId, enabled) {
+    setEnabled(tabId: string, enabled) {
         this.__findTab(tabId).set({
             enabled
         });
     },
 
-    setTabError(tabId, error) {
+    setTabError(tabId: string, error) {
         this.__findTab(tabId).set({ error });
     },
 
@@ -197,7 +213,7 @@ export default Marionette.LayoutView.extend({
         return this.__tabsCollection.indexOf(model);
     },
 
-    __findTab(tabId) {
+    __findTab(tabId: string): Backbone.Model {
         helpers.assertArgumentNotFalsy(tabId, 'tabId');
 
         const tabModel = this.__tabsCollection.find(x => x.id === tabId);
@@ -207,20 +223,31 @@ export default Marionette.LayoutView.extend({
         return tabModel;
     },
 
-    __handleSelect(model) {
+    __handleSelect(model: Backbone.Model): void {
         this.selectTab(model.id);
     },
 
-    __onSelectedChanged(model) {
+    __onSelectedChanged(model: Backbone.Model): void {
         this.__updateTabRegion(model);
     },
 
-    __updateTabRegion(model) {
+    __updateTabRegion(model: Backbone.Model): void {
         const selected = model.get('selected');
-        model.get('$regionEl').toggle(Boolean(selected));
+
+        if (selected) {
+            model.get('regionEl').classList.remove(classes.HIDDEN);
+        } else {
+            model.get('regionEl').classList.add(classes.HIDDEN);
+        }
+
+        this.trigger('changed:selectedTab', model);
+        // model.get('regionEl').classList.toggle(classes.HIDDEN, !selected); //second argument don't work in IE 11;
+
+        // todo: find bettter way to initiate child resize
+        Core.services.GlobalEventService.trigger('window:resize');
     },
 
-    __handleStepperSelect(model) {
+    __handleStepperSelect(model: Backbone.Model): void {
         this.__handleSelect(model);
     }
 });

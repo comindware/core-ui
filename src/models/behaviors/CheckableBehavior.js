@@ -1,45 +1,46 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*eslint-disable*/
 
+//can't use Backbone.Collection for checked because VirtualCollection change prototype
 
 const CheckableBehavior = {};
 
-CheckableBehavior.CheckableCollection = function(collection) {
-    this.collection = collection;
+function __updateChecked() {
     this.checked = {};
-    collection.on('add remove reset', () => {
-        calculateCheckedLength(collection);
-        Object.entries(this.checked).forEach(entry => {
-            if (!collection.get(entry[0])) {
-                delete this.checked[entry[0]]
-            }
-        })
+    this.collection.each(model => {
+        if (model.checked) {
+            this.checked[model.cid] = model;
+        }
+    });
+    this.__triggerCheck();
+}
+
+CheckableBehavior.CheckableCollection = function (collection) {
+    this.collection = collection;
+    this.__updateChecked();
+    collection.on('add remove reset update', function() {
+        if (this.internalCheck) {
+            return;
+        }
+        this.__debounceUpdateChecked();
     });
 };
 
 _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
     check(model) {
-        if (this.checked[model.cid]) { return; }
+        if (this.internalCheck || this.checked[model.cid]) { return; }
 
         this.checked[model.cid] = model;
         model.check();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     uncheck(model) {
-        if (!this.checked[model.cid]) { return; }
+        if (this.internalCheck || !this.checked[model.cid]) { return; }
 
         delete this.checked[model.cid];
         model.uncheck();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     checkSome(model) {
@@ -47,29 +48,92 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         delete this.checked[model.cid];
         model.checkSome();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     checkAll() {
-        this.each(model => { model.check(); });
-        calculateCheckedLength(this);
+        this.internalCheck = true;
+        this.each(model => {
+            this.checked[model.cid] = model;
+            model.check();
+        });
+        this.internalCheck = false;
+        this.__triggerCheck();
     },
 
     uncheckAll() {
-        this.each(model => { model.uncheck(); });
-        calculateCheckedLength(this);
+        this.internalCheck = true;
+        this.each(model => {
+            delete this.checked[model.cid];
+            model.uncheck();
+        });
+        this.internalCheck = false;
+        this.__triggerCheck();
     },
 
     toggleCheckAll() {
-        if (this.checkedLength === this.length) {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        if (checkedLength === this.length) {
             this.uncheckAll();
         } else {
             this.checkAll();
         }
+    },
+
+    updateTreeNodesCheck(model, updateParent = true) {
+        if (model.children && model.children.length) {
+            model.children.forEach(child => {
+                if (model.checked) {
+                    child.check();
+                } else {
+                    child.uncheck();
+                }
+                this.updateTreeNodesCheck(child, false);
+            })
+        }
+        if (!updateParent) {
+            return;
+        }
+        let parent = model.parentModel;
+        while (parent && parent.children) {
+            const length = parent.children.length;
+            const checkedLength = parent.children.filter(child => child.checked || child.checked === null).length;
+            if (checkedLength === length) {
+                parent.check()
+            } else if (checkedLength > 0 && checkedLength < length) {
+                parent.checkSome();
+            } else if (checkedLength === 0) {
+                parent.uncheck();
+            }
+            parent = parent.parentModel;
+        }
+    },
+
+    __debounceUpdateChecked: _.debounce(__updateChecked, 10),
+
+    __updateChecked,
+
+    __triggerCheck() {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        const length = this.length;
+    
+        if (checkedLength === length) {
+            this.collection.trigger('check:all', this, 'all');
+            return;
+        }
+    
+        if (checkedLength === 0) {
+            this.collection.trigger('check:none', this, 'none');
+            return;
+        }
+    
+        if (checkedLength > 0 && checkedLength < length) {
+            this.collection.trigger('check:some', this, 'some');
+        }
     }
 });
 
-CheckableBehavior.CheckableModel = function(model) {
+CheckableBehavior.CheckableModel = function (model) {
     this.model = model;
 };
 
@@ -115,27 +179,6 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
         }
     }
 });
-
-const calculateCheckedLength = function(collection) {
-    collection.checkedLength = _.filter(collection.models, model => model.checked).length;
-
-    const checkedLength = collection.checkedLength;
-    const length = collection.length;
-
-    if (checkedLength === length) {
-        collection.trigger('check:all', collection);
-        return;
-    }
-
-    if (checkedLength === 0) {
-        collection.trigger('check:none', collection);
-        return;
-    }
-
-    if (checkedLength > 0 && checkedLength < length) {
-        collection.trigger('check:some', collection);
-    }
-};
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;

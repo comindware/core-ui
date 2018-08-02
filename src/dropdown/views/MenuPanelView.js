@@ -1,11 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/27/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
 
@@ -27,22 +20,19 @@ export default ListPanelView.extend({
 
     className: 'popout-menu',
 
-    childView: MenuItemView,
-
-    getChildView(model) {
+    childView(model) {
         if (model.get('customView')) {
             return model.get('customView');
         }
         return MenuItemView;
     },
 
-    childEvents: {
+    childViewEvents: {
         execute: '__execute'
     },
 
-    __execute(child, model) {
+    __execute(model) {
         this.options.parent.close();
         this.options.parent.trigger('execute', model.id, model);
     }
 });
-
