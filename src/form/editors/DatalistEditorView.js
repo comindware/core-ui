@@ -77,7 +77,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.controller =
             this.options.controller ||
             new StaticController({
-                collection: options.collection
+                collection: options.collection,
+                displayAttribute: options.displayAttribute
             });
 
         this.value = this.__adjustValue(this.value);
