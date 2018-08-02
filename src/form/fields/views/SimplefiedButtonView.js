@@ -32,7 +32,7 @@ export default Marionette.View.extend({
 
         if (collectionValues.length > 3) { //todo make dynamic
             counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 1);
+            collectionValues.splice(2, collectionValues.length - 3);
             showCounter = true;
         }
 
@@ -44,6 +44,7 @@ export default Marionette.View.extend({
                 showHeader: false,
                 class: 'simplefied-button_grid'
             },
+            isSliding: false,
             collection
         });
 
@@ -57,10 +58,41 @@ export default Marionette.View.extend({
     __formatValues(schema, values) {
         switch (schema.type) {
             case 'Datalist': {
-                return Array.isArray(values) ? values.map(v => ({ value: v.name })) : [{ value: values.name }];
+                return Array.isArray(values) ? values.map(v => ({
+                    value: `
+                <div class="user-edit-wrp" title="${v.name}">
+                    <div class="user-abr__container">
+                    ${v.userpicUri ? `<img src="${v.userpicUri}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                </div>
+            </div>`
+                })) : [{ value: values.name }];
             }
             default:
                 return Array.isArray(values) ? values : [values];
         }
+    },
+
+    __getAbbreviation(fullName) {
+        if (!fullName) {
+            return '';
+        }
+
+        const words = fullName.split(/[, _]/);
+        switch (words.length) {
+            case 0:
+                return '';
+            case 1:
+                return this._getWordAbbreviation(words[0], true);
+            default:
+                return this._getWordAbbreviation(words[0], words[1].length === 0) + this._getWordAbbreviation(words[1], words[0].length === 0);
+        }
+    },
+
+    _getWordAbbreviation(word, takeTwo) {
+        if (word.length === 0) {
+            return '';
+        }
+
+        return word.substring(0, word.length > 1 && takeTwo ? 2 : 1);
     }
 });

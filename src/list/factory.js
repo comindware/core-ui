@@ -114,7 +114,7 @@ const factory = {
             selectableBehavior: options.gridViewOptions.selectableBehavior,
             isTree: options.gridViewOptions.isTree,
             expandOnShow: options.gridViewOptions.expandOnShow,
-            isSliding: true,
+            isSliding: options.isSliding === false ? options.isSliding : true,
             comparator: getDefaultComparator(options.columns || options.gridViewOptions.columns || [])
         });
 
