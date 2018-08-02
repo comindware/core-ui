@@ -1,13 +1,13 @@
 // @flow
-import template from './templates/simplefiedField.hbs';
+import template from './templates/simplifiedField.hbs';
 import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';
 import InfoButtonView from './views/InfoButtonView';
 import TooltipPanelView from './views/TooltipPanelView';
 import ErrosPanelView from './views/ErrosPanelView';
 import formRepository from '../formRepository';
-import SimplefiedButtonView from './views/SimplefiedButtonView';
-import SimplefiedPanelView from './views/SimplefiedPanelView';
+import SimplifiedButtonView from './views/SimplifiedButtonView';
+import SimplifiedPanelView from './views/SimplifiedPanelView';
 
 const classes = {
     REQUIRED: 'required',
@@ -48,14 +48,15 @@ export default Marionette.View.extend({
 
     onRender() {
         const menuView = Core.dropdown.factory.createDropdown({
-            buttonView: SimplefiedButtonView,
-            panelView: SimplefiedPanelView,
+            buttonView: SimplifiedButtonView,
+            panelView: SimplifiedPanelView,
             panelViewOptions: {
                 editor: this.editor
             },
             buttonViewOptions: {
                 editor: this.editor
             },
+            class: 'simplified-panel_container',
             autoopen: true
         });
 

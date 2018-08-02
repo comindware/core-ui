@@ -116,10 +116,7 @@
   border: var(--border);
   border-radius: var(--border-radius);
 }
-.dropdown__wrp_down {
-  position: fixed;
-  background-color: white;
-}
+
 .dropdown__wrp.dropdown__wrp_down {
   margin-top: -1px;
   border-radius: 0 0 var(--border-radius) var(--border-radius);

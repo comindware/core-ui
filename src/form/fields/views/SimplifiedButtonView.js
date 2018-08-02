@@ -1,9 +1,9 @@
-import template from '../templates/simplefiedButton.hbs';
+import template from '../templates/simplifiedButton.hbs';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    className: 'simplefied-button_container',
+    className: 'simplified-button_container',
 
     regions: {
         gridRegion: '.js-grid-region'
@@ -25,6 +25,7 @@ export default Marionette.View.extend({
         ];
 
         const values = this.options.editor.getValue();
+        this.options.editor.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
         const collectionValues = this.__formatValues(this.options.editor.schema, values);
 
         let showCounter = false;
@@ -36,16 +37,16 @@ export default Marionette.View.extend({
             showCounter = true;
         }
 
-        const collection = new Backbone.Collection(collectionValues);
+        this.collection = new Backbone.Collection(collectionValues);
 
         const grid = new Core.list.factory.createDefaultGrid({
             gridViewOptions: {
                 columns,
                 showHeader: false,
-                class: 'simplefied-button_grid'
+                class: 'simplified-button_grid'
             },
             isSliding: false,
-            collection
+            collection: this.collection
         });
 
         this.showChildView('gridRegion', grid);
@@ -94,5 +95,23 @@ export default Marionette.View.extend({
         }
 
         return word.substring(0, word.length > 1 && takeTwo ? 2 : 1);
+    },
+
+    __updateDisplayValue(values) {
+        const collectionValues = this.__formatValues(this.options.editor.schema, values);
+
+        let showCounter = false;
+        let counterValue = false;
+
+        if (collectionValues.length > 3) { //todo make dynamic
+            counterValue = collectionValues.length;
+            collectionValues.splice(2, collectionValues.length - 3);
+            showCounter = true;
+        }
+        this.collection.reset(collectionValues);
+        if (showCounter) {
+            this.ui.counterRegion.show();
+            this.ui.counterRegionCounter.html(counterValue);
+        }
     }
 });

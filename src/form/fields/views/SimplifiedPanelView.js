@@ -1,4 +1,4 @@
-import template from '../templates/simplefiedPanel.hbs';
+import template from '../templates/simplifiedPanel.hbs';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
@@ -7,7 +7,7 @@ export default Marionette.View.extend({
         editorRegion: '.js-editor-region'
     },
 
-    class: 'simplefied-panel_container',
+    className: 'simplified-panel_container',
 
     onRender() {
         this.showChildView('editorRegion', this.options.editor);

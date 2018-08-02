@@ -46,7 +46,7 @@ export default () => {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
-            simplefied: true,
+            simplified: true,
             dataType: 'DateTime',
             title: 'DateTime Cell',
             editable: true,
@@ -82,7 +82,7 @@ export default () => {
             type: 'Datalist',
             dataType: 'Instance',
             title: 'Reference Cell',
-            simplefied: true,
+            simplified: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             autocommit: true,

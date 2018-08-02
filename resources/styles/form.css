@@ -1005,30 +1005,34 @@ input[type="color"], .colorpicker{
     position: relative!important;
 }
 
-.simplefied-button_container {
+.simplified-button_container {
     display: flex;
     height: 100%;
     justify-content: space-between;
 }
 
-.simplefied-button_grid .cell{
+.simplified-button_grid .cell{
     min-width: 35px;
     width: 35px;
     padding: 0;
     box-shadow: none!important;
 }
 
-.simplefied-button_grid .visible-collection-wrp {
+.simplified-button_grid .visible-collection-wrp {
     flex-direction: row;
     display: flex;
 }
+
+.simplified-button_grid .visible-collection {
+    height: 35px;
+} 
 
 .counter_container {
   display: flex;
   align-items: center;
 }
 
-.simplefied-panel_container {
+.simplified-panel_container {
     position: fixed;
 }
 
@@ -1043,7 +1047,8 @@ input[type="color"], .colorpicker{
     text-align: center;
     line-height: 30px;
     background-color: white;
-    margin-right: -5px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
+    margin-left: 1px;
+    margin-top: 2px;
 }
