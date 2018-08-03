@@ -1,20 +1,11 @@
 import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';
-import template from '../templates/dateInput.hbs';
 import TextEditorView from '../../../TextEditorView';
 
 export default TextEditorView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
-    },
-
-    template: Handlebars.compile(template),
-
-    className: 'date-view',
-
-    ui: {
-        input: '.js-date-input'
     },
 
     events: {

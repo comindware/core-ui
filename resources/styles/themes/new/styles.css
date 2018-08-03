@@ -257,7 +257,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
     height: 100%;
 }
 
-.cell .editor {
+.cell > .editor {
   position: absolute;
   top: 0;
   left: 0;
