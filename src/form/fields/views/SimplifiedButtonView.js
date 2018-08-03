@@ -24,8 +24,9 @@ export default Marionette.View.extend({
             }
         ];
 
+        this.options.model.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
         const values = this.options.editor.getValue();
-        this.options.editor.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
+
         const collectionValues = this.__formatValues(this.options.editor.schema, values);
 
         let showCounter = false;
@@ -112,6 +113,8 @@ export default Marionette.View.extend({
         if (showCounter) {
             this.ui.counterRegion.show();
             this.ui.counterRegionCounter.html(counterValue);
+        } else {
+            this.ui.counterRegion.hide();
         }
     }
 });
