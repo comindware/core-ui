@@ -199,6 +199,7 @@
     white-space: nowrap;
     text-align: left;
     cursor: default;
+    height: 100%;
 }
 
 .grid-header-dragger {
