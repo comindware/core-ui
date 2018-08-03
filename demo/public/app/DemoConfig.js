@@ -412,6 +412,11 @@ export default {
                     id: 'complexGrid',
                     displayName: 'Complex grid',
                     description: 'Mega Grid'
+                },
+                {
+                    id: 'compactGrid',
+                    displayName: 'Compact grid',
+                    description: 'Mega mini Grid'
                 }
             ]
         },

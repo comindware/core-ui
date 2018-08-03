@@ -414,7 +414,6 @@ export default Marionette.CompositeView.extend({
 
         this.collection.updateWindowSize(visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE);
         this.handleResize();
-        //_.defer(() => this.__updatePadding());
     },
 
     __updatePadding() {

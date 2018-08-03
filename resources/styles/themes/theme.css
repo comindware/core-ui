@@ -509,7 +509,9 @@ svg.svg-grid-icons {
   cursor: pointer;
   transform: none;
   top: var(--bubbles-icon-offset-x);
-  right: 0;
+  right: 2px;
+  top: 5px;
+  font-size: 18px;
 }
 .editor_bubble--edit.editor_bubble--delete .icon-edit {
   right: 15px;

@@ -2,6 +2,7 @@
 import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
+import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
 
 let factory;
 
@@ -14,7 +15,7 @@ type Column = { key: string, columnClass: string, editable: boolean, type: strin
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            return EditableGridFieldView;
+            return column.simplified ? SimplifiedFieldView : EditableGridFieldView;
         }
 
         return factory.getCellHtml(column, model);

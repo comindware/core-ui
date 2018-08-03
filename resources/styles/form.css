@@ -1,4 +1,4 @@
-﻿/* CSS form and editors
+/* CSS form and editors
 
 #70787f; 	// Label text
 			// disabled label text
@@ -991,4 +991,62 @@ input[type="color"], .colorpicker{
 
 .dev-expression-editor-field-inline .editor {
     position: relative!important;
+}
+
+.simplified-button_container {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.simplified-button_grid .cell{
+    min-width: 35px;
+    width: 35px;
+    padding: 0;
+    box-shadow: none!important;
+}
+
+.simplified-button_grid .visible-collection-wrp {
+    flex-direction: row;
+    display: flex;
+}
+
+.simplified-button_grid .visible-collection {
+    height: 35px;
+}
+
+.simplified-button_grid .grid-content-view{
+    overflow: hidden;
+}
+
+.counter_container {
+  display: flex;
+  align-items: center;
+}
+
+.cell > .simplified-panel_container {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    height: 33px;
+}
+
+.simplified-panel_container {
+    position: fixed;
+}
+
+.user-edit-wrp {
+    display: flex;
+}
+
+.user-abr__container {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #0575bd;
+    margin-left: 1px;
+    margin-top: 2px;
 }

@@ -4,7 +4,7 @@
     font-size: 18px;
     color: #fff;
     border-radius: 5px;
-    background: #26cce8;
+    background: #41BCD5;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -18,28 +18,38 @@
     min-width: 40px;
     align-items: center;
     background-color: white;
-    color: #26cce8;
+    color: #41BCD5;
     font-size: 24px;
 }
-.fr-alert .text-container {
+
+.notification-body_container{
     padding: 0.5rem;
-    text-align: center;
+}
+
+.fr-alert .text-container {
+    text-align: left;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     overflow-y: auto;
     max-height: calc(2em + 1rem);
+    font-size: .9em;
 }
+
+.fr-alert .fr-alert-title + .text-container{
+
+}
+
 .fr-alert .close-button_container {
     min-width: 20px;
     padding: 3px 6px;
     display: flex;
 }
 .fr-alert_error {
-    background: #FF7489;
+    background:  #F58020;
 }
 
 .fr-alert_error .icon-container{
-    color: #FF7489;
+    color: #F58020;
 }
 
 .dev-alert_success {
@@ -63,8 +73,11 @@
     align-items: flex-end;
 }
 
+.notification-container > div{
+    pointer-events: auto;
+}
+
 .fr-alert-title {
-    padding-left: 0.5rem;
     font-weight: 600;
     overflow-y: auto;
     max-height: calc(1em + 1rem);

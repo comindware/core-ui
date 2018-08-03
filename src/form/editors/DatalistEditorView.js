@@ -77,7 +77,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.controller =
             this.options.controller ||
             new StaticController({
-                collection: options.collection
+                collection: options.collection,
+                displayAttribute: options.displayAttribute
             });
 
         this.value = this.__adjustValue(this.value);
@@ -235,6 +236,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         this.isFilterDeayed = true;
         return this.__updateWithDelay();
+    },
+
+    onAttach() {
+        if (this.options.openOnRender) {
+            this.__onButtonClick();
+        }
     },
 
     __updateFilter() {
