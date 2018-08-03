@@ -238,6 +238,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.__updateWithDelay();
     },
 
+    onAttach() {
+        if (this.options.openOnRender) {
+            this.__onButtonClick();
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;

@@ -10,6 +10,6 @@ export default Marionette.View.extend({
     className: 'simplified-panel_container',
 
     onRender() {
-        this.showChildView('editorRegion', new this.options.editorConstructor(this.options.editorConfig));
+        this.showChildView('editorRegion', new this.options.editorConstructor(Object.assign({ openOnRender: true }, this.options.editorConfig)));
     }
 });
