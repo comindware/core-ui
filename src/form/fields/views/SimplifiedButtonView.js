@@ -54,6 +54,8 @@ export default Marionette.View.extend({
         if (showCounter) {
             this.ui.counterRegion.show();
             this.ui.counterRegionCounter.html(counterValue);
+        } else {
+            this.ui.counterRegion.hide();
         }
     },
 

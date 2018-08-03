@@ -1025,11 +1025,21 @@ input[type="color"], .colorpicker{
 
 .simplified-button_grid .visible-collection {
     height: 35px;
-} 
+}
+
+.simplified-button_grid .grid-content-view{
+    overflow: hidden;
+}
 
 .counter_container {
   display: flex;
   align-items: center;
+}
+
+.cell > .simplified-panel_container {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    height: 33px;
 }
 
 .simplified-panel_container {
