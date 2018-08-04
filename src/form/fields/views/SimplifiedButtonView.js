@@ -71,6 +71,16 @@ export default Marionette.View.extend({
             </div>`
                 })) : [{ value: values.name }];
             }
+            case 'Document': {
+                return Array.isArray(values) ? values.map(v => ({
+                    value: `
+                <div class="user-edit-wrp" title="${v.name}">
+                    <div class="user-abr__container">
+                    ${v.userpicUri ? `<img src="${v.userpicUri}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                </div>
+            </div>`
+                })) : [{ value: values.name }];
+            }
             default:
                 return Array.isArray(values) ? values : [values];
         }

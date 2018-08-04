@@ -771,6 +771,7 @@ input[type="color"], .colorpicker{
 
 .editor:hover .editor__icons.icon-remove {
     visibility: visible;
+    padding: 0px 5px;
 }
 
 .dd-list__filter_reference:hover .editor__icons.icon-remove {

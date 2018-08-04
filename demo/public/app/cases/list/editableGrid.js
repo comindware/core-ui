@@ -74,7 +74,8 @@ export default () => {
             type: 'Document',
             dataType: 'Document',
             title: 'Document',
-            // editable: true,
+            simplified: true,
+            editable: true,
             autocommit: true
         },
         {
@@ -83,6 +84,7 @@ export default () => {
             dataType: 'Instance',
             title: 'Reference Cell',
             simplified: true,
+            required: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             autocommit: true,
