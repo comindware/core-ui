@@ -71,7 +71,7 @@ export default Marionette.View.extend({
         this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
 
         this.listenTo(this.listView, 'update:height', () => this.trigger('change:content'));
-        this.listenTo(collection, 'add update', () => this.__toggleElementsQuantityWarning(collection.length, collection.totalCount));
+        this.listenTo(collection, 'add reset update', () => this.__toggleElementsQuantityWarning(collection.length, collection.totalCount));
     },
 
     handleCommand(command) {

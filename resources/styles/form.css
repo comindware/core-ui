@@ -314,6 +314,7 @@ input[type="checkbox"].checkbox {
 
 .editor_date-time .input{
     border: 0;
+    border-radius: 0;
 }
 
 
