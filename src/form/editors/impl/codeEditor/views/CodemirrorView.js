@@ -122,7 +122,6 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            lineSeparator: '\r\n',
             mode: modes[this.options.mode],
             ontologyObjects: this.autoCompleteArray,
             matchBrackets: true,
