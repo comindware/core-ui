@@ -53,10 +53,10 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     initialize(options) {
         this.format = options.format || options.intlOptions;
+        this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {
             this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
-            this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
             this.numberMask = createNumberMask({
                 prefix: '',
                 thousandsSeparatorSymbol: this.thousandsSeparator,
@@ -162,7 +162,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if ((value === this.value && !force) || value === '-') {
+        if ((value === this.value && !force) || value === '-' || (this.options.allowFloat && typeof value === 'string' && value.slice(-1) === this.decimalSymbol)) {
             return;
         }
 
@@ -171,7 +171,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             parsed = this.__parse(value);
             if (parsed !== null) {
                 if (!this.options.allowFloat) {
-                    value = Math.round(parsed);
+                    value = Math.floor(parsed);
                 } else {
                     value = parsed;
                 }
