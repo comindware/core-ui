@@ -7,8 +7,6 @@ export default function () {
         numberValue: 42
     });
 
-    model.on('change', (model) => console.log(model.changed));
-
     return new CanvasView({
         view: new core.form.editors.NumberEditor({
             model,
