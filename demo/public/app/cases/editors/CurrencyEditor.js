@@ -17,7 +17,7 @@ export default function () {
             max: 300000,
             step: 3,
             allowFloat: true,
-            options: { //options for new Intl.NumberFormat([locales[, options]])
+            IntlOptions: { //options for new Intl.NumberFormat([locales[, options]])
                 minimumFractionDigits: 2
             }
         }),
