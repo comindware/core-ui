@@ -12,7 +12,8 @@ const changeMode = {
 
 const defaultOptions = {
     max: undefined,
-    min: 0,
+    min: undefined,
+    step: undefined,
     allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
@@ -219,9 +220,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __setInputOptions() {
-        this.ui.input[0].setAttribute('min', this.options.min);
-        this.ui.input[0].setAttribute('max', this.options.max);
-        this.ui.input[0].setAttribute('step', this.options.step);
+        this.options.min !== undefined && this.ui.input[0].setAttribute('min', this.options.min);
+        this.options.max !== undefined && this.ui.input[0].setAttribute('max', this.options.max);
+        this.options.step !== undefined && this.ui.input[0].setAttribute('step', this.options.step);
     },
 
     __parseToNumber(string) {
