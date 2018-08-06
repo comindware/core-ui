@@ -66,6 +66,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                 allowNegative: true
             });
         }
+        this.isChangeModeKeydown = this.options.changeMode === changeMode.keydown;
     },
 
     ui: {
@@ -103,11 +104,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         if (value === `-${this.decimalSymbol}`) {
             return;
         }
-        if (this.options.changeMode === changeMode.keydown) {
-            this.__value(value, true, true, false);
-        } else {
-            this.__value(value, true, false, false);
-        }
+        this.__value(value, true, this.isChangeModeKeydown, false);
     },
 
     __onChange() {
@@ -155,7 +152,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __clear() {
-        this.__value(null, false, true, false);
+        this.__value(null, false, this.isChangeModeKeydown, false);
         this.focus();
         return false;
     },
