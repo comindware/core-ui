@@ -1002,8 +1002,8 @@ input[type="color"], .colorpicker{
 }
 
 .simplified-button_grid .cell{
-    min-width: 35px;
-    width: 35px;
+    min-width: 28px;
+    width: 28px;
     padding: 0;
     box-shadow: none!important;
 }
@@ -1040,15 +1040,15 @@ input[type="color"], .colorpicker{
     display: flex;
 }
 
-.user-abr__container {
-    height: 30px;
-    width: 30px;
+.simple-field_container {
+    height: 26px;
+    width: 26px;
     border-radius: 50%;
     text-align: center;
-    line-height: 30px;
+    line-height: 26px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 2px;
+    margin-top: 3px;
 }
