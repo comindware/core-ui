@@ -16,7 +16,7 @@ const defaultOptions = {
     allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
-    IntlOptions: undefined,
+    intlOptions: undefined,
     showTitle: true,
     class: undefined
 };
@@ -35,7 +35,7 @@ const defaultOptions = {
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * 
  * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
- * @param {Object} [options.IntlOptions=null] options for new Intl.NumberFormat([locales[, options]])
+ * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]])
  * 
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
@@ -52,9 +52,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     initialize(options) {
-        this.format = options.format || options.IntlOptions;
+        this.format = options.format || options.intlOptions;
         if (this.format) {
-            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.IntlOptions);
+            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
             this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
             this.numberMask = createNumberMask({
