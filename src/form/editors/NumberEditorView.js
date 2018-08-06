@@ -16,6 +16,7 @@ const defaultOptions = {
     allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
+    options: undefined,
     showTitle: true,
     class: undefined
 };
@@ -32,7 +33,10 @@ const defaultOptions = {
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
- * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * 
+ * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * @param {Object} [options.options=null] options for new Intl.NumberFormat([locales[, options]])
+ * 
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
@@ -48,7 +52,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     initialize(options) {
-        if (options.format) {
+        this.format = options.format || options.options;
+        if (this.format) {
+            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.options);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
             this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
             this.numberMask = createNumberMask({
@@ -61,6 +67,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             });
         }
     },
+
     ui: {
         input: '.js-input'
     },
@@ -75,16 +82,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     onRender() {
         this.__setInputOptions();
-        this.__value(this.value, false, false, true);
     },
 
     onAttach() {
-        if (this.options.format) {
+        if (this.format) {
             this.maskedInputController = maskInput({
                 inputElement: this.ui.input[0],
                 mask: this.numberMask
             });
         }
+        this.__value(this.value, false, false, true);
     },
 
     onDestroy() {
@@ -109,11 +116,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         const min = input[0].getAttribute('min');
         const value = this.__checkMaxMinValue(input.val(), max, min);
         this.__value(value, false, true, false);
-        if (this.options.format) {
-            this.maskedInputController && this.maskedInputController.textMaskInputElement.update(value);
-        } else {
-            this.ui.input.val(value);
-        }
     },
 
     __checkMaxMinValue(value, max, min) {
@@ -185,8 +187,12 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             this.$el.prop('title', value);
         }
 
-        if (!this.options.format || this.ui.input.val() === '' || value === null) {
+        if (this.value === null) {
+            this.ui.input.val('');
+        } else if (!this.format) {
             this.ui.input.val(value);
+        } else {
+            this.maskedInputController && this.maskedInputController.textMaskInputElement.update(this.intl.format(value));
         }
 
         if (triggerChange) {

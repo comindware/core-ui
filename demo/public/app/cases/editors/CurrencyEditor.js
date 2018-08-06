@@ -17,7 +17,9 @@ export default function () {
             max: 300000,
             step: 3,
             allowFloat: true,
-            format: '0,0[.]00', //'currency' or format from numeraljs.com
+            options: { //options for new Intl.NumberFormat([locales[, options]])
+                minimumFractionDigits: 2
+            }
         }),
         presentation: '{{numberValue}}',
         isEditor: true
