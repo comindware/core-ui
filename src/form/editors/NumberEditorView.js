@@ -187,9 +187,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             this.$el.prop('title', value);
         }
 
-        if (this.value === null) {
-            this.ui.input.val('');
-        } else if (!this.format) {
+        if (!this.format || this.value === null) {
             this.ui.input.val(value);
         } else {
             this.maskedInputController && this.maskedInputController.textMaskInputElement.update(this.intl.format(value));
