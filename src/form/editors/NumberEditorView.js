@@ -53,17 +53,19 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     initialize(options) {
-        this.format = options.format || options.intlOptions;
+        this.format = options.format || options.intlOptions || options.allowFloat;
         this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {
             this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
+            if (options.intlOptions && options.intlOptions.useGrouping === false) {
+                this.thousandsSeparator = '';
+            }
             this.numberMask = createNumberMask({
                 prefix: '',
                 thousandsSeparatorSymbol: this.thousandsSeparator,
                 decimalSymbol: this.decimalSymbol,
                 allowDecimal: options.allowFloat,
-                requireDecimal: options.allowFloat,
                 allowNegative: true
             });
         }
@@ -226,8 +228,10 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __parseToNumber(string) {
-        let newValue = string.replace(new RegExp(`\\${this.thousandsSeparator}`, 'g'), '');
-        newValue = newValue.replace(new RegExp(`\\${this.decimalSymbol}`, 'g'), '.');
+        let newValue = string.replace(new RegExp(`\\${this.decimalSymbol}`, 'g'), '.');
+        if (this.thousandsSeparator) {
+            newValue = newValue.replace(new RegExp(`\\${this.thousandsSeparator}`, 'g'), '');
+        }
         newValue = newValue.replace(/[^\d\.-]*/g, '');
 
         return parseFloat(newValue);
