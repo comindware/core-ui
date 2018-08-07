@@ -23,9 +23,6 @@ export default Marionette.View.extend({
         this.fieldId = _.uniqueId('field-');
 
         this.__createEditor(options, this.fieldId, _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
-        if (this.schema.getReadonly || this.schema.getHidden) {
-            this.listenTo(this.model, 'change', this.__updateExternalChange);
-        }
     },
 
     templateContext() {
@@ -51,10 +48,12 @@ export default Marionette.View.extend({
             buttonView: SimplifiedButtonView,
             panelView: SimplifiedPanelView,
             panelViewOptions: {
-                editor: this.editor
+                editorConstructor: this.editorConstructor,
+                editorConfig: this.editorConfig
             },
             buttonViewOptions: {
-                editor: this.editor
+                editor: this.editor,
+                model: this.model
             },
             class: 'simplified-panel_container',
             autoopen: true
@@ -185,17 +184,8 @@ export default Marionette.View.extend({
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     },
 
-    __updateExternalChange() {
-        if (_.isFunction(this.schema.getReadonly)) {
-            this.editor.setReadonly(this.schema.getReadonly(this.model));
-        }
-        if (_.isFunction(this.schema.getHidden)) {
-            this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
-        }
-    },
-
     __createEditor(options, fieldId, ConstructorFn) {
-        this.editor = new ConstructorFn({
+        this.editorConfig = {
             schema: this.schema,
             form: options.form,
             field: this,
@@ -204,7 +194,10 @@ export default Marionette.View.extend({
             id: this.__createEditorId(options.key),
             value: this.options.value,
             fieldId
-        });
+        };
+        this.editor = new ConstructorFn(this.editorConfig);
+
+        this.editorConstructor = ConstructorFn;
         this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());

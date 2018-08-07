@@ -12,10 +12,12 @@ const changeMode = {
 
 const defaultOptions = {
     max: undefined,
-    min: 0,
+    min: undefined,
+    step: undefined,
     allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
+    intlOptions: undefined,
     showTitle: true,
     class: undefined
 };
@@ -32,7 +34,10 @@ const defaultOptions = {
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
- * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * 
+ * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]])
+ * 
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
@@ -48,19 +53,25 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     initialize(options) {
-        if (options.format) {
+        this.format = options.format || options.intlOptions || options.allowFloat;
+        this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
+        if (this.format) {
+            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
-            this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
+            if (options.intlOptions && options.intlOptions.useGrouping === false) {
+                this.thousandsSeparator = '';
+            }
             this.numberMask = createNumberMask({
                 prefix: '',
                 thousandsSeparatorSymbol: this.thousandsSeparator,
                 decimalSymbol: this.decimalSymbol,
                 allowDecimal: options.allowFloat,
-                requireDecimal: options.allowFloat,
                 allowNegative: true
             });
         }
+        this.isChangeModeKeydown = this.options.changeMode === changeMode.keydown;
     },
+
     ui: {
         input: '.js-input'
     },
@@ -75,16 +86,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     onRender() {
         this.__setInputOptions();
-        this.__value(this.value, false, false, true);
     },
 
     onAttach() {
-        if (this.options.format) {
+        if (this.format) {
             this.maskedInputController = maskInput({
                 inputElement: this.ui.input[0],
                 mask: this.numberMask
             });
         }
+        this.__value(this.value, false, false, true);
     },
 
     onDestroy() {
@@ -96,11 +107,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         if (value === `-${this.decimalSymbol}`) {
             return;
         }
-        if (this.options.changeMode === changeMode.keydown) {
-            this.__value(value, true, true, false);
-        } else {
-            this.__value(value, true, false, false);
-        }
+        this.__value(value, true, this.isChangeModeKeydown, false);
     },
 
     __onChange() {
@@ -109,11 +116,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         const min = input[0].getAttribute('min');
         const value = this.__checkMaxMinValue(input.val(), max, min);
         this.__value(value, false, true, false);
-        if (this.options.format) {
-            this.maskedInputController && this.maskedInputController.textMaskInputElement.update(value);
-        } else {
-            this.ui.input.val(value);
-        }
     },
 
     __checkMaxMinValue(value, max, min) {
@@ -153,14 +155,14 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __clear() {
-        this.__value(null, false, true, false);
+        this.__value(null, false, this.isChangeModeKeydown, false);
         this.focus();
         return false;
     },
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if ((value === this.value && !force) || value === '-') {
+        if ((value === this.value && !force) || value === '-' || (this.options.allowFloat && typeof value === 'string' && value.slice(-1) === this.decimalSymbol)) {
             return;
         }
 
@@ -169,7 +171,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             parsed = this.__parse(value);
             if (parsed !== null) {
                 if (!this.options.allowFloat) {
-                    value = Math.round(parsed);
+                    value = Math.floor(parsed);
                 } else {
                     value = parsed;
                 }
@@ -185,8 +187,10 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             this.$el.prop('title', value);
         }
 
-        if (!this.options.format || this.ui.input.val() === '' || value === null) {
+        if (!this.format || this.value === null) {
             this.ui.input.val(value);
+        } else {
+            this.maskedInputController && this.maskedInputController.textMaskInputElement.update(this.intl.format(value));
         }
 
         if (triggerChange) {
@@ -218,14 +222,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __setInputOptions() {
-        this.ui.input[0].setAttribute('min', this.options.min);
-        this.ui.input[0].setAttribute('max', this.options.max);
-        this.ui.input[0].setAttribute('step', this.options.step);
+        this.options.min !== undefined && this.ui.input[0].setAttribute('min', this.options.min);
+        this.options.max !== undefined && this.ui.input[0].setAttribute('max', this.options.max);
+        this.options.step !== undefined && this.ui.input[0].setAttribute('step', this.options.step);
     },
 
     __parseToNumber(string) {
-        let newValue = string.replace(new RegExp(`\\${this.thousandsSeparator}`, 'g'), '');
-        newValue = newValue.replace(new RegExp(`\\${this.decimalSymbol}`, 'g'), '.');
+        let newValue = string.replace(new RegExp(`\\${this.decimalSymbol}`, 'g'), '.');
+        if (this.thousandsSeparator) {
+            newValue = newValue.replace(new RegExp(`\\${this.thousandsSeparator}`, 'g'), '');
+        }
         newValue = newValue.replace(/[^\d\.-]*/g, '');
 
         return parseFloat(newValue);

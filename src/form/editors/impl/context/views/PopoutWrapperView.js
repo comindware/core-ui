@@ -40,7 +40,8 @@ export default Marionette.View.extend({
                 isTree: true,
                 childrenAttribute: 'children',
                 showHeader: false,
-                expandOnShow: false
+                expandOnShow: false,
+                class: 'compact'
             },
             collection: this.model.get('context')
         });

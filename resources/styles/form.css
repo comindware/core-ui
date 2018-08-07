@@ -182,13 +182,6 @@ rgba(5,117,189,.5) // user avatar btn
     pointer-events: none;
 }
 
-.editor_disabled div.time-view,
-.editor_disabled div.date-view {
-    pointer-events: auto;
-}
-
-
-
 /* checkbox */
 input[type="checkbox"].checkbox {
     display: none;
@@ -321,6 +314,11 @@ input[type="checkbox"].checkbox {
 
 .editor_date-time .input{
     border: 0;
+    border-radius: 0;
+}
+
+.editor_date-time_date .input{
+    padding: 4px 10px;
 }
 
 
@@ -778,6 +776,7 @@ input[type="color"], .colorpicker{
 
 .editor:hover .editor__icons.icon-remove {
     visibility: visible;
+    padding: 0px 5px;
 }
 
 .dd-list__filter_reference:hover .editor__icons.icon-remove {
@@ -808,11 +807,6 @@ input[type="color"], .colorpicker{
 .editor_date-time.editor_empty{
     color:inherit;
 }
-
-.date-view .dropdown__wrp{
-    width: 220px;
-}
-
 
 /*-----//------*/
 
@@ -1012,8 +1006,8 @@ input[type="color"], .colorpicker{
 }
 
 .simplified-button_grid .cell{
-    min-width: 35px;
-    width: 35px;
+    min-width: 28px;
+    width: 28px;
     padding: 0;
     box-shadow: none!important;
 }
@@ -1025,11 +1019,21 @@ input[type="color"], .colorpicker{
 
 .simplified-button_grid .visible-collection {
     height: 35px;
-} 
+}
+
+.simplified-button_grid .grid-content-view{
+    overflow: hidden;
+}
 
 .counter_container {
   display: flex;
   align-items: center;
+}
+
+.cell > .simplified-panel_container {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    height: 33px;
 }
 
 .simplified-panel_container {
@@ -1040,15 +1044,15 @@ input[type="color"], .colorpicker{
     display: flex;
 }
 
-.user-abr__container {
-    height: 30px;
-    width: 30px;
+.simple-field_container {
+    height: 26px;
+    width: 26px;
     border-radius: 50%;
     text-align: center;
-    line-height: 30px;
+    line-height: 26px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 2px;
+    margin-top: 3px;
 }

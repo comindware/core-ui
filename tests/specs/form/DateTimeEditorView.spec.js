@@ -4,11 +4,11 @@ import 'jasmine-jquery';
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
         const findDateInput = function (view) {
-            return view.$('.js-date-input');
+            return view.$('input:first');
         };
 
         const findTimeInput = function (view) {
-            return view.$('.js-input');
+            return view.$('input:last');
         };
 
         const selectTodayOnOpenPanel = function (view) {

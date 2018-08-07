@@ -238,6 +238,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.__updateWithDelay();
     },
 
+    onAttach() {
+        if (this.options.openOnRender) {
+            this.__onButtonClick();
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;
@@ -357,8 +363,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.dropdownView.buttonView.setLoading(true);
 
         return this.controller.fetch({ text: this.searchText }).then(data => {
-            this.panelCollection.reset(data.collection);
             this.panelCollection.totalCount = data.totalCount;
+            this.panelCollection.reset(data.collection);
 
             if (this.panelCollection.length > 0 && this.value) {
                 this.value.forEach(value => {
@@ -370,6 +376,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 });
             }
             this.dropdownView.buttonView.setLoading(false);
+
             this.__tryPointFirstRow();
         });
     },

@@ -246,7 +246,6 @@ export default Marionette.View.extend({
 
         this.codemirror.refresh();
         this.codemirror.focus();
-        this.isMaximized = true;
     },
 
     __onMinimize() {
@@ -254,7 +253,6 @@ export default Marionette.View.extend({
         this.$el.removeClass(classes.maximized);
         this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();
-        this.isMaximized = false;
         this.__change();
     },
 
@@ -266,7 +264,7 @@ export default Marionette.View.extend({
         this.trigger('change', this);
     },
 
-    __onChange(editor, change) {
+    __onChange() {
         if (!this.isExternalChange) {
             if (this.options.mode === 'expression') {
                 this.__showHint();

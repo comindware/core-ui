@@ -14,8 +14,12 @@ export default function () {
             changeMode: 'keydown',
             autocommit: true,
             min: -300,
+            allowFloat: true,
             max: 300,
-            step: 3
+            step: 3,
+            intlOptions: {
+                useGrouping: false
+            }
         }),
         presentation: '{{numberValue}}',
         isEditor: true

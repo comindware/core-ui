@@ -4,7 +4,8 @@ export default function() {
         idealDays: 12,
         dueDate: '2015-07-20T10:46:37Z',
         description: 'no-op',
-        computed: false
+        computed: false,
+        ref: []
     });
 
     const formSchema = {
@@ -30,6 +31,10 @@ export default function() {
         },
         expression: {
             type: 'TextArea'
+        },
+        ref: {
+            type: 'Datalist',
+            collection: new Backbone.Collection()
         }
     };
 
@@ -45,7 +50,7 @@ export default function() {
                     id: false,
                     text: 'Cancel',
                     customClass: 'btn-small btn-outline',
-                    handler(popup) {
+                    handler() {
                         core.services.WindowService.closePopup();
                     }
                 },
@@ -54,9 +59,13 @@ export default function() {
                     text: 'Save',
                     customClass: 'btn-small',
                     handler(popup) {
-                        popup.content.form.commit();
-                        core.services.WindowService.closePopup();
-                        alert(JSON.stringify(model.toJSON(), null, 4));
+                        popup.setLoading(true);
+                        setTimeout(() => {
+                            popup.setLoading(false);
+                            popup.content.form.commit();
+                            core.services.WindowService.closePopup();
+                            alert(JSON.stringify(model.toJSON(), null, 4));
+                        }, 1000);
                     }
                 }
             ],
@@ -83,6 +92,11 @@ export default function() {
                             id: 'expression',
                             name: 'Computed Expression',
                             view: core.layout.createEditorAnchor('expression')
+                        },
+                        {
+                            id: 'ref',
+                            name: 'Datalist editor',
+                            view: core.layout.createEditorAnchor('ref')
                         }
                     ]
                 })

@@ -1,15 +1,16 @@
 ﻿.fr-alert {
     min-height: 50px;
-    max-width: 50%;
+    max-width: 100%;
     font-size: 18px;
     color: #fff;
     border-radius: 5px;
-    background: #26cce8;
+    background: #41BCD5;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
     margin: 0.5rem;
     display: flex;
+    align-items: stretch;
 }
 .fr-alert .icon-container {
     display: flex;
@@ -18,12 +19,18 @@
     min-width: 40px;
     align-items: center;
     background-color: white;
-    color: #26cce8;
+    color: #41BCD5;
     font-size: 24px;
+
 }
 
 .notification-body_container{
-    padding: 0.5rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+
+.fr-alert .fr-alert-title{
+    padding-right:  0.5rem;;
 }
 
 .fr-alert .text-container {
@@ -33,6 +40,8 @@
     overflow-y: auto;
     max-height: calc(2em + 1rem);
     font-size: .9em;
+    white-space: normal;
+    padding-right:  0.5rem;;
 }
 
 .fr-alert .fr-alert-title + .text-container{
@@ -45,11 +54,11 @@
     display: flex;
 }
 .fr-alert_error {
-    background: #FF7489;
+    background:  #F58020;
 }
 
 .fr-alert_error .icon-container{
-    color: #FF7489;
+    color: #F58020;
 }
 
 .dev-alert_success {

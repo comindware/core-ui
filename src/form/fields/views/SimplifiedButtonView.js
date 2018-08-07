@@ -24,14 +24,15 @@ export default Marionette.View.extend({
             }
         ];
 
+        this.options.model.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
         const values = this.options.editor.getValue();
-        this.options.editor.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
+
         const collectionValues = this.__formatValues(this.options.editor.schema, values);
 
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 3) { //todo make dynamic
+        if (collectionValues.length > 4) {
             counterValue = collectionValues.length;
             collectionValues.splice(2, collectionValues.length - 3);
             showCounter = true;
@@ -43,7 +44,8 @@ export default Marionette.View.extend({
             gridViewOptions: {
                 columns,
                 showHeader: false,
-                class: 'simplified-button_grid'
+                class: 'simplified-button_grid',
+                emptyView: null
             },
             isSliding: false,
             collection: this.collection
@@ -53,6 +55,8 @@ export default Marionette.View.extend({
         if (showCounter) {
             this.ui.counterRegion.show();
             this.ui.counterRegionCounter.html(counterValue);
+        } else {
+            this.ui.counterRegion.hide();
         }
     },
 
@@ -62,8 +66,18 @@ export default Marionette.View.extend({
                 return Array.isArray(values) ? values.map(v => ({
                     value: `
                 <div class="user-edit-wrp" title="${v.name}">
-                    <div class="user-abr__container">
-                    ${v.userpicUri ? `<img src="${v.userpicUri}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                    <div class="simple-field_container">
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                </div>
+            </div>`
+                })) : [{ value: values.name }];
+            }
+            case 'Document': {
+                return Array.isArray(values) ? values.map(v => ({
+                    value: `
+                <div class="user-edit-wrp" title="${v.name}">
+                    <div class="simple-field_container">
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
                 </div>
             </div>`
                 })) : [{ value: values.name }];
@@ -112,6 +126,8 @@ export default Marionette.View.extend({
         if (showCounter) {
             this.ui.counterRegion.show();
             this.ui.counterRegionCounter.html(counterValue);
+        } else {
+            this.ui.counterRegion.hide();
         }
     }
 });
