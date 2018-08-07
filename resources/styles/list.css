@@ -506,6 +506,10 @@
     font-size: 13px;
 }
 
+.cell p{
+    margin-bottom: 0;
+}
+
 .cell__dots{
     position: absolute;
     left: 0;
