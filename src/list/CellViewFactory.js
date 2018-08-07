@@ -317,11 +317,8 @@ export default (factory = {
                             return '';
                         }
                         if (column.formatOptions) {
-                            if (column.formatOptions.format) {
-                                return new Intl.NumberFormat(Localizer.langCode, {
-                                    minimumIntegerDigits: 1,
-                                    minimumFractionDigits: 2
-                                }).format(value);
+                            if (column.formatOptions.intlOptions) {
+                                return new Intl.NumberFormat(Localizer.langCode, column.formatOptions.intlOptions).format(value);
                             } else if (column.formatOptions.allowFloat === false) {
                                 return Math.floor(v);
                             }
