@@ -1,6 +1,6 @@
 ﻿.fr-alert {
     min-height: 50px;
-    max-width: 50%;
+    max-width: 100%;
     font-size: 18px;
     color: #fff;
     border-radius: 5px;
@@ -10,6 +10,7 @@
     overflow: hidden;
     margin: 0.5rem;
     display: flex;
+    align-items: stretch;
 }
 .fr-alert .icon-container {
     display: flex;
@@ -20,10 +21,16 @@
     background-color: white;
     color: #41BCD5;
     font-size: 24px;
+
 }
 
 .notification-body_container{
-    padding: 0.5rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+
+.fr-alert .fr-alert-title{
+    padding-right:  0.5rem;;
 }
 
 .fr-alert .text-container {
@@ -33,6 +40,8 @@
     overflow-y: auto;
     max-height: calc(2em + 1rem);
     font-size: .9em;
+    white-space: normal;
+    padding-right:  0.5rem;;
 }
 
 .fr-alert .fr-alert-title + .text-container{
