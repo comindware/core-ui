@@ -3,6 +3,7 @@ import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
+import DateTimeService from '../form/editors/services/DateTimeService';
 
 let factory;
 
@@ -309,12 +310,36 @@ export default (factory = {
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                adjustedValue = this.__adjustValue(value) || '';
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        if (!v) {
+                            return '';
+                        }
+                        if (column.formatOptions) {
+                            if (column.formatOptions.format) {
+                                return new Intl.NumberFormat(Localizer.langCode, {
+                                    minimumIntegerDigits: 1,
+                                    minimumFractionDigits: 2
+                                }).format(value);
+                            } else if (column.formatOptions.allowFloat === false) {
+                                return Math.floor(v);
+                            }
+                        }
+                        return value;
+                    }).join(', ');
                 return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
                     .map(v => {
+                        const defaultOptions = {
+                            allowDays: true,
+                            allowHours: true,
+                            allowMinutes: true,
+                            allowSeconds: true
+                        };
+                        const options = Object.assign(defaultOptions, _.pick(column.formatOptions || {}, Object.keys(defaultOptions)));
                         let result = '';
                         if (value === 0) {
                             return '0';
@@ -324,14 +349,17 @@ export default (factory = {
                         }
 
                         const duration = dateHelpers.durationISOToObject(value);
-                        if (duration.days) {
+                        if (options.allowDays) {
                             result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
                         }
-                        if (duration.hours) {
+                        if (options.allowHours) {
                             result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
                         }
-                        if (duration.minutes) {
+                        if (options.allowMinutes) {
                             result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                        }
+                        if (options.allowSeconds) {
+                            result += `${duration.seconds + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
                         }
                         return result;
                     })
@@ -357,7 +385,14 @@ export default (factory = {
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
-                    .map(v => dateHelpers.dateToDateTimeString(v, column.format || 'generalDateShortTime')).join(', ');
+                    .map(v => {
+                        if (column.formatOptions) {
+                            const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(v, column.formatOptions.dateDisplayFormat) : '';
+                            const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(v, column.formatOptions.timeDisplayFormat) : '';
+                            return `${dateDisplayValue} ${timeDisplayValue}`;
+                        }
+                        return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
+                    }).join(', ');
                 return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
