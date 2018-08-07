@@ -192,7 +192,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (this.getOption('valueType') === 'id') {
             return value === undefined;
         }
-        return value === undefined || !value.length;
+        return value === undefined || value === null || !value.length;
     },
 
     getValue() {
