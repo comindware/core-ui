@@ -317,6 +317,10 @@ input[type="checkbox"].checkbox {
     border-radius: 0;
 }
 
+.editor_date-time_date .input{
+    padding: 4px 10px;
+}
+
 
 /* /Date Time/ */
 
