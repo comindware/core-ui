@@ -190,9 +190,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     isEmptyValue(): boolean {
         const value = this.getValue();
         if (this.getOption('valueType') === 'id') {
-            return !value;
+            return value === undefined;
         }
-        return !value || !value.length;
+        return value === undefined || value === null || !value.length;
     },
 
     getValue() {
@@ -200,7 +200,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             if (this.getOption('maxQuantitySelected') === 1) {
                 return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
             }
-            return Array.isArray(this.value) && this.value.map(value => (value && value.id ? value.id : value));
+            return Array.isArray(this.value) && this.value.map(value => (value && value.id !== undefined ? value.id : value));
         }
         return this.value;
     },
@@ -255,7 +255,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __adjustValue(value: DataValue): any {
-        if ((typeof value === 'string' || typeof value === 'number') && value) {
+        if ((typeof value === 'string' || typeof value === 'number') && value !== undefined) {
             return this.panelCollection.get(value) || [];
         }
         if (_.isUndefined(value) || value === null) {
@@ -265,7 +265,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             if (Array.isArray(value)) {
                 return value.map(v => this.panelCollection.get(v) || v);
             }
-            return this.panelCollection.get(value && value.id ? value.id : value);
+            return this.panelCollection.get(value && value.id !== undefined ? value.id : value);
         }
         return value;
     },
@@ -368,7 +368,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
             if (this.panelCollection.length > 0 && this.value) {
                 this.value.forEach(value => {
-                    const id = value && value.id ? value.id : value;
+                    const id = value && value.id !== undefined ? value.id : value;
 
                     if (this.panelCollection.has(id)) {
                         this.panelCollection.get(id).select({ isSilent: true });
@@ -391,7 +391,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __getDisplayText(value, displayAttribute) {
-        if (!value) {
+        if (value === undefined || value === null) {
             return '';
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
@@ -443,7 +443,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue() || []);
-        const removingModelIndex = selected.findIndex(s => (s && s.id ? s.id : s) === model.get('id'));
+        const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }

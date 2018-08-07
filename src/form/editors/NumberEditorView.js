@@ -3,7 +3,7 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
-import { maskInput, createNumberMask } from 'lib';
+import { maskInput, createNumberMask } from 'lib'; //docs: https://github.com/text-mask/text-mask/tree/master/addons
 
 const changeMode = {
     keydown: 'keydown',
