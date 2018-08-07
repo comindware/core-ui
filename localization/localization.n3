@@ -501,6 +501,8 @@
 
 <http://comindware.com/text/core/services/message/unsavedChanges#leave> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2018-05-21T07:32:41.8848072Z"; l10n:modificationDate "2018-05-21T07:34:12.7338392Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Leave"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Ivan Zaycev"; l10n:modifiedBy "Ivan Zaycev"; l10n:creationDate "2018-08-07T14:58:42.0086750Z"; l10n:modificationDate "2018-08-07T14:58:45.0498445Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Save and leave"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2018-05-21T07:32:45.9403509Z"; l10n:modificationDate "2018-05-21T07:34:33.5028108Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Stay"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/views#behaviors> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-25T12:42:37.1284525Z"; l10n:modificationDate "2015-08-25T12:42:37.1284525Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].

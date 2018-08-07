@@ -59,9 +59,17 @@ export default {
                     text: button.text,
                     customClass: button.customClass,
                     handler() {
-                        WindowService.closePopup(this.openedPopupId);
-                        this.openedPopupId = null;
-                        resolve(button.id);
+                        if (button.beforeLeaveFn) {
+                            button.beforeLeaveFn().then(() => {
+                                WindowService.closePopup(this.openedPopupId);
+                                this.openedPopupId = null;
+                                resolve(true);
+                            });
+                        } else {
+                            WindowService.closePopup(this.openedPopupId);
+                            this.openedPopupId = null;
+                            resolve(button.id);
+                        }
                     }
                 })),
                 content: `<div class='systemMessageBody'>${description}</div>`
@@ -75,21 +83,32 @@ export default {
     },
 
     showSystemMessage(messageConfiguration) {
+        const buttons = [
+            {
+                id: true,
+                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE'),
+                customClass: 'btn-small btn-outline'
+            },
+            {
+                id: false,
+                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY'),
+                customClass: 'btn-small'
+            }
+        ];
+
+        if (messageConfiguration.beforeLeaveFn) {
+            buttons.unshift({
+                id: 'saveAndLeave',
+                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.SAVEANDLEAVE'),
+                customClass: 'btn-small',
+                beforeLeaveFn: messageConfiguration.beforeLeaveFn
+            });
+        }
+
         const systemMessages = {
             unsavedChanges: {
                 description: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.DESCRIPTION'),
-                buttons: [
-                    {
-                        id: true,
-                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE'),
-                        customClass: 'btn-small btn-outline'
-                    },
-                    {
-                        id: false,
-                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY'),
-                        customClass: 'btn-small'
-                    }
-                ]
+                buttons
             }
         };
 

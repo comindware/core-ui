@@ -326,6 +326,8 @@
 
 <http://comindware.com/text/core/services/message/unsavedChanges#leave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти"; l10n:originalData "leave"].
 
+<http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить и выйти"; l10n:originalData "Save and leave"].
+
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
 
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
