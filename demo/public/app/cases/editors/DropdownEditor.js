@@ -2,9 +2,9 @@ import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const possibleItems = _.times(200, n => ({
-        id: n + 1,
-        text: `Text ${n + 1}`,
-        subtext: `subtext ${n + 1}`
+        id: n,
+        text: `Text ${n}`,
+        subtext: `subtext ${n}`
     }));
 
     const model = new Backbone.Model({
