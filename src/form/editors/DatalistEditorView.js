@@ -390,7 +390,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __getDisplayText(value, displayAttribute) {
-        if (value === undefined) {
+        if (value === undefined || value === null) {
             return '';
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
