@@ -34,6 +34,7 @@ const defaultOptions = {
     textFilterDelay: 300,
     collection: null,
     maxQuantitySelected: 1,
+    allowEmptyValue: true,
     canDeleteItem: true,
     valueType: 'normal',
     showSearch: true,
@@ -119,7 +120,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
-                canDeleteItem: this.options.canDeleteItem,
+                canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()

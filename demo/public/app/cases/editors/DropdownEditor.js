@@ -17,8 +17,8 @@ export default function() {
             key: 'dropdownValue',
             autocommit: true,
             collection: possibleItems,
-            createBySelect: true,
-            valueType: 'id'
+            valueType: 'id',
+            allowEmptyValue: false
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true
