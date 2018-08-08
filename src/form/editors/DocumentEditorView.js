@@ -229,6 +229,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     onSelectFiles(e) {
+        if (this.internalChange) {
+            return;
+        }
         const input = e.target;
         const files = input.files;
 
@@ -320,7 +323,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                     };
                     resultObjects.push(obj);
                 }
+                this.internalChange = true;
                 this.ui.fileUpload[0].value = null;
+                this.internalChange = false;
                 this.ui.form.trigger('reset');
                 this.trigger('uploaded', resultObjects);
             },
