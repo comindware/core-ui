@@ -52,12 +52,7 @@ export default Marionette.View.extend({
         });
 
         this.showChildView('gridRegion', grid);
-        if (showCounter) {
-            this.ui.counterRegion.show();
-            this.ui.counterRegionCounter.html(counterValue);
-        } else {
-            this.ui.counterRegion.hide();
-        }
+        this.__updateCounter(showCounter, counterValue);
     },
 
     __formatValues(schema, values) {
@@ -123,11 +118,17 @@ export default Marionette.View.extend({
             showCounter = true;
         }
         this.collection.reset(collectionValues);
-        if (showCounter) {
-            this.ui.counterRegion.show();
-            this.ui.counterRegionCounter.html(counterValue);
-        } else {
-            this.ui.counterRegion.hide();
+        this.__updateCounter(showCounter, counterValue);
+    },
+
+    __updateCounter(showCounter, counterValue) {
+        if (this.isRendered()) {
+            if (showCounter) {
+                this.ui.counterRegion.show();
+                this.ui.counterRegionCounter.html(counterValue);
+            } else {
+                this.ui.counterRegion.hide();
+            }
         }
     }
 });
