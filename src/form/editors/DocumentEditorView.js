@@ -24,6 +24,7 @@ const defaultOptions = {
     multiple: true,
     fileFormat: undefined,
     showRevision: true,
+    showAll: false,
     createDocuments: documents =>
         // todo: strange method
         Promise.resolve(
@@ -420,7 +421,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderShowMore() {
-        if (this.collapsed) {
+        if (this.collapsed && !this.options.showAll) {
             this.collapseShowMore();
         } else {
             this.expandShowMore();
@@ -428,7 +429,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     update() {
-        if (this.collapsed) {
+        if (this.collapsed && !this.options.showAll) {
             this.collapseShowMore();
         }
     },

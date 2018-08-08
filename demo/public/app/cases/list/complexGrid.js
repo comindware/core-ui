@@ -17,7 +17,7 @@ export default function () {
                 userCell: [{ id: 'user.1', columns: ['J. J.'] }],
                 referenceCell: { name: 'Ref 1' },
                 enumCell: { valueExplained: ['123'] },
-                documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+                documentCell: [{ id: '1', name: 'Doc 1', columns: ['Doc 1', 'url'] }, { id: '2', name: 'Doc 2', columns: ['Doc 2', 'url2'] }]
             };
             item.parent = parent;
             if (level > 0) {
@@ -82,6 +82,7 @@ export default function () {
             type: 'Document',
             title: 'Document Cell',
             editable: true,
+            showAll: true,
             width: 100
         },
         {

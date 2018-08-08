@@ -206,6 +206,7 @@ module.exports.apply = {
     },
     'button-icon-theme': {
         width: '30px',
+        'min-width': '30px',
         height: '30px',
         padding: '3px 0',
         'text-align': 'center'
