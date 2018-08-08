@@ -18,7 +18,8 @@ export default function () {
             max: 300,
             step: 3,
             intlOptions: {
-                useGrouping: false
+                useGrouping: true,
+                maximumFractionDigits: 3
             }
         }),
         presentation: '{{numberValue}}',
