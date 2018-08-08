@@ -224,8 +224,11 @@ input[type="checkbox"].checkbox {
 /* radiobutton */
 .editor_radiobutton {
     display: flex;
-    cursor: pointer;
     align-items: center;
+}
+
+.editor_radiobutton > .radiobutton {
+    cursor: pointer;
 }
 
 .radiobutton {

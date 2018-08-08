@@ -27,8 +27,12 @@ export default Marionette.View.extend({
         deselected: '__toggle'
     },
 
+    ui: {
+        btn: '.js-radiobutton'
+    },
+
     events: {
-        click: '__changeModelSelected'
+        'click @ui.btn': '__changeModelSelected'
     },
 
     onRender() {
