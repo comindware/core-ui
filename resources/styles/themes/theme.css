@@ -336,7 +336,7 @@ svg.svg-grid-icons {
 }
 
 .selected .cell,
-.cell_selection-index.selected {
+.cell_selection.selected {
   background-color: var(--grid-row-selected-color);
 }
 

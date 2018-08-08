@@ -76,6 +76,8 @@ export default Marionette.CompositeView.extend({
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
         this.height = options.height;
         this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
+        this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
+
 
         if (options.height === undefined) {
             this.height = defaultOptions.height;
@@ -315,7 +317,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __normalizePosition(position) {
-        const maxPos = Math.max(0, this.collection.length - this.state.visibleCollectionSize);
+        const maxPos = Math.max(0, this.collection.length - Math.max(this.minimumVisibleRows, this.state.visibleCollectionSize));
         return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE / 2));
     },
 
@@ -412,7 +414,7 @@ export default Marionette.CompositeView.extend({
             return;
         }
 
-        this.collection.updateWindowSize(visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE);
+        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
         this.handleResize();
     },
 

@@ -5,7 +5,7 @@ import ListCanvasView from 'demoPage/views/ListCanvasView';
 export default function() {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 1000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -64,7 +64,8 @@ export default function() {
         gridViewOptions: {
             columns,
             childHeight: 40,
-            useDefaultRowView: true
+            useDefaultRowView: true,
+            minimumVisibleRows: 100
         },
         collection: dataArray
     });
