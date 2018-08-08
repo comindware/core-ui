@@ -215,8 +215,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .layout__horizontal-layout > div,
 .layout__horizontal-layout-list-item {
-  padding-left: 5px;
-  padding-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .layout__vertical-layout > div,
 .layout__vertical-layout-item {
@@ -263,6 +263,21 @@ svg.svg-grid-icons.svg-icons_flag-none {
   left: 0;
   right: 0;
   padding: 0 20px 0 15px;
+}
+
+.cell > .editor.editor_document {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell > .editor.editor_document > .documents {
+  margin: 8px 0 0 3px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.cell > .editor.editor_document .task-links__i:before {
+  content: none;
 }
 
 .cell .js-tree-first-cell + .editor {

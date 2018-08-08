@@ -24,6 +24,7 @@ const defaultOptions = {
     multiple: true,
     fileFormat: undefined,
     showRevision: true,
+    showAll: false,
     createDocuments: documents =>
         // todo: strange method
         Promise.resolve(
@@ -228,6 +229,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     onSelectFiles(e) {
+        if (this.internalChange) {
+            return;
+        }
         const input = e.target;
         const files = input.files;
 
@@ -319,7 +323,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                     };
                     resultObjects.push(obj);
                 }
+                this.internalChange = true;
                 this.ui.fileUpload[0].value = null;
+                this.internalChange = false;
                 this.ui.form.trigger('reset');
                 this.trigger('uploaded', resultObjects);
             },
@@ -420,7 +426,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderShowMore() {
-        if (this.collapsed) {
+        if (this.collapsed && !this.options.showAll) {
             this.collapseShowMore();
         } else {
             this.expandShowMore();
@@ -428,7 +434,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     update() {
-        if (this.collapsed) {
+        if (this.collapsed && !this.options.showAll) {
             this.collapseShowMore();
         }
     },
