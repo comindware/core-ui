@@ -33,7 +33,7 @@ describe('Components', () => {
                 .getRegion('contentRegion')
                 .show(button);
 
-            button.$el.click();
+            button.ui.btn.click();
 
             expect(doneFn.calls.count()).toEqual(1);
         });
