@@ -30,8 +30,12 @@ export default Marionette.View.extend({
         }
     },
 
+    ui: {
+        btn: '.js-btn'
+    },
+
     events: {
-        click: '__onClick'
+        'click @ui.btn': '__onClick'
     },
 
     onRender() {
