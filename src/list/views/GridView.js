@@ -149,7 +149,8 @@ export default Marionette.View.extend({
             forbidSelection: this.forbidSelection,
             isTree: this.options.isTree,
             isEditable: this.isEditable,
-            showRowIndex
+            showRowIndex,
+            minimumVisibleRows: options.minimumVisibleRows
         });
 
         if (this.options.showCheckbox) {
