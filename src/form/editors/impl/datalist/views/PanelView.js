@@ -96,9 +96,5 @@ export default Marionette.View.extend({
         if (warningRegion) {
             count > collectionLength ? warningRegion.$el.show() : warningRegion.$el.hide();
         }
-    },
-
-    __valueSelect() {
-        this.reqres.request('value:select');
     }
 });

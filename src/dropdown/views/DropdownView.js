@@ -180,6 +180,11 @@ export default Marionette.View.extend({
         // trying to fit into viewport
         if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
             top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
+            if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
+                const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
+                top += diff;
+                panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
+            }
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
