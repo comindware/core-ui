@@ -17,9 +17,7 @@ export default ButtonView.extend({
     },
 
     onRender() {
-        if (this.model.get('isChecked')) {
-            this.ui.check.toggleClass(classes.CHECKED);
-        }
+        this.ui.check.toggleClass(classes.CHECKED, this.model.get('isChecked'));
     },
 
     events: {
@@ -29,6 +27,7 @@ export default ButtonView.extend({
     __handleClick() {
         const newState = !this.model.get('isChecked');
         this.model.set('isChecked', newState);
+        this.ui.check.toggleClass(classes.CHECKED, newState);
         this.trigger('action:click', this.model);
     }
 });
