@@ -129,6 +129,11 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             return;
         }
 
+        const parsed = this.__parse(value);
+        if (parsed === 0 && value[0] === '-') {
+            return;
+        }
+
         this.__value(value, true, this.isChangeModeKeydown, false);
     },
 

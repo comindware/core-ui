@@ -17,7 +17,7 @@ export default ButtonView.extend({
     },
 
     onRender() {
-        this.ui.check.toggleClass(classes.CHECKED, this.model.get('isChecked'));
+        this.ui.check.toggleClass(classes.CHECKED, !!this.model.get('isChecked'));
     },
 
     events: {
