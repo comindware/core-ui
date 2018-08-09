@@ -341,6 +341,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onValueUnset(model: Backbone.Model): void {
+        if (this.viewModel.button.selected.length === 1 && !this.options.allowEmptyValue) {
+            this.__focusButton();
+            this.dropdownView.close();
+            return;
+        }
         this.__onBubbleDelete(model);
     },
 
