@@ -32,9 +32,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 4) {
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 5) {
+            counterValue = `+${collectionValues.length - 5}`;
+            collectionValues.splice(5, collectionValues.length - 5);
             showCounter = true;
         }
 
@@ -112,9 +112,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 3) { //todo make dynamic
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 5) { //todo make dynamic
+            counterValue = `+${collectionValues.length}`;
+            collectionValues.splice(5, collectionValues.length - 5);
             showCounter = true;
         }
         this.collection.reset(collectionValues);

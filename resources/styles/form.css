@@ -1046,14 +1046,26 @@ input[type="color"], .colorpicker{
 }
 
 .simple-field_container {
-    height: 26px;
-    width: 26px;
+    height: 22px;
+    width: 22px;
     border-radius: 50%;
     text-align: center;
-    line-height: 26px;
+    line-height: 20px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 3px;
+    margin-top: 5px;
+}
+
+.simplified-button_grid .row + .row {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:first-child {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:last-child {
+    margin-right: 0!important;
 }
