@@ -56,6 +56,14 @@ export default Marionette.View.extend({
     },
 
     __formatValues(schema, values) {
+        const singleValue = values.length === 1;
+
+        if (singleValue) {
+            this.el.setAttribute('extended', true);
+        } else {
+            this.el.removeAttribute('extended');
+        }
+
         switch (schema.type) {
             case 'Datalist': {
                 return Array.isArray(values) ? values.map(v => ({
@@ -64,6 +72,7 @@ export default Marionette.View.extend({
                     <div class="simple-field_container">
                     ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
                 </div>
+                 ${singleValue ? v.name : ''}
             </div>`
                 })) : [{ value: values.name }];
             }

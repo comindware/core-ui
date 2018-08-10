@@ -1006,6 +1006,14 @@ input[type="color"], .colorpicker{
     justify-content: space-between;
 }
 
+.simplified-button_container[extended] .cell {
+    width: auto;
+}
+
+.simplified-button_container[extended] .cell .simple-field_container{
+    margin-right: 5px;
+}
+
 .simplified-button_grid .cell{
     min-width: 28px;
     width: 28px;
