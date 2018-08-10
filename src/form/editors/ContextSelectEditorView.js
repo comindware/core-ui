@@ -122,7 +122,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     __getButtonText(selectedItem) {
         if (!selectedItem || selectedItem === 'False') return '';
 
-        const itemId = selectedItem[selectedItem.length - 1];
+        const itemId = selectedItem[0];
         let text = '';
 
         Object.values(this.context).forEach(value => {
