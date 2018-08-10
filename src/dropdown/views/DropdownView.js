@@ -148,6 +148,16 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
+        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
+
+        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
+            panelEl.style.width = `${panelWidth}px`;
+        }
+
+        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            panelEl.style.minWidth = `${panelWidth}px`;
+        }
+
         const offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
@@ -188,16 +198,11 @@ export default Marionette.View.extend({
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
-        }
 
-        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
-
-        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelEl.style.width = `${panelWidth}px`;
-        }
-
-        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            panelEl.style.minWidth = `${panelWidth}px`;
+            if (offsetHeight > buttonRect.top) {
+                const diff = offsetHeight - buttonRect.top;
+                panelEl.style.height = `${offsetHeight - diff}px`;
+            }
         }
 
         panelEl.style.top = `${top}px`;
