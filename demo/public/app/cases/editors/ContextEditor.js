@@ -17,7 +17,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'id'
+                        id: 'id',
+                        alias: 'id_alias'
                     },
                     {
                         type: 'Account',
@@ -28,7 +29,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'lastModifier'
+                        id: 'lastModifier',
+                        alias: 'lastModifier_alias'
                     },
                     {
                         type: 'DateTime',
@@ -39,7 +41,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'lastWriteDate'
+                        id: 'lastWriteDate',
+                        alias: 'lastWriteDate_alias'
                     },
                     {
                         instanceTypeId: 'oa.1',
@@ -51,7 +54,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.2'
+                        id: 'op.2',
+                        alias: 'op.2_alias'
                     },
                     {
                         instanceTypeId: 'oa.1',
@@ -63,7 +67,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.1'
+                        id: 'op.1',
+                        alias: 'op.1_alias'
                     },
                     {
                         type: 'DateTime',
@@ -74,7 +79,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'creationDate'
+                        id: 'creationDate',
+                        alias: 'creationDate_alias'
                     },
                     {
                         type: 'Boolean',
@@ -85,7 +91,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'isDisabled'
+                        id: 'isDisabled',
+                        alias: 'isDisabled_alias'
                     },
                     {
                         type: 'Account',
@@ -96,7 +103,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'creator'
+                        id: 'creator',
+                        alias: 'creator_alias'
                     },
                     {
                         type: 'String',
@@ -107,7 +115,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.10'
+                        id: 'op.10',
+                        alias: 'op.10_alias'
                     },
                     {
                         instanceTypeId: 'oa.1',
@@ -119,7 +128,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.13'
+                        id: 'op.13',
+                        alias: 'op.13_alias'
                     },
                     {
                         instanceTypeId: 'oa.1',
@@ -131,7 +141,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.14'
+                        id: 'op.14',
+                        alias: 'op.14_alias'
                     },
                     {
                         type: 'String',
@@ -142,7 +153,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'engine:id'
+                        id: 'engine:id',
+                        alias: 'engine:id_alias'
                     },
                     {
                         type: 'String',
@@ -153,7 +165,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'id'
+                        id: 'id',
+                        alias: 'id_alias'
                     },
                     {
                         type: 'Account',
@@ -164,7 +177,8 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'creator'
+                        id: 'creator',
+                        alias: 'creator_alias'
                     }
                 ]
             },
