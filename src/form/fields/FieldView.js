@@ -20,7 +20,7 @@ export default Marionette.View.extend({
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId,  _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
+        this.__createEditor(options, this.fieldId, _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.listenTo(this.model, 'change', this.__updateExternalChange);
         }
@@ -47,7 +47,7 @@ export default Marionette.View.extend({
     onRender() {
         this.showChildView('editorRegion', this.editor);
         if (this.schema.helpText) {
-            this.__viewModel = new Backbone.Model({
+            const viewModel = new Backbone.Model({
                 helpText: this.schema.helpText,
                 errorText: null
             });
@@ -56,7 +56,7 @@ export default Marionette.View.extend({
                 buttonView: InfoButtonView,
                 panelView: TooltipPanelView,
                 panelViewOptions: {
-                    model: this.__viewModel,
+                    model: viewModel,
                     textAttribute: 'helpText'
                 },
                 popoutFlow: 'right',

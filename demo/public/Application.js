@@ -15,7 +15,8 @@ const rootView = Marionette.View.extend({
         <div class="js-navigation-drawer-region"></div>
         <div class="wrapper">
             <div class="js-header-region header-container"></div>
-		    <div class="js-content-region content-container"></div>
+            <div class="js-content-region content-container"></div>
+            <div class="js-toast-notification-region"></div>
 		</div>
     `),
 
@@ -24,7 +25,8 @@ const rootView = Marionette.View.extend({
     regions: {
         headerRegion: '.js-header-region',
         contentRegion: '.js-content-region',
-        navigationDrawerRegion: '.js-navigation-drawer-region'
+        navigationDrawerRegion: '.js-navigation-drawer-region',
+        toastNotificationRegion: '.js-toast-notification-region'
     }
 });
 
@@ -57,6 +59,10 @@ export default Marionette.Application.extend({
             userService: {
                 dataProvider
             }
+        });
+
+        Core.ToastNotifications.initialize({
+            toastNotificationRegion: this.getView().getRegion('toastNotificationRegion')
         });
 
         Backbone.history.start();

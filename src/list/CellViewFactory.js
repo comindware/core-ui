@@ -2,6 +2,8 @@
 import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
+import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
+import DateTimeService from '../form/editors/services/DateTimeService';
 
 let factory;
 
@@ -14,7 +16,7 @@ type Column = { key: string, columnClass: string, editable: boolean, type: strin
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            return EditableGridFieldView;
+            return column.simplified ? SimplifiedFieldView : EditableGridFieldView;
         }
 
         return factory.getCellHtml(column, model);
@@ -127,9 +129,9 @@ export default (factory = {
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-                '{{/if}}',
+            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}',
             extention
         );
     },
@@ -277,6 +279,16 @@ export default (factory = {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
+            case objectPropertyTypes.EXTENDED_STRING:
+                adjustedValue = this.__adjustValue(value);
+                return `
+                        <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
+                        <div class="context-icon context-icon-type_${model.get('type').toLocaleLowerCase()}"></div>
+                        <div class="extend_cell_text">
+                            <span class="extend_cell_header">${adjustedValue}</span>
+                            <span class="extend_info">${model.get('alias')}</span>
+                        </div>
+                        </div>`;
             case objectPropertyTypes.INSTANCE:
                 if (Array.isArray(value)) {
                     adjustedValue = value.map(v => v && v.name).join(', ');
@@ -308,12 +320,33 @@ export default (factory = {
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                adjustedValue = this.__adjustValue(value) || '';
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        if (!v) {
+                            return '';
+                        }
+                        if (column.formatOptions) {
+                            if (column.formatOptions.intlOptions) {
+                                return new Intl.NumberFormat(Localizer.langCode, column.formatOptions.intlOptions).format(value);
+                            } else if (column.formatOptions.allowFloat === false) {
+                                return Math.floor(v);
+                            }
+                        }
+                        return value;
+                    }).join(', ');
                 return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
                     .map(v => {
+                        const defaultOptions = {
+                            allowDays: true,
+                            allowHours: true,
+                            allowMinutes: true,
+                            allowSeconds: true
+                        };
+                        const options = Object.assign(defaultOptions, _.pick(column.formatOptions || {}, Object.keys(defaultOptions)));
                         let result = '';
                         if (value === 0) {
                             return '0';
@@ -323,14 +356,17 @@ export default (factory = {
                         }
 
                         const duration = dateHelpers.durationISOToObject(value);
-                        if (duration.days) {
+                        if (options.allowDays) {
                             result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
                         }
-                        if (duration.hours) {
+                        if (options.allowHours) {
                             result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
                         }
-                        if (duration.minutes) {
+                        if (options.allowMinutes) {
                             result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                        }
+                        if (options.allowSeconds) {
+                            result += `${duration.seconds + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
                         }
                         return result;
                     })
@@ -356,7 +392,14 @@ export default (factory = {
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
-                    .map(v => dateHelpers.dateToDateTimeString(v, column.format || 'generalDateShortTime')).join(', ');
+                    .map(v => {
+                        if (column.formatOptions) {
+                            const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(v, column.formatOptions.dateDisplayFormat) : '';
+                            const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(v, column.formatOptions.timeDisplayFormat) : '';
+                            return `${dateDisplayValue} ${timeDisplayValue}`;
+                        }
+                        return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
+                    }).join(', ');
                 return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
@@ -370,7 +413,8 @@ export default (factory = {
                         .join(', ')}</div>`;
                 }
             default:
-                return `<div class="cell ${column.columnClass}"></div>`;
+                adjustedValue = this.__adjustValue(value);
+                return `<div class="cell ${column.columnClass}">${adjustedValue || ''}</div>`;
         }
     },
 

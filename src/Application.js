@@ -15,7 +15,7 @@ import ThemeService from './services/ThemeService';
 import 'backbone.trackit';
 
 export default {
-    start(options) {
+    async start(options) {
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
@@ -26,10 +26,10 @@ export default {
         InterfaceErrorMessageService.initialize();
 
         const toastNotificationRegion = options.toastNotificationRegion;
+
         if (toastNotificationRegion) {
             ToastNotificationService.initialize({
-                toastNotificationRegion,
-                toastNotificationRegionEl: toastNotificationRegion.el
+                toastNotificationRegion
             });
         }
 
@@ -56,6 +56,8 @@ export default {
                 context: options.navigationConfiguration.context,
                 configurationKey: options.navigationConfiguration.configurationKey
             });
+
+            await window.application.navigationController.initializeModule();
 
             RoutingService.initialize({
                 defaultUrl: window.application.navigationController.getDefaultUrl(),

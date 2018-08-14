@@ -1,6 +1,10 @@
 //@flow
-import template from '../templates/actionMenuButton.html';
+import ButtonView from './ButtonView';
 
-export default Marionette.View.extend({
-    template: Handlebars.compile(template)
+export default ButtonView.extend({
+    templateContext() {
+        return {
+            isGroup: true
+        };
+    }
 });

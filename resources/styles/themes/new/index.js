@@ -144,7 +144,7 @@ const variables = {
     'dropdown-item-hover-color': 'var(--blue-100)',
     'bubbles-item-delete-padding': '20px',
     'bubbles-item-edit-delete-padding': '40px',
-    'bubbles-icon-offset-x': '6px',
+    'bubbles-icon-offset-x': '5px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
@@ -206,6 +206,7 @@ module.exports.apply = {
     },
     'button-icon-theme': {
         width: '30px',
+        'min-width': '30px',
         height: '30px',
         padding: '3px 0',
         'text-align': 'center'
@@ -220,8 +221,7 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        padding: '4px 5px 0px 0',
-        transition: 'padding-right .3s'
+        padding: '4px 20px 0px 0'
     },
     'input-theme': {
         border: variables.border,
@@ -296,7 +296,7 @@ module.exports.apply = {
     'tab-panel-container-theme': {
         border: variables.border,
         'background-color': variables.white,
-        'border-radius': '0 4px 4px 4px'
+        'border-radius': '0 0 4px 4px'
     },
     'tab-move-btn-theme': {
         right: '0',

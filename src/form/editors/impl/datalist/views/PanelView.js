@@ -70,7 +70,11 @@ export default Marionette.View.extend({
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
 
-        this.listenTo(this.listView, 'update:height', () => this.trigger('change:content'));
+        this.listenTo(this.listView, 'update:height', () => {
+            this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
+            this.trigger('change:content');
+        });
+        this.listenTo(collection, 'add reset update', () => this.__toggleElementsQuantityWarning(collection.length, collection.totalCount));
     },
 
     handleCommand(command) {
@@ -92,9 +96,5 @@ export default Marionette.View.extend({
         if (warningRegion) {
             count > collectionLength ? warningRegion.$el.show() : warningRegion.$el.hide();
         }
-    },
-
-    __valueSelect() {
-        this.reqres.request('value:select');
     }
 });

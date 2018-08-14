@@ -17,6 +17,7 @@ export default Marionette.View.extend({
         helpers.ensureOption(options, 'view');
 
         this.model = new Backbone.Model(Object.assign(defaults, options));
+        this.model.set({ collapsible: options.collapsible === undefined ? true : options.collapsible });
         this.listenTo(this.model, 'change:collapsed', this.__onCollapsedChange);
     },
 
@@ -59,6 +60,9 @@ export default Marionette.View.extend({
     },
 
     __toggleCollapse() {
+        if (!this.model.get('collapsible')) {
+            return;
+        }
         if (this.model.get('collapsible') !== false) {
             this.model.set('collapsed', !this.model.get('collapsed'));
             return false;

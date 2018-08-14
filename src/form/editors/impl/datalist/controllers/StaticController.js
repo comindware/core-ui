@@ -8,7 +8,7 @@ export default BaseReferenceEditorController.extend({
                 const filterText = options.text.trim().toUpperCase();
                 if (filterText) {
                     this.collection.filter(model => {
-                        const text = model.get('text');
+                        const text = model.get('text') || model.get(this.options.displayAttribute);
                         if (!text) {
                             return false;
                         }

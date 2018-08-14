@@ -24,7 +24,7 @@ export default Marionette.View.extend({
             el: '.js-collection-region',
             replaceElement: true
         },
-        loadingRegion: '.js-loading-region'
+        loadingRegion: '.js-datalist-loading-region'
     },
 
     events: {

@@ -2,7 +2,9 @@
 import ActionPanelChildView from './ActionPanelChildView';
 
 export default Marionette.CollectionView.extend({
-    className: 'toolbar-panel_container',
+    className() {
+        return `toolbar-panel_container ${this.options.class || ''}`;
+    },
 
     template: false,
 

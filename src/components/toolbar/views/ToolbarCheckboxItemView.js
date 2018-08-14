@@ -1,23 +1,23 @@
 //@flow
-import template from '../templates/toolbarCheckboxItem.html';
+import ButtonView from './ButtonView';
 
 const classes = {
     CHECKED: 'editor_checked'
 };
 
-export default Marionette.View.extend({
-    className: 'toolbar-btn',
-
-    template: Handlebars.compile(template),
-
+export default ButtonView.extend({
     ui: {
         check: '.js-check'
     },
 
+    templateContext() {
+        return {
+            checkbox: true
+        };
+    },
+
     onRender() {
-        if (this.model.get('isChecked')) {
-            this.ui.check.toggleClass(classes.CHECKED);
-        }
+        this.ui.check.toggleClass(classes.CHECKED, !!this.model.get('isChecked'));
     },
 
     events: {
@@ -27,6 +27,7 @@ export default Marionette.View.extend({
     __handleClick() {
         const newState = !this.model.get('isChecked');
         this.model.set('isChecked', newState);
+        this.ui.check.toggleClass(classes.CHECKED, newState);
         this.trigger('action:click', this.model);
     }
 });

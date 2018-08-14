@@ -11,13 +11,15 @@ export default function () {
         view: new core.form.editors.NumberEditor({
             model,
             key: 'numberValue',
-            changeMode: 'keydown',
+            changeMode: 'keydown', //default - 'blur', like browser behavior
             autocommit: true,
-            min: -300,
-            max: 300,
+            min: 10000,
+            max: 300000,
             step: 3,
             allowFloat: true,
-            format: 'currency'
+            intlOptions: { //options for new Intl.NumberFormat([locales[, options]])
+                minimumFractionDigits: 2
+            }
         }),
         presentation: '{{numberValue}}',
         isEditor: true

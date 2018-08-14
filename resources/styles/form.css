@@ -1,4 +1,4 @@
-﻿/* CSS form and editors
+/* CSS form and editors
 
 #70787f; 	// Label text
 			// disabled label text
@@ -182,13 +182,6 @@ rgba(5,117,189,.5) // user avatar btn
     pointer-events: none;
 }
 
-.editor_disabled div.time-view,
-.editor_disabled div.date-view {
-    pointer-events: auto;
-}
-
-
-
 /* checkbox */
 input[type="checkbox"].checkbox {
     display: none;
@@ -196,6 +189,7 @@ input[type="checkbox"].checkbox {
 .editor_checkbox {
     max-width: 100%;
     display: inline-flex;
+    flex-shrink: 0;
 }
 
 .checkbox {
@@ -232,6 +226,7 @@ input[type="checkbox"].checkbox {
     display: flex;
     cursor: pointer;
     align-items: center;
+    width: fit-content;
 }
 
 .radiobutton {
@@ -311,12 +306,20 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
 }
-.editor_date-time .dropdown {
-    flex-shrink: 1;
-    flex-basis: 100px;
+.editor_date-time .dropdown.editor_date-time_date {
+    flex: 0 0 140px;
 }
+.editor_date-time .dropdown.editor_date-time_time {
+    flex: 1 0 70px;
+}
+
 .editor_date-time .input{
     border: 0;
+    border-radius: 0;
+}
+
+.editor_date-time_date .input{
+    padding: 4px 10px;
 }
 
 
@@ -774,6 +777,7 @@ input[type="color"], .colorpicker{
 
 .editor:hover .editor__icons.icon-remove {
     visibility: visible;
+    padding: 0px 5px;
 }
 
 .dd-list__filter_reference:hover .editor__icons.icon-remove {
@@ -805,11 +809,6 @@ input[type="color"], .colorpicker{
     color:inherit;
 }
 
-.date-view .dropdown__wrp{
-    width: 220px;
-}
-
-
 /*-----//------*/
 
 
@@ -823,7 +822,7 @@ input[type="color"], .colorpicker{
 }
 
 .editor_hidden {
-    display: none;
+    display: none !important;
 }
 
 .grid-cell .dev-code-button-edit {
@@ -999,4 +998,82 @@ input[type="color"], .colorpicker{
 
 .dev-expression-editor-field-inline .editor {
     position: relative!important;
+}
+
+.simplified-button_container {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.simplified-button_container[extended] .cell {
+    width: auto;
+}
+
+.simplified-button_container[extended] .cell .simple-field_container{
+    margin-right: 5px;
+}
+
+.simplified-button_grid .cell{
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+    box-shadow: none!important;
+}
+
+.simplified-button_grid .visible-collection-wrp {
+    flex-direction: row;
+    display: flex;
+}
+
+.simplified-button_grid .visible-collection {
+    height: 35px;
+}
+
+.simplified-button_grid .grid-content-view{
+    overflow: hidden;
+}
+
+.counter_container {
+  display: flex;
+  align-items: center;
+}
+
+.cell > .simplified-panel_container {
+    margin-top: 1px;
+    margin-bottom: 1px;
+    height: 33px;
+}
+
+.simplified-panel_container {
+    position: fixed;
+}
+
+.user-edit-wrp {
+    display: flex;
+}
+
+.simple-field_container {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #0575bd;
+    margin-left: 1px;
+    margin-top: 5px;
+}
+
+.simplified-button_grid .row + .row {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:first-child {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:last-child {
+    margin-right: 0!important;
 }

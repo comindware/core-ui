@@ -11,7 +11,7 @@ export default () => {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
+            referenceCell: [{ id: 'task.1', name: 'Ref 1' }, { id: 'task.2', name: 'Ref 2' }, { id: 'task.3', name: 'Ref 3' }, { id: 'task.4', name: 'Ref 4' }, { id: 'task.5', name: 'Ref 5' }, { id: 'task.6', name: 'Ref 6' }, { id: 'task.7', name: 'Ref 7' }],
             enumCell: { valueExplained: ['123'] },
             documentCell: [
                 {
@@ -46,6 +46,7 @@ export default () => {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
+            simplified: true,
             dataType: 'DateTime',
             title: 'DateTime Cell',
             editable: true,
@@ -73,7 +74,8 @@ export default () => {
             type: 'Document',
             dataType: 'Document',
             title: 'Document',
-            // editable: true,
+            simplified: true,
+            editable: true,
             autocommit: true
         },
         {
@@ -81,6 +83,8 @@ export default () => {
             type: 'Datalist',
             dataType: 'Instance',
             title: 'Reference Cell',
+            simplified: true,
+            required: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             autocommit: true,

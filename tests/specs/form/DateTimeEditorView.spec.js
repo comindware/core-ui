@@ -4,11 +4,11 @@ import 'jasmine-jquery';
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
         const findDateInput = function (view) {
-            return view.$('.js-date-input');
+            return view.$('input:first');
         };
 
         const findTimeInput = function (view) {
-            return view.$('.js-time-input');
+            return view.$('input:last');
         };
 
         const selectTodayOnOpenPanel = function (view) {
@@ -79,7 +79,8 @@ describe('Editors', () => {
             // assert
             const expected = model.get('data');
             expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
-            expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
+            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
+            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -99,7 +100,8 @@ describe('Editors', () => {
 
             // assert
             expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
-            expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
+            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
+            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -297,7 +299,7 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            document.getElementsByClassName('js-time-input')[0].click();
+            findTimeInput(view)[0].click();
 
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
@@ -323,9 +325,11 @@ describe('Editors', () => {
                 done();
             });
 
-            document.getElementsByClassName('js-time-input')[0].click();
+            findTimeInput(view)[0].click();
 
-            document.getElementsByClassName('time-dropdown__i')[4].click();
+            document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
+
+            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
         });
     });
 });

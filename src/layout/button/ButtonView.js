@@ -17,7 +17,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            customClass: this.options.customClass || '',
+            customClass: this.options.class || '',
             text: this.options.text
         };
     },
@@ -30,8 +30,12 @@ export default Marionette.View.extend({
         }
     },
 
+    ui: {
+        btn: '.js-btn'
+    },
+
     events: {
-        click: '__onClick'
+        'click @ui.btn': '__onClick'
     },
 
     onRender() {

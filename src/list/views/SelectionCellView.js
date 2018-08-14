@@ -47,15 +47,18 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.checkbox': '__handleClick',
+        'click @ui.checkbox': '__handleCheckboxClick',
         'dragstart @ui.dots': '__handleDragStart',
         'dragend @ui.dots': '__handleDragEnd',
+        click: '__handleClick',
+        dblclick: '__handleDblClick',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave'
+        mouseleave: '__handleMouseLeave',
+        contextmenu: '__handleContextMenu'
     },
 
     modelEvents: {
@@ -85,7 +88,19 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleClick() {
+    __handleClick(event) {
+        if (!this.selectAllCell) {
+            this.model.trigger('click', event);
+        }
+    },
+
+    __handleDblClick(event) {
+        if (!this.selectAllCell) {
+            this.model.trigger('dblclick', event);
+        }
+    },
+
+    __handleCheckboxClick() {
         if (this.selectAllCell) {
             this.collection.toggleCheckAll();
         } else {
@@ -164,6 +179,12 @@ export default Marionette.View.extend({
         this.el.classList.remove(classes.dragover);
         if (this.collection.draggingModel) {
             this.trigger('drag:drop', this.collection.draggingModel, this.model);
+        }
+    },
+
+    __handleContextMenu(event) {
+        if (!this.selectAllCell) {
+            this.model.trigger('contextmenu', event);
         }
     },
 

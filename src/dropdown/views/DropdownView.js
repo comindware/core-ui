@@ -88,7 +88,9 @@ export default Marionette.View.extend({
 
     template: false,
 
-    className: 'dropdown',
+    className() {
+        return `dropdown ${this.options.class || ''}`;
+    },
 
     ui: {
         button: '.js-button-region'
@@ -146,6 +148,16 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
+        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
+
+        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
+            panelEl.style.width = `${panelWidth}px`;
+        }
+
+        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            panelEl.style.minWidth = `${panelWidth}px`;
+        }
+
         const offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
@@ -178,19 +190,19 @@ export default Marionette.View.extend({
         // trying to fit into viewport
         if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
             top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
+            if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
+                const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
+                top += diff;
+                panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
+            }
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
-        }
 
-        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
-
-        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelEl.style.width = `${panelWidth}px`;
-        }
-
-        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            panelEl.style.minWidth = `${panelWidth}px`;
+            if (offsetHeight > buttonRect.top) {
+                const diff = offsetHeight - buttonRect.top;
+                panelEl.style.height = `${offsetHeight - diff}px`;
+            }
         }
 
         panelEl.style.top = `${top}px`;

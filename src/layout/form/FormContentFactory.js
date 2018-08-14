@@ -49,13 +49,10 @@ export default {
                     );
                 case 'Popup':
                 case 'popup':
-                    return new Popup(_.pick(child, ['size', 'header', 'content']));
+                    return new Popup(_.omit(child, 'type'));
                 case 'Button':
                 case 'button':
-                    return new Button({
-                        text: child.text,
-                        handler: child.handler
-                    });
+                    return new Button(_.omit(child, 'type'));
                 case 'grid': {
                     const controller = new GridController(child);
 

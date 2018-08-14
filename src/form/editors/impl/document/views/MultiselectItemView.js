@@ -31,7 +31,7 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'task-links__i dev-task-links__links__i',
+    className: 'task-links__i',
 
     ui: {
         remove: '.js-bubble-delete',

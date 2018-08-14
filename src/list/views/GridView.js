@@ -38,6 +38,7 @@ import SearchBarView from '../../views/SearchBarView';
  * @param {Array} options.columns массив колонок
  * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
  * @param {Number} options.childHeight высота строки списка (childView)
+ * @param {Number} options.maxHeight максимальная высота всего списка
  * @param {Backbone.View} [options.childView] view строки списка
  * @param {Backbone.View} [options.childViewOptions] опции для childView
  * @param {Function} options.childViewSelector ?
@@ -148,7 +149,8 @@ export default Marionette.View.extend({
             forbidSelection: this.forbidSelection,
             isTree: this.options.isTree,
             isEditable: this.isEditable,
-            showRowIndex
+            showRowIndex,
+            minimumVisibleRows: options.minimumVisibleRows
         });
 
         if (this.options.showCheckbox) {
@@ -305,7 +307,7 @@ export default Marionette.View.extend({
         if (this.options.showSearch) {
             this.searchView.focus();
         }
-        this.ui.content.css('maxHeight', window.innerHeight);
+        this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         // if (this.collection.visibleLength) {
         //     this.collection.select(this.collection.at(0), false, false, false);
         // }
@@ -337,7 +339,7 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        this.styleSheet && document.body && document.body.removeChild(this.styleSheet);
+        this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {

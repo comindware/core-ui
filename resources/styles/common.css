@@ -360,8 +360,8 @@ a:hover {
 /* native scroll */
 
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1057,7 +1057,7 @@ a:hover {
 /* -------- context select ------*/
 .data-source-popout-view {
     min-width: 165px;
-    max-width: 255px;
+    max-width: 400px;
     overflow: hidden;
     position: fixed;
     background-color: white;

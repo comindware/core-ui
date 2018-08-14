@@ -1,24 +1,16 @@
 import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';
-import template from '../templates/dateInput.hbs';
+import TextEditorView from '../../../TextEditorView';
 
-export default Marionette.View.extend({
+export default TextEditorView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
     },
 
-    template: Handlebars.compile(template),
-
-    className: 'date-view',
-
-    ui: {
-        dateInput: '.js-date-input'
-    },
-
     events: {
         click: '__onClick',
-        'focus @ui.dateInput': '__onFocus'
+        'focus @ui.input': '__onFocus'
     },
 
     onRender() {
@@ -27,7 +19,7 @@ export default Marionette.View.extend({
     },
 
     setPlaceholder() {
-        this.ui.dateInput.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'));
+        this.ui.input.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'));
     },
 
     setValue(value) {
@@ -35,7 +27,7 @@ export default Marionette.View.extend({
             return;
         }
         const displayValue = DateTimeService.getDateDisplayValue(value, this.options.dateDisplayFormat);
-        this.ui.dateInput.val(displayValue);
+        this.ui.input.val(displayValue);
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);
         }
@@ -50,7 +42,7 @@ export default Marionette.View.extend({
     },
 
     focus() {
-        this.ui.dateInput.focus();
+        this.ui.input.focus();
         this.trigger('focus');
         this.trigger('calendar:open');
     }

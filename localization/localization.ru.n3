@@ -22,11 +22,15 @@
 
 <http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
 
+<http://comindware.com/text/core/form/editors/code#compile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Компилировать"; l10n:originalData "Compile"].
+
 <http://comindware.com/text/core/form/editors/code#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "edit"].
 
 <http://comindware.com/text/core/form/editors/code#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "empty"].
 
 <http://comindware.com/text/core/form/editors/code#emptyDescription> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Описание отсутствует"; l10n:originalData "emptyDescription"].
+
+<http://comindware.com/text/core/form/editors/code#errors> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибки"; l10n:originalData "Errors"].
 
 <http://comindware.com/text/core/form/editors/code#find> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Найти"; l10n:originalData "Find"].
 
@@ -34,13 +38,39 @@
 
 <http://comindware.com/text/core/form/editors/code#hint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Автозаполнение"; l10n:originalData "Autocomplete"].
 
+<http://comindware.com/text/core/form/editors/code#info> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Информация"; l10n:originalData "Info"].
+
 <http://comindware.com/text/core/form/editors/code#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Развернуть"; l10n:originalData "Maximize"].
 
 <http://comindware.com/text/core/form/editors/code#minimize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Свернуть"; l10n:originalData "Minimize"].
 
+<http://comindware.com/text/core/form/editors/code#nosuggestions> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "нет предложений"; l10n:originalData "no suggestions"].
+
 <http://comindware.com/text/core/form/editors/code#redo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Повторить"; l10n:originalData "Redo"].
 
+<http://comindware.com/text/core/form/editors/code#successfulcompile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Успешная компиляция"; l10n:originalData "Successful compile"].
+
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
+
+<http://comindware.com/text/core/form/editors/code#warnings> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждения"; l10n:originalData "Warnings"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сообщение"; l10n:originalData "message"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "messcode"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сообщение"; l10n:originalData "message"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "Messcode"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#warninglevel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Уровень ошибки"; l10n:originalData "Warning level"].
 
 <http://comindware.com/text/core/form/editors/collection#addNewItem> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить новый элемент"; l10n:originalData "Add a new item"].
 
@@ -78,13 +108,13 @@
 
 <http://comindware.com/text/core/form/editors/duration#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#days> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " д"; l10n:originalData " d"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#days> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "д"; l10n:originalData "d"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#hours> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " ч"; l10n:originalData " h"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#hours> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ч"; l10n:originalData "h"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#minutes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " м"; l10n:originalData " m"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#minutes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "м"; l10n:originalData "m"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " с"; l10n:originalData " s"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "с"; l10n:originalData "s"].
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/days#separatorChar> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "д"; l10n:originalData "d"].
 
@@ -204,6 +234,8 @@
 
 <http://comindware.com/text/core/form/fields#errorField> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибка при инициализации поля"; l10n:originalData "errorView"].
 
+<http://comindware.com/text/core/form/validation#code> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отношение кода к комментарию должно быть не менее 25%"; l10n:originalData "Ratio of the code to the commentary should not be less than 25%"].
+
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
@@ -293,6 +325,8 @@
 <http://comindware.com/text/core/services/message/unsavedChanges#description> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти без сохранения?"; l10n:originalData "Exit without saving?"].
 
 <http://comindware.com/text/core/services/message/unsavedChanges#leave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти"; l10n:originalData "leave"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить и выйти"; l10n:originalData "Save and leave"].
 
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
 

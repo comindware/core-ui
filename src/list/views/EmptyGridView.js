@@ -22,5 +22,6 @@ export default Marionette.View.extend({
     },
 
     template: Handlebars.compile(template),
+
     className: 'empty-view'
 });

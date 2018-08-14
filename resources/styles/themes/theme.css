@@ -61,6 +61,24 @@ body {
   color: var(--warning-color);
 }
 
+.cell.error .form-label__error{
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: -13px;
+}
+
+.cell.error .form-label__error-button{
+  height: 0;
+  width: 0;
+  border-top: 10px solid #e61212;
+  border-right: 10px solid transparent;
+}
+
+.cell.error .form-label__error-button:before{
+  display: none;
+}
+
 /*------------------ Form Editor ------------------*/
 .editor {
   font-size: var(--editor-font-size);
@@ -156,6 +174,7 @@ body {
   display: inline-block;
   white-space: nowrap;
   margin-left: 10px;
+  user-select: none;
 }
 
 .editor_readonly .checkbox-text,
@@ -213,7 +232,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
-  padding: var(--input-padding);
+  overflow: hidden;
 }
 
 .editor_disabled.editor_date-time,
@@ -296,7 +315,6 @@ svg.svg-grid-icons {
   color: var(--text-color);
   box-shadow: var(--grid-cell-border);
   padding: var(--grid-cell-padding);
-  background-color: var(--grid-cell-bg);
 }
 
 .grid__headless .row:first-child .cell{
@@ -318,7 +336,7 @@ svg.svg-grid-icons {
 }
 
 .selected .cell,
-.cell_selection-index.selected {
+.cell_selection.selected {
   background-color: var(--grid-row-selected-color);
 }
 
@@ -399,6 +417,10 @@ svg.svg-grid-icons {
 .cell.selected:not(.cell_selection){
   outline: 1px solid #0575bd;
 }
+.cell-focused.error{
+  outline-color: #e61212;
+}
+
 
 .collapsible-btn {
   position: relative;
@@ -480,11 +502,16 @@ svg.svg-grid-icons {
 .bubbles__caret {
   @apply --dropdown-caret-theme;
 }
+.editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {
+  color: inherit;
+}
 .bubbles .editor__icons {
   cursor: pointer;
   transform: none;
   top: var(--bubbles-icon-offset-x);
-  right: 0;
+  right: 2px;
+  top: 6px;
+  font-size: 16px;
 }
 .editor_bubble--edit.editor_bubble--delete .icon-edit {
   right: 15px;
@@ -498,10 +525,6 @@ svg.svg-grid-icons {
 }
 .bubbles__i {
   @apply --bubbles-item-theme;
-}
-
-.editor_bubble--single .bubbles {
-  @apply --dropdown-theme;
 }
 
 .bubbles .bubbles__caret,
@@ -731,7 +754,7 @@ svg.svg-grid-icons {
 }
 
 .layout__group-collapsed__button svg {
-  transform: rotate(-90deg);
+  transform: rotate(+90deg);
 }
 
 .group-title.layout__group-collapsed__button{

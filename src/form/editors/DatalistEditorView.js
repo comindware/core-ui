@@ -34,6 +34,7 @@ const defaultOptions = {
     textFilterDelay: 300,
     collection: null,
     maxQuantitySelected: 1,
+    allowEmptyValue: true,
     canDeleteItem: true,
     valueType: 'normal',
     showSearch: true,
@@ -77,7 +78,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.controller =
             this.options.controller ||
             new StaticController({
-                collection: options.collection
+                collection: options.collection,
+                displayAttribute: options.displayAttribute
             });
 
         this.value = this.__adjustValue(this.value);
@@ -118,7 +120,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
-                canDeleteItem: this.options.canDeleteItem,
+                canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
@@ -180,19 +182,26 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.showChildView('dropdownRegion', this.dropdownView);
 
         this.__updateFakeInputModel();
+
+        if (this.options.valueType === 'id' && (!this.options.collection || this.options.collection.length === 0)) {
+            this.__requestAndResetButtonViewData();
+        }
     },
 
     isEmptyValue(): boolean {
         const value = this.getValue();
         if (this.getOption('valueType') === 'id') {
-            return !value;
+            return value == null;
         }
-        return !value || !value.length;
+        return value == null || !value.length;
     },
 
     getValue() {
-        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') === 1) {
-            return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
+        if (this.getOption('valueType') === 'id') {
+            if (this.getOption('maxQuantitySelected') === 1) {
+                return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
+            }
+            return Array.isArray(this.value) && this.value.map(value => (value && value.id !== undefined ? value.id : value));
         }
         return this.value;
     },
@@ -230,21 +239,34 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.__updateWithDelay();
     },
 
+    onAttach() {
+        if (this.options.openOnRender) {
+            this.__onButtonClick();
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;
         }
         this.activeText = this.searchText;
         this.isFilterDeayed = false;
+
         return this.__onFilterText();
     },
 
     __adjustValue(value: DataValue): any {
-        if ((typeof value === 'string' || typeof value === 'number') && value) {
+        if ((typeof value === 'string' || typeof value === 'number') && value !== undefined) {
             return this.panelCollection.get(value) || [];
         }
         if (_.isUndefined(value) || value === null) {
             return [];
+        }
+        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
+            if (Array.isArray(value)) {
+                return value.map(v => this.panelCollection.get(v) || v);
+            }
+            return this.panelCollection.get(value && value.id !== undefined ? value.id : value);
         }
         return value;
     },
@@ -319,6 +341,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onValueUnset(model: Backbone.Model): void {
+        if (this.viewModel.button.selected.length === 1 && !this.options.allowEmptyValue) {
+            this.__focusButton();
+            this.dropdownView.close();
+            return;
+        }
         this.__onBubbleDelete(model);
     },
 
@@ -338,20 +365,24 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.updateFilter(value, immediate);
     },
 
-    __onFilterText() {
+    async __onFilterText() {
         this.dropdownView.buttonView.setLoading(true);
+
         return this.controller.fetch({ text: this.searchText }).then(data => {
-            this.panelCollection.reset(data.collection);
             this.panelCollection.totalCount = data.totalCount;
+            this.panelCollection.reset(data.collection);
 
             if (this.panelCollection.length > 0 && this.value) {
-                this.value.forEach(model => {
-                    if (this.panelCollection.has(model.id)) {
-                        this.panelCollection.get(model.id).select({ isSilent: true });
+                this.value.forEach(value => {
+                    const id = value && value.id !== undefined ? value.id : value;
+
+                    if (this.panelCollection.has(id)) {
+                        this.panelCollection.get(id).select({ isSilent: true });
                     }
                 });
             }
             this.dropdownView.buttonView.setLoading(false);
+
             this.__tryPointFirstRow();
         });
     },
@@ -366,7 +397,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __getDisplayText(value, displayAttribute) {
-        if (!value) {
+        if (value == null) {
             return '';
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
@@ -418,7 +449,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue() || []);
-        const removingModelIndex = selected.findIndex(s => (s ? s.id : s) === model.get('id'));
+        const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
@@ -514,5 +545,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         } else {
             this.__onValueSelect();
         }
+    },
+
+    async __requestAndResetButtonViewData() {
+        await this.__onFilterText();
+
+        this.setValue(this.value);
     }
 }));

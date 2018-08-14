@@ -10,6 +10,7 @@ import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
 import '../resources/styles/layout-designer.css';
+import '../resources/styles/notifications.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
@@ -54,6 +55,7 @@ import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
 import Toolbar from './components/toolbar/ToolbarView';
 import LayoutDesigner from './components/layoutDesigner';
+import VideoChat from './components/videoChat/VideoChat';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -167,7 +169,8 @@ const core = {
         NavigationDrawer,
         Toolbar,
         BreadCrumbs,
-        LayoutDesigner
+        LayoutDesigner,
+        VideoChat
     }
 };
 

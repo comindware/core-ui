@@ -1,4 +1,5 @@
 import FieldView from '../fields/FieldView';
+import SimplifiedFieldView from '../fields/SimplifiedFieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
 const componentTypes = {
@@ -23,12 +24,13 @@ const Form = Marionette.Object.extend({
         this.regions = [];
 
         Object.entries(this.schema).forEach(entry => {
-            const FieldType = entry[1].field || options.field || FieldView; //TODO fix api
+            const fieldScema = entry[1];
+            const FieldType = fieldScema.field || options.field || (fieldScema.simplified ? SimplifiedFieldView : FieldView); //TODO fix api
             let field;
             try {
                 field = new FieldType({
                     key: entry[0],
-                    schema: entry[1],
+                    schema: fieldScema,
                     model: this.model
                 });
                 this.listenTo(field.editor, 'all', this.__handleEditorEvent);

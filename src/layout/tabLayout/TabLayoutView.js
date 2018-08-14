@@ -91,7 +91,13 @@ export default Marionette.View.extend({
             const region = this.addRegion(`${tabModel.id}TabRegion`, {
                 el: regionEl
             });
-            region.show(tabModel.get('view'));
+            const view = tabModel.get('view');
+
+            view.on('all', (...args) => {
+                args[0] = `tab:${args[0]}`;
+                this.triggerMethod(...args);
+            });
+            region.show(view);
             tabModel.set({
                 region,
                 regionEl

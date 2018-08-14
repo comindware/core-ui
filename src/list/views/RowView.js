@@ -5,6 +5,7 @@ const classes = {
     selected: 'selected',
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
+    collapsibleIcon: 'js-tree-first-cell',
     dragover: 'dragover',
     hover: 'hover',
     cellFocused: 'cell-focused',
@@ -13,7 +14,8 @@ const classes = {
 
 const defaultOptions = {
     levelMargin: 10,
-    collapsibleButtonWidth: 20
+    contextLevelMargin: 30,
+    subGroupMargin: 20
 };
 
 /**
@@ -39,18 +41,21 @@ export default Marionette.View.extend({
     },
 
     events: {
-        click: '__onClick',
-        dblclick: '__onDblClick',
+        click: '__handleClick',
+        dblclick: '__handleDblClick',
         'click @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave'
+        mouseleave: '__handleMouseLeave',
+        contextmenu: '__handleContextMenu'
     },
 
     modelEvents: {
+        click: '__handleModelClick',
+        dblclick: '__handleModelDblClick',
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
@@ -99,7 +104,7 @@ export default Marionette.View.extend({
     },
 
     updateCollapsed(model) {
-        const collaspibleButtons = this.el.getElementsByClassName(classes.collapsible);
+        const collaspibleButtons = this.el.getElementsByClassName(classes.collapsibleIcon);
         if (!model.collapsed) {
             if (collaspibleButtons.length) {
                 collaspibleButtons[0].classList.add(classes.expanded);
@@ -155,6 +160,14 @@ export default Marionette.View.extend({
         }
     },
 
+    __handleClick(event) {
+        this.model.trigger('click', event);
+    },
+
+    __handleDblClick(event) {
+        this.model.trigger('dblclick', event);
+    },
+
     __handleDragOver(event) {
         event.preventDefault();
     },
@@ -202,6 +215,10 @@ export default Marionette.View.extend({
         this.el.classList.remove(classes.dragover);
     },
 
+    __handleContextMenu(event) {
+        this.model.trigger('contextmenu', event);
+    },
+
     __handleHighlight(fragment) {
         this.cellViews.forEach(cellView => {
             cellView.model.set('highlightedFragment', fragment);
@@ -220,7 +237,7 @@ export default Marionette.View.extend({
             if (elements.length) {
                 const el = elements[0];
                 const level = this.model.level || 0;
-                const margin = level * this.options.levelMargin;
+                let margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
                 const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
                 if (this.lastHasChildren === hasChildren && this.lastMargin === margin) {
@@ -230,7 +247,18 @@ export default Marionette.View.extend({
                 if (treeFirstCell) {
                     el.removeChild(treeFirstCell);
                 }
-                if (hasChildren) {
+
+                const isContext = el.getElementsByClassName('context-icon')[0];
+                if (isContext) {
+                    margin = level * this.options.contextLevelMargin;
+                    if (hasChildren) {
+                        el.insertAdjacentHTML(
+                            'beforeend',
+                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${this.model.collapsed === false ? classes.expanded : ''}"></span></div>`
+                        );
+                    }
+                    isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
+                } else if (hasChildren) {
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
@@ -238,7 +266,7 @@ export default Marionette.View.extend({
                         }" style="margin-left:${margin}px;"></span>&nbsp;`
                     );
                 } else {
-                    el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
+                    el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
                 }
                 this.lastHasChildren = hasChildren;
                 this.lastMargin = margin;
@@ -246,7 +274,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __onClick(e) {
+    __handleModelClick(e) {
         const model = this.model;
 
         if (model.selected) {
@@ -269,7 +297,7 @@ export default Marionette.View.extend({
         this.trigger('click', this.model);
     },
 
-    __onDblClick() {
+    __handleModelDblClick() {
         this.trigger('dblclick', this.model);
     },
 

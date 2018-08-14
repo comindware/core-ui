@@ -7,6 +7,7 @@ import ItemModel from '../model/ItemModel';
 export default Marionette.Object.extend({
     initialize(options) {
         this.options = options;
+        this.members = {};
         this.channel = new Backbone.Radio.channel(_.uniqueId('splitC'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:move', this.moveItems, this);
@@ -20,17 +21,10 @@ export default Marionette.Object.extend({
     },
 
     fillInModel() {
-        const users = this.options.users;
-        const groups = this.options.groups;
-        const members = {};
-
-        users.forEach(model => (members[model.id] = model));
-
-        groups.forEach(model => (members[model.id] = model));
-
+        this.model.loading = this.__updateItems();
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
-            items: members,
+            items: this.members,
             showUsers: !this.options.hideUsers,
             showGroups: !this.options.hideGroups,
             showAll: !this.options.hideUsers && !this.options.hideGroups,
@@ -42,7 +36,8 @@ export default Marionette.Object.extend({
         });
     },
 
-    getDisplayText() {
+    async getDisplayText() {
+        await this.model.loading;
         let resultText = '';
         const members = this.model.get('items');
 
@@ -78,6 +73,15 @@ export default Marionette.Object.extend({
             ? ''
             : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
         return resultText;
+    },
+
+    async __updateItems() {
+        const users = await this.options.users;
+        const groups = await this.options.groups;
+
+        users.forEach(model => (this.members[model.id] = model));
+
+        groups.forEach(model => (this.members[model.id] = model));
     },
 
     __getFullMemberSplitTitle() {
@@ -269,8 +273,8 @@ export default Marionette.Object.extend({
         this.__applyFilter('available');
         this.__applyFilter('selected');
 
-        Promise.resolve(this.model.get('items')).then(oldItems => {
-            const items = _.clone(oldItems);
+        Promise.resolve(this.model.loading).then(() => {
+            const items = _.clone(this.members);
             this.options.exclude.forEach(id => {
                 if (items[id]) {
                     delete items[id];

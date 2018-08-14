@@ -23,6 +23,11 @@ export default {
                     description: 'Form Layout'
                 },
                 {
+                    id: 'FormOldSyntaxContent',
+                    displayName: '!! Deprecated!! Form Layout from old Syntax (content in options)',
+                    description: 'Deprecated!! Form Layout from old Syntax (content in options)'
+                },
+                {
                     id: 'GroupView',
                     displayName: 'Group',
                     description: 'Group'
@@ -65,6 +70,11 @@ export default {
                 {
                     id: 'BreadCrumbs',
                     displayName: 'BreadCrumbs',
+                    description: ''
+                },
+                {
+                    id: 'VideoChat',
+                    displayName: 'VideoChat',
                     description: ''
                 }
             ]
@@ -402,6 +412,11 @@ export default {
                     id: 'complexGrid',
                     displayName: 'Complex grid',
                     description: 'Mega Grid'
+                },
+                {
+                    id: 'compactGrid',
+                    displayName: 'Compact grid',
+                    description: 'Mega mini Grid'
                 }
             ]
         },
@@ -436,20 +451,14 @@ export default {
             displayName: 'Core services',
             groups: [
                 {
-                    id: 'LocalizationService',
-                    displayName: 'Localization Service'
-                },
-                {
                     id: 'ToastNotificationsService',
-                    displayName: 'Toast notification Service'
-                },
-                {
-                    id: 'WindowsService',
-                    displayName: 'Windows Service'
+                    displayName: 'Toast notification Service',
+                    description: 'Toast notification Service'
                 },
                 {
                     id: 'MessageService',
-                    displayName: 'Message Service'
+                    displayName: 'Message Service',
+                    description: 'Message Service'
                 }
             ]
         }
