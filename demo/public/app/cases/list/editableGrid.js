@@ -87,7 +87,9 @@ export default () => {
             required: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
+            showCheckboxes: true,
             autocommit: true,
+            maxQuantitySelected: 5,
             getReadonly: model => model.get('numberCell') % 2,
         }
     ];

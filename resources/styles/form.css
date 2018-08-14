@@ -1045,8 +1045,30 @@ input[type="color"], .colorpicker{
     height: 33px;
 }
 
+.js-core-ui__global-popup-region .simplified-panel_container {
+    margin-left: -15px;
+}
 .simplified-panel_container {
     position: fixed;
+}
+
+.simplified-panel_container .bubbles__caret {
+    display: none;
+}
+
+.simplified-panel_container .bubbles {
+    padding: 0 0 0 14px;
+    max-height: 155px;
+    overflow-y: scroll;
+}
+
+.simplified-panel_container .bubbles__list {
+    flex-direction: column;
+    max-height: 300px;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i{
+    width: 100%;
 }
 
 .user-edit-wrp {
