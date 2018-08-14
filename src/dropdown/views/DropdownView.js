@@ -32,7 +32,8 @@ const defaultOptions = {
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
     panelMinWidth: panelMinWidth.BUTTON_WIDTH,
-    allowNestedFocus: true
+    allowNestedFocus: true,
+    externalBlurHandler: () => false
 };
 
 /**
@@ -305,13 +306,13 @@ export default Marionette.View.extend({
     },
 
     __handleBlur() {
-        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+        if (!this.options.externalBlurHandler(document.activeElement) && !this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
             this.close();
         }
     },
 
     __handleGlobalMousedown(target) {
-        if (this.__isNestedInPanel(target)) {
+        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target)) {
             this.__suppressHandlingBlur = true;
         } else if (!this.__isNestedInButton(target)) {
             this.close();

@@ -19,7 +19,9 @@ export default Marionette.View.extend({
         this.showAddNewButton = this.options.showAddNewButton;
     },
 
-    className: 'dropdown__wrp dropdown__wrp_reference',
+    className() {
+        return `dropdown__wrp dropdown__wrp_reference ${this.options.class || ''}`;
+    },
 
     template: Handlebars.compile(template),
 

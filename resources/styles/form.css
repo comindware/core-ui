@@ -1047,6 +1047,8 @@ input[type="color"], .colorpicker{
 
 .js-core-ui__global-popup-region .simplified-panel_container {
     margin-left: -15px;
+    background-color: white;
+    border: 1px solid #c1c1c1;
 }
 .simplified-panel_container {
     position: fixed;
@@ -1056,19 +1058,32 @@ input[type="color"], .colorpicker{
     display: none;
 }
 
+.simplified-panel_wrapper {
+    margin-top: 56px!important;
+    border-top: none!important;
+    box-shadow: none!important;
+}
+
+.simplified-panel-title {
+    font-weight: 600;
+    padding: 4px 4px 4px 14px;
+}
+
 .simplified-panel_container .bubbles {
     padding: 0 0 0 14px;
     max-height: 155px;
     overflow-y: scroll;
+    border: none;
 }
 
-.simplified-panel_container .bubbles__list {
+.simplified-panel_contagrid-toolbar__searchiner .bubbles__list {
     flex-direction: column;
     max-height: 300px;
 }
 
 .simplified-panel_container .bubbles__list > .bubbles__i{
     width: 100%;
+    padding: 4px 20px 4px 0;
 }
 
 .user-edit-wrp {

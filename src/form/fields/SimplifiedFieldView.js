@@ -81,6 +81,7 @@ export default Marionette.View.extend({
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
         this.showChildView('editorRegion', menuView);
+        this.listenTo(menuView, 'panel:dropdown:close', () => menuView.close());
     },
 
     /**
