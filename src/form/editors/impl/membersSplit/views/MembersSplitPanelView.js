@@ -85,6 +85,7 @@ export default Marionette.View.extend({
         availableList.on('childview:dblclick', this.__moveRight);
 
         this.showChildView('availableItemsListRegion', availableList);
+        availableList.setLoading(this.model.loading);
 
         const selectedList = new Core.list.controllers.GridController({
             collection: this.model.get('selected'),
@@ -116,6 +117,7 @@ export default Marionette.View.extend({
         this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
+        selectedList.setLoading(this.model.loading);
     },
 
     __moveRight(model) {

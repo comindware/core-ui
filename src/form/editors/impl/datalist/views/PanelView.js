@@ -19,7 +19,9 @@ export default Marionette.View.extend({
         this.showAddNewButton = this.options.showAddNewButton;
     },
 
-    className: 'dropdown__wrp dropdown__wrp_reference',
+    className() {
+        return `dropdown__wrp dropdown__wrp_reference ${this.options.class || ''}`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -96,9 +98,5 @@ export default Marionette.View.extend({
         if (warningRegion) {
             count > collectionLength ? warningRegion.$el.show() : warningRegion.$el.hide();
         }
-    },
-
-    __valueSelect() {
-        this.reqres.request('value:select');
     }
 });

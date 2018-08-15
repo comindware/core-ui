@@ -32,9 +32,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 4) {
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 5) {
+            counterValue = `+${collectionValues.length - 5}`;
+            collectionValues.splice(5, collectionValues.length - 5);
             showCounter = true;
         }
 
@@ -56,6 +56,14 @@ export default Marionette.View.extend({
     },
 
     __formatValues(schema, values) {
+        const singleValue = values.length === 1;
+
+        if (singleValue) {
+            this.el.setAttribute('extended', true);
+        } else {
+            this.el.removeAttribute('extended');
+        }
+
         switch (schema.type) {
             case 'Datalist': {
                 return Array.isArray(values) ? values.map(v => ({
@@ -64,6 +72,7 @@ export default Marionette.View.extend({
                     <div class="simple-field_container">
                     ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
                 </div>
+                 ${singleValue ? v.name : ''}
             </div>`
                 })) : [{ value: values.name }];
             }
@@ -112,9 +121,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 3) { //todo make dynamic
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 5) { //todo make dynamic
+            counterValue = `+${collectionValues.length}`;
+            collectionValues.splice(5, collectionValues.length - 5);
             showCounter = true;
         }
         this.collection.reset(collectionValues);

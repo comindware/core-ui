@@ -10,16 +10,31 @@ const changeMode = {
     blur: 'blur'
 };
 
+const defaultAllowFroat = false;
+
 const defaultOptions = {
     max: undefined,
     min: undefined,
     step: undefined,
-    allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
-    intlOptions: undefined,
     showTitle: true,
-    class: undefined
+    class: undefined,
+    allowFloat: defaultAllowFroat,
+    requireDecimal: false,
+    allowNegative: true,
+    allowLeadingZeroes: false,
+    intlOptions: {
+        style: 'decimal',
+        useGrouping: true,
+        /* The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group, 
+        minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined, 
+        then the first group is ignored. https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat */
+        minimumFractionDigits: 0,
+        maximumFractionDigits: defaultAllowFroat ? 3 : 0,
+        maximumSignificantDigits: undefined, //default from Intl is 21
+        minimumSignificantDigits: undefined //default from Intl is 1
+    }
 };
 
 /**
@@ -36,7 +51,7 @@ const defaultOptions = {
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * 
  * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
- * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]])
+ * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]]) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
  * 
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
@@ -63,10 +78,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             }
             this.numberMask = createNumberMask({
                 prefix: '',
+                suffix: '',
+                includeThousandsSeparator: options.intlOptions.useGrouping,
                 thousandsSeparatorSymbol: this.thousandsSeparator,
-                decimalSymbol: this.decimalSymbol,
                 allowDecimal: options.allowFloat,
-                allowNegative: true
+                decimalSymbol: this.decimalSymbol,
+                decimalLimit: options.intlOptions.maximumFractionDigits,
+                integerLimit: options.intlOptions.maximumSignificantDigits || null,
+                requireDecimal: options.requireDecimal,
+                allowNegative: options.allowNegative,
+                allowLeadingZeroes: options.allowLeadingZeroes
             });
         }
         this.isChangeModeKeydown = this.options.changeMode === changeMode.keydown;
@@ -102,12 +123,29 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         this.maskedInputController && this.maskedInputController.destroy();
     },
 
-    __keyup() {
-        const value = this.ui.input.val();
-        if (value === `-${this.decimalSymbol}`) {
+    __keyup(event) {
+        const value = event.target.value;
+        if (this.__isTypeInFractionPart(value) && this.__isTypeInTheEnd(value) && value.slice(-1) === '0') {
             return;
         }
+
+        const parsed = this.__parse(value);
+        if (parsed === 0 && value[0] === '-') {
+            return;
+        }
+
         this.__value(value, true, this.isChangeModeKeydown, false);
+    },
+
+    __isTypeInFractionPart(value) {
+        const posCaret = this.ui.input[0].selectionStart;
+        const posDecimalSymbol = value.indexOf(this.decimalSymbol);
+        return posDecimalSymbol !== -1 && posCaret > posDecimalSymbol;
+    },
+
+    __isTypeInTheEnd(value) {
+        const posCaret = this.ui.input[0].selectionStart;
+        return posCaret === value.length;
     },
 
     __onChange() {
@@ -162,7 +200,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if ((value === this.value && !force) || value === '-' || (this.options.allowFloat && typeof value === 'string' && value.slice(-1) === this.decimalSymbol)) {
+        if ((value === this.value && !force) || (typeof value === 'string' && [this.decimalSymbol, '_', '-'].includes(value.slice(-1)))) { // '_' - placeholder from mask
             return;
         }
 

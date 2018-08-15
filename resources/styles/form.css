@@ -1006,6 +1006,14 @@ input[type="color"], .colorpicker{
     justify-content: space-between;
 }
 
+.simplified-button_container[extended] .cell {
+    width: auto;
+}
+
+.simplified-button_container[extended] .cell .simple-field_container{
+    margin-right: 5px;
+}
+
 .simplified-button_grid .cell{
     min-width: 28px;
     width: 28px;
@@ -1037,8 +1045,62 @@ input[type="color"], .colorpicker{
     height: 33px;
 }
 
+.js-core-ui__global-popup-region .simplified-panel_container {
+    margin-left: -15px;
+    background-color: white;
+    border: 1px solid #c1c1c1;
+}
 .simplified-panel_container {
     position: fixed;
+}
+
+.simplified-panel_container .bubbles__caret {
+    display: none;
+}
+
+.simplified-panel_wrapper.dropdown__wrp_down {
+    margin-top: 89px!important;
+}
+
+.simplified-panel_wrapper.dropdown__wrp_up {
+    margin-top: -31px!important;
+}
+
+.simplified-panel_wrapper {
+    border-top: none!important;
+    box-shadow: none!important;
+    margin-left: -1px!important;
+}
+
+.simplified-panel-title {
+    font-weight: 600;
+    padding: 8px 4px 4px 14px;
+}
+
+.simplified-panel-title.simplified-panel-subtitle {
+    border-top: 1px solid #c1c1c1;
+    margin-top: 14px;
+}
+
+.simplified-panel-search {
+    padding: 0 14px 14px 14px;
+}
+
+.simplified-panel_container .bubbles {
+    padding: 0 0 0 14px;
+    max-height: 155px;
+    overflow-y: scroll;
+    border: none;
+}
+
+.simplified-panel_contagrid-toolbar__searchiner .bubbles__list {
+    flex-direction: column;
+    max-height: 300px;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i{
+    width: 100%;
+    padding: 4px 20px 4px 0;
 }
 
 .user-edit-wrp {
@@ -1046,14 +1108,26 @@ input[type="color"], .colorpicker{
 }
 
 .simple-field_container {
-    height: 26px;
-    width: 26px;
+    height: 22px;
+    width: 22px;
     border-radius: 50%;
     text-align: center;
-    line-height: 26px;
+    line-height: 20px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 3px;
+    margin-top: 5px;
+}
+
+.simplified-button_grid .row + .row {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:first-child {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:last-child {
+    margin-right: 0!important;
 }

@@ -32,7 +32,8 @@ const defaultOptions = {
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
     panelMinWidth: panelMinWidth.BUTTON_WIDTH,
-    allowNestedFocus: true
+    allowNestedFocus: true,
+    externalBlurHandler: () => false
 };
 
 /**
@@ -142,11 +143,23 @@ export default Marionette.View.extend({
     },
 
     __adjustPosition(panelEl) {
+        panelEl.style.height = ''; //resetting custom height
+
         const viewportHeight = window.innerHeight;
         const buttonEl = this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
+
+        const panelWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0, this.options.panelViewOptions.maxWidth || 0);
+
+        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
+            panelEl.style.width = `${panelWidth}px`;
+        }
+
+        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            panelEl.style.minWidth = `${panelWidth}px`;
+        }
 
         const offsetHeight = panelEl.offsetHeight;
 
@@ -180,19 +193,19 @@ export default Marionette.View.extend({
         // trying to fit into viewport
         if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
             top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
+            if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
+                const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
+                top += diff;
+                panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
+            }
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
-        }
 
-        const panelWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0, this.options.panelViewOptions.maxWidth || 0);
-
-        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelEl.style.width = `${panelWidth}px`;
-        }
-
-        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            panelEl.style.minWidth = `${panelWidth}px`;
+            if (offsetHeight > buttonRect.top) {
+                const diff = offsetHeight - buttonRect.top;
+                panelEl.style.height = `${offsetHeight - diff}px`;
+            }
         }
 
         panelEl.style.top = `${top}px`;
@@ -295,13 +308,13 @@ export default Marionette.View.extend({
     },
 
     __handleBlur() {
-        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+        if (!this.options.externalBlurHandler(document.activeElement) && !this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
             this.close();
         }
     },
 
     __handleGlobalMousedown(target) {
-        if (this.__isNestedInPanel(target)) {
+        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target)) {
             this.__suppressHandlingBlur = true;
         } else if (!this.__isNestedInButton(target)) {
             this.close();

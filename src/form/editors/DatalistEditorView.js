@@ -38,7 +38,8 @@ const defaultOptions = {
     canDeleteItem: true,
     valueType: 'normal',
     showSearch: true,
-    class: undefined
+    class: undefined,
+    externalBlurHandler: undefined
 };
 
 /**
@@ -100,6 +101,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
 
+        this.reqres = reqres;
+
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
             'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
@@ -127,6 +130,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             },
             panelView: PanelView,
             panelViewOptions: {
+                class: this.options.panelClass,
                 model: this.viewModel.panel,
                 reqres,
                 showAddNewButton: this.options.showAddNewButton,
@@ -135,7 +139,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 textFilterDelay: this.options.textFilterDelay
             },
-            autoOpen: false
+            autoOpen: false,
+            externalBlurHandler: this.options.externalBlurHandler
         });
     },
 
@@ -341,6 +346,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onValueUnset(model: Backbone.Model): void {
+        if (this.viewModel.button.selected.length === 1 && !this.options.allowEmptyValue) {
+            this.__focusButton();
+            this.dropdownView.close();
+            return;
+        }
         this.__onBubbleDelete(model);
     },
 
@@ -532,6 +542,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.onBlur();
         this.panelCollection.pointOff();
         this.activeText = null;
+        this.trigger('dropdown:close');
     },
 
     __proxyValueSelect() {
