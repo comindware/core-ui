@@ -9,7 +9,8 @@ const valueTypes = {
     value: 'value',
     context: 'context',
     expression: 'expression',
-    script: 'script'
+    script: 'script',
+    template: 'template'
 };
 
 const classes = {
@@ -21,6 +22,7 @@ const defaultOptions = {
     showContext: true,
     showExpression: true,
     showScript: true,
+    showTemplate: false,
     enabled: true,
     valueEditor: formRepository.editors.Text,
     valueEditorOptions: {},
@@ -40,7 +42,8 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         valueContainer: '.js-new-expression-value-container',
         contextContainer: '.js-new-expression-context-container',
         scriptContainer: '.js-new-expression-script-container',
-        expressionContainer: '.js-new-expression-expression-container'
+        expressionContainer: '.js-new-expression-expression-container',
+        templateContainer: '.js-new-expression-template-container'
     },
 
     ui: {
@@ -48,7 +51,8 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         value: '.js-new-expression-value-container',
         context: '.js-new-expression-context-container',
         script: '.js-new-expression-script-container',
-        expression: '.js-new-expression-expression-container'
+        expression: '.js-new-expression-expression-container',
+        template: '.js-new-expression-template-container'
     },
 
     template: Handlebars.compile(template),
@@ -63,6 +67,9 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         _.extend(this, _.pick(options, 'field'));
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
+        }
+        if (_.isString(this.options.templateEditor)) {
+            this.options.templateEditor = formRepository.editors[this.options.templateEditor];
         }
         if (!this.value || !Object.keys(this.value).length) {
             this.value = {
@@ -128,6 +135,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         this.__showContextEditor();
         this.__showExpressionEditor();
         this.__showScriptEditor();
+        this.__showTemplateEditor();
         this.__showTypeEditor();
         this.__updateEditorState();
         if (this.options.displayInline) {
@@ -245,11 +253,33 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         this.showChildView('scriptContainer', this.scriptEditor);
     },
 
+    __showTemplateEditor() {
+        if (!this.options.showTemplate) {
+            return;
+        }
+        this.valueTypeCollection.add({
+            id: valueTypes.template,
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
+        });
+
+        const value = this.value.value;
+
+        this.templateEditor = new this.options.templateEditor(
+            _.extend(this.options.templateEditorOptions, {
+                value: this.value.type === valueTypes.template ? value : null
+            })
+        );
+
+        this.templateEditor.on('change', this.__updateEditorValue, this);
+        this.showChildView('templateContainer', this.templateEditor);
+    },
+
     __updateEditorState() {
         this.ui.value.toggleClass('hidden', this.value.type !== valueTypes.value);
         this.ui.expression.toggleClass('hidden', this.value.type !== valueTypes.expression);
         this.ui.script.toggleClass('hidden', this.value.type !== valueTypes.script);
         this.ui.context.toggleClass('hidden', this.value.type !== valueTypes.context);
+        this.ui.template.toggleClass('hidden', this.value.type !== valueTypes.template);
     },
 
     __updateEditorValue() {
@@ -267,6 +297,9 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
                 break;
             case valueTypes.script:
                 value = this.scriptEditor ? this.scriptEditor.getValue() : null;
+                break;
+            case valueTypes.template:
+                value = this.templateEditor.getValue();
                 break;
             default:
                 break;
@@ -291,6 +324,9 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
                 break;
             case valueTypes.script:
                 this.scriptEditor.setReadonly(readonly);
+                break;
+            case valueTypes.template:
+                this.templateEditor.setReadonly(readonly);
                 break;
             default:
                 break;
