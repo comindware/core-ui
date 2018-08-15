@@ -1058,15 +1058,32 @@ input[type="color"], .colorpicker{
     display: none;
 }
 
+.simplified-panel_wrapper.dropdown__wrp_down {
+    margin-top: 89px!important;
+}
+
+.simplified-panel_wrapper.dropdown__wrp_up {
+    margin-top: -31px!important;
+}
+
 .simplified-panel_wrapper {
-    margin-top: 56px!important;
     border-top: none!important;
     box-shadow: none!important;
+    margin-left: -1px!important;
 }
 
 .simplified-panel-title {
     font-weight: 600;
-    padding: 4px 4px 4px 14px;
+    padding: 8px 4px 4px 14px;
+}
+
+.simplified-panel-title.simplified-panel-subtitle {
+    border-top: 1px solid #c1c1c1;
+    margin-top: 14px;
+}
+
+.simplified-panel-search {
+    padding: 0 14px 14px 14px;
 }
 
 .simplified-panel_container .bubbles {

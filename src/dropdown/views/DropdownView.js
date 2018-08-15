@@ -143,6 +143,8 @@ export default Marionette.View.extend({
     },
 
     __adjustPosition(panelEl) {
+        panelEl.style.height = ''; //resetting custom height
+
         const viewportHeight = window.innerHeight;
         const buttonEl = this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
