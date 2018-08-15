@@ -16,6 +16,7 @@ export default Marionette.View.extend({
             showSearch: false,
             openOnRender: true,
             panelClass: 'simplified-panel_wrapper',
+            customTemplate: '<div class="user-edit-wrp" title="{{name}}"><div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div></div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
 

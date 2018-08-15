@@ -63,7 +63,8 @@ export default Marionette.CollectionView.extend({
             createValueUrl: this.options.createValueUrl,
             showEditButton: this.options.showEditButton,
             showRemoveButton: this.options.canDeleteItem,
-            getDisplayText: this.options.getDisplayText
+            getDisplayText: this.options.getDisplayText,
+            customTemplate: this.options.customTemplate
         };
     },
 

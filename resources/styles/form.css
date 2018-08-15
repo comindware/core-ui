@@ -1048,7 +1048,7 @@ input[type="color"], .colorpicker{
 .js-core-ui__global-popup-region .simplified-panel_container {
     margin-left: -15px;
     background-color: white;
-    border: 1px solid #c1c1c1;
+    box-shadow: 0 0 1px 0 #c1c1c1;
 }
 .simplified-panel_container {
     position: fixed;
@@ -1067,9 +1067,8 @@ input[type="color"], .colorpicker{
 }
 
 .simplified-panel_wrapper {
-    border-top: none!important;
-    box-shadow: none!important;
-    margin-left: -1px!important;
+    border: none!important;
+    box-shadow: 0 0 1px 0 #c1c1c1!important;
 }
 
 .simplified-panel-title {
@@ -1101,6 +1100,13 @@ input[type="color"], .colorpicker{
 .simplified-panel_container .bubbles__list > .bubbles__i{
     width: 100%;
     padding: 4px 20px 4px 0;
+    align-items: center;
+    display: flex;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i > .user-edit-wrp{
+    margin-right: 10px;
+    margin-top: -4px;
 }
 
 .user-edit-wrp {
@@ -1108,8 +1114,8 @@ input[type="color"], .colorpicker{
 }
 
 .simple-field_container {
-    height: 22px;
-    width: 22px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     text-align: center;
     line-height: 20px;
@@ -1117,7 +1123,8 @@ input[type="color"], .colorpicker{
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 5px;
+    margin-top: 6px;
+    color: #0575bd;
 }
 
 .simplified-button_grid .row + .row {

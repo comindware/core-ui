@@ -39,7 +39,8 @@ const defaultOptions = {
     valueType: 'normal',
     showSearch: true,
     class: undefined,
-    externalBlurHandler: undefined
+    externalBlurHandler: undefined,
+    customTemplate: undefined
 };
 
 /**
@@ -123,6 +124,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),

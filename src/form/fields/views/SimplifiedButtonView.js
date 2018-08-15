@@ -32,9 +32,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 5) {
-            counterValue = `+${collectionValues.length - 5}`;
-            collectionValues.splice(5, collectionValues.length - 5);
+        if (collectionValues.length > 2) {
+            counterValue = `+${collectionValues.length - 1}`;
+            collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;
         }
 
@@ -56,13 +56,7 @@ export default Marionette.View.extend({
     },
 
     __formatValues(schema, values) {
-        const singleValue = values.length === 1;
-
-        if (singleValue) {
-            this.el.setAttribute('extended', true);
-        } else {
-            this.el.removeAttribute('extended');
-        }
+        this.el.setAttribute('extended', true);
 
         switch (schema.type) {
             case 'Datalist': {
@@ -72,7 +66,7 @@ export default Marionette.View.extend({
                     <div class="simple-field_container">
                     ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
                 </div>
-                 ${singleValue ? v.name : ''}
+                 ${v.name}
             </div>`
                 })) : [{ value: values.name }];
             }
@@ -121,11 +115,12 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 5) { //todo make dynamic
-            counterValue = `+${collectionValues.length}`;
-            collectionValues.splice(5, collectionValues.length - 5);
+        if (collectionValues.length > 2) {
+            counterValue = `+${collectionValues.length - 1}`;
+            collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;
         }
+
         this.collection.reset(collectionValues);
         this.__updateCounter(showCounter, counterValue);
     },
