@@ -169,6 +169,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __clear() {
+        this.triggeredByClean = true;
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: null
@@ -216,7 +217,8 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         });
         let newValue;
         newValue = moment.duration(this.state.displayValue).toISOString();
-        if (!this.options.showEmptyParts || this.value == null) {
+        if (!this.options.showEmptyParts || this.triggeredByClean) {
+            this.triggeredByClean = false;
             if (Object.values(newValueObject).every(value => value === 0)) {
                 newValue = null;
                 this.ui.input.val(null);
@@ -532,20 +534,18 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             [focusablePartId.SECONDS]: seconds
         };
 
-        if (!editable) {
-            if (isNull) {
-                // null value is rendered as empty text
-                return '';
+        if (!editable && isNull) {
+            // null value is rendered as empty text
+            return '';
+        }
+        if (!this.options.showEmptyParts && !editable) {
+            const filledSegments = this.focusableParts.filter(part => Boolean(data[part.id]));
+            if (filledSegments.length > 0) {
+                // returns string like '0d 4h 32m'
+                return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
             }
-            if (!this.options.showEmptyParts) {
-                const filledSegments = this.focusableParts.filter(part => Boolean(data[part.id]));
-                if (filledSegments.length > 0) {
-                    // returns string like '0d 4h 32m'
-                    return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
-                }
-                // returns string like '0d'
-                return `0${this.focusableParts[0].text}`;
-            }
+            // returns string like '0d'
+            return `0${this.focusableParts[0].text}`;
         }
         // always returns string with all editable segments like '0 d 5 h 2 m'
         return this.focusableParts
