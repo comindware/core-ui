@@ -623,10 +623,10 @@
 
 .context-collapse-button {
     position: absolute;
-    height: 44px;
+    height: 36px;
     background-color: white;
     width: 30px;
-    padding-top: 12px;
+    padding-top: 8px;
     right: 0px;
     padding-left: 6px;
 }
@@ -639,8 +639,12 @@
 }
 
 .extend_cell_header {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
+}
+
+.extend_info {
+    font-size: 12px;
 }
 
 /*-- End ExtendedString --*/

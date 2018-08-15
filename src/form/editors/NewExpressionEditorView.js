@@ -185,7 +185,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
             return;
         }
 
-        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
+        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'contextModel', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
         _.extend(contextOptions, {
             value: this.value.type === valueTypes.context ? this.value.value : null
