@@ -84,6 +84,7 @@ export default Marionette.View.extend({
         _.bindAll(this, 'open', 'close', '__onBlur');
 
         this.__observedEntities = [];
+        this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
     },
 
@@ -151,7 +152,7 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        const panelWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0, this.options.panelViewOptions.maxWidth || 0);
+        const panelWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0, this.maxWidth);
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
             panelEl.style.width = `${panelWidth}px`;
