@@ -334,5 +334,5 @@
 
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 
-<http://comindware.com/text/core/views/searchBar#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Начните ввод для отображения вариантов"; l10n:originalData "Start typing to get suggestions"].
+<http://comindware.com/text/core/views/searchBar#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "Search..."].
 

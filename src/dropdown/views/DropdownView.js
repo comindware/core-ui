@@ -147,7 +147,10 @@ export default Marionette.View.extend({
         panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;
-        const buttonEl = this.button.el;
+        const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
+        const dropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
+        const dropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
+        const buttonEl = dropDownRoot || this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
@@ -166,7 +169,11 @@ export default Marionette.View.extend({
 
         let position = this.options.panelPosition;
 
-        if (position === panelPosition.DOWN && bottom < offsetHeight && buttonRect.top > bottom) {
+        if (dropDownRoot && dropDownRootPositionUp) {
+            position = panelPosition.UP;
+        } else if (dropDownRoot && dropDownRootPositionDown) {
+            position = panelPosition.DOWN;
+        } else if (position === panelPosition.DOWN && ((bottom < offsetHeight && buttonRect.top > bottom) || bottom < this.options.minAvailableHeight + offsetHeight)) {
             position = panelPosition.UP;
         } else if (position === panelPosition.UP && buttonRect.top < offsetHeight && bottom > buttonRect.top) {
             position = panelPosition.DOWN;

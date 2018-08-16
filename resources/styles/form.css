@@ -1058,14 +1058,6 @@ input[type="color"], .colorpicker{
     display: none;
 }
 
-.simplified-panel_wrapper.dropdown__wrp_down {
-    margin-top: 89px!important;
-}
-
-.simplified-panel_wrapper.dropdown__wrp_up {
-    margin-top: -31px!important;
-}
-
 .simplified-panel_wrapper {
     border: none!important;
     box-shadow: 0 0 1px 0 #c1c1c1!important;

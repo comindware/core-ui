@@ -40,7 +40,8 @@ const defaultOptions = {
     showSearch: true,
     class: undefined,
     externalBlurHandler: undefined,
-    customTemplate: undefined
+    customTemplate: undefined,
+    minAvailableHeight: undefined
 };
 
 /**
@@ -142,7 +143,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 textFilterDelay: this.options.textFilterDelay
             },
             autoOpen: false,
-            externalBlurHandler: this.options.externalBlurHandler
+            externalBlurHandler: this.options.externalBlurHandler,
+            minAvailableHeight: this.options.minAvailableHeight
         });
     },
 
