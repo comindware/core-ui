@@ -1049,7 +1049,23 @@ input[type="color"], .colorpicker{
     margin-left: -15px;
     background-color: white;
     box-shadow: 0 0 1px 0 #c1c1c1;
+    height: 240px;
+    margin-top: 1px;
 }
+
+.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_up {
+    height: 200px;
+    margin-top: -1px;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region {
+    height: 130px;
+}
+
+.simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
+    margin-top: -470px;
+}
+
 .simplified-panel_container {
     position: fixed;
 }
@@ -1061,11 +1077,19 @@ input[type="color"], .colorpicker{
 .simplified-panel_wrapper {
     border: none!important;
     box-shadow: 0 0 1px 0 #c1c1c1!important;
+    height: 240px;
+    background-color: white;
 }
-
+.simplified-panel_wrapper .js-elements-quantity-warning-region {
+    display: none!important;
+}
+.simplified-panel_wrapper .dd-list__i_checkbox {
+    padding-left: 14px;
+}
 .simplified-panel-title {
     font-weight: 600;
     padding: 8px 4px 4px 14px;
+    background-color: white;
 }
 
 .simplified-panel-title.simplified-panel-subtitle {
@@ -1075,6 +1099,7 @@ input[type="color"], .colorpicker{
 
 .simplified-panel-search {
     padding: 0 14px 14px 14px;
+    background-color: white;
 }
 
 .simplified-panel_container .bubbles {

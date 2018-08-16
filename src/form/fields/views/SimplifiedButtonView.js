@@ -32,7 +32,7 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 2) {
+        if (collectionValues.length > 1) {
             counterValue = `+${collectionValues.length - 1}`;
             collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;
@@ -64,7 +64,7 @@ export default Marionette.View.extend({
                     value: `
                 <div class="user-edit-wrp" title="${v.name}">
                     <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
                  ${v.name}
             </div>`
@@ -75,7 +75,7 @@ export default Marionette.View.extend({
                     value: `
                 <div class="user-edit-wrp" title="${v.name}">
                     <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
             </div>`
                 })) : [{ value: values.name }];
@@ -85,37 +85,13 @@ export default Marionette.View.extend({
         }
     },
 
-    __getAbbreviation(fullName) {
-        if (!fullName) {
-            return '';
-        }
-
-        const words = fullName.split(/[, _]/);
-        switch (words.length) {
-            case 0:
-                return '';
-            case 1:
-                return this._getWordAbbreviation(words[0], true);
-            default:
-                return this._getWordAbbreviation(words[0], words[1].length === 0) + this._getWordAbbreviation(words[1], words[0].length === 0);
-        }
-    },
-
-    _getWordAbbreviation(word, takeTwo) {
-        if (word.length === 0) {
-            return '';
-        }
-
-        return word.substring(0, word.length > 1 && takeTwo ? 2 : 1);
-    },
-
     __updateDisplayValue(values) {
         const collectionValues = this.__formatValues(this.options.editor.schema, values);
 
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 2) {
+        if (collectionValues.length > 1) {
             counterValue = `+${collectionValues.length - 1}`;
             collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;

@@ -165,7 +165,7 @@ export default Marionette.View.extend({
             panelEl.style.minWidth = `${panelWidth}px`;
         }
 
-        const offsetHeight = panelEl.offsetHeight;
+        let offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
 
@@ -184,6 +184,8 @@ export default Marionette.View.extend({
         this.el.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
         panelEl.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
         panelEl.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
+
+        offsetHeight = panelEl.offsetHeight;
 
         // panel positioning
         let top: number = 0;
