@@ -1049,7 +1049,7 @@ input[type="color"], .colorpicker{
     margin-left: -15px;
     background-color: white;
     box-shadow: 0 0 1px 0 #c1c1c1;
-    height: 240px;
+    height: 250px;
     margin-top: 1px;
 }
 
@@ -1062,8 +1062,16 @@ input[type="color"], .colorpicker{
     height: 130px;
 }
 
+.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region > .editor_bubble{
+    height: 130px;
+}
+
 .simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
     margin-top: -470px;
+}
+
+.simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-search {
+    height: 300px;
 }
 
 .simplified-panel_container {
@@ -1104,7 +1112,7 @@ input[type="color"], .colorpicker{
 
 .simplified-panel_container .bubbles {
     padding: 0 0 0 14px;
-    max-height: 155px;
+    max-height: 130px;
     overflow-y: scroll;
     border: none;
 }
@@ -1142,6 +1150,12 @@ input[type="color"], .colorpicker{
     margin-left: 1px;
     margin-top: 6px;
     color: #0575bd;
+    font-size: 10px;
+}
+
+.simple-field_container img{
+    width: 20px;
+    height: 20px;
 }
 
 .simplified-button_grid .row + .row {
