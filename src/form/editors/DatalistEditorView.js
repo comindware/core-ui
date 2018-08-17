@@ -254,6 +254,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
+    adjustPosition() {
+        if (this.dropdownView) {
+            this.dropdownView.adjustPosition();
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;
@@ -415,6 +421,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onDropdownOpen(): void {
         this.__focusButton();
         this.onFocus();
+        this.trigger('dropdown:open');
     },
 
     __focusButton(): void {
