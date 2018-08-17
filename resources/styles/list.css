@@ -114,7 +114,7 @@
     font-size: 12px;
     color: #000;
     cursor: default;
-    min-width: 100px;
+    min-width: 50px;
 }
 
 .grid-selection-cell-all {
@@ -190,7 +190,7 @@
 .grid-header-column {
     display: inline-block;
     position: relative;
-    min-width: 100px;
+    min-width: 50px;
 }
 
 .grid-header-column-content {
@@ -429,7 +429,7 @@
     white-space: nowrap;
     cursor: default;
     overflow: hidden;
-    min-width: 100px;
+    min-width: 50px;
 }
 .cell_editable {
     display: flex;
