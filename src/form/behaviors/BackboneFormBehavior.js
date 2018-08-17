@@ -1,6 +1,7 @@
 import FieldView from '../fields/FieldView';
 import SimplifiedFieldView from '../fields/SimplifiedFieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
+import transliterator from '../../utils/transliterator';
 
 const componentTypes = {
     editor: 'editor',
@@ -19,6 +20,12 @@ const Form = Marionette.Object.extend({
 
         this.schema = _.result(options, 'schema');
         this.model = options.model;
+
+        if (options.transliterateFields) {
+            this.schema = transliterator.setOptionsToComputedRelatedFields(this.schema, options.transliterateFields);
+            this.model.computed = transliterator.extendComputed(this.model, options.transliterateFields);
+            this.model.computedFields = new Backbone.ComputedFields(this.model);
+        }
 
         this.fields = {};
         this.regions = [];
@@ -348,12 +355,11 @@ export default Marionette.Behavior.extend({
             schema = schema.call(this.view);
         }
 
-        const form = new Form({
+        const form = new Form(_.defaults({
             model,
             schema,
             $target: this.$el,
-            field: this.options.field
-        });
+        }, this.options));
         this.view.form = this.form = form;
         if (this.view.initForm) {
             this.view.initForm();

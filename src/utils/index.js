@@ -6,6 +6,7 @@ import diffHelper_ from './diffHelper';
 import keyCode_ from './keyCode';
 import './handlebars/all';
 import './codemirror';
+import transliterator from './transliterator';
 
 export const comparators = comparators_;
 export const helpers = helpers_;
@@ -43,6 +44,7 @@ export default {
      * @namespace
      * */
     keyCode,
+    transliterator,
 
     diffHelper
 };
