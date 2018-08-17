@@ -13,34 +13,8 @@ export default function () {
         '<div class="field-width" data-fields="dateTime2"></div>';
 
     // 2. Create form model
-    const newClass = Backbone.Model.extend({
-        initialize() {
-            this.computedFields = new Backbone.ComputedFields(this);
-        },
-
-        computed: {
-            alias: {
-                depends: ['name', 'alias'],
-                get(fields) {
-                    if (fields.alias) {
-                        return fields.alias;
-                    }
-                    return fields.name;
-                }
-            },
-            name: {
-                depends: ['name', 'alias'],
-                get(fields) {
-                    if (fields.name) {
-                        return fields.name;
-                    }
-                    return this.previous('name');
-                }
-            }
-        }
-    });
-    const model = new newClass({
-        name: 'some name',
+    const model = new Backbone.Model({
+        name: '12_Мир ;Труд%,.Май64',
         alias: 'some alias',
         number: 451,
         dateTime: new Date(1984, 0, 24),
@@ -64,6 +38,9 @@ export default function () {
         behaviors: {
             BackboneFormBehavior: {
                 behaviorClass: core.form.behaviors.BackboneFormBehavior,
+                transliterateFields: { 
+                    name: 'alias'
+                }, // transliterateFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
                 schema() {
                     return {
                         name: {
