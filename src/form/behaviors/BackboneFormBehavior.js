@@ -47,7 +47,13 @@ const Form = Marionette.Object.extend({
     },
 
     handleAttach() {
-        this.regions.forEach(region => region.currentView && region.currentView.triggerMethod('attach'));
+        this.regions.forEach(region => {
+            const currentView = region.currentView;
+            if (currentView) {
+                currentView._isAttached = true;
+                currentView.triggerMethod('attach');
+            }
+        });
     },
 
     onDestroy() {
