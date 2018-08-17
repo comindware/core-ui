@@ -51,7 +51,6 @@ const defaultOptions = {
  * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true - обязательно
- * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * должны быть указаны cellView для каждой колонки.
  * */
 
@@ -75,9 +74,7 @@ export default Marionette.CompositeView.extend({
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
         this.height = options.height;
-        this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
         this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
-
 
         if (options.height === undefined) {
             this.height = defaultOptions.height;
@@ -120,9 +117,6 @@ export default Marionette.CompositeView.extend({
 
     onAttach() {
         this.handleResize();
-        if (this.forbidSelection) {
-            htmlHelpers.forbidSelection(this.el);
-        }
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
@@ -360,9 +354,9 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop =
-                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
-                this.childHeight;
+            const scrollTop
+                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
+                * this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -380,8 +374,8 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight
-            = this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
+        const availableHeight =
+            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
                 ? this.el.parentElement.clientHeight
                 : window.innerHeight;
 
