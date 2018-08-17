@@ -21,9 +21,9 @@ const Form = Marionette.Object.extend({
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
-        if (options.transliterateFields) {
-            this.schema = transliterator.setOptionsToComputedRelatedFields(this.schema, options.transliterateFields);
-            this.model.computed = transliterator.extendComputed(this.model, options.transliterateFields);
+        if (options.transliteratedFields) {
+            this.schema = transliterator.setOptionsToComputedTransliteratedFields(this.schema, options.transliteratedFields);
+            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields);
             this.model.computedFields = new Backbone.ComputedFields(this.model);
         }
 
@@ -355,11 +355,16 @@ export default Marionette.Behavior.extend({
             schema = schema.call(this.view);
         }
 
+        let options = this.options.options;
+        if (_.isFunction(options)) {
+            options = options.call(this.view);
+        }
+
         const form = new Form(_.defaults({
             model,
             schema,
             $target: this.$el,
-        }, this.options));
+        }, this.options, options));
         this.view.form = this.form = form;
         if (this.view.initForm) {
             this.view.initForm();
