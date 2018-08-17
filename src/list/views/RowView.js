@@ -126,7 +126,7 @@ export default Marionette.View.extend({
             if (typeof cell === 'string') {
                 return this.el.insertAdjacentHTML('beforeend', cell);
             }
-            let cellClasses = '';
+            let cellClasses = gridColumn.class ? `${gridColumn.class} ` : '';
             if (gridColumn.editable) cellClasses += classes.cellEditable;
 
             const cellView = new cell({

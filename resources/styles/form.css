@@ -1046,7 +1046,6 @@ input[type="color"], .colorpicker{
 }
 
 .js-core-ui__global-popup-region .simplified-panel_container {
-    margin-left: -15px;
     background-color: white;
     box-shadow: 0 0 1px 0 #c1c1c1;
     height: 250px;
@@ -1154,8 +1153,10 @@ input[type="color"], .colorpicker{
 }
 
 .simple-field_container img{
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 .simplified-button_grid .row + .row {

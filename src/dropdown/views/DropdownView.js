@@ -155,7 +155,7 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        const panelWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0, this.maxWidth);
+        const panelWidth = Math.min(Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0), this.maxWidth);
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
             panelEl.style.width = `${panelWidth}px`;
@@ -202,7 +202,7 @@ export default Marionette.View.extend({
 
         // trying to fit into viewport
         if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
-            top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
+            top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight; // todo add border offset
             if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
                 const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
                 top += diff;

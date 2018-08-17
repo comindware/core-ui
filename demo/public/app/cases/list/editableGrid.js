@@ -85,6 +85,7 @@ export default () => {
             title: 'Reference Cell',
             simplified: true,
             required: true,
+            class: 'dropdown_root',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             showCheckboxes: true,

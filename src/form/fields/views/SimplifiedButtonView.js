@@ -15,15 +15,6 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const columns = [
-            {
-                key: 'value',
-                type: Core.meta.objectPropertyTypes.STRING,
-                format: 'HTML',
-                width: 35
-            }
-        ];
-
         this.options.model.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
         const values = this.options.editor.getValue();
 
@@ -42,7 +33,14 @@ export default Marionette.View.extend({
 
         const grid = new Core.list.factory.createDefaultGrid({
             gridViewOptions: {
-                columns,
+                columns: [
+                    {
+                        key: 'value',
+                        type: Core.meta.objectPropertyTypes.STRING,
+                        format: 'HTML',
+                        width: 35
+                    }
+                ],
                 showHeader: false,
                 class: 'simplified-button_grid',
                 emptyView: null
