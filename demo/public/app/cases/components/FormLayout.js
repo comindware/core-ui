@@ -2,8 +2,8 @@ export default function() {
     return new core.layout.Form({
         model: new Backbone.Model({
             1: 'text',
-            2: 123,
-            3: 'foo',
+            2: '12_Мир ;Труд%,.Май64',
+            3: 123,
             4: '2015-07-20T10:46:37Z',
             5: true,
             6: 'aaa',
@@ -13,6 +13,9 @@ export default function() {
             10: 789,
             11: new Backbone.Collection([{}, {}])
         }),
+        transliteratedFields: { 
+            2: '6'
+        }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
         schema: [
             {
                 type: 'v-container',

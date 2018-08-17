@@ -9,13 +9,14 @@ export default Marionette.View.extend({
         searchBarRegion: '.js-search-bar-region'
     },
 
-    className: 'simplified-panel_container',
+    className: 'simplified-panel_container dropdown_root',
 
     onRender() {
         const customEditor = Object.assign({}, this.options.editorConfig, {
             showSearch: false,
             openOnRender: true,
             panelClass: 'simplified-panel_wrapper',
+            customTemplate: '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
 

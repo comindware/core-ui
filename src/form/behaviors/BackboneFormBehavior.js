@@ -1,6 +1,7 @@
 import FieldView from '../fields/FieldView';
 import SimplifiedFieldView from '../fields/SimplifiedFieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
+import transliterator from '../../utils/transliterator';
 
 const componentTypes = {
     editor: 'editor',
@@ -19,6 +20,12 @@ const Form = Marionette.Object.extend({
 
         this.schema = _.result(options, 'schema');
         this.model = options.model;
+
+        if (options.transliteratedFields) {
+            this.schema = transliterator.setOptionsToComputedTransliteratedFields(this.schema, options.transliteratedFields);
+            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields);
+            this.model.computedFields = new Backbone.ComputedFields(this.model);
+        }
 
         this.fields = {};
         this.regions = [];
@@ -47,7 +54,13 @@ const Form = Marionette.Object.extend({
     },
 
     handleAttach() {
-        this.regions.forEach(region => region.currentView && region.currentView.triggerMethod('attach'));
+        this.regions.forEach(region => {
+            const currentView = region.currentView;
+            if (currentView) {
+                currentView._isAttached = true;
+                currentView.triggerMethod('attach');
+            }
+        });
     },
 
     onDestroy() {
@@ -342,12 +355,16 @@ export default Marionette.Behavior.extend({
             schema = schema.call(this.view);
         }
 
-        const form = new Form({
+        let options = this.options.options;
+        if (_.isFunction(options)) {
+            options = options.call(this.view);
+        }
+
+        const form = new Form(_.defaults({
             model,
             schema,
             $target: this.$el,
-            field: this.options.field
-        });
+        }, this.options, options));
         this.view.form = this.form = form;
         if (this.view.initForm) {
             this.view.initForm();
