@@ -143,6 +143,10 @@ export default Marionette.View.extend({
         }
     },
 
+    adjustPosition() {
+        this.__adjustPosition(this.panelEl);
+    },
+
     __adjustPosition(panelEl) {
         panelEl.style.height = ''; //resetting custom height
 
@@ -155,7 +159,9 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        const panelWidth = Math.min(Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0), this.maxWidth);
+        const computedWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
+
+        const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
             panelEl.style.width = `${panelWidth}px`;
