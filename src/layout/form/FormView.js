@@ -54,6 +54,9 @@ export default Marionette.View.extend({
             schema() {
                 const schema = this.schema;
                 return _.isFunction(schema) ? schema.call(this) : schema;
+            },
+            options() {
+                return this.options;
             }
         }
     },
