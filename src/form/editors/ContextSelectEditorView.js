@@ -9,6 +9,7 @@ import dropdownFactory from '../../dropdown/factory';
 const defaultOptions = {
     recordTypeId: undefined,
     context: undefined,
+    contextModel: undefined,
     propertyTypes: undefined,
     usePropertyTypes: true,
     allowBlank: false,
@@ -19,7 +20,12 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.context = this.options.context;
+        if (this.options.contextModel) {
+            this.listenTo(this.options.contextModel, 'change:items', (model, value) => this.__onContextChange(value));
+            this.context = this.options.contextModel.get('items');
+        } else {
+            this.context = this.options.context;
+        }
 
         const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
@@ -73,6 +79,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.popoutView = dropdownFactory.createDropdown({
             panelView: PopoutWrapperView,
             panelViewOptions: {
+                maxWidth: 390,
                 model: this.viewModel.get('panel')
             },
             buttonView: PopoutButtonView,
@@ -147,6 +154,11 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
         this.popoutView.close();
         this.__value(selected.get('id'), true, newValue);
+    },
+
+    __onContextChange(newData) {
+        this.context = newData;
+        this.updateContext(this.options.recordTypeId, newData);
     },
 
     __createTreeCollection(context, recordTypeId) {

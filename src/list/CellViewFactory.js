@@ -286,7 +286,7 @@ export default (factory = {
                         <div class="context-icon context-icon-type_${model.get('type').toLocaleLowerCase()}"></div>
                         <div class="extend_cell_text">
                             <span class="extend_cell_header">${adjustedValue}</span>
-                            <span class="extend_info">${model.get('alias')}</span>
+                            <span class="extend_info">${model.get('alias') || ''}</span>
                         </div>
                         </div>`;
             case objectPropertyTypes.INSTANCE:

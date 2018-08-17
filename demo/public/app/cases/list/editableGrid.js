@@ -11,7 +11,7 @@ export default () => {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: [{ id: 'task.1', name: 'Ref 1' }, { id: 'task.2', name: 'Ref 2' }, { id: 'task.3', name: 'Ref 3' }, { id: 'task.4', name: 'Ref 4' }, { id: 'task.5', name: 'Ref 5' }, { id: 'task.6', name: 'Ref 6' }, { id: 'task.7', name: 'Ref 7' }],
+            referenceCell: [{ id: 'task.1', name: 'Ref 1', abbreviation: 'AB' }, { id: 'task.2', name: 'Ref 2' }, { id: 'task.3', name: 'Ref 3' }, { id: 'task.4', name: 'Ref 4' }, { id: 'task.5', name: 'Ref 5' }, { id: 'task.6', name: 'Ref 6' }, { id: 'task.7', name: 'Ref 7' }],
             enumCell: { valueExplained: ['123'] },
             documentCell: [
                 {
@@ -85,9 +85,12 @@ export default () => {
             title: 'Reference Cell',
             simplified: true,
             required: true,
+            customClass: 'dropdown_root',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
+            showCheckboxes: true,
             autocommit: true,
+            maxQuantitySelected: 5,
             getReadonly: model => model.get('numberCell') % 2,
         }
     ];

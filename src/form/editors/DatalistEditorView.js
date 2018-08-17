@@ -38,7 +38,10 @@ const defaultOptions = {
     canDeleteItem: true,
     valueType: 'normal',
     showSearch: true,
-    class: undefined
+    class: undefined,
+    externalBlurHandler: undefined,
+    customTemplate: undefined,
+    minAvailableHeight: undefined
 };
 
 /**
@@ -100,6 +103,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
 
+        this.reqres = reqres;
+
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
             'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
@@ -120,6 +125,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
@@ -127,6 +133,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             },
             panelView: PanelView,
             panelViewOptions: {
+                class: this.options.panelClass,
                 model: this.viewModel.panel,
                 reqres,
                 showAddNewButton: this.options.showAddNewButton,
@@ -135,7 +142,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 textFilterDelay: this.options.textFilterDelay
             },
-            autoOpen: false
+            autoOpen: false,
+            externalBlurHandler: this.options.externalBlurHandler,
+            minAvailableHeight: this.options.minAvailableHeight
         });
     },
 
@@ -537,6 +546,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.onBlur();
         this.panelCollection.pointOff();
         this.activeText = null;
+        this.trigger('dropdown:close');
     },
 
     __proxyValueSelect() {
