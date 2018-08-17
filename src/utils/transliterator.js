@@ -12,17 +12,17 @@ export default {
         ['ö', 'o'],  ['Ü', 'U'],  ['ü', 'u'],   ['ß', 's']
     ]),
 
-    setOptionsToComputedRelatedFields(schema, relatedFields = {name: 'alias'}, options = {
+    setOptionsToComputedTransliteratedFields(schema, transliteratedFields = {name: 'alias'}, options = {
             changeMode: 'blur',
             autocommit: true,
             forceCommit: true
         }) {
         const newSchema = Object.assign({}, schema);
 
-        let computedRelatedFields = relatedFields;
-        if (!Array.isArray(relatedFields)) {
+        let computedRelatedFields = transliteratedFields;
+        if (!Array.isArray(transliteratedFields)) {
             computedRelatedFields = [];
-            Object.entries(relatedFields).forEach(keyVal =>
+            Object.entries(transliteratedFields).forEach(keyVal =>
                 keyVal.forEach(input =>
                     computedRelatedFields.push(input)
                 )
@@ -70,7 +70,7 @@ export default {
         return this.__translitToSystemName;
     },
 
-    extendComputed(model, relatedFields = {name: 'alias'}) {
+    extendComputed(model, transliteratedFields = {name: 'alias'}) {
         const computed = model.computed || {};
 
         const required = (name) =>
@@ -88,15 +88,15 @@ export default {
                 return this.systemNameFiltration(fields[name]);
             };
 
-        Object.entries(relatedFields).forEach((keyValue) => {
+        Object.entries(transliteratedFields).forEach((keyValue) => {
             const name = keyValue[0];
             const alias = keyValue[1];
 
-            if (computed[name] && !computed[name].relatedFieldsClass) {
+            if (computed[name] && !computed[name].transliteratedFieldsClass) {
                 console.error(`Transliterator: computed is not fully extended, computed[${name}] is exist in model!`);
                 return;
             }
-            if (computed[alias] && !computed[alias].relatedFieldsClass) {
+            if (computed[alias] && !computed[alias].transliteratedFieldsClass) {
                 console.error(`Transliterator: computed is not fully extended, computed[${alias}] is exist in model!`);
                 return;
             }
@@ -104,12 +104,12 @@ export default {
             computed[name] = {
                 depends: [name],
                 get: required(name),
-                relatedFieldsClass: 'name' //flag for separate from original computed
+                transliteratedFieldsClass: 'name' //flag for separate from original computed
             };
             computed[alias] = {
                 depends: [name, alias],
                 get: getTranslite(name, alias),
-                relatedFieldsClass: 'alias'
+                transliteratedFieldsClass: 'alias'
             };
         });
 

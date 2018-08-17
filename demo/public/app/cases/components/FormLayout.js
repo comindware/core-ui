@@ -13,9 +13,9 @@ export default function() {
             10: 789,
             11: new Backbone.Collection([{}, {}])
         }),
-        transliterateFields: { 
+        transliteratedFields: { 
             2: '6'
-        }, // transliterateFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
+        }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
         schema: [
             {
                 type: 'v-container',
