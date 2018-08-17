@@ -128,16 +128,15 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     __getButtonText(selectedItem) {
         if (!selectedItem || selectedItem === 'False') return '';
-
-        const itemId = selectedItem[0];
+        let instanceTypeId = this.viewModel.get('panel').get('instanceTypeId');
         let text = '';
 
-        Object.values(this.context).forEach(value => {
-            value.forEach(context => {
-                if (context.id === itemId) {
-                    text = context.name;
-                }
-            });
+        selectedItem.forEach((item, index) => {
+            const searchItem = this.context[instanceTypeId].find(contextItem => contextItem.id === item);
+            if (searchItem) {
+                text += index ? ` - ${searchItem.name}` : searchItem.name;
+                instanceTypeId = searchItem.instanceTypeId;
+            }
         });
 
         return text;
@@ -209,7 +208,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __collectPropertyPath(selectedModel, collectedPath = []) {
-        collectedPath.push(selectedModel.get('id'));
+        collectedPath.unshift(selectedModel.get('id'));
 
         if (selectedModel.parent) {
             return this.__collectPropertyPath(selectedModel.parent, collectedPath);
