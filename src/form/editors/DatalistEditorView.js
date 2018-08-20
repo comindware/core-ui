@@ -307,11 +307,17 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onResetCollection(panelCollection) {
-        const editorId = this.model.get(this.key);
+        const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(panelCollection.models);
-
-        if (editorId) {
-            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+        if (value) {
+            const selectedItem = this.panelCollection.find(collectionItem => {
+                const itemId = collectionItem.get('id').toString();
+                if (Array.isArray(value)) {
+                    return value.find(v => (v && v.id ? v.id : v === itemId));
+                } else {
+                    return value === itemId;
+                }
+            });
             if (selectedItem) {
                 this.setValue(selectedItem.toJSON());
                 selectedItem.select();
