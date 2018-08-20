@@ -210,6 +210,12 @@
     border-bottom: 1px solid #ececec;
 }
 
+.subtext-list:hover {
+    cursor: pointer;
+    color: #0575bd;
+    background-color: #d6e7f2;
+}
+
 .datalist-checkbox {
     margin: 0 13px;
 }

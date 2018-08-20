@@ -1,0 +1,14 @@
+{{#if showCheckboxes}}
+    <span class="checkbox js-checkbox datalist-checkbox">
+        <svg class="svg-icons svg-icons_checked svg-icons_checked-reference">
+            <use xlink:href="#icon-checked"/>
+        </svg>
+    </span>
+{{/if}}
+{{#if iconType}}
+    <div class="datalist-subtext-icon context-icon-type_{{iconType}}"></div>
+{{/if}}
+<div class="datalist-text-container">
+    <span class="datalist-container-text" title="{{text}}">{{text}}</span>
+    <span class="datalist-container-subtext" title="{{subtext}}">{{subtext}}</span>
+</div>
