@@ -60,7 +60,7 @@ export default function() {
                     text: 'Save',
                     customClass: 'btn-small',
                     handler(popup) {
-                        const error = popup.getRegion('contentRegion').currentView.form.validate();
+                        const error = popup.content.form.validate();
                         if (error) {
                             return;
                         }
