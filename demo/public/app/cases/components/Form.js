@@ -47,7 +47,8 @@ export default function () {
                             title: 'Name',
                             type: 'Text',
                             helpText: 'Some help information',
-                            autocommit: true
+                            autocommit: true,
+                            allowEmptyValue: true //turn off required-like behavior for name
                         },
                         alias: {
                             title: 'Alias',
