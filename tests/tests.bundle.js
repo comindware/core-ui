@@ -46,6 +46,10 @@ const Application = Marionette.Application.extend({
             ajaxService: {
                 ajaxMap: []
             },
+            themeService: {
+                theme: 'new',
+                themesPath: 'dist/themes/'
+            },
             contentView: Marionette.View.extend({ template: false }),
             localizationService: {
                 langCode: 'en',

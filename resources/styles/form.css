@@ -1092,7 +1092,7 @@ input[type="color"], .colorpicker{
 
 .simplified-panel_container {
     position: fixed;
-    z-index: 45;
+    z-index: 55;
 }
 
 .js-core-ui__global-popup-region > .simplified-panel_container[noSelected].dropdown__wrp_up {
@@ -1215,4 +1215,8 @@ input[type="color"], .colorpicker{
 
 .simplified-button_grid .row:last-child {
     margin-right: 0!important;
+}
+
+.simplified-button_grid .selected .cell {
+    background-color: transparent!important;
 }
