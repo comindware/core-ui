@@ -204,6 +204,40 @@
     text-overflow: ellipsis;
 }
 
+.subtext-list {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ececec;
+}
+
+.datalist-checkbox {
+    margin: 0 13px;
+}
+
+.datalist-text-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px;
+}
+
+.datalist-container-text {
+    font-size: 15px;
+    font-weight: 900;
+    color: #808080;
+}
+
+.datalist-subtext-icon {
+    background: 0 0 no-repeat;
+    background-position-x: 13px;
+    background-position-y: 16px;
+    border-left: 1px solid #d6d6d6;
+    width: 35px;
+    height: 50px;
+}
+
+.datalist-container-subtext {
+    color: #313131;
+}
 
 .reference-btn-more{
     color: #4d4d4d;

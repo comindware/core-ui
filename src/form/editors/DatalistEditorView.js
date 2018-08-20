@@ -8,6 +8,7 @@ import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
+import ReferenceListWithSubtextItemView from './impl/reference/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import StaticController from './impl/datalist/controllers/StaticController';
@@ -29,7 +30,11 @@ const defaultOptions = {
     showAddNewButton: false,
     showEditButton: false,
     buttonView: ButtonView,
+    showSubText: false,
+    displayAttributeSubtext: '',
+    displayAttributeType: '',
     listItemView: ReferenceListItemView,
+    listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
     collection: null,
@@ -138,8 +143,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
-                listItemView: this.options.listItemView,
+                listItemView: this.options.showSubText ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                subTextOptions: {
+                    displayAttributeSubtext: this.options.displayAttributeSubtext,
+                    displayAttributeType: this.options.displayAttributeType
+                },
                 textFilterDelay: this.options.textFilterDelay
             },
             autoOpen: false,
