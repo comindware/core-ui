@@ -320,9 +320,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 const itemId = collectionItem.get('id').toString();
                 if (Array.isArray(value)) {
                     return value.find(v => (v && v.id ? v.id : v === itemId));
-                } else {
-                    return value === itemId;
                 }
+                return value === itemId;
             });
             if (selectedItem) {
                 this.setValue(selectedItem.toJSON());
