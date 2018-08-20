@@ -55,6 +55,9 @@ export default {
                     return new Button(_.omit(child, 'type'));
                 case 'grid': {
                     const controller = new GridController(child);
+                    if (typeof child.executeAction === 'function') {
+                        controller.listenTo(controller, 'execute', child.executeAction);
+                    }
 
                     return controller.view;
                 }

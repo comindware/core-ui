@@ -15,7 +15,8 @@ export default {
     setOptionsToComputedTransliteratedFields(schema, transliteratedFields = {name: 'alias'}, options = {
             changeMode: 'blur',
             autocommit: true,
-            forceCommit: true
+            forceCommit: true,
+            transliteratorChangedSomeProperties: true
         }) {
         const newSchema = Object.assign({}, schema);
 
@@ -23,8 +24,12 @@ export default {
         computedRelatedFields = computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => !(schema[name] && schema[name].allowEmptyValue)));
 
         computedRelatedFields.forEach((input) => {
+            if (!schema[input]) {
+                console.warn(`Transliterator: schema has no input '${input}'`);
+                return;
+            }
             Object.keys(options).forEach((propetry) => {
-                if (schema[input][propetry]) {
+                if (schema[input][propetry] && !schema[input].transliteratorChangedSomeProperties) {
                     console.warn(`Transliterator: Property '${propetry}' of input '${input}' was overwritten`);
                 }
             });

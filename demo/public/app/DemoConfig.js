@@ -48,6 +48,11 @@ export default {
                     description: 'Popup View'
                 },
                 {
+                    id: 'PopupViewLayoutForm',
+                    displayName: 'PopupView with new Form Syntax',
+                    description: 'PopupView with new Form Syntax'
+                },
+                {
                     id: 'MessageBox',
                     displayName: 'Message Box',
                     description: 'Message Box'
