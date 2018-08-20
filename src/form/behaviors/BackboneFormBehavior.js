@@ -23,7 +23,7 @@ const Form = Marionette.Object.extend({
 
         if (options.transliteratedFields) {
             this.schema = transliterator.setOptionsToComputedTransliteratedFields(this.schema, options.transliteratedFields);
-            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields);
+            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields, this.schema);
             this.model.computedFields = new Backbone.ComputedFields(this.model);
         }
 
