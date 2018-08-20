@@ -8,6 +8,9 @@ const componentTypes = {
     field: 'field'
 };
 
+// every of options.transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
+// allowEmptyValue: true; // in schema turn off required-like behavior for name
+
 const Form = Marionette.Object.extend({
     /**
      * Constructor

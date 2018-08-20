@@ -1,6 +1,6 @@
 export default function() {
     const model = new Backbone.Model({
-        name: 'new operation',
+        name: '',
         idealDays: 12,
         dueDate: '2015-07-20T10:46:37Z',
         description: 'no-op',
@@ -11,7 +11,8 @@ export default function() {
     const formSchema = {
         name: {
             title: 'Name',
-            type: 'Text'
+            type: 'Text',
+            validators: ['required']
         },
         idealDays: {
             title: 'Ideal Days',
@@ -59,6 +60,10 @@ export default function() {
                     text: 'Save',
                     customClass: 'btn-small',
                     handler(popup) {
+                        const error = popup.content.form.validate();
+                        if (error) {
+                            return;
+                        }
                         popup.setLoading(true);
                         setTimeout(() => {
                             popup.setLoading(false);
@@ -72,6 +77,9 @@ export default function() {
             content: new core.layout.Form({
                 model,
                 schema: formSchema,
+                transliteratedFields: {
+                    description: 'name'
+                },
                 content: new core.layout.TabLayout({
                     tabs: [
                         {
