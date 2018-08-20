@@ -19,15 +19,8 @@ export default {
         }) {
         const newSchema = Object.assign({}, schema);
 
-        let computedRelatedFields = transliteratedFields;
-        if (!Array.isArray(transliteratedFields)) {
-            computedRelatedFields = [];
-            Object.entries(transliteratedFields).forEach(keyVal =>
-                keyVal.forEach(input =>
-                    computedRelatedFields.push(input)
-                )
-            );
-        }
+        const computedRelatedFields = Object.values(transliteratedFields);
+        computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => schema.name.allowEmptyValue));
 
         computedRelatedFields.forEach((input) => {
             Object.keys(options).forEach((propetry) => {
@@ -70,7 +63,7 @@ export default {
         return this.__translitToSystemName;
     },
 
-    extendComputed(model, transliteratedFields = {name: 'alias'}) {
+    extendComputed(model, transliteratedFields = {name: 'alias'}, schema = {}) {
         const computed = model.computed || {};
 
         const required = (name) =>
@@ -101,11 +94,14 @@ export default {
                 return;
             }
 
-            computed[name] = {
-                depends: [name],
-                get: required(name),
-                transliteratedFieldsClass: 'name' //flag for separate from original computed
-            };
+            if (!schema.name.allowEmptyValue) {
+                computed[name] = {
+                    depends: [name],
+                    get: required(name),
+                    transliteratedFieldsClass: 'name' //flag for separate from original computed
+                };
+            }
+
             computed[alias] = {
                 depends: [name, alias],
                 get: getTranslite(name, alias),
