@@ -52,7 +52,7 @@ const defaultOptions = {
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
  * @param {Marionette.View} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.View} [options.listView=ReferenceListView] view to display item in the dropdown list.
- * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
+ * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text or function return display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * @param {String} [options.valueType = 'normal'] type of value (id or [{ id, name }]).
@@ -399,6 +399,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __getDisplayText(value, displayAttribute) {
         if (value == null) {
             return '';
+        }
+        if (typeof displayAttribute === 'function') {
+            return displayAttribute(value);
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
