@@ -71,13 +71,14 @@ export default {
     extendComputed(model, transliteratedFields = {name: 'alias'}, schema = {}) {
         const computed = model.computed || {};
 
-        const required = (name) =>
-            (fields) => {
+        const required = function(name) {
+            return function(fields) {
                 if (fields[name]) {
                     return fields[name];
                 }
-                return model.previous(name);
+                return this.previous(name);
             };
+        };
         const getTranslite = (name, alias) =>
             (fields) => {
                 if (fields[alias]) {
