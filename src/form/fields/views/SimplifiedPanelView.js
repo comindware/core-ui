@@ -60,11 +60,11 @@ export default Marionette.View.extend({
             if (values.length === 0) {
                 this.el.setAttribute('noSelected', true);
                 this.ui.panelSelectedContainer.css({ visibility: 'hidden' });
-                editor.adjustPosition();
+                editor.adjustPosition(true);
             } else {
                 this.el.removeAttribute('noSelected');
                 this.ui.panelSelectedContainer.css({ visibility: 'visible' });
-                editor.adjustPosition();
+                editor.adjustPosition(true);
             }
         }
     }

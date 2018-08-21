@@ -48,7 +48,7 @@ const Application = Marionette.Application.extend({
             },
             themeService: {
                 theme: 'new',
-                themesPath: 'dist/themes/'
+                themesPath: '../dist/themes/'
             },
             contentView: Marionette.View.extend({ template: false }),
             localizationService: {

@@ -143,11 +143,11 @@ export default Marionette.View.extend({
         }
     },
 
-    adjustPosition() {
-        this.__adjustPosition(this.panelEl);
+    adjustPosition(isNeedToRefreshAnchorPosition) {
+        this.__adjustPosition(this.panelEl, isNeedToRefreshAnchorPosition);
     },
 
-    __adjustPosition(panelEl) {
+    __adjustPosition(panelEl, isNeedToRefreshAnchorPosition) {
         panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;
@@ -226,6 +226,10 @@ export default Marionette.View.extend({
 
         panelEl.style.top = `${top}px`;
         panelEl.style.left = `${buttonRect.left}px`;
+
+        if (isNeedToRefreshAnchorPosition) {
+            this.__updateAnchorPosition(this.el);
+        }
     },
 
     /**
@@ -371,6 +375,7 @@ export default Marionette.View.extend({
 
         // saving el position relative to the viewport for further check
         const { left, top } = el.getBoundingClientRect();
+
         this.__observedEntities.push({
             anchorViewportPos: {
                 left: Math.floor(left),
@@ -401,5 +406,18 @@ export default Marionette.View.extend({
                 }
             });
         }, 50);
+    },
+
+    __updateAnchorPosition(el) {
+        const observable = this.__observedEntities.find(entrie => entrie.el === el);
+
+        if (observable) {
+            const { left, top } = el.getBoundingClientRect();
+
+            observable.anchorViewportPos = {
+                left: Math.floor(left),
+                top: Math.floor(top)
+            };
+        }
     }
 });

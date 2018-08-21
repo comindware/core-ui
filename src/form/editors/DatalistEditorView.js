@@ -263,9 +263,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    adjustPosition() {
+    adjustPosition(isNeedToRefreshAnchorPosition) {
         if (this.dropdownView) {
-            this.dropdownView.adjustPosition();
+            this.dropdownView.adjustPosition(isNeedToRefreshAnchorPosition);
         }
     },
 
