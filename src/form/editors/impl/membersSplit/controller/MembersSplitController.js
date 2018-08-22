@@ -3,25 +3,26 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
 import ItemModel from '../model/ItemModel';
+import dataProvider from '../../../../../../demo/public/demoPage/dataProvider';
 
 export default Marionette.Object.extend({
     initialize(options) {
         this.options = options;
         this.members = {};
-        this.channel = new Backbone.Radio.channel(_.uniqueId('splitC'));
-        this.channel.on('items:select', this.selectItemsByToolbar, this);
+        this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplit'));
         this.channel.on('items:move', this.moveItems, this);
         this.channel.on('items:update', this.updateMembers, this);
         this.channel.on('items:cancel', this.cancelMembers, this);
-        this.__createModel();
-
-        this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplitPanel'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:move', this.__onItemsMove, this);
+        this.channel.on('items:search', this.__onItemsSearch, this);
+        this.collectionTypeValue = {};
+        this.collectionSearchValue = {};
+        this.__createModel();
     },
 
     fillInModel() {
-        this.model.loading = this.__updateItems();
+        this.model.initialized = this.__updateItems();
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
             items: this.members,
@@ -37,9 +38,9 @@ export default Marionette.Object.extend({
     },
 
     async getDisplayText() {
-        await this.model.loading;
+        await this.model.initialized;
         let resultText = '';
-        const members = this.model.get('items');
+        const members = this.members;
 
         const membersCount = {
             users: 0,
@@ -76,12 +77,27 @@ export default Marionette.Object.extend({
     },
 
     async __updateItems() {
-        const users = await this.options.users;
-        const groups = await this.options.groups;
-
-        users.forEach(model => (this.members[model.id] = model));
-
-        groups.forEach(model => (this.members[model.id] = model));
+        if (this.options.memberService) {
+            try {
+                this.__setLoading(true);
+                const data = await this.options.memberService.getMembers(this.__getSettings());
+                this.members = {};
+                data.available.forEach(item => this.members[item.id] = item);
+                data.selected.forEach(item => this.members[item.id] = item);
+                this.__processValues();
+                this.model.get('available').totalCount = data.totalCount;
+                this.view && this.view.toggleElementsQuantityWarning();
+            } catch (e) {
+                console.log(e);
+            } finally {
+                this.__setLoading(false);
+            }
+        } else {
+            const users = await this.options.users;
+            const groups = await this.options.groups;
+            users.forEach(model => (this.members[model.id] = model));
+            groups.forEach(model => (this.members[model.id] = model));
+        }
     },
 
     __getFullMemberSplitTitle() {
@@ -101,7 +117,8 @@ export default Marionette.Object.extend({
     createView() {
         this.view = new MembersSplitPanelView({
             channel: this.channel,
-            model: this.model
+            model: this.model,
+            memberService: this.options.memberService
         });
     },
 
@@ -127,28 +144,31 @@ export default Marionette.Object.extend({
     },
 
     selectItemsByToolbar(type, value) {
-        this.collectionFilterValue[type] = value;
+        this.collectionTypeValue[type] = value;
         this.__applyFilter(type);
     },
 
     __applyFilter(type) {
-        this.__createCollection(type);
-        this.collection.selectNone();
-        this.collection.unhighlight();
-
-        const filterValue = this.collectionFilterValue[type];
+        const filterValue = this.collectionTypeValue[type];
         const searchValue = this.collectionSearchValue[type];
 
-        if (!filterValue && !searchValue) {
-            this.collection.filter(null);
-            return;
-        }
-        this.collection.filter(model => {
-            const modelType = model.get('type');
-            const modelName = model.get('name');
+        if (this.options.memberService && type === 'available') {
+            this.__updateItems();
+        } else {
+            this.__createCollection(type);
+            this.collection.selectNone();
+            this.collection.unhighlight();
+            if (!filterValue && !searchValue) {
+                this.collection.filter(null);
+                return;
+            }
+            this.collection.filter(model => {
+                const modelType = model.get('type');
+                const modelName = model.get('name');
 
-            return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
-        });
+                return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
+            });
+        }
     },
 
     moveItems(typeFrom, typeTo, all, model) {
@@ -241,6 +261,7 @@ export default Marionette.Object.extend({
         if (this.groupConfig) {
             availableModels.group(this.groupConfig);
         }
+        availableModels.totalCount = 0;
         this.model.set('available', availableModels);
 
         const selectedComparator = this.options.orderEnabled
@@ -267,42 +288,71 @@ export default Marionette.Object.extend({
         this.fillInModel();
     },
 
-    setValue() {
-        this.collectionFilterValue = [];
-        this.collectionSearchValue = [];
-        this.__applyFilter('available');
+    async setValue() {
+        this.collectionTypeValue = {};
+        this.collectionSearchValue = {};
+        if (!this.options.memberService) {
+            this.__applyFilter('available');
+        }
         this.__applyFilter('selected');
+        await this.model.initialized;
+        this.__processValues();
+    },
 
-        Promise.resolve(this.model.loading).then(() => {
-            const items = _.clone(this.members);
-            this.options.exclude.forEach(id => {
-                if (items[id]) {
-                    delete items[id];
-                }
-            });
-            const selected = this.options.selected;
-            let selectedItems = Array.isArray(selected)
-                ? this.options.selected.map(id => {
-                    const model = items[id];
-                    delete items[id];
-                    return model;
-                })
-                : [];
-
-            const availableItems = Object.values(items);
-            let i = 1;
-            selectedItems = _.chain(selectedItems)
-                .filter(item => item !== undefined)
-                .map(item => {
-                    if (this.options.orderEnabled) {
-                        item.order = i++;
-                    }
-                    return item;
-                })
-                .value();
-
-            this.model.get('available').reset(availableItems);
-            this.model.get('selected').reset(selectedItems);
+    __processValues() {
+        const items = _.clone(this.members);
+        this.options.exclude.forEach(id => {
+            if (items[id]) {
+                delete items[id];
+            }
         });
+        const selected = this.options.selected;
+        let selectedItems = Array.isArray(selected)
+            ? this.options.selected.map(id => {
+                const model = items[id];
+                delete items[id];
+                return model;
+            })
+            : [];
+
+        const availableItems = Object.values(items);
+        let i = 1;
+        selectedItems = _.chain(selectedItems)
+            .filter(item => item !== undefined)
+            .map(item => {
+                if (this.options.orderEnabled) {
+                    item.order = i++;
+                }
+                return item;
+            })
+            .value();
+
+        this.model.get('available').reset(availableItems);
+        this.model.get('selected').reset(selectedItems);
+    },
+
+    __getSettings() {
+        const selected = this.model.initialized ? this.model.get('selected').map(item => item.id) : this.options.selected;
+        let filterType = this.collectionTypeValue.available || 'all';
+        if (this.options.hideUser) {
+            filterType = 'groups';
+        } else if (this.options.hideGroups) {
+            filterType = 'users';
+        }
+
+        return {
+            filterText: this.collectionSearchValue.available || '',
+            filterType,
+            selected: selected || []
+        };
+    },
+
+    __onItemsSearch(text) {
+        this.collectionSearchValue.available = text;
+        this.__applyFilter('available');
+    },
+
+    __setLoading(state) {
+        this.view && !this.view.isDestroyed() && this.view.setLoading(state);
     }
 });
