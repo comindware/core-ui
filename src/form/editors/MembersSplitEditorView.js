@@ -22,7 +22,7 @@ const defaultOptions = () => ({
     users: undefined,
     groups: undefined,
     showMode: null,
-    cacheService: undefined,
+    memberService: undefined,
     getDisplayText: null
 });
 
@@ -84,26 +84,8 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
 
         const defOps = Object.assign(defaultOptions(), {
-            users:
-                options.users ||
-                options.cacheService.GetUsers().then(users =>
-                    users.map(user => ({
-                        id: user.id,
-                        name: user.text,
-                        abbreviation: user.abbreviation,
-                        userpicUri: user.userpicUri,
-                        type: 'users'
-                    }))
-                ),
-            groups:
-                options.groups ||
-                options.cacheService.GetGroups().then(groups =>
-                    groups.map(group => ({
-                        id: group.id,
-                        name: group.name,
-                        type: 'groups'
-                    }))
-                )
+            users: options.users || [],
+            groups: options.groups || []
         });
 
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);

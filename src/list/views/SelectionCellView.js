@@ -85,6 +85,9 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
         } else {
             this.listenTo(this.model, 'checked unchecked checked:some', this.__updateState);
+            if (this.model.selected) {
+                this.__handleSelection();
+            }
         }
     },
 
