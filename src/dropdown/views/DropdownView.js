@@ -144,7 +144,9 @@ export default Marionette.View.extend({
     },
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
-        this.__adjustPosition(this.panelEl, isNeedToRefreshAnchorPosition);
+        if (this.panelEl) {
+            this.__adjustPosition(this.panelEl, isNeedToRefreshAnchorPosition);
+        }
     },
 
     __adjustPosition(panelEl, isNeedToRefreshAnchorPosition) {
