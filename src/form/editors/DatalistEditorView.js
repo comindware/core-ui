@@ -44,7 +44,7 @@ const defaultOptions = {
 /**
  * @name DatalistView
  * @member of module:core.form.editors
- * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
+ * @class advanced css class
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
@@ -75,11 +75,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
+        this.displayAttribute = Array.isArray(options.displayAttribute) ? options.displayAttribute[0] : options.displayAttribute;
+
         this.controller =
             this.options.controller ||
             new StaticController({
                 collection: options.collection,
-                displayAttribute: options.displayAttribute
+                displayAttribute: this.displayAttribute
             });
 
         this.value = this.__adjustValue(this.value);
@@ -118,7 +120,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             buttonViewOptions: {
                 model: this.viewModel.button,
                 reqres,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                getDisplayText: value => this.__getDisplayText(value, this.displayAttribute),
                 showEditButton: this.options.showEditButton,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
@@ -132,8 +134,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
-                textFilterDelay: this.options.textFilterDelay
+                getDisplayText: this.__getDisplayText,
+                displayAttribute: this.options.displayAttribute,
+                textFilterDelay: this.options.textFilterDelay,
+                listItemClass: this.options.panelViewListItemClass
             },
             autoOpen: false
         });
