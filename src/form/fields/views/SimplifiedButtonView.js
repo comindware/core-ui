@@ -15,15 +15,6 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const columns = [
-            {
-                key: 'value',
-                type: Core.meta.objectPropertyTypes.STRING,
-                format: 'HTML',
-                width: 35
-            }
-        ];
-
         this.options.model.on('change', () => this.__updateDisplayValue(this.options.editor.getValue()));
         const values = this.options.editor.getValue();
 
@@ -32,9 +23,9 @@ export default Marionette.View.extend({
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 4) {
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 1) {
+            counterValue = `+${collectionValues.length - 1}`;
+            collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;
         }
 
@@ -42,7 +33,14 @@ export default Marionette.View.extend({
 
         const grid = new Core.list.factory.createDefaultGrid({
             gridViewOptions: {
-                columns,
+                columns: [
+                    {
+                        key: 'value',
+                        type: Core.meta.objectPropertyTypes.STRING,
+                        format: 'HTML',
+                        width: 35
+                    }
+                ],
                 showHeader: false,
                 class: 'simplified-button_grid',
                 emptyView: null
@@ -52,23 +50,21 @@ export default Marionette.View.extend({
         });
 
         this.showChildView('gridRegion', grid);
-        if (showCounter) {
-            this.ui.counterRegion.show();
-            this.ui.counterRegionCounter.html(counterValue);
-        } else {
-            this.ui.counterRegion.hide();
-        }
+        this.__updateCounter(showCounter, counterValue);
     },
 
     __formatValues(schema, values) {
+        this.el.setAttribute('extended', true);
+
         switch (schema.type) {
             case 'Datalist': {
                 return Array.isArray(values) ? values.map(v => ({
                     value: `
                 <div class="user-edit-wrp" title="${v.name}">
                     <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
+                 ${v.name}
             </div>`
                 })) : [{ value: values.name }];
             }
@@ -77,7 +73,7 @@ export default Marionette.View.extend({
                     value: `
                 <div class="user-edit-wrp" title="${v.name}">
                     <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : this.__getAbbreviation(v.name).toUpperCase()}
+                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
             </div>`
                 })) : [{ value: values.name }];
@@ -87,47 +83,30 @@ export default Marionette.View.extend({
         }
     },
 
-    __getAbbreviation(fullName) {
-        if (!fullName) {
-            return '';
-        }
-
-        const words = fullName.split(/[, _]/);
-        switch (words.length) {
-            case 0:
-                return '';
-            case 1:
-                return this._getWordAbbreviation(words[0], true);
-            default:
-                return this._getWordAbbreviation(words[0], words[1].length === 0) + this._getWordAbbreviation(words[1], words[0].length === 0);
-        }
-    },
-
-    _getWordAbbreviation(word, takeTwo) {
-        if (word.length === 0) {
-            return '';
-        }
-
-        return word.substring(0, word.length > 1 && takeTwo ? 2 : 1);
-    },
-
     __updateDisplayValue(values) {
         const collectionValues = this.__formatValues(this.options.editor.schema, values);
 
         let showCounter = false;
         let counterValue = false;
 
-        if (collectionValues.length > 3) { //todo make dynamic
-            counterValue = collectionValues.length;
-            collectionValues.splice(2, collectionValues.length - 3);
+        if (collectionValues.length > 1) {
+            counterValue = `+${collectionValues.length - 1}`;
+            collectionValues.splice(1, collectionValues.length - 1);
             showCounter = true;
         }
+
         this.collection.reset(collectionValues);
-        if (showCounter) {
-            this.ui.counterRegion.show();
-            this.ui.counterRegionCounter.html(counterValue);
-        } else {
-            this.ui.counterRegion.hide();
+        this.__updateCounter(showCounter, counterValue);
+    },
+
+    __updateCounter(showCounter, counterValue) {
+        if (this.isRendered()) {
+            if (showCounter) {
+                this.ui.counterRegion.show();
+                this.ui.counterRegionCounter.html(counterValue);
+            } else {
+                this.ui.counterRegion.hide();
+            }
         }
     }
 });

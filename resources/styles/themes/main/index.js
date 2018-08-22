@@ -113,7 +113,7 @@ const variables = {
 
     'grid-selection-color': 'var(--grey-900)',
     'grid-selection-width': '26px',
-    'grid-selection-bg': 'var(--grid-header-selection-bg)',
+    'grid-selection-bg': 'var(--grid-cell-bg)',
     'grid-selection-index-width': '53px',
     'grid-selection-index-padding-x': '10px',
 

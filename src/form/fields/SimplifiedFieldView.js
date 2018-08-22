@@ -49,14 +49,18 @@ export default Marionette.View.extend({
             panelView: SimplifiedPanelView,
             panelViewOptions: {
                 editorConstructor: this.editorConstructor,
-                editorConfig: this.editorConfig
+                editorConfig: this.editorConfig,
+                maxWidth: 320,
+                model: this.model,
+                editor: this.editor
             },
             buttonViewOptions: {
                 editor: this.editor,
                 model: this.model
             },
             class: 'simplified-panel_container',
-            autoopen: true
+            autoopen: true,
+            minAvailableHeight: 220
         });
 
         if (this.schema.helpText) {
@@ -81,6 +85,7 @@ export default Marionette.View.extend({
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
         this.showChildView('editorRegion', menuView);
+        this.listenTo(menuView, 'panel:dropdown:close', () => menuView.close());
     },
 
     /**

@@ -1,6 +1,7 @@
 //@flow
 export const objectPropertyTypes = {
     STRING: 'String',
+    EXTENDED_STRING: 'ExtendedString',
     BOOLEAN: 'Boolean',
     DATETIME: 'DateTime',
     DURATION: 'Duration',

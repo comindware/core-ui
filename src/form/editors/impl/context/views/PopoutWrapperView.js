@@ -26,10 +26,10 @@ export default Marionette.View.extend({
         const columns = [
             {
                 key: 'name',
-                type: 'String',
+                type: 'ExtendedString',
                 title: 'TextCell',
                 sorting: 'asc',
-                width: 240
+                width: 390
             }
         ];
 
@@ -48,6 +48,6 @@ export default Marionette.View.extend({
 
         this.showChildView('popoutWrapper', listView);
 
-        listView.on('childview:dblclick', model => this.trigger('context:selected', model));
+        listView.on('childview:click', model => this.trigger('context:selected', model));
     }
 });

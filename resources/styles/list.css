@@ -114,7 +114,7 @@
     font-size: 12px;
     color: #000;
     cursor: default;
-    min-width: 100px;
+    min-width: 50px;
 }
 
 .grid-selection-cell-all {
@@ -190,7 +190,7 @@
 .grid-header-column {
     display: inline-block;
     position: relative;
-    min-width: 100px;
+    min-width: 50px;
 }
 
 .grid-header-column-content {
@@ -429,7 +429,7 @@
     white-space: nowrap;
     cursor: default;
     overflow: hidden;
-    min-width: 100px;
+    min-width: 50px;
 }
 .cell_editable {
     display: flex;
@@ -591,3 +591,60 @@
     top: 3px;
 }
 /*-- End Compact list --*/
+
+/*-- ExtendedString --*/
+
+.context-icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin: 10px -4px 0 22px;
+    flex: none;
+    background: 0 0 no-repeat;
+}
+
+.extend_cell_content {
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+    border-bottom: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+}
+
+.extend_cell_content:hover {
+    cursor: pointer;
+    background-color: #d6e7f2;
+}
+
+.extend_cell_content:hover > .context-collapse-button {
+    cursor: pointer;
+    background-color: #cbdce7;
+}
+
+.context-collapse-button {
+    position: absolute;
+    height: 35px;
+    background-color: white;
+    width: 30px;
+    padding-top: 8px;
+    right: 0px;
+    padding-left: 6px;
+}
+
+.extend_cell_text {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    padding: 2px 5px;
+}
+
+.extend_cell_header {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.extend_info {
+    font-size: 12px;
+}
+
+/*-- End ExtendedString --*/

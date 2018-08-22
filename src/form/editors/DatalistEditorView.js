@@ -8,6 +8,7 @@ import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
+import ReferenceListWithSubtextItemView from './impl/reference/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import StaticController from './impl/datalist/controllers/StaticController';
@@ -29,7 +30,11 @@ const defaultOptions = {
     showAddNewButton: false,
     showEditButton: false,
     buttonView: ButtonView,
+    showSubText: false,
+    displayAttributeSubtext: '',
+    displayAttributeType: '',
     listItemView: ReferenceListItemView,
+    listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
     collection: null,
@@ -38,7 +43,10 @@ const defaultOptions = {
     canDeleteItem: true,
     valueType: 'normal',
     showSearch: true,
-    class: undefined
+    class: undefined,
+    externalBlurHandler: undefined,
+    customTemplate: undefined,
+    minAvailableHeight: undefined
 };
 
 /**
@@ -102,6 +110,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
 
+        this.reqres = reqres;
+
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
             'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
@@ -122,6 +132,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
@@ -129,17 +140,23 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             },
             panelView: PanelView,
             panelViewOptions: {
+                class: this.options.panelClass,
                 model: this.viewModel.panel,
                 reqres,
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
-                listItemView: this.options.listItemView,
-                getDisplayText: this.__getDisplayText,
-                displayAttribute: this.options.displayAttribute,
+                listItemView: this.options.showSubText ? this.options.listItemViewWithText : this.options.listItemView,
+                getDisplayText: this.options.showSubText ? value => this.__getDisplayText(value, this.displayAttribute) : this.__getDisplayText,
+                subTextOptions: {
+                    displayAttributeSubtext: this.options.displayAttributeSubtext,
+                    displayAttributeType: this.options.displayAttributeType
+                },
                 textFilterDelay: this.options.textFilterDelay,
                 listItemClass: this.options.panelViewListItemClass
             },
-            autoOpen: false
+            autoOpen: false,
+            externalBlurHandler: this.options.externalBlurHandler,
+            minAvailableHeight: this.options.minAvailableHeight
         });
     },
 
@@ -249,6 +266,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
+    adjustPosition(isNeedToRefreshAnchorPosition) {
+        if (this.dropdownView) {
+            this.dropdownView.adjustPosition(isNeedToRefreshAnchorPosition);
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;
@@ -302,11 +325,16 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onResetCollection(panelCollection) {
-        const editorId = this.model.get(this.key);
+        const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(panelCollection.models);
-
-        if (editorId) {
-            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+        if (value) {
+            const selectedItem = this.panelCollection.find(collectionItem => {
+                const itemId = collectionItem.get('id').toString();
+                if (Array.isArray(value)) {
+                    return value.find(v => (v && v.id ? v.id : v === itemId));
+                }
+                return value === itemId;
+            });
             if (selectedItem) {
                 this.setValue(selectedItem.toJSON());
                 selectedItem.select();
@@ -413,6 +441,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onDropdownOpen(): void {
         this.__focusButton();
         this.onFocus();
+        this.trigger('dropdown:open');
     },
 
     __focusButton(): void {
@@ -544,6 +573,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.onBlur();
         this.panelCollection.pointOff();
         this.activeText = null;
+        this.trigger('dropdown:close');
     },
 
     __proxyValueSelect() {
