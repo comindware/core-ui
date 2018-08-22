@@ -2,12 +2,18 @@
 import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
-import iconPalette from './impl/iconEditor/iconPalette';
+import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
+};
+
+const iconStyle = {
+    solid: 'fas',
+    regular: 'far',
+    light: 'fal'
 };
 
 /*
@@ -84,13 +90,27 @@ export default BaseLayoutEditorView.extend({
     },
 
     __getConfig() {
+        const iconService = window.application.options.iconService;
+        const style = (iconService && iconService.style) || 'solid';
+        const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
-            Object.values(iconPalette).map((value) => ({
-                name: value.label,
-                groupItems: value.icons.map(icon => Object.assign({
-                        filter: icons[icon.id].search.terms
-                    }, icon)
-                )
+            Object.values(categories)
+            .map((category) => ({
+                name: category.label,
+                groupItems: category.icons
+                .reduce((arr, icon) => {
+                    if (!useBrands && icons[icon].styles.includes('brands')) {
+                        return arr;
+                    }
+                    arr.push({
+                        id: icon,
+                        name: icons[icon].label,
+                        style: useBrands && icons[icon].styles.includes('brands') ? 'fab' : iconStyle[style],
+                        filter: icons[icon].search.terms
+                    });
+
+                    return arr;
+                }, [])
             }))
         );
     },
