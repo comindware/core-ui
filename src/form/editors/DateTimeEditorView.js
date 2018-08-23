@@ -233,18 +233,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateChange(date, updateView = true) {
-        const oldValue = new Date(this.value);
         let newVal = null;
 
-        if (!isNaN(oldValue)) {
-            newVal = moment(oldValue)
-                .year(date.getFullYear())
-                .month(date.getMonth())
-                .date(date.getDate())
-                .toISOString();
-        } else {
-            newVal = moment(date).toISOString();
-        }
+        newVal = moment(date).toISOString();
 
         this.__value(newVal, updateView, true);
         this.stopListening(GlobalEventService);

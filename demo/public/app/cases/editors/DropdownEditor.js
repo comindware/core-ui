@@ -18,7 +18,8 @@ export default function() {
             autocommit: true,
             collection: possibleItems,
             valueType: 'id',
-            allowEmptyValue: false
+            allowEmptyValue: false,
+            displayAttribute: attr => `id: ${attr.id}, text: ${attr.text}`
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true

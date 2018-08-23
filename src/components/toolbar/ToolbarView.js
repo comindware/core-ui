@@ -17,9 +17,10 @@ export default Marionette.View.extend({
         this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
         this.listenTo(this.toolbarActions, 'actionSelected', model => this.trigger('command:execute', model));
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
-        this.debounceRebuild = _.debounce(() => this.rebuildView(), 500);
-        this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuild);
-        this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuild);
+        this.debounceRebuildLong = _.debounce(this.rebuildView, 300);
+        this.debounceRebuildShort = _.debounce(this.rebuildView, 5);
+        this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuildLong);
+        this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -32,7 +33,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.debounceRebuild();
+        this.debounceRebuildShort();
     },
 
     onRender() {

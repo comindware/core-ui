@@ -9,6 +9,10 @@ export default Marionette.View.extend({
         searchBarRegion: '.js-search-bar-region'
     },
 
+    ui: {
+        panelSelectedContainer: '.panel-selected_container'
+    },
+
     className: 'simplified-panel_container dropdown_root',
 
     onRender() {
@@ -28,6 +32,13 @@ export default Marionette.View.extend({
 
         this.listenTo(searchView, 'search', text => this.__onSearch(text, editor));
         this.listenTo(editor, 'dropdown:close', () => this.trigger('dropdown:close'));
+        this.listenTo(editor, 'dropdown:open', () => this.__adjustPanelContainerVisibility(this.options.editor.getValue(), editor));
+
+        this.options.model.on('change', () => {
+            const values = this.options.editor.getValue();
+
+            this.__adjustPanelContainerVisibility(values, editor);
+        });
     },
 
     templateContext() {
@@ -42,5 +53,19 @@ export default Marionette.View.extend({
 
     __handleBlur(activeElement) {
         return this.el.contains(activeElement);
+    },
+
+    __adjustPanelContainerVisibility(values, editor) {
+        if (this.isRendered()) {
+            if (values.length === 0) {
+                this.el.setAttribute('noSelected', true);
+                this.ui.panelSelectedContainer.css({ visibility: 'hidden' });
+                editor.adjustPosition(true);
+            } else {
+                this.el.removeAttribute('noSelected');
+                this.ui.panelSelectedContainer.css({ visibility: 'visible' });
+                editor.adjustPosition(true);
+            }
+        }
     }
 });

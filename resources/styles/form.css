@@ -694,6 +694,21 @@ input[type="checkbox"].checkbox {
     cursor: default;
 }
 
+.member-select__elements_quantity_warning {
+    padding: 0 0 .5rem;
+    max-width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+}
+
+.member-select__elements_quantity_warning > span {
+    color: #999;
+    font-size: 11px;
+}
+
 /* /Member editor/ */
 
 
@@ -1047,9 +1062,19 @@ input[type="color"], .colorpicker{
 
 .js-core-ui__global-popup-region .simplified-panel_container {
     background-color: white;
-    box-shadow: 0 0 1px 0 #c1c1c1;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     height: 250px;
-    margin-top: 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_down > .panel-selected_container {
+    flex: 1;
+}
+
+.panel-selected_container {
+    height: 100%;
+    z-index: 0;
 }
 
 .js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_up {
@@ -1067,14 +1092,39 @@ input[type="color"], .colorpicker{
 
 .simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
     margin-top: -470px;
+    border-top: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.simplified-panel_container[noSelected].dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
+    margin-top: -310px;
 }
 
 .simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-search {
-    height: 300px;
+    height: 278px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .simplified-panel_container {
     position: fixed;
+    z-index: 55;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container[noSelected].dropdown__wrp_up {
+    height: 0;
+    margin-top: 165px;
+}
+
+.simplified-panel_container[noSelected] {
+    height: 70px;
+}
+
+.simplified-panel_container[noSelected] > .panel-selected_container{
+    height: 0;
+}
+
+.simplified-panel_container[noSelected] > .simplified-panel-subtitle {
+    margin-top: 0;
 }
 
 .simplified-panel_container .bubbles__caret {
@@ -1083,7 +1133,7 @@ input[type="color"], .colorpicker{
 
 .simplified-panel_wrapper {
     border: none!important;
-    box-shadow: 0 0 1px 0 #c1c1c1!important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)!important;
     height: 240px;
     background-color: white;
 }
@@ -1093,6 +1143,11 @@ input[type="color"], .colorpicker{
 .simplified-panel_wrapper .dd-list__i_checkbox {
     padding-left: 14px;
 }
+
+.simplified-panel_wrapper.dropdown__wrp_up {
+    box-shadow: none!important;;
+}
+
 .simplified-panel-title {
     font-weight: 600;
     padding: 8px 4px 4px 14px;
@@ -1100,7 +1155,7 @@ input[type="color"], .colorpicker{
 }
 
 .simplified-panel-title.simplified-panel-subtitle {
-    border-top: 1px solid #c1c1c1;
+    border-top: 1px solid rgba(210, 210, 210, 1);
     margin-top: 14px;
 }
 
@@ -1131,6 +1186,12 @@ input[type="color"], .colorpicker{
 .simplified-panel_container .bubbles__list > .bubbles__i > .user-edit-wrp{
     margin-right: 10px;
     margin-top: -4px;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i > a{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-edit-wrp {
@@ -1169,4 +1230,8 @@ input[type="color"], .colorpicker{
 
 .simplified-button_grid .row:last-child {
     margin-right: 0!important;
+}
+
+.simplified-button_grid .selected .cell {
+    background-color: transparent!important;
 }

@@ -50,7 +50,9 @@ export default Marionette.View.extend({
             panelViewOptions: {
                 editorConstructor: this.editorConstructor,
                 editorConfig: this.editorConfig,
-                maxWidth: 320
+                maxWidth: 320,
+                model: this.model,
+                editor: this.editor
             },
             buttonViewOptions: {
                 editor: this.editor,

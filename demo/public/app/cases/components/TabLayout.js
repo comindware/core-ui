@@ -2,11 +2,62 @@ import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        title: 'foo',
+        title: '',
         idealDays: 12,
         dueDate: '2015-07-20T10:46:37Z',
         description: 'bar\nbaz',
         blocked: true
+    });
+
+    const view = new core.layout.Form({
+        model,
+        schema: [
+            {
+                type: 'v-container',
+                items: [
+                    {
+                        key: 'title',
+                        title: 'Title',
+                        type: 'Text-field',
+                        validators: ['required']
+                    },
+                    {
+                        type: 'h-container',
+                        items: [
+                            {
+                                key: 'idealDays',
+                                title: 'Ideal Days',
+                                type: 'Number-field'
+                            },
+                            {
+                                key: 'dueDate',
+                                type: 'DateTime-field',
+                                title: 'Due Date'
+                            }
+                        ]
+                    },
+                    {
+                        key: 'description',
+                        title: 'Description',
+                        type: 'TextArea-field'
+                    },
+                    {
+                        key: 'blocked',
+                        type: 'Boolean-field',
+                        displayText: 'Blocked by another task'
+                    },
+                    {
+                        text: 'Commit',
+                        type: 'Button',
+                        handler() {
+                            console.log(window.temp = view);
+                            view.form.commit();
+                            // alert(JSON.stringify(model.toJSON(), null, 4));
+                        }
+                    }
+                ]
+            }
+        ]
     });
 
     return new CanvasView({
@@ -15,54 +66,7 @@ export default function() {
                 {
                     id: 'tab1',
                     name: 'Tab 1',
-                    view: new core.layout.Form({
-                        model,
-                        schema: [
-                            {
-                                type: 'v-container',
-                                items: [
-                                    {
-                                        key: 'title',
-                                        title: 'Title',
-                                        type: 'Text-field'
-                                    },
-                                    {
-                                        type: 'h-container',
-                                        items: [
-                                            {
-                                                key: 'idealDays',
-                                                title: 'Ideal Days',
-                                                type: 'Number-field'
-                                            },
-                                            {
-                                                key: 'dueDate',
-                                                type: 'DateTime-field',
-                                                title: 'Due Date'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        key: 'description',
-                                        title: 'Description',
-                                        type: 'TextArea-field'
-                                    },
-                                    {
-                                        key: 'blocked',
-                                        type: 'Boolean-field',
-                                        displayText: 'Blocked by another task'
-                                    },
-                                    {
-                                        text: 'Commit',
-                                        type: 'Button',
-                                        handler() {
-                                            view.form.commit();
-                                            alert(JSON.stringify(model.toJSON(), null, 4));
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    })
+                    view
                 },
                 {
                     id: 'tab2',

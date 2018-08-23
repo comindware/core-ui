@@ -8,6 +8,9 @@ const componentTypes = {
     field: 'field'
 };
 
+// every of options.transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
+// allowEmptyValue: true; // in schema turn off required-like behavior for name
+
 const Form = Marionette.Object.extend({
     /**
      * Constructor
@@ -23,7 +26,7 @@ const Form = Marionette.Object.extend({
 
         if (options.transliteratedFields) {
             this.schema = transliterator.setOptionsToComputedTransliteratedFields(this.schema, options.transliteratedFields);
-            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields);
+            this.model.computed = transliterator.extendComputed(this.model, options.transliteratedFields, this.schema);
             this.model.computedFields = new Backbone.ComputedFields(this.model);
         }
 

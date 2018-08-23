@@ -15,23 +15,21 @@ export default {
     setOptionsToComputedTransliteratedFields(schema, transliteratedFields = {name: 'alias'}, options = {
             changeMode: 'blur',
             autocommit: true,
-            forceCommit: true
+            forceCommit: true,
+            transliteratorChangedSomeProperties: true
         }) {
         const newSchema = Object.assign({}, schema);
 
-        let computedRelatedFields = transliteratedFields;
-        if (!Array.isArray(transliteratedFields)) {
-            computedRelatedFields = [];
-            Object.entries(transliteratedFields).forEach(keyVal =>
-                keyVal.forEach(input =>
-                    computedRelatedFields.push(input)
-                )
-            );
-        }
+        let computedRelatedFields = Object.values(transliteratedFields);
+        computedRelatedFields = computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => !(schema[name] && schema[name].allowEmptyValue)));
 
         computedRelatedFields.forEach((input) => {
+            if (!schema[input]) {
+                console.warn(`Transliterator: schema has no input '${input}'`);
+                return;
+            }
             Object.keys(options).forEach((propetry) => {
-                if (schema[input][propetry]) {
+                if (schema[input][propetry] && !schema[input].transliteratorChangedSomeProperties) {
                     console.warn(`Transliterator: Property '${propetry}' of input '${input}' was overwritten`);
                 }
             });
@@ -70,16 +68,17 @@ export default {
         return this.__translitToSystemName;
     },
 
-    extendComputed(model, transliteratedFields = {name: 'alias'}) {
+    extendComputed(model, transliteratedFields = {name: 'alias'}, schema = {}) {
         const computed = model.computed || {};
 
-        const required = (name) =>
-            (fields) => {
+        const required = function(name) {
+            return function(fields) {
                 if (fields[name]) {
                     return fields[name];
                 }
-                return model.previous(name);
+                return this.previous(name);
             };
+        };
         const getTranslite = (name, alias) =>
             (fields) => {
                 if (fields[alias]) {
@@ -101,11 +100,14 @@ export default {
                 return;
             }
 
-            computed[name] = {
-                depends: [name],
-                get: required(name),
-                transliteratedFieldsClass: 'name' //flag for separate from original computed
-            };
+            if (!(schema[name] && schema[name].allowEmptyValue)) {
+                computed[name] = {
+                    depends: [name],
+                    get: required(name),
+                    transliteratedFieldsClass: 'name' //flag for separate from original computed
+                };
+            }
+
             computed[alias] = {
                 depends: [name, alias],
                 get: getTranslite(name, alias),

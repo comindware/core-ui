@@ -60,7 +60,7 @@ const defaultOptions = {
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
  * @param {Marionette.View} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.View} [options.listView=ReferenceListView] view to display item in the dropdown list.
- * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
+ * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text or function return display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * @param {String} [options.valueType = 'normal'] type of value (id or [{ id, name }]).
@@ -263,6 +263,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
+    adjustPosition(isNeedToRefreshAnchorPosition) {
+        if (this.dropdownView) {
+            this.dropdownView.adjustPosition(isNeedToRefreshAnchorPosition);
+        }
+    },
+
     __updateFilter() {
         if (this.activeText === this.searchText) {
             return;
@@ -316,11 +322,16 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onResetCollection(panelCollection) {
-        const editorId = this.model.get(this.key);
+        const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(panelCollection.models);
-
-        if (editorId) {
-            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+        if (value) {
+            const selectedItem = this.panelCollection.find(collectionItem => {
+                const itemId = collectionItem.get('id').toString();
+                if (Array.isArray(value)) {
+                    return value.find(v => (v && v.id ? v.id : v === itemId));
+                }
+                return value === itemId;
+            });
             if (selectedItem) {
                 this.setValue(selectedItem.toJSON());
                 selectedItem.select();
@@ -418,12 +429,16 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (value == null) {
             return '';
         }
+        if (typeof displayAttribute === 'function') {
+            return displayAttribute(value);
+        }
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
 
     __onDropdownOpen(): void {
         this.__focusButton();
         this.onFocus();
+        this.trigger('dropdown:open');
     },
 
     __focusButton(): void {
