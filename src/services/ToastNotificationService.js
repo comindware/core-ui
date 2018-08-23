@@ -20,7 +20,7 @@ export default class ToastNotificationService {
         Object.assign(this, Backbone.Events);
     }
 
-    static add(message, type = this.notificationTypes.INFO, time) {
+    static add(message, type = this.notificationTypes.SUCCESS, time) {
         if (!message) {
             return;
         }
