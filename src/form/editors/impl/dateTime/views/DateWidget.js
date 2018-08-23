@@ -588,7 +588,7 @@
                                 break;
                             case 'today': {
                                 let date = new Date();
-                                date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
+                                date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate());
 
                                 // Respect startDate and endDate.
                                 if (date < this.startDate) date = this.startDate;
@@ -650,9 +650,6 @@
                             const day = parseInt(target.text(), 10) || 1;
                             let year = this.viewDate.getUTCFullYear();
                             let month = this.viewDate.getUTCMonth();
-                            const hours = this.viewDate.getUTCHours();
-                            const minutes = this.viewDate.getUTCMinutes();
-                            const seconds = this.viewDate.getUTCSeconds();
 
                             if (target.is('.old')) {
                                 if (month === 0) {
@@ -676,7 +673,7 @@
                                 date: this.viewDate
                             });
                             if (this.viewSelect >= 2) {
-                                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                                this._setDate(UTCDate(year, month, day));
                             }
                         }
                         this.showMode(-1);
