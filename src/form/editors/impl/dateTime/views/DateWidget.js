@@ -32,7 +32,7 @@
         );
 
         this.initialDate = new Date();
-        this.zIndex = options.zIndex || this.element.data('z-index') || undefined;
+
         this.title = typeof options.title === 'undefined' ? false : options.title;
         this.timezone = options.timezone || timeZoneAbbreviation();
 
@@ -43,8 +43,6 @@
         this.icontype = 'glyphicon';
 
         this._attachEvents();
-
-        this.formatViewType = 'datetime';
 
         this.minView = DPGlobal.convertViewMode(2);
 
@@ -611,9 +609,6 @@
                             let year = this.viewDate.getUTCFullYear();
                             let month = this.viewDate.getUTCMonth();
                             let day = this.viewDate.getUTCDate();
-                            const hours = this.viewDate.getUTCHours();
-                            const minutes = this.viewDate.getUTCMinutes();
-                            const seconds = this.viewDate.getUTCSeconds();
 
                             if (target.is('.month')) {
                                 this.viewDate.setUTCDate(1);
@@ -628,7 +623,7 @@
                                     date: this.viewDate
                                 });
                                 if (this.viewSelect >= 3) {
-                                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                                    this._setDate(UTCDate(year, month, day));
                                 }
                             } else if (target.is('.year')) {
                                 this.viewDate.setUTCDate(1);
@@ -639,7 +634,7 @@
                                     date: this.viewDate
                                 });
                                 if (this.viewSelect >= 4) {
-                                    this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
+                                    this._setDate(UTCDate(year, month, day));
                                 }
                             }
                             if (this.viewMode !== 0) {
