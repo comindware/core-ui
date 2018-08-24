@@ -10,12 +10,6 @@ const constants = {
     iconPropertyDefaultName: 'iconClass'
 };
 
-const iconStyle = {
-    solid: 'fas',
-    regular: 'far',
-    light: 'fal'
-};
-
 /*
  * options parameters:
  *
@@ -91,7 +85,6 @@ export default BaseLayoutEditorView.extend({
 
     __getConfig() {
         const iconService = window.application.options.iconService;
-        const style = (iconService && iconService.style) || 'solid';
         const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
             Object.values(categories)
@@ -99,13 +92,13 @@ export default BaseLayoutEditorView.extend({
                 name: category.label,
                 groupItems: category.icons
                 .reduce((arr, icon) => {
-                    if (!useBrands && icons[icon].styles.includes('brands')) {
+                    const isBrand = icons[icon].styles.includes('brands');
+                    if (!useBrands && isBrand) {
                         return arr;
                     }
                     arr.push({
                         id: icon,
                         name: icons[icon].label,
-                        style: useBrands && icons[icon].styles.includes('brands') ? 'fab' : iconStyle[style],
                         filter: icons[icon].search.terms
                     });
 

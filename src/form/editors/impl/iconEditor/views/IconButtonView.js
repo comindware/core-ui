@@ -7,6 +7,12 @@ export default Marionette.View.extend({
         this.listenTo(this.model, 'change:iconClass', this.render);
     },
 
+    templateContext() {
+        return {
+            iconClass: this.model.get('iconClass') || 'level-down-alt'
+        };
+    },
+
     template: Handlebars.compile(template),
 
     triggers: {

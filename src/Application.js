@@ -11,6 +11,7 @@ import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
+import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 
 import 'backbone.trackit';
 
@@ -78,6 +79,8 @@ export default {
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
 
         ThemeService.initialize(options.themeService);
+
+        Handlebars.registerHelper('iconPrefixer', getIconPrefixer());
 
         return marionetteApp;
     },
