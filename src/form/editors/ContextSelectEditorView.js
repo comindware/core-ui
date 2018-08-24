@@ -9,6 +9,7 @@ import dropdownFactory from '../../dropdown/factory';
 const defaultOptions = {
     recordTypeId: undefined,
     context: undefined,
+    contextModel: undefined,
     propertyTypes: undefined,
     usePropertyTypes: true,
     allowBlank: false,
@@ -19,7 +20,12 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.context = this.options.context;
+        if (this.options.contextModel) {
+            this.listenTo(this.options.contextModel, 'change:items', (model, value) => this.__onContextChange(value));
+            this.context = this.options.contextModel.get('items');
+        } else {
+            this.context = this.options.context;
+        }
 
         const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
@@ -73,6 +79,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.popoutView = dropdownFactory.createDropdown({
             panelView: PopoutWrapperView,
             panelViewOptions: {
+                maxWidth: 390,
                 model: this.viewModel.get('panel')
             },
             buttonView: PopoutButtonView,
@@ -121,16 +128,15 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     __getButtonText(selectedItem) {
         if (!selectedItem || selectedItem === 'False') return '';
-
-        const itemId = selectedItem[selectedItem.length - 1];
+        let instanceTypeId = this.viewModel.get('panel').get('instanceTypeId');
         let text = '';
 
-        Object.values(this.context).forEach(value => {
-            value.forEach(context => {
-                if (context.id === itemId) {
-                    text = context.name;
-                }
-            });
+        selectedItem.forEach((item, index) => {
+            const searchItem = this.context[instanceTypeId].find(contextItem => contextItem.id === item);
+            if (searchItem) {
+                text += index ? ` - ${searchItem.name}` : searchItem.name;
+                instanceTypeId = searchItem.instanceTypeId;
+            }
         });
 
         return text;
@@ -147,6 +153,11 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
         this.popoutView.close();
         this.__value(selected.get('id'), true, newValue);
+    },
+
+    __onContextChange(newData) {
+        this.context = newData;
+        this.updateContext(this.options.recordTypeId, newData);
     },
 
     __createTreeCollection(context, recordTypeId) {
@@ -197,7 +208,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __collectPropertyPath(selectedModel, collectedPath = []) {
-        collectedPath.push(selectedModel.get('id'));
+        collectedPath.unshift(selectedModel.get('id'));
 
         if (selectedModel.parent) {
             return this.__collectPropertyPath(selectedModel.parent, collectedPath);

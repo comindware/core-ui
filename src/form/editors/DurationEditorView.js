@@ -14,7 +14,7 @@ const focusablePartId = {
     SECONDS: 'seconds'
 };
 
-const createFocusableParts = function (options) {
+const createFocusableParts = function(options) {
     const result = [];
     const settings = {};
     settings.daysSettings = _.defaults(options.days, options.allFocusableParts, {
@@ -33,7 +33,7 @@ const createFocusableParts = function (options) {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
         maxLength: 4
     });
-    Object.values(settings).forEach(setting => setting.text = ` ${setting.text}`); //RegExp in getSegmentValue method based on ' ' (\s)
+    Object.values(settings).forEach(setting => (setting.text = ` ${setting.text}`)); //RegExp in getSegmentValue method based on ' ' (\s)
     if (options.allowDays) {
         result.push({
             id: focusablePartId.DAYS,
@@ -173,6 +173,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __clear() {
+        this.triggeredByClean = true;
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: null
@@ -220,7 +221,8 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         });
         let newValue;
         newValue = moment.duration(this.state.displayValue).toISOString();
-        if (!this.options.showEmptyParts) {
+        if (!this.options.showEmptyParts || this.triggeredByClean) {
+            this.triggeredByClean = false;
             if (Object.values(newValueObject).every(value => value === 0)) {
                 newValue = null;
                 this.ui.input.val(null);
@@ -436,9 +438,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (event.ctrlKey || this.readonly) {
             return;
         }
-        if ((event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) || 
-        (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) || 
-        event.keyCode === keyCode.DELETE) {
+        if (
+            (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) ||
+            (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) ||
+            event.keyCode === keyCode.DELETE
+        ) {
             const position = this.getCaretPos();
             const index = this.getSegmentIndex(position);
             const focusablePart = this.focusableParts[index];
@@ -534,11 +538,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             [focusablePartId.SECONDS]: seconds
         };
 
+        if (!editable && isNull) {
+            // null value is rendered as empty text
+            return '';
+        }
         if (!this.options.showEmptyParts && !editable) {
-            if (isNull) {
-                // null value is rendered as empty text
-                return '';
-            }
             const filledSegments = this.focusableParts.filter(part => Boolean(data[part.id]));
             if (filledSegments.length > 0) {
                 // returns string like '0d 4h 32m'

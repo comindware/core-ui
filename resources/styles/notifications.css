@@ -1,10 +1,9 @@
 ﻿.fr-alert {
-    min-height: 50px;
-    max-width: 100%;
+    max-width: 475px;
     font-size: 18px;
     color: #fff;
     border-radius: 5px;
-    background: #41BCD5;
+    background: #eb6c16;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -19,13 +18,13 @@
     min-width: 40px;
     align-items: center;
     background-color: white;
-    color: #41BCD5;
+    color: #eb6c16;
     font-size: 24px;
 
 }
 
 .notification-body_container{
-    padding: 0.5rem 0 0.5rem 0.5rem;
+    padding: 0.75rem 0 0.75rem 0.75rem;
 }
 
 
@@ -39,9 +38,8 @@
     align-items: flex-start;
     overflow-y: auto;
     max-height: calc(2em + 1rem);
-    font-size: .9em;
     white-space: normal;
-    padding-right:  0.5rem;;
+    padding-right: 0.75rem;
 }
 
 .fr-alert .fr-alert-title + .text-container{
@@ -54,11 +52,11 @@
     display: flex;
 }
 .fr-alert_error {
-    background:  #F58020;
+    background:  #eb6c16;
 }
 
 .fr-alert_error .icon-container{
-    color: #F58020;
+    color: #eb6c16;
 }
 
 .dev-alert_success {

@@ -1,7 +1,6 @@
 //@flow
 /* eslint-disable no-param-reassign */
 
-import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -51,7 +50,6 @@ import SearchBarView from '../../views/SearchBarView';
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию.
  * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
- * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
 
 export default Marionette.View.extend({
@@ -105,9 +103,6 @@ export default Marionette.View.extend({
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
 
-        if (!options.draggable) {
-            this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
-        }
         const childView = options.childView || RowView;
 
         const showRowIndex = this.getOption('showRowIndex');
@@ -146,10 +141,10 @@ export default Marionette.View.extend({
             loadingChildView: options.loadingChildView || LoadingChildView,
             maxRows: options.maxRows,
             height: options.height,
-            forbidSelection: this.forbidSelection,
             isTree: this.options.isTree,
             isEditable: this.isEditable,
-            showRowIndex
+            showRowIndex,
+            minimumVisibleRows: options.minimumVisibleRows
         });
 
         if (this.options.showCheckbox) {
@@ -225,7 +220,7 @@ export default Marionette.View.extend({
         noColumnsViewRegion: '.js-nocolumns-view-region',
         toolbarRegion: '.js-grid-tools-toolbar-region',
         searchRegion: '.js-grid-tools-search-region',
-        loadingRegion: '.js-loading-region'
+        loadingRegion: '.js-grid-loading-region'
     },
 
     ui: {
@@ -295,9 +290,6 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        if (this.forbidSelection) {
-            htmlHelpers.forbidSelection(this.el);
-        }
         this.options.columns.forEach((column, i) => {
             this.__setColumnWidth(i, column.width);
         });

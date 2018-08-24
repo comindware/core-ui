@@ -1,7 +1,7 @@
 import template from '../templates/membersSplitPanel.html';
 import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
-import helpers from '../../../../../utils/helpers';
+import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
     CHILD_HEIGHT: 34
@@ -33,7 +33,8 @@ export default Marionette.View.extend({
         availableItemsListRegion: '.js-available-items-list-region',
         availableItemsToolbarRegion: '.js-available-items-toolbar-region',
         selectedItemsListRegion: '.js-selected-items-list-region',
-        selectedItemsToolbarRegion: '.js-selected-items-toolbar-region'
+        selectedItemsToolbarRegion: '.js-selected-items-toolbar-region',
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
     onRender() {
@@ -57,12 +58,13 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const availableList = new Core.list.controllers.GridController({
+        const availableList = this.availableList = new Core.list.controllers.GridController({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
             showSearch: true,
             showCheckbox: true,
             showHeader: false,
+            handleSearch: !this.options.memberService,
             columns: [
                 {
                     title: 'name',
@@ -83,8 +85,14 @@ export default Marionette.View.extend({
         }).view;
 
         availableList.on('childview:dblclick', this.__moveRight);
+        availableList.on('childview:dblclick', this.__moveRight);
+        this.listenTo(availableList, 'childview:dblclick', this.__moveRight);
+        this.listenTo(availableList, 'search', (...args) => this.channel.trigger('items:search', ...args));
+        this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
+        this.toggleElementsQuantityWarning();
 
         this.showChildView('availableItemsListRegion', availableList);
+        availableList.setLoading(this.model.initialized);
 
         const selectedList = new Core.list.controllers.GridController({
             collection: this.model.get('selected'),
@@ -116,6 +124,7 @@ export default Marionette.View.extend({
         this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
+        selectedList.setLoading(this.model.initialized);
     },
 
     __moveRight(model) {
@@ -150,5 +159,18 @@ export default Marionette.View.extend({
     __reject() {
         this.channel.trigger('items:cancel');
         Core.services.WindowService.closePopup();
+    },
+
+    setLoading(state) {
+        this.availableList && !this.availableList.isDestroyed() && this.availableList.setLoading(state);
+    },
+
+    toggleElementsQuantityWarning() {
+        if (this.isDestroyed()) {
+            return;
+        }
+        const collection = this.model.get('available');
+        const warningRegion = this.getRegion('elementsQuantityWarningRegion');
+        warningRegion.$el.toggle(collection.length < collection.totalCount);
     }
 });

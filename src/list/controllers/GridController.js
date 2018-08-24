@@ -13,7 +13,8 @@ import factory from '../factory';
 
 const defaultOptions = {
     isSliding: true,
-    showHeader: true
+    showHeader: true,
+    handleSearch: true
 };
 
 export default Marionette.Object.extend({
@@ -57,6 +58,10 @@ export default Marionette.Object.extend({
     },
 
     __onSearch(text, columns, collection) {
+        if (!this.getOption('handleSearch')) {
+            this.trigger('search', text);
+            return;
+        }
         if (text) {
             this.__applyFilter(new RegExp(text, 'i'), columns, collection);
             this.__highlightCollection(text, collection);

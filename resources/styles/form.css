@@ -694,6 +694,21 @@ input[type="checkbox"].checkbox {
     cursor: default;
 }
 
+.member-select__elements_quantity_warning {
+    padding: 0 0 .5rem;
+    max-width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+}
+
+.member-select__elements_quantity_warning > span {
+    color: #999;
+    font-size: 11px;
+}
+
 /* /Member editor/ */
 
 
@@ -1006,6 +1021,14 @@ input[type="color"], .colorpicker{
     justify-content: space-between;
 }
 
+.simplified-button_container[extended] .cell {
+    width: auto;
+}
+
+.simplified-button_container[extended] .cell .simple-field_container{
+    margin-right: 5px;
+}
+
 .simplified-button_grid .cell{
     min-width: 28px;
     width: 28px;
@@ -1037,8 +1060,138 @@ input[type="color"], .colorpicker{
     height: 33px;
 }
 
+.js-core-ui__global-popup-region .simplified-panel_container {
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_down > .panel-selected_container {
+    flex: 1;
+}
+
+.panel-selected_container {
+    height: 100%;
+    z-index: 0;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_up {
+    height: 165px;
+    margin-top: -1px;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region {
+    height: 130px;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region > .editor_bubble{
+    height: 130px;
+}
+
+.simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
+    margin-top: -470px;
+    border-top: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.simplified-panel_container[noSelected].dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
+    margin-top: -310px;
+}
+
+.simplified-panel_container.dropdown_root.dropdown__wrp_up .simplified-panel-search {
+    height: 278px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
 .simplified-panel_container {
     position: fixed;
+    z-index: 55;
+}
+
+.js-core-ui__global-popup-region > .simplified-panel_container[noSelected].dropdown__wrp_up {
+    height: 0;
+    margin-top: 165px;
+}
+
+.simplified-panel_container[noSelected] {
+    height: 70px;
+}
+
+.simplified-panel_container[noSelected] > .panel-selected_container{
+    height: 0;
+}
+
+.simplified-panel_container[noSelected] > .simplified-panel-subtitle {
+    margin-top: 0;
+}
+
+.simplified-panel_container .bubbles__caret {
+    display: none;
+}
+
+.simplified-panel_wrapper {
+    border: none!important;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)!important;
+    height: 240px;
+    background-color: white;
+}
+.simplified-panel_wrapper .js-elements-quantity-warning-region {
+    display: none!important;
+}
+.simplified-panel_wrapper .dd-list__i_checkbox {
+    padding-left: 14px;
+}
+
+.simplified-panel_wrapper.dropdown__wrp_up {
+    box-shadow: none!important;;
+}
+
+.simplified-panel-title {
+    font-weight: 600;
+    padding: 8px 4px 4px 14px;
+    background-color: white;
+}
+
+.simplified-panel-title.simplified-panel-subtitle {
+    border-top: 1px solid rgba(210, 210, 210, 1);
+    margin-top: 14px;
+}
+
+.simplified-panel-search {
+    padding: 0 14px 14px 14px;
+    background-color: white;
+}
+
+.simplified-panel_container .bubbles {
+    padding: 0 0 0 14px;
+    max-height: 130px;
+    overflow-y: scroll;
+    border: none;
+}
+
+.simplified-panel_contagrid-toolbar__searchiner .bubbles__list {
+    flex-direction: column;
+    max-height: 300px;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i{
+    width: 100%;
+    padding: 4px 20px 4px 0;
+    align-items: center;
+    display: flex;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i > .user-edit-wrp{
+    margin-right: 10px;
+    margin-top: -4px;
+}
+
+.simplified-panel_container .bubbles__list > .bubbles__i > a{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-edit-wrp {
@@ -1046,14 +1199,39 @@ input[type="color"], .colorpicker{
 }
 
 .simple-field_container {
-    height: 26px;
-    width: 26px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     text-align: center;
-    line-height: 26px;
+    line-height: 20px;
     background-color: white;
     overflow: hidden;
     box-shadow: 0 0 0 1px #0575bd;
     margin-left: 1px;
-    margin-top: 3px;
+    margin-top: 6px;
+    color: #0575bd;
+    font-size: 10px;
+}
+
+.simple-field_container img{
+    width: 22px;
+    height: 22px;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.simplified-button_grid .row + .row {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:first-child {
+    margin-right: -8px;
+}
+
+.simplified-button_grid .row:last-child {
+    margin-right: 0!important;
+}
+
+.simplified-button_grid .selected .cell {
+    background-color: transparent!important;
 }

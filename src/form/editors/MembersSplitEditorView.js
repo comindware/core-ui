@@ -22,43 +22,13 @@ const defaultOptions = () => ({
     users: undefined,
     groups: undefined,
     showMode: null,
-    cacheService: undefined,
+    memberService: undefined,
     getDisplayText: null
 });
 
 export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
-
-        const defOps = Object.assign(defaultOptions(), {
-            users:
-                options.users ||
-                options.cacheService.GetUsers().map(user => ({
-                    id: user.Id,
-                    name: user.Text || user.Username,
-                    abbreviation: user.abbreviation,
-                    userpicUri: user.userpicUri,
-                    type: 'users'
-                })),
-            groups:
-                options.groups ||
-                options.cacheService.GetGroups().map(group => ({
-                    id: group.id,
-                    name: group.name,
-                    type: 'groups'
-                }))
-        });
-
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
-
-        this.options.selected = this.getValue();
-
-        this.controller = new MembersSplitController(this.options);
-        if (this.getOption('showMode') !== 'button') {
-            this.controller.on('popup:ok', () => {
-                this.__value(this.options.selected, true);
-            });
-        }
+        this.__initializeController(options);
     },
 
     className: 'member-split',
@@ -110,6 +80,26 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         this.controller.initItems();
     },
 
+    __initializeController(options) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
+
+        const defOps = Object.assign(defaultOptions(), {
+            users: options.users || [],
+            groups: options.groups || []
+        });
+
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
+
+        this.options.selected = this.getValue();
+
+        this.controller = new MembersSplitController(this.options);
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.on('popup:ok', () => {
+                this.__value(this.options.selected, true);
+            });
+        }
+    },
+
     __showPopup() {
         if (!this.getEnabled()) {
             return;
@@ -150,8 +140,8 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         WindowService.showPopup(popup);
     },
 
-    __updateText() {
-        this.ui.membersText.text(this.controller.getDisplayText());
+    async __updateText() {
+        this.ui.membersText.text(await this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {

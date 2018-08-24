@@ -1,5 +1,3 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
@@ -11,7 +9,8 @@ export default function() {
         view: new core.form.editors.DurationEditor({
             model,
             key: 'durationValue',
-            autocommit: true
+            autocommit: true,
+            showEmptyParts: true
         }),
         presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}",
         isEditor: true
