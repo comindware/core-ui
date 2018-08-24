@@ -2,7 +2,7 @@
 import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
-import iconPalette from './impl/iconEditor/iconPalette';
+import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
@@ -84,13 +84,26 @@ export default BaseLayoutEditorView.extend({
     },
 
     __getConfig() {
+        const iconService = window.application.options.iconService;
+        const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
-            Object.values(iconPalette).map((value) => ({
-                name: value.label,
-                groupItems: value.icons.map(icon => Object.assign({
-                        filter: icons[icon.id].search.terms
-                    }, icon)
-                )
+            Object.values(categories)
+            .map((category) => ({
+                name: category.label,
+                groupItems: category.icons
+                .reduce((arr, icon) => {
+                    const isBrand = icons[icon].styles.includes('brands');
+                    if (!useBrands && isBrand) {
+                        return arr;
+                    }
+                    arr.push({
+                        id: icon,
+                        name: icons[icon].label,
+                        filter: icons[icon].search.terms
+                    });
+
+                    return arr;
+                }, [])
             }))
         );
     },

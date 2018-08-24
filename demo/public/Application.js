@@ -58,6 +58,10 @@ export default Marionette.Application.extend({
             },
             userService: {
                 dataProvider
+            },
+            iconService: {
+                style: 'solid',
+                useBrands: false
             }
         });
 
