@@ -17,7 +17,6 @@ export default function() {
                 text: 'minutes'
             },
             seconds: {
-                maxLength: 3,
                 text: 'seconds'
             }
         }),
