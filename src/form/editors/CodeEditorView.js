@@ -62,19 +62,11 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
     },
-    /*
+
     __handleKeydown(e) {
-        switch (e.keyCode) {
-            case keyCode.ESCAPE:
-                this.editor.minimize();
-                this.__onMinimize();
-                break;
-            default:
-                break;
-        }
         e.stopPropagation();
     },
-    */
+
     onRender() {
         this.editor = new CodemirrorView({
             mode: this.options.mode,
