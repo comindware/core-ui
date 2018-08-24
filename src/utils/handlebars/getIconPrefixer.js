@@ -1,7 +1,7 @@
 import icons from '../../form/editors/impl/iconEditor/icons';
 
-export default () => {
-    const iconService = window.application.options.iconService;
+export default (options) => {
+    const iconService = options.iconService;
     const style = (iconService && iconService.style) || 'solid';
     
     const iconStyle = {
