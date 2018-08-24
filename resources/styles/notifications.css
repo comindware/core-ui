@@ -52,11 +52,11 @@
     display: flex;
 }
 .fr-alert_error {
-    background:  #F58020;
+    background:  #eb6c16;
 }
 
 .fr-alert_error .icon-container{
-    color: #F58020;
+    color: #eb6c16;
 }
 
 .dev-alert_success {
