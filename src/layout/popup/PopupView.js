@@ -78,7 +78,9 @@ export default Marionette.View.extend({
     },
 
     __keyAction(event) {
-        if (event.keyCode === 27) {
+        const isNeedToPrevent = this.__isNeedToPrevent();
+
+        if (!isNeedToPrevent && event.keyCode === 27) {
             this.__close();
         }
     },
@@ -99,6 +101,10 @@ export default Marionette.View.extend({
         return new Core.layout.HorizontalLayout({
             columns: buttons
         });
+    },
+
+    __isNeedToPrevent() {
+        return document.querySelector('.dev-codemirror-maximized') !== null;
     },
 
     setLoading(loading) {
