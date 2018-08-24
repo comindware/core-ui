@@ -9,7 +9,17 @@ export default function() {
                 dateTimeValue: '2015-07-20T10:46:37Z'
             }),
             key: 'dateTimeValue',
-            autocommit: true
+            autocommit: true,
+            hours: {
+                text: 'hours'
+            },
+            minutes: {
+                text: 'minutes'
+            },
+            seconds: {
+                maxLength: 3,
+                text: 'seconds'
+            }
         }),
         presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}",
         isEditor: true

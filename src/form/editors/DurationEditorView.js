@@ -17,19 +17,19 @@ const focusablePartId = {
 const createFocusableParts = function (options) {
     const result = [];
     const settings = {};
-    settings.daysSettings = _.defaults(options.days, options.allFocusablePart, {
+    settings.daysSettings = _.defaults(options.days, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
         maxLength: 4
     });
-    settings.hoursSettings = _.defaults(options.hours, options.allFocusablePart, {
+    settings.hoursSettings = _.defaults(options.hours, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
         maxLength: 4
     });
-    settings.minutesSettings = _.defaults(options.minutes, options.allFocusablePart, {
+    settings.minutesSettings = _.defaults(options.minutes, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
         maxLength: 4
     });
-    settings.secondsSettings = _.defaults(options.seconds, options.allFocusablePart, {
+    settings.secondsSettings = _.defaults(options.seconds, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
         maxLength: 4
     });
@@ -80,7 +80,7 @@ const defaultOptions = {
     hideClearButton: false,
     fillZero: false,
     normalTime: false
-    // allFocusablePart: undefined,
+    // allFocusableParts: undefined,
     // seconds: undefined // days, minutes, hours
 };
 
@@ -106,6 +106,10 @@ const stateModes = {
  * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
+ * @param {Object}  [seconds] second Options
+ * @param {Number}  [seconds.maxLength=4] Max digit capacity of seconds
+ * @param {Number}  [seconds.text=(localization)] Separator. Show after part.
+ * Similar options for days, hours, minutes. If all options are similar, use @param {Object} [allFocusableParts] by default.
  * */
 
 export default (formRepository.editors.Duration = BaseItemEditorView.extend({

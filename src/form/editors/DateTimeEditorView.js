@@ -16,7 +16,14 @@ const defaultOptions = {
     allowEmptyValue: true,
     dateDisplayFormat: undefined,
     timeDisplayFormat: undefined,
-    showTitle: true
+    showTitle: true,
+    allFocusableParts: {
+        maxLength: 2,
+        text: ':',
+    },
+    seconds: {
+        text: ''
+    }
 };
 
 /**
@@ -32,6 +39,8 @@ const defaultOptions = {
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
+ * @param {Object} [allFocusableParts] Params for time editor's part. Like Duration Editor Options.
+ * @param {Object} [days, minutes, hours, seconds] Params for time editor's part. Like Duration Editor Options.
  * */
 
 export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
@@ -299,14 +308,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 showEmptyParts: true,
                 hideClearButton: true,
                 fillZero: true,
-                normalTime: true,
-                allFocusablePart: {
-                    maxLength: 2,
-                    text: ':',
-                },
-                seconds: {
-                    text: ''
-                }
+                normalTime: true
             }, this.options, {
                 model
             }),
