@@ -17,6 +17,8 @@ import 'backbone.trackit';
 
 export default {
     async start(options) {
+        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
@@ -79,8 +81,6 @@ export default {
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
 
         ThemeService.initialize(options.themeService);
-
-        Handlebars.registerHelper('iconPrefixer', getIconPrefixer());
 
         return marionetteApp;
     },
