@@ -317,6 +317,15 @@ export default (factory = {
             case objectPropertyTypes.ENUM:
                 adjustedValue = value ? value.valueExplained : '';
                 return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+            case objectPropertyTypes.NEW_EXPRESSION:
+                switch (value.type) {
+                    case 'context':
+                        adjustedValue = this.__adjustContextValue(column, value);
+                        return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                    default:
+                        adjustedValue = value.value || '';
+                        return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                }
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -416,6 +425,26 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${column.columnClass}">${adjustedValue || ''}</div>`;
         }
+    },
+
+    __adjustContextValue(column, value) {
+        let adjustValue = '';
+        let instanceTypeId = column.recordTypeId;
+        for (let i = 0; i < value.value.length; i++) {
+            let searchValue;
+            if (instanceTypeId) {
+                searchValue = column.context[instanceTypeId].find(item => item.id === value.value[i]);
+            }
+            if (searchValue) {
+                instanceTypeId = searchValue.instanceTypeId;
+                adjustValue += i !== 0 ? ` → ${searchValue.name}` : searchValue.name;
+            } else {
+                instanceTypeId = null;
+                adjustValue += i !== 0 ? ` → ${value.value[i]}` : value.value[i];
+            }
+        }
+
+        return adjustValue;
     },
 
     __adjustValue(value: Array<string | number> | string) {
