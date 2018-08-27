@@ -7,7 +7,6 @@ export const objectPropertyTypes = {
     DURATION: 'Duration',
     DECIMAL: 'Decimal',
     INTEGER: 'Integer',
-    NEW_EXPRESSION: 'NewExpression',
     DOUBLE: 'Double',
     ACCOUNT: 'Account',
     DOCUMENT: 'Document',
