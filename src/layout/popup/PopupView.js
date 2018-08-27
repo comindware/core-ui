@@ -11,6 +11,8 @@ const classes = {
     CLASS_NAME: 'layout__popup-view'
 };
 
+const sizeVisibleChunk = 50; //px;
+
 export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'header');
@@ -127,7 +129,12 @@ export default Marionette.View.extend({
         });
 
         this.__setDraggableContainment = _.debounce(() => // eslint-disable-line no-unused-expressions
-            this.ui.window.draggable( 'option', 'containment', [-380, 0, $('html').outerWidth() - 50, $('html').outerHeight() - 50]), //first digit should be less min-width
+            this.ui.window.draggable( 'option', 'containment', [
+                sizeVisibleChunk - this.ui.window.outerWidth(),
+                0,
+                window.innerWidth - sizeVisibleChunk,
+                window.innerHeight - sizeVisibleChunk
+            ]),
         300),
 
         this.__setDraggableContainment();
