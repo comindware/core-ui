@@ -19,11 +19,11 @@
     flex-direction: column;
     overflow-y: hidden;
     position: relative;
-    transition: top .3s ease-out;
 }
 
 .layout__popup-view-header {
     position: relative;
+    cursor: all-scroll;
 }
 
 .layout__popup-view-header-text {
