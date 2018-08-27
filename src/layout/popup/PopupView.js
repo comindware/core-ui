@@ -128,17 +128,19 @@ export default Marionette.View.extend({
             handle: '.js-header'
         });
 
-        this.__setDraggableContainment = _.debounce(() => // eslint-disable-line no-unused-expressions
-            this.ui.window.draggable( 'option', 'containment', [
-                sizeVisibleChunk - this.ui.window.outerWidth(),
-                0,
-                window.innerWidth - sizeVisibleChunk,
-                window.innerHeight - sizeVisibleChunk
-            ]),
-        300),
+        this.__debounceSetDraggableContainment = _.debounce(this.__setDraggableContainment, 300);
 
         this.__setDraggableContainment();
-        this.listenTo(GlobalEventService, 'window:resize', this.__setDraggableContainment);
+        this.listenTo(GlobalEventService, 'window:resize', this.__debounceSetDraggableContainment);
+    },
+
+    __setDraggableContainment() {
+        this.ui.window.draggable( 'option', 'containment', [
+            sizeVisibleChunk - this.ui.window.outerWidth(),
+            0,
+            window.innerWidth - sizeVisibleChunk,
+            window.innerHeight - sizeVisibleChunk
+        ]);
     },
 
     __isNeedToPrevent() {
