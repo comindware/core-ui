@@ -102,8 +102,8 @@
 }
 
 .layout__popup-view-header__close {
-    display: inline-block;
     cursor: pointer;
+    padding-left: 10px;
 }
 
 .layout__popup-view-header__close svg{

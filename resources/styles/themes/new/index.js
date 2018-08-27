@@ -401,8 +401,7 @@ module.exports.apply = {
         padding: '15px'
     },
     'popup-close-theme': {
-        width: '12px',
-        height: '12px'
+        'font-size': '19px'
     },
     'popup-form-content-theme': {
         padding: '15px',

@@ -338,8 +338,7 @@ module.exports.apply = {
         'border-top': `1px solid ${variables['grey-400']}`
     },
     'popup-close-theme': {
-        width: '22px',
-        height: '22px',
+        'font-size': '35px',
         padding: '4px',
         position: 'absolute',
         right: '4px',

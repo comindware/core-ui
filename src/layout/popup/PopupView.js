@@ -45,12 +45,14 @@ export default Marionette.View.extend({
     ui: {
         button: '.js-button',
         window: '.js-window',
-        close: '.js-close'
+        close: '.js-close',
+        newTab: '.js-new-tab'
     },
 
     events: {
         'click @ui.button': '__onButtonClick',
-        'click @ui.close': '__close'
+        'click @ui.close': '__close',
+        'click @ui.newTab': '__openInNewTab'
     },
 
     regions: {
@@ -68,6 +70,10 @@ export default Marionette.View.extend({
         this.showChildView('buttonsRegion', this.__createButtonsView());
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
+
+        if (!this.options.urlNewTab) {
+            this.ui.newTab.hide();
+        }
 
         this.__initializeWindowDrag();
     },
@@ -87,6 +93,15 @@ export default Marionette.View.extend({
         }
     },
 
+    __openInNewTab() {
+        if (Array.isArray(this.options.urlNewTab)) {
+            window.open(...this.options.urlNewTab);
+        } else {
+            window.open(this.options.urlNewTab);
+        }
+        this.__close();
+    },
+
     async __close() {
         if (this.onClose) {
             const closeResult = await this.onClose();
@@ -95,7 +110,6 @@ export default Marionette.View.extend({
         } else {
             WindowService.closePopup();
         }
-        window.removeEventListener('resize', this.__debounceResize);
     },
 
     __createButtonsView() {
@@ -112,13 +126,12 @@ export default Marionette.View.extend({
             handle: '.js-header'
         });
 
-        this.__debounceResize = _.debounce(() => // eslint-disable-line no-unused-expressions
-            this.ui.window.draggable( 'option', 'containment', [-380, 0, $('html').outerWidth() - 100, $('html').outerHeight() - 100]), //first digit should be less min-width
+        this.__setDraggableContainment = _.debounce(() => // eslint-disable-line no-unused-expressions
+            this.ui.window.draggable( 'option', 'containment', [-380, 0, $('html').outerWidth() - 50, $('html').outerHeight() - 50]), //first digit should be less min-width
         300),
 
-        this.__debounceResize();
-
-        window.addEventListener('resize', this.__debounceResize);
+        this.__setDraggableContainment();
+        this.listenTo(GlobalEventService, 'window:resize', this.__setDraggableContainment);
     },
 
     __isNeedToPrevent() {

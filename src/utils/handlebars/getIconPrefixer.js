@@ -20,5 +20,5 @@ export default (options) => {
         return prefixes;
     }, {});
 
-    return iconClass => `${prefixes[iconClass] || iconStyle[style]} fa-${iconClass}`;
+    return iconClass => ` ${prefixes[iconClass] || iconStyle[style]} fa-${iconClass} `;
 }
