@@ -68,6 +68,8 @@ export default Marionette.View.extend({
         this.showChildView('buttonsRegion', this.__createButtonsView());
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
+
+        this.__initializeWindowDrag();
     },
 
     update() {
@@ -98,6 +100,13 @@ export default Marionette.View.extend({
 
         return new Core.layout.HorizontalLayout({
             columns: buttons
+        });
+    },
+
+    __initializeWindowDrag() {
+        this.ui.window.draggable({
+            containment: 'parent',
+            handle: '.js-header'
         });
     },
 
