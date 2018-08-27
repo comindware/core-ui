@@ -134,7 +134,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         selectedItem.forEach((item, index) => {
             const searchItem = this.context[instanceTypeId].find(contextItem => contextItem.id === item);
             if (searchItem) {
-                text += index ? ` - ${searchItem.name}` : searchItem.name;
+                text += index ? ` → ${searchItem.name}` : searchItem.name;
                 instanceTypeId = searchItem.instanceTypeId;
             }
         });
