@@ -95,6 +95,7 @@ export default Marionette.View.extend({
         } else {
             WindowService.closePopup();
         }
+        window.removeEventListener('resize', this.__debounceResize);
     },
 
     __createButtonsView() {
@@ -107,9 +108,17 @@ export default Marionette.View.extend({
 
     __initializeWindowDrag() {
         this.ui.window.draggable({
-            containment: 'parent',
+            scroll: false,
             handle: '.js-header'
         });
+
+        this.__debounceResize = _.debounce(() => // eslint-disable-line no-unused-expressions
+            this.ui.window.draggable( 'option', 'containment', [-380, 0, $('html').outerWidth() - 100, $('html').outerHeight() - 100]), //first digit should be less min-width
+        300),
+
+        this.__debounceResize();
+
+        window.addEventListener('resize', this.__debounceResize);
     },
 
     __isNeedToPrevent() {
