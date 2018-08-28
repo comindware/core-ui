@@ -243,10 +243,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
   flex: 1 1 auto;
   padding-right: 10px;
 }
-.layout__popup-view-header__close {
+.layout__popup-view-header__btn {
   opacity: 0.5;
 }
-.layout__popup-view-header__close:hover {
+.layout__popup-view-header__btn:hover {
   opacity: 1;
 }
 

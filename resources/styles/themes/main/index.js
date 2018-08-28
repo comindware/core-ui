@@ -150,6 +150,7 @@ const variables = {
 
     'popup-window-bg': '#fff',
     'popup-content-padding': '0 20px',
+    'popup-header-btn-font-size_equate': '42px',
     'system-message-font-size': '18px'
 };
 
@@ -338,8 +339,7 @@ module.exports.apply = {
         'border-top': `1px solid ${variables['grey-400']}`
     },
     'popup-close-theme': {
-        width: '22px',
-        height: '22px',
+        'font-size': '35px',
         padding: '4px',
         position: 'absolute',
         right: '4px',

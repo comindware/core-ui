@@ -7,20 +7,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 5%;
+}
+
+.cur_aI {
+    cursor: auto !important
 }
 
 .layout__popup-view-window {
-    max-width: 980px;
-    min-width: 400px;
-    max-height: 650px;
-    min-height: 150px;
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
     position: relative;
 }
 
+.layout__popup-view-window_expand {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
 .layout__popup-view-header {
     position: relative;
     cursor: all-scroll;
@@ -101,13 +107,9 @@
     color: #000;
 }
 
-.layout__popup-view-header__close {
-    display: inline-block;
+.layout__popup-view-header__btn {
     cursor: pointer;
-}
-
-.layout__popup-view-header__close svg{
-    vertical-align: top;
+    padding-left: 10px;
 }
 
 .layout__popup-view-content .layout__group {

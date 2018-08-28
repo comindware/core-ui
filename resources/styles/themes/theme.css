@@ -776,8 +776,11 @@ svg.svg-grid-icons {
   @apply --popup-footer-theme;
 }
 
-.layout__popup-view-header__close {
+.layout__popup-view-header__btn {
   @apply --popup-close-theme;
+}
+.layout__popup-view-header__btn_equate{
+  font-size: var(--popup-header-btn-font-size_equate);
 }
 .layout__popup-view-content {
   padding: var(--popup-content-padding);
