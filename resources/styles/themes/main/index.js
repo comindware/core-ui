@@ -150,6 +150,7 @@ const variables = {
 
     'popup-window-bg': '#fff',
     'popup-content-padding': '0 20px',
+    'popup-header-btn-font-size_equate': '42px',
     'system-message-font-size': '18px'
 };
 

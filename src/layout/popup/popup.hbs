@@ -1,8 +1,9 @@
 <div class="layout__popup-view-window js-window">
     <div class="layout__popup-view-header js-header">
         <span class="layout__popup-view-header-text">{{headerText}}</span>
-        <span class="layout__popup-view-header__close {{iconPrefixer 'share-square'}} js-new-tab"></span>
-        <span class="layout__popup-view-header__close {{iconPrefixer 'times'}} js-close"></span>
+        <span class="layout__popup-view-header__btn {{iconPrefixer newTab}} js-new-tab"></span>
+        <span class="layout__popup-view-header__btn {{iconPrefixer expand}} {{iconPrefixer collapse}} js-toggle-mode"></span>
+        <span class="layout__popup-view-header__btn layout__popup-view-header__btn_equate {{iconPrefixer close}} js-close"></span>
     </div>
     <div class="layout__popup-view-content js-content-region"></div>
     <div class="layout__popup-view-button-list js-buttons-region"></div>

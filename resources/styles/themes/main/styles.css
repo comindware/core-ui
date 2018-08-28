@@ -355,11 +355,11 @@ svg.svg-grid-icons {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.layout__popup-view-header__close:hover {
+.layout__popup-view-header__btn:hover {
   background: #f7f6f6;
   border-color: #dfe4e8;
 }
-.layout__popup-view-header__close:active {
+.layout__popup-view-header__btn:active {
   box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
 }
 

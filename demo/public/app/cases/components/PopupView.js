@@ -45,7 +45,7 @@ export default function() {
                 width: '800px',
                 height: '700px'
             },
-            urlNewTab: '#', //array with arguments or single url for window.open
+            newTabUrl: '#', //array with arguments or single url for window.open
             header: 'New Operation',
             buttons: [
                 {
