@@ -17,7 +17,7 @@ import RadioGroupEditorView from './editors/RadioGroupEditorView';
 import DateEditorView from './editors/DateEditorView';
 import TimeEditorView from './editors/TimeEditorView';
 import DateTimeEditorView from './editors/DateTimeEditorView';
-import DateWidget from './editors/impl/dateTime/views/DateWidget';
+import initializeDatePicker from './editors/impl/dateTime/views/initializeDatePicker';
 import MentionEditorView from './editors/MentionEditorView';
 import AvatarEditorView from './editors/AvatarEditorView';
 import DocumentEditorView from './editors/DocumentEditorView';
@@ -83,7 +83,7 @@ const api = /** @lends module:core.form */ {
                     },
                     factory: editorsImplCommonMembersFactory
                 },
-                DateWidget
+                initializeDatePicker
             }
         },
         /**

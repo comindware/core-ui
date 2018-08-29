@@ -5,6 +5,8 @@ import ajaxStub from './utils/ajaxStub';
 import localizationMap from 'localizationMap';
 import 'jasmine-jquery';
 
+core.form.editors.impl.common.initializeDatePicker($);
+
 const rootView = Marionette.View.extend({
     template: Handlebars.compile(`
         <div class="js-fading-region fading-container hidden"></div>
