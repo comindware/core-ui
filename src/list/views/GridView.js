@@ -123,7 +123,7 @@ export default Marionette.View.extend({
                 }
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
-            this.listenTo(this.collection, 'move:right', () => this.__onCursorMove(+1));
+            this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
         }
 

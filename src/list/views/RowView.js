@@ -254,7 +254,9 @@ export default Marionette.View.extend({
                     if (hasChildren) {
                         el.insertAdjacentHTML(
                             'beforeend',
-                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${this.model.collapsed === false ? classes.expanded : ''}"></span></div>`
+                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${
+                                this.model.collapsed === false ? classes.expanded : ''
+                            }"></span></div>`
                         );
                     }
                     isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
@@ -369,16 +371,28 @@ export default Marionette.View.extend({
 
     __selectPointed(pointed) {
         if (this.lastPointedEl) {
+            const lastEditor = this.lastPointedEl.querySelector('input') || this.lastPointedEl.querySelector('[class~=editor]');
+            if (lastEditor) {
+                lastEditor.blur();
+            }
             this.lastPointedEl.classList.remove(classes.cellFocused);
         }
         const pointedEls = this.el.getElementsByClassName(this.columnClasses[pointed]);
         if (pointedEls && pointedEls.length) {
             const pointedEl = pointedEls[0];
-            pointedEl.classList.add(classes.cellFocused);
             const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
-            if (editor && !pointedEl.contains(document.activeElement)) {
-                editor.focus();
+
+            if (editor) {
+                const view = this.cellViews[pointed];
+                if (view.editor.hidden) {
+                    view.model.trigger('select:hidden');
+                    return false;
+                }
+                if (!pointedEl.contains(document.activeElement)) {
+                    editor.focus();
+                }
             }
+            pointedEl.classList.add(classes.cellFocused);
             this.lastPointedEl = pointedEl;
         }
     },
