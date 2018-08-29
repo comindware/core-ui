@@ -120,12 +120,18 @@ export default Marionette.View.extend({
         }
         this.cellViews = [];
 
-        this.options.columns.forEach(gridColumn => {
+        const isTree = this.getOption('isTree');
+        this.options.columns.forEach((gridColumn, index) => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
-                return this.el.insertAdjacentHTML('beforeend', cell);
+                this.el.insertAdjacentHTML('beforeend', cell);
+                if (isTree && index === 0) {
+                    this.insertFirstCellHtml();
+                }
+                return;
             }
+
             let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
             if (gridColumn.editable) cellClasses += classes.cellEditable;
 
@@ -135,15 +141,16 @@ export default Marionette.View.extend({
                 model: this.model,
                 key: gridColumn.key
             });
+
+            if (isTree && index === 0) {
+                cellView.on('render', () => this.insertFirstCellHtml(true));
+            }
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
 
             this.cellViews.push(cellView);
         });
-        if (this.getOption('isTree')) {
-            this.insertFirstCellHtml();
-        }
     },
 
     __handleChange() {
@@ -153,7 +160,11 @@ export default Marionette.View.extend({
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
                     const elements = this.el.getElementsByClassName(this.columnClasses[index]);
                     if (elements.length) {
-                        elements[0].innerHTML = CellViewFactory.getCellHtml(column, this.model);
+                        elements[0].insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
+                        this.el.removeChild(elements[0]);
+                        if (index === 0) {
+                            this.insertFirstCellHtml(true);
+                        }
                     }
                 }
             });
@@ -231,7 +242,7 @@ export default Marionette.View.extend({
         });
     },
 
-    insertFirstCellHtml() {
+    insertFirstCellHtml(force) {
         if (this.isRendered()) {
             const elements = this.el.getElementsByClassName(this.columnClasses[0]);
             if (elements.length) {
@@ -240,7 +251,7 @@ export default Marionette.View.extend({
                 let margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
                 const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
-                if (this.lastHasChildren === hasChildren && this.lastMargin === margin) {
+                if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
                     return;
                 }
 
@@ -264,8 +275,8 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                            this.model.collapsed === false ? classes.expanded : ''
-                        }" style="margin-left:${margin}px;"></span>&nbsp;`
+                        this.model.collapsed === false ? classes.expanded : ''
+                        }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
                     el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
