@@ -160,6 +160,7 @@ const variables = {
 
     'popup-window-bg': 'var(--grey-100)',
     'popup-content-padding': '0 15px',
+    'popup-header-btn-font-size_equate': '22px',
     'system-message-font-size': '15px'
 };
 
@@ -401,8 +402,7 @@ module.exports.apply = {
         padding: '15px'
     },
     'popup-close-theme': {
-        width: '12px',
-        height: '12px'
+        'font-size': '19px'
     },
     'popup-form-content-theme': {
         padding: '15px',

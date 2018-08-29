@@ -13,7 +13,7 @@ export default Marionette.View.extend({
         panelSelectedContainer: '.panel-selected_container'
     },
 
-    className: 'simplified-panel_container dropdown_root',
+    className: 'simplified-panel_container simplified-panel_panel dropdown_root',
 
     onRender() {
         const customEditor = Object.assign({}, this.options.editorConfig, {

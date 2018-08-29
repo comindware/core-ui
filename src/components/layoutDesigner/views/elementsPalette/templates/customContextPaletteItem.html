@@ -1,6 +1,6 @@
 <div class="ld-list-item__link js-drag-handle" title="{{text}}">
     {{#if iconClass}}
-        <i class="dev-ld-list-item-icon fa fa-lg fa-{{iconClass}}" aria-hidden="true"></i>
+        <i class="dev-ld-list-item-icon fa-lg {{iconPrefixer iconClass}}" aria-hidden="true"></i>
     {{else}}
         <div class="ld-list-item-icon"></div>
     {{/if}}

@@ -11,11 +11,14 @@ import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
+import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 
 import 'backbone.trackit';
 
 export default {
     async start(options) {
+        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 

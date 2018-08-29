@@ -1034,6 +1034,7 @@ input[type="color"], .colorpicker{
     width: 28px;
     padding: 0;
     box-shadow: none!important;
+    background-color: transparent!important;
 }
 
 .simplified-button_grid .visible-collection-wrp {
@@ -1060,7 +1061,7 @@ input[type="color"], .colorpicker{
     height: 33px;
 }
 
-.js-core-ui__global-popup-region .simplified-panel_container {
+.simplified-panel_panel {
     background-color: white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     height: 250px;
@@ -1068,7 +1069,7 @@ input[type="color"], .colorpicker{
     flex-direction: column;
 }
 
-.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_down > .panel-selected_container {
+.simplified-panel_panel.dropdown__wrp_down > .panel-selected_container {
     flex: 1;
 }
 
@@ -1077,16 +1078,16 @@ input[type="color"], .colorpicker{
     z-index: 0;
 }
 
-.js-core-ui__global-popup-region > .simplified-panel_container.dropdown__wrp_up {
+.simplified-panel_panel.dropdown__wrp_up {
     height: 165px;
     margin-top: -1px;
 }
 
-.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region {
+.simplified-panel_panel > .js-editor-region {
     height: 130px;
 }
 
-.js-core-ui__global-popup-region > .simplified-panel_container > .js-editor-region > .editor_bubble{
+.simplified-panel_panel > .js-editor-region > .editor_bubble{
     height: 130px;
 }
 
@@ -1105,12 +1106,12 @@ input[type="color"], .colorpicker{
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.simplified-panel_container {
+.simplified-panel_panel {
     position: fixed;
-    z-index: 55;
+    z-index: 101;
 }
 
-.js-core-ui__global-popup-region > .simplified-panel_container[noSelected].dropdown__wrp_up {
+.simplified-panel_panel[noSelected].dropdown__wrp_up {
     height: 0;
     margin-top: 165px;
 }

@@ -206,11 +206,11 @@ export default Marionette.CompositeView.extend({
                 }
                 return eventResult;
             case keyCode.PAGE_UP:
-                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                delta = Math.ceil(this.state.viewportHeight - 1);
                 this.moveCursorBy(-delta, e.shiftKey);
                 return false;
             case keyCode.PAGE_DOWN:
-                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                delta = Math.ceil(this.state.viewportHeight - 1);
                 this.moveCursorBy(delta, e.shiftKey);
                 return false;
             case keyCode.SPACE:
@@ -229,12 +229,14 @@ export default Marionette.CompositeView.extend({
                 }
                 return eventResult;
             case keyCode.TAB:
+                this.collection.trigger('move:right');
                 return false;
             case keyCode.ENTER:
                 if (handle) {
                     this.collection.trigger('enter');
                 }
-                return eventResult;
+                this.moveCursorBy(1, false);
+                return false;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
             case keyCode.ESCAPE:

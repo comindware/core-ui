@@ -1,7 +1,6 @@
 //@flow
 /* eslint-disable no-param-reassign */
 
-import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -124,7 +123,7 @@ export default Marionette.View.extend({
                 }
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
-            this.listenTo(this.collection, 'move:right', () => this.__onCursorMove(+1));
+            this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
         }
 
@@ -221,7 +220,7 @@ export default Marionette.View.extend({
         noColumnsViewRegion: '.js-nocolumns-view-region',
         toolbarRegion: '.js-grid-tools-toolbar-region',
         searchRegion: '.js-grid-tools-search-region',
-        loadingRegion: '.js-loading-region'
+        loadingRegion: '.js-grid-loading-region'
     },
 
     ui: {

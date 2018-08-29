@@ -8,8 +8,22 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
 
 const classes = {
-    CLASS_NAME: 'layout__popup-view'
+    CLASS_NAME: 'layout__popup-view',
+    EXPAND: 'layout__popup-view-window_expand',
+    CURSOR_AUTO: 'cur_aI'
 };
+
+const iconsName = {
+    expand: 'expand',
+    collapse: 'compress',
+    newTab: 'share-square',
+    close: 'times'
+};
+
+const TRANSITION = 100; //ms
+const sizeVisibleChunk = 50; //px;
+
+const expandId = _.uniqueId('expand');
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -20,14 +34,15 @@ export default Marionette.View.extend({
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.content = options.content;
         this.onClose = options.onClose;
+        this.__expanded = false;
     },
 
     template: Handlebars.compile(template),
 
     templateContext() {
-        return {
+        return Object.assign({
             headerText: this.options.header
-        };
+        }, iconsName);
     },
 
     className: classes.CLASS_NAME,
@@ -44,13 +59,18 @@ export default Marionette.View.extend({
 
     ui: {
         button: '.js-button',
+        header: '.js-header',
         window: '.js-window',
-        close: '.js-close'
+        close: '.js-close',
+        newTab: '.js-new-tab',
+        fullscreenToggle: '.js-fullscreen-toggle'
     },
 
     events: {
         'click @ui.button': '__onButtonClick',
-        'click @ui.close': '__close'
+        'click @ui.close': '__close',
+        'click @ui.newTab': '__openInNewTab',
+        'click @ui.fullscreenToggle': '__fullscreenToggle'
     },
 
     regions: {
@@ -68,6 +88,19 @@ export default Marionette.View.extend({
         this.showChildView('buttonsRegion', this.__createButtonsView());
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
+
+        if (!this.options.newTabUrl) {
+            this.ui.newTab.hide();
+        }
+        if (this.options.fullscreenToggleDisabled) {
+            this.ui.fullscreenToggle.hide();
+        }
+
+        this.__initializeWindowDrag();
+    },
+
+    onAttach() {
+        this.__setDraggableContainment();
     },
 
     update() {
@@ -78,9 +111,41 @@ export default Marionette.View.extend({
     },
 
     __keyAction(event) {
-        if (event.keyCode === 27) {
+        const isNeedToPrevent = this.__isNeedToPrevent();
+
+        if (!isNeedToPrevent && event.keyCode === 27) {
             this.__close();
         }
+    },
+
+    __openInNewTab() {
+        if (Array.isArray(this.options.newTabUrl)) {
+            window.open(...this.options.newTabUrl);
+        } else {
+            window.open(this.options.newTabUrl);
+        }
+        this.__close();
+    },
+
+    __fullscreenToggle() {
+        this.__expanded = !this.__expanded;
+        this.__callWithTransition(() => {
+            this.ui.window.draggable('option', 'disabled', this.__expanded);
+            this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
+            this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
+        }, () => {
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.expand}`, !this.__expanded);
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.collapse}`, this.__expanded);
+        });
+    },
+
+    __callWithTransition(callback, callbackAfterTransition) {
+        this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
+        typeof callback === 'function' && callback();
+        helpers.setUniqueTimeout(expandId, () => {
+            this.ui.window.css('transition', 'unset');
+            typeof callbackAfterTransition === 'function' && callbackAfterTransition();
+        }, TRANSITION);
     },
 
     async __close() {
@@ -99,6 +164,37 @@ export default Marionette.View.extend({
         return new Core.layout.HorizontalLayout({
             columns: buttons
         });
+    },
+
+    __initializeWindowDrag() {
+        this.ui.window.draggable({
+            scroll: false,
+            handle: '.js-header'
+        });
+
+        this.__debounceOnResize = _.debounce(this.__onResize, 300);
+        this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
+    },
+
+    __onResize() {
+        this.__callWithTransition(() => {
+            this.ui.window.css('top', 0);
+            this.ui.window.css('left', 0);
+        });
+        this.__setDraggableContainment();
+    },
+
+    __setDraggableContainment() {
+        this.ui.window.draggable( 'option', 'containment', [
+            sizeVisibleChunk - this.ui.window.outerWidth(),
+            0,
+            window.innerWidth - sizeVisibleChunk,
+            window.innerHeight - sizeVisibleChunk
+        ]);
+    },
+
+    __isNeedToPrevent() {
+        return document.querySelector('.dev-codemirror-maximized') !== null;
     },
 
     setLoading(loading) {

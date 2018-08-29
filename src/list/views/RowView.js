@@ -120,12 +120,18 @@ export default Marionette.View.extend({
         }
         this.cellViews = [];
 
-        this.options.columns.forEach(gridColumn => {
+        const isTree = this.getOption('isTree');
+        this.options.columns.forEach((gridColumn, index) => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
-                return this.el.insertAdjacentHTML('beforeend', cell);
+                this.el.insertAdjacentHTML('beforeend', cell);
+                if (isTree && index === 0) {
+                    this.insertFirstCellHtml();
+                }
+                return;
             }
+
             let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
             if (gridColumn.editable) cellClasses += classes.cellEditable;
 
@@ -135,15 +141,16 @@ export default Marionette.View.extend({
                 model: this.model,
                 key: gridColumn.key
             });
+
+            if (isTree && index === 0) {
+                cellView.on('render', () => this.insertFirstCellHtml(true));
+            }
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
 
             this.cellViews.push(cellView);
         });
-        if (this.getOption('isTree')) {
-            this.insertFirstCellHtml();
-        }
     },
 
     __handleChange() {
@@ -153,7 +160,11 @@ export default Marionette.View.extend({
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
                     const elements = this.el.getElementsByClassName(this.columnClasses[index]);
                     if (elements.length) {
-                        elements[0].innerHTML = CellViewFactory.getCellHtml(column, this.model);
+                        elements[0].insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
+                        this.el.removeChild(elements[0]);
+                        if (index === 0) {
+                            this.insertFirstCellHtml(true);
+                        }
                     }
                 }
             });
@@ -231,7 +242,7 @@ export default Marionette.View.extend({
         });
     },
 
-    insertFirstCellHtml() {
+    insertFirstCellHtml(force) {
         if (this.isRendered()) {
             const elements = this.el.getElementsByClassName(this.columnClasses[0]);
             if (elements.length) {
@@ -240,7 +251,7 @@ export default Marionette.View.extend({
                 let margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
                 const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
-                if (this.lastHasChildren === hasChildren && this.lastMargin === margin) {
+                if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
                     return;
                 }
 
@@ -254,7 +265,9 @@ export default Marionette.View.extend({
                     if (hasChildren) {
                         el.insertAdjacentHTML(
                             'beforeend',
-                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${this.model.collapsed === false ? classes.expanded : ''}"></span></div>`
+                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${
+                                this.model.collapsed === false ? classes.expanded : ''
+                            }"></span></div>`
                         );
                     }
                     isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
@@ -262,8 +275,8 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                            this.model.collapsed === false ? classes.expanded : ''
-                        }" style="margin-left:${margin}px;"></span>&nbsp;`
+                        this.model.collapsed === false ? classes.expanded : ''
+                        }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
                     el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
@@ -369,16 +382,28 @@ export default Marionette.View.extend({
 
     __selectPointed(pointed) {
         if (this.lastPointedEl) {
+            const lastEditor = this.lastPointedEl.querySelector('input') || this.lastPointedEl.querySelector('[class~=editor]');
+            if (lastEditor) {
+                lastEditor.blur();
+            }
             this.lastPointedEl.classList.remove(classes.cellFocused);
         }
         const pointedEls = this.el.getElementsByClassName(this.columnClasses[pointed]);
         if (pointedEls && pointedEls.length) {
             const pointedEl = pointedEls[0];
-            pointedEl.classList.add(classes.cellFocused);
             const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
-            if (editor && !pointedEl.contains(document.activeElement)) {
-                editor.focus();
+
+            if (editor) {
+                const view = this.cellViews[pointed];
+                if (view.editor.hidden) {
+                    view.model.trigger('select:hidden');
+                    return false;
+                }
+                if (!pointedEl.contains(document.activeElement)) {
+                    editor.focus();
+                }
             }
+            pointedEl.classList.add(classes.cellFocused);
             this.lastPointedEl = pointedEl;
         }
     },
