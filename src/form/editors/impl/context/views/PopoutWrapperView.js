@@ -29,7 +29,7 @@ export default Marionette.View.extend({
                 type: 'ExtendedString',
                 title: 'TextCell',
                 sorting: 'asc',
-                width: 390
+                width: 380
             }
         ];
 

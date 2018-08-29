@@ -435,8 +435,27 @@ svg.svg-grid-icons {
   vertical-align: middle
 }
 
+.context-collapsible-btn {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: var(--collapse-icon);
+  vertical-align: middle;
+  transition-property: transform;
+  transition-duration: 300ms;
+  transform: rotate(90deg);
+}
+
 .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(90deg);
+}
+
+.context-collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(270deg);
 }
 
 .grid-header-column-content .collapsible-btn {

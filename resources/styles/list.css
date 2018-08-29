@@ -607,6 +607,7 @@
     align-items: center;
     display: flex;
     overflow: hidden;
+    height: 54px;
     border-bottom: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 }
@@ -623,27 +624,29 @@
 
 .context-collapse-button {
     position: absolute;
-    height: 35px;
+    height: 53px;
     background-color: white;
     width: 30px;
-    padding-top: 8px;
-    right: 0px;
+    padding-top: 16px;
+    right: 1px;
     padding-left: 6px;
 }
 
 .extend_cell_text {
     display: flex;
-    flex-flow: column;
-    flex-grow: 1;
-    padding: 2px 5px;
+    flex-direction: column;
+    padding: 8px 10px;
+    overflow: hidden;
 }
 
 .extend_cell_header {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
+    color: #434343;
 }
 
 .extend_info {
+    color: #cfcfd0;
     font-size: 12px;
 }
 

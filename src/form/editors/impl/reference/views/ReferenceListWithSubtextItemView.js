@@ -7,10 +7,11 @@ export default ReferenceListItemView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const options = this.options.subTextOptions;
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
-            iconType: this.model.get(this.options.subTextOptions.displayAttributeType).toLocaleLowerCase(),
-            subtext: this.model.get(this.options.subTextOptions.displayAttributeSubtext),
+            iconType: options.iconProperty ? this.model.get(options.iconProperty).toLocaleLowerCase() : false,
+            subtext: this.model.get(options.subtextProperty),
             showCheckboxes: this.options.showCheckboxes
         };
     }

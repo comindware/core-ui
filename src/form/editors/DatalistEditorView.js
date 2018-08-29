@@ -30,9 +30,9 @@ const defaultOptions = {
     showAddNewButton: false,
     showEditButton: false,
     buttonView: ButtonView,
-    showSubText: false,
-    displayAttributeSubtext: '',
-    displayAttributeType: '',
+    showAdditionalList: false,
+    subtextProperty: '',
+    iconProperty: '',
     listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
@@ -143,11 +143,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
-                listItemView: this.options.showSubText ? this.options.listItemViewWithText : this.options.listItemView,
+                listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 subTextOptions: {
-                    displayAttributeSubtext: this.options.displayAttributeSubtext,
-                    displayAttributeType: this.options.displayAttributeType
+                    subtextProperty: this.options.subtextProperty,
+                    iconProperty: this.options.iconProperty
                 },
                 textFilterDelay: this.options.textFilterDelay
             },
