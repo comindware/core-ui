@@ -1106,9 +1106,9 @@ input[type="color"], .colorpicker{
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.simplified-panel_container {
+.simplified-panel_panel {
     position: fixed;
-    z-index: 55;
+    z-index: 101;
 }
 
 .simplified-panel_panel[noSelected].dropdown__wrp_up {
