@@ -53,6 +53,7 @@ export default {
     showMessageDialog(description, text, buttons, iconId = iconIds.NONE) {
         return new Promise(resolve => {
             const view = new Core.layout.Popup({
+                fullscreenToggleDisabled: true,
                 header: text,
                 buttons: buttons.map(button => ({
                     id: button.id,
