@@ -10,10 +10,11 @@ export default function() {
 
     const createPopup = () =>
         new core.layout.Popup({
-            size: {
-                width: '800px',
-                height: '700px'
-            },
+            // size: {
+            //     width: '800px', //default: 780px;
+            //     height: '700px' //default: 550px;
+            // },
+            fullscreenToggleDisabled: true,
             header: 'New Operation',
             buttons: [
                 {

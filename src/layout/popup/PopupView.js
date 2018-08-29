@@ -63,14 +63,14 @@ export default Marionette.View.extend({
         window: '.js-window',
         close: '.js-close',
         newTab: '.js-new-tab',
-        toggleMode: '.js-toggle-mode'
+        fullscreenToggle: '.js-fullscreen-toggle'
     },
 
     events: {
         'click @ui.button': '__onButtonClick',
         'click @ui.close': '__close',
         'click @ui.newTab': '__openInNewTab',
-        'click @ui.toggleMode': '__toggleMode'
+        'click @ui.fullscreenToggle': '__fullscreenToggle'
     },
 
     regions: {
@@ -92,8 +92,15 @@ export default Marionette.View.extend({
         if (!this.options.newTabUrl) {
             this.ui.newTab.hide();
         }
+        if (this.options.fullscreenToggleDisabled) {
+            this.ui.fullscreenToggle.hide();
+        }
 
         this.__initializeWindowDrag();
+    },
+
+    onAttach() {
+        this.__setDraggableContainment();
     },
 
     update() {
@@ -120,21 +127,21 @@ export default Marionette.View.extend({
         this.__close();
     },
 
-    __toggleMode() {
+    __fullscreenToggle() {
         this.__expanded = !this.__expanded;
         this.__callWithTransition(() => {
             this.ui.window.draggable('option', 'disabled', this.__expanded);
             this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
             this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
         }, () => {
-            this.ui.toggleMode.toggleClass(`fa-${iconsName.expand}`, !this.__expanded);
-            this.ui.toggleMode.toggleClass(`fa-${iconsName.collapse}`, this.__expanded);
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.expand}`, !this.__expanded);
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.collapse}`, this.__expanded);
         });
     },
 
     __callWithTransition(callback, callbackAfterTransition) {
         this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
-        typeof callback === 'function' &&callback();
+        typeof callback === 'function' && callback();
         helpers.setUniqueTimeout(expandId, () => {
             this.ui.window.css('transition', 'unset');
             typeof callbackAfterTransition === 'function' && callbackAfterTransition();
@@ -166,8 +173,6 @@ export default Marionette.View.extend({
         });
 
         this.__debounceOnResize = _.debounce(this.__onResize, 300);
-
-        this.__setDraggableContainment();
         this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
     },
 

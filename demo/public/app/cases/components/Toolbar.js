@@ -8,7 +8,8 @@ export default function () {
                 type: 'Action',
                 severity: 'Low',
                 resultType: 'CustomClientAction',
-                context: 'Void'
+                context: 'Void',
+                description: 'createComponent'
             },
             {
                 iconType: 'Undefined',

@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5%;
+    padding: 30px;
 }
 
 .cur_aI {
@@ -19,6 +19,8 @@
     flex-direction: column;
     overflow-y: hidden;
     position: relative;
+    width: 780px;
+    height: 550px;
 }
 
 .layout__popup-view-window_expand {
