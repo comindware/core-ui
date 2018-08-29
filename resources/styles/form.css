@@ -1034,6 +1034,7 @@ input[type="color"], .colorpicker{
     width: 28px;
     padding: 0;
     box-shadow: none!important;
+    background-color: transparent!important;
 }
 
 .simplified-button_grid .visible-collection-wrp {
