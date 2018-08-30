@@ -402,7 +402,7 @@ module.exports.apply = {
         padding: '15px'
     },
     'popup-close-theme': {
-        'font-size': '19px'
+        'font-size': '17px'//if icons style = solid, then 19px
     },
     'popup-form-content-theme': {
         padding: '15px',
