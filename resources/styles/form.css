@@ -806,8 +806,6 @@ input[type="color"], .colorpicker{
     visibility: hidden;
 }
 
-.editor_readonly .icon-edit,
-.editor_disabled .icon-edit,
 .editor.editor_readonly .editor__icons.icon-remove,
 .editor.editor_disabled .editor__icons.icon-remove {
     display: none;
