@@ -227,12 +227,6 @@
     overflow: hidden;
 }
 
-.datalist-container-text {
-    font-size: 15px;
-    font-weight: 600;
-    color: #434343;
-}
-
 .datalist-subtext-icon {
     background: 0 0 no-repeat;
     background-position-x: 13px;
@@ -242,9 +236,23 @@
     height: 50px;
 }
 
+.datalist-container-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #434343;
+}
+
 .datalist-container-subtext {
     color: #cfcfd0;
     font-size: 12px;
+}
+
+.subtext-list:hover .datalist-container-text {
+    color: #0575bd;
+}
+
+.subtext-list:hover .datalist-container-subtext {
+    color: #1c80c1;
 }
 
 .reference-btn-more{

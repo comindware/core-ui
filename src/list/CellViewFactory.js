@@ -1,5 +1,5 @@
 //@flow
-import { objectPropertyTypes } from '../Meta';
+import { objectPropertyTypes, contextIconType } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
@@ -283,7 +283,7 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `
                         <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
-                        <div class="context-icon context-icon-type_${model.get('type').toLocaleLowerCase()}"></div>
+                        <i class="fas fa-${contextIconType[model.get('type').toLocaleLowerCase()]} context-icon" aria-hidden="true"></i>
                         <div class="extend_cell_text">
                             <span class="extend_cell_header">${adjustedValue}</span>
                             <span class="extend_info">${model.get('alias') || ''}</span>

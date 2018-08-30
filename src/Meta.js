@@ -1,4 +1,18 @@
 //@flow
+export const contextIconType = {
+    reference: 'link',
+    member: 'user',
+    document: 'paperclip',
+    date: 'calendar-alt',
+    duration: 'stopwatch',
+    actionbutton: 'hand-pointer',
+    text: 'font',
+    boolean: 'check-square',
+    table: 'newspaper',
+    subform: 'list-alt',
+    undefined: 'dot-circle'
+};
+
 export const objectPropertyTypes = {
     STRING: 'String',
     EXTENDED_STRING: 'ExtendedString',
@@ -25,5 +39,6 @@ export const presentingComponentsTypes = {
 
 export default {
     objectPropertyTypes,
+    contextIconType,
     presentingComponentsTypes
 };

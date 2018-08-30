@@ -595,12 +595,13 @@
 /*-- ExtendedString --*/
 
 .context-icon {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    margin: 10px -4px 0 22px;
-    flex: none;
-    background: 0 0 no-repeat;
+    font-size: 19px;
+    color: #cfcfd0;
+    width: 16px;
+}
+
+.extend_cell_content:hover .context-icon {
+    color: #1c80c1;
 }
 
 .extend_cell_content {
@@ -648,6 +649,14 @@
 .extend_info {
     color: #cfcfd0;
     font-size: 12px;
+}
+
+.extend_cell_content:hover .extend_cell_header {
+    color: #0575bd;
+}
+
+.extend_cell_content:hover .extend_info {
+    color: #1c80c1;
 }
 
 /*-- End ExtendedString --*/
