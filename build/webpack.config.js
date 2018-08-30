@@ -35,7 +35,7 @@ module.exports = options => {
                         pathResolver.source('collections'),
                         pathResolver.source('Meta.js'),
                         pathResolver.source('utils'),
-                        pathResolver.source('form/editors/impl/dateTime/views/DateWidget.js'),
+                        pathResolver.source('form/editors/impl/dateTime/views/initializeDatePicker.js'),
                         pathResolver.tests(),
                         pathResolver.demo()
                     ],

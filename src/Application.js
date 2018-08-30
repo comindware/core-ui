@@ -12,6 +12,7 @@ import InterfaceErrorMessageService from './services/InterfaceErrorMessageServic
 import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
+import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
 
 import 'backbone.trackit';
 
@@ -75,7 +76,7 @@ export default {
         // Backbone default behaviors path (obsolete because of inconsistency: we store behaviors in many different paths)
         Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
 
-        //this.initializeThirdParties();
+        this.initializeThirdParties();
         marionetteApp.start();
 
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
@@ -86,14 +87,17 @@ export default {
     },
 
     initializeThirdParties() {
-        $.fn.datetimepicker.dates[LocalizationService.langCode] = {
-            days: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSFULL').split(','), //["Sunday", "Monday", ... ]
-            daysShort: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','), //["Sun", "Mon", ... ],
-            daysMin: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','),
-            months: LocalizationService.get('CORE.FORMATS.DATETIME.MONTHS').split(','), //["January", "February", ... ]
-            monthsShort: LocalizationService.get('CORE.FORMATS.DATETIME.MONTHSSHORT').split(','), //["Jan", "Feb", ... ]
-            today: LocalizationService.get('CORE.FORMATS.DATETIME.TODAY'),
-            meridiem: LocalizationService.get('CORE.FORMATS.DATETIME.MERIDIEM').split(',')
+        const dates = {
+            [LocalizationService.langCode]: {
+                days: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSFULL').split(','), //["Sunday", "Monday", ... ]
+                daysShort: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','), //["Sun", "Mon", ... ],
+                daysMin: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','),
+                months: LocalizationService.get('CORE.FORMATS.DATETIME.MONTHS').split(','), //["January", "February", ... ]
+                monthsShort: LocalizationService.get('CORE.FORMATS.DATETIME.MONTHSSHORT').split(','), //["Jan", "Feb", ... ]
+                today: LocalizationService.get('CORE.FORMATS.DATETIME.TODAY'),
+                meridiem: LocalizationService.get('CORE.FORMATS.DATETIME.MERIDIEM').split(',')
+            }
         };
+        initializeDatePicker($, dates);
     }
 };
