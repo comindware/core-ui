@@ -5,4 +5,6 @@
         </svg>
     </span>
 {{/if}}
-<span class="dd-list__text" title="{{text}}">{{text}}</span>
+{{#each lines}}
+    <div class="dd-list__text" title="{{text}}">{{text}}</div>
+{{/each}}

@@ -12,7 +12,7 @@ export default Marionette.CollectionView.extend({
         'click:item': '__triggerChildSelect'
     },
 
-    __triggerChildSelect(model) {
-        this.trigger('click:item', model);
+    __triggerChildSelect(id) {
+        this.trigger('click:item', id);
     }
 });

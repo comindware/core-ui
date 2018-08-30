@@ -7,7 +7,7 @@ const classes = {
 
 export default Marionette.View.extend({
     className() {
-        return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
+        return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''} ${this.options.class || ''}`;
     },
 
     behaviors: [{
@@ -19,9 +19,13 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const arrDisplayAttribute = Array.isArray(this.options.displayAttribute) ? this.options.displayAttribute : [this.options.displayAttribute];
+        const lines = arrDisplayAttribute.map(attr => ({
+            text: this.options.getDisplayText(this.model.toJSON(), attr)
+        }));
         return {
-            text: this.options.getDisplayText(this.model.toJSON()),
-            showCheckboxes: this.options.showCheckboxes
+            showCheckboxes: this.options.showCheckboxes,
+            lines
         };
     },
 

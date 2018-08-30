@@ -51,6 +51,8 @@ export default Marionette.View.extend({
                 childViewOptions: {
                     reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText,
+                    displayAttribute: this.options.displayAttribute,
+                    class: this.options.listItemClass,
                     subTextOptions: this.options.subTextOptions,
                     showCheckboxes: this.options.showCheckboxes
                 },

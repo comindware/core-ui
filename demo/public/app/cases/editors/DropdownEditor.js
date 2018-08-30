@@ -19,7 +19,7 @@ export default function() {
             collection: possibleItems,
             valueType: 'id',
             allowEmptyValue: false,
-            displayAttribute: attr => `id: ${attr.id}, text: ${attr.text}`
+            displayAttribute: [attr => `name: ${attr.text}`, attr => `alias: ${attr.text}`]
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true
