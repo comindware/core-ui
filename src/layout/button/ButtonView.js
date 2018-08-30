@@ -4,7 +4,9 @@ import template from './button.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
-    CLASS_NAME: 'layout__button'
+    CLASS_NAME: 'layout__button',
+    PALE: 'btn-pale',
+    STRONG: 'btn-strong',
 };
 
 export default Marionette.View.extend({
@@ -18,6 +20,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             customClass: this.options.class || '',
+            brightnessClass: this.options.id === false ? classes.PALE : classes.STRONG,
             text: this.options.text
         };
     },

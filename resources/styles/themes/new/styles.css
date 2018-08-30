@@ -146,6 +146,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .layout__tab-layout_move-button {
   @apply --button-theme;
+  @apply --button-strong;
   @apply --button-outline-theme;
   @apply --tab-move-btn-theme;
 }
