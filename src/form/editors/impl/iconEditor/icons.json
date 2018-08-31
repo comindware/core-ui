@@ -48,6 +48,20 @@
     "unicode": "f369",
     "label": "Accusoft"
   },
+  "ad": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f641",
+    "label": "Ad"
+  },
   "address-book": {
     "changes": [
       "4.7",
@@ -238,6 +252,20 @@
     ],
     "unicode": "f038",
     "label": "align-right"
+  },
+  "alipay": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f642",
+    "label": "Alipay"
   },
   "allergies": {
     "changes": [
@@ -583,6 +611,28 @@
     ],
     "unicode": "f420",
     "label": "Angular"
+  },
+  "ankh": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "amulet",
+        "copper",
+        "coptic christianity",
+        "copts",
+        "crux ansata",
+        "egyptian",
+        "venus"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f644",
+    "label": "Ankh"
   },
   "app-store": {
     "changes": [
@@ -1072,7 +1122,11 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "atheism",
+        "chemistry",
+        "science"
+      ]
     },
     "styles": [
       "solid"
@@ -1614,6 +1668,24 @@
     "unicode": "f55b",
     "label": "Bezier Curve"
   },
+  "bible": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "book",
+        "catholicism",
+        "christianity"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f647",
+    "label": "Bible"
+  },
   "bicycle": {
     "changes": [
       "4.2",
@@ -2079,7 +2151,15 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "cerebellum",
+        "gray matter",
+        "intellect",
+        "medulla oblongata",
+        "mind",
+        "noodle",
+        "wit"
+      ]
     },
     "styles": [
       "solid"
@@ -2090,7 +2170,8 @@
   "briefcase": {
     "changes": [
       "2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -2233,7 +2314,8 @@
   "bullhorn": {
     "changes": [
       "2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -2254,7 +2336,8 @@
   "bullseye": {
     "changes": [
       "3.1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -2338,6 +2421,26 @@
     "unicode": "f55e",
     "label": "Bus Alt"
   },
+  "business-time": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "briefcase",
+        "business socks",
+        "clock",
+        "flight of the conchords",
+        "wednesday"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f64a",
+    "label": "Business Time"
+  },
   "buysellads": {
     "changes": [
       "4.3",
@@ -2356,7 +2459,8 @@
   "calculator": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -2448,7 +2552,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "delete",
+        "remove"
+      ]
     },
     "styles": [
       "solid",
@@ -2464,7 +2571,11 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "add",
+        "create",
+        "new"
+      ]
     },
     "styles": [
       "solid",
@@ -2480,7 +2591,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "archive",
+        "delete",
+        "remove",
+        "x"
+      ]
     },
     "styles": [
       "solid",
@@ -2833,6 +2949,8 @@
     "search": {
       "terms": [
         "add",
+        "create",
+        "new",
         "shopping"
       ]
     },
@@ -3103,7 +3221,8 @@
   "chart-bar": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -3123,7 +3242,8 @@
   "chart-line": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -3144,7 +3264,8 @@
   "chart-pie": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -3617,6 +3738,26 @@
     "unicode": "f1ce",
     "label": "Circle Notched"
   },
+  "city": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "buildings",
+        "busy",
+        "skyscrapers",
+        "urban",
+        "windows"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f64f",
+    "label": "City"
+  },
   "clipboard": {
     "changes": [
       "5.0.0"
@@ -4072,6 +4213,20 @@
     "unicode": "f27a",
     "label": "Alternate Comment"
   },
+  "comment-dollar": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f651",
+    "label": "Comment Dollar"
+  },
   "comment-dots": {
     "changes": [
       "5.0.9"
@@ -4128,6 +4283,20 @@
     ],
     "unicode": "f086",
     "label": "comments"
+  },
+  "comments-dollar": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f653",
+    "label": "Comments Dollar"
   },
   "compact-disc": {
     "changes": [
@@ -4589,6 +4758,23 @@
     "unicode": "f565",
     "label": "Alternate Crop"
   },
+  "cross": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "catholicism",
+        "christianity"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f654",
+    "label": "Cross"
+  },
   "crosshairs": {
     "changes": [
       "1",
@@ -4880,6 +5066,24 @@
     ],
     "unicode": "f1bd",
     "label": "deviantART"
+  },
+  "dharmachakra": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "buddhism",
+        "buddhist",
+        "wheel of dharma"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f655",
+    "label": "Dharmachakra"
   },
   "diagnoses": {
     "changes": [
@@ -5315,7 +5519,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "animal",
+        "bird",
+        "flying",
+        "peace"
+      ]
     },
     "styles": [
       "solid"
@@ -5765,6 +5974,20 @@
     ],
     "unicode": "f2b6",
     "label": "Envelope Open"
+  },
+  "envelope-open-text": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f658",
+    "label": "Envelope Open-text"
   },
   "envelope-square": {
     "changes": [
@@ -6261,7 +6484,8 @@
   "fax": {
     "changes": [
       "4.1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -7085,11 +7309,12 @@
   "folder": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": null
     },
     "styles": [
       "solid",
@@ -7097,6 +7322,24 @@
     ],
     "unicode": "f07b",
     "label": "Folder"
+  },
+  "folder-minus": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "archive",
+        "delete",
+        "remove"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f65d",
+    "label": "Folder Minus"
   },
   "folder-open": {
     "changes": [
@@ -7113,6 +7356,24 @@
     ],
     "unicode": "f07c",
     "label": "Folder Open"
+  },
+  "folder-plus": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "add",
+        "create",
+        "new"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f65e",
+    "label": "Folder Plus"
   },
   "font": {
     "changes": [
@@ -7429,6 +7690,20 @@
     ],
     "unicode": "f50b",
     "label": "Fulcrum"
+  },
+  "funnel-dollar": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f662",
+    "label": "Funnel Dollar"
   },
   "futbol": {
     "changes": [
@@ -8133,6 +8408,26 @@
     "unicode": "f1ee",
     "label": "Google Wallet"
   },
+  "gopuram": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "entrance",
+        "hinduism",
+        "temple",
+        "tower"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f664",
+    "label": "Gopuram"
+  },
   "graduation-cap": {
     "changes": [
       "4.1",
@@ -8634,6 +8929,28 @@
     "unicode": "f5f7",
     "label": "Hackerrank"
   },
+  "hamsa": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "amulet",
+        "christianity",
+        "islam",
+        "jewish",
+        "judaism",
+        "muslim",
+        "protection"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f665",
+    "label": "Hamsa"
+  },
   "hand-holding": {
     "changes": [
       "5.0.9"
@@ -8952,6 +9269,24 @@
     ],
     "unicode": "f292",
     "label": "Hashtag"
+  },
+  "haykal": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "bahai",
+        "bahá'í",
+        "star"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f666",
+    "label": "Haykal"
   },
   "hdd": {
     "changes": [
@@ -9622,7 +9957,8 @@
   },
   "infinity": {
     "changes": [
-      "5.0.13"
+      "5.0.13",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -9781,13 +10117,31 @@
     "unicode": "f4e4",
     "label": "Java"
   },
+  "jedi": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "star wars"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f669",
+    "label": "Jedi"
+  },
   "jedi-order": {
     "changes": [
       "5.0.12"
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "star wars"
+      ]
     },
     "styles": [
       "brands"
@@ -9862,6 +10216,25 @@
     "unicode": "f1aa",
     "label": "Joomla Logo"
   },
+  "journal-whills": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "book",
+        "jedi",
+        "star wars",
+        "the force"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f66a",
+    "label": "Journal of the Whills"
+  },
   "js": {
     "changes": [
       "5.0.0"
@@ -9905,6 +10278,25 @@
     ],
     "unicode": "f1cc",
     "label": "jsFiddle"
+  },
+  "kaaba": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "cube",
+        "islam",
+        "muslim"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f66b",
+    "label": "Kaaba"
   },
   "kaggle": {
     "changes": [
@@ -9984,6 +10376,25 @@
     ],
     "unicode": "f3ba",
     "label": "KeyCDN"
+  },
+  "khanda": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "chakkar",
+        "sikh",
+        "sikhism",
+        "sword"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f66d",
+    "label": "Khanda"
   },
   "kickstarter": {
     "changes": [
@@ -10104,6 +10515,24 @@
     ],
     "unicode": "f42f",
     "label": "KORVUE"
+  },
+  "landmark": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "historic",
+        "memoroable"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f66f",
+    "label": "Landmark"
   },
   "language": {
     "changes": [
@@ -10456,7 +10885,8 @@
   "lightbulb": {
     "changes": [
       "3",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -10900,6 +11330,20 @@
     ],
     "unicode": "f076",
     "label": "magnet"
+  },
+  "mail-bulk": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f674",
+    "label": "Mail Bulk"
   },
   "mailchimp": {
     "changes": [
@@ -11470,6 +11914,25 @@
     "unicode": "f538",
     "label": "Memory"
   },
+  "menorah": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "candle",
+        "jewish",
+        "judaism",
+        "light"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f676",
+    "label": "Menorah"
+  },
   "mercury": {
     "changes": [
       "4.3",
@@ -11974,6 +12437,24 @@
     "unicode": "f5a7",
     "label": "Mortar Pestle"
   },
+  "mosque": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "islam",
+        "muslim"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f678",
+    "label": "Mosque"
+  },
   "motorcycle": {
     "changes": [
       "4.3",
@@ -12314,6 +12795,25 @@
     "unicode": "f510",
     "label": "Old Republic"
   },
+  "om": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "buddhism",
+        "hinduism",
+        "jainism",
+        "mantra"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f679",
+    "label": "Om"
+  },
   "opencart": {
     "changes": [
       "4.4",
@@ -12618,6 +13118,25 @@
     "unicode": "f5ab",
     "label": "Passport"
   },
+  "pastafarianism": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "agnosticism",
+        "atheism",
+        "flying spaghetti monster",
+        "fsm"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f67b",
+    "label": "Pastafarianism"
+  },
   "paste": {
     "changes": [
       "2",
@@ -12715,6 +13234,20 @@
     ],
     "unicode": "f1ed",
     "label": "Paypal"
+  },
+  "peace": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f67c",
+    "label": "Peace"
   },
   "pen": {
     "changes": [
@@ -13184,6 +13717,20 @@
     "unicode": "f0d3",
     "label": "Pinterest Square"
   },
+  "place-of-worship": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f67f",
+    "label": "Place Of Worship"
+  },
   "plane": {
     "changes": [
       "1",
@@ -13407,6 +13954,34 @@
     "unicode": "f2ce",
     "label": "Podcast"
   },
+  "poll": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f681",
+    "label": "Poll"
+  },
+  "poll-h": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f682",
+    "label": "Poll H"
+  },
   "poo": {
     "changes": [
       "5.0.0",
@@ -13488,6 +14063,34 @@
     "unicode": "f011",
     "label": "Power Off"
   },
+  "pray": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f683",
+    "label": "Pray"
+  },
+  "praying-hands": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f684",
+    "label": "Praying Hands"
+  },
   "prescription": {
     "changes": [
       "5.1.0"
@@ -13548,7 +14151,8 @@
   "print": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -13798,6 +14402,24 @@
     "unicode": "f10e",
     "label": "quote-right"
   },
+  "quran": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "book",
+        "islam",
+        "muslim"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f687",
+    "label": "Quran"
+  },
   "r-project": {
     "changes": [
       "5.0.11",
@@ -13991,7 +14613,8 @@
     "search": {
       "terms": [
         "forward",
-        "repeat",
+        "refresh",
+        "reload",
         "repeat"
       ]
     },
@@ -14009,6 +14632,8 @@
     "search": {
       "terms": [
         "forward",
+        "refresh",
+        "reload",
         "repeat"
       ]
     },
@@ -14582,6 +15207,34 @@
     "unicode": "f002",
     "label": "Search"
   },
+  "search-dollar": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f688",
+    "label": "Search Dollar"
+  },
+  "search-location": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f689",
+    "label": "Search Location"
+  },
   "search-minus": {
     "changes": [
       "1",
@@ -14591,7 +15244,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "magnify",
         "minify",
         "smaller",
         "zoom",
@@ -15072,7 +15724,8 @@
   "signal": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -15452,6 +16105,25 @@
     "unicode": "f2dc",
     "label": "Snowflake"
   },
+  "socks": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "business socks",
+        "business time",
+        "flight of the conchords",
+        "wednesday"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f696",
+    "label": "Socks"
+  },
   "solar-panel": {
     "changes": [
       "5.1.0"
@@ -15793,6 +16465,20 @@
     "unicode": "f45c",
     "label": "Square Full"
   },
+  "square-root-alt": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f698",
+    "label": "Square Root Alternate"
+  },
   "squarespace": {
     "changes": [
       "5.1.0"
@@ -15876,6 +16562,23 @@
     "unicode": "f005",
     "label": "Star"
   },
+  "star-and-crescent": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "islam",
+        "muslim"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f699",
+    "label": "Star and Crescent"
+  },
   "star-half": {
     "changes": [
       "1",
@@ -15920,6 +16623,23 @@
     "unicode": "f5c0",
     "label": "Alternate Star Half"
   },
+  "star-of-david": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "jewish",
+        "judaism"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f69a",
+    "label": "Star of David"
+  },
   "star-of-life": {
     "changes": [
       "5.2.0"
@@ -15932,7 +16652,7 @@
       "solid"
     ],
     "unicode": "f621",
-    "label": "Star Of-life"
+    "label": "Star of Life"
   },
   "staylinked": {
     "changes": [
@@ -16523,6 +17243,26 @@
     "unicode": "f5c5",
     "label": "Swimming Pool"
   },
+  "synagogue": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "jewish",
+        "judaism",
+        "star of david",
+        "temple"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f69b",
+    "label": "Synagogue"
+  },
   "sync": {
     "changes": [
       "1",
@@ -16983,6 +17723,20 @@
     "unicode": "f00b",
     "label": "th-list"
   },
+  "the-red-yeti": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f69d",
+    "label": "The Red Yeti"
+  },
   "theater-masks": {
     "changes": [
       "5.2.0"
@@ -17398,6 +18152,41 @@
     ],
     "unicode": "f5c9",
     "label": "Tooth"
+  },
+  "torah": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "book",
+        "jewish",
+        "judaism"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6a0",
+    "label": "Torah"
+  },
+  "torii-gate": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "building",
+        "shintoism"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6a1",
+    "label": "Torii Gate"
   },
   "trade-federation": {
     "changes": [
@@ -18343,7 +19132,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "delete",
+        "remove"
+      ]
     },
     "styles": [
       "solid"
@@ -18388,7 +19180,7 @@
       "solid"
     ],
     "unicode": "f234",
-    "label": "Add User"
+    "label": "User Plus"
   },
   "user-secret": {
     "changes": [
@@ -18485,7 +19277,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "archive",
+        "delete",
+        "remove",
+        "x"
+      ]
     },
     "styles": [
       "solid"
@@ -18788,6 +19585,25 @@
     "unicode": "f4e2",
     "label": "Video Slash"
   },
+  "vihara": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "buddhism",
+        "buddhist",
+        "building",
+        "monastery"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6a7",
+    "label": "Vihara"
+  },
   "vimeo": {
     "changes": [
       "5.0.0"
@@ -18895,7 +19711,8 @@
   "volume-down": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -18912,12 +19729,13 @@
       "solid"
     ],
     "unicode": "f027",
-    "label": "volume-down"
+    "label": "Volume Down"
   },
   "volume-off": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -18932,12 +19750,13 @@
       "solid"
     ],
     "unicode": "f026",
-    "label": "volume-off"
+    "label": "Volume Off"
   },
   "volume-up": {
     "changes": [
       "1",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -18954,7 +19773,7 @@
       "solid"
     ],
     "unicode": "f028",
-    "label": "volume-up"
+    "label": "Volume Up"
   },
   "vuejs": {
     "changes": [
@@ -19157,7 +19976,8 @@
   "wifi": {
     "changes": [
       "4.2",
-      "5.0.0"
+      "5.0.0",
+      "5.3.0"
     ],
     "ligatures": [],
     "search": {
@@ -19588,6 +20408,24 @@
     ],
     "unicode": "f157",
     "label": "Yen Sign"
+  },
+  "yin-yang": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "daoism",
+        "opposites",
+        "taoism"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6ad",
+    "label": "Yin Yang"
   },
   "yoast": {
     "changes": [
