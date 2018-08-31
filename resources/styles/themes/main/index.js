@@ -254,6 +254,9 @@ module.exports.apply = {
         color: variables['grey-500'],
         'border-bottom-color': variables['grey-500']
     },
+    'tab-item-hidden-theme': {
+        dispay: 'none'
+    },
     'tab-panel-container-theme': {},
     'tab-move-btn-theme': {
         width: '20px',
