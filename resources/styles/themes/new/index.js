@@ -176,21 +176,37 @@ module.exports.apply = {
         display: 'inline-block',
         'vertical-align': 'middle',
         cursor: 'pointer',
-        color: variables['blue-100'],
         'font-size': '15px',
         'line-height': '1.5',
         padding: '3px 15px',
-        'border-radius': '4px',
+        'border-radius': '4px'
+    },
+    'button-strong': {
         'background-color': variables['blue-300'],
+        color: variables['blue-100'],
         border: `1px solid ${variables['blue-300']}`
     },
-    'button-hover-theme': {
+    'button-pale': {
+        'background-color': variables.white,
+        color: variables['blue-300'],
+        border: `1px solid ${variables['grey-400']}`
+    },
+    'button-strong-hover-theme': {
         'background-color': variables['blue-400'],
         'border-color': variables['blue-400']
     },
-    'button-active-theme': {
+    'button-strong-active-theme': {
         'border-color': variables['blue-400'],
         'background-color': variables['blue-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
+    'button-pale-hover-theme': {
+        'background-color': variables['grey-400'],
+        'border-color': variables['grey-400']
+    },
+    'button-pale-active-theme': {
+        'border-color': variables['grey-400'],
+        'background-color': variables['grey-400'],
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
     },
     'button-outline-theme': {
@@ -402,7 +418,7 @@ module.exports.apply = {
         padding: '15px'
     },
     'popup-close-theme': {
-        'font-size': '19px'
+        'font-size': '17px'//if icons style = solid, then 19px
     },
     'popup-form-content-theme': {
         padding: '15px',
