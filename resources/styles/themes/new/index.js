@@ -310,6 +310,9 @@ module.exports.apply = {
         color: variables['grey-400'],
         cursor: 'not-allowed'
     },
+    'tab-item-hidden-theme': {
+        display: 'none'
+    },
     'tab-panel-container-theme': {
         border: variables.border,
         'background-color': variables.white,

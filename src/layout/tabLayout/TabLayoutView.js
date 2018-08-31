@@ -27,6 +27,9 @@ export default Marionette.View.extend({
             if (model.get('enabled') === undefined) {
                 model.set('enabled', true);
             }
+            if (model.get('visible') === undefined) {
+                model.set('visible', true);
+            }
         });
         const selectedTab = this.__findSelectedTab();
         if (!selectedTab) {
@@ -37,6 +40,7 @@ export default Marionette.View.extend({
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
+        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
 
         this.tabs = options.tabs.reduce((s, a) => {
             s[a.id] = a.view;
@@ -151,10 +155,20 @@ export default Marionette.View.extend({
         }
     },
 
-    setEnabled(tabId: string, enabled) {
+    setEnabled(tabId: string, enabled: boolean) {
         this.__findTab(tabId).set({
             enabled
         });
+    },
+
+    setVisible(tabId: string, visible: boolean) {
+        const tab = this.__findTab(tabId);
+        tab.set({ visible });
+        let newTabIndex = this.__tabsCollection.indexOf(tab) + 1;
+        if (newTabIndex === this.__tabsCollection.length) {
+            newTabIndex -= 2;
+        }
+        this.selectTab(this.__tabsCollection.at(newTabIndex).id);
     },
 
     setTabError(tabId: string, error) {
@@ -229,6 +243,10 @@ export default Marionette.View.extend({
 
     __onSelectedChanged(model: Backbone.Model): void {
         this.__updateTabRegion(model);
+    },
+
+    __onVisibleChanged(model: Backbone.Model, visible: boolean): void {
+        this.setVisible(model.id, visible);
     },
 
     __updateTabRegion(model: Backbone.Model): void {

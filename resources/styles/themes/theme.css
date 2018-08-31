@@ -612,6 +612,10 @@ svg.svg-grid-icons {
   @apply --tab-item-disabled-theme;
 }
 
+.tabs__i.disabled {
+  @apply --tab-item-hidden-theme;
+}
+
 .layout__tab-layout__header-view {
   justify-content: var(--tab-header-justify);
 }
@@ -632,6 +636,10 @@ svg.svg-grid-icons {
 
 .layout__tab-layout__header-view-item_disabled {
   @apply --tab-item-disabled-theme;
+}
+
+.layout__tab-layout__header-view-item_hidden {
+  @apply --tab-item-hidden-theme;
 }
 
 .layout__tab-layout__panel-container {
