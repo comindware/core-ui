@@ -34,13 +34,11 @@ import editorsImplCommonMemberModel from './editors/impl/members/models/MemberMo
 import IconEditorView from './editors/IconEditorView';
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
-import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
-import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
-import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
-import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
-import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
-import LoadingView from './editors/impl/reference/views/LoadingView';
-import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
+import DemoReferenceEditorController from './editors/impl/datalist/controllers/DemoReferenceEditorController';
+import BaseReferenceEditorController from './editors/impl/datalist/controllers/BaseReferenceEditorController';
+import BaseReferenceCollection from './editors/impl/datalist/collections/BaseReferenceCollection';
+import DefaultReferenceModel from './editors/impl/datalist/models/DefaultReferenceModel';
+import LoadingView from './editors/impl/datalist/views/LoadingView';
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
@@ -130,9 +128,7 @@ const api = /** @lends module:core.form */ {
                 DefaultReferenceModel
             },
             views: {
-                ReferenceListItemView,
                 LoadingView,
-                ReferenceButtonView,
                 DatalistButtonView
             }
         },

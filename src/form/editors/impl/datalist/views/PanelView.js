@@ -2,7 +2,7 @@
 import list from 'list';
 import template from '../templates/bubblePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
-import AddNewButtonView from './../../reference/views/AddNewButtonView';
+import AddNewButtonView from './AddNewButtonView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {

@@ -1,7 +1,7 @@
 // @flow
 import template from '../templates/button.hbs';
 import BubbleCollection from './BubbleCollectionView';
-import LoadingView from './../../reference/views/LoadingView';
+import LoadingView from './LoadingView';
 
 const classes = {
     CLASS_NAME: 'bubbles',
