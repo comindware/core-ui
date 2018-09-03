@@ -5,6 +5,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapDate from './iconsWraps/iconWrapDate.html';
+import iconWrapTime from './iconsWraps/iconWrapTime.html';
 import DateInputView from './impl/dateTime/views/DateInputView';
 import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
@@ -397,7 +398,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.$el.off('mouseenter');
 
         if (!this.options.hideClearButton) {
-            this.renderIcons(iconWrapDate, iconWrapRemove);
+            this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
         }
     }
 }));
