@@ -3,6 +3,7 @@ import localizationMapDe from 'localizationMapDe';
 import localizationMapRu from 'localizationMapRu';
 import ajaxMap from './ajaxMap.json';
 import dataProvider from 'demoPage/dataProvider';
+import ajaxStub from './ajaxStub/ajaxStub';
 
 import core from 'comindware/core';
 
@@ -70,5 +71,7 @@ export default Marionette.Application.extend({
         });
 
         Backbone.history.start();
+
+        ajaxStub.makeStub();
     }
 });

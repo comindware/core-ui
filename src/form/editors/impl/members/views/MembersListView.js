@@ -1,7 +1,7 @@
 import { helpers } from 'utils';
 import list from 'list';
 import template from '../templates/panel.hbs';
-import ListView from './MembersListView';
+import ListItemView from './MembersListItemView';
 
 const config = {
     CHILD_HEIGHT: 34
@@ -26,9 +26,9 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.listView = list.factory.createDefaultList({
-            collection: this.collection,
+            collection: this.options.collection,
             listViewOptions: {
-                childView: ListView,
+                childView: ListItemView,
                 childViewOptions: {
                     reqres: this.reqres
                 },

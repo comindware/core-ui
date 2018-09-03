@@ -1,5 +1,5 @@
 //@flow
-import DefaultReferenceModel from '../../reference/models/DefaultReferenceModel';
+import DefaultReferenceModel from '../../datalist/models/DefaultReferenceModel';
 
 export default DefaultReferenceModel.extend({
     defaults: {

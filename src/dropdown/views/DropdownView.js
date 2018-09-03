@@ -188,10 +188,19 @@ export default Marionette.View.extend({
         }
 
         // class adjustments
-        this.el.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
-        this.el.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
-        panelEl.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
-        panelEl.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
+        if (position === panelPosition.DOWN) {
+            this.el.classList.add(classes.DROPDOWN_DOWN);
+            panelEl.classList.add(classes.DROPDOWN_DOWN);
+
+            this.el.classList.remove(classes.DROPDOWN_UP);
+            panelEl.classList.remove(classes.DROPDOWN_UP);
+        } else if (position === panelPosition.UP) {
+            this.el.classList.add(classes.DROPDOWN_UP);
+            panelEl.classList.add(classes.DROPDOWN_UP);
+
+            this.el.classList.remove(classes.DROPDOWN_DOWN);
+            panelEl.classList.remove(classes.DROPDOWN_DOWN);
+        }
 
         offsetHeight = panelEl.offsetHeight;
 
