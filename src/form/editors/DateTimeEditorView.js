@@ -57,9 +57,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     events: {
-        'click @ui.clearButton': '__onClear',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        'click @ui.clearButton': '__onClear'
     },
 
     regions: {
@@ -115,6 +113,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             this.calendarDropdownView.button.ui.input
                 .prop('readonly', true)
                 .prop('tabindex', true ? -1 : 0);
+        }
+    },
+
+    onAttach() {
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapRemove, iconWrapDate);
         }
     },
 
@@ -197,14 +201,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.$el.prop('title', resultValue);
     },
 
-    __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapDate);
-    },
-
-    __onMouseleave() {
-        this.el.removeChild(this.el.lastElementChild);
-    },
-
     __getDateByValue(value) {
         if (!value) {
             return new Date();
@@ -221,7 +217,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle
+                showTitle: this.options.showTitle,
+                hideClearButton: true
             },
             panelView: DatePanelView,
             panelViewOptions: {
