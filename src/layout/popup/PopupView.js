@@ -173,6 +173,9 @@ export default Marionette.View.extend({
     },
 
     __onResize() {
+        if (this.isDestroyed()) {
+            return;
+        }
         this.__callWithTransition(() => {
             this.ui.window.css('top', 0);
             this.ui.window.css('left', 0);
@@ -181,7 +184,7 @@ export default Marionette.View.extend({
     },
 
     __setDraggableContainment() {
-        this.ui.window.draggable( 'option', 'containment', [
+        this.ui.window.draggable('option', 'containment', [
             sizeVisibleChunk - this.ui.window.outerWidth(),
             0,
             window.innerWidth - sizeVisibleChunk,
