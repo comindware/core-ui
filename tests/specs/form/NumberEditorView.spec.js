@@ -308,5 +308,27 @@ describe('Editors', () => {
             // assert
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
+
+        
+        it('should hide clear button if hideClearButton = true', () => {
+            const model = new Backbone.Model({
+                data: 123
+            });
+            const view = new core.form.editors.NumberEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                hideClearButton: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            view.trigger('mouseenter');
+            expect(view.$('.js-clear-button').length).toEqual(0);
+        });
     });
 });
