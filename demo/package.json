@@ -14,7 +14,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
-    "cssnano": "^4.0.5",
+    "cssnano": "^4.1.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-prettier": "^2.6.2",
     "exports-loader": "^0.7.0",
@@ -24,21 +24,21 @@
     "handlebars-loader": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
-    "mini-css-extract-plugin": "^0.4.1",
+    "mini-css-extract-plugin": "^0.4.2",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.14.2",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
     "text-loader": "^0.0.1",
-    "url-loader": "^1.1.0",
-    "webpack": "^4.16.5",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5",
+    "webpack-dev-server": "^3.1.7",
     "webpack-pwa-manifest": "^3.7.1",
     "workbox-webpack-plugin": "^3.4.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.2.0"
+    "@fortawesome/fontawesome-free": "^5.3.1"
   }
 }
