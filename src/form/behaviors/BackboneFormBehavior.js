@@ -277,17 +277,17 @@ const Form = Marionette.Object.extend({
 
     __renderComponents(componentType) {
         const $target = this.options.$target;
-        const rootView = window.app.getView();
+        const view = this.options.view;
 
         $target.find(`[data-${componentType}s]`).each((i, el) => {
             if ((!this.model.has('uniqueFormId') && !el.hasAttribute(`${componentType}-for`)) || this.model.get('uniqueFormId').has(el.getAttribute(`${componentType}-for`))) {
                 const key = el.getAttribute(`data-${componentType}s`);
                 const regionName = `${key}Region`;
-                const fieldRegion = rootView.addRegion(regionName, { el });
+                const fieldRegion = view.addRegion(regionName, { el });
                 this.regions.push(fieldRegion);
                 if (this.fields[key]) {
                     const componentView = componentType === componentTypes.field ? this.fields[key] : this.fields[key].editor;
-                    rootView.showChildView(regionName, componentView);
+                    view.showChildView(regionName, componentView);
                 }
             }
         });
@@ -367,6 +367,7 @@ export default Marionette.Behavior.extend({
             model,
             schema,
             $target: this.$el,
+            view: this.view
         }, this.options, options));
         this.view.form = this.form = form;
         if (this.view.initForm) {
