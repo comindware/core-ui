@@ -403,7 +403,7 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
-        it('should hide clear button if allowEmptyValue = false', () => {
+        it('should hide clear button if hideClearButton = true', () => {
             const model = new Backbone.Model({
                 data: 'text'
             });
@@ -412,7 +412,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown',
                 autocommit: true,
-                allowEmptyValue: false
+                hideClearButton: true
             });
 
             window.app

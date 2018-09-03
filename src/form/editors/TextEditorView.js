@@ -87,8 +87,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
         'click @ui.clearButton': '__clear',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        mouseenter: '__onMouseenter'
     },
 
     __keyup() {
@@ -154,6 +153,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
             return;
         }
         this.value = value;
+        this.__updateEmpty();
 
         if (this.getOption('showTitle')) {
             this.ui.input.prop('title', value);
@@ -178,14 +178,10 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __onMouseenter() {
-        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
-            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
-        }
-    },
+        this.$el.off('mouseenter');
 
-    __onMouseleave() {
-        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
-            this.el.removeChild(this.el.lastElementChild);
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapText, iconWrapRemove);
         }
     }
 }));

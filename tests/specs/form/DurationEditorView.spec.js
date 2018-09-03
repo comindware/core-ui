@@ -75,5 +75,26 @@ describe('Editors', () => {
             const expected = model.get('value');
             expect(value).toEqual(expected);
         });
+
+        it('should hide clear button if hideClearButton = true', () => {
+            const model = new Backbone.Model({
+                data: 'P3DT3H4M'
+            });
+            const view = new core.form.editors.DurationEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                hideClearButton: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            view.trigger('mouseenter');
+            expect(view.$('.js-clear-button').length).toEqual(0);
+        });
     });
 });

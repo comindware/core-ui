@@ -58,8 +58,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     events: {
         'click @ui.clearButton': '__onClear',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        mouseenter: '__onMouseenter'
     },
 
     regions: {
@@ -197,14 +196,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.$el.prop('title', resultValue);
     },
 
-    __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapDate);
-    },
-
-    __onMouseleave() {
-        this.el.removeChild(this.el.lastElementChild);
-    },
-
     __getDateByValue(value) {
         if (!value) {
             return new Date();
@@ -221,7 +212,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle
+                showTitle: this.options.showTitle,
+                hideClearButton: true
             },
             panelView: DatePanelView,
             panelViewOptions: {
@@ -398,6 +390,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __onTimeButtonFocus() {
         if (this.enabled && !this.readonly) {
             this.__timeDropdownOpen();
+        }
+    },
+
+    __onMouseenter() {
+        this.$el.off('mouseenter');
+
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapDate, iconWrapRemove);
         }
     }
 }));
