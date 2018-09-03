@@ -331,5 +331,27 @@ describe('Editors', () => {
 
             expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
         });
+
+                
+        it('should hide clear button if hideClearButton = true', () => {
+            const model = new Backbone.Model({
+                data: '2015-07-20T10:46:37.000Z'
+            });
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                hideClearButton: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            view.trigger('mouseenter');
+            expect(view.$('.js-clear-button').length).toEqual(0);
+        });
     });
 });

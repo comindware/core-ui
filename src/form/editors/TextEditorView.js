@@ -59,6 +59,9 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
                 )
             );
         }
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapText, iconWrapRemove);
+        }
     },
 
     focusElement: '.js-input',
@@ -86,9 +89,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
-        'click @ui.clearButton': '__clear',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        'click @ui.clearButton': '__clear'
     },
 
     __keyup() {
@@ -154,6 +155,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
             return;
         }
         this.value = value;
+        this.__updateEmpty();
 
         if (this.getOption('showTitle')) {
             this.ui.input.prop('title', value);
@@ -175,17 +177,5 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
 
     deselect() {
         this.ui.input.deselect();
-    },
-
-    __onMouseenter() {
-        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
-            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
-        }
-    },
-
-    __onMouseleave() {
-        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
-            this.el.removeChild(this.el.lastElementChild);
-        }
     }
 }));

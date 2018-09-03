@@ -94,15 +94,14 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     ui: {
-        input: '.js-input'
+        input: '.js-input',
+        clearButton: '.js-clear-button',
     },
 
     events: {
-        'click .js-clear-button': '__clear',
+        'click @ui.clearButton': '__clear',
         'keyup @ui.input': '__keyup',
-        'change @ui.input': '__onChange',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        'change @ui.input': '__onChange'
     },
 
     onRender() {
@@ -117,6 +116,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             });
         }
         this.__value(this.value, false, false, true);
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapNumber, iconWrapRemove);
+        }
     },
 
     onDestroy() {
@@ -221,6 +223,8 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         }
 
         this.value = value;
+        this.__updateEmpty();
+
         if (this.options.showTitle) {
             this.$el.prop('title', value);
         }
@@ -249,14 +253,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         }
 
         return val === '' || isNaN(val) ? null : val;
-    },
-
-    __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
-    },
-
-    __onMouseleave() {
-        this.el.removeChild(this.el.lastElementChild);
     },
 
     __setInputOptions() {
