@@ -19,7 +19,7 @@ const defaultOptions = {
     showTitle: true,
     allFocusableParts: {
         maxLength: 2,
-        text: ':',
+        text: ':'
     },
     seconds: {
         text: ''
@@ -114,8 +114,27 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             //calendar button readonly as don't develop mask validation
             this.calendarDropdownView.button.ui.input
                 .prop('readonly', true)
-                .prop('tabindex', true ? -1 : 0);
+                .prop('tabindex', -1);
         }
+    },
+
+    focusElement: null,
+
+    focus(): void {
+        if (this.enabled && !this.readonly) {
+            this.calendarDropdownView.open();
+            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
+            this.calendarDropdownView.button.focus();
+        }
+    },
+
+    blur(): void {
+        this.__dateBlur();
+        this.__timeBlur();
+    },
+
+    onFocus(): void {
+        BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
     __updateClearButton(): void {
@@ -165,25 +184,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __onClear(): boolean {
         this.__value(null, true, true);
         return false;
-    },
-
-    focusElement: null,
-
-    focus(): void {
-        if (this.enabled && !this.readonly) {
-            this.calendarDropdownView.open();
-            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
-            this.calendarDropdownView.button.focus();
-        }
-    },
-
-    blur(): void {
-        this.__dateBlur();
-        this.__timeBlur();
-    },
-
-    onFocus(): void {
-        BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
     __adjustValue(value: string): string {
@@ -242,9 +242,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateChange(date, updateView = true) {
-        let newVal = null;
-
-        newVal = moment(date).toISOString();
+        const newVal = moment(date).toISOString();
 
         this.__value(newVal, updateView, true);
         this.stopListening(GlobalEventService);
