@@ -26,7 +26,7 @@ export default Marionette.View.extend({
         _.defaults(this.options, defaultOptions);
 
         _.bindAll(this, '__startDragging', '__stopDragging', '__handleDocumentMouseMove', '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
-
+        /*
         this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', () => {
             this.$el.addClass('double-panels');
@@ -34,13 +34,14 @@ export default Marionette.View.extend({
         this.on('show', () => {
             this.__handleWindowResize();
         });
+        */
     },
 
     initialize(options) {
         this.regionModulesMap = [];
         const handlerRoutPairs = options.handlerRoutPairs;
 
-        if (handlerRoutPairs && handlerRoutPairs.legnth) {
+        if (handlerRoutPairs && handlerRoutPairs.length) {
             this.__initializeViews(handlerRoutPairs);
         }
     },
@@ -49,15 +50,8 @@ export default Marionette.View.extend({
 
     className: 'split-panel_container',
 
-    regions: {
-        panel1Region: '.js-panel1',
-        panel2Region: '.js-panel2'
-    },
-
     ui: {
         resizer: '.js-resizer',
-        panel1: '.js-panel1',
-        panel2: '.js-panel2'
     },
 
     events: {
@@ -83,9 +77,9 @@ export default Marionette.View.extend({
         const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
         const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
         const rightWidthPx = 100 - leftWidthPx;
-        this.ui.panel1.css('width', `${leftWidthPx}%`);
+
         this.ui.resizer.css('left', `${leftWidthPx}%`);
-        this.ui.panel2.css('width', `${rightWidthPx}%`);
+
         this.__handleWindowResize();
         return false;
     },
@@ -147,9 +141,17 @@ export default Marionette.View.extend({
 
     __initializeViews(handlerRoutPairs) {
         handlerRoutPairs.forEach((pair, i) => {
+            const regionEl = document.createElement('div');
+            regionEl.className = `panel${i + 1}Region`;
+
+            this.$el.append(regionEl);
+
+            const region = this.addRegion(`panel${i + 1}Region`, {
+                el: regionEl
+            });
             this.regionModulesMap.push({
                 routeRegExp: pair.routeRegExp,
-                region: this.getRegion(`panel${i + 1}Region`)
+                region
             });
             setTimeout(() => pair.callback(pair.route), 100);
         });
