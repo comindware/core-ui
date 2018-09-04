@@ -36,7 +36,18 @@ export default Marionette.View.extend({
         });
     },
 
+    initialize(options) {
+        this.regionModulesMap = [];
+        const handlerRoutPairs = options.handlerRoutPairs;
+
+        if (handlerRoutPairs && handlerRoutPairs.legnth) {
+            this.__initializeViews(handlerRoutPairs);
+        }
+    },
+
     template: Handlebars.compile(template),
+
+    className: 'split-panel_container',
 
     regions: {
         panel1Region: '.js-panel1',
@@ -132,5 +143,15 @@ export default Marionette.View.extend({
     __handleWindowResize() {
         this.__updatePanelClasses(this.ui.panel1);
         this.__updatePanelClasses(this.ui.panel2);
+    },
+
+    __initializeViews(handlerRoutPairs) {
+        handlerRoutPairs.forEach((pair, i) => {
+            this.regionModulesMap.push({
+                routeRegExp: pair.routeRegExp,
+                region: this.getRegion(`panel${i + 1}Region`)
+            });
+            setTimeout(() => pair.callback(pair.route), 100);
+        });
     }
 });

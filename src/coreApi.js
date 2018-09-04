@@ -42,13 +42,11 @@ import UserService from './services/UserService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import ThemeService from './services/ThemeService';
 
-import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
 import CollectionHighlightableBehavior from './collections/behaviors/HighlightableBehavior';
 import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
-import CheckableBehavior from './models/behaviors/CheckableBehavior';
 import MobileService from './services/MobileService';
 
 import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
@@ -109,7 +107,6 @@ const core = {
         behaviors: {
             HighlightableBehavior: CollectionHighlightableBehavior
         },
-        SlidingWindowCollection,
         VirtualCollection
     },
     /**
@@ -121,8 +118,7 @@ const core = {
         behaviors: {
             CollapsibleBehavior,
             HighlightableBehavior,
-            SelectableBehavior,
-            CheckableBehavior
+            SelectableBehavior
         }
     },
     views: {

@@ -1156,3 +1156,10 @@ a:hover {
     white-space: normal;
     padding-left: 12px;
 }
+
+.split-panel_container {
+    display: flex;
+}
+.split-panel_container .content-view {
+    padding-top: 0;
+}

@@ -10,6 +10,7 @@ export default Marionette.Object.extend({
         this.contentView = this.contentView || window.application.defaultContentView;
         this.view = new this.contentView(contentViewOptions);
         this.moduleRegion = this.view.getRegion('moduleRegion');
+
         options.region.show(this.view); // <- this can be moved out to routing services after we get rid of old modules
         Marionette.Object.prototype.constructor.apply(this, arguments);
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
