@@ -162,7 +162,7 @@ export default Marionette.View.extend({
                     if (elements.length) {
                         elements[0].insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
                         this.el.removeChild(elements[0]);
-                        if (index === 0) {
+                        if (this.getOption('isTree') && index === 0) {
                             this.insertFirstCellHtml(true);
                         }
                     }
@@ -266,7 +266,7 @@ export default Marionette.View.extend({
                         el.insertAdjacentHTML(
                             'beforeend',
                             `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${
-                                this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                             }"></span></div>`
                         );
                     }
@@ -395,7 +395,7 @@ export default Marionette.View.extend({
 
             if (editor) {
                 const view = this.cellViews[pointed];
-                if (view.editor.hidden) {
+                if (view && view.editor && view.editor.hidden) {
                     view.model.trigger('select:hidden');
                     return false;
                 }
