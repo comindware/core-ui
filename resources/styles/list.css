@@ -636,7 +636,7 @@
 .extend_cell_text {
     display: flex;
     flex-direction: column;
-    padding: 8px 10px;
+    padding: 8px 17px;
     overflow: hidden;
 }
 
@@ -644,11 +644,15 @@
     font-size: 15px;
     font-weight: 600;
     color: #434343;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .extend_info {
     color: #cfcfd0;
     font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .extend_cell_content:hover .extend_cell_header {

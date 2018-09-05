@@ -283,7 +283,7 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `
                         <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
-                        <i class="fas fa-${contextIconType[model.get('type').toLocaleLowerCase()]} context-icon" aria-hidden="true"></i>
+                        <i class="fal fa-${contextIconType[model.get('type').toLocaleLowerCase()]} context-icon" aria-hidden="true"></i>
                         <div class="extend_cell_text">
                             <span class="extend_cell_header">${adjustedValue}</span>
                             <span class="extend_info">${model.get('alias') || ''}</span>

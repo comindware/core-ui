@@ -8,9 +8,12 @@ export default ReferenceListItemView.extend({
 
     templateContext() {
         const options = this.options.subTextOptions;
+        const iconPropertyValue = this.model.get(options.iconProperty);
+        const type = iconPropertyValue ? iconPropertyValue.toLocaleLowerCase() : '';
+        const iconType = Core.meta.contextIconType[type] || null;
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
-            iconType: options.iconProperty ? this.model.get(options.iconProperty).toLocaleLowerCase() : false,
+            iconType,
             subtext: this.model.get(options.subtextProperty),
             showCheckboxes: this.options.showCheckboxes
         };

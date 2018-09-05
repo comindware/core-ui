@@ -455,7 +455,7 @@ svg.svg-grid-icons {
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
-  transform: rotate(270deg);
+  transform: rotate(-90deg);
 }
 
 .grid-header-column-content .collapsible-btn {

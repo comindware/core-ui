@@ -265,7 +265,7 @@ export default Marionette.View.extend({
                     if (hasChildren) {
                         el.insertAdjacentHTML(
                             'beforeend',
-                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell collapsible-btn ${
+                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
                                 this.model.collapsed === false ? classes.expanded : ''
                             }"></span></div>`
                         );
