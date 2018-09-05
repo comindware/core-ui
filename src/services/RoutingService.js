@@ -121,15 +121,14 @@ export default {
                 this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
                 return;
             }
-            if (this.activeModule.moduleId !== 'module:process:megamodule') {
-                this.trigger('module:leave', {
-                    page: this.activeModule ? this.activeModule.moduleId : null
-                });
-                //clear all promises of the previous module
-                Core.services.PromiseService.cancelAll();
-                if (!this.loadingContext.loaded) {
-                    this.activeModule.view.setModuleLoading(true);
-                }
+
+            this.trigger('module:leave', {
+                page: this.activeModule ? this.activeModule.moduleId : null
+            });
+            //clear all promises of the previous module
+            Core.services.PromiseService.cancelAll();
+            if (!this.loadingContext.loaded) {
+                this.activeModule.view.setModuleLoading(true);
             }
         }
 

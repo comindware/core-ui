@@ -46,7 +46,7 @@ export default Marionette.View.extend({
     className: 'split-panel_container',
 
     ui: {
-        resizer: '.js-resizer',
+        splitPanelWrapper: '.split-panel_wrapper'
     },
 
     events: {
@@ -145,11 +145,11 @@ export default Marionette.View.extend({
     __initializeViews(handlerRoutPairs) {
         handlerRoutPairs.forEach((pair, i) => {
             const regionEl = document.createElement('div');
-            regionEl.className = `panel${i + 1}Region`;
+            regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
 
-            this.$el.append(regionEl);
+            this.ui.splitPanelWrapper.append(regionEl);
 
-            const region = this.addRegion(`panel${i + 1}Region`, {
+            const region = this.addRegion(`js-tile${i + 1}-region`, {
                 el: regionEl
             });
             this.regionModulesMap.push({
