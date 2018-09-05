@@ -3,10 +3,12 @@ import template from './templates/mentionEditor.hbs';
 import dropdown from 'dropdown';
 import { keyCode } from 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import membersFactory from './impl/members/services/factory';
+import UserService from 'services/UserService';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
+import MembersListView from './impl/members/views/MembersListView';
+import MembersCollection from './impl/members/collections/MembersCollection';
 
 const defaultOptions = {
     editorOptions: undefined
@@ -31,7 +33,8 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
 
     __createViewModel() {
         this.viewModel = new Backbone.Model();
-        const membersCollection = membersFactory.createMembersCollection();
+        const membersCollection = new MembersCollection();
+        membersCollection.reset(UserService.listUsers());
         this.viewModel.set('availableMembers', membersCollection);
         this.viewModel.set(
             'membersByUserName',
@@ -66,7 +69,7 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
                 autocommit: this.options.autocommit,
                 emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
             }),
-            panelView: membersFactory.getMembersListView(),
+            panelView: MembersListView,
             panelViewOptions: {
                 collection: this.viewModel.get('availableMembers')
             },
@@ -81,10 +84,6 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, (v, k) => {
-            this.dropdownView.button.addKeyboardListener(k, v.bind(this));
-        });
-
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);
         this.setValue(this.value);

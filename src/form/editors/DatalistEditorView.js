@@ -7,10 +7,10 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
-import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
-import ReferenceListWithSubtextItemView from './impl/reference/views/ReferenceListWithSubtextItemView';
+import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
+import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
-import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
+import DefaultReferenceModel from './impl/datalist/models/DefaultReferenceModel';
 import StaticController from './impl/datalist/controllers/StaticController';
 
 type DataValue = {

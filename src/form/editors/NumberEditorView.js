@@ -94,15 +94,15 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     ui: {
-        input: '.js-input'
+        input: '.js-input',
+        clearButton: '.js-clear-button',
     },
 
     events: {
-        'click .js-clear-button': '__clear',
+        'click @ui.clearButton': '__clear',
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__onChange',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        mouseenter: '__onMouseenter'
     },
 
     onRender() {
@@ -221,6 +221,8 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         }
 
         this.value = value;
+        this.__updateEmpty();
+
         if (this.options.showTitle) {
             this.$el.prop('title', value);
         }
@@ -251,14 +253,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         return val === '' || isNaN(val) ? null : val;
     },
 
-    __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
-    },
-
-    __onMouseleave() {
-        this.el.removeChild(this.el.lastElementChild);
-    },
-
     __setInputOptions() {
         this.options.min !== undefined && this.ui.input[0].setAttribute('min', this.options.min);
         this.options.max !== undefined && this.ui.input[0].setAttribute('max', this.options.max);
@@ -277,5 +271,13 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __parseToString(number) {
         return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);     
+    },
+
+    __onMouseenter() {
+        this.$el.off('mouseenter');
+
+        if (!this.options.hideClearButton) {
+            this.renderIcons(iconWrapNumber, iconWrapRemove);
+        }
     }
 }));

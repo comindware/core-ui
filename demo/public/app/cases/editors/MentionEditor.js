@@ -1,5 +1,3 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 import PresentationItemView from 'demoPage/views/PresentationItemView';
 
@@ -19,12 +17,12 @@ export default function() {
     });
 
     return new CanvasView({
-        editor,
+        view: editor,
         presentation: PresentationItemView.extend({
             template: Handlebars.compile(
                 '<span>model[textAreaValue]: </span>' +
-                '<div style="display: inline-block">\'{{{textAreaValue}}}</div>\'' +
-                '<br/><br/><input type="button" class="js-get-mentions-button" value="getMentions()">'
+                    '<div style="display: inline-block">\'{{{textAreaValue}}}</div>\'' +
+                    '<br/><br/><input type="button" class="js-get-mentions-button" value="getMentions()">'
             ),
             templateContext() {
                 return {

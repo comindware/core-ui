@@ -1,11 +1,4 @@
-import { helpers } from 'utils';
-import list from 'list';
-
 export default Backbone.Model.extend({
-    initialize() {
-        helpers.applyBehavior(this, list.models.behaviors.ListItemBehavior);
-    },
-
     matchText(text) {
         const name = this.get('name');
         const userName = this.get('userName');

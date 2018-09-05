@@ -6,6 +6,7 @@ import LayoutBehavior from '../behaviors/LayoutBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
+import meta from 'Meta';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view',
@@ -13,12 +14,7 @@ const classes = {
     CURSOR_AUTO: 'cur_aI'
 };
 
-const iconsName = {
-    expand: 'expand',
-    collapse: 'compress',
-    newTab: 'share-square',
-    close: 'times'
-};
+const iconsNames = meta.iconsNames;
 
 const TRANSITION = 100; //ms
 const sizeVisibleChunk = 50; //px;
@@ -42,7 +38,7 @@ export default Marionette.View.extend({
     templateContext() {
         return Object.assign({
             headerText: this.options.header
-        }, iconsName);
+        }, iconsNames);
     },
 
     className: classes.CLASS_NAME,
@@ -134,8 +130,8 @@ export default Marionette.View.extend({
             this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
             this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
         }, () => {
-            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.expand}`, !this.__expanded);
-            this.ui.fullscreenToggle.toggleClass(`fa-${iconsName.collapse}`, this.__expanded);
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.expand}`, !this.__expanded);
+            this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.minimize}`, this.__expanded);
         });
     },
 
@@ -177,6 +173,9 @@ export default Marionette.View.extend({
     },
 
     __onResize() {
+        if (this.isDestroyed()) {
+            return;
+        }
         this.__callWithTransition(() => {
             this.ui.window.css('top', 0);
             this.ui.window.css('left', 0);
@@ -185,7 +184,7 @@ export default Marionette.View.extend({
     },
 
     __setDraggableContainment() {
-        this.ui.window.draggable( 'option', 'containment', [
+        this.ui.window.draggable('option', 'containment', [
             sizeVisibleChunk - this.ui.window.outerWidth(),
             0,
             window.innerWidth - sizeVisibleChunk,

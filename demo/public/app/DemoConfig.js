@@ -197,6 +197,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'MentionEditor',
+                    displayName: 'Mention Editor',
+                    description: 'Mention editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'NumberEditor',
                     displayName: 'Number Editor',
                     description: 'Simple number editor',

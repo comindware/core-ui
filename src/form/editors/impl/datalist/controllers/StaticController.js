@@ -1,5 +1,5 @@
 // @flow
-import BaseReferenceEditorController from '../../reference/controllers/BaseReferenceEditorController';
+import BaseReferenceEditorController from './BaseReferenceEditorController';
 
 export default BaseReferenceEditorController.extend({
     fetch(options = {}) {

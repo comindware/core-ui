@@ -5,6 +5,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapDate from './iconsWraps/iconWrapDate.html';
+import iconWrapTime from './iconsWraps/iconWrapTime.html';
 import DateInputView from './impl/dateTime/views/DateInputView';
 import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
@@ -19,7 +20,7 @@ const defaultOptions = {
     showTitle: true,
     allFocusableParts: {
         maxLength: 2,
-        text: ':',
+        text: ':'
     },
     seconds: {
         text: ''
@@ -58,8 +59,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     events: {
         'click @ui.clearButton': '__onClear',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        mouseenter: '__onMouseenter'
     },
 
     regions: {
@@ -114,8 +114,27 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             //calendar button readonly as don't develop mask validation
             this.calendarDropdownView.button.ui.input
                 .prop('readonly', true)
-                .prop('tabindex', true ? -1 : 0);
+                .prop('tabindex', -1);
         }
+    },
+
+    focusElement: null,
+
+    focus(): void {
+        if (this.enabled && !this.readonly) {
+            this.calendarDropdownView.open();
+            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
+            this.calendarDropdownView.button.focus();
+        }
+    },
+
+    blur(): void {
+        this.__dateBlur();
+        this.__timeBlur();
+    },
+
+    onFocus(): void {
+        BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
     __updateClearButton(): void {
@@ -167,25 +186,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         return false;
     },
 
-    focusElement: null,
-
-    focus(): void {
-        if (this.enabled && !this.readonly) {
-            this.calendarDropdownView.open();
-            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
-            this.calendarDropdownView.button.focus();
-        }
-    },
-
-    blur(): void {
-        this.__dateBlur();
-        this.__timeBlur();
-    },
-
-    onFocus(): void {
-        BaseLayoutEditorView.prototype.onFocus.call(this);
-    },
-
     __adjustValue(value: string): string {
         return value === null ? value : moment(value).toISOString();
     },
@@ -195,14 +195,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat);
         const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;
         this.$el.prop('title', resultValue);
-    },
-
-    __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapDate);
-    },
-
-    __onMouseleave() {
-        this.el.removeChild(this.el.lastElementChild);
     },
 
     __getDateByValue(value) {
@@ -221,7 +213,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle
+                showTitle: this.options.showTitle,
+                hideClearButton: true
             },
             panelView: DatePanelView,
             panelViewOptions: {
@@ -242,9 +235,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateChange(date, updateView = true) {
-        let newVal = null;
-
-        newVal = moment(date).toISOString();
+        const newVal = moment(date).toISOString();
 
         this.__value(newVal, updateView, true);
         this.stopListening(GlobalEventService);
@@ -400,6 +391,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __onTimeButtonFocus() {
         if (this.enabled && !this.readonly) {
             this.__timeDropdownOpen();
+        }
+    },
+
+    __onMouseenter() {
+        this.$el.off('mouseenter');
+
+        if (!this.options.hideClearButton) {
+            this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
         }
     }
 }));

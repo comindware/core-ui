@@ -165,7 +165,6 @@ module.exports.apply = {
         transform: 'translateY(-50%)'
     },
     'button-theme': {
-        color: variables['text-color'],
         'font-size': '12px',
         padding: '4px 10px',
         'white-space': 'nowrap',
@@ -173,13 +172,28 @@ module.exports.apply = {
         overflow: 'hidden',
         border: `1px solid ${variables['grey-400']}`,
         'border-radius': '2px',
-        background: variables['grey-100']
     },
-    'button-hover-theme': {
+    'button-strong': {
+        'background-color': variables['grey-100'],
+        color: variables['text-color'],
+    },
+    'button-pale': {
+        'background-color': variables['text-color'],
+        color: variables['grey-100'],
+    },
+    'button-strong-hover-theme': {
         'border-color': variables['grey-600'],
         'box-shadow': 'inset 0 2px 3px #fff'
     },
-    'button-active-theme': {
+    'button-strong-active-theme': {
+        'border-color': variables['grey-800'],
+        'box-shadow': 'inset 0 1px 5px rgba(180,180,180,.5)'
+    },
+    'button-pale-hover-theme': {
+        'border-color': variables['grey-600'],
+        'box-shadow': 'inset 0 2px 3px #fff'
+    },
+    'button-pale-active-theme': {
         'border-color': variables['grey-800'],
         'box-shadow': 'inset 0 1px 5px rgba(180,180,180,.5)'
     },
@@ -253,6 +267,9 @@ module.exports.apply = {
     'tab-item-disabled-theme': {
         color: variables['grey-500'],
         'border-bottom-color': variables['grey-500']
+    },
+    'tab-item-hidden-theme': {
+        dispay: 'none'
     },
     'tab-panel-container-theme': {},
     'tab-move-btn-theme': {

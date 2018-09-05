@@ -414,6 +414,10 @@ export default {
                 this.checkChange();
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
+            },
+            
+            renderIcons(...iconTemplates) {
+                this.el.insertAdjacentHTML('beforeend', iconTemplates.join(' '));
             }
         };
     }
