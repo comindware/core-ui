@@ -37,13 +37,8 @@ export default Marionette.View.extend({
         */
     },
 
-    initialize(options) {
+    initialize() {
         this.regionModulesMap = [];
-        const handlerRoutPairs = options.handlerRoutPairs;
-
-        if (handlerRoutPairs && handlerRoutPairs.length) {
-            this.__initializeViews(handlerRoutPairs);
-        }
     },
 
     template: Handlebars.compile(template),
@@ -56,6 +51,14 @@ export default Marionette.View.extend({
 
     events: {
         'mousedown @ui.resizer': '__handleResizerMousedown'
+    },
+
+    onRender() {
+        const handlerRoutPairs = this.options.handlerRoutPairs;
+
+        if (handlerRoutPairs && handlerRoutPairs.length) {
+            this.__initializeViews(handlerRoutPairs);
+        }
     },
 
     __handleResizerMousedown(event) {

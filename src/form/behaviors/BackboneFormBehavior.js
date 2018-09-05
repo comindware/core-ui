@@ -284,7 +284,7 @@ const Form = Marionette.Object.extend({
                 const key = el.getAttribute(`data-${componentType}s`);
                 const regionName = `${key}Region`;
                 const fieldRegion = view.addRegion(regionName, { el });
-                this.regions.push(fieldRegion);
+                this.regions.push(fieldRegion); //todo chech this out
                 if (this.fields[key]) {
                     const componentView = componentType === componentTypes.field ? this.fields[key] : this.fields[key].editor;
                     view.showChildView(regionName, componentView);

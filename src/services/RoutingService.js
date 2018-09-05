@@ -151,7 +151,8 @@ export default {
 
         let componentQuery;
         let customModuleRegion;
-        if (this.activeModule) {
+
+        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
