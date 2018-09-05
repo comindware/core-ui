@@ -1,3 +1,4 @@
+//@flow
 import ContentLoadingView from './routing/ContentLoadingView';
 import WindowService from './WindowService';
 
@@ -106,30 +107,13 @@ export default {
             leavingPromise: null,
             loaded: false
         };
-        if (!this.activeModule) {
-            window.app
-                .getView()
-                .getRegion('contentLoadingRegion')
-                .show(new ContentLoadingView());
-        } else {
-            this.trigger('module:before:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
-            const canLeave = await this.activeModule.leave();
-            if (!canLeave && this.getPreviousUrl()) {
-                // getting back to last url
-                this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
-                return;
-            }
 
-            this.trigger('module:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
-            //clear all promises of the previous module
-            Core.services.PromiseService.cancelAll();
-            if (!this.loadingContext.loaded) {
-                this.activeModule.view.setModuleLoading(true);
-            }
+        const customModuleRegion = this.__tryGetSubmoduleRegion(config);
+
+        if (!this.activeModule) {
+            this.__showViewPlaceholder();
+        } else {
+            await this.__leaveActiveModule(!!customModuleRegion);
         }
 
         // reject race condition
@@ -143,24 +127,14 @@ export default {
             .getView()
             .getRegion('contentLoadingRegion')
             .reset();
+
         if (this.activeModule) {
             this.activeModule.view.setModuleLoading(false);
         }
+
         const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
 
         let componentQuery;
-        let customModuleRegion;
-
-        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
-            const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
-
-            if (map) {
-                const match = map.find(pair => Object.values(config.navigationUrl).some(url => RegExp(pair.routeRegExp).test(url)));
-                if (match) {
-                    customModuleRegion = match.region;
-                }
-            }
-        }
 
         const lastArg = _.last(_.compact(routingArgs));
         const index = routingArgs.indexOf(lastArg);
@@ -206,24 +180,96 @@ export default {
                 return;
             }
         }
-        if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-            const configuration = this.activeModule.routingActions[callbackName];
-            configuration.routingAction = callbackName;
+        try {
+            if (activeSubModule) {
+                this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
+            } else {
+                this.__callRoutingActionForActiveModule(callbackName, routingArgs);
+            }
+        } catch (e) {
+            Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
+        }
 
-            this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
-        } else if (activeSubModule && activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
+        this.__setupComponentQuery(componentQuery);
+    },
+
+    __showViewPlaceholder() {
+        window.app
+            .getView()
+            .getRegion('contentLoadingRegion')
+            .show(new ContentLoadingView());
+    },
+
+    async __leaveActiveModule(subModulePresented) {
+        const canLeave = await this.activeModule.leave();
+
+        if (!canLeave && this.getPreviousUrl()) {
+            // getting back to last url
+            this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
+            return;
+        }
+        if (!subModulePresented) { //do not trigger events and cancel requests for submodules
+            this.trigger('module:leave', {
+                page: this.activeModule ? this.activeModule.moduleId : null
+            });
+            //clear all promises of the previous module
+            Core.services.PromiseService.cancelAll();
+            if (!this.loadingContext.loaded) {
+                this.activeModule.view.setModuleLoading(true);
+            }
+        }
+    },
+
+    __tryGetSubmoduleRegion(config) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
+            const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
+
+            if (map) {
+                const match = map.find(pair => Object.values(config.navigationUrl).some(url => RegExp(pair.routeRegExp).test(url)));
+                if (match) {
+                    return match.region;
+                }
+            }
+        }
+
+        return null;
+    },
+
+    __callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule) {
+        if (activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
             const configuration = activeSubModule.routingActions[callbackName];
+
             configuration.routingAction = callbackName;
 
             activeSubModule.handleRouterEvent.call(activeSubModule, configuration, routingArgs);
         } else {
-            const routingCallback = this.activeModule[callbackName] || activeSubModule[callbackName];
-            if (!routingCallback) {
-                Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
-            }
-            routingCallback.apply(this.activeModule[callbackName] ? this.activeModule : activeSubModule, routingArgs);
-        }
+            const routingCallback = activeSubModule[callbackName];
 
+            if (!routingCallback) {
+                throw new Error();
+            }
+            routingCallback.apply(activeSubModule, routingArgs);
+        }
+    },
+
+    __callRoutingActionForActiveModule(callbackName, routingArgs) {
+        if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
+            const configuration = this.activeModule.routingActions[callbackName];
+
+            configuration.routingAction = callbackName;
+
+            this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
+        } else {
+            const routingCallback = this.activeModule[callbackName];
+
+            if (!routingCallback) {
+                throw new Error();
+            }
+            routingCallback.apply(this.activeModule, routingArgs);
+        }
+    },
+
+    __setupComponentQuery(componentQuery) {
         if (componentQuery && componentQuery.length > 1) {
             this.activeModule.componentQuery = componentQuery[1];
         } else {
