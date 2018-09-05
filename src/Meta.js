@@ -53,8 +53,16 @@ export const presentingComponentsTypes = {
     tab: 'tab'
 };
 
+export const iconsNames = {
+    expand: 'expand',
+    minimize: 'compress',
+    newTab: 'share-square',
+    close: 'times'
+};
+
 export default {
     objectPropertyTypes,
     contextIconType,
-    presentingComponentsTypes
+    presentingComponentsTypes,
+    iconsNames
 };

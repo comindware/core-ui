@@ -1,10 +1,7 @@
-(factory => {
-    factory(require('jquery'));
-})($ => {
+export default function($, dates) {
     let DPGlobal;
-    let dates;
 
-    const old = $.fn.datetimepicker;
+    const old = $.fn && $.fn.datetimepicker;
 
     function timeZoneAbbreviation() {
         const date = new Date().toString();
@@ -21,7 +18,7 @@
     const Datetimepicker = function (element, options) {
         this.element = $(element);
 
-        this.language = 'en';
+        this.language = options.language || 'en';
         this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr
         this.language = this.language in dates ? this.language : 'en';
         this.isRTL = dates[this.language].rtl || false;
@@ -196,10 +193,12 @@
 
         getDate() {
             const d = this.getUTCDate();
+
             if (d === null) {
                 return null;
             }
-            return new Date(d.getTime() + d.getTimezoneOffset() * 60000);
+
+            return new Date(d.getTime() + moment().utcOffset() * 60000);
         },
 
         getUTCDate() {
@@ -951,6 +950,9 @@
         }
     };
 
+    if (!$.fn) {
+        $.fn = {};
+    }
     $.fn.datetimepicker = function (option) {
         const args = Array.apply(null, arguments);
         args.shift();
@@ -975,7 +977,7 @@
 
     $.fn.datetimepicker.defaults = {};
     $.fn.datetimepicker.Constructor = Datetimepicker;
-    dates = $.fn.datetimepicker.dates = {
+    dates = dates || {
         en: {
             days: ['Sunday',
                 'Monday',
@@ -1034,6 +1036,8 @@
             clear: 'Clear'
         }
     };
+
+    $.fn.datetimepicker.dates = dates;
 
     DPGlobal = {
         modes: [
@@ -1411,6 +1415,7 @@
     /* DATETIMEPICKER DATA-API
    * ================== */
 
+   if (typeof $ === 'function') {
     $(document).on('focus.datetimepicker.data-api click.datetimepicker.data-api', '[data-provide="datetimepicker"]', function (e) {
         const $this = $(this);
         if ($this.data('datetimepicker')) return;
@@ -1421,4 +1426,5 @@
     $(() => {
         $('[data-provide="datetimepicker-inline"]').datetimepicker();
     });
-});
+   }
+}

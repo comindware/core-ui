@@ -28,6 +28,7 @@ export default Marionette.View.extend({
 
     events: {
         'keydown @ui.input': '__search',
+        'keyup @ui.input': '__commit',
         'input @ui.input': '__search'
     },
 
@@ -76,10 +77,6 @@ export default Marionette.View.extend({
                 }
                 break;
             }
-            case 13: {
-                this.reqres.request('try:value:select');
-                break;
-            }
             case 38: {
                 this.reqres.request('input:up');
                 break;
@@ -94,6 +91,20 @@ export default Marionette.View.extend({
                 }
                 this.filterValue = value;
                 this.reqres.request('input:search', value, false);
+            }
+        }
+    },
+
+    __commit(e) {
+        switch (e.keyCode) {
+            case 13: {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                this.reqres.request('try:value:select');
+                return false;
+            }
+            default: {
+                break;
             }
         }
     },

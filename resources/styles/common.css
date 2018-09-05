@@ -1156,3 +1156,25 @@ a:hover {
     white-space: normal;
     padding-left: 12px;
 }
+
+.split-panel_container {
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.split-panel_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.split-panel_tile {
+    flex: 1;
+    min-width: 500px;
+    min-height: 500px;
+    padding: 0 10px;
+}
+
+.split-panel_container .content-view {
+    padding-top: 0;
+}

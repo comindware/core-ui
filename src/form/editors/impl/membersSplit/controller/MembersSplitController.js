@@ -3,7 +3,6 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
 import ItemModel from '../model/ItemModel';
-import dataProvider from '../../../../../../demo/public/demoPage/dataProvider';
 
 export default Marionette.Object.extend({
     initialize(options) {

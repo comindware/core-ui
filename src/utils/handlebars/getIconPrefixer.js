@@ -21,4 +21,4 @@ export default (options) => {
     }, {});
 
     return iconClass => ` ${prefixes[iconClass] || iconStyle[style]} fa-${iconClass} `;
-}
+};

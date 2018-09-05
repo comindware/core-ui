@@ -26,7 +26,7 @@ export default Marionette.View.extend({
         _.defaults(this.options, defaultOptions);
 
         _.bindAll(this, '__startDragging', '__stopDragging', '__handleDocumentMouseMove', '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
-
+        /*
         this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', () => {
             this.$el.addClass('double-panels');
@@ -34,23 +34,31 @@ export default Marionette.View.extend({
         this.on('show', () => {
             this.__handleWindowResize();
         });
+        */
+    },
+
+    initialize() {
+        this.regionModulesMap = [];
     },
 
     template: Handlebars.compile(template),
 
-    regions: {
-        panel1Region: '.js-panel1',
-        panel2Region: '.js-panel2'
-    },
+    className: 'split-panel_container',
 
     ui: {
-        resizer: '.js-resizer',
-        panel1: '.js-panel1',
-        panel2: '.js-panel2'
+        splitPanelWrapper: '.split-panel_wrapper'
     },
 
     events: {
         'mousedown @ui.resizer': '__handleResizerMousedown'
+    },
+
+    onRender() {
+        const handlerRoutPairs = this.options.handlerRoutPairs;
+
+        if (handlerRoutPairs && handlerRoutPairs.length) {
+            this.__initializeViews(handlerRoutPairs);
+        }
     },
 
     __handleResizerMousedown(event) {
@@ -72,9 +80,9 @@ export default Marionette.View.extend({
         const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
         const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
         const rightWidthPx = 100 - leftWidthPx;
-        this.ui.panel1.css('width', `${leftWidthPx}%`);
+
         this.ui.resizer.css('left', `${leftWidthPx}%`);
-        this.ui.panel2.css('width', `${rightWidthPx}%`);
+
         this.__handleWindowResize();
         return false;
     },
@@ -132,5 +140,23 @@ export default Marionette.View.extend({
     __handleWindowResize() {
         this.__updatePanelClasses(this.ui.panel1);
         this.__updatePanelClasses(this.ui.panel2);
+    },
+
+    __initializeViews(handlerRoutPairs) {
+        handlerRoutPairs.forEach((pair, i) => {
+            const regionEl = document.createElement('div');
+            regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
+
+            this.ui.splitPanelWrapper.append(regionEl);
+
+            const region = this.addRegion(`js-tile${i + 1}-region`, {
+                el: regionEl
+            });
+            this.regionModulesMap.push({
+                routeRegExp: pair.routeRegExp,
+                region
+            });
+            setTimeout(() => pair.callback(pair.route), 100);
+        });
     }
 });

@@ -589,11 +589,23 @@ svg.svg-grid-icons {
 .btn{
   @apply --button-theme;
 }
-.btn:hover{
-  @apply --button-hover-theme;
+.btn-strong{
+  @apply --button-strong;
 }
-.btn:active{
-  @apply --button-active-theme;
+.btn-pale{
+  @apply --button-pale;
+}
+.btn-strong:hover{
+  @apply --button-strong-hover-theme;
+}
+.btn-strong:active{
+  @apply --button-strong-active-theme;
+}
+.btn-pale:hover{
+  @apply --button-pale-hover-theme;
+}
+.btn-pale:active{
+  @apply --button-pale-active-theme;
 }
 
 /* tabs */
@@ -619,6 +631,10 @@ svg.svg-grid-icons {
   @apply --tab-item-disabled-theme;
 }
 
+.tabs__i.disabled {
+  @apply --tab-item-hidden-theme;
+}
+
 .layout__tab-layout__header-view {
   justify-content: var(--tab-header-justify);
 }
@@ -641,6 +657,10 @@ svg.svg-grid-icons {
   @apply --tab-item-disabled-theme;
 }
 
+.layout__tab-layout__header-view-item_hidden {
+  @apply --tab-item-hidden-theme;
+}
+
 .layout__tab-layout__panel-container {
   @apply --tab-panel-container-theme;
   padding: var(--tab-panel-container-padding);
@@ -660,6 +680,7 @@ svg.svg-grid-icons {
 
 .toolbar-btn {
   @apply --button-theme;
+  @apply --button-strong;
   @apply --toolbar-btn-theme;
 }
 .toolbar-btn:last-child {
@@ -667,11 +688,11 @@ svg.svg-grid-icons {
 }
 
 .toolbar-btn:hover {
-  @apply --button-hover-theme;
+  @apply --button-strong-hover-theme;
 }
 
 .toolbar-btn:active {
-  @apply --button-active-theme;
+  @apply --button-strong-active-theme;
 }
 
 /* .toolbar-btn__text {
@@ -912,14 +933,15 @@ svg.svg-grid-icons {
 }
 .sp-container button.sp-choose, .sp-cancel {
   @apply --button-theme;
+  @apply --button-strong;
   background-image: none;
 }
 .sp-container button.sp-choose:hover {
-  @apply --button-hover-theme;
+  @apply --button-strong-hover-theme;
   background-image: none;
 }
 .sp-container button.sp-choose:active {
-  @apply --button-active-theme;
+  @apply --button-strong-active-theme;
   background-image: none;
 }
 .sp-dragger {
