@@ -236,7 +236,7 @@ export default Marionette.View.extend({
         }
 
         panelEl.style.top = `${top}px`;
-        panelEl.style.left = `${buttonRect.left}px`;
+        panelEl.style.left = `${buttonRect.left - (panelWidth - buttonRect.width)}px`;
 
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.el);
