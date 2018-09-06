@@ -18,8 +18,6 @@ export default {
             forceCommit: true,
             transliteratorChangedSomeProperties: true
         }) {
-        const newSchema = _.cloneDeep(schema);
-
         let computedRelatedFields = Object.values(transliteratedFields);
         computedRelatedFields = computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => !(schema[name] && schema[name].allowEmptyValue)));
 
@@ -33,10 +31,10 @@ export default {
                     console.warn(`Transliterator: Property '${propetry}' of input '${input}' was overwritten`);
                 }
             });
-            Object.assign(newSchema[input], options);
+            Object.assign(schema[input], options);
         });
 
-        return newSchema;
+        return schema;
     },
 
     systemNameFiltration(string) {

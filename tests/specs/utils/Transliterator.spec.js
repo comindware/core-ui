@@ -100,48 +100,41 @@ describe('Transliterator:', () => {
     });
 
     it('setOptionsToComputedTransliteratedFields (default) should return schema with correct value to name and alias input of schema', () => {
-        const result = transliterator.setOptionsToComputedTransliteratedFields(schema);
+        const instance = _.cloneDeep(schema);
+        transliterator.setOptionsToComputedTransliteratedFields(instance);
 
-        expect(schema.name.changeMode).toEqual('keydown');
-        expect(schema.name.autocommit).toEqual(false);
-        expect(schema.name.forceCommit).toEqual(false);
-        expect(schema.name.transliteratorChangedSomeProperties).toEqual(undefined);
-        expect(schema.alias.changeMode).toEqual('keydown');
-        expect(schema.alias.autocommit).toEqual(false);
-        expect(schema.alias.forceCommit).toEqual(false);
-        expect(schema.alias.transliteratorChangedSomeProperties).toEqual(undefined);
-
-        expect(result.name.changeMode).toEqual('blur');
-        expect(result.name.autocommit).toEqual(true);
-        expect(result.name.forceCommit).toEqual(true);
-        expect(result.name.transliteratorChangedSomeProperties).toEqual(true);
-        expect(result.alias.changeMode).toEqual('blur');
-        expect(result.alias.autocommit).toEqual(true);
-        expect(result.alias.forceCommit).toEqual(true);
-        expect(result.alias.transliteratorChangedSomeProperties).toEqual(true);
+        expect(instance.name.changeMode).toEqual('blur');
+        expect(instance.name.autocommit).toEqual(true);
+        expect(instance.name.forceCommit).toEqual(true);
+        expect(instance.name.transliteratorChangedSomeProperties).toEqual(true);
+        expect(instance.alias.changeMode).toEqual('blur');
+        expect(instance.alias.autocommit).toEqual(true);
+        expect(instance.alias.forceCommit).toEqual(true);
+        expect(instance.alias.transliteratorChangedSomeProperties).toEqual(true);
     });
 
     
     it('setOptionsToComputedTransliteratedFields should return schema with correct value to transliteratedFields input of schema', () => {
-        const result = transliterator.setOptionsToComputedTransliteratedFields(schema, { dateTime: 'duration' });
+        const instance = _.cloneDeep(schema);
+        transliterator.setOptionsToComputedTransliteratedFields(instance, { dateTime: 'duration' });
 
-        expect(result.name.changeMode).toEqual('keydown');
-        expect(result.name.autocommit).toEqual(false);
-        expect(result.name.forceCommit).toEqual(false);
-        expect(result.name.transliteratorChangedSomeProperties).toEqual(undefined);
-        expect(result.alias.changeMode).toEqual('keydown');
-        expect(result.alias.autocommit).toEqual(false);
-        expect(result.alias.forceCommit).toEqual(false);
-        expect(result.alias.transliteratorChangedSomeProperties).toEqual(undefined);
+        expect(instance.name.changeMode).toEqual('keydown');
+        expect(instance.name.autocommit).toEqual(false);
+        expect(instance.name.forceCommit).toEqual(false);
+        expect(instance.name.transliteratorChangedSomeProperties).toEqual(undefined);
+        expect(instance.alias.changeMode).toEqual('keydown');
+        expect(instance.alias.autocommit).toEqual(false);
+        expect(instance.alias.forceCommit).toEqual(false);
+        expect(instance.alias.transliteratorChangedSomeProperties).toEqual(undefined);
 
-        expect(result.dateTime.changeMode).toEqual('blur');
-        expect(result.dateTime.autocommit).toEqual(true);
-        expect(result.dateTime.forceCommit).toEqual(true);
-        expect(result.dateTime.transliteratorChangedSomeProperties).toEqual(true);
-        expect(result.duration.changeMode).toEqual('blur');
-        expect(result.duration.autocommit).toEqual(true);
-        expect(result.duration.forceCommit).toEqual(true);
-        expect(result.duration.transliteratorChangedSomeProperties).toEqual(true);
+        expect(instance.dateTime.changeMode).toEqual('blur');
+        expect(instance.dateTime.autocommit).toEqual(true);
+        expect(instance.dateTime.forceCommit).toEqual(true);
+        expect(instance.dateTime.transliteratorChangedSomeProperties).toEqual(true);
+        expect(instance.duration.changeMode).toEqual('blur');
+        expect(instance.duration.autocommit).toEqual(true);
+        expect(instance.duration.forceCommit).toEqual(true);
+        expect(instance.duration.transliteratorChangedSomeProperties).toEqual(true);
     });
 
     it('extendComputed should return correct computed for Backbone.ComputedFields', () => {
