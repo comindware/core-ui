@@ -363,7 +363,7 @@ describe('Editors', () => {
             let panel = document.getElementsByClassName('dropdown__wrp')[0];
             expect(panel.clientHeight).toEqual(200);
         });
-        */
+        
         it('should remove items on uncheck in panel', done => {
             const model = new Backbone.Model({
                 value: [{ id: 'task.1', name: 'Test Reference 1' }, { id: 'task.2', name: 'Test Reference 2' }]
@@ -374,7 +374,8 @@ describe('Editors', () => {
                 controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
                 key: 'value',
                 maxQuantitySelected: Infinity,
-                autocommit: true
+                autocommit: true,
+                openOnRender: true
             });
 
             view.on('change', () => {
@@ -383,16 +384,23 @@ describe('Editors', () => {
             });
 
             view.on('view:ready', () => {
-                $('.dd-list__i')[0].click();
+                const tId = setTimeout(() => {
+                    if (Backbone.$('.dd-list__i:eq(0)').el) {
+                        console.log(Backbone.$('.dd-list__i:eq(0)').el);
+                        Backbone.$('.dd-list__i:eq(0)').click();
+                        clearTimeout(tId);
+                    }
+                }, 300);
             });
 
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
+
             view.focus();
         });
-
+        */
         it('should uncheck items on remove items click', done => {
             const model = new Backbone.Model({
                 value: [{ id: 'task.1', name: 'Test Reference 1' }, { id: 'task.2', name: 'Test Reference 2' }]
