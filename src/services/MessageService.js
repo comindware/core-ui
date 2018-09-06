@@ -22,13 +22,13 @@ export default {
             text,
             [
                 {
-                    id: true,
-                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
-                },
-                {
                     id: false,
                     text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
                     default: true
+                },
+                {
+                    id: true,
+                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
                 }
             ],
             iconIds.QUESTION
@@ -91,14 +91,14 @@ export default {
     showSystemMessage(messageConfiguration) {
         const buttons = [
             {
-                id: true,
-                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE'),
-                customClass: 'btn-small btn-outline'
-            },
-            {
                 id: false,
                 text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY'),
                 customClass: 'btn-small'
+            },
+            {
+                id: true,
+                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE'),
+                customClass: 'btn-small btn-outline'
             }
         ];
 

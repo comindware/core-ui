@@ -18,7 +18,7 @@ export default {
             forceCommit: true,
             transliteratorChangedSomeProperties: true
         }) {
-        const newSchema = Object.assign({}, schema);
+        const newSchema = _.cloneDeep(schema);
 
         let computedRelatedFields = Object.values(transliteratedFields);
         computedRelatedFields = computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => !(schema[name] && schema[name].allowEmptyValue)));
@@ -29,7 +29,7 @@ export default {
                 return;
             }
             Object.keys(options).forEach((propetry) => {
-                if (schema[input][propetry] && !schema[input].transliteratorChangedSomeProperties) {
+                if (schema[input][propetry] !== undefined && !schema[input].transliteratorChangedSomeProperties) {
                     console.warn(`Transliterator: Property '${propetry}' of input '${input}' was overwritten`);
                 }
             });
@@ -82,7 +82,7 @@ export default {
         const getTranslite = (name, alias) =>
             (fields) => {
                 if (fields[alias]) {
-                    return fields[alias];
+                    return this.systemNameFiltration(fields[alias]);
                 }
                 return this.systemNameFiltration(fields[name]);
             };
