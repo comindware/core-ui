@@ -25,6 +25,7 @@ export default function() {
             }),
             new core.layout.Button({
                 text: 'Say hello!',
+                iconClass: 'plus',
                 handler() {
                     alert('Hello!');
                 }
