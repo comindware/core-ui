@@ -10,6 +10,8 @@ export const contextIconType = {
     accountproperty: 'user',
     document: 'paperclip',
     documentproperty: 'paperclip',
+    enum: 'list-ul',
+    contextIconType: 'list-ul',
     grouppanel: 'list-alt',
     horizontallayout: 'columns',
     staticcontent: 'stream',
