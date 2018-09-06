@@ -1,3 +1,8 @@
 <div class="btn js-btn {{customClass}} {{brightnessClass}}">
+    {{#if iconClass}}
+        <div class="toolbar__icons">
+            <i class="{{iconPrefixer iconClass}}" aria-hidden="true"></i>
+        </div>
+    {{/if}}
     <span class="btn__text">{{text}}</span>
 </div>

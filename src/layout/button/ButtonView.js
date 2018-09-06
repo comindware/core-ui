@@ -21,7 +21,8 @@ export default Marionette.View.extend({
         return {
             customClass: this.options.class || '',
             brightnessClass: this.options.id === false ? classes.PALE : classes.STRONG,
-            text: this.options.text
+            text: this.options.text,
+            iconClass: this.options.iconClass
         };
     },
 
