@@ -17,7 +17,7 @@ function __updateChecked() {
 CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
     this.__updateChecked();
-    collection.on('add remove reset update', function() {
+    collection.on('add remove reset update', function () {
         if (this.internalCheck) {
             return;
         }
@@ -83,7 +83,9 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     updateTreeNodesCheck(model, updateParent = true) {
         if (model.children && model.children.length) {
             model.children.forEach(child => {
-                if (model.checked) {
+                if (typeof child.check !== 'function') {
+                    child.checked = Boolean(model.checked);
+                } else if (model.checked) {
                     child.check();
                 } else {
                     child.uncheck();
@@ -97,7 +99,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         let parent = model.parentModel;
         while (parent && parent.children) {
             const length = parent.children.length;
-            const checkedLength = parent.children.filter(child => child.checked || child.checked === null).length;
+            const checkedLength = parent.children.filter(child => child.checked).length;
             if (checkedLength === length) {
                 parent.check()
             } else if (checkedLength > 0 && checkedLength < length) {
@@ -116,19 +118,19 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     __triggerCheck() {
         const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
         const length = this.length;
-    
+
         if (checkedLength === length) {
-            this.collection.trigger('check:all', this, 'all');
+            this.collection.trigger('check:all', this, 'checked');
             return;
         }
-    
+
         if (checkedLength === 0) {
-            this.collection.trigger('check:none', this, 'none');
+            this.collection.trigger('check:none', this, 'unchecked');
             return;
         }
-    
+
         if (checkedLength > 0 && checkedLength < length) {
-            this.collection.trigger('check:some', this, 'some');
+            this.collection.trigger('check:some', this, 'checkedSome');
         }
     }
 });
