@@ -1,12 +1,12 @@
-import { helpers, htmlHelpers } from 'utils';
+import { helpers } from 'utils';
 
 const eventBubblingIgnoreList = ['before:render',
-'render',
-'dom:refresh',
-'before:show',
-'show',
-'before:destroy',
-'destroy'];
+    'render',
+    'dom:refresh',
+    'before:show',
+    'show',
+    'before:destroy',
+    'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
@@ -41,7 +41,7 @@ export default Marionette.Behavior.extend({
         if (model.highlighted) {
             this.__highlight(model.highlightedFragment);
         }
-        if (htmlHelpers.isElementInDom(this.el)) {
+        if (document.body.contains(this.el)) {
             Marionette.triggerMethodOn(this.view, 'show');
         }
     },

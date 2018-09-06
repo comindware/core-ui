@@ -4,7 +4,7 @@ import 'jasmine-jquery';
 const $ = core.lib.$;
 
 describe('Editors', () => {
-    const findInput = function(view) {
+    const findInput = function (view) {
         return view.$('.js-input');
     };
 
@@ -363,24 +363,22 @@ describe('Editors', () => {
             let panel = document.getElementsByClassName('dropdown__wrp')[0];
             expect(panel.clientHeight).toEqual(200);
         });
-        
+        */
         it('should remove items on uncheck in panel', done => {
             const model = new Backbone.Model({
-                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+                value: [{ id: 'task.1', name: 'Test Reference 1' }, { id: 'task.2', name: 'Test Reference 2' }]
             });
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
             });
 
             view.on('change', () => {
-                expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
+                expect(view.getValue()).toEqual([{ id: 'task.2', name: 'Test Reference 2' }]);
                 done();
             });
 
@@ -394,24 +392,21 @@ describe('Editors', () => {
                 .show(view);
             view.focus();
         });
-        
+
         it('should uncheck items on remove items click', done => {
             const model = new Backbone.Model({
-                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+                value: [{ id: 'task.1', name: 'Test Reference 1' }, { id: 'task.2', name: 'Test Reference 2' }]
             });
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
             });
 
             view.on('change', () => {
-                console.log(1);
                 expect(view.panelCollection.at(0).selected).toEqual(false);
                 done();
             });
@@ -428,7 +423,7 @@ describe('Editors', () => {
 
             view.focus();
         });
-        */
+
         it('should use default parameters if non is passed', () => {
             const model = new Backbone.Model({
                 value: null

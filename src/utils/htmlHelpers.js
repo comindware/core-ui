@@ -86,32 +86,5 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
         const regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
         return text.replace(regex, url => `<a href="${url}">${url}</a>`);
-    },
-
-    /**
-     * Checks if element is presented in visible DOM.
-     * @param {Object} el DOM-element to check.
-     * @return {Boolean} True if an element is presented in DOM.
-     * */
-    isElementInDom(el) {
-        return document.body.contains(el);
-    },
-
-    /**
-     * Use CSS for the same effect. IE8 is not supported anymore.
-     * @deprecated
-     */
-    forbidSelection(el) {
-        function stopAndPreventDefault(e) {
-            if (e === undefined) {
-                return false;
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        el.onselectstart = stopAndPreventDefault;
-        el.ondragstart = stopAndPreventDefault;
     }
 };
