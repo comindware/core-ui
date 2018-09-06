@@ -595,18 +595,20 @@
 /*-- ExtendedString --*/
 
 .context-icon {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    margin: 10px -4px 0 22px;
-    flex: none;
-    background: 0 0 no-repeat;
+    font-size: 19px;
+    color: #cfcfd0;
+    width: 16px;
+}
+
+.extend_cell_content:hover .context-icon {
+    color: #1c80c1;
 }
 
 .extend_cell_content {
     align-items: center;
     display: flex;
     overflow: hidden;
+    height: 54px;
     border-bottom: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 }
@@ -623,28 +625,42 @@
 
 .context-collapse-button {
     position: absolute;
-    height: 35px;
+    height: 53px;
     background-color: white;
     width: 30px;
-    padding-top: 8px;
-    right: 0px;
+    padding-top: 16px;
+    right: 1px;
     padding-left: 6px;
 }
 
 .extend_cell_text {
     display: flex;
-    flex-flow: column;
-    flex-grow: 1;
-    padding: 2px 5px;
+    flex-direction: column;
+    padding: 8px 17px;
+    overflow: hidden;
 }
 
 .extend_cell_header {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
+    color: #434343;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .extend_info {
+    color: #cfcfd0;
     font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.extend_cell_content:hover .extend_cell_header {
+    color: #0575bd;
+}
+
+.extend_cell_content:hover .extend_info {
+    color: #1c80c1;
 }
 
 /*-- End ExtendedString --*/

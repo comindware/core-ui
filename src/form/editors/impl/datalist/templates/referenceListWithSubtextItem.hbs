@@ -5,9 +5,7 @@
         </svg>
     </span>
 {{/if}}
-{{#if iconType}}
-    <div class="datalist-subtext-icon context-icon-type_{{iconType}}"></div>
-{{/if}}
+<i class="{{iconPrefixer iconType}} datalist-icon" aria-hidden="true"></i>
 <div class="datalist-text-container">
     <span class="datalist-container-text" title="{{text}}">{{text}}</span>
     <span class="datalist-container-subtext" title="{{subtext}}">{{subtext}}</span>
