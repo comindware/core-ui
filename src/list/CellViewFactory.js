@@ -4,6 +4,7 @@ import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
+import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 
 let factory;
 
@@ -280,15 +281,7 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.EXTENDED_STRING:
-                adjustedValue = this.__adjustValue(value);
-                return `
-                        <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
-                        <i class="fal fa-${contextIconType[model.get('type').toLocaleLowerCase()]} context-icon" aria-hidden="true"></i>
-                        <div class="extend_cell_text">
-                            <span class="extend_cell_header">${adjustedValue}</span>
-                            <span class="extend_info">${model.get('alias') || ''}</span>
-                        </div>
-                        </div>`;
+                return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
                 if (Array.isArray(value)) {
                     adjustedValue = value.map(v => v && v.name).join(', ');
@@ -416,6 +409,20 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${column.columnClass}">${adjustedValue || ''}</div>`;
         }
+    },
+
+    __createContextString(model, value, column) {
+        const adjustedValue = this.__adjustValue(value);
+        const type = contextIconType[model.get('type').toLocaleLowerCase()];
+        const getIcon = getIconPrefixer(type);
+        return `
+            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
+            <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
+            <div class="extend_cell_text">
+                <span class="extend_cell_header">${adjustedValue}</span>
+                <span class="extend_info">${model.get('alias') || ''}</span>
+            </div>
+            </div>`;
     },
 
     __adjustValue(value: Array<string | number> | string) {
