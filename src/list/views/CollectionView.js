@@ -92,6 +92,7 @@ export default Marionette.CompositeView.extend({
         this.debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
+        this.listenTo(this.collection, 'filter', this.__handleFilter);
         // this.on('render', this.__onRender);
     },
 
@@ -322,8 +323,12 @@ export default Marionette.CompositeView.extend({
         return Math.max(0, Math.min(this.collection.length - 1, index));
     },
 
-    __onScroll() {
-        if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll || this.isDestroyed()) {
+    __onScroll(e) {
+        if (this.state.viewportHeight === undefined
+            || e.target.scrollLe
+            || this.collection.length <= this.state.viewportHeight
+            || this.internalScroll
+            || this.isDestroyed()) {
             return;
         }
 
@@ -516,6 +521,12 @@ export default Marionette.CompositeView.extend({
             this.gridEventAggregator.trigger('update:collapse:all', collapsed);
             this.gridEventAggregator.trigger('collapse:change');
         }
+        this.debouncedHandleResize();
+    },
+
+    __handleFilter() {
+        this.$el.parent().scrollTop(0);
+        this.scrollTo(0);
         this.debouncedHandleResize();
     }
 });

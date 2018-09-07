@@ -31,7 +31,9 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.ui.clear.toggle(!!this.ui.input.val());
+        const value = this.ui.input.val();
+        this.ui.clear.toggle(!!value);
+        this.__updateInput(value);
     },
 
     focus() {
@@ -44,6 +46,7 @@ export default Marionette.View.extend({
         const value = this.ui.input.val();
         this.__triggerSearch(value);
         this.ui.clear.toggle(!!value);
+        this.__updateInput(value);
     },
 
     __triggerSearch(value) {
@@ -54,5 +57,9 @@ export default Marionette.View.extend({
         this.ui.input.val('');
         this.__search();
         this.ui.input.focus();
+    },
+
+    __updateInput(value) {
+        this.ui.input.css('background', value ? 'none' : '');
     }
 });
