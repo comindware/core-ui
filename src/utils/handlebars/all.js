@@ -1,6 +1,5 @@
 import or from './or';
 import join from './join';
-import debug from './debug';
 import equal from './equal';
 import isNull from './isNull';
 import highlightFragment from './highlightFragment';
@@ -13,7 +12,6 @@ import renderShortDuration from './renderShortDuration';
 
 Handlebars.registerHelper('or', or);
 Handlebars.registerHelper('join', join);
-Handlebars.registerHelper('debug', debug);
 Handlebars.registerHelper('equal', equal);
 Handlebars.registerHelper('isNull', isNull);
 Handlebars.registerHelper('highlightFragment', highlightFragment);

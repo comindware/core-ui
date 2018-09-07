@@ -401,11 +401,6 @@ export default {
                     description: 'List with search'
                 },
                 {
-                    id: 'listGroupBy',
-                    displayName: 'List (Group By)',
-                    description: 'List with grouping'
-                },
-                {
                     id: 'grid',
                     displayName: 'Grid',
                     description: 'Simple grid'

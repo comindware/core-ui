@@ -44,7 +44,6 @@ import ThemeService from './services/ThemeService';
 
 import VirtualCollection from './collections/VirtualCollection';
 import CollectionHighlightableBehavior from './collections/behaviors/HighlightableBehavior';
-import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
 import MobileService from './services/MobileService';
@@ -116,7 +115,6 @@ const core = {
      * */
     models: {
         behaviors: {
-            CollapsibleBehavior,
             HighlightableBehavior,
             SelectableBehavior
         }
