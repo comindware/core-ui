@@ -115,7 +115,7 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
             header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
             buttons: [
                 {
-                    id: 'close',
+                    id: false,
                     text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
                     customClass: 'btn-small btn-outline',
                     handler: () => {

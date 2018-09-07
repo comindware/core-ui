@@ -21,7 +21,7 @@ export default function() {
             maxQuantitySelected: 5,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
         }),
-        presentation: "[ {{#each DatalistValue}}{ id: '{{this.id}}', text: '{{this.text}}' }{{#unless @last}}, {{/unless}}{{/each}} ]",
+        presentation: "[ {{#each DatalistValue}}<div>{ id: '{{this.id}}', text: '{{this.text}}' }{{#unless @last}}, {{/unless}}</div>{{/each}} <div>]</div>",
         isEditor: true
     });
 }
