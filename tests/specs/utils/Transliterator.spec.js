@@ -19,7 +19,7 @@ const ruName = 'Иван Иванович';
 
 const Model = Backbone.Model.extend({
     initialize() {
-        this.computed = transliterator.extendComputed(this);
+        transliterator.extendComputed(this);
         this.computedFields = new Backbone.ComputedFields(this);
     },
 });
@@ -113,7 +113,6 @@ describe('Transliterator:', () => {
         expect(instance.alias.transliteratorChangedSomeProperties).toEqual(true);
     });
 
-    
     it('setOptionsToComputedTransliteratedFields should return schema with correct value to transliteratedFields input of schema', () => {
         const instance = _.cloneDeep(schema);
         transliterator.setOptionsToComputedTransliteratedFields(instance, { dateTime: 'duration' });
@@ -137,6 +136,13 @@ describe('Transliterator:', () => {
         expect(instance.duration.transliteratorChangedSomeProperties).toEqual(true);
     });
 
+    it('setOptionsToComputedTransliteratedFields should return object in first arguments', () => {
+        const instance = _.cloneDeep(schema);
+        const returned = transliterator.setOptionsToComputedTransliteratedFields(instance, { dateTime: 'duration' });
+
+        expect(returned).toEqual(instance);
+    });
+
     it('extendComputed should return correct computed for Backbone.ComputedFields', () => {
         const model = new Model({
             name: ruName,
@@ -144,6 +150,13 @@ describe('Transliterator:', () => {
         })
         expect(model.get('alias')).toEqual(correctAlias);
         expect(model.get('name')).toEqual(ruName);
+    });
+
+    it('extendComputed should return object in first arguments', () => {
+        const model = new Backbone.Model();
+        const returned = transliterator.extendComputed(model);
+
+        expect(returned).toEqual(model);
     });
 
     it('Model should transliterate alias if null, don`t transliterate if not empty', () => {
