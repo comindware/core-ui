@@ -627,6 +627,10 @@ export default Marionette.View.extend({
             && !event.metaKey
             && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
         );
+        if (charCode === 27 && !this.hintIsShown) {
+            this.minimize();
+            return;
+        }
         this.__change();
     },
 

@@ -49,8 +49,7 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     events: {
         'click @ui.editBtn': '__onEdit',
-        'click @ui.clearBtn': '__onClear'//,
-        //keydown: '__handleKeydown'
+        'click @ui.clearBtn': '__onClear'
     },
 
     template: Handlebars.compile(template),
@@ -61,10 +60,6 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-    },
-
-    __handleKeydown(e) {
-        e.stopPropagation();
     },
 
     onRender() {

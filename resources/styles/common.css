@@ -1178,3 +1178,7 @@ a:hover {
 .split-panel_container .content-view {
     padding-top: 0;
 }
+
+.hidden {
+    display: none !important;
+}

@@ -400,6 +400,7 @@ const VirtualCollection = Backbone.Collection.extend(
         filter(filterFn) {
             this.filterFn = filterFn;
             this.__rebuildIndex({}, true);
+            this.trigger('filter');
         },
 
         __filterModels(models) {

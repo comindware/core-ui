@@ -34,7 +34,7 @@ const defaultOptions = {
                 documentsId: documents.map(item => item.id)
             }))
         ),
-    removeDocuments: () => {},
+    removeDocuments: () => { },
     displayText: ''
 };
 
@@ -117,7 +117,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         'click @ui.showMore': 'toggleShowMore',
         keydown: '__handleKeydown',
         'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick'
+        'click @ui.fileUploadButton': '__onItemClick',
+        dragover: '__onDargover',
+        drop: '__onDrop'
     },
 
     childViewEvents: {
@@ -135,6 +137,33 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     onRender() {
         this.renderUploadButton(this.options.readonly);
+    },
+
+    __onDargover(e) {
+        const dataTransfer = e.originalEvent.dataTransfer;
+
+        if (!dataTransfer.files.length) {
+            return;
+        }
+        if (this.readonly) {
+            dataTransfer.dropEffect = 'none';
+        } else {
+            dataTransfer.dropEffect = 'move';
+        }
+        e.preventDefault();
+    },
+
+    __onDrop(e) {
+        const files = e.originalEvent.dataTransfer.files;
+
+        if (!files.length) {
+            return;
+        }
+
+        if (this.__validate(files) && !this.readonly) {
+            this._uploadFiles(files);
+        }
+        e.preventDefault();
     },
 
     initcollection() {
@@ -167,9 +196,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderUploadButton(isReadonly) {
-        if (isReadonly) {
-            this.ui.addRegion.hide();
-        }
+        this.ui.addRegion.toggle(!isReadonly);
     },
 
     addItem(items) {

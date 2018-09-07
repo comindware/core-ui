@@ -2,7 +2,8 @@
     <i class="{{iconPrefixer 'paperclip'}}"></i>
 </span>
 <form class="js-file-form">
-    <input name="fileId" type="file" multiple="" class="js-file-input input-upload" accept="{{fileFormat}}" style="display: none">
+    <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
+        style="display: none">
 </form>
 <ul class="documents js-collection-container"></ul>
 <div class="field-documents__more js-show-more">

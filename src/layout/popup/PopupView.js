@@ -107,9 +107,7 @@ export default Marionette.View.extend({
     },
 
     __keyAction(event) {
-        const isNeedToPrevent = this.__isNeedToPrevent();
-
-        if (!isNeedToPrevent && event.keyCode === 27) {
+        if (event.keyCode === 27 && !this.__isNeedToPrevent()) {
             this.__close();
         }
     },
