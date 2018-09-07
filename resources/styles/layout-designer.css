@@ -863,10 +863,6 @@
     margin-bottom: 0;
 }
 
-.ld-module.ld-invalid{
-    background-color: palevioletred;
-}
-
 .ld-module .input{
     position: relative;
     border-bottom-color: #b9bcbd;
@@ -890,10 +886,6 @@
 .fr-btn_ld-document{
     margin: 0 10px 0 0;
     flex: none;
-}
-
-.ld-module .input_document{
-
 }
 
 .svg-icons_reference{

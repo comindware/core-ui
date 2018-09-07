@@ -23,7 +23,7 @@ body {
     font-weight: var(--form-label-font-weight);
     color: var(--form-label-color);
 }
-.form-group .form-label {
+.form-group .form-label__txt {
   padding: var(--form-label-padding);
 }
 .form-label:not(.form-label--empty) {
@@ -47,10 +47,6 @@ body {
 
 .form-label__error-text {
   margin-left: 10px;
-}
-
-.required .form-label {
-  padding-left: 10px;
 }
 
 .form-label__error-icon-error{
