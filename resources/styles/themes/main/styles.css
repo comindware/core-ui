@@ -317,7 +317,10 @@ svg.svg-grid-icons {
 .disabled .form-label {
   color: var(--grey-800);
 }
-
+.form-label_required {
+    padding-left: 10px;
+    position: relative;
+}
 .required .form-label::before, .form-label_required:before, .cell.required::before {
   content: '*';
   margin: -5px 0 0;

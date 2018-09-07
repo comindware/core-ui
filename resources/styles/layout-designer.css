@@ -853,18 +853,8 @@
     margin-bottom: 0;
 }
 
-
-.ld-module{
-
-}
-
 .ld-module.ld-invalid{
     background-color: palevioletred;
-}
-
-.form-label_required {
-    padding-left: 10px;
-    position: relative;
 }
 
 .ld-module .input{
