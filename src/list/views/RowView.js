@@ -74,6 +74,7 @@ export default Marionette.View.extend({
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.columnClasses = this.options.columnClasses;
+        this.collection = this.model.collection;
 
         // TODO: think about implementation in tree or grouped grids
         // this.listenTo(this.model, 'checked', this.__onModelChecked);
@@ -184,13 +185,21 @@ export default Marionette.View.extend({
     },
 
     __handleDragEnter(event) {
-        if (!this.model.collection.draggingModel) {
-            return;
-        }
         this.model.collection.dragoverModel = this.model;
-        if (this.model.collection.draggingModel !== this.model && !this.__findInParents(this.model.collection.draggingModel, this.model)) {
+        if (this.__allowDrop()) {
             this.model.trigger('dragover', event);
         }
+    },
+
+    __allowDrop() {
+        const draggingModel = this.collection.draggingModel;
+        if (!draggingModel) {
+            return false;
+        }
+        if (this.collection.indexOf(this.model) + 1 === this.collection.indexOf(draggingModel) && this.model.level <= draggingModel.level) {
+            return false;
+        }
+        return !this.__findInParents(draggingModel, this.model);
     },
 
     __findInParents(draggingModel, model) {
@@ -208,7 +217,8 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if (!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) {
+        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model)
+            || event.relatedTarget.classList.contains('js-grid-content-view')) {
             this.model.trigger('dragleave', event);
             delete this.model.dragover;
         }
@@ -219,7 +229,9 @@ export default Marionette.View.extend({
     },
 
     __handleDrop(event) {
-        this.model.trigger('drop', event);
+        if (this.__allowDrop()) {
+            this.model.trigger('drop', event);
+        }
     },
 
     __handleModelDrop() {
@@ -266,7 +278,7 @@ export default Marionette.View.extend({
                         el.insertAdjacentHTML(
                             'beforeend',
                             `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
-                                this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                             }"></span></div>`
                         );
                     }

@@ -128,15 +128,22 @@ export default Marionette.View.extend({
     },
 
     __handleDragEnter(event) {
-        if (!this.collection.draggingModel) {
+        this.collection.dragoverModel = this.model;
+        this.__triggerIfAllow('dragover', event);
+    },
+
+    __triggerIfAllow(eventName, event) {
+        const draggingModel = this.collection.draggingModel;
+        if (!draggingModel) {
             return;
         }
-        this.collection.dragoverModel = this.model;
-        if (this.collection.draggingModel !== this.model && !this.__findInParents(this.collection.draggingModel, this.model)) {
+        if (!this.__findInParents(this.collection.draggingModel, this.model)) {
             if (this.selectAllCell) {
-                this.collection.trigger('dragover:head', event);
-            } else {
-                this.model.trigger('dragover', event);
+                if (this.collection.indexOf(this.collection.draggingModel) > 0) {
+                    this.collection.trigger(`${eventName}:head`, event);
+                }
+            } else if (!(this.collection.indexOf(this.model) + 1 === this.collection.indexOf(this.collection.draggingModel) && this.model.level <= draggingModel.level)) {
+                this.model.trigger(eventName, event);
             }
         }
     },
@@ -156,7 +163,11 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if (!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== this.model) {
+        if ((!this.el.contains(event.relatedTarget)
+            && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined))
+            || event.relatedTarget.classList.contains('js-grid-content-view')
+            || event.relatedTarget.classList.contains('js-grid-selection-panel-view')
+        ) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragleave:head', event);
             } else {
@@ -171,11 +182,7 @@ export default Marionette.View.extend({
     },
 
     __handleDrop(event) {
-        if (this.selectAllCell) {
-            this.collection.trigger('drop:head', event);
-        } else {
-            this.model.trigger('drop', event);
-        }
+        this.__triggerIfAllow('drop', event);
     },
 
     __handleModelDrop() {

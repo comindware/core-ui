@@ -236,16 +236,14 @@ const GridHeaderView = Marionette.View.extend({
         if (!this.collection.draggingModel) {
             return;
         }
-        this.collection.trigger('dragover:head', event);
         event.preventDefault();
     },
 
     __handleDragEnter(event) {
-        if (!this.collection.draggingModel) {
-            return;
-        }
         this.collection.dragoverModel = undefined;
-        this.collection.trigger('dragover:head', event);
+        if (this.__allowDrop()) {
+            this.collection.trigger('dragover:head', event);
+        }
     },
 
     __handleModelDragOver() {
@@ -253,7 +251,8 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if (!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== this.model) {
+        if ((!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== undefined)
+            || event.relatedTarget.classList.contains('js-grid-content-view')) {
             this.collection.trigger('dragleave:head', event);
         }
     },
@@ -263,7 +262,16 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDrop(event) {
-        this.collection.trigger('drop:head', event);
+        if (this.__allowDrop()) {
+            this.collection.trigger('drop:head', event);
+        }
+    },
+
+    __allowDrop() {
+        if (!this.collection.draggingModel || this.collection.indexOf(this.collection.draggingModel) < 0) {
+            return false;
+        }
+        return true;
     },
 
     __handleModelDrop() {
