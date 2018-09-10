@@ -1,5 +1,3 @@
-import { helpers } from 'utils';
-
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
     
@@ -22,12 +20,12 @@ import { helpers } from 'utils';
 */
 
 const eventBubblingIgnoreList = ['before:render',
-'render',
-'dom:refresh',
-'before:show',
-'show',
-'before:destroy',
-'destroy'];
+    'render',
+    'dom:refresh',
+    'before:show',
+    'show',
+    'before:destroy',
+    'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {

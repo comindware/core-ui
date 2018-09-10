@@ -289,10 +289,14 @@ export default {
         const cleanUrl = url.replace('#', '');
         const prefix = cleanUrl.split('/')[0];
         const urlParts = window.location.hash.split('&nxt');
-        const replaceIndex = urlParts.indexOf(fragment => fragment.inclueds(prefix));
+        const replaceIndex = urlParts.indexOf(prefix);
 
-        urlParts.splice(replaceIndex, 1, cleanUrl);
+        if (replaceIndex !== -1) {
+            urlParts.splice(replaceIndex, 1, cleanUrl);
 
-        return urlParts.join('&nxt');
+            return urlParts.join('&nxt');
+        }
+
+        return url;
     }
 };
