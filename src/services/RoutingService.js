@@ -167,9 +167,7 @@ export default {
                 });
             }
         }
-        this.trigger('module:loaded', {
-            page: this.activeModule ? this.activeModule.moduleId : null
-        });
+        this.trigger('module:loaded', config, callbackName, routingArgs); //args like in Backbone.on('route')
 
         // navigate to new module
         this.loadingContext = null;
