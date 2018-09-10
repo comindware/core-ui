@@ -121,7 +121,10 @@ export default {
         if (!this.activeModule) {
             this.__showViewPlaceholder();
         } else {
-            await this.__leaveActiveModule(!!customModuleRegion);
+            const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
+            if (!isLeaved) {
+                return;
+            }
         }
 
         // reject race condition
@@ -206,13 +209,13 @@ export default {
             .show(new ContentLoadingView());
     },
 
-    async __leaveActiveModule(subModulePresented) {
+    async __tryLeaveActiveModule(subModulePresented) {
         const canLeave = await this.activeModule.leave();
 
         if (!canLeave && this.getPreviousUrl()) {
             // getting back to last url
             this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
-            return;
+            return false;
         }
         if (!subModulePresented) { //do not trigger events and cancel requests for submodules
             this.trigger('module:leave', {
@@ -224,6 +227,7 @@ export default {
                 this.activeModule.view.setModuleLoading(true);
             }
         }
+        return true;
     },
 
     __tryGetSubmoduleRegion(config) {

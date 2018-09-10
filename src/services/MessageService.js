@@ -59,7 +59,7 @@ export default {
                     'min-width': '300px'
                 }, //don't use min-values if fullscreenToggleDisabled: false
                 fullscreenToggleDisabled: true,
-                header: text,
+                header: text || description,
                 buttons: buttons.map(button => ({
                     id: button.id,
                     text: button.text,
@@ -103,7 +103,7 @@ export default {
         ];
 
         if (messageConfiguration.beforeLeaveFn) {
-            buttons.unshift({
+            buttons.add({
                 id: 'saveAndLeave',
                 text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.SAVEANDLEAVE'),
                 customClass: 'btn-small',

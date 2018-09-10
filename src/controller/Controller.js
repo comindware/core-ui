@@ -22,17 +22,17 @@ export default Marionette.Object.extend({
 
     leave(isCalledByUnloadEvent) {
         if (_.isFunction(this.onLeave)) {
-            const moduleLeaveHandler = this.onLeave();
+            const moduleLeaveConfig = this.onLeave();
 
-            if (typeof moduleLeaveHandler === 'boolean') {
-                return moduleLeaveHandler;
+            if (typeof moduleLeaveConfig === 'boolean') {
+                return moduleLeaveConfig;
             }
 
             if (isCalledByUnloadEvent) {
                 return false;
             }
 
-            return Core.services.MessageService.showSystemMessage(moduleLeaveHandler);
+            return Core.services.MessageService.showSystemMessage(moduleLeaveConfig);
         }
 
         return true;
