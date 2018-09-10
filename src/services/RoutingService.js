@@ -71,11 +71,19 @@ export default {
 
     // options: replace (history), trigger (routing)
     navigateToUrl(url, options = {}) {
+        let newUrl = url;
+
         if (options.trigger === undefined) {
             options.trigger = true;
         }
+
         shouldCheckUrl = options.trigger || activeUrl === url;
-        Backbone.history.navigate(url, options);
+
+        if (!shouldCheckUrl) {
+            newUrl = this.__getUpdatedUrl(url);
+        }
+
+        Backbone.history.navigate(newUrl, options);
     },
 
     getPreviousUrl() {
@@ -275,5 +283,16 @@ export default {
         } else {
             this.activeModule.componentQuery = null;
         }
+    },
+
+    __getUpdatedUrl(url) {
+        const cleanUrl = url.replace('#', '');
+        const prefix = cleanUrl.split('/')[0];
+        const urlParts = window.location.hash.split('&nxt');
+        const replaceIndex = urlParts.indexOf(fragment => fragment.inclueds(prefix));
+
+        urlParts.splice(replaceIndex, 1, cleanUrl);
+
+        return urlParts.join('&nxt');
     }
 };

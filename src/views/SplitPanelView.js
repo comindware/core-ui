@@ -156,7 +156,8 @@ export default Marionette.View.extend({
                 routeRegExp: pair.routeRegExp,
                 region
             });
-            setTimeout(() => pair.callback(pair.route), 100);
+
+            pair.callback(pair.route);
         });
     }
 });

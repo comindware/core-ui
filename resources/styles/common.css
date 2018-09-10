@@ -1166,6 +1166,7 @@ a:hover {
 .split-panel_wrapper {
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
 }
 
 .split-panel_tile {

@@ -12,7 +12,6 @@ export default Marionette.View.extend({
         Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
         _.bindAll(this, '__onSelectedItemsSelect', '__moveRight', '__moveLeft', '__moveRightAll', '__moveLeftAll');
-        this.eventAggregator = [];
 
         this.model.set('isDisplayedAvailable', false);
         this.model.set('isDisplayedSelected', false);
