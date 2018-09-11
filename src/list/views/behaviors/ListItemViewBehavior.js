@@ -94,6 +94,12 @@ export default Marionette.Behavior.extend({
             return;
         }
 
+        if (typeof this.view.options.canSelect === 'function') {
+            if (!this.view.options.canSelect()) {
+                return;
+            }
+        }
+
         const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
         if (selectFn) {
             selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));

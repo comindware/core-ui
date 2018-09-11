@@ -31,7 +31,8 @@ const variables = {
     'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
     'warning-color': '#e19e35',
-    'selected-color': 'var(--grey-100)',
+    'selected-background-color': 'var(--grey-100)',
+    'disabled-text-color': 'var(--grey-400)',
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
@@ -89,7 +90,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--grey-400)',
+    'radio-checked-disabled-color': 'var(--grey-300)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',

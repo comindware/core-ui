@@ -564,6 +564,15 @@ svg.svg-grid-icons {
 .cell .editor_readonly .bubbles {
   background: transparent;
 }
+
+.datalist-panel_list.disable-select .dd-list__i:not(.editor_checked){
+  cursor: auto;
+  color: var(--disabled-text-color);
+}
+.datalist-panel_list.disable-select .dd-list__i:not(.editor_checked) > .checkbox{
+  cursor: auto;
+  background: var(--radio-checked-disabled-color);
+}
 /* columns select */
 
 

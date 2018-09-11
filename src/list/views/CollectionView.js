@@ -114,7 +114,9 @@ export default Marionette.CompositeView.extend({
         keydown: '__handleKeydown'
     },
 
-    className: 'visible-collection',
+    className() {
+        return `visible-collection ${this.options.class || ''}`;
+    },
 
     onAttach() {
         this.handleResize();

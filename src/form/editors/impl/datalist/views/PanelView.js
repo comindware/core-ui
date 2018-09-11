@@ -10,6 +10,7 @@ const config = {
 };
 
 const classes = {
+    DISABLE_SELECT: 'disable-select',
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
@@ -42,17 +43,19 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const collection = this.model.get('collection');
+        this.collection = this.model.get('collection');
 
         this.listView = list.factory.createDefaultList({
-            collection,
+            collection: this.collection,
             listViewOptions: {
+                class: 'datalist-panel_list',
                 childView: this.options.listItemView,
                 childViewOptions: {
                     reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,
-                    showCheckboxes: this.options.showCheckboxes
+                    showCheckboxes: this.options.showCheckboxes,
+                    canSelect: this.options.canSelect
                 },
                 emptyViewOptions: {
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
@@ -71,13 +74,24 @@ export default Marionette.View.extend({
         this.showChildView('listRegion', this.listView);
 
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
-        this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
+        this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount);
 
         this.listenTo(this.listView, 'update:height', () => {
-            this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
+            this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount);
             this.trigger('change:content');
         });
-        this.listenTo(collection, 'add reset update', () => this.__toggleElementsQuantityWarning(collection.length, collection.totalCount));
+        this.listenTo(this.collection, 'add reset update', () => this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount));
+
+        if (typeof this.options.canSelect === 'function') {
+            this.__changeSelected();
+            this.listenTo(this.collection, 'selected deselected', this.__changeSelected);
+        }
+    },
+
+    onBeforeDestroy() {
+        if (typeof this.options.canSelect === 'function') {
+            this.stopListening(this.collection, 'selected deselected', this.__changeSelected);
+        }
     },
 
     handleCommand(command) {
@@ -90,6 +104,12 @@ export default Marionette.View.extend({
                 break;
             default:
                 break;
+        }
+    },
+
+    __changeSelected() {
+        if (this.isAttached()) {
+            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !this.options.canSelect());
         }
     },
 
