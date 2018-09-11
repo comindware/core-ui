@@ -7,10 +7,8 @@ import ListView from './views/CollectionView';
 import RowView from './views/RowView';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import ListItemViewBehavior from './views/behaviors/ListItemViewBehavior';
-import GridItemViewBehavior from './views/behaviors/GridItemViewBehavior';
 import LoadingRowModel from './models/LoadingRowModel';
 import ListItemBehavior from './models/behaviors/ListItemBehavior';
-import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
@@ -46,8 +44,7 @@ export default {
         EditableGridFieldView,
 
         behaviors: {
-            ListItemViewBehavior,
-            GridItemViewBehavior
+            ListItemViewBehavior
         }
     },
     /**
@@ -57,8 +54,7 @@ export default {
     models: {
         LoadingRowModel,
         behaviors: {
-            ListItemBehavior,
-            GridItemBehavior
+            ListItemBehavior
         }
     },
 

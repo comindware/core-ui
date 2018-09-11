@@ -2,7 +2,6 @@
 import { comparators, helpers } from 'utils';
 import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
-import GlobalEventService from '../../services/GlobalEventService';
 
 /*
 *
@@ -51,9 +50,9 @@ const GridHeaderView = Marionette.View.extend({
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
-    template: Handlebars.compile(template),
+    tagName: 'thead',
 
-    className: 'grid-header',
+    template: Handlebars.compile(template),
 
     ui: {
         gridHeaderColumn: '.grid-header-column'

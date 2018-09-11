@@ -70,12 +70,6 @@ export default Marionette.View.extend({
         const HeaderView = this.options.headerView || GridHeaderView;
 
         this.columnClasses = [];
-        options.columns.forEach((c, i) => {
-            const cClass = `${this.uniqueId}-column${i}`;
-
-            this.columnClasses.push(cClass);
-            c.columnClass = cClass;
-        });
 
         if (this.options.showHeader !== false) {
             this.options.showHeader = true;
@@ -93,7 +87,6 @@ export default Marionette.View.extend({
             });
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
         }
 
         if (options.noColumnsView) {
@@ -110,7 +103,6 @@ export default Marionette.View.extend({
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            columnClasses: this.columnClasses,
             isTree: this.options.isTree
         });
 
@@ -213,14 +205,38 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        headerRegion: '.js-grid-header-view',
-        contentRegion: '.js-grid-content-view',
-        selectionPanelRegion: '.js-grid-selection-panel-view',
-        selectionHeaderRegion: '.js-grid-selection-header-view',
-        noColumnsViewRegion: '.js-nocolumns-view-region',
-        toolbarRegion: '.js-grid-tools-toolbar-region',
-        searchRegion: '.js-grid-tools-search-region',
-        loadingRegion: '.js-grid-loading-region'
+        headerRegion: {
+            el: '.js-grid-header-view',
+            replaceElement: true
+        },
+        contentRegion: {
+            el: '.js-grid-content-view',
+            replaceElement: true
+        },
+        selectionPanelRegion: {
+            el: '.js-grid-selection-panel-view',
+            replaceElement: true
+        },
+        selectionHeaderRegion: {
+            el: '.js-grid-selection-header-view',
+            replaceElement: true
+        },
+        noColumnsViewRegion: {
+            el: '.js-nocolumns-view-region',
+            replaceElement: true
+        },
+        toolbarRegion: {
+            el: '.js-grid-tools-toolbar-region',
+            replaceElement: true
+        },
+        searchRegion: {
+            el: '.js-grid-tools-search-region',
+            replaceElement: true
+        },
+        loadingRegion: {
+            el: '.js-grid-loading-region',
+            replaceElement: true
+        }
     },
 
     ui: {
@@ -290,9 +306,6 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.options.columns.forEach((column, i) => {
-            this.__setColumnWidth(i, column.width);
-        });
         document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
         if (this.options.showSearch) {
@@ -405,46 +418,6 @@ export default Marionette.View.extend({
                 this.collection.trigger('dragleave:head');
             }
             this.collection.dragoverModel = null;
-        }
-    },
-
-    __setColumnWidth(index, width = 0) {
-        const style = this.styleSheet;
-        const columnClass = this.columnClasses[index];
-        const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
-        let widthCell = '';
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-                widthCell = `max-width: ${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-                widthCell = `max-width: ${width}px`;
-            }
-        } else {
-            basis = '0%';
-        }
-
-        const grow = width > 0 ? 0 : 1;
-        const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
-
-        if (MobileService.isIE) {
-            if (widthCell) {
-                const regexpCells = new RegExp(`.cell.${columnClass} { max-width: [0-9]*\\.?[0-9]*[%,px;]* } `);
-                const newCellValue = `.cell.${columnClass} { ${widthCell}; } `;
-                if (regexpCells.test(style.innerHTML)) {
-                    style.innerHTML = style.innerHTML.replace(regexpCells, newCellValue);
-                } else {
-                    style.innerHTML += newCellValue;
-                }
-            }
-        }
-
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
         }
     }
 });

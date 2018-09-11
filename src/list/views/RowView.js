@@ -35,6 +35,8 @@ const defaultOptions = {
 export default Marionette.View.extend({
     className: 'row',
 
+    tagName: 'tr',
+
     ui: {
         cells: '.js-grid-cell',
         collapsibleButton: '.js-collapsible-button'

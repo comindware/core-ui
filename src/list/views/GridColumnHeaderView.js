@@ -26,6 +26,7 @@ export default Marionette.View.extend({
         this.alignRight = [objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type);
         return `grid-header-column-content ${this.alignRight ? 'grid-header-right' : ''}`;
     },
+
     events: {
         click: '__handleSorting'
     },

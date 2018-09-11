@@ -1,5 +1,5 @@
 //@flow
-import { keyCode, helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import template from '../templates/collection.hbs';
 
@@ -67,10 +67,10 @@ export default Marionette.CompositeView.extend({
         options.childView && (this.childView = options.childView);
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
+
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
-        // this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        // this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
+
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
         this.height = options.height;
@@ -93,7 +93,6 @@ export default Marionette.CompositeView.extend({
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
         this.listenTo(this.collection, 'filter', this.__handleFilter);
-        // this.on('render', this.__onRender);
     },
 
     attributes() {
@@ -104,11 +103,11 @@ export default Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    childViewContainer: '.js-visible-collection-wrp',
-
     ui: {
         childViewContainer: '.js-visible-collection-wrp'
     },
+
+    tagName: 'tbody',
 
     events: {
         keydown: '__handleKeydown'

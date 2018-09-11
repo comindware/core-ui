@@ -279,7 +279,7 @@ export default (factory = {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
+                return `<td colspan="2" class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</td>`;
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
@@ -288,7 +288,7 @@ export default (factory = {
                 } else if (value && value.name) {
                     adjustedValue = value.name;
                 }
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue || ''}">${adjustedValue || ''}</div>`;
+                return `<td class="cell ${column.columnClass}" title="${adjustedValue || ''}">${adjustedValue || ''}</td>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value.length > 0) {
                     adjustedValue = value
@@ -303,13 +303,13 @@ export default (factory = {
                             }
                             return member.text;
                         }, null);
-                    return `<div class="cell ${column.columnClass}" title="${adjustedValue} || ''">${adjustedValue}</div>`;
+                    return `<td class="cell ${column.columnClass}" title="${adjustedValue} || ''">${adjustedValue}</td>`;
                 } else if (value.name) {
-                    return `<div class="cell ${column.columnClass}" title="${value.name}">${value.name}</div>`;
+                    return `<td class="cell ${column.columnClass}" title="${value.name}">${value.name}</td>`;
                 }
             case objectPropertyTypes.ENUM:
                 adjustedValue = value ? value.valueExplained : '';
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<td class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</td>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -328,7 +328,7 @@ export default (factory = {
                         }
                         return value;
                     }).join(', ');
-                return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<td class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</td>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -366,7 +366,7 @@ export default (factory = {
                     .join(', ')
                     .trim();
 
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<td class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</td>`;
             }
             case objectPropertyTypes.BOOLEAN:
                 adjustedValue = Array.isArray(value) ? value : [value || ''];
@@ -381,7 +381,7 @@ export default (factory = {
                         return result;
                     })
                     .join(', ');
-                return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
+                return `<td class="cell ${column.columnClass}">${adjustedValue}</td>`;
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -393,21 +393,21 @@ export default (factory = {
                         }
                         return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
                     }).join(', ');
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<td class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</td>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
-                    return `<div class="cell ${column.columnClass}">${value
+                    return `<td class="cell ${column.columnClass}">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
                             return `<a href="${url}" target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
-                        .join(', ')}</div>`;
+                        .join(', ')}</td>`;
                 }
             default:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}">${adjustedValue || ''}</div>`;
+                return `<td class="cell ${column.columnClass}">${adjustedValue || ''}</td>`;
         }
     },
 

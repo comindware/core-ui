@@ -188,7 +188,6 @@
 }
 
 .grid-header-column {
-    display: inline-block;
     position: relative;
     min-width: 50px;
 }
@@ -414,17 +413,15 @@
 /* /Editable Grid */
 
 /* New grid */
-.row {
-    display: flex;
+.native-table {
+    display: table;
 }
-
 .row.selected{
     background: transparent;
 }
 
 .cell {
     position: relative;
-    display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: default;
