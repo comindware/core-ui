@@ -416,6 +416,9 @@
 .native-table {
     display: table;
 }
+.native-table_container {
+    display: flex;
+}
 .row.selected{
     background: transparent;
 }

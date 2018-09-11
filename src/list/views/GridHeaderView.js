@@ -3,12 +3,6 @@ import { comparators, helpers } from 'utils';
 import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
 
-/*
-*
-* Fires: columnsResize(this, { changes: { 0: 0.5, 1: 0.5 } })
-*
-* */
-
 /**
  * @name GridHeaderView
  * @memberof module:core.list.views
@@ -97,7 +91,6 @@ const GridHeaderView = Marionette.View.extend({
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
-            el.classList.add(column.columnClass);
         });
 
         if (this.options.isTree) {
@@ -214,12 +207,7 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.trigger('update:width', index, newColumnWidth);
-
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
-
-        this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
-        this.columns[index].width = newColumnWidth;
+        this.$el.children()[index].querySelector('.grid-header-column-content').style.width = `${newColumnWidth}px`;
     },
 
     __toggleCollapseAll() {

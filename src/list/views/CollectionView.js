@@ -101,8 +101,6 @@ export default Marionette.CompositeView.extend({
         };
     },
 
-    template: Handlebars.compile(template),
-
     ui: {
         childViewContainer: '.js-visible-collection-wrp'
     },
@@ -114,6 +112,8 @@ export default Marionette.CompositeView.extend({
     },
 
     className: 'visible-collection',
+
+    template: Handlebars.compile(''),
 
     onAttach() {
         this.handleResize();
@@ -338,7 +338,7 @@ export default Marionette.CompositeView.extend({
 
     __updateTop() {
         const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-        this.ui.childViewContainer[0].style.top = `${top}px`;
+        this.el.style.top = `${top}px`;
 
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:top', top);
