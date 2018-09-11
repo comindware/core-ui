@@ -306,15 +306,11 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
         if (this.options.showSearch) {
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
-        // if (this.collection.visibleLength) {
-        //     this.collection.select(this.collection.at(0), false, false, false);
-        // }
     },
 
     __executeAction(model) {
@@ -340,10 +336,6 @@ export default Marionette.View.extend({
                 selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
             }
         });
-    },
-
-    onDestroy() {
-        this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {

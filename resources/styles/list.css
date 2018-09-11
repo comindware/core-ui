@@ -413,11 +413,12 @@
 /* /Editable Grid */
 
 /* New grid */
-.native-table {
-    display: table;
+.row {
+    height: 35px;
 }
 .native-table_container {
     display: flex;
+    overflow: auto;
 }
 .row.selected{
     background: transparent;

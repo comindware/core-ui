@@ -101,10 +101,6 @@ export default Marionette.CompositeView.extend({
         };
     },
 
-    ui: {
-        childViewContainer: '.js-visible-collection-wrp'
-    },
-
     tagName: 'tbody',
 
     events: {
@@ -118,7 +114,7 @@ export default Marionette.CompositeView.extend({
     onAttach() {
         this.handleResize();
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.$el.parent().on('scroll', this.__onScroll.bind(this));
+        this.$el.parent().parent().on('scroll', this.__onScroll.bind(this));
     },
 
     _showCollection() {
@@ -331,7 +327,7 @@ export default Marionette.CompositeView.extend({
             return;
         }
 
-        const newPosition = Math.max(0, Math.floor(this.$el.parent().scrollTop() / this.childHeight));
+        const newPosition = Math.max(0, Math.floor(this.$el.parent().parent().scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
         this.__updateTop();
     },
@@ -402,7 +398,7 @@ export default Marionette.CompositeView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.height(allItemsHeight || '');
+            this.$el.parent().height(allItemsHeight || '');
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {
