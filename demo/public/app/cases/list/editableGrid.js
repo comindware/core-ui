@@ -3,9 +3,10 @@ import CanvasView from 'demoPage/views/CanvasView';
 export default () => {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 15; i++) {
         dataArray.push({
-            textCell: `Text Cell ${i}`,
+            textCell: `Текст Яч. ${i}`,
+            aliasCell: `Alias_Cell_${i}`,
             numberCell: i + 1,
             dateTimeCell: '2015-07-24T08:13:13.847Z',
             durationCell: 'P12DT5H42M',
@@ -33,7 +34,17 @@ export default () => {
             required: true,
             sorting: 'asc',
             editable: true,
-            autocommit: true
+            // autocommit: true //property autocommit:true will be set for transliteratedFields
+        },
+        {
+            key: 'aliasCell',
+            type: 'Text',
+            dataType: 'String',
+            title: 'AliasCell',
+            required: true,
+            sorting: 'asc',
+            editable: true,
+            // autocommit: true //property autocommit:true will be set for transliteratedFields
         },
         {
             key: 'numberCell',
@@ -100,6 +111,9 @@ export default () => {
     // 3. Create grid
     const gridController = new core.list.controllers.GridController({
         columns,
+        transliteratedFields: {
+            textCell: 'aliasCell'
+        },
         selectableBehavior: 'multi',
         showToolbar: true,
         showSearch: true,

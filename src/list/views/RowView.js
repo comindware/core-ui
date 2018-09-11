@@ -1,5 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
+import transliterator from 'utils/transliterator';
 
 const classes = {
     selected: 'selected',
@@ -116,6 +117,12 @@ export default Marionette.View.extend({
     },
 
     _renderTemplate() {
+        if (typeof this.options.transliteratedFields === 'object') {
+            transliterator.initializeTransliteration({
+                model: this.model,
+                transliteratedFields: this.options.transliteratedFields
+            });
+        }
         if (this.cellViews) {
             this.cellViews.forEach(view => view.destroy());
         }

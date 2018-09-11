@@ -24,10 +24,12 @@ const Form = Marionette.Object.extend({
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
-        if (options.transliteratedFields) {
-            transliterator.setOptionsToComputedTransliteratedFields(this.schema, options.transliteratedFields);
-            transliterator.extendComputed(this.model, options.transliteratedFields, this.schema);
-            this.model.computedFields = new Backbone.ComputedFields(this.model);
+        if (typeof this.options.transliteratedFields === 'object') {
+            transliterator.initializeTransliteration({
+                model: this.model,
+                schema: this.schema,
+                transliteratedFields: options.transliteratedFields
+            });
         }
 
         this.fields = {};
