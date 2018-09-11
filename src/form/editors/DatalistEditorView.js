@@ -145,6 +145,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                canSelect: () => this.__canAddItem(),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
                     iconProperty: this.options.iconProperty

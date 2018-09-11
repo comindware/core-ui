@@ -52,7 +52,8 @@ export default Marionette.View.extend({
                     reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,
-                    showCheckboxes: this.options.showCheckboxes
+                    showCheckboxes: this.options.showCheckboxes,
+                    canSelect: this.options.canSelect
                 },
                 emptyViewOptions: {
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),

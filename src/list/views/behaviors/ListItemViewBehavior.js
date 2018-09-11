@@ -1,3 +1,5 @@
+import LocalizationService from "../../../services/LocalizationService";
+
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
     
@@ -92,6 +94,13 @@ export default Marionette.Behavior.extend({
         if (model.selected) {
             model.deselect();
             return;
+        }
+
+        if (typeof this.view.options.canSelect === 'function') {
+            if (!this.view.options.canSelect()) {
+                Core.ToastNotifications.add(LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.MAXQUANTITYSELECTED'), Core.ToastNotifications.notificationTypes.INFO);
+                return;
+            }
         }
 
         const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
