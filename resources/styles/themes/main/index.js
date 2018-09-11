@@ -22,7 +22,8 @@ const variables = {
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
     'warning-color': '#ffda44',
-    'selected-color': 'var(--blue-extra-light)',
+    'selected-background-color': 'var(--blue-extra-light)',
+    'disabled-text-color': 'var(--grey-400)',
 
     border: '1px solid var(--grey-400)',
     'border-radius': '2px',
