@@ -79,7 +79,9 @@ const defaultOptions = {
     showEmptyParts: false,
     hideClearButton: false,
     fillZero: false,
-    normalTime: false
+    normalTime: false,
+    max: undefined,
+    min: 0
     // allFocusableParts: undefined,
     // seconds: undefined // days, minutes, hours
 };
@@ -110,6 +112,7 @@ const stateModes = {
  * @param {Number}  [seconds.maxLength=4] Max digit capacity of seconds
  * @param {Number}  [seconds.text=(localization)] Separator. Show after part.
  * Similar options for days, hours, minutes. If all options are similar, use @param {Object} [allFocusableParts] by default.
+ * @param {Object, String, Number} [max, min] Max, min value. Type - like arg for moment.duration
  * */
 
 export default (formRepository.editors.Duration = BaseItemEditorView.extend({
@@ -177,7 +180,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             mode: stateModes.VIEW,
             displayValue: null
         });
-        this.__value(null, true);
+        this.__value(null, false);
         this.focus();
     },
 
@@ -204,7 +207,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         }
 
         const values = this.getSegmentValue();
-        const newValueObject = {
+        let newValueObject = {
             days: 0,
             hours: 0,
             minutes: 0,
@@ -214,12 +217,16 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             newValueObject[seg.id] = Number(values[i]);
         });
 
+        newValueObject = this.checkMaxMinObject(newValueObject, this.options.max, this.options.min);
+
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: newValueObject
         });
-        let newValue;
-        newValue = moment.duration(this.state.displayValue).toISOString();
+
+        let newValue = moment.duration(this.state.displayValue);
+        newValue = newValue.asMilliseconds() === 0 ? null : newValue.toISOString();
+
         if (!this.options.showEmptyParts || this.triggeredByClean) {
             this.triggeredByClean = false;
             if (Object.values(newValueObject).every(value => value === 0)) {
@@ -227,6 +234,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
                 this.ui.input.val(null);
             }
         }
+
         this.__value(newValue, true);
     },
 
@@ -568,16 +576,16 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         return (mask + string).slice(-length);
     },
 
-    __normalizeDuration(value) {
+    __normalizeDuration(object) {
         // Data normalization:
         // Object like this: { days: 2, hours: 3, minutes: 133, seconds: 0 }
         // Is converted into this: { days: 2, hours: 5, minutes: 13, seconds: 0 }
         // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313, seconds: 0 } // 313 = 133 + 3*60
 
-        if (value === null) {
+        if (object === null) {
             return null;
         }
-        let totalMilliseconds = moment.duration(value).asMilliseconds();
+        let totalMilliseconds = moment.duration(object).asMilliseconds();
         const result = {
             days: 0,
             hours: 0,
@@ -632,5 +640,24 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);
         }
+    },
+
+    checkMaxMinObject(valueObject, max, min) {
+        const value = moment.duration(valueObject).asMilliseconds();
+        const maxValue = moment.duration(max).asMilliseconds();
+        const minValue = moment.duration(min).asMilliseconds();
+        const result = this.__checkMaxMinValue(value, maxValue, minValue);
+        return dateHelpers.durationToObject(result);
+    },
+
+    __checkMaxMinValue(milliseconds, max, min) {
+        let value = milliseconds;
+        if (max) {
+            value = value > max ? max : value;
+        }
+        if (min) {
+            value = value < min ? min : value;
+        }
+        return value;
     }
 }));
