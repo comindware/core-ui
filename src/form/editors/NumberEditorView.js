@@ -48,7 +48,7 @@ const defaultOptions = {
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
- * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
+ * @param {Number} [options.min=null] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * 
  * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]]) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
