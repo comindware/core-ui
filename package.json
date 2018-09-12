@@ -105,7 +105,7 @@
     "run-sequence": "^2.2.1",
     "style-loader": "^0.23.0",
     "url-loader": "^1.1.1",
-    "webpack": "^4.17.2"
+    "webpack": "^4.18.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",

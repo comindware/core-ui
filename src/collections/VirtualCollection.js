@@ -3,7 +3,8 @@
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
+import IndexTreeCollection from './IndexTreeCollection';
+import IndexTreeModel from '../models/IndexTreeModel';
 
 const selectableBehavior = {
     none: null,
@@ -257,8 +258,6 @@ const VirtualCollection = Backbone.Collection.extend(
                 model.collection = this;
                 model.level = level;
 
-                Object.assign(model, GridItemBehavior(this));
-
                 if (!model.collapsed && model.children) {//Skip building children models, if parent model is collapsed
                     if (this.isTree) {
                         this.stopListening(model.children, 'add remove reset');
@@ -279,7 +278,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 const groupingOptions = this.grouping[i];
                 fixGroupingOptions(groupingOptions);
 
-                return new Backbone.Collection(
+                return new IndexTreeCollection(
                     _.chain(models)
                         .groupBy(groupingOptions.iterator)
                         .map(v => {
@@ -293,7 +292,8 @@ const VirtualCollection = Backbone.Collection.extend(
                         .value()
                 );
             }
-            return new Backbone.Collection(models);
+
+            return new IndexTreeCollection(models.map(v => v.attributes));
         },
 
         updateWindowSize(newWindowSize) {
