@@ -8,6 +8,7 @@
 
 .layout__horizontal-layout > * {
     flex: 1 1 0%;
+    overflow-x: auto;
 }
 
 .layout__horizontal-layout-list {
