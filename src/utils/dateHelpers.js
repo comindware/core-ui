@@ -162,6 +162,10 @@ export default /** @lends module:core.utils.dateHelpers */ {
         if (!duration) {
             return null;
         }
+        return this.durationToObject(duration);
+    },
+
+    durationToObject(duration) {
         const val = moment.duration(duration);
         return {
             // we don't use moment.days() here because it returns only up to 30 days
