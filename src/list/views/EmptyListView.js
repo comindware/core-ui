@@ -14,7 +14,7 @@ import LocalizationService from '../../services/LocalizationService';
  * @param {Object} options Constructor options
  * @param {string} [options.text=Список пуст] отображаемый текст
  * */
-const EmptyListView = Marionette.View.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.model = new Backbone.Model({
             text: (options && options.text) || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')
@@ -25,5 +25,3 @@ const EmptyListView = Marionette.View.extend({
 
     className: 'empty-view'
 });
-
-export default EmptyListView;

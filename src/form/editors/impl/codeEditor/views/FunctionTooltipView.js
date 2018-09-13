@@ -1,5 +1,4 @@
 import FunctionOverloadView from './FunctionOverloadView';
-import FunctionOverloadModel from '../models/FunctionOverloadModel';
 import FunctionParametersView from '../views/FunctionParametersView';
 import template from '../templates/functionTooltip.html';
 
@@ -21,9 +20,7 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     onAttach() {
-        const collection = new Backbone.Collection(this.model.get('overloads'), {
-            model: FunctionOverloadModel
-        });
+        const collection = new Backbone.Collection(this.model.get('overloads'));
         this.functionOverloads = new Core.list.factory.createDefaultList({
             collection: new Core.collections.VirtualCollection(collection),
             listViewOptions: {

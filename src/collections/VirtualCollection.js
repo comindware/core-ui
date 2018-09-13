@@ -3,7 +3,7 @@
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
+import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
 
 const selectableBehavior = {
     none: null,

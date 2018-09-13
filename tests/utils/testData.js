@@ -2,11 +2,7 @@ import core from 'coreApi';
 
 export var UserModel = Backbone.Model.extend({});
 
-export var TaskModel = Backbone.Model.extend({
-    initialize() {
-        _.extend(this, new core.list.models.behaviors.ListItemBehavior(this));
-    }
-});
+export var TaskModel = Backbone.Model.extend({});
 
 export function addChanceMixins(chance) {
     chance.mixin({
