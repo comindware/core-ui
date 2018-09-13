@@ -240,10 +240,15 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     focus(): void {
+        this.hasFocus = true;
+        this.onFocus();
         this.__onButtonClick();
+        this.__focusButton();
     },
 
     blur(): void {
+        this.hasFocus = false;
+        this.onBlur();
         this.dropdownView.close();
         this.__blurButton();
     },
@@ -343,8 +348,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onValueSelect(): void {
         if (this.panelCollection.lastPointedModel) {
             this.panelCollection.lastPointedModel.toggleSelected();
-        } else {
-            this.__onValueSet(this.panelCollection.selected);
         }
     },
 
@@ -371,11 +374,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onValueUnset(model: Backbone.Model): void {
-        if (this.viewModel.button.selected.length === 1 && !this.options.allowEmptyValue) {
-            this.__focusButton();
-            this.dropdownView.close();
-            return;
-        }
+        this.dropdownView.close();
+        this.__focusButton();
         this.__onBubbleDelete(model);
     },
 
@@ -437,14 +437,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onDropdownOpen(): void {
-        this.__focusButton();
-        this.onFocus();
+        this.focus();
         this.trigger('dropdown:open');
     },
 
-    __focusButton(): void {
+    __focusButton(options): void {
         if (this.dropdownView.button) {
-            this.dropdownView.button.focus();
+            this.dropdownView.button.focus(options);
         }
     },
 
@@ -454,21 +453,17 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __onButtonClick(): void {
-        if (this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen) {
-            const promise = this.updateFilter(null, true);
-            if (promise) {
-                promise
-                    .then(() => {
-                        this.dropdownView.open();
-                        this.__triggerReady();
-                    })
-                    .catch(e => {
-                        console.error(e.message);
-                    });
-            } else {
+    async __onButtonClick(): void {
+        if (this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && !this.__pendingButtonClick) {
+            this.__pendingButtonClick = true;
+            try {
+                await this.updateFilter(null, true);
                 this.dropdownView.open();
                 this.__triggerReady();
+            } catch(e) {
+                console.error(e);
+            } finally {
+                this.__pendingButtonClick = false;
             }
         }
     },
@@ -476,10 +471,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {
         if (!model) {
             return;
+        }     
+        const selectedModels = this.viewModel.button.selected;
+        if (selectedModels.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+            return;
         }
+
         this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
 
-        const selectedModels = this.viewModel.button.selected;
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue() || []);
@@ -492,8 +491,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__triggerChange();
 
         this.__updateFakeInputModel();
-        this.__focusButton();
-        this.__onButtonClick();
+        this.focus();
     },
 
     __updateFakeInputModel(): void {
@@ -506,15 +504,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
             return;
         }
-        if (this.__canAddItem() && !this.fakeInputModel) {
+        if (!this.fakeInputModel) {
             this.fakeInputModel = new FakeInputModel();
             selectedModels.add(this.fakeInputModel, { at: selectedModels.length });
-        }
-        if (!this.__canAddItem() && this.fakeInputModel) {
-            selectedModels.remove(this.fakeInputModel);
-            delete this.fakeInputModel;
-        }
-        if (this.fakeInputModel) {
+        } else {
             this.fakeInputModel.updateEmpty();
         }
     },
@@ -536,7 +529,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         if (collection.indexOf(this.panelCollection.lastPointedModel) === 0) {
             this.dropdownView.close();
-            this.__focusButton();
+            this.__focusButton({
+                isShowLastSearch: true
+            });
         } else {
             this.__sendPanelCommand('up');
         }
@@ -545,6 +540,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onInputDown(): void {
         if (!this.dropdownView.isOpen) {
             this.dropdownView.open();
+            this.__tryPointFirstRow();
         } else {
             this.__sendPanelCommand('down');
         }
@@ -564,11 +560,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __tryPointFirstRow() {
         if (this.panelCollection.length) {
             this.panelCollection.selectSmart(this.panelCollection.at(0), false, false, false);
+        } else {
+            this.panelCollection.pointOff();
         }
     },
 
     __onDropdownClose() {
-        this.onBlur();
+        this.blur();
         this.panelCollection.pointOff();
         this.activeText = null;
         this.trigger('dropdown:close');

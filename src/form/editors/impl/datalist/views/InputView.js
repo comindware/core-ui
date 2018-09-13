@@ -29,7 +29,9 @@ export default Marionette.View.extend({
     events: {
         'keydown @ui.input': '__search',
         'keyup @ui.input': '__commit',
-        'input @ui.input': '__search'
+        'input @ui.input': '__search',
+        'focus @ui.input': '__focus',
+        'blur @ui.input': '__blur'
     },
 
     modelEvents: {
@@ -41,12 +43,24 @@ export default Marionette.View.extend({
         this.__updateInputPlaceholder();
     },
 
-    focus() {
+    focus(options) {
         this.ui.input.focus();
+        this.__focus(options);
+    },
+
+    __focus(options = {}) {
+        if (options.isShowLastSearch) {
+            this.updateInput(this.filterValue);
+        }
     },
 
     blur() {
         this.ui.input.blur();
+        this.__blur();
+    },
+
+    __blur() {
+        this.updateInput();
     },
 
     __getFilterValue() {
