@@ -13,9 +13,6 @@ export default function() {
     // 2. Create VirtualCollection that use this model (and do other stuff maybe)
     // [NEW] apply HighlightableBehavior on it
     const ListItemCollection = core.collections.VirtualCollection.extend({
-        initialize() {
-            core.utils.helpers.applyBehavior(this, core.collections.behaviors.HighlightableBehavior);
-        },
         model: ListItemModel
     });
 

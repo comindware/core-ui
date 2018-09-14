@@ -10,14 +10,9 @@
 
 import { helpers, comparators } from 'utils';
 import VirtualCollection from '../../../../../collections/VirtualCollection';
-import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import MemberModel from '../models/MemberModel';
 
 export default VirtualCollection.extend({
-    initialize() {
-        helpers.applyBehavior(this, HighlightableBehavior);
-    },
-
     model: MemberModel,
 
     comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name'),

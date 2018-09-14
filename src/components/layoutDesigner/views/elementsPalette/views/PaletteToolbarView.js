@@ -89,9 +89,6 @@ export default Marionette.View.extend({
     },
 
     __highlightCollection(collection, text) {
-        if (!(typeof collection.highlight === 'function')) {
-            Core.utils.helpers.applyBehavior(collection, Core.collections.behaviors.HighlightableBehavior);
-        }
         collection.highlight(text);
         collection.each(model => {
             if (this.__hasChildren(model)) {
@@ -101,9 +98,6 @@ export default Marionette.View.extend({
     },
 
     __unhighlightCollection(collection) {
-        if (!(typeof collection.unhighlight === 'function')) {
-            Core.utils.helpers.applyBehavior(collection, Core.collections.behaviors.HighlightableBehavior);
-        }
         collection.unhighlight();
         collection.each(model => {
             if (this.__hasChildren(model)) {

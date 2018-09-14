@@ -1,5 +1,4 @@
 import { helpers } from 'utils';
-import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
@@ -10,7 +9,6 @@ const defaultOptions = {
 export default Backbone.Collection.extend({
     constructor() {
         Backbone.Collection.prototype.constructor.apply(this, arguments);
-        _.extend(this, new HighlightableBehavior(this));
         _.extend(this, new SelectableBehavior.SingleSelect(this));
     },
 
