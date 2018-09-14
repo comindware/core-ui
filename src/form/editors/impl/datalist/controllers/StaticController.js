@@ -4,22 +4,15 @@ import BaseReferenceEditorController from './BaseReferenceEditorController';
 export default BaseReferenceEditorController.extend({
     fetch(options = {}) {
         const promise = new Promise(resolve => {
-            if (options.text) {
+            if (options.text && options.getDisplayText) {
                 const filterText = options.text.trim().toUpperCase();
                 if (filterText) {
                     this.collection.filter(model => {
-                        let text = model.get('text');
-                        if (!text) {
-                            if (typeof this.options.displayAttribute === 'function') {
-                                text = this.options.displayAttribute(model.attributes);
-                            } else {
-                                text = model.get(this.options.displayAttribute);
-                            }
-                        }
+                        const text = options.getDisplayText(model.attributes);
                         if (!text) {
                             return false;
                         }
-                        return text.toUpperCase().indexOf(filterText) !== -1;
+                        return String(text).toUpperCase().includes(filterText);
                     });
                 } else {
                     this.collection.filter(null);

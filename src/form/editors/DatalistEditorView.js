@@ -248,7 +248,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     blur(): void {
         this.hasFocus = false;
-        this.onBlur();
+        this.onBlur({
+            triggerChange: false
+        });
         this.dropdownView.close();
         this.__blurButton();
     },
@@ -398,7 +400,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     async __onFilterText() {
         this.dropdownView.buttonView.setLoading(true);
 
-        return this.controller.fetch({ text: this.searchText }).then(data => {
+        return this.controller.fetch({
+            text: this.searchText,
+            getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute)
+        }).then(data => {
             this.panelCollection.totalCount = data.totalCount;
             this.panelCollection.reset(data.collection);
 
