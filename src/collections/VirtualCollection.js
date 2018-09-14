@@ -300,12 +300,14 @@ const VirtualCollection = Backbone.Collection.extend(
 
         updateWindowSize(newWindowSize) {
             if (this.state.windowSize !== newWindowSize) {
+                this.internalUpdate = true;
                 this.isSliding = true;
                 this.state.windowSize = newWindowSize;
                 const oldModels = this.visibleModels.concat();
                 this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
                 this.visibleLength = this.visibleModels.length;
                 this.__processDiffs(oldModels);
+                this.internalUpdate = false;
             }
         },
 
