@@ -1,4 +1,5 @@
 // @flow
+import { keyCode } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
 
@@ -82,7 +83,7 @@ export default Marionette.View.extend({
     __search(e) {
         const value = this.__getFilterValue();
         switch (e.keyCode) {
-            case 8: {
+            case keyCode.BACKSPACE: {
                 if (this.__getRawValue().length === 0) {
                     if (!this.options.enabled) {
                         return;
@@ -91,11 +92,11 @@ export default Marionette.View.extend({
                 }
                 break;
             }
-            case 38: {
+            case keyCode.UP: {
                 this.reqres.request('input:up');
                 break;
             }
-            case 40: {
+            case keyCode.DOWN: {
                 this.reqres.request('input:down');
                 break;
             }
@@ -111,9 +112,9 @@ export default Marionette.View.extend({
 
     __commit(e) {
         switch (e.keyCode) {
-            case 13: {
-                e.preventDefault();
-                e.stopImmediatePropagation();
+            case keyCode.ENTER: {
+                e.preventDefault && e.preventDefault();
+                e.stopImmediatePropagation && e.stopImmediatePropagation();
                 this.reqres.request('try:value:select');
                 return false;
             }
