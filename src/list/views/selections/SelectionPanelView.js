@@ -1,5 +1,5 @@
 //@flow
-import template from '../templates/selectionPanel.hbs';
+import template from '../../templates/selectionPanel.hbs';
 
 import SelectionCellView from './SelectionCellView';
 

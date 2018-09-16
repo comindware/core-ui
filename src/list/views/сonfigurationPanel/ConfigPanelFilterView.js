@@ -1,4 +1,4 @@
-import template from '../../templates/configPanelFilter.html';
+import template from '../../templates/filterPanel/configPanelFilter.html';
 import FilterItemView from './FilterItemView';
 import EmptyFilterItemView from './EmptyFilterItemView';
 

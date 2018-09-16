@@ -1,6 +1,6 @@
 //@flow
 import { comparators, helpers } from 'utils';
-import GridColumnHeaderView from './GridColumnHeaderView';
+import GridColumnHeaderView from './header/GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 

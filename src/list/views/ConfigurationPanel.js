@@ -7,6 +7,23 @@ const constants = {
 
 export default Marionette.View.extend({
     initialize(options) {
+        this.panelViewModel = new Backbone.Model({
+            columnModel: new Backbone.Model()
+        });
+
+        this.panelViewModel.set({
+            columnType: this.columnModel.get('columnType'),
+            filtersConfigurationModel: new Backbone.Model({
+                datasourceId: this.datasourceId,
+                columnType: this.columnModel.get('columnType'),
+                dataFormat: this.columnModel.get('dataFormat'),
+                query: this.columnModel.get('queryConfiguration')
+            }),
+            level,
+            columnModel: viewData,
+            isActionChange: isNeedToApply
+        });
+
         this.isOpen = false;
         this.panelView = this.__createPanelView(options.panelView, options.panelViewOptions);
     },

@@ -1,5 +1,5 @@
 import { sortDirection } from '../../../Meta';
-import template from '../../templates/configPanelSort.html';
+import template from '../../templates/filterPanel/configPanelSort.html';
 
 export default Marionette.View.extend({
     initialize() {

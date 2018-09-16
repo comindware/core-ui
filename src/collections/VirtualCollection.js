@@ -4,75 +4,12 @@ import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper, helpers } from 'utils';
 import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
-import HighlightableBehavior from './behaviors/HighlightableBehavior';
+import FixGroupingOptions from './GroupingService';
 
 const selectableBehavior = {
     none: null,
     single: SelectableBehavior.SingleSelect,
     multi: SelectableBehavior.MultiSelect
-};
-
-const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
-    const it = groupingOptions.iterator;
-    return _.isString(it)
-        ? function (model) {
-            return model.get(it) || model[it];
-        }
-        : it;
-};
-
-const getNormalizedGroupingComparator = function getNormalizedGroupingComparator(groupingOptions) {
-    const cmp = groupingOptions.comparator;
-    return cmp !== undefined
-        ? _.isString(cmp)
-            ? function (model) {
-                return model.get(cmp) || model[cmp];
-            }
-            : cmp
-        : groupingOptions.iterator;
-};
-
-const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFactory(groupingOptions) {
-    const modelFactory = groupingOptions.modelFactory;
-    return modelFactory !== undefined
-        ? _.isString(modelFactory)
-            ? function (model) {
-                return new Backbone.Model({
-                    displayText: model.get(modelFactory),
-                    groupingModel: true
-                });
-            }
-            : modelFactory
-        : function (model) {
-            return new Backbone.Model({
-                displayText: groupingOptions.iterator(model),
-                groupingModel: true
-            });
-        };
-};
-
-const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
-    if (groupingOptions.__normalized) {
-        return;
-    }
-    if (!groupingOptions.affectedAttributes) {
-        groupingOptions.affectedAttributes = [];
-    }
-    if (_.isString(groupingOptions.iterator)) {
-        groupingOptions.affectedAttributes.push(groupingOptions.iterator);
-    }
-    if (_.isString(groupingOptions.comparator)) {
-        groupingOptions.affectedAttributes.push(groupingOptions.comparator);
-    }
-    if (_.isString(groupingOptions.modelFactory)) {
-        groupingOptions.affectedAttributes.push(groupingOptions.modelFactory);
-    }
-    groupingOptions.affectedAttributes = _.uniq(groupingOptions.affectedAttributes);
-
-    groupingOptions.iterator = getNormalizedGroupingIterator(groupingOptions);
-    groupingOptions.comparator = getNormalizedGroupingComparator(groupingOptions);
-    groupingOptions.modelFactory = getNormalizedGroupingModelFactory(groupingOptions);
-    groupingOptions.__normalized = true;
 };
 
 /**
@@ -103,8 +40,7 @@ const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
  * </ul>.
  * */
 
-const VirtualCollection = Backbone.Collection.extend(
-    /** @lends module:core.collections.VirtualCollection.prototype */ {
+const VirtualCollection = Backbone.Collection.extend({
         constructor(collection, options = {}) {
             this.options = options;
             this.isTree = this.options.isTree;
@@ -149,11 +85,6 @@ const VirtualCollection = Backbone.Collection.extend(
 
             this.__debounceRebuild = _.debounce((...args) => this.__rebuildModels(...args), 10);
 
-            //noinspection JSUnresolvedVariable,JSHint
-            options.close_with && this.__bindLifecycle(options.close_with, 'close');
-            //noinspection JSUnresolvedVariable,JSHint
-            options.destroy_with && this.__bindLifecycle(options.destroy_with, 'destroy');
-
             if (options.model) {
                 this.model = options.model;
             } else if (collection.model) {
@@ -182,11 +113,39 @@ const VirtualCollection = Backbone.Collection.extend(
                 _.extend(this, new SelectableBehaviorClass(this));
             }
             _.extend(this, new CheckableBehavior.CheckableCollection(this));
-            helpers.applyBehavior(this, HighlightableBehavior);
         },
 
         rebuild() {
             this.__rebuildIndex({}, true);
+        },
+
+        highlight(text) {
+            this.parentCollection.each(record => {
+                if (record.highlight) {
+                    record.highlight(text);
+                }
+            });
+        },
+
+        unhighlight() {
+            this.parentCollection.each(record => {
+                if (record.unhighlight) {
+                    record.unhighlight();
+                }
+            });
+        },
+
+        updateWindowSize(newWindowSize) {
+            if (this.state.windowSize !== newWindowSize) {
+                this.internalUpdate = true;
+                this.isSliding = true;
+                this.state.windowSize = newWindowSize;
+                const oldModels = this.visibleModels.concat();
+                this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
+                this.visibleLength = this.visibleModels.length;
+                this.__processDiffs(oldModels);
+                this.internalUpdate = false;
+            }
         },
 
         __rebuildIndex(options = {}, immediate) {
@@ -279,7 +238,7 @@ const VirtualCollection = Backbone.Collection.extend(
             const self = this;
             if (i < this.grouping.length) {
                 const groupingOptions = this.grouping[i];
-                fixGroupingOptions(groupingOptions);
+                FixGroupingOptions(groupingOptions);
 
                 return new Backbone.Collection(
                     _.chain(models)
@@ -296,19 +255,6 @@ const VirtualCollection = Backbone.Collection.extend(
                 );
             }
             return new Backbone.Collection(models);
-        },
-
-        updateWindowSize(newWindowSize) {
-            if (this.state.windowSize !== newWindowSize) {
-                this.internalUpdate = true;
-                this.isSliding = true;
-                this.state.windowSize = newWindowSize;
-                const oldModels = this.visibleModels.concat();
-                this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
-                this.visibleLength = this.visibleModels.length;
-                this.__processDiffs(oldModels);
-                this.internalUpdate = false;
-            }
         },
 
         /**
@@ -426,10 +372,6 @@ const VirtualCollection = Backbone.Collection.extend(
             }
 
             this.__rebuildIndex();
-        },
-
-        __bindLifecycle(view, methodName) {
-            view.on(methodName, _.bind(this.stopListening, this));
         },
 
         grouping: [],
@@ -612,7 +554,5 @@ const VirtualCollection = Backbone.Collection.extend(
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });
-
-Object.assign(VirtualCollection.prototype, Backbone.Events);
 
 export default VirtualCollection;

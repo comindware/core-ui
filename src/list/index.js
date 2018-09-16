@@ -1,6 +1,6 @@
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
-import GridColumnHeaderView from './views/GridColumnHeaderView';
+import GridColumnHeaderView from './views/header/GridColumnHeaderView';
 import GridHeaderView from './views/GridHeaderView';
 import GridView from './views/GridView';
 import ListView from './views/CollectionView';

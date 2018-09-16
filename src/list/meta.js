@@ -10,7 +10,19 @@ export const columnTypes = {
     BOOLEAN: 'boolean',
     DATETIME: 'dateTime',
     HTML: 'html',
-    DOCUMENT: 'document'
+    DOCUMENT: 'document',
+    decimal: 'Decimal',
+    integer: 'Integer',
+    datetime: 'DateTime',
+    duration: 'Duration',
+    string: 'String',
+    boolean: 'Boolean',
+    users: 'AccountProperty',
+    reference: 'InstanceProperty',
+    enumerable: 'EnumProperty',
+    document: 'DocumentProperty',
+    collection: 'Collection',
+    id: 'id'
 };
 
 export const getDefaultActions = () => [

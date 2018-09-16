@@ -4,7 +4,7 @@ import ListView from './views/CollectionView';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
-import GridColumnHeaderView from './views/GridColumnHeaderView';
+import GridColumnHeaderView from './views/header/GridColumnHeaderView';
 
 export const getDefaultComparator = (columns = []) => {
     const sortingColumn = columns.find(column => column.sorting);

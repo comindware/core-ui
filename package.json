@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.8.0",
+  "version": "1.10.0",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -58,7 +58,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.0",
-    "eslint": "^5.5.0",
+    "eslint": "^5.6.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-flowtype-errors": "^3.6.0",

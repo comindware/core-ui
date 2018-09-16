@@ -1,6 +1,6 @@
-import { columnType, queryBuilderActions } from '../../../Meta';
+import { columnTypes, queryBuilderActions } from '../../../Meta';
 import ConfigPanelSortView from './ConfigPanelSortView';
-import template from '../../templates/gridColumnConfigPanel.html';
+import template from '../../templates/filterPanel/gridColumnConfigPanel.html';
 import ConfigPanelGroupView from './ConfigPanelGroupView';
 import ConfigPanelFilterView from './ConfigPanelFilterView';
 import ConfigPanelAggregationView from './ConfigPanelAggregationView';
@@ -86,25 +86,25 @@ export default Marionette.View.extend({
                 this.ui.addFilterButton.show();
             } else {
                 switch (this.model.get('columnType')) {
-                    case columnType.id:
-                    case columnType.string:
-                    case columnType.integer:
-                    case columnType.decimal:
-                    case columnType.datetime:
-                    case columnType.duration:
+                    case columnTypes.id:
+                    case columnTypes.string:
+                    case columnTypes.integer:
+                    case columnTypes.decimal:
+                    case columnTypes.datetime:
+                    case columnTypes.duration:
                         this.ui.addFilterButton.show();
                         break;
-                    case columnType.boolean:
+                    case columnTypes.boolean:
                         if (this.collection.length < 3) {
                             this.ui.addFilterButton.show();
                         } else {
                             this.ui.addFilterButton.hide();
                         }
                         break;
-                    case columnType.enumerable:
-                    case columnType.users:
-                    case columnType.document:
-                    case columnType.reference:
+                    case columnTypes.enumerable:
+                    case columnTypes.users:
+                    case columnTypes.document:
+                    case columnTypes.reference:
                         this.ui.addFilterButton.hide();
                         break;
                     default:

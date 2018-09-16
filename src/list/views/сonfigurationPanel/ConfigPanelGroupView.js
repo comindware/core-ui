@@ -1,4 +1,4 @@
-import template from '../../templates/configPanelGroup.html';
+import template from '../../templates/filterPanel/configPanelGroup.html';
 
 const constants = {
     groupByClass: 'icon-group',
