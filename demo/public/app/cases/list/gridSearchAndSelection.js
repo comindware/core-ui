@@ -3,7 +3,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 // 1. Get some data
 export default function() {
     const dataArray = [];
-    for (let i = 0; i < 50000; i++) {
+    for (let i = 0; i < 500000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,

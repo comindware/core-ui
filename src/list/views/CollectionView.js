@@ -406,7 +406,7 @@ export default Marionette.CompositeView.extend({
             }
         }
 
-        if (this.state.viewportHeight === oldViewportHeight) {
+        if (this.state.viewportHeight === oldViewportHeight || oldViewportHeight === undefined) {
             return;
         }
 

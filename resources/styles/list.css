@@ -411,6 +411,7 @@
 /* New grid */
 .row {
     height: 35px;
+    max-height: 35px;
 }
 .native-table_container {
     display: flex;
