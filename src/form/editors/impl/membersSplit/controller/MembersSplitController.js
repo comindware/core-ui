@@ -342,7 +342,7 @@ export default Marionette.Object.extend({
     },
 
     __onItemsSearch(text) {
-        this.collectionSearchValue.available = text;
+        this.collectionSearchValue.available = text ? text.toLowerCase() : null;
         this.__applyFilter('available');
     },
 
