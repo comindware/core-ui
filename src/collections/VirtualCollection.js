@@ -4,7 +4,6 @@ import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
 import IndexTreeCollection from './IndexTreeCollection';
-import IndexTreeModel from '../models/IndexTreeModel';
 
 const selectableBehavior = {
     none: null,

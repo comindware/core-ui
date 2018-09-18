@@ -237,16 +237,6 @@ export default Marionette.View.extend({
             this.el.classList.add('grid__headless');
         }
 
-        if (this.options.showCheckbox) {
-            if (this.options.showHeader) {
-                this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
-            }
-            this.showChildView('selectionPanelRegion', this.selectionPanelView);
-            if (this.getOption('showRowIndex')) {
-                this.getRegion('selectionHeaderRegion').el.classList.add('cell_selection-index');
-            }
-        }
-
         if (this.options.showToolbar) {
             this.showChildView('toolbarRegion', this.toolbarView);
         }
@@ -266,7 +256,6 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.__bindListRegionScroll();
         if (this.options.showSearch) {
             this.searchView.focus();
         }
@@ -282,20 +271,6 @@ export default Marionette.View.extend({
         if (this.options.isTree) {
             this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
-    },
-
-    __bindListRegionScroll() {
-        const headerRegionEl = this.options.showHeader && this.getRegion('headerRegion').el;
-        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
-
-        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
-            if (headerRegionEl) {
-                headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
-            }
-            if (selectionPanelRegionEl) {
-                selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
-            }
-        });
     },
 
     sortBy(columnIndex, sorting) {
