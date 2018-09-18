@@ -124,6 +124,16 @@ export default Marionette.View.extend({
         this.cellViews = [];
 
         const isTree = this.getOption('isTree');
+
+        if (this.showChechboxes) {
+            const cellView = this.__showCheckbox();
+
+            cellView.render();
+            this.el.insertAdjacentElement('beforeend', cellView.el);
+            cellView.triggerMethod('attach');
+
+            this.cellViews.push(cellView);
+        }
         this.options.columns.forEach((gridColumn, index) => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
@@ -451,5 +461,9 @@ export default Marionette.View.extend({
 
     __handleModelMouseLeave() {
         this.el.classList.remove(classes.hover);
+    },
+
+    __showCheckbox() {
+        return CellViewFactory.getSelectionCell();
     }
 });

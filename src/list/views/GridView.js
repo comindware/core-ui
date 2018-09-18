@@ -4,8 +4,6 @@
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
-import SelectionPanelView from './SelectionPanelView';
-import SelectionCellView from './SelectionCellView';
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
@@ -138,41 +136,12 @@ export default Marionette.View.extend({
             minimumVisibleRows: options.minimumVisibleRows
         });
 
-        if (this.options.showCheckbox) {
-            const draggable = this.getOption('draggable');
-            this.selectionPanelView = new SelectionPanelView({
-                collection: this.listView.collection,
-                gridEventAggregator: this,
-                showRowIndex: this.options.showRowIndex,
-                childViewOptions: {
-                    draggable,
-                    showRowIndex,
-                    bindSelection: this.getOption('bindSelection')
-                }
-            });
-
-            this.selectionHeaderView = new SelectionCellView({
-                collection: this.collection,
-                selectionType: 'all',
-                gridEventAggregator: this,
-                showRowIndex
-            });
-
-            if (draggable) {
-                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
-                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
-            }
-        }
-
         this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
             if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName].concat(eventArguments));
             }
         });
 
-        if (this.collection.length) {
-            //this.__presortCollection(options.columns); TODO WFT
-        }
         this.collection = options.collection;
 
         if (options.showToolbar) {
@@ -210,14 +179,6 @@ export default Marionette.View.extend({
         },
         contentRegion: {
             el: '.js-grid-content-view',
-            replaceElement: true
-        },
-        selectionPanelRegion: {
-            el: '.js-grid-selection-panel-view',
-            replaceElement: true
-        },
-        selectionHeaderRegion: {
-            el: '.js-grid-selection-header-view',
             replaceElement: true
         },
         noColumnsViewRegion: {

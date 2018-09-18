@@ -5,6 +5,7 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
+import SelectionCellView from './views/SelectionCellView';
 
 let factory;
 
@@ -266,6 +267,10 @@ export default (factory = {
             }
         };
         return this.__getSimpleView('{{{value}}}', extention);
+    },
+
+    getSelectionCell() {
+        return new SelectionCellView();
     },
 
     getCellHtml(column: Column, model: Backbone.Model) {
