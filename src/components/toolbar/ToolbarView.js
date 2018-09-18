@@ -65,7 +65,7 @@ export default Marionette.View.extend({
         let childWidth = 0;
         let notFitItem = -1;
         toolbarActions.each((i, val) => {
-            childWidth += val.getBoundingClientRect().width;
+            childWidth += val.offsetWidth;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 if (i === toolbarActions.length - 1) {
                     if (childWidth < toolbarWidth) {
