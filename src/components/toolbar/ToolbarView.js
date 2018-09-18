@@ -4,6 +4,7 @@ import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 
 const actionsMenuLabel = '⋮';
+const elementsMargin = 5;
 
 export default Marionette.View.extend({
     initialize() {
@@ -65,7 +66,7 @@ export default Marionette.View.extend({
         let childWidth = 0;
         let notFitItem = -1;
         toolbarActions.each((i, val) => {
-            childWidth += val.offsetWidth;
+            childWidth += val.offsetWidth + elementsMargin;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 if (i === toolbarActions.length - 1) {
                     if (childWidth < toolbarWidth) {
