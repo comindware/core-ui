@@ -1,6 +1,4 @@
 //@flow
-/* eslint-disable no-param-reassign */
-
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -62,25 +60,21 @@ export default Marionette.View.extend({
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
 
         this.uniqueId = _.uniqueId('native-grid');
-        this.styleSheet = document.createElement('style');
-
-        const HeaderView = this.options.headerView || GridHeaderView;
-
-        this.columnClasses = [];
 
         if (this.options.showHeader !== false) {
             this.options.showHeader = true;
         }
 
         if (this.options.showHeader) {
-            this.headerView = new HeaderView({
+            this.headerView = new GridHeaderView({
                 columns: options.columns,
                 gridEventAggregator: this,
                 checkBoxPadding: options.checkBoxPadding || 0,
                 gridColumnHeaderView: options.gridColumnHeaderView,
                 uniqueId: this.uniqueId,
                 isTree: this.options.isTree,
-                expandOnShow: options.expandOnShow
+                expandOnShow: options.expandOnShow,
+                showCheckbox: this.options.showCheckbox,
             });
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -100,7 +94,8 @@ export default Marionette.View.extend({
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            showCheckbox: this.options.showCheckbox
         });
 
         this.isEditable = _.isBoolean(options.editable) ? options.editable : options.columns.some(column => column.editable);
@@ -273,7 +268,8 @@ export default Marionette.View.extend({
         }
     },
 
-    sortBy(columnIndex, sorting) {
+    sortBy(columnIndex, sortingOtter) {
+        let sorting = sortingOtter;
         const column = this.options.columns[columnIndex];
         if (sorting) {
             this.options.columns.forEach(c => (c.sorting = null));
@@ -314,26 +310,9 @@ export default Marionette.View.extend({
         }
     },
 
-    handleResize() {
-        if (this.options.showHeader) {
-            this.headerView.handleResize();
-        }
-    },
-
     setLoading(state) {
         if (!this.isDestroyed()) {
             this.loading.setLoading(state);
-        }
-    },
-
-    __presortCollection(columns) {
-        const sortingColumn = columns.find(column => column.sorting);
-        if (sortingColumn) {
-            if (sortingColumn.sorting === 'asc') {
-                this.onColumnSort(sortingColumn, sortingColumn.sortAsc);
-            } else {
-                this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
-            }
         }
     },
 

@@ -99,10 +99,6 @@ const GridHeaderView = Marionette.View.extend({
                 `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>&nbsp;`
             );
         }
-
-        // if (this.options.expandOnShow) {
-        //     this.__updateCollapseAll(false);
-        // }
     },
 
     onDestroy() {

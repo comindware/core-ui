@@ -388,11 +388,6 @@ export default Marionette.CompositeView.extend({
             }
         }
 
-        if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
-            helpers.throwInvalidOperationError("ListView configuration error: you have passed option height: AUTO into ListView control but didn't specify maxRows option.");
-        }
-
-        // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
@@ -412,48 +407,6 @@ export default Marionette.CompositeView.extend({
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
         this.handleResize();
-    },
-
-    __updatePadding() {
-        if (this.el.scrollHeight > this.el.offsetHeight) {
-            const scrollBarWidth = this.el.offsetWidth - this.el.clientWidth;
-            this.$el.css({
-                width: `calc(100% + ${scrollBarWidth}px)`,
-                paddingRight: scrollBarWidth
-            });
-        }
-    },
-
-    getAdjustedElementHeight(elementHeight) {
-        let adjustedElementHeight;
-        if (this.height !== heightOptions.AUTO) {
-            if (elementHeight) {
-                adjustedElementHeight = elementHeight;
-            } else {
-                let parent = this.el.offsetParent;
-                let clientHeight = parent.clientHeight;
-                while (parent && !clientHeight && parent !== document.body) {
-                    parent = parent.offsetParent;
-                    clientHeight = parent.clientHeight;
-                }
-                const parentStyles = getComputedStyle(parent);
-                const contentHeight = clientHeight - parseFloat(parentStyles.paddingTop) - parseFloat(parentStyles.paddingBottom);
-                adjustedElementHeight = contentHeight || defaultOptions.defaultElHeight;
-            }
-        } else {
-            const computedViewportHeight = Math.min(this.maxRows, this.collection.length);
-            let minHeight = 0;
-            let outerBoxAdjustments = 0;
-
-            if (this.isEmpty()) {
-                minHeight = this.$el.find('.empty-view').height();
-            }
-
-            outerBoxAdjustments = this.ui.visibleCollection.outerHeight() % this.childHeight;
-
-            adjustedElementHeight = Math.max(this.childHeight * computedViewportHeight + outerBoxAdjustments, minHeight);
-        }
-        return adjustedElementHeight;
     },
 
     onAddChild(view, child) {
@@ -495,19 +448,6 @@ export default Marionette.CompositeView.extend({
                 this.__updateTreeCollapse(model.children, collapsed);
             }
         });
-    },
-
-    __getParentCollapsed(model) {
-        let collapsed = false;
-        let parentModel = model.parentModel;
-        while (parentModel) {
-            if (parentModel.collapsed !== false) {
-                collapsed = true;
-                break;
-            }
-            parentModel = parentModel.parentModel;
-        }
-        return collapsed;
     },
 
     __updateCollapseAll() {

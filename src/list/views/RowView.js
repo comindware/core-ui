@@ -125,8 +125,8 @@ export default Marionette.View.extend({
 
         const isTree = this.getOption('isTree');
 
-        if (this.showChechboxes) {
-            const cellView = this.__showCheckbox();
+        if (this.options.showCheckbox) {
+            const cellView = this.__showCheckbox(this.model);
 
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
