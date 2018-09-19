@@ -111,7 +111,8 @@ export default Marionette.CompositeView.extend({
     },
 
     events: {
-        keydown: '__handleKeydown'
+        keydown: '__handleKeydown',
+        click: '__resetSelected'
     },
 
     className() {
@@ -189,6 +190,13 @@ export default Marionette.CompositeView.extend({
 
     end(e) {
         this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
+    },
+
+    __resetSelected(e) {
+        if (this.ui.childViewContainer[0].contains(e.target)) {
+            return;
+        }
+        this.collection.selected instanceof Backbone.Model && this.collection.deselect(this.collection.selected);
     },
 
     __handleKeydown(e) {
