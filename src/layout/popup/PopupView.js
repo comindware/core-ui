@@ -36,9 +36,12 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return Object.assign({
-            headerText: this.options.header
-        }, iconsNames);
+        return Object.assign(
+            {
+                headerText: this.options.header
+            },
+            iconsNames
+        );
     },
 
     className: classes.CLASS_NAME,
@@ -191,7 +194,7 @@ export default Marionette.View.extend({
     },
 
     __isNeedToPrevent() {
-        return document.querySelector('.dev-codemirror-maximized') !== null;
+        return this.el.querySelector('.dev-codemirror-maximized') !== null || this.el.querySelector('.CodeMirror-hints') !== null;
     },
 
     setLoading(loading) {

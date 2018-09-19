@@ -80,8 +80,8 @@ export default Marionette.Object.extend({
                 this.__setLoading(true);
                 const data = await this.options.memberService.getMembers(this.__getSettings());
                 this.members = {};
-                data.available.forEach(item => this.members[item.id] = item);
-                data.selected.forEach(item => this.members[item.id] = item);
+                data.available.forEach(item => (this.members[item.id] = item));
+                data.selected.forEach(item => (this.members[item.id] = item));
                 this.__processValues();
                 this.model.get('available').totalCount = data.totalCount;
                 this.view && this.view.toggleElementsQuantityWarning();
@@ -160,11 +160,12 @@ export default Marionette.Object.extend({
                 this.collection.filter(null);
                 return;
             }
+            const regex = new RegExp(searchValue, 'i');
             this.collection.filter(model => {
                 const modelType = model.get('type');
                 const modelName = model.get('name');
 
-                return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
+                return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && regex.test(modelName) : true);
             });
         }
     },
@@ -246,14 +247,11 @@ export default Marionette.Object.extend({
     __createModel() {
         this.model = new Backbone.Model();
 
-        const availableModels = new ItemCollection(
-            new Backbone.Collection([]),
-            {
-                isSliding: true,
-                selectableBehavior: 'multi',
-                comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
-            }
-        );
+        const availableModels = new ItemCollection(new Backbone.Collection([]), {
+            isSliding: true,
+            selectableBehavior: 'multi',
+            comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
+        });
         if (this.groupConfig) {
             availableModels.group(this.groupConfig);
         }
@@ -264,14 +262,11 @@ export default Marionette.Object.extend({
             ? Core.utils.helpers.comparatorFor(Core.utils.comparators.numberComparator2Asc, 'order')
             : Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name');
 
-        const selectedModels = new ItemCollection(
-            new Backbone.Collection([]),
-            {
-                isSliding: true,
-                selectableBehavior: 'multi',
-                comparator: selectedComparator
-            }
-        );
+        const selectedModels = new ItemCollection(new Backbone.Collection([]), {
+            isSliding: true,
+            selectableBehavior: 'multi',
+            comparator: selectedComparator
+        });
         this.model.set('selected', selectedModels);
 
         this.model.set({
@@ -303,10 +298,10 @@ export default Marionette.Object.extend({
         const selected = this.options.selected;
         let selectedItems = Array.isArray(selected)
             ? this.options.selected.map(id => {
-                const model = items[id];
-                delete items[id];
-                return model;
-            })
+                  const model = items[id];
+                  delete items[id];
+                  return model;
+              })
             : [];
 
         const availableItems = Object.values(items);
@@ -341,9 +336,9 @@ export default Marionette.Object.extend({
         };
     },
 
-    __onItemsSearch(text) {
-        this.collectionSearchValue.available = text;
-        this.__applyFilter('available');
+    __onItemsSearch(text, type) {
+        this.collectionSearchValue[type] = text;
+        this.__applyFilter(type);
     },
 
     __setLoading(state) {

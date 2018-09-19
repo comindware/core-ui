@@ -34,7 +34,7 @@ const defaultOptions = {
  * */
 
 export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
-    className: 'dev-code-editor-field',
+    className: 'dev-code-editor-field editor',
 
     regions: {
         editorContainer: '.js-code-codemirror-container'

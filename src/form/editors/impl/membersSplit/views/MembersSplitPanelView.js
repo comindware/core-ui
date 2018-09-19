@@ -57,13 +57,13 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const availableList = this.availableList = new Core.list.controllers.GridController({
+        const availableList = (this.availableList = new Core.list.controllers.GridController({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
             showSearch: true,
+            handleSearch: false,
             showCheckbox: true,
             showHeader: false,
-            handleSearch: !this.options.memberService,
             columns: [
                 {
                     title: 'name',
@@ -81,12 +81,12 @@ export default Marionette.View.extend({
                 maxRows: 10,
                 childViewSelector: this.options.childViewSelector
             }
-        }).view;
+        }).view);
 
         availableList.on('childview:dblclick', this.__moveRight);
         availableList.on('childview:dblclick', this.__moveRight);
+        availableList.on('search', text => this.channel.trigger('items:search', text, 'available'));
         this.listenTo(availableList, 'childview:dblclick', this.__moveRight);
-        this.listenTo(availableList, 'search', (...args) => this.channel.trigger('items:search', ...args));
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.toggleElementsQuantityWarning();
 
@@ -104,6 +104,7 @@ export default Marionette.View.extend({
                 }
             ],
             showSearch: true,
+            handleSearch: false,
             showHeader: false,
             listViewOptions: {
                 height: 'auto',
@@ -118,7 +119,8 @@ export default Marionette.View.extend({
         }).view;
 
         selectedList.on('childview:dblclick', this.__moveLeft);
-        
+        selectedList.on('search', text => this.channel.trigger('items:search', text, 'selected'));
+
         this.listenTo(this.model.get('available'), 'move:right enter', this.__moveRight);
         this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
@@ -127,11 +129,11 @@ export default Marionette.View.extend({
     },
 
     __moveRight(model) {
-        this.channel.trigger('items:move', 'available', 'selected', false, (model instanceof Backbone.Model && model));
+        this.channel.trigger('items:move', 'available', 'selected', false, model instanceof Backbone.Model && model);
     },
 
     __moveLeft(model) {
-        this.channel.trigger('items:move', 'selected', 'available', false, (model instanceof Backbone.Model && model));
+        this.channel.trigger('items:move', 'selected', 'available', false, model instanceof Backbone.Model && model);
     },
 
     __moveRightAll() {

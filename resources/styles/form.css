@@ -986,6 +986,7 @@ input[type="color"], .colorpicker{
 
 .dev-expression-editor-field-inline {
     display: flex;
+    align-items: center;
 }
 
 .dev-expression-editor-field-inline .editor {
