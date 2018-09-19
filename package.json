@@ -58,7 +58,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.0",
-    "eslint": "^5.5.0",
+    "eslint": "^5.6.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-flowtype-errors": "^3.6.0",
@@ -66,7 +66,7 @@
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
     "file-loader": "^2.0.0",
-    "flow-bin": "^0.80.0",
+    "flow-bin": "^0.81.0",
     "flow-webpack-plugin": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^7.0.1",
@@ -96,7 +96,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "3.0.0",
     "merge-stream": "^1.0.1",
-    "mini-css-extract-plugin": "^0.4.2",
+    "mini-css-extract-plugin": "^0.4.3",
     "postcss-apply": "^0.11.0",
     "postcss-custom-properties": "^7.0.0",
     "postcss-loader": "^3.0.0",
@@ -105,7 +105,7 @@
     "run-sequence": "^2.2.1",
     "style-loader": "^0.23.0",
     "url-loader": "^1.1.1",
-    "webpack": "^4.19.0"
+    "webpack": "^4.19.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",
