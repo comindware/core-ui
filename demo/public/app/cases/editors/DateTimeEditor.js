@@ -20,7 +20,7 @@ export default function() {
                 text: 'seconds'
             }
         }),
-        presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}",
+        presentation: "{{dateTimeValue}}",
         isEditor: true
     });
 }

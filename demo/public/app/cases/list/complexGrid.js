@@ -287,7 +287,8 @@ export default function () {
             showSearch: true,
             showCheckbox: true,
             showRowIndex: true,
-            childrenAttribute: 'children'
+            childrenAttribute: 'children',
+            title: 'Complex grid'
         },
         collection: data
     });
