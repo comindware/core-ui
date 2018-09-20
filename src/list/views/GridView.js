@@ -288,9 +288,10 @@ export default Marionette.View.extend({
         }
 
         if (this.getOption('title')) {
+            this.ui.title.parent().show();
             this.ui.title.text(this.getOption('title') || '');
         } else {
-            this.ui.title.hide();
+            this.ui.title.parent().hide();
         }
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
     },

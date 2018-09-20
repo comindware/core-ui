@@ -45,6 +45,7 @@ export default Marionette.View.extend({
                 view
             });
         });
+        this.__updateState();
     },
 
     onAttach() {

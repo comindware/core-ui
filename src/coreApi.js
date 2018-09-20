@@ -43,8 +43,6 @@ import InterfaceErrorMessageService from './services/InterfaceErrorMessageServic
 import ThemeService from './services/ThemeService';
 
 import VirtualCollection from './collections/VirtualCollection';
-import CollectionHighlightableBehavior from './collections/behaviors/HighlightableBehavior';
-import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
 import MobileService from './services/MobileService';
 
@@ -98,14 +96,6 @@ const core = {
      * @memberof module:core
      * */
     collections: {
-        /**
-         * Backbone collection behaviors of general use.
-         * @namespace
-         * @memberof module:core.collections
-         * */
-        behaviors: {
-            HighlightableBehavior: CollectionHighlightableBehavior
-        },
         VirtualCollection
     },
     /**
@@ -115,7 +105,6 @@ const core = {
      * */
     models: {
         behaviors: {
-            HighlightableBehavior,
             SelectableBehavior
         }
     },

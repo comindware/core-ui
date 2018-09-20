@@ -249,6 +249,9 @@ module.exports.apply = {
     'input-disabled-theme': {
         'background-color': variables['grey-100']
     },
+    'cell-input-disabled-theme': {
+        'background-color': 'transparent'
+    },
     'input-search-clear-theme': {
         width: '26px',
         height: '26px',

@@ -13,7 +13,7 @@ export default function() {
             key: 'dateValue',
             autocommit: true
         }),
-        presentation: "{{#isNull dateValue}}null{{else}}'{{dateValue}}'{{/isNull}}",
+        presentation: "{{dateValue}}",
         isEditor: true
     });
 }

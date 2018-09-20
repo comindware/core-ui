@@ -41,8 +41,8 @@ export default Marionette.View.extend({
         this.collectionView.on('add:child remove:child', () => this.trigger('change:content'));
     },
 
-    focus() {
-        this.collectionView.focus();
+    focus(options) {
+        this.collectionView.focus(options);
     },
 
     blur() {

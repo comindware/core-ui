@@ -2,8 +2,9 @@
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
+import { diffHelper, helpers } from 'utils';
+import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
+import HighlightableBehavior from './behaviors/HighlightableBehavior';
 
 const selectableBehavior = {
     none: null,
@@ -181,6 +182,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 _.extend(this, new SelectableBehaviorClass(this));
             }
             _.extend(this, new CheckableBehavior.CheckableCollection(this));
+            helpers.applyBehavior(this, HighlightableBehavior);
         },
 
         rebuild() {
@@ -298,12 +300,14 @@ const VirtualCollection = Backbone.Collection.extend(
 
         updateWindowSize(newWindowSize) {
             if (this.state.windowSize !== newWindowSize) {
+                this.internalUpdate = true;
                 this.isSliding = true;
                 this.state.windowSize = newWindowSize;
                 const oldModels = this.visibleModels.concat();
                 this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
                 this.visibleLength = this.visibleModels.length;
                 this.__processDiffs(oldModels);
+                this.internalUpdate = false;
             }
         },
 

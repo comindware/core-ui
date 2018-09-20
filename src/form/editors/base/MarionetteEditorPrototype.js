@@ -410,8 +410,10 @@ export default {
                 this.trigger('focus', this);
             },
 
-            onBlur() {
-                this.checkChange();
+            onBlur(options = {}) {
+                if (options.triggerChange === undefined || options.triggerChange === true) {
+                    this.checkChange();
+                }
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             },

@@ -1,5 +1,6 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import { keyCode } from 'utils';
 
 const $ = core.lib.$;
 
@@ -339,6 +340,50 @@ describe('Editors', () => {
             view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([]);
         });
+
+        it('should once trigger "view:ready" on remove icon item click', done => {
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    }
+                ]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                maxQuantitySelected: 5,
+                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            let counter = 0;
+            view.on('view:ready', () => ++counter);
+
+            view.$('.bubbles__i:eq(1)').trigger('mouseenter');
+
+            view.$('.js-bubble-delete')[0].click();
+            expect(view.getValue().length).toEqual(1);
+
+            setTimeout(() => {
+                expect(counter).toEqual(1);
+                done();
+            }, 1100) //after DemoReferenceEditorController fetch the data
+        });
         /*
         it('should set size for panel', () => {
             const model = new Backbone.Model({
@@ -489,5 +534,183 @@ describe('Editors', () => {
             });
         });
         */
+
+        it('should set value of first founded of search on Enter keyup', done => {
+            const model = new Backbone.Model({
+                value: 3
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                autocommit: true,
+                valueType: 'id',
+            });
+
+            view.on('attach', () => {
+                const input = findInput(view);
+                const first = setInterval(() => {
+                    input.click();
+                    input.val('1');
+                    input.keydown();
+                    if (view.panelCollection.length === 1) {
+                        clearTimeout(first);
+                        input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
+                        expect(model.get('value')).toEqual(1);
+                        done();
+                    }
+                }, 10);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should not set value on Enter keyup if search result is empty', done => {
+            const model = new Backbone.Model({
+                value: 3
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                autocommit: true,
+                valueType: 'id',
+            });
+
+            view.on('attach', () => {
+                const input = findInput(view);
+                const first = setInterval(() => {
+                    input.click();
+                    input.val('d');
+                    input.keydown();
+                    if (view.panelCollection.length === 0) {
+                        clearTimeout(first);
+                        input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
+                        expect(model.get('value')).toEqual(3);
+                        done();
+                    }
+                }, 10);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+        
+        it('should not delete selected value on blur if search result is none', done => {
+            const model = new Backbone.Model({
+                value: 3
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                autocommit: true,
+                valueType: 'id'
+            });
+
+            view.on('attach', () => {
+                const length = view.dropdownView.button.collectionView.collection.length;
+                expect(length).toEqual(2); //selected + input
+
+                const input = findInput(view);
+                const first = setInterval(() => {
+                    input.click();
+                    input.val('d');
+                    input.keydown();
+                    if (view.panelCollection.length === 0) {
+                        clearTimeout(first);
+                        setTimeout(() => {
+                            view.blur();
+                            const length = view.dropdownView.button.collectionView.collection.length;
+                            expect(length).toEqual(2); //selected + input
+                            done();
+                        }, 100);
+                    }
+                }, 10);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should have input for search in single value mode', done => {
+            const model = new Backbone.Model({
+                value: 54
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                autocommit: true,
+                valueType: 'id',
+            });
+
+            view.on('attach', () => {
+                const input = findInput(view);
+                expect(input.length).toEqual(1);
+                done();
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should have input for search in multi value mode', done => {
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    },
+                    {
+                        id: 'task.3',
+                        text: 'Test Reference 3'
+                    }
+                ]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                maxQuantitySelected: 3,
+                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
+            });
+
+            view.on('attach', () => {
+                const input = findInput(view);
+                expect(input.length).toEqual(1);
+                done();
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
     });
 });

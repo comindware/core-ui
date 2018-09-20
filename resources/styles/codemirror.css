@@ -540,12 +540,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-button-mode {
-    height: 20px;
-    line-height: 20px;
-    font-size: 12px;
-    position: relative;
-    display: inline-block;
-    padding-right: 20px;
+    line-height: initial;
 }
 
 .dev-code-editor-field:hover .editor__icons.icon-remove {
@@ -557,12 +552,14 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-button-edit {
-    padding: 0 5px;
     vertical-align: top;
     cursor: pointer;
     white-space: nowrap;
-    border: 1px solid #dfe4e8;
-    border-radius: 2px;
+    background-color: #ffffff;
+    border: 1px solid #c1c1c1;
+    border-radius: 4px;
+    height: 100%;
+    padding: 4px 20px 4px 10px;
 }
 
 .dev-code-button-edit:hover {

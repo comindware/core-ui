@@ -14,11 +14,11 @@ function __updateChecked() {
     this.__triggerCheck();
 }
 
-CheckableBehavior.CheckableCollection = function (collection) {
+CheckableBehavior.CheckableCollection = function(collection) {
     this.collection = collection;
     this.__updateChecked();
-    collection.on('add remove reset update', function () {
-        if (this.internalCheck) {
+    collection.on('add remove reset update', function() {
+        if (this.internalCheck || collection.internalUpdate) {
             return;
         }
         this.__debounceUpdateChecked();
@@ -26,9 +26,10 @@ CheckableBehavior.CheckableCollection = function (collection) {
 };
 
 _.extend(CheckableBehavior.CheckableCollection.prototype, {
-
     check(model) {
-        if (this.internalCheck || this.checked[model.cid]) { return; }
+        if (this.internalCheck || this.checked[model.cid]) {
+            return;
+        }
 
         this.checked[model.cid] = model;
         model.check();
@@ -36,7 +37,9 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     uncheck(model) {
-        if (this.internalCheck || !this.checked[model.cid]) { return; }
+        if (this.internalCheck || !this.checked[model.cid]) {
+            return;
+        }
 
         delete this.checked[model.cid];
         model.uncheck();
@@ -44,7 +47,9 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     checkSome(model) {
-        if (!this.checked[model.cid]) { return; }
+        if (!this.checked[model.cid]) {
+            return;
+        }
 
         delete this.checked[model.cid];
         model.checkSome();
@@ -91,7 +96,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
                     child.uncheck();
                 }
                 this.updateTreeNodesCheck(child, false);
-            })
+            });
         }
         if (!updateParent) {
             return;
@@ -101,7 +106,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
             const length = parent.children.length;
             const checkedLength = parent.children.filter(child => child.checked).length;
             if (checkedLength === length) {
-                parent.check()
+                parent.check();
             } else if (checkedLength > 0 && checkedLength < length) {
                 parent.checkSome();
             } else if (checkedLength === 0) {
@@ -119,30 +124,35 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
         const length = this.length;
 
-        if (checkedLength === length) {
-            this.collection.trigger('check:all', this, 'checked');
-            return;
-        }
+        if (checkedLength !== this.prevChechLength) {
+            this.prevChechLength = checkedLength;
 
-        if (checkedLength === 0) {
-            this.collection.trigger('check:none', this, 'unchecked');
-            return;
-        }
+            if (checkedLength === length) {
+                this.collection.trigger('check:all', this, 'checked');
+                return;
+            }
 
-        if (checkedLength > 0 && checkedLength < length) {
-            this.collection.trigger('check:some', this, 'checkedSome');
+            if (checkedLength === 0) {
+                this.collection.trigger('check:none', this, 'unchecked');
+                return;
+            }
+
+            if (checkedLength > 0 && checkedLength < length) {
+                this.collection.trigger('check:some', this, 'checkedSome');
+            }
         }
     }
 });
 
-CheckableBehavior.CheckableModel = function (model) {
+CheckableBehavior.CheckableModel = function(model) {
     this.model = model;
 };
 
 _.extend(CheckableBehavior.CheckableModel.prototype, {
-
     check() {
-        if (this.checked) { return; }
+        if (this.checked) {
+            return;
+        }
 
         this.checked = true;
         this.trigger('checked', this);
@@ -153,7 +163,9 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
     },
 
     uncheck() {
-        if (this.checked === false) { return; }
+        if (this.checked === false) {
+            return;
+        }
 
         this.checked = false;
         this.trigger('unchecked', this);
@@ -164,7 +176,9 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
     },
 
     checkSome() {
-        if (this.checked === null) { return; }
+        if (this.checked === null) {
+            return;
+        }
 
         this.checked = null;
         this.trigger('checked:some', this);
