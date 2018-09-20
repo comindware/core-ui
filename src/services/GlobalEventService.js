@@ -26,6 +26,10 @@ const windowEventList = [
     {
         name: 'load',
         capture: false
+    },
+    {
+        name: 'unload',
+        capture: false
     }
 ];
 
