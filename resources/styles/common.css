@@ -922,6 +922,38 @@ a:hover {
 /* End Two Columns Switch */
 
 /* Toolbar component */
+.toolbar {
+    height: 50px;
+    padding: 0 17px;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    background: #d6e7f2;
+    color:#636262;
+    box-sizing: border-box;
+    z-index: 55; /*bigger then grid*/;
+    flex: none;
+}
+
+
+.toolbar__i{
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.toolbar__i_left{
+    flex-grow: 1;
+}
+.toolbar__i_center{
+    flex-grow: 2;
+    text-align: center;
+}
+
+
+
 
 .toolbar-items-wrp {
     display: flex;
