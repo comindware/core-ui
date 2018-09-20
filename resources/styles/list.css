@@ -474,7 +474,7 @@
 .dragover .cell,
 .dragover.cell,
 .dragover .grid-header-column{
-    border-bottom: 1px solid #0575bd;
+    border-bottom: 1px solid #ff0000;
 }
 
 .cell > .editor:after{
