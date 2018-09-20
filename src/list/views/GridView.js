@@ -336,7 +336,7 @@ export default Marionette.View.extend({
 
     onDestroy() {
         this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
-        this.__configurationPanel.destroy();
+        this.__configurationPanel && this.__configurationPanel.destroy();
     },
 
     sortBy(columnIndex, sorting) {

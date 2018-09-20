@@ -1,13 +1,17 @@
 import template from '../../templates/infoButton.html';
+import dropdown from 'dropdown';
+import getIconPrefixer from '../../../utils/handlebars/getIconPrefixer';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    className: 'form-label__info-button fa fa-question-circle',
+    className() {
+        return `${getIconPrefixer('question-circle')('question-circle')}`;
+    },
 
     behaviors: {
         CustomAnchorBehavior: {
-            behaviorClass: Core.dropdown.views.behaviors.CustomAnchorBehavior,
+            behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
             anchor: '.js-anchor',
             omitDefaultStyling: true
         }

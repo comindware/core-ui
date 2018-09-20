@@ -48,6 +48,34 @@ export const getDefaultActions = () => [
     }
 ];
 
+export const filterPredicates = {
+    between: 'between',
+    substringOf: 'substringof',
+    notSubstringOf: 'notsubstringof',
+    startsWith: 'startsWith',
+    endsWith: 'endswith',
+    equal: 'eq',
+    notEqual: 'ne',
+    greaterThan: 'gt',
+    greaterOrEquals: 'ge',
+    lessThan: 'lt',
+    lessOrEquals: 'le',
+    greateThan: 'gt',
+    notSet: 'ns',
+    set: 'se'
+};
+
+export const aggregationPredicates = {
+    sum: 'sum',
+    count: 'count'
+};
+
+export const booleanDropdown = {
+    yes: true,
+    no: false,
+    null: null
+};
+
 export default {
     contextTypes,
     columnTypes,

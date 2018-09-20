@@ -4,21 +4,15 @@ import template from '../../templates/gridcolumnheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
 
-/**
- * @name GridColumnHeaderView
- * @memberof module:core.list.views
- * @class GridColumnHeaderView
- * @constructor
- * @description View используемый по умолчанию для отображения ячейки заголовка (шапки) списка, передавать в
- * {@link module:core.list.views.GridView GridView options.gridColumnHeaderView}
- * @extends Marionette.View
- * @param {Object} options Constructor options
- * @param {Array} options.columns массив колонок
- * */
-
 export default Marionette.View.extend({
     initialize(options) {
         this.column = options.column;
+    },
+
+    attributes() {
+        return {
+            title: this.options.title
+        };
     },
 
     template: Handlebars.compile(template),
@@ -28,17 +22,15 @@ export default Marionette.View.extend({
         this.alignRight = [objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type);
         return `grid-header-column-content ${this.alignRight ? 'grid-header-right' : ''}`;
     },
+
     events: {
-        click: '__handleSorting'
+        mouseover: '__handleColumnSelect',
+        click: '__handleSorting',
+        'click .js-help-text-region': '__handleHelpMenuClick'
     },
 
-    __handleSorting(e) {
-        if (e.target.className.includes('js-collapsible-button')) {
-            return;
-        }
-        this.trigger('columnSort', this, {
-            column: this.column
-        });
+    regions: {
+        helpTextRegion: '.js-help-text-region'
     },
 
     templateContext() {
@@ -51,11 +43,9 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const helpText = this.getOption('column').helpText;
+        const helpText = this.column.helpText;
 
         if (helpText) {
-            this.addRegion('viewRegion', { el: this.ui.helpTextRegion[0] });
-
             const infoPopout = Core.dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
                 panelView: InfoMessageView,
@@ -65,7 +55,28 @@ export default Marionette.View.extend({
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.getRegion('viewRegion').show(infoPopout);
+
+            this.showChildView('helpTextRegion', infoPopout);
         }
+    },
+
+    __handleHelpMenuClick() {
+        return false;
+    },
+
+    __handleSorting(e) {
+        if (e.target.className.includes('js-collapsible-button')) {
+            return;
+        }
+        this.trigger('columnSort', this, {
+            column: this.column
+        });
+    },
+
+    __handleColumnSelect(event) {
+        this.trigger('handleColumnSelect', {
+            view: this,
+            event
+        });
     }
 });

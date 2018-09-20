@@ -1,4 +1,5 @@
-import template from '../../templates/gridColumnConfigTabPanel.html';
+import template from '../templates/gridColumnConfigTabPanel.html';
+import PanelView from './сonfigurationPanel/GridColumnConfigPanelView';
 
 const constants = {
     animationTime: 100,
@@ -9,19 +10,6 @@ export default Marionette.View.extend({
     initialize(options) {
         this.panelViewModel = new Backbone.Model({
             columnModel: new Backbone.Model()
-        });
-
-        this.panelViewModel.set({
-            columnType: this.columnModel.get('columnType'),
-            filtersConfigurationModel: new Backbone.Model({
-                datasourceId: this.datasourceId,
-                columnType: this.columnModel.get('columnType'),
-                dataFormat: this.columnModel.get('dataFormat'),
-                query: this.columnModel.get('queryConfiguration')
-            }),
-            level,
-            columnModel: viewData,
-            isActionChange: isNeedToApply
         });
 
         this.isOpen = false;
@@ -45,26 +33,38 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.showChildView('tabPanelRegion', this.panelView);
-        this.listenTo(Core.services.GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
+        const panelView = new PanelView();
+        this.showChildView('tabPanelRegion', panelView);
+
+        this.listenTo(Core.services.GlobalEventService, 'window:mousedown:captured', target => this.__handleGlobalMousedown(target, panelView));
     },
 
-    __handleGlobalMousedown(target) {
-        if (!this.__isNestedInPanel(target) && !this.__isNestedInButton(target)) {
+    updatePanelConfiguration(level, viewData) {
+        this.panelViewModel.set({
+            columnType: this.columnModel.get('columnType'),
+            filtersConfigurationModel: new Backbone.Model({
+                datasourceId: this.datasourceId,
+                columnType: this.columnModel.get('columnType'),
+                dataFormat: this.columnModel.get('dataFormat'),
+                query: this.columnModel.get('queryConfiguration')
+            }),
+            level,
+            columnModel: viewData
+        });
+    },
+
+    __handleGlobalMousedown(target, panelView) {
+        if (!this.__isNestedInPanel(target) && !this.__isNestedInButton(target, panelView)) {
             this.trigger('mouseDown', true);
         }
     },
 
-    __isNestedInButton(testedEl) {
-        return this.el === testedEl || $.contains(this.el, testedEl) || $.contains(this.panelView.el, testedEl);
+    __isNestedInButton(target, panelView) {
+        return this.el === target || $.contains(this.el, target) || $.contains(panelView.el, target);
     },
 
     __isNestedInPanel(testedEl) {
         return !!$(testedEl).parents('.js-core-ui__global-popup-region').length || !!$(testedEl).parents('.js-grid-header-region').length;
-    },
-
-    updatePanelView(options) {
-        this.panelView.updateView && this.panelView.updateView(options);
     },
 
     __createPanelView(panelView, options) {

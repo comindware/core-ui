@@ -1213,3 +1213,8 @@ input[type="color"], .colorpicker{
 .simplified-button_grid .selected .cell {
     background-color: transparent!important;
 }
+
+.fr-dropdown-message {
+    min-width: 200px;
+    padding: 10px;
+}
