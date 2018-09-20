@@ -9,7 +9,7 @@ export default () => {
             numberCell: i + 1,
             dateTimeCell: '2015-07-24T08:13:13.847Z',
             durationCell: 'P12DT5H42M',
-            booleanCell: true,
+            booleanCell: i % 2,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
             referenceCell: [{ id: 'task.1', name: 'Ref 1', abbreviation: 'AB' }, { id: 'task.2', name: 'Ref 2' }, { id: 'task.3', name: 'Ref 3' }, { id: 'task.4', name: 'Ref 4' }, { id: 'task.5', name: 'Ref 5' }, { id: 'task.6', name: 'Ref 6' }, { id: 'task.7', name: 'Ref 7' }],
             enumCell: { valueExplained: ['123'] },
@@ -33,7 +33,8 @@ export default () => {
             required: true,
             sorting: 'asc',
             editable: true,
-            autocommit: true
+            autocommit: true,
+            getReadonly: model => model.get('booleanCell')
         },
         {
             key: 'numberCell',
@@ -67,7 +68,7 @@ export default () => {
             title: 'Boolean Cell',
             editable: true,
             autocommit: true,
-            getHidden: model => model.get('numberCell') % 2
+            getHidden: model => !model.get('numberCell') % 2 && !model.get('numberCell') % 3
         },
         {
             key: 'documentCell',
@@ -91,7 +92,7 @@ export default () => {
             showCheckboxes: true,
             autocommit: true,
             maxQuantitySelected: 5,
-            getReadonly: model => model.get('numberCell') % 2,
+            getReadonly: model => model.get('numberCell') % 2
         }
     ];
 

@@ -87,6 +87,22 @@ describe('Components', () => {
         }
     ];
 
+    const dependantColumns = [
+        {
+            key: 'textCell',
+            type: 'Text',
+            title: 'TextCell',
+            getReadonly: model => model.get('booleanCell'),
+            editable: true
+        },
+        {
+            key: 'booleanCell',
+            type: 'Boolean',
+            title: 'Boolean Cell',
+            editable: true
+        }
+    ];
+
     const excludeActions = ['archive', 'unarchive'];
     const additionalActions = [
         {
@@ -158,64 +174,100 @@ describe('Components', () => {
             gridController.view.$(searchInput).trigger('keyup');
         });
         /*
-        it('should update toolbar on row checkbox select', done => {
-            const collection = new Backbone.Collection(data);
+               it('should correctly apply access modificators', done => {
+                   const collection = new Backbone.Collection(data);
 
-            const gridController = new core.list.controllers.GridController({
-                columns,
-                selectableBehavior: 'multi',
-                showToolbar: true,
-                showSearch: true,
-                showCheckbox: true,
-                collection,
-                title: 'Editable grid',
-                excludeActions,
-                additionalActions
-            });
+                   const gridController = new core.list.controllers.GridController({
+                       columns: dependantColumns,
+                       selectableBehavior: 'multi',
+                       collection,
+                       title: 'Editable grid'
+                   });
+                   const view = gridController.view;
+                   window.app
+                       .getView()
+                       .getRegion('contentRegion')
+                       .show(view);
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(gridController.view);
+                   const checkBox = document.querySelector('.editor_checkbox');
+                   const textInput = document.querySelector('.editor .input_text');
 
-            const firstChechbox = gridController.view.$('.checkbox:eq(1)');
-            const secondChechbox = gridController.view.$('.checkbox:eq(2)');
-            const gridCollection = gridController.view.collection;
-            const allItemsCollection = gridController.view.toolbarView.allItemsCollection;
-            const checkSomeCallback = jasmine.createSpy('checkSomeCallback');
-            gridCollection.on('check:some', checkSomeCallback);
+                   expect(textInput.hasAttribute('readonly')).toEqual(true);
 
-            const firstObserver = new MutationObserver(() => {
-                expect(firstChechbox[0].classList.contains('editor_checked')).toBe(true);
-            });
+                   var observer = new MutationObserver(() => {
+                       expect(textInput.hasAttribute('readonly')).toEqual(false);
 
-            firstObserver.observe(firstChechbox[0], {
-                attributes: true,
-                attributeFilter: ['class'],
-                childList: false,
-                characterData: false
-            });
+                       Backbone.$(checkBox).click();
 
-            const secondObserver = new MutationObserver(() => {
-                expect(secondChechbox[0].classList.contains('editor_checked')).toBe(true);
-            });
+                       expect(textInput.hasAttribute('readonly')).toEqual(true);
 
-            secondObserver.observe(secondChechbox[0], {
-                attributes: true,
-                attributeFilter: ['class'],
-                childList: false,
-                characterData: false
-            });
+                       this.disconnect();
+                       done();
+                   });
 
-            allItemsCollection.on('update:child:top', () => {
-                expect(checkSomeCallback).toHaveBeenCalledTimes(1);
-                expect(gridController.view.toolbarView.allItemsCollection.length).toBe(4);
-                done();
-            });
+                   observer.observe(textInput, { attributes: true, childList: false, characterData: false });
 
-            firstChechbox.click();
-            secondChechbox.click();
-        });
-        */
+                   Backbone.$(checkBox).click();
+               });
+
+               it('should update toolbar on row checkbox select', done => {
+                   const collection = new Backbone.Collection(data);
+
+                   const gridController = new core.list.controllers.GridController({
+                       columns,
+                       selectableBehavior: 'multi',
+                       showToolbar: true,
+                       showSearch: true,
+                       showCheckbox: true,
+                       collection,
+                       title: 'Editable grid',
+                       excludeActions,
+                       additionalActions
+                   });
+
+                   window.app
+                       .getView()
+                       .getRegion('contentRegion')
+                       .show(gridController.view);
+
+                   const firstChechbox = gridController.view.$('.checkbox:eq(1)');
+                   const secondChechbox = gridController.view.$('.checkbox:eq(2)');
+                   const gridCollection = gridController.view.collection;
+                   const allItemsCollection = gridController.view.toolbarView.allItemsCollection;
+                   const checkSomeCallback = jasmine.createSpy('checkSomeCallback');
+                   gridCollection.on('check:some', checkSomeCallback);
+
+                   const firstObserver = new MutationObserver(() => {
+                       expect(firstChechbox[0].classList.contains('editor_checked')).toBe(true);
+                   });
+
+                   firstObserver.observe(firstChechbox[0], {
+                       attributes: true,
+                       attributeFilter: ['class'],
+                       childList: false,
+                       characterData: false
+                   });
+
+                   const secondObserver = new MutationObserver(() => {
+                       expect(secondChechbox[0].classList.contains('editor_checked')).toBe(true);
+                   });
+
+                   secondObserver.observe(secondChechbox[0], {
+                       attributes: true,
+                       attributeFilter: ['class'],
+                       childList: false,
+                       characterData: false
+                   });
+
+                   allItemsCollection.on('update:child:top', () => {
+                       expect(checkSomeCallback).toHaveBeenCalledTimes(1);
+                       expect(gridController.view.toolbarView.allItemsCollection.length).toBe(4);
+                       done();
+                   });
+
+                   firstChechbox.click();
+                   secondChechbox.click();
+               });
+               */
     });
 });

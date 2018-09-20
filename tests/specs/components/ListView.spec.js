@@ -2,7 +2,7 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    const data = _.times(10000, i => ({
+    const data = _.times(1000, i => ({
         id: i + 1,
         title: `My Task ${i + 1}`
     }));

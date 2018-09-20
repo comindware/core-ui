@@ -100,6 +100,21 @@ body {
   @apply --input-disabled-theme;
 }
 
+.cell .editor_disabled .input,
+.cell .editor_disabled .input:hover,
+.cell .editor_readonly .input,
+.cell .editor_readonly .input:hover,
+.cell .editor_disabled .textarea,
+.cell .editor_readonly .textarea,
+.cell .editor_disabled .bubbles,
+.cell .editor_disabled .bubbles:hover,
+.cell .editor_readonly .bubbles,
+.cell .editor_readonly .bubbles:hover,
+.cell .editor.context_select.editor_readonly,
+.cell .editor.context_select.editor_disabled {
+  @apply --cell-input-disabled-theme;
+}
+
 .error .editor .input,
 .error .editor .textarea,
 .error .editor .bubbles,
