@@ -34,7 +34,7 @@ const defaultOptions = {
                 documentsId: documents.map(item => item.id)
             }))
         ),
-    removeDocuments: () => { },
+    removeDocuments: () => {},
     displayText: ''
 };
 
@@ -142,7 +142,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     __onDargover(e) {
         const dataTransfer = e.originalEvent.dataTransfer;
 
-        if (!dataTransfer.files.length) {
+        if (!dataTransfer.items.length || !dataTransfer.types.includes('Files')) {
             return;
         }
         if (this.readonly) {
