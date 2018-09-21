@@ -590,6 +590,11 @@
 .compact.fr-collection .sort_up{
     top: 3px;
 }
+
+.compact.fr-collection .toolbar {
+    padding: 0 5px;
+    height: 38px;
+}
 /*-- End Compact list --*/
 
 /*-- ExtendedString --*/
