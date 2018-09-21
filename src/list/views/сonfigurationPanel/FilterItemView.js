@@ -1,11 +1,11 @@
-import template from '../../templates/filterItem.html';
-import { columnType, filterPredicates } from '../../../Meta';
+import template from '../../templates/filterPanel/filterItem.html';
+import { columnTypes, filterPredicates } from '../../../Meta';
 import FilterValueItemView from './FilterValueItemView';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 
 export default Marionette.View.extend({
     initialize(options) {
-        this.__createFilterCompositeView(options.filtersConfigurationModel.get('columnType'));
+        this.__createFilterCompositeView(options.filtersConfigurationModel.get('columnTypes'));
     },
 
     regions: {
@@ -55,21 +55,21 @@ export default Marionette.View.extend({
 
     __createFilterCompositeView(filterType) {
         switch (filterType) {
-            case columnType.string:
-            case columnType.integer:
-            case columnType.decimal:
-            case columnType.datetime:
-            case columnType.duration:
-            case columnType.users:
-            case columnType.reference:
+            case columnTypes.string:
+            case columnTypes.integer:
+            case columnTypes.decimal:
+            case columnTypes.datetime:
+            case columnTypes.duration:
+            case columnTypes.users:
+            case columnTypes.reference:
                 this.filterView = this.__createFilterView();
                 this.filterPredicateDropdown = this.__createFilterPredicateDropdown(this.getOption('filtersConfigurationModel').get('columnType'), this.model);
                 this.$el.removeClass('filters_settings-inline-after');
                 break;
-            case columnType.id:
-            case columnType.enumerable:
-            case columnType.boolean:
-            case columnType.document:
+            case columnTypes.id:
+            case columnTypes.enumerable:
+            case columnTypes.boolean:
+            case columnTypes.document:
                 this.filterView = this.__createFilterView();
                 this.$el.addClass('filters_settings-inline-after');
                 break;
@@ -88,9 +88,9 @@ export default Marionette.View.extend({
 
     __adjustRemoveFilterButtonVisibility() {
         switch (this.getOption('filtersConfigurationModel').get('columnType')) {
-            case columnType.enumerable:
-            case columnType.users:
-            case columnType.document:
+            case columnTypes.enumerable:
+            case columnTypes.users:
+            case columnTypes.document:
                 this.ui.removeButton.hide();
                 break;
             default:

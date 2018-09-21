@@ -4,8 +4,8 @@
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
-import SelectionPanelView from './SelectionPanelView';
-import SelectionCellView from './SelectionCellView';
+import SelectionPanelView from './selections/SelectionPanelView';
+import SelectionCellView from './selections/SelectionCellView';
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
@@ -13,6 +13,7 @@ import ToolbarView from '../../components/toolbar/ToolbarView';
 import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
+import ConfigurationPanel from './ConfigurationPanel';
 import transliterator from 'utils/transliterator';
 
 /*
@@ -176,6 +177,10 @@ export default Marionette.View.extend({
             if (draggable) {
                 this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
                 this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
+            }
+
+            if (this.options.showConfigurationPanel) {
+                this.__initializeConfigurationPanel();
             }
         }
 
@@ -341,6 +346,7 @@ export default Marionette.View.extend({
 
     onDestroy() {
         this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
+        this.__configurationPanel && this.__configurationPanel.destroy();
     },
 
     sortBy(columnIndex, sorting) {
@@ -456,5 +462,9 @@ export default Marionette.View.extend({
         } else {
             style.innerHTML += newValue;
         }
+    },
+
+    __initializeConfigurationPanel() {
+        this.__configurationPanel = new ConfigurationPanel();
     }
 });

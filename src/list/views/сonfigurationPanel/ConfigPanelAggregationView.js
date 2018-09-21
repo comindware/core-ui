@@ -1,4 +1,4 @@
-import template from '../../templates/configPanelAgregation.html';
+import template from '../../templates/filterPanel/configPanelAgregation.html';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 
 export default Marionette.View.extend({

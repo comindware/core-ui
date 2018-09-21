@@ -1,7 +1,5 @@
-import shared from 'modules/shared';
-import { objectPropertyFormats as dateFormats } from 'modules/shared/Meta';
 import DatasetViewReferenceCollection from '../collections/DatasetViewReferenceCollection';
-import { filterPredicates, aggregationPredicates, booleanDropdown, columnType } from '../meta';
+import { filterPredicates, aggregationPredicates, booleanDropdown, columnTypes, objectPropertyFormats as dateFormats } from '../meta';
 import formatService from 'services/FormatService';
 
 const constants = {
@@ -14,7 +12,7 @@ export default {
         const editorColumnType = filtersConfigurationModel.get('columnType');
 
         switch (editorColumnType) {
-            case columnType.decimal:
+            case columnTypes.decimal:
                 return new Core.form.editors.NumberEditor({
                     model,
                     key: 'value',
@@ -24,7 +22,7 @@ export default {
                     max: null,
                     allowFloat: true
                 });
-            case columnType.integer:
+            case columnTypes.integer:
                 return new Core.form.editors.NumberEditor({
                     model,
                     key: 'value',
@@ -34,7 +32,7 @@ export default {
                     max: null,
                     allowFloat: false
                 });
-            case columnType.datetime: {
+            case columnTypes.datetime: {
                 const dateDisplayFormat = formatService.getDateDisplayFormat(filtersConfigurationModel.get('dataFormat'));
                 const filterDateFormat = filtersConfigurationModel.get('dataFormat');
                 if (
@@ -60,7 +58,7 @@ export default {
                     autocommit: true
                 });
             }
-            case columnType.duration:
+            case columnTypes.duration:
                 return new Core.form.editors.DurationEditor({
                     model,
                     key: 'value',
@@ -68,7 +66,7 @@ export default {
                     autocommit: true,
                     showEmptyParts: true
                 });
-            case columnType.boolean:
+            case columnTypes.boolean:
                 return new Core.form.editors.RadioGroupEditor({
                     model,
                     key: 'value',
@@ -89,7 +87,7 @@ export default {
                         }
                     ]
                 });
-            case columnType.document:
+            case columnTypes.document:
                 return new Core.form.editors.RadioGroupEditor({
                     model,
                     key: 'value',
@@ -106,17 +104,17 @@ export default {
                         }
                     ]
                 });
-            case columnType.string:
+            case columnTypes.string:
                 return new Core.form.editors.TextEditor({
                     model,
                     key: 'value',
                     autocommit: true,
                     changeMode: 'keydown'
                 });
-            case columnType.id:
-            case columnType.users:
-            case columnType.reference:
-            case columnType.enumerable: {
+            case columnTypes.id:
+            case columnTypes.users:
+            case columnTypes.reference:
+            case columnTypes.enumerable: {
                 const datasourceId = filtersConfigurationModel.get('datasourceId');
                 model.set('datasourceId', datasourceId, { silent: true });
                 let searchId = null;
@@ -129,7 +127,7 @@ export default {
                     model,
                     key: 'value',
                     autocommit: true,
-                    controller: new shared.controllers.DataSourceReferenceEditorController({
+                    controller: new Core.form.editors.reference.controllers.BaseReferenceEditorController({
                         collection: new DatasetViewReferenceCollection([], { datasourceId, searchId, query: filtersConfigurationModel.get('query') })
                     }),
                     textFilterDelay: 1000,
@@ -153,9 +151,9 @@ export default {
         ];
 
         switch (inputColumnType) {
-            case columnType.decimal:
-            case columnType.integer:
-            case columnType.duration:
+            case columnTypes.decimal:
+            case columnTypes.integer:
+            case columnTypes.duration:
                 aggregationMethodsList.push({
                     id: aggregationPredicates.sum,
                     title: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.SUM'),
@@ -179,10 +177,10 @@ export default {
         let filterPredicateCollection;
 
         switch (inputColumnType) {
-            case columnType.decimal:
-            case columnType.integer:
-            case columnType.duration:
-            case columnType.datetime:
+            case columnTypes.decimal:
+            case columnTypes.integer:
+            case columnTypes.duration:
+            case columnTypes.datetime:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {
@@ -217,7 +215,7 @@ export default {
                     { comparator: null }
                 );
                 break;
-            case columnType.string:
+            case columnTypes.string:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {
@@ -256,9 +254,9 @@ export default {
                     { comparator: null }
                 );
                 break;
-            case columnType.users:
-            case columnType.reference:
-            case columnType.enumerable:
+            case columnTypes.users:
+            case columnTypes.reference:
+            case columnTypes.enumerable:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {

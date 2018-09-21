@@ -10,7 +10,19 @@ export const columnTypes = {
     BOOLEAN: 'boolean',
     DATETIME: 'dateTime',
     HTML: 'html',
-    DOCUMENT: 'document'
+    DOCUMENT: 'document',
+    decimal: 'Decimal',
+    integer: 'Integer',
+    datetime: 'DateTime',
+    duration: 'Duration',
+    string: 'String',
+    boolean: 'Boolean',
+    users: 'AccountProperty',
+    reference: 'InstanceProperty',
+    enumerable: 'EnumProperty',
+    document: 'DocumentProperty',
+    collection: 'Collection',
+    id: 'id'
 };
 
 export const getDefaultActions = () => [
@@ -35,6 +47,34 @@ export const getDefaultActions = () => [
         contextType: contextTypes.any
     }
 ];
+
+export const filterPredicates = {
+    between: 'between',
+    substringOf: 'substringof',
+    notSubstringOf: 'notsubstringof',
+    startsWith: 'startsWith',
+    endsWith: 'endswith',
+    equal: 'eq',
+    notEqual: 'ne',
+    greaterThan: 'gt',
+    greaterOrEquals: 'ge',
+    lessThan: 'lt',
+    lessOrEquals: 'le',
+    greateThan: 'gt',
+    notSet: 'ns',
+    set: 'se'
+};
+
+export const aggregationPredicates = {
+    sum: 'sum',
+    count: 'count'
+};
+
+export const booleanDropdown = {
+    yes: true,
+    no: false,
+    null: null
+};
 
 export default {
     contextTypes,

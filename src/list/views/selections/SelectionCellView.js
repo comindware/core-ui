@@ -1,5 +1,5 @@
 //@flow
-import template from '../templates/selectionCell.hbs';
+import template from '../../templates/selectionCell.hbs';
 
 const selectionTypes = {
     all: 'all',
