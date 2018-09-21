@@ -33,7 +33,9 @@ export default Marionette.View.extend({
 
     tagName: 'form',
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.options.class || ''}`;
+    },
 
     regions: {
         contentRegion: {
