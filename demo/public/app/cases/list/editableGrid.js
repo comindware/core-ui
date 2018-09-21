@@ -34,6 +34,7 @@ export default () => {
             required: true,
             sorting: 'asc',
             editable: true,
+            helpText: 'Text cell'
             // autocommit: true //property autocommit:true will be set for transliteratedFields
         },
         {

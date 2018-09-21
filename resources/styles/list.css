@@ -669,3 +669,7 @@
 }
 
 /*-- End ExtendedString --*/
+
+.collection-grid-header__help {
+    float: right;
+}
