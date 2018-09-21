@@ -126,7 +126,9 @@ export default Marionette.View.extend({
         }
     },
 
-    className: 'popout',
+    className() {
+        return `dropdown ${this.options.class || ''}`;
+    },
 
     regions: {
         buttonRegion: '.js-button-region'

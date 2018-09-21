@@ -224,7 +224,10 @@ export default Marionette.View.extend({
         selectionPanelRegion: '.js-grid-selection-panel-view',
         selectionHeaderRegion: '.js-grid-selection-header-view',
         noColumnsViewRegion: '.js-nocolumns-view-region',
-        toolbarRegion: '.js-grid-tools-toolbar-region',
+        toolbarRegion: {
+            el: '.js-grid-tools-toolbar-region',
+            replaceElement: true
+        },
         searchRegion: '.js-grid-tools-search-region',
         loadingRegion: '.js-grid-loading-region'
     },
