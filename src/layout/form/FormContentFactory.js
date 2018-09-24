@@ -60,7 +60,7 @@ export default {
                     }
 
                     if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => GridController.on(key, child.viewEvents[key]));
+                        Object.keys(child.viewEvents).forEach(key => controller.on(key, child.viewEvents[key]));
                     }
 
                     return controller.view;
