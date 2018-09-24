@@ -35,7 +35,7 @@ const defaultOptions = {
 };
 
 export default (formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
-    className: 'new-expression-editor-field',
+    className: 'new-expression-editor-field layout__vertical-layout',
 
     regions: {
         typeContainer: '.js-new-expression-type-container',
