@@ -775,11 +775,18 @@ svg.svg-grid-icons {
 
 .toolbar__icons {
   display: inline-block;
-  margin-right: 5px;
 }
 
 .toolbar__icons .fa {
   font-size: 14px;
+}
+
+.toolbar__icons + .toolbar-btn__text{
+  margin-left: 5px;
+}
+
+.toolbar__icons + .toolbar-btn__text:empty{
+  margin-left: 0;
 }
 
 .toolbar-btn__text > .editor_checkbox {
