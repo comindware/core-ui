@@ -30,7 +30,11 @@ export const contextIconType = {
     table: 'newspaper',
     collection: 'newspaper',
     subform: 'list-alt',
-    undefined: 'dot-circle'
+    undefined: 'dot-circle',
+    task: 'tasks',
+    record: 'list-alt',
+    process: 'cogs',
+    case: 'cube'
 };
 
 export const objectPropertyTypes = {
