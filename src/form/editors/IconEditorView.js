@@ -10,13 +10,6 @@ const constants = {
     iconPropertyDefaultName: 'iconClass'
 };
 
-/*
- * options parameters:
- *
- * @param model
- * @param modelIconProperty - name of model property. 'iconClass' as default
- */
-
 export default BaseLayoutEditorView.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
@@ -53,6 +46,7 @@ export default BaseLayoutEditorView.extend({
             },
             panelViewOptions: {
                 collection: this.__getConfig(),
+                showColorPicker: this.options.showColorPicker,
                 model: this.model
             },
             autoOpen: true
