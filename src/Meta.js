@@ -1,4 +1,6 @@
 //@flow
+import coreIcons from 'form/editors/impl/iconEditor/icons';
+
 export const contextIconType = {
     reference: 'link',
     instance: 'link',
@@ -103,5 +105,6 @@ export default {
     contextIconType,
     presentingComponentsTypes,
     iconsNames,
+    coreIcons,
     objectPropertyFormats
 };
