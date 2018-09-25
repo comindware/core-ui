@@ -17,6 +17,9 @@ export default BaseLayoutEditorView.extend({
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
             this.model.set('iconClass', this.model.get(options.modelIconProperty));
         }
+
+        this.iconsMeta = options.iconsMeta || icons;
+        this.iconsCategories = options.iconsCategories || categories;
     },
 
     template: Handlebars.compile(template),
@@ -81,19 +84,20 @@ export default BaseLayoutEditorView.extend({
         const iconService = window.application.options.iconService;
         const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
-            Object.values(categories)
-            .map((category) => ({
+            Object.values(this.iconsCategories)
+            .map(category => ({
                 name: category.label,
                 groupItems: category.icons
                 .reduce((arr, icon) => {
-                    const isBrand = icons[icon].styles.includes('brands');
+                    const metaIcon = this.iconsMeta[icon];
+                    const isBrand = metaIcon ? metaIcon.styles.includes('brands') : true;
                     if (!useBrands && isBrand) {
                         return arr;
                     }
                     arr.push({
                         id: icon,
-                        name: icons[icon].label,
-                        filter: icons[icon].search.terms
+                        name: metaIcon ? metaIcon.label : icon,
+                        filter: metaIcon ? metaIcon.search.terms : [icon],
                     });
 
                     return arr;
