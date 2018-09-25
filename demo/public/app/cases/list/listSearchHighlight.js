@@ -8,9 +8,6 @@ import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 export default function() {
     // 1. Create Backbone.Model that implement ListItemBehavior
     const ListItemModel = Backbone.Model.extend({
-        initialize() {
-            core.utils.helpers.applyBehavior(this, core.list.models.behaviors.ListItemBehavior);
-        }
     });
 
     // 2. Create VirtualCollection that use this model (and do other stuff maybe)

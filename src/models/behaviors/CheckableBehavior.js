@@ -119,18 +119,22 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
         const length = this.length;
 
-        if (checkedLength === length) {
-            this.collection.trigger('check:all', this, 'checked');
-            return;
-        }
+        if (checkedLength !== this.prevChechLength) {
+            this.prevChechLength = checkedLength;
 
-        if (checkedLength === 0) {
-            this.collection.trigger('check:none', this, 'unchecked');
-            return;
-        }
+            if (checkedLength === length) {
+                this.collection.trigger('check:all', this, 'checked');
+                return;
+            }
 
-        if (checkedLength > 0 && checkedLength < length) {
-            this.collection.trigger('check:some', this, 'checkedSome');
+            if (checkedLength === 0) {
+                this.collection.trigger('check:none', this, 'unchecked');
+                return;
+            }
+
+            if (checkedLength > 0 && checkedLength < length) {
+                this.collection.trigger('check:some', this, 'checkedSome');
+            }
         }
     }
 });

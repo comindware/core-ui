@@ -2,7 +2,6 @@ import MembersSplitPanelView from '../views/MembersSplitPanelView';
 import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
-import ItemModel from '../model/ItemModel';
 
 export default Marionette.Object.extend({
     initialize(options) {
@@ -205,7 +204,7 @@ export default Marionette.Object.extend({
         const newSelectedFragment = this.collectionSearchValue[typeTo];
 
         selected.forEach(selectedModel => {
-            if (!(selectedModel instanceof ItemModel)) {
+            if (!(selectedModel instanceof Backbone.Model)) {
                 return;
             }
             if (this.options.orderEnabled) {
@@ -248,9 +247,7 @@ export default Marionette.Object.extend({
         this.model = new Backbone.Model();
 
         const availableModels = new ItemCollection(
-            new Backbone.Collection([], {
-                model: ItemModel
-            }),
+            new Backbone.Collection([]),
             {
                 isSliding: true,
                 selectableBehavior: 'multi',
@@ -268,9 +265,7 @@ export default Marionette.Object.extend({
             : Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name');
 
         const selectedModels = new ItemCollection(
-            new Backbone.Collection([], {
-                model: ItemModel
-            }),
+            new Backbone.Collection([]),
             {
                 isSliding: true,
                 selectableBehavior: 'multi',
