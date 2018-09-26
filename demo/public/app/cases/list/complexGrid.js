@@ -295,7 +295,6 @@ export default function () {
             showCheckbox: true,
             showRowIndex: true,
             childrenAttribute: 'children',
-            showConfigurationPanel: true,
             title: 'Complex grid'
     },
         collection: data
