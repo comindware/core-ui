@@ -101,7 +101,7 @@
   padding: 3px 0 1px 0;
 }
 .bubbles__form {
-  padding-top: 4px;
+  padding: 2px 0;
 }
 .dropdown.open.dropdown__wrp_down .bubbles {
   border-bottom-left-radius: 0;

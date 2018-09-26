@@ -136,15 +136,15 @@ const variables = {
 
     'columns-select-border': '0',
 
-    'dropdown-padding': '0 20px 4px var(--form-input-padding)',
+    'dropdown-padding': '2px 20px 2px var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '12px',
     'dropdown-group-color': 'var(--black)',
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
-    'bubbles-item-delete-padding': '20px',
-    'bubbles-item-edit-delete-padding': '40px',
+    'bubbles-item-delete-padding': '0',
+    'bubbles-item-edit-delete-padding': '20px',
     'bubbles-icon-offset-x': '5px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
@@ -239,7 +239,8 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        padding: '4px 20px 0px 0'
+        padding: '4px 20px 4px 0',
+        'line-height': '1'
     },
     'input-theme': {
         border: variables.border,
@@ -430,7 +431,7 @@ module.exports.apply = {
         padding: '15px'
     },
     'popup-close-theme': {
-        'font-size': '17px'//if icons style = solid, then 19px
+        'font-size': '17px' //if icons style = solid, then 19px
     },
     'popup-form-content-theme': {
         padding: '15px',
