@@ -180,6 +180,13 @@ export default {
         }
         this.trigger('module:loaded', config, callbackName, routingArgs); //args like in Backbone.on('route')
 
+        if (activeSubModule) {
+            if (activeSubModule.onRoute) {
+                activeSubModule.routerAction = callbackName;
+                await activeSubModule.onRoute.apply(activeSubModule, routingArgs);
+            }
+        }
+
         // navigate to new module
         this.loadingContext = null;
         if (this.activeModule.onRoute) {
