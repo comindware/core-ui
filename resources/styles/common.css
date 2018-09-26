@@ -1215,3 +1215,13 @@ a:hover {
 .hidden {
     display: none !important;
 }
+
+.btn.disabled,
+.btn.disabled:hover,
+.btn.disabled:hover:active{
+    cursor: default;
+    background-color: #a3abb0;
+    border-color: #a3abb0;
+    box-shadow: none;
+    pointer-events: none
+}
