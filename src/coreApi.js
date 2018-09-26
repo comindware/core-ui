@@ -49,7 +49,6 @@ import MobileService from './services/MobileService';
 import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
 import Toolbar from './components/toolbar/ToolbarView';
-import LayoutDesigner from './components/layoutDesigner';
 import VideoChat from './components/videoChat/VideoChat';
 
 /**
@@ -152,7 +151,6 @@ const core = {
         NavigationDrawer,
         Toolbar,
         BreadCrumbs,
-        LayoutDesigner,
         VideoChat
     }
 };

@@ -56,7 +56,7 @@
 .grid-content-wrp {
     position: relative;
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     min-height: 0;
 }
 
