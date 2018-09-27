@@ -73,7 +73,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
     },
 
-    className: 'editor editor_date-time',
+    className() {
+        return `editor editor_date-time ${this.options.dateDisplayFormat || ''} ${this.options.timeDisplayFormat || ''}`;
+    },
 
     template: Handlebars.compile(template),
 
