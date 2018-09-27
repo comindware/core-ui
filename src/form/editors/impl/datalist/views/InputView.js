@@ -40,7 +40,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.updateInput();
+        this.updateInput(this.model.get('searchText'));
         this.__updateInputPlaceholder();
     },
 
@@ -61,7 +61,6 @@ export default Marionette.View.extend({
     },
 
     __blur() {
-        this.updateInput();
     },
 
     __getFilterValue() {
@@ -105,7 +104,7 @@ export default Marionette.View.extend({
                     return;
                 }
                 this.filterValue = value;
-                this.reqres.request('input:search', value, false);
+                this.reqres.request('input:search', value);
             }
         }
     },

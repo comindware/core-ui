@@ -2,12 +2,13 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 import { keyCode } from 'utils';
 
-const $ = core.lib.$;
-
 describe('Editors', () => {
-    const findInput = function (view) {
-        return view.$('.js-input');
-    };
+    const getElement = (view, selector) => view.$(selector);
+    const getButton = view => view.dropdownView.button.$el;
+    const getBubble = (view, index) => getElement(view, `.bubbles__i:eq(${index})`);
+    const getBubbleDelete = view => getElement(view, '.js-bubble-delete');
+
+    const findInput = view => getElement(view, '.js-input');
 
     const collectionData = [
         {
@@ -24,14 +25,21 @@ describe('Editors', () => {
         }
     ];
 
+    function timeout(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function sleep(fn, ...args) {
+        await timeout(1000);
+        return fn(...args);
+    }
+
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
-        fetch() {
+        async fetch() {
             return new Promise(resolve => {
                 this.collection.reset(collectionData);
 
                 this.totalCount = 3;
-
-                return resolve({
+                return sleep(resolve, {
                     collection: collectionData,
                     totalCount: this.totalCount
                 });
@@ -185,29 +193,32 @@ describe('Editors', () => {
             });
         });
 
-        it('should have collection matched it dynamic initial collection', () => {
+        it('should have collection matched it dynamic initial collection', done => {
             const model = new Backbone.Model({
                 value: null
             });
 
+            const collection = new core.form.editors.reference.collections.BaseReferenceCollection(collectionData);
+
             const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                    collection
                 }),
                 key: 'value',
                 maxQuantitySelected: Infinity
+            });
+
+            view.on('view:ready', () => {
+                view.focus
+                expect(view.panelCollection.length).toEqual(collectionData.length);
+                done();
             });
 
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
-
-            view.panelCollection.on('reset', () => {
-                expect(view.panelCollection.toJSON()).toEqual(collectionData);
-            });
-            view.focus();
         });
 
         it('should change value on setValue() get called', () => {
@@ -341,7 +352,8 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should once trigger "view:ready" on remove icon item click', done => {
+        it('should open panel on click if view is ready', done => {
+            //this test is correct if controller has delay
             const model = new Backbone.Model({
                 DatalistValue: [
                     {
@@ -363,26 +375,30 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 5,
-                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.on('view:ready', () => {
+                expect(view.isReady).toEqual(true);
+                view.on('dropdown:open', () => {
+                    expect(view.dropdownView.isOpen).toEqual(true);
+                    done();
+                });
+            });
+
+            view.on('attach', () => {
+                const button = getButton(view);
+                button.click();
+                expect(!!view.isReady).toEqual(false);
+                expect(!!view.dropdownView.isOpen).toEqual(false);
             });
 
             window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-
-            let counter = 0;
-            view.on('view:ready', () => ++counter);
-
-            view.$('.bubbles__i:eq(1)').trigger('mouseenter');
-
-            view.$('.js-bubble-delete')[0].click();
-            expect(view.getValue().length).toEqual(1);
-
-            setTimeout(() => {
-                expect(counter).toEqual(1);
-                done();
-            }, 1100) //after DemoReferenceEditorController fetch the data
+            .getView()
+            .getRegion('contentRegion')
+            .show(view);
         });
         /*
         it('should set size for panel', () => {
@@ -453,28 +469,32 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                }),
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
             });
 
-            view.on('change', () => {
-                expect(view.panelCollection.at(0).selected).toEqual(false);
-                done();
+            view.on('attach', () => {
+                view.focus();
             });
 
-            view.on('view:ready', () => {
-                view.$(view.$('.bubbles__i:eq(0)')[0]).trigger('mouseenter');
-                view.$('.js-bubble-delete')[0].click();
+            view.on('dropdown:open', () => {
+                view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                view.$('.js-bubble-delete').click();
+            });
+
+            view.on('change', () => {
+                expect(!!view.panelCollection.at(0).selected).toEqual(false);
+                done();
             });
 
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
-
-            view.focus();
         });
 
         it('should use default parameters if non is passed', () => {
@@ -698,7 +718,9 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 3,
-                controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
             });
 
             view.on('attach', () => {
