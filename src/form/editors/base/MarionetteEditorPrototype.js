@@ -13,7 +13,8 @@ const classes = {
     readonly: 'editor_readonly',
     hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
-    EMPTY: 'editor_empty'
+    EMPTY: 'editor_empty',
+    ERROR: 'js-editor_error'
 };
 
 const onRender = function() {
@@ -357,6 +358,10 @@ export default {
                         error = getValidator(validator)(value, formValues);
                         return !error;
                     });
+                }
+
+                if (this.isRendered() && !this.isDestroyed()) {
+                    this.$el.toggleClass(classes.ERROR, !!error);
                 }
 
                 return error;

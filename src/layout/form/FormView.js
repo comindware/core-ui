@@ -97,13 +97,15 @@ export default Marionette.View.extend({
     },
 
     validate() {
-        let result;
-        if (this.content && this.content.validate) {
-            result = this.content.validate();
-        }
+        let fieldErrors;
+        let contentErrors;
         if (this.form) {
-            result = this.form.validate() || result;
+            fieldErrors = this.form.validate();
         }
-        return result;
+        if (this.content && this.content.validate) {
+            contentErrors = this.content.validate();
+        }
+
+        return fieldErrors || contentErrors;
     }
 });

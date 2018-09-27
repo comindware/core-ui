@@ -28,5 +28,11 @@ export default Marionette.View.extend({
 
     update() {
         this.__updateState();
+    },
+
+    validate() {
+        if (this.isRendered() && !this.isDestroyed()) {
+            return !!this.el.getElementsByClassName('js-editor_error').length;
+        }
     }
 });
