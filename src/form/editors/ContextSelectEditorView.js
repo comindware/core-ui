@@ -115,10 +115,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __value(value, triggerChange, newValue) {
-        if (this.value === value) {
-            return;
-        }
         this.value = newValue || value;
+
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -231,7 +229,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __clear() {
-        this.__value(null, true);
+        this.__value(null, true, null);
         return false;
     }
 }));
