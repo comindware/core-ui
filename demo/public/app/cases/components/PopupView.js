@@ -1,7 +1,6 @@
 export default function() {
     const model = new Backbone.Model({
         name: '',
-        idealDays: 12,
         dueDate: '2015-07-20T10:46:37Z',
         description: 'no-op',
         computed: false,
@@ -12,11 +11,16 @@ export default function() {
         name: {
             title: 'Name',
             type: 'Text',
+            autocommit: true,
+            required: true,
             validators: ['required']
         },
         idealDays: {
             title: 'Ideal Days',
-            type: 'Number'
+            type: 'Number',
+            autocommit: true,
+            required: true,
+            validators: ['required']
         },
         dueDate: {
             title: 'Due Date',
@@ -31,11 +35,19 @@ export default function() {
             displayText: 'Computed via expression'
         },
         expression: {
-            type: 'TextArea'
+            type: 'Code',
+            title: 'Expression',
+            autocommit: true,
+            required: true,
+            validators: ['required']
         },
         ref: {
             type: 'Datalist',
-            collection: new Backbone.Collection()
+            title: 'Datalist',
+            autocommit: true,
+            collection: new Backbone.Collection(),
+            required: true,
+            validators: ['required']
         }
     };
 
@@ -61,7 +73,7 @@ export default function() {
                     text: 'Save',
                     customClass: 'btn-small',
                     handler(popup) {
-                        const error = popup.content.form.validate();
+                        const error = popup.validate();
                         if (error) {
                             return;
                         }
@@ -100,12 +112,12 @@ export default function() {
                         {
                             id: 'expression',
                             name: 'Computed Expression',
-                            view: core.layout.createEditorAnchor('expression')
+                            view: core.layout.createFieldAnchor('expression')
                         },
                         {
                             id: 'ref',
                             name: 'Datalist editor',
-                            view: core.layout.createEditorAnchor('ref')
+                            view: core.layout.createFieldAnchor('ref')
                         }
                     ]
                 })

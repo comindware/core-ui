@@ -33,6 +33,15 @@ const onRender = function() {
         this.$el.on('keyup', this.onKeyup);
     }
     this.__updateEmpty();
+
+    // revalidate if model isInvalid
+    if (this.model && this.model.validationResult) {
+        if (this.field) {
+            e.validationResult = this.field.validate();
+        } else {
+            e.validationResult = this.validate();
+        }
+    }
 };
 
 const onChange = function() {
@@ -145,6 +154,13 @@ export default {
                 if (this.model) {
                     this.listenTo(this.model, `change:${this.key}`, this.updateValue);
                     this.listenTo(this.model, 'sync', this.updateValue);
+                    this.listenTo(this.model, 'validate:force', (e = {}) => {
+                        if (this.field) {
+                            e.validationResult = this.field.validate();
+                        } else {
+                            e.validationResult = this.validate();
+                        }
+                    });
                 }
             },
 
@@ -417,7 +433,7 @@ export default {
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             },
-            
+
             renderIcons(...iconTemplates) {
                 this.el.insertAdjacentHTML('beforeend', iconTemplates.join(' '));
             }

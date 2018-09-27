@@ -64,6 +64,19 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    validate() {
+        let result;
+        this.rows.forEach(view => {
+            if (view.validate) {
+                const error = view.validate();
+                if (error) {
+                    result = error;
+                }
+            }
+        });
+        return result;
+    },
+
     __handleChangeVisibility(view, visible) {
         view.$el.toggleClass(classes.HIDDEN, !visible);
     },
