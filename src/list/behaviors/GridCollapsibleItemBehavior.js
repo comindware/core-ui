@@ -3,16 +3,15 @@ export default function () {
     // Select this model, and tell our
     // collection that we're selected
     return {
-        select(options: { isSilent: boolean } = { isSilent: false }) {
+        select(options) {
             if (this.selected) {
                 return;
             }
 
             this.selected = true;
 
-            if (!options.isSilent) {
-                this.trigger('selected', this, options.isSilent);
-            }
+            this.trigger('selected', this, options);
+
             if (this.collection) {
                 this.collection.select(this);
             }
@@ -20,16 +19,14 @@ export default function () {
 
         // Deselect this model, and tell our
         // collection that we're deselected
-        deselect(options: { isSilent: boolean } = { isSilent: false }) {
+        deselect(options) {
             if (!this.selected) {
                 return;
             }
 
             this.selected = false;
 
-            if (!options.isSilent) {
-                this.trigger('deselected', this, options.isSilent);
-            }
+            this.trigger('deselected', this, options);
 
             if (this.collection && this.collection.deselect) {
                 this.collection.deselect(this);
