@@ -239,8 +239,7 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        padding: '4px 20px 4px 0',
-        'line-height': '1'
+        padding: '2px 20px 2px 0'
     },
     'input-theme': {
         border: variables.border,
