@@ -158,7 +158,8 @@ describe('Editors', () => {
             });
             const view = new core.form.editors.DateTimeEditor({
                 model,
-                key: 'data'
+                key: 'data',
+                timeDisplayFormat: 'HH:mm:ss'
             });
             window.app
                 .getView()
@@ -180,7 +181,8 @@ describe('Editors', () => {
             // arrange
             const expected = '2015-07-20T10:46:37.000Z';
             const view = new core.form.editors.DateTimeEditor({
-                value: expected
+                value: expected,
+                timeDisplayFormat: 'HH:mm:ss'
             });
             window.app
                 .getView()
@@ -404,7 +406,8 @@ describe('Editors', () => {
             const view = new core.form.editors.DateTimeEditor({
                 model,
                 autocommit: true,
-                key: 'data'
+                key: 'data',
+                timeDisplayFormat: 'HH:mm:ss'
             });
 
             window.app

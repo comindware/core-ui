@@ -174,6 +174,13 @@ export default /** @lends module:core.utils.dateHelpers */ {
         });
     },
 
+    isFormatHasSeconds(format) {
+        if (typeof format !== 'string') {
+            return false;
+        }
+        return format.includes('s') || format.includes('S');
+    },
+
     getWeekStartDay() {
         let startDay = 0;
 

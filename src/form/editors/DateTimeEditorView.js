@@ -125,6 +125,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     setFormat(newFormat) {
+        if (typeof newFormat !== 'object') {
+            return;
+        }
         this.options.dateDisplayFormat = newFormat.dateDisplayFormat;
         this.options.timeDisplayFormat = newFormat.timeDisplayFormat;
 
@@ -275,19 +278,18 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: Object.assign({
+            buttonViewOptions: _.defaultsPure({
                 allowDays: false,
                 allowHours: true,
                 allowMinutes: true,
-                allowSeconds: true,
+                allowSeconds: dateHelpers.isFormatHasSeconds(this.options.timeDisplayFormat),
                 showEmptyParts: true,
                 hideClearButton: true,
                 fillZero: true,
-                normalTime: true
-            }, this.options, {
-                model,
-                showTitle: false
-            }),
+                normalTime: true,
+                showTitle: false,
+                model
+            }, this.options),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',
