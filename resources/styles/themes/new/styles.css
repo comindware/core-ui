@@ -259,6 +259,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 0 20px 0 15px;
 }
 
+.cell > .context_select {
+  position: static;
+  padding: 4px 20px 4px 10px;
+}
+
 .cell > .editor.editor_document {
   display: flex;
   flex-direction: row;
