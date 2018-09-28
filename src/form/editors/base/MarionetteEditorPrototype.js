@@ -38,9 +38,9 @@ const onRender = function() {
     // revalidate if model isInvalid
     if (this.model && this.model.validationResult) {
         if (this.field) {
-            e.validationResult = this.field.validate();
+            this.field.validate();
         } else {
-            e.validationResult = this.validate();
+            this.validate();
         }
     }
 };
