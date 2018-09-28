@@ -77,12 +77,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateContext() {
-        return _.extend(this.options, {
-            title: this.value || ''
-        });
-    },
-
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',

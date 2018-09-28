@@ -210,7 +210,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle,
+                showTitle: false,
                 hideClearButton: true
             },
             panelView: DatePanelView,
@@ -285,7 +285,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 fillZero: true,
                 normalTime: true
             }, this.options, {
-                model
+                model,
+                showTitle: false
             }),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
