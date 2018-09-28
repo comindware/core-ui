@@ -64,7 +64,6 @@ export default Marionette.View.extend({
             });
             this.showChildView('helpTextRegion', infoPopout);
         }
-        this.__rendered = true;
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
     },
@@ -207,6 +206,6 @@ export default Marionette.View.extend({
     },
 
     __checkUiReady() {
-        return this.__rendered && !this.isDestroyed();
+        return this.isRendered() && !this.isDestroyed();
     }
 });
