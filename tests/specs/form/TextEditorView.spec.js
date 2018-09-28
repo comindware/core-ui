@@ -399,6 +399,48 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
+        it('should have no title options.showTitle false', () => {
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                readonly: true,
+                showTitle: false
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            expect(findInput(view).prop('title')).toEqual('');
+        });
+
+        it('should have title options.showTitle true', () => {
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                readonly: true,
+                showTitle: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            expect(findInput(view).prop('title')).toEqual('text');
+        });
+
         it('should show title passed in configuration', () => {
             expect(true).toEqual(true);
         });
