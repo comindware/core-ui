@@ -266,6 +266,22 @@
 
 <http://comindware.com/text/core/formats/datetime#today> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сегодня"; l10n:originalData "Today"].
 
+<http://comindware.com/text/core/formats/moment#condensedDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ll"; l10n:originalData "ll"].
+
+<http://comindware.com/text/core/formats/moment#dateISO> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "YYYY-MM-DD"; l10n:originalData "YYYY-MM-DD"].
+
+<http://comindware.com/text/core/formats/moment#longDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "LL"; l10n:originalData "dddd, LL"].
+
+<http://comindware.com/text/core/formats/moment#longTime> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "LTS"; l10n:originalData "LTS"].
+
+<http://comindware.com/text/core/formats/moment#monthDay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "d MMMM"; l10n:originalData "MMMM d"].
+
+<http://comindware.com/text/core/formats/moment#shortDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "L"; l10n:originalData "L"].
+
+<http://comindware.com/text/core/formats/moment#shortTime> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "LT"; l10n:originalData "LT"].
+
+<http://comindware.com/text/core/formats/moment#yearMonth> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "MMMM, YYYY"; l10n:originalData "MMMM, YYYY"].
+
 <http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notSet"].
 
 <http://comindware.com/text/core/grid/actions#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].

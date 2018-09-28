@@ -1,4 +1,3 @@
-
 import template from 'text-loader!../templates/editorCanvas.html';
 import PresentationItemView from './PresentationItemView';
 
@@ -19,7 +18,8 @@ export default Marionette.View.extend({
     regions: {
         editorRegion: '.js-editor-region',
         modelRegion: '.js-model-region',
-        editorModeRegion: '.js-editor-mode-region'
+        editorModeRegion: '.js-editor-mode-region',
+        formatSelectionRegion: '.js-format-selection-region'
     },
 
     onRender() {
@@ -66,13 +66,23 @@ export default Marionette.View.extend({
                 ]
             });
             this.showChildView('editorModeRegion', editorModeView);
-            this.listenTo(editorModeView, 'change', this.updateEditorModel);
+            this.listenTo(editorModeView, 'change', this.__updateEditorModel);
         } else {
             this.ui.editorRegion.addClass('canvas-wrap');
         }
+
+        if (this.getOption('showFormat')) {
+            const formatSelectionView = new core.form.editors.DatalistEditor({
+                value: 'none',
+                maxQuantitySelected: 1,
+                collection: new Backbone.Collection(this.getOption('formats'))
+            });
+            this.showChildView('formatSelectionRegion', formatSelectionView);
+            this.listenTo(formatSelectionView, 'change', () => this.__updateEditorFormat(formatSelectionView));
+        }
     },
 
-    updateEditorModel(editor) {
+    __updateEditorModel(editor) {
         const editorMode = editor.getValue();
         switch (editorMode) {
             case 'none':
@@ -98,6 +108,10 @@ export default Marionette.View.extend({
             default:
                 break;
         }
+    },
+
+    __updateEditorFormat(formatSelectionView) {
+        this.view.setFormat && this.view.setFormat(formatSelectionView.getValue()[0]);
     },
 
     __toggleCollapse() {
