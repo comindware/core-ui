@@ -672,7 +672,12 @@ export default function($, dates) {
                                 date: this.viewDate
                             });
                             if (this.viewSelect >= 2) {
-                                this._setDate(UTCDate(year, month, day));
+                                const date = moment({
+                                    year: year,
+                                    month: month,
+                                    day: day
+                                }).toISOString();
+                                this._setDate(new Date(date));
                             }
                         }
                         this.showMode(-1);

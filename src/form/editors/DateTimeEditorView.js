@@ -102,22 +102,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     onRender(): void {
-        this.__updateClearButton();
-        if (this.options.showTitle) {
-            this.__updateTitle();
-        }
-
-        if (this.options.showTime !== false) {
-            this.__createTimeDropdownView();
-        }
-
-        if (this.options.showDate !== false) {
-            this.__createDateDropdownEditor();
-            //calendar button readonly as don't develop mask validation
-            this.calendarDropdownView.button.ui.input
-                .prop('readonly', true)
-                .prop('tabindex', -1);
-        }
+        this.__presentView();
     },
 
     focusElement: null,
@@ -137,6 +122,19 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     onFocus(): void {
         BaseLayoutEditorView.prototype.onFocus.call(this);
+    },
+
+    setFormat(newFormat) {
+        if (typeof newFormat !== 'object') {
+            return;
+        }
+        this.options.dateDisplayFormat = newFormat.dateDisplayFormat;
+        this.options.timeDisplayFormat = newFormat.timeDisplayFormat;
+
+        this.options.showDate = !!this.options.dateDisplayFormat;
+        this.options.showTime = !!this.options.timeDisplayFormat;
+
+        this.__presentView();
     },
 
     __updateClearButton(): void {
@@ -215,7 +213,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle,
+                showTitle: false,
                 hideClearButton: true
             },
             panelView: DatePanelView,
@@ -272,10 +270,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.timeDropdownView.close();
     },
 
-    timeHasFocus() {
-        return this.el.contains(document.activeElement);
-    },
-
     __createTimeDropdownView() {
         const model = new Backbone.Model({
             [this.key]: dateHelpers.dateISOToDuration(this.value, { days: false }).toISOString()
@@ -284,18 +278,18 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: Object.assign({
+            buttonViewOptions: _.defaultsPure({
                 allowDays: false,
                 allowHours: true,
                 allowMinutes: true,
-                allowSeconds: true,
+                allowSeconds: dateHelpers.isFormatHasSeconds(this.options.timeDisplayFormat),
                 showEmptyParts: true,
                 hideClearButton: true,
                 fillZero: true,
-                normalTime: true
-            }, this.options, {
+                normalTime: true,
+                showTitle: false,
                 model
-            }),
+            }, this.options),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',
@@ -401,6 +395,29 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         if (!this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
+        }
+    },
+
+    __presentView() {
+        this.__updateClearButton();
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
+
+        if (this.options.showTime !== false) {
+            this.__createTimeDropdownView();
+        } else {
+            this.getRegion('timeDropdownRegion').reset();
+        }
+
+        if (this.options.showDate !== false) {
+            this.__createDateDropdownEditor();
+            //calendar button readonly as don't develop mask validation
+            this.calendarDropdownView.button.ui.input
+                .prop('readonly', true)
+                .prop('tabindex', -1);
+        } else {
+            this.getRegion('dateDropdownRegion').reset();
         }
     }
 }));

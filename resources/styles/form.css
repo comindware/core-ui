@@ -381,12 +381,9 @@ input[type="checkbox"].checkbox {
 }
 .bubbles__i {
     max-width: 100%;
-    display: inline-block;
+    display: flex;
     position: relative;
     flex: 0 0 auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .bubbles__link {
