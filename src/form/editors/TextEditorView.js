@@ -1,3 +1,4 @@
+import { maskInput, emailMask } from 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
@@ -16,11 +17,12 @@ const defaultOptions = () => ({
     emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
     maxLength: undefined,
     mask: undefined,
-    maskPlaceholder: '_',
+    placeholderChar: '_',
     maskOptions: {},
     showTitle: true,
     allowEmptyValue: true,
-    class: undefined
+    class: undefined,
+    format: ''
 });
 
 /**
@@ -34,30 +36,23 @@ const defaultOptions = () => ({
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
+ * @param {String} [options.format=''] ('email'/'phone') set the predefined input mask and validator
  * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
  * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
- * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
+ * @param {String} [options.placeholderChar='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
 export default (formRepository.editors.Text = BaseItemEditorView.extend({
     initialize() {
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defOps)), defOps);
         this.placeholder = this.options.emptyPlaceholder;
-    },
-
-    onAttach() {
-        if (this.options.mask) {
-            this.ui.input.inputmask(
-                Object.assign(
-                    {
-                        mask: this.options.mask,
-                        placeholder: this.options.maskPlaceholder,
-                        autoUnmask: true
-                    },
-                    this.options.maskOptions || {}
-                )
-            );
+        if (this.options.format) {
+            this.__setMaskByFormat(this.options.format);
+        } else {
+            this.mask = this.options.mask;
         }
     },
 
@@ -69,9 +64,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     className() {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defOps)), defOps);
-
         return `${this.options.class || ''} editor`;
     },
 
@@ -88,6 +80,26 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         'change @ui.input': '__change',
         'click @ui.clearButton': '__clear',
         mouseenter: '__onMouseenter'
+    },
+
+    onAttach() {
+        if (this.mask) {
+            this.maskedInputController = maskInput(
+                Object.assign(
+                    {
+                        inputElement: this.ui.input[0],
+                        mask: this.mask,
+                        placeholderChar: this.options.placeholderChar,
+                        autoUnmask: true
+                    },
+                    this.options.maskOptions || {}
+                )
+            );
+        }
+    },
+
+    onDestroy() {
+        this.maskedInputController && this.maskedInputController.destroy();
     },
 
     __keyup() {
@@ -118,13 +130,14 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     setPlaceholder() {
+        let placeholder;
         if (!this.getEnabled() || this.getReadonly()) {
-            this.placeholder = '';
+            placeholder = '';
         } else {
-            this.placeholder = this.options.emptyPlaceholder;
+            placeholder = this.placeholder;
         }
 
-        this.ui.input.prop('placeholder', this.placeholder);
+        this.ui.input.prop('placeholder', placeholder);
     },
 
     __setEnabled(enabled) {
@@ -182,6 +195,34 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapText, iconWrapRemove);
+        }
+    },
+
+    __setMaskByFormat(format) {
+        let additioanlValidator;
+        switch (format) {
+            case 'email':
+                this.mask = emailMask;
+                this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
+                additioanlValidator = 'email';
+                break;
+            case 'phone':
+                this.mask = [/[1-9]/, ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
+                this.placeholder = '5 (555) 555-55-55';
+                this.options.maskOptions = {
+                    guide: true
+                };
+                additioanlValidator = 'phone';
+                break;
+            default:
+                break;
+        }
+        if (additioanlValidator) {
+            if (this.validators) {
+                this.validators.push(additioanlValidator);
+            } else {
+                this.validators = [additioanlValidator];
+            }
         }
     }
 }));
