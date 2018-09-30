@@ -9,6 +9,7 @@ import 'moment/locale/de';
 /* Text Mask */
 import maskInput from 'vanilla-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import emailMask from 'text-mask-addons/dist/emailMask';
 
 /* --- */
 import underscoreLib from 'underscore';
@@ -50,7 +51,8 @@ const api = {
     JSEncrypt: jsencrypt.JSEncrypt,
     autosize,
     maskInput,
-    createNumberMask
+    createNumberMask,
+    emailMask
 };
 
 const moment = api.moment;
@@ -62,4 +64,4 @@ const Marionette = Marionette_;
 const codemirror = api.codemirror;
 
 export default api;
-export { moment, Handlebars, $, _, Backbone, Marionette, codemirror, autosize, createNumberMask, maskInput };
+export { moment, Handlebars, $, _, Backbone, Marionette, codemirror, autosize, createNumberMask, maskInput, emailMask };

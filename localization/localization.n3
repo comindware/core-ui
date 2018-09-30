@@ -345,6 +345,8 @@
 
 <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:49:47.9940740Z"; l10n:modificationDate "2015-07-31T11:55:18.7632797Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Field is disabled"].
 
+<http://comindware.com/text/core/form/editors/textEditor#emailPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-09-29T16:30:04.2640482Z"; l10n:modificationDate "2018-09-29T16:30:07.0212267Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter email"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors/textEditor#placeholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:48:49.4222174Z"; l10n:modificationDate "2015-07-30T12:59:01.8417384Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter text here"].
 
 <http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:49:29.4882236Z"; l10n:modificationDate "2015-07-31T11:44:57.3594587Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Field is read-only"].
@@ -387,7 +389,7 @@
 
 <http://comindware.com/text/core/form/validation#password> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-07T06:37:10.6112211Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Password must be at least 8 characters long."].
 
-<http://comindware.com/text/core/form/validation#phone> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:56:53.1220877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Phone number must be at least 8 characters long. <br> Use digits and characters (), -, +."].
+<http://comindware.com/text/core/form/validation#phone> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:56:53.1220877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Invalid phone number"].
 
 <http://comindware.com/text/core/form/validation#required> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T08:00:03.1650877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "This field is required"].
 

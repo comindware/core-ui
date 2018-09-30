@@ -98,7 +98,7 @@
 
 <http://comindware.com/text/core/form/validation#password> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Das Kennwort muss mindestens 8 Zeichen lang sein."; l10n:isBeingTranslated true; l10n:originalData "Password must be at least 8 characters long."].
 
-<http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Telefonnummer muss mindestens 8 Zeichen enthalten.<br> Dabei sind Zahlen und die Zeichen (),-,+ erlaubt."; l10n:isBeingTranslated true; l10n:originalData "Phone number must be at least 8 characters long. <br> Use digits and characters (), -, +."].
+<http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ungültige Telefonnummer"; l10n:originalData "Invalid phone number"].
 
 <http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:isBeingTranslated true; l10n:originalData "This field is required."].
 
