@@ -10,8 +10,8 @@ export default function($, dates) {
         return ((ref = date.split('(')[1]) != null ? ref.slice(0, -1) : 0) || date.split(' ');
     }
 
-    function UTCDate() {
-        return new Date(Date.UTC.apply(Date, arguments));
+    function UTCDate(year, month, day) {
+        return moment({ year, month, day, hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
     }
 
     // Picker object
@@ -38,8 +38,6 @@ export default function($, dates) {
             rightArrow: 'icon-arrow-right'
         };
         this.icontype = 'glyphicon';
-
-        this._attachEvents();
 
         this.minView = DPGlobal.convertViewMode(2);
 
@@ -77,8 +75,6 @@ export default function($, dates) {
             this.picker.find(selector).toggleClass(`${this.icons.leftArrow} ${this.icons.rightArrow}`);
         }
 
-        $(document).on('mousedown touchend', this.clickedOutside);
-
         this.weekStart = 0;
         if (typeof options.weekStart !== 'undefined') {
             this.weekStart = options.weekStart;
@@ -88,10 +84,7 @@ export default function($, dates) {
         this.weekStart = this.weekStart % 7;
         this.weekEnd = (this.weekStart + 6) % 7;
         this.onRenderDay = date => {
-            let render = (options.onRenderDay
-                || function () {
-                    return [];
-                })(date);
+            let render = ((() => [])(date));
             if (typeof render === 'string') {
                 render = [render];
             }
@@ -100,10 +93,7 @@ export default function($, dates) {
         };
 
         this.onRenderYear = function (date) {
-            let render = (options.onRenderYear
-                || function () {
-                    return [];
-                })(date);
+            let render = ((() => [])(date));
             const res = ['year'];
             if (typeof render === 'string') {
                 render = [render];
@@ -119,10 +109,7 @@ export default function($, dates) {
             return res.concat(render || []);
         };
         this.onRenderMonth = function (date) {
-            let render = (options.onRenderMonth
-                || function () {
-                    return [];
-                })(date);
+            let render = ((() => [])(date));
             const res = ['month'];
             if (typeof render === 'string') {
                 render = [render];
@@ -139,7 +126,7 @@ export default function($, dates) {
         this.setDaysOfWeekDisabled(options.daysOfWeekDisabled);
         this.fillDow();
         this.fillMonths();
-        this.update();
+        this.updateNavArrows();
         this.showMode();
 
         this.show();
@@ -147,26 +134,6 @@ export default function($, dates) {
 
     Datetimepicker.prototype = {
         constructor: Datetimepicker,
-
-        _events: [],
-        _attachEvents() {
-            this._detachEvents();
-
-            for (let i = 0, el, ev; i < this._events.length; i++) {
-                el = this._events[i][0];
-                ev = this._events[i][1];
-                el.on(ev);
-            }
-        },
-
-        _detachEvents() {
-            for (let i = 0, el, ev; i < this._events.length; i++) {
-                el = this._events[i][0];
-                ev = this._events[i][1];
-                el.off(ev);
-            }
-            this._events = [];
-        },
 
         show(e) {
             this.picker.show();
@@ -184,8 +151,6 @@ export default function($, dates) {
         },
 
         remove() {
-            this._detachEvents();
-            $(document).off('mousedown', this.clickedOutside);
             this.picker.remove();
             delete this.picker;
             delete this.element.data().datetimepicker;
@@ -214,7 +179,7 @@ export default function($, dates) {
         },
 
         setDate(d) {
-            this.setUTCDate(new Date(d.getTime() - d.getTimezoneOffset() * 60000));
+            this.setUTCDate(new Date(d.getTime() - moment().utcOffset() * 60000));
         },
 
         setUTCDate(d) {
@@ -255,8 +220,6 @@ export default function($, dates) {
             if (this.startDate.valueOf() !== 8639968443048000) {
                 this.startDate = DPGlobal.parseDate(this.startDate, this.format, this.language, this.formatType, this.timezone);
             }
-            this.update();
-            this.updateNavArrows();
         },
 
         setEndDate(endDate) {
@@ -264,8 +227,6 @@ export default function($, dates) {
             if (this.endDate.valueOf() !== 8639968443048000) {
                 this.endDate = DPGlobal.parseDate(this.endDate, this.format, this.language, this.formatType, this.timezone);
             }
-            this.update();
-            this.updateNavArrows();
         },
 
         setDatesDisabled(datesDisabled) {
@@ -275,8 +236,6 @@ export default function($, dates) {
             }
             const mThis = this;
             this.datesDisabled = $.map(this.datesDisabled, d => DPGlobal.parseDate(d, mThis.format, mThis.language, mThis.formatType, mThis.timezone).toDateString());
-            this.update();
-            this.updateNavArrows();
         },
 
         setTitle(selector, value) {
@@ -292,8 +251,6 @@ export default function($, dates) {
                 this.daysOfWeekDisabled = this.daysOfWeekDisabled.split(/,\s*/);
             }
             this.daysOfWeekDisabled = $.map(this.daysOfWeekDisabled, d => parseInt(d, 10));
-            this.update();
-            this.updateNavArrows();
         },
 
         hour_minute: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
@@ -377,7 +334,7 @@ export default function($, dates) {
 
             this.updateNavArrows();
             this.fillMonths();
-            const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
+            let prevMonth = moment({ year, month: month - 1, day: 28 }).toDate();
             const day = DPGlobal.getDaysInMonth(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth());
             prevMonth.setUTCDate(day);
             prevMonth.setUTCDate(day - (prevMonth.getUTCDay() - this.weekStart + 7) % 7);
@@ -415,7 +372,7 @@ export default function($, dates) {
                 if (prevMonth.getUTCDay() === this.weekEnd) {
                     html.push('</tr>');
                 }
-                prevMonth.setUTCDate(prevMonth.getUTCDate() + 1);
+                prevMonth = moment(prevMonth).add(1, 'days').toDate();
             }
             this.picker
                 .find('.datetimepicker-days tbody')
@@ -557,9 +514,6 @@ export default function($, dates) {
                             case 'next': {
                                 const dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className === 'prev' ? -1 : 1);
                                 switch (this.viewMode) {
-                                    case 0:
-                                        this.viewDate = this.moveHour(this.viewDate, dir);
-                                        break;
                                     case 1:
                                         this.viewDate = this.moveDate(this.viewDate, dir);
                                         break;
@@ -672,12 +626,7 @@ export default function($, dates) {
                                 date: this.viewDate
                             });
                             if (this.viewSelect >= 2) {
-                                const date = moment({
-                                    year: year,
-                                    month: month,
-                                    day: day
-                                }).toISOString();
-                                this._setDate(new Date(date));
+                                this._setDate(UTCDate(year, month, day));
                             }
                         }
                         this.showMode(-1);
@@ -694,32 +643,12 @@ export default function($, dates) {
             if (!which || which === 'view') this.viewDate = date;
             this.fill();
             this.setValue();
-            let element;
 
-            if (element) {
-                element.change();
-            }
             this.element.trigger({
                 type: 'changeDate',
-                date: this.getDate()
+                date: this.date
             });
             if (date === null) this.date = this.viewDate;
-        },
-
-        moveMinute(date, dir) {
-            if (!dir) return date;
-            const new_date = new Date(date.valueOf());
-            //dir = dir > 0 ? 1 : -1;
-            new_date.setUTCMinutes(new_date.getUTCMinutes() + dir * 5);
-            return new_date;
-        },
-
-        moveHour(date, dir) {
-            if (!dir) return date;
-            const new_date = new Date(date.valueOf());
-            //dir = dir > 0 ? 1 : -1;
-            new_date.setUTCHours(new_date.getUTCHours() + dir);
-            return new_date;
         },
 
         moveDate(date, dir) {
@@ -824,12 +753,6 @@ export default function($, dates) {
                         } else if (viewMode === 2) {
                             newDate = this.moveDate(this.date, dir);
                             newViewDate = this.moveDate(this.viewDate, dir);
-                        } else if (viewMode === 1) {
-                            newDate = this.moveHour(this.date, dir);
-                            newViewDate = this.moveHour(this.viewDate, dir);
-                        } else if (viewMode === 0) {
-                            newDate = this.moveMinute(this.date, dir);
-                            newViewDate = this.moveMinute(this.viewDate, dir);
                         }
                         if (this.dateWithinRange(newDate)) {
                             this.date = newDate;
@@ -859,12 +782,6 @@ export default function($, dates) {
                         } else if (viewMode === 2) {
                             newDate = this.moveDate(this.date, dir * 7);
                             newViewDate = this.moveDate(this.viewDate, dir * 7);
-                        } else if (viewMode === 1) {
-                            newDate = this.moveHour(this.date, dir * 4);
-                            newViewDate = this.moveHour(this.viewDate, dir * 4);
-                        } else if (viewMode === 0) {
-                            newDate = this.moveMinute(this.date, dir * 4);
-                            newViewDate = this.moveMinute(this.viewDate, dir * 4);
                         }
                         if (this.dateWithinRange(newDate)) {
                             this.date = newDate;
@@ -915,22 +832,8 @@ export default function($, dates) {
                     this.viewMode = newViewMode;
                 }
             }
-            /*
-       vitalets: fixing bug of very special conditions:
-       jquery 1.7.1 + webkit + show inline datetimepicker in bootstrap popover.
-       Method show() does not set display css correctly and datetimepicker is not shown.
-       Changed to .css('display', 'block') solve the problem.
-       See https://github.com/vitalets/x-editable/issues/37
 
-       In jquery 1.7.2+ everything works fine.
-       */
-            //this.picker.find('>div').hide().filter('.datetimepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
-            this.picker
-                .find('>div')
-                .hide()
-                .filter(`.datetimepicker-${DPGlobal.modes[this.viewMode].clsName}`)
-                .css('display', 'block');
-            this.updateNavArrows();
+            this.picker.find('>div').hide().filter('.datetimepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
         },
 
         reset() {
@@ -947,8 +850,6 @@ export default function($, dates) {
                     return 'month';
                 case 1:
                     return 'day';
-                case 0:
-                    return 'hour';
                 default:
                     break;
             }
@@ -1115,7 +1016,8 @@ export default function($, dates) {
             let part;
             let parts;
             if (date instanceof Date) {
-                const dateUTC = new Date(date.valueOf() - date.getTimezoneOffset() * 60000);
+                const dateUTC = new Date(date.valueOf() - moment().utcOffset() * 60000);
+                dateUTC.setMilliseconds(0);
                 dateUTC.setMilliseconds(0);
                 return dateUTC;
             }
@@ -1377,9 +1279,6 @@ export default function($, dates) {
                 case 1:
                 case 'day':
                     return (viewMode = 1);
-                case 0:
-                case 'hour':
-                    return (viewMode = 0);
                 default:
                     break;
             }
