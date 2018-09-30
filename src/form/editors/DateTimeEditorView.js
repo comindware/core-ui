@@ -137,6 +137,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.__presentView();
     },
 
+    hasFocus() {
+        return this.el.contains(document.activeElement);
+    },
+
     __updateClearButton(): void {
         if (!this.options.allowEmptyValue || !this.getValue()) {
             this.ui.clearButton.hide();
@@ -260,10 +264,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __dateBlur() {
         this.calendarDropdownView.close();
-    },
-
-    hasFocus() {
-        return this.el.contains(document.activeElement);
     },
 
     __timeBlur() {
