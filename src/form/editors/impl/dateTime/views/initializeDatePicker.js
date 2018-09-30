@@ -10,8 +10,8 @@ export default function($, dates) {
         return ((ref = date.split('(')[1]) != null ? ref.slice(0, -1) : 0) || date.split(' ');
     }
 
-    function UTCDate(year, month, day) {
-        return moment({ year, month, day, hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate();
+    function UTCDate() {
+        return new Date(Date.UTC.apply(Date, arguments));
     }
 
     // Picker object
@@ -179,7 +179,7 @@ export default function($, dates) {
         },
 
         setDate(d) {
-            this.setUTCDate(new Date(d.getTime() - moment().utcOffset() * 60000));
+            this.setUTCDate(new Date(d.getTime() - d.getTimezoneOffset() * 60000));
         },
 
         setUTCDate(d) {
@@ -334,7 +334,7 @@ export default function($, dates) {
 
             this.updateNavArrows();
             this.fillMonths();
-            let prevMonth = moment({ year, month: month - 1, day: 28 }).toDate();
+            const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
             const day = DPGlobal.getDaysInMonth(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth());
             prevMonth.setUTCDate(day);
             prevMonth.setUTCDate(day - (prevMonth.getUTCDay() - this.weekStart + 7) % 7);
@@ -372,7 +372,7 @@ export default function($, dates) {
                 if (prevMonth.getUTCDay() === this.weekEnd) {
                     html.push('</tr>');
                 }
-                prevMonth = moment(prevMonth).add(1, 'days').toDate();
+                prevMonth.setUTCDate(prevMonth.getUTCDate() + 1);
             }
             this.picker
                 .find('.datetimepicker-days tbody')
@@ -626,7 +626,7 @@ export default function($, dates) {
                                 date: this.viewDate
                             });
                             if (this.viewSelect >= 2) {
-                                this._setDate(UTCDate(year, month, day));
+                                this._setDate(moment({ year, month, day, hour: 0, minute: 0, second: 0, millisecond: 0 }).toDate());
                             }
                         }
                         this.showMode(-1);
@@ -1016,8 +1016,7 @@ export default function($, dates) {
             let part;
             let parts;
             if (date instanceof Date) {
-                const dateUTC = new Date(date.valueOf() - moment().utcOffset() * 60000);
-                dateUTC.setMilliseconds(0);
+                const dateUTC = new Date(date.valueOf() - date.getTimezoneOffset() * 60000);
                 dateUTC.setMilliseconds(0);
                 return dateUTC;
             }
