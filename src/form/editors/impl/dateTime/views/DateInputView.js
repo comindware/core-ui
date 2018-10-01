@@ -8,11 +8,6 @@ export default TextEditorView.extend({
         helpers.ensureOption(options, 'allowEmptyValue');
     },
 
-    events: {
-        click: '__onClick',
-        'focus @ui.input': '__onFocus'
-    },
-
     onRender() {
         this.setPlaceholder();
         this.setValue(this.options.value);
@@ -33,17 +28,8 @@ export default TextEditorView.extend({
         }
     },
 
-    __onClick() {
-        this.trigger('calendar:open');
-    },
-
-    __onFocus() {
-        this.trigger('focus');
-    },
-
     focus() {
         this.ui.input.focus();
         this.trigger('focus');
-        this.trigger('calendar:open');
     }
 });

@@ -233,7 +233,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
-        this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onDateButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onDateChange, this);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
     },
@@ -244,14 +243,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.__value(newVal, updateView, true);
         this.stopListening(GlobalEventService);
         this.calendarDropdownView.close();
-    },
-
-    __onDateButtonCalendarOpen() {
-        if (this.enabled && !this.readonly) {
-            this.calendarDropdownView.open();
-            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
-            this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
-        }
     },
 
     __onDateButtonFocus() {
@@ -316,7 +307,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
-        this.listenTo(this.timeDropdownView, 'button:click', this.__onTimeButtonCalendarOpen, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
@@ -376,12 +366,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
 
         return timeArray;
-    },
-
-    __onTimeButtonCalendarOpen() {
-        if (this.enabled && !this.readonly) {
-            this.__timeDropdownOpen();
-        }
     },
 
     __onTimeButtonFocus() {
