@@ -271,6 +271,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
         this.listenTo(model, 'change', this.__onTimeModelChange);
 
+        const isFormatHasSeconds = dateHelpers.isFormatHasSeconds(this.options.timeDisplayFormat);
+
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
             buttonViewOptions: _.defaultsPure(
@@ -278,7 +280,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                     allowDays: false,
                     allowHours: true,
                     allowMinutes: true,
-                    allowSeconds: dateHelpers.isFormatHasSeconds(this.options.timeDisplayFormat),
+                    allowSeconds: isFormatHasSeconds,
+                    minutes: {
+                        text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
+                    },
                     showEmptyParts: true,
                     hideClearButton: true,
                     fillZero: true,

@@ -107,6 +107,13 @@ describe('Editors', () => {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
+        const show = view => {
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        };
+
         it('should get focus when focus() is called', () => {
             // arrange
             const model = new Backbone.Model({
@@ -116,11 +123,8 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
 
+            show(view);
             view.focus();
 
             expect(findDateInput(view)).toBeFocused();
@@ -137,13 +141,9 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
 
+            show(view);
             view.focus();
-
             view.blur();
 
             expect(findDateInput(view)).toBeFocused(); // Closing dropdown doesn't clear activeDocument to keep dropdown nesting
@@ -161,10 +161,7 @@ describe('Editors', () => {
                 key: 'data',
                 timeDisplayFormat: 'HH:mm:ss'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             // act
             const value = view.getValue();
@@ -184,10 +181,7 @@ describe('Editors', () => {
                 value: expected,
                 timeDisplayFormat: 'HH:mm:ss'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             // act
             const value = view.getValue();
@@ -210,10 +204,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -234,10 +225,7 @@ describe('Editors', () => {
                 value: expected,
                 autocommit: true
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -262,10 +250,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
             view.on('change', onChangeCallback);
 
             model.set('data', '2016-01-01T00:00:06.000Z');
@@ -290,10 +275,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -319,10 +301,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
@@ -346,10 +325,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -367,10 +343,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
             // act
             const isEmpty = view.isEmptyValue();
 
@@ -388,10 +361,7 @@ describe('Editors', () => {
                 key: 'data'
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             findTimeInput(view)[0].focus();
 
@@ -410,10 +380,7 @@ describe('Editors', () => {
                 timeDisplayFormat: 'HH:mm:ss'
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.on('change', () => {
                 expect(view.getValue()).toEqual('2015-07-19T22:00:00.000Z');
@@ -440,10 +407,7 @@ describe('Editors', () => {
                 hideClearButton: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.trigger('mouseenter');
             expect(view.$('.js-clear-button').length).toEqual(0);
@@ -463,10 +427,7 @@ describe('Editors', () => {
                 showTitle: false
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             expect(view.$el.prop('title')).toEqual('');
             expect(findDateInput(view).prop('title')).toEqual('');
@@ -490,10 +451,7 @@ describe('Editors', () => {
             const getDateDisplayValue = format => DateTimeService.getDateDisplayValue(dateTimeISO, format);
             const getTimeDisplayValue = format => DateTimeService.getTimeDisplayValue(dateTimeISO, format);
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             formats.forEach(format => {
                 view.setFormat(format);
@@ -502,6 +460,61 @@ describe('Editors', () => {
                 expect(findDateInput(view).prop('title')).toEqual('');
                 expect(findTimeInput(view).prop('title')).toEqual('');
             });
+        });
+
+        it('should display seconds depends format', () => {
+            const formatWithSeconds = 'HH:mm:ss';
+            const formatWithoutSeconds = 'HH:mm';
+            const someDateTimeISO = '2015-07-20T10:46:37.000Z';
+
+            const model = new Backbone.Model({
+                data: someDateTimeISO
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'data',
+                timeDisplayFormat: formatWithSeconds
+            });
+
+            show(view);
+            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithSeconds));
+            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+
+            view.setFormat({
+                timeDisplayFormat: formatWithoutSeconds
+            });
+            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithoutSeconds));
+            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+        });
+
+        it('should show custom minutes free from format', () => {
+            const formatWithSeconds = 'LTS';
+            const formatWithoutSeconds = 'HH:mm';
+            const someDateTimeISO = '2015-07-20T10:46:37.000Z';
+
+            const model = new Backbone.Model({
+                data: someDateTimeISO
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                minutes: {
+                    text: 'minutes'
+                },
+                key: 'data',
+                timeDisplayFormat: formatWithSeconds
+            });
+
+            show(view);
+            expect(findTimeInput(view).val().trim().includes('minutes')).toEqual(true);
+
+            view.setFormat({
+                timeDisplayFormat: formatWithoutSeconds
+            });
+            expect(findTimeInput(view).val().trim().endsWith('minutes')).toEqual(true);
         });
     });
 });
