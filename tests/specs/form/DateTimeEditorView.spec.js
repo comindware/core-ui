@@ -393,7 +393,7 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            findTimeInput(view)[0].click();
+            findTimeInput(view)[0].focus();
 
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
@@ -420,7 +420,7 @@ describe('Editors', () => {
                 done();
             });
 
-            findTimeInput(view)[0].click();
+            findTimeInput(view)[0].focus();
 
             document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
 
