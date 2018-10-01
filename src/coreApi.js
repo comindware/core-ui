@@ -1,5 +1,5 @@
 //@flow
-import '../resources/styles/bootstrap-datetimepicker.css';
+import '../resources/styles/date-picker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
 import '../resources/styles/services/messageService.css';

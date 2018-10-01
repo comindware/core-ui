@@ -24,6 +24,8 @@ const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
+const text2AscComparatorSort = helpers.comparatorFor(comparators.stringComparator2Asc, 'text');
+
 const defaultOptions = {
     displayAttribute: 'name',
     controller: null,
@@ -68,6 +70,7 @@ const defaultOptions = {
 export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
+        helpers.ensureOption(options, 'collection');
 
         let collection = [];
         if (options.collection) {
@@ -75,7 +78,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 collection = options.collection;
             } else {
                 collection = options.collection.toJSON();
-                this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
+                this.listenTo(options.collection, 'reset', collect => this.resetCollection(collect));
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), {
@@ -91,14 +94,22 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             });
 
         this.value = this.__adjustValue(this.value);
-        this.__updateWithDelay = _.debounce(this.__updateFilter, this.options.textFilterDelay);
+        this.debouncedFetchUpdateFilter = _.debounce(this.fetchUpdateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
 
         this.viewModel = {
             button: {
                 selected: new Backbone.Collection(this.value, {
-                    comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
+                    comparator: (a, b) => {
+                        if (a instanceof FakeInputModel) {
+                            return 1;
+                        }
+                        if (b instanceof FakeInputModel) {
+                            return -1;
+                        }
+                        return text2AscComparatorSort(a, b);
+                    }
                 })
             },
             panel: new Backbone.Model({
@@ -188,10 +199,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.viewModel && this.viewModel.button.selected.reset();
+        this.resetSelectedCollection();
         this.__value(value, false);
-        delete this.fakeInputModel;
-        this.__updateFakeInputModel();
     },
 
     onRender(): void {
@@ -200,10 +209,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         this.showChildView('dropdownRegion', this.dropdownView);
 
-        this.__updateFakeInputModel();
-
-        if (this.options.valueType === 'id' && (!this.options.collection || this.options.collection.length === 0)) {
-            this.__requestAndResetButtonViewData();
+        if (this.viewModel) {
+            this.__addFakeInputModel(this.viewModel.button.selected);
         }
     },
 
@@ -242,7 +249,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     focus(): void {
         this.hasFocus = true;
         this.onFocus();
-        this.__onButtonClick();
+        this.open();
         this.__focusButton();
     },
 
@@ -255,17 +262,73 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__blurButton();
     },
 
-    updateFilter(value, immediate) {
+    async fetchUpdateFilter(value, forceCompareText) {
         this.searchText = (value || '').trim();
-
-        if (immediate) {
-            return this.__updateFilter();
+        if (this.fakeInputModel.get('searchText') === this.searchText && !forceCompareText) {
+            return;
         }
-        this.isFilterDeayed = true;
-        return this.__updateWithDelay();
+        this.fakeInputModel.set('searchText', this.searchText);
+        return this.__fetchUpdateFilter(this.searchText);
+    },
+
+    async __fetchUpdateFilter(fetchedDataForSearchText) {
+        if (this.isFetchCompleted === false) {
+            return false;
+        }
+        this.isFetchCompleted = false;
+        this.panelCollection.pointOff();
+
+        try {
+            const data = await this.controller.fetch({
+                text: fetchedDataForSearchText,
+                getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
+            });
+            this.isFetchCompleted = true;
+
+            this.resetPanelCollection(data);
+
+            if (this.searchText !== fetchedDataForSearchText) {
+                return this.__fetchUpdateFilter(this.searchText);
+            }
+            this.__tryPointFirstRow();
+            this.isLastFetchSuccess = true;
+            this.triggerReady(); //don't move to finally, recursively.
+            return true;
+        } catch(e) {
+            this.isFetchCompleted = true;
+            this.isLastFetchSuccess = false;
+            this.triggerReady();
+            return false;
+        }
+    },
+
+    resetSelectedCollection(models) {
+        if (this.viewModel) {
+            return;
+        }
+        const selectedCollection = this.viewModel.button.selected;
+        selectedCollection.reset(models);
+        this.__addFakeInputModel(selectedCollection);
+    },
+
+    resetPanelCollection(data) {
+        this.panelCollection.totalCount = data.totalCount;
+        this.panelCollection.reset(data.collection);
+
+        if (this.panelCollection.length > 0 && this.value) {
+            this.value.forEach(editorValue => {
+                const id = editorValue && editorValue.id !== undefined ? editorValue.id : editorValue;
+
+                if (this.panelCollection.has(id)) {
+                    this.panelCollection.get(id).select({ isSilent: true });
+                }
+            });
+        }   
     },
 
     onAttach() {
+        this.triggerNotReady();
+        this.debouncedFetchUpdateFilter(null, true);
         if (this.options.openOnRender) {
             this.__onButtonClick();
         }
@@ -277,14 +340,23 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __updateFilter() {
-        if (this.activeText === this.searchText) {
+    getIsOpenAllowed() {
+        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen;
+    },
+
+    open() {
+        if (!this.getIsOpenAllowed()) {
             return;
         }
-        this.activeText = this.searchText;
-        this.isFilterDeayed = false;
+        if (this.isReady) {
+            this.dropdownView.open();
+        } else {
+            this.listenToOnce(this, 'view:ready', this.open);
+        }
+    },
 
-        return this.__onFilterText();
+    close() {
+        this.dropdownView.close();
     },
 
     __adjustValue(value: DataValue): any {
@@ -321,7 +393,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             this.value = this.getValue().concat(adjustedValue);
         }
 
-        selectedModels.add(this.value, { at: selectedModels.length - 1 });
+        selectedModels.add(this.value);
         this.viewModel.panel.set('value', this.value);
 
         if (triggerChange) {
@@ -329,9 +401,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __onResetCollection(panelCollection) {
+    resetCollection(collection) {
         const value = this.model ? this.model.get(this.key) : this.value;
-        this.panelCollection.reset(panelCollection.models);
+        this.panelCollection.reset(collection.models);
         if (value) {
             const selectedItem = this.panelCollection.find(collectionItem => {
                 const itemId = collectionItem.get('id').toString();
@@ -353,15 +425,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __onValueSet(model?: Backbone.Model, isSilent: boolean = false): void {
+    __onValueSet(model?: Backbone.Model, options = {}): void {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
         this.__value(value, true);
         this.__updateFakeInputModel();
 
-        if (this.options.maxQuantitySelected === 1 && !isSilent) {
+        if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
             this.dropdownView.close();
-            this.__updateButtonInput();
             this.__focusButton();
             return;
         }
@@ -369,8 +440,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         const stopAddItems = canAddItemOldValue !== this.__canAddItem();
         if (stopAddItems) {
             this.dropdownView.close();
-        } else if (!isSilent) {
-            this.__updateButtonInput();
+        } else if (!options.isSilent) {
             this.__focusButton();
         }
     },
@@ -393,33 +463,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.controller.edit(value);
     },
 
-    __onInputSearch(value, immediate: boolean): void {
-        this.updateFilter(value, immediate);
-    },
-
-    async __onFilterText() {
-        this.dropdownView.buttonView.setLoading(true);
-
-        return this.controller.fetch({
-            text: this.searchText,
-            getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute)
-        }).then(data => {
-            this.panelCollection.totalCount = data.totalCount;
-            this.panelCollection.reset(data.collection);
-
-            if (this.panelCollection.length > 0 && this.value) {
-                this.value.forEach(value => {
-                    const id = value && value.id !== undefined ? value.id : value;
-
-                    if (this.panelCollection.has(id)) {
-                        this.panelCollection.get(id).select({ isSilent: true });
-                    }
-                });
-            }
-            this.dropdownView.buttonView.setLoading(false);
-
-            this.__tryPointFirstRow();
-        });
+    __onInputSearch(value): void {
+        this.triggerNotReady();
+        this.debouncedFetchUpdateFilter(value);
     },
 
     __onAddNewItem(): void {
@@ -441,11 +487,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
 
-    __onDropdownOpen(): void {
-        this.focus();
-        this.trigger('dropdown:open');
-    },
-
     __focusButton(options): void {
         if (this.dropdownView.button) {
             this.dropdownView.button.focus(options);
@@ -458,18 +499,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    async __onButtonClick(): void {
-        if (this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && !this.__pendingButtonClick) {
-            this.__pendingButtonClick = true;
-            try {
-                await this.updateFilter(null, true);
-                this.dropdownView.open();
-                this.__triggerReady();
-            } catch(e) {
-                console.error(e);
-            } finally {
-                this.__pendingButtonClick = false;
-            }
+    __onButtonClick(): void {
+        this.open();
+        if (this.isReady && !this.isLastFetchSuccess) {
+            this.fetchUpdateFilter(this.fakeInputModel.get('searchText'), true);
         }
     },
 
@@ -500,26 +533,33 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __updateFakeInputModel(): void {
-        const selectedModels = this.viewModel.button.selected;
+        this.fakeInputModel && this.fakeInputModel.updateEmpty();
+    },
 
+    __addFakeInputModel(collection) {
         if (!this.options.showSearch) {
             if (this.fakeInputModel) {
-                selectedModels.remove(this.fakeInputModel);
+                collection.remove(this.fakeInputModel);
                 delete this.fakeInputModel;
             }
             return;
         }
-        if (!this.fakeInputModel) {
-            this.fakeInputModel = new FakeInputModel();
-            selectedModels.add(this.fakeInputModel, { at: selectedModels.length });
-        } else {
-            this.fakeInputModel.updateEmpty();
-        }
+        collection.add(
+            this.isFakeInputModelWrong(collection) ? 
+            this.fakeInputModel = new FakeInputModel() : 
+            this.fakeInputModel
+        );
+
+        this.__updateFakeInputModel();
     },
 
-    __updateButtonInput(): void {
+    isFakeInputModelWrong(collection) {
+        return !this.fakeInputModel || !collection.has(this.fakeInputModel.id);
+    },
+
+    updateButtonInput(string): void {
         if (this.dropdownView.button) {
-            this.dropdownView.button.collectionView.updateInput();
+            this.dropdownView.button.collectionView.updateInput(string);
         }
     },
 
@@ -544,8 +584,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onInputDown(): void {
         if (!this.dropdownView.isOpen) {
-            this.dropdownView.open();
-            this.__tryPointFirstRow();
+            this.open();
         } else {
             this.__sendPanelCommand('down');
         }
@@ -557,9 +596,18 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __triggerReady() {
+    triggerNotReady() {
+        this.isReady = false;
+        this.dropdownView.buttonView.setLoading(true);
+        this.trigger('view:notReady');
+        return false;
+    },
+
+    triggerReady() {
+        this.isReady = true;
+        this.dropdownView.buttonView.setLoading(false);
         this.trigger('view:ready');
-        this.__tryPointFirstRow();
+        return true;
     },
 
     __tryPointFirstRow() {
@@ -570,24 +618,23 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
+    __onDropdownOpen(): void {
+        this.focus();
+        this.__tryPointFirstRow();
+        this.trigger('dropdown:open');
+    },
+
     __onDropdownClose() {
         this.blur();
         this.panelCollection.pointOff();
-        this.activeText = null;
         this.trigger('dropdown:close');
     },
 
     __proxyValueSelect() {
-        if (this.isFilterDeayed) {
-            this.updateFilter(this.searchText, true);
-        } else {
+        if (!this.isReady) {
+            this.fetchUpdateFilter(this.searchText);
+        } else if (this.dropdownView.isOpen) {
             this.__onValueSelect();
         }
-    },
-
-    async __requestAndResetButtonViewData() {
-        await this.__onFilterText();
-
-        this.setValue(this.value);
     }
 }));

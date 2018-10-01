@@ -399,6 +399,48 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
+        it('should have no title options.showTitle false', () => {
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                readonly: true,
+                showTitle: false
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            expect(findInput(view).prop('title')).toEqual('');
+        });
+
+        it('should have title options.showTitle true', () => {
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                readonly: true,
+                showTitle: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            expect(findInput(view).prop('title')).toEqual('text');
+        });
+
         it('should show title passed in configuration', () => {
             expect(true).toEqual(true);
         });
@@ -422,6 +464,65 @@ describe('Editors', () => {
 
             view.trigger('mouseenter');
             expect(view.$('.js-clear-button').length).toEqual(0);
+        });
+
+        it('should set email placeholder, mask and validator if same format was passed', () => {
+            const model = new Backbone.Model({
+                data: 'some invalid @ ema.il  . comm'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                format: 'email'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            const input = view.ui.input;
+            expect(input.prop('placeholder')).toEqual('Enter email');
+            expect(input.val()).toEqual('someinvalid@email.comm');
+            model.set('data', 'invalid');
+            expect(view.validate()).toEqual({
+                type: 'email',
+                message: 'Invalid email address'
+            });
+
+            model.set('data', 'valid@email.com');
+            expect(view.validate()).toBeUndefined();
+        });
+
+        it('should set phone placeholder, mask and validator if same format was passed', () => {
+            const model = new Backbone.Model({
+                data: '123456789'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                format: 'phone'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            const input = view.ui.input;
+            expect(input.prop('placeholder')).toEqual('5 (555) 555-55-55');
+            expect(input.val()).toEqual('1 (234) 567-89-__');
+            model.set('data', 'invalid');
+            expect(view.validate()).toEqual({
+                type: 'phone',
+                message: 'Invalid phone number'
+            });
+            model.set('data', '5 (555) 555-55-55');
+            expect(view.validate()).toBeUndefined();
         });
     });
 });

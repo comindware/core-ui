@@ -3,7 +3,6 @@ const requireText = require.context('raw-loader!../cases', true);
 
 import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
-import markdown from 'markdown';
 
 export default Marionette.View.extend({
     className: 'demo-content_wrapper',
@@ -12,7 +11,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            description: markdown.toHTML(this.model.get('description') || '')
+            description: this.model.get('description') || ''
         };
     },
 

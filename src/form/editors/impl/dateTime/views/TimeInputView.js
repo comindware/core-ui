@@ -18,11 +18,6 @@ export default Marionette.View.extend({
 
     className: 'time-view',
 
-    events: {
-        click: '__onClick',
-        'focus @ui.input': '__onFocus'
-    },
-
     onRender() {
         this.setPlaceholder();
         this.setValue(this.options.value);
@@ -40,18 +35,9 @@ export default Marionette.View.extend({
         this.ui.input.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'));
     },
 
-    __onClick() {
-        this.trigger('calendar:open');
-    },
-
-    __onFocus() {
-        this.trigger('focus');
-    },
-
     focus() {
         this.ui.input.focus();
         this.trigger('focus');
-        this.trigger('calendar:open');
     },
 
     __hasSeconds(format) {

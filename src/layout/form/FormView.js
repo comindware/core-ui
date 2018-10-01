@@ -66,8 +66,10 @@ export default Marionette.View.extend({
     onRender() {
         this.showChildView('contentRegion', this.content);
         if ('content' in this.options) {
-            anchors.forEach((anchor) => {
-                this.content.$el.find(`[data-${anchor}s]`).each((i, el) => { el.setAttribute(`${anchor}-for`, this.uniqueFormId); });
+            anchors.forEach(anchor => {
+                this.content.$el.find(`[data-${anchor}s]`).each((i, el) => {
+                    el.setAttribute(`${anchor}-for`, this.uniqueFormId);
+                });
             });
         }
         this.__updateState();
@@ -92,5 +94,18 @@ export default Marionette.View.extend({
             this.content.update();
         }
         this.__updateState();
+    },
+
+    validate() {
+        let fieldErrors;
+        let contentErrors;
+        if (this.form) {
+            fieldErrors = this.form.validate();
+        }
+        if (this.content && this.content.validate) {
+            contentErrors = this.content.validate();
+        }
+
+        return fieldErrors || contentErrors;
     }
 });

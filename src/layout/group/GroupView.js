@@ -59,6 +59,13 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    validate() {
+        const view = this.model.get('view');
+        if (view.validate) {
+            return view.validate();
+        }
+    },
+
     __toggleCollapse() {
         if (!this.model.get('collapsible')) {
             return;

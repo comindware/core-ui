@@ -17,19 +17,19 @@ const focusablePartId = {
 const createFocusableParts = function(options) {
     const result = [];
     const settings = {};
-    settings.daysSettings = _.defaults(options.days, options.allFocusableParts, {
+    settings.daysSettings = _.defaultsPure(options.days, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
         maxLength: 4
     });
-    settings.hoursSettings = _.defaults(options.hours, options.allFocusableParts, {
+    settings.hoursSettings = _.defaultsPure(options.hours, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
         maxLength: 4
     });
-    settings.minutesSettings = _.defaults(options.minutes, options.allFocusableParts, {
+    settings.minutesSettings = _.defaultsPure(options.minutes, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
         maxLength: 4
     });
-    settings.secondsSettings = _.defaults(options.seconds, options.allFocusableParts, {
+    settings.secondsSettings = _.defaultsPure(options.seconds, options.allFocusableParts, {
         text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
         maxLength: 4
     });

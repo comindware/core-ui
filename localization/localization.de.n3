@@ -98,7 +98,7 @@
 
 <http://comindware.com/text/core/form/validation#password> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Das Kennwort muss mindestens 8 Zeichen lang sein."; l10n:isBeingTranslated true; l10n:originalData "Password must be at least 8 characters long."].
 
-<http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Telefonnummer muss mindestens 8 Zeichen enthalten.<br> Dabei sind Zahlen und die Zeichen (),-,+ erlaubt."; l10n:isBeingTranslated true; l10n:originalData "Phone number must be at least 8 characters long. <br> Use digits and characters (), -, +."].
+<http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ungültige Telefonnummer"; l10n:originalData "Invalid phone number"].
 
 <http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:isBeingTranslated true; l10n:originalData "This field is required."].
 
@@ -113,6 +113,22 @@
 <http://comindware.com/text/core/formats/datetime#monthsShort> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Jan,Feb,Mrz,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez"; l10n:originalData "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"].
 
 <http://comindware.com/text/core/formats/datetime#today> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Heute"; l10n:originalData "Today"].
+
+<http://comindware.com/text/core/formats/moment#condensedDate> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "ll"; l10n:originalData "ll"].
+
+<http://comindware.com/text/core/formats/moment#dateISO> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "YYYY-MM-DD"; l10n:originalData "YYYY-MM-DD"].
+
+<http://comindware.com/text/core/formats/moment#longDate> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "dddd, LL"; l10n:originalData "dddd, LL"].
+
+<http://comindware.com/text/core/formats/moment#longTime> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "LTS"; l10n:originalData "LTS"].
+
+<http://comindware.com/text/core/formats/moment#monthDay> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "d. MMMM"; l10n:originalData "MMMM d"].
+
+<http://comindware.com/text/core/formats/moment#shortDate> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "L"; l10n:originalData "L"].
+
+<http://comindware.com/text/core/formats/moment#shortTime> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "LT"; l10n:originalData "LT"].
+
+<http://comindware.com/text/core/formats/moment#yearMonth> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "MMMM, YYYY"; l10n:originalData "MMMM, YYYY"].
 
 <http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht eingerichtet"; l10n:originalData "notSet"].
 

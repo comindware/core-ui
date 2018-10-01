@@ -414,6 +414,7 @@ export default Marionette.CompositeView.extend({
         }
 
         if (this.state.viewportHeight === oldViewportHeight) {
+            this.scrollTo(0);
             return;
         }
 

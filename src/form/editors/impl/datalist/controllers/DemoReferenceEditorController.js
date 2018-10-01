@@ -3,7 +3,7 @@ import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
 const createDemoData = function () {
     return _.times(1000, i => {
-        const id = `task.${i + 1}`;
+        const id = `task.${i}`;
         return {
             id,
             text: `Test Reference ${i}`

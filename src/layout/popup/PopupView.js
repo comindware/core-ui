@@ -109,6 +109,13 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    validate() {
+        const content = this.options.content;
+        if (content.validate) {
+            return content.validate();
+        }
+    },
+
     __keyAction(event) {
         if (event.keyCode === 27 && !this.__isNeedToPrevent()) {
             this.__close();
@@ -126,23 +133,30 @@ export default Marionette.View.extend({
 
     __fullscreenToggle() {
         this.__expanded = !this.__expanded;
-        this.__callWithTransition(() => {
-            this.ui.window.draggable('option', 'disabled', this.__expanded);
-            this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
-            this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
-        }, () => {
-            this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.expand}`, !this.__expanded);
-            this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.minimize}`, this.__expanded);
-        });
+        this.__callWithTransition(
+            () => {
+                this.ui.window.draggable('option', 'disabled', this.__expanded);
+                this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
+                this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
+            },
+            () => {
+                this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.expand}`, !this.__expanded);
+                this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.minimize}`, this.__expanded);
+            }
+        );
     },
 
     __callWithTransition(callback, callbackAfterTransition) {
         this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
         typeof callback === 'function' && callback();
-        helpers.setUniqueTimeout(expandId, () => {
-            this.ui.window.css('transition', 'unset');
-            typeof callbackAfterTransition === 'function' && callbackAfterTransition();
-        }, TRANSITION);
+        helpers.setUniqueTimeout(
+            expandId,
+            () => {
+                this.ui.window.css('transition', 'unset');
+                typeof callbackAfterTransition === 'function' && callbackAfterTransition();
+            },
+            TRANSITION
+        );
     },
 
     async __close() {

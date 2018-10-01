@@ -1,6 +1,7 @@
 //@flow
 /* eslint-disable no-param-reassign */
 
+import form from 'form';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -400,6 +401,51 @@ export default Marionette.View.extend({
         if (!this.isDestroyed()) {
             this.loading.setLoading(state);
         }
+    },
+
+    validate() {
+        if (!this.isEditable) {
+            return;
+        }
+
+        return this.options.columns.some(column => {
+            if (!column.editable || !column.validators) {
+                return false;
+            }
+            const validators = [];
+            return column.validators.some(validator => {
+                let result;
+                if (typeof validator === 'function') {
+                    validators.push(validator);
+                } else {
+                    const predefined = form.repository.validators[validator];
+                    if (typeof predefined === 'function') {
+                        validators.push(predefined());
+                    }
+                }
+
+                this.collection.forEach(model => {
+                    if (model._events['validate:force']) {
+                        const e = {};
+                        model.trigger('validate:force', e);
+                        if (e.validationResult) {
+                            result = e.validationResult;
+                        }
+                    } else if (!model.isValid()) {
+                        result = model.validationResult;
+                    } else {
+                        validators.some(v => {
+                            const error = v(model.get(column.key), model.attributes);
+                            if (error) {
+                                result = model.validationResult = error;
+                            }
+                            return result;
+                        });
+                    }
+                });
+                return result;
+            });
+        });
     },
 
     __presortCollection(columns) {

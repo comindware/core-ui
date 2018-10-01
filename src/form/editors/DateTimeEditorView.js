@@ -27,6 +27,8 @@ const defaultOptions = {
     }
 };
 
+const defaultClasses = 'editor editor_date-time ';
+
 /**
  * @name DateTimeEditorView
  * @memberof module:core.form.editors
@@ -74,7 +76,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     className() {
-        return `editor editor_date-time ${this.options.dateDisplayFormat || ''} ${this.options.timeDisplayFormat || ''}`;
+        return this.__getClassName();
     },
 
     template: Handlebars.compile(template),
@@ -91,33 +93,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
-    __keyAction(event) {
-        const dropdownView = this.calendarDropdownView;
-        if (dropdownView.isOpen && event.keyCode === keyCode.ENTER) {
-            const newValue = dropdownView.button.ui.dateInput.val();
-            const newDate = new Date(newValue);
-            dropdownView.panelView.updatePickerDate(newDate);
-            this.__onDateChange(newDate, false);
-        }
-    },
-
     onRender(): void {
-        this.__updateClearButton();
-        if (this.options.showTitle) {
-            this.__updateTitle();
-        }
-
-        if (this.options.showTime !== false) {
-            this.__createTimeDropdownView();
-        }
-
-        if (this.options.showDate !== false) {
-            this.__createDateDropdownEditor();
-            //calendar button readonly as don't develop mask validation
-            this.calendarDropdownView.button.ui.input
-                .prop('readonly', true)
-                .prop('tabindex', -1);
-        }
+        this.__presentView();
     },
 
     focusElement: null,
@@ -137,6 +114,35 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     onFocus(): void {
         BaseLayoutEditorView.prototype.onFocus.call(this);
+    },
+
+    setFormat(newFormat) {
+        if (typeof newFormat !== 'object') {
+            return;
+        }
+        this.options.dateDisplayFormat = newFormat.dateDisplayFormat;
+        this.options.timeDisplayFormat = newFormat.timeDisplayFormat;
+
+        this.options.showDate = !!this.options.dateDisplayFormat;
+        this.options.showTime = !!this.options.timeDisplayFormat;
+
+        this.__presentView();
+
+        this.$el.attr('class', this.__getClassName());
+    },
+
+    hasFocus() {
+        return this.el.contains(document.activeElement);
+    },
+
+    __keyAction(event) {
+        const dropdownView = this.calendarDropdownView;
+        if (dropdownView.isOpen && event.keyCode === keyCode.ENTER) {
+            const newValue = dropdownView.button.ui.dateInput.val();
+            const newDate = new Date(newValue);
+            dropdownView.panelView.updatePickerDate(newDate);
+            this.__onDateChange(newDate, false);
+        }
     },
 
     __updateClearButton(): void {
@@ -215,7 +221,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.options.allowEmptyValue,
                 dateDisplayFormat: this.options.dateDisplayFormat,
-                showTitle: this.options.showTitle,
+                showTitle: false,
                 hideClearButton: true
             },
             panelView: DatePanelView,
@@ -231,7 +237,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
-        this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onDateButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onDateChange, this);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
     },
@@ -242,14 +247,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.__value(newVal, updateView, true);
         this.stopListening(GlobalEventService);
         this.calendarDropdownView.close();
-    },
-
-    __onDateButtonCalendarOpen() {
-        if (this.enabled && !this.readonly) {
-            this.calendarDropdownView.open();
-            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
-            this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
-        }
     },
 
     __onDateButtonFocus() {
@@ -264,16 +261,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.calendarDropdownView.close();
     },
 
-    hasFocus() {
-        return this.el.contains(document.activeElement);
-    },
-
     __timeBlur() {
         this.timeDropdownView.close();
-    },
-
-    timeHasFocus() {
-        return this.el.contains(document.activeElement);
     },
 
     __createTimeDropdownView() {
@@ -282,20 +271,28 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
         this.listenTo(model, 'change', this.__onTimeModelChange);
 
+        const isFormatHasSeconds = dateHelpers.isFormatHasSeconds(this.options.timeDisplayFormat);
+
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: Object.assign({
-                allowDays: false,
-                allowHours: true,
-                allowMinutes: true,
-                allowSeconds: true,
-                showEmptyParts: true,
-                hideClearButton: true,
-                fillZero: true,
-                normalTime: true
-            }, this.options, {
-                model
-            }),
+            buttonViewOptions: _.defaultsPure(
+                {
+                    allowDays: false,
+                    allowHours: true,
+                    allowMinutes: true,
+                    allowSeconds: isFormatHasSeconds,
+                    minutes: {
+                        text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
+                    },
+                    showEmptyParts: true,
+                    hideClearButton: true,
+                    fillZero: true,
+                    normalTime: true,
+                    showTitle: false,
+                    model
+                },
+                this.options
+            ),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',
@@ -322,12 +319,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
-        this.listenTo(this.timeDropdownView, 'button:click', this.__onTimeButtonCalendarOpen, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
 
-    __updateTime(ISOstr) { //replace time of ISO string to time from timebutton
+    __updateTime(ISOstr) {
+        //replace time of ISO string to time from timebutton
         const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
         if (!valTimeModel) {
             return;
@@ -384,12 +381,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         return timeArray;
     },
 
-    __onTimeButtonCalendarOpen() {
-        if (this.enabled && !this.readonly) {
-            this.__timeDropdownOpen();
-        }
-    },
-
     __onTimeButtonFocus() {
         if (this.enabled && !this.readonly) {
             this.__timeDropdownOpen();
@@ -402,5 +393,30 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (!this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
         }
+    },
+
+    __presentView() {
+        this.__updateClearButton();
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
+
+        if (this.options.showTime !== false) {
+            this.__createTimeDropdownView();
+        } else {
+            this.getRegion('timeDropdownRegion').reset();
+        }
+
+        if (this.options.showDate !== false) {
+            this.__createDateDropdownEditor();
+            //calendar button readonly as don't develop mask validation
+            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', -1);
+        } else {
+            this.getRegion('dateDropdownRegion').reset();
+        }
+    },
+
+    __getClassName() {
+        return `${defaultClasses}${this.options.dateDisplayFormat || ''} ${this.options.timeDisplayFormat || ''}`;
     }
 }));

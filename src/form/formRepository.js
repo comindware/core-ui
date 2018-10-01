@@ -5,6 +5,7 @@ import PhoneValidator from './validators/phoneValidator';
 import SystemNameValidator from './validators/systemNameValidator';
 import EmailValidator from './validators/emailValidator';
 import CodeValidation from './validators/codeValidation';
+import RegExpValidator from './validators/regExpValidator';
 
 
 export default {
@@ -16,6 +17,7 @@ export default {
         phone: PhoneValidator,
         systemName: SystemNameValidator,
         email: EmailValidator,
-        code: CodeValidation
+        code: CodeValidation,
+        regexp: RegExpValidator
     }
 };
