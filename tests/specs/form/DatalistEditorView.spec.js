@@ -10,6 +10,11 @@ describe('Editors', () => {
 
     const findInput = view => getElement(view, '.js-input');
 
+    const show = view => window.app
+                                .getView()
+                                .getRegion('contentRegion')
+                                .show(view);
+
     const collectionData = [
         {
             id: 1,
@@ -64,10 +69,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.focus();
             view.on('view:ready', () => {
@@ -89,12 +91,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.focus();
+
             view.on('view:ready', () => {
                 view.blur();
                 expect(findInput(view)).not.toBeFocused();
@@ -135,10 +135,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
         });
@@ -157,10 +154,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             const doneFn = jasmine.createSpy();
             view.panelCollection.on('reset', () => doneFn);
@@ -181,10 +175,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.focus();
             view.on('view:ready', () => {
@@ -209,16 +200,15 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            view.on('view:ready', () => {
-                view.focus
-                expect(view.panelCollection.length).toEqual(collectionData.length);
-                done();
+            view.on('attach', () => {
+                view.focus();
+                view.on('view:ready', () => {
+                    expect(view.panelCollection.length).toEqual(collectionData.length);
+                    done();
+                });
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
 
         it('should change value on setValue() get called', () => {
@@ -233,10 +223,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.setValue([{ id: 2, name: 2 }]);
 
@@ -255,16 +242,14 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-
-            view.focus();
+            show(view);
+            
             view.on('view:ready', () => {
                 expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
                 done();
             });
+
+            view.focus();
         });
 
         it('should change value on panel item select', done => {
@@ -279,12 +264,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.focus();
+
             view.on('view:ready', () => {
                 expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
                 view.panelCollection.at(1).select();
@@ -308,10 +291,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.on('change', () => {
                 expect(true).toEqual(true);
@@ -336,10 +316,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.$('.bubbles__i:eq(1)').trigger('mouseenter');
 
@@ -382,10 +359,8 @@ describe('Editors', () => {
 
             view.on('view:ready', () => {
                 expect(view.isReady).toEqual(true);
-                view.on('dropdown:open', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
-                    done();
-                });
+                expect(view.dropdownView.isOpen).toEqual(true);
+                done();
             });
 
             view.on('attach', () => {
@@ -395,10 +370,7 @@ describe('Editors', () => {
                 expect(!!view.dropdownView.isOpen).toEqual(false);
             });
 
-            window.app
-            .getView()
-            .getRegion('contentRegion')
-            .show(view);
+            show(view);
         });
         /*
         it('should set size for panel', () => {
@@ -414,10 +386,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
@@ -454,10 +423,7 @@ describe('Editors', () => {
                 }, 300);
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.focus();
         });
@@ -491,10 +457,7 @@ describe('Editors', () => {
                 done();
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
 
         it('should use default parameters if non is passed', () => {
@@ -508,10 +471,7 @@ describe('Editors', () => {
                 key: 'value'
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             expect(view.options).toEqual(
                 jasmine.objectContaining({
@@ -571,10 +531,10 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 const input = findInput(view);
+                input.click();
+                input.val('1');
+                input.keydown();
                 const first = setInterval(() => {
-                    input.click();
-                    input.val('1');
-                    input.keydown();
                     if (view.panelCollection.length === 1) {
                         clearTimeout(first);
                         input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
@@ -584,10 +544,7 @@ describe('Editors', () => {
                 }, 10);
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
 
         it('should not set value on Enter keyup if search result is empty', done => {
@@ -606,10 +563,10 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 const input = findInput(view);
+                input.click();
+                input.val('d');
+                input.keydown();
                 const first = setInterval(() => {
-                    input.click();
-                    input.val('d');
-                    input.keydown();
                     if (view.panelCollection.length === 0) {
                         clearTimeout(first);
                         input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
@@ -619,12 +576,9 @@ describe('Editors', () => {
                 }, 10);
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
-        
+
         it('should not delete selected value on blur if search result is none', done => {
             const model = new Backbone.Model({
                 value: 3
@@ -643,11 +597,11 @@ describe('Editors', () => {
                 const length = view.dropdownView.button.collectionView.collection.length;
                 expect(length).toEqual(2); //selected + input
 
-                const input = findInput(view);
-                const first = setInterval(() => {
+                const input = findInput(view);   
                     input.click();
                     input.val('d');
                     input.keydown();
+                const first = setInterval(() => {
                     if (view.panelCollection.length === 0) {
                         clearTimeout(first);
                         setTimeout(() => {
@@ -660,10 +614,7 @@ describe('Editors', () => {
                 }, 10);
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
 
         it('should have input for search in single value mode', done => {
@@ -686,10 +637,7 @@ describe('Editors', () => {
                 done();
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
 
         it('should have input for search in multi value mode', done => {
@@ -729,10 +677,7 @@ describe('Editors', () => {
                 done();
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
         });
     });
 });
