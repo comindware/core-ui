@@ -574,9 +574,8 @@ body {
 }
 
 
-.new-expression-editor-field{
+.new-expression-editor-field {
     width: 100%;
-    overflow: auto;
 }
 
 .header-content {
