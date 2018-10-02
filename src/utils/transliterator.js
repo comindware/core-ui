@@ -24,11 +24,12 @@ export default {
             this.extendComputed(options.model, options.transliteratedFields, options.schema);
             options.model.computedFields = new Backbone.ComputedFields(options.model);
         }
+
         return {
             schema: options.schema,
             model: options.model,
             transliteratedFields: options.transliteratedFields
-        }
+        };
     },
 
     setOptionsToComputedTransliteratedFields(schema, transliteratedFields = {name: 'alias'}, inputSettings = {
@@ -75,7 +76,7 @@ export default {
     mapOldSchemaToNew(oldShema) {
         return Object.entries(oldShema).map(keyValue => {
             keyValue[1].key = keyValue[0];
-            return keyValue[1]
+            return keyValue[1];
         });
     },  
 
@@ -91,7 +92,7 @@ export default {
 
         return Array.from(str).map(char => {
             firstIsDigit && (firstIsDigit = nonLatinReg.test(char));
-            return char.replace(firstIsDigit ? nonLatinReg : nonLatinDigitReg, '')
+            return char.replace(firstIsDigit ? nonLatinReg : nonLatinDigitReg, '');
         }).join('');
     },
 
@@ -161,4 +162,4 @@ export default {
     translite(text) {
         return String(text).replace(/[а-яё]/gi, ruChar => this.getTranslitToSystemName()[ruChar] || '');
     }    
-}
+};

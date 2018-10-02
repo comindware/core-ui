@@ -1,4 +1,4 @@
-/*eslint-ignore*/
+/*eslint-disable*/
 import LocalizationService from '../services/LocalizationService';
 
 const timeoutCache = {};
