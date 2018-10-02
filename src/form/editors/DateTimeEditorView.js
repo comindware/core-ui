@@ -12,6 +12,7 @@ import dropdown from 'dropdown';
 import { dateHelpers, keyCode } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import DurationEditorView from './DurationEditorView';
+import { getClasses } from './impl/dateTime/meta';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -76,6 +77,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     className() {
+        this.displayClasses = getClasses();
+
         return this.__getClassName();
     },
 
@@ -417,6 +420,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __getClassName() {
-        return `${defaultClasses}${this.options.dateDisplayFormat || ''} ${this.options.timeDisplayFormat || ''}`;
+        return `${defaultClasses}${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[this.options.timeDisplayFormat] || ''}`;
     }
 }));
