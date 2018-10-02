@@ -118,13 +118,20 @@
 }
 
 .dropdown__wrp.dropdown__wrp_down {
-  margin-top: -1px;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .dropdown__wrp.dropdown__wrp_up {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.dropdown__wrp_reference.dropdown__wrp_down {
+  margin-top: -1px;
+}
+
+.dropdown__wrp_reference.dropdown__wrp_up {
   margin-top: 1px;
 }
+
 /* icons */
 
 svg.svg-icons.svg-icons_remove {
