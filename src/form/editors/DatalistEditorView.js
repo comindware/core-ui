@@ -249,7 +249,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     focus(): void {
         this.hasFocus = true;
         this.onFocus();
-        this.open();
+        this.__onButtonClick();
         this.__focusButton();
     },
 
@@ -267,6 +267,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (this.fakeInputModel.get('searchText') === this.searchText && !forceCompareText) {
             return;
         }
+        this.triggerNotReady();
         this.fakeInputModel.set('searchText', this.searchText);
         return this.__fetchUpdateFilter(this.searchText);
     },
@@ -292,6 +293,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
+            this.open();
             this.triggerReady(); //don't move to finally, recursively.
             return true;
         } catch(e) {
@@ -327,8 +329,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     onAttach() {
-        this.triggerNotReady();
-        this.debouncedFetchUpdateFilter(null, true);
         if (this.options.openOnRender) {
             this.__onButtonClick();
         }
@@ -348,11 +348,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (!this.getIsOpenAllowed()) {
             return;
         }
-        if (this.isReady) {
-            this.dropdownView.open();
-        } else {
-            this.listenToOnce(this, 'view:ready', this.open);
-        }
+        this.dropdownView.open();
     },
 
     close() {
@@ -375,10 +371,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return value;
     },
 
+    isValueIncluded(value) {
+        return JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id));
+    },
+
     __value(value: DataValue, triggerChange: boolean): void {
-        if (JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
+        if (this.isValueIncluded(value)) {
             this.viewModel.panel.set('value', this.value);
-            return;
+            return false;
         }
         const adjustedValue = this.__adjustValue(value);
         const selectedModels = this.viewModel.button.selected;
@@ -399,6 +399,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (triggerChange) {
             this.__triggerChange();
         }
+
+        return true;
     },
 
     resetCollection(collection) {
@@ -428,7 +430,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onValueSet(model?: Backbone.Model, options = {}): void {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
-        this.__value(value, true);
+        const setted = this.__value(value, true);
+        if (!options.isSilent && setted) {
+            this.__clearSearch();
+        }
         this.__updateFakeInputModel();
 
         if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
@@ -500,10 +505,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        this.open();
-        if (this.isReady && !this.isLastFetchSuccess) {
-            this.fetchUpdateFilter(this.fakeInputModel.get('searchText'), true);
-        }
+        this.debouncedFetchUpdateFilter(this.fakeInputModel.get('searchText'), true);
     },
 
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {
@@ -619,15 +621,22 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onDropdownOpen(): void {
-        this.focus();
         this.__tryPointFirstRow();
         this.trigger('dropdown:open');
     },
 
     __onDropdownClose() {
-        this.blur();
         this.panelCollection.pointOff();
         this.trigger('dropdown:close');
+    },
+
+    __clearSearch() {
+        this.__startSearch('');
+    },
+
+    __startSearch(string) {
+        this.updateButtonInput(string);
+        this.debouncedFetchUpdateFilter(string);
     },
 
     __proxyValueSelect() {
