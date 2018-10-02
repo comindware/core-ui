@@ -99,7 +99,12 @@ describe('Transliterator:', () => {
         expect(Boolean(validator(resultWithNumber))).toEqual(false);
     });
 
-    it('setOptionsToComputedTransliteratedFields (default) should return schema with correct value to name and alias input of schema', () => {
+    it('setOptionsToComputedTransliteratedFields (default) should return schema with correct value to name and alias input of schema. console.warn', () => {
+        const originalWarn = console.warn;
+        const messages = [];
+        console.warn = function(string) {
+            messages.push(string);
+        };
         const instance = _.cloneDeep(schema);
         transliterator.setOptionsToComputedTransliteratedFields(instance);
 
@@ -111,6 +116,9 @@ describe('Transliterator:', () => {
         expect(instance.alias.autocommit).toEqual(true);
         expect(instance.alias.forceCommit).toEqual(true);
         expect(instance.alias.transliteratorChangedSomeProperties).toEqual(true);
+
+        expect(messages.length).toEqual(6);
+        console.warn = originalWarn;
     });
 
     it('setOptionsToComputedTransliteratedFields should return schema with correct value to transliteratedFields input of schema', () => {
