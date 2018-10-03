@@ -145,6 +145,7 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
     },
 
     __value(value, triggerChange) {
+        this.options.selected = value;
         if (this.getOption('showMode') === 'button') {
             this.__updateText();
         }

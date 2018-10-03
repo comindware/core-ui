@@ -15,7 +15,7 @@ export default config => {
             message: _.isFunction(options.message) ? options.message(options) : options.message
         };
         if (value === null || value === undefined || value === false || value === '') {
-            return true;
+            return;
         }
 
         if (!/^[\w\-]{1,}([\w\-\+.]{1,1}[\w\-]{1,}){0,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/.test(value)) {

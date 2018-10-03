@@ -131,19 +131,27 @@ export default Marionette.Object.extend({
     },
 
     __updateActions(allToolbarActions, collection) {
-        const selected = this.__getSelectedItems(collection).length;
+        const selected = this.__getSelectedItems(collection);
+        const selectedLength = selected.length;
 
         allToolbarActions.filter(action => {
+            let isActionApplicable;
             switch (action.get('contextType')) {
-                case 'void':
-                    return true;
                 case 'one':
-                    return selected === 1;
+                    isActionApplicable = selectedLength === 1;
+                    break;
                 case 'any':
-                    return selected;
+                    isActionApplicable = selectedLength;
+                    break;
+                case 'void':
                 default:
-                    return true;
+                    isActionApplicable = true;
             }
+            const condition = action.get('condition');
+            if (isActionApplicable && condition && typeof condition === 'function') {
+                isActionApplicable = condition(selected);
+            }
+            return isActionApplicable;
         });
     },
 

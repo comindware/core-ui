@@ -47,13 +47,14 @@ const defaultOptions = () => ({
 export default (formRepository.editors.Text = BaseItemEditorView.extend({
     initialize() {
         const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defOps)), defOps);
-        this.placeholder = this.options.emptyPlaceholder;
-        if (this.options.format) {
-            this.__setMaskByFormat(this.options.format);
+        const editorOptions = this.options.schema ? this.options.schema : this.options;
+        if (editorOptions.format) {
+            this.__setMaskByFormat(editorOptions.format, defOps);
         } else {
             this.mask = this.options.mask;
         }
+        _.defaults(this.options, _.pick(editorOptions, Object.keys(defOps)), defOps);
+        this.placeholder = this.options.emptyPlaceholder;
     },
 
     focusElement: '.js-input',
@@ -156,10 +157,14 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __value(value, updateUi, triggerChange) {
-        if (this.value === value) {
+        let realValue = value;
+        if (!updateUi && value && this.options.format === 'phone') {
+            realValue = realValue.replace(/[^\d]/g, '');
+        }
+        if (this.value === realValue) {
             return;
         }
-        this.value = value;
+        this.value = realValue;
         this.__updateEmpty();
 
         if (this.getOption('showTitle')) {
@@ -192,30 +197,30 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         }
     },
 
-    __setMaskByFormat(format) {
-        let additioanlValidator;
+    __setMaskByFormat(format, defaults) {
+        let additionalValidator;
         switch (format) {
             case 'email':
                 this.mask = emailMask;
-                this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
-                additioanlValidator = 'email';
+                additionalValidator = 'email';
+                defaults.emptyPlaceholder = LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
                 break;
             case 'phone':
                 this.mask = [/[1-9]/, ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
-                this.placeholder = '5 (555) 555-55-55';
+                defaults.emptyPlaceholder = '5 (555) 555-55-55';
                 this.options.maskOptions = {
                     guide: true
                 };
-                additioanlValidator = 'phone';
+                additionalValidator = 'phone';
                 break;
             default:
                 break;
         }
-        if (additioanlValidator) {
+        if (additionalValidator) {
             if (this.validators) {
-                this.validators.push(additioanlValidator);
+                this.validators.push(additionalValidator);
             } else {
-                this.validators = [additioanlValidator];
+                this.validators = [additionalValidator];
             }
         }
     }
