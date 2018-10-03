@@ -89,6 +89,13 @@ export default /** @lends module:core.utils.helpers */ {
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
+    replaceCurlyParameters(string, ...values) {
+        if (!_.isString(string)) {
+            return '';
+        }
+        return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
+    },
+
     /**
      * Takes a number and array of strings and then returns a valid plural form.
      * Works with complex cases and valid for all supported languages (by default for en, de and ru).
