@@ -133,11 +133,11 @@ export default {
             const alias = keyValue[1];
 
             if (computed[name] && !computed[name].transliteratedFieldsClass) {
-                console.error(`Transliterator: computed is not fully extended, computed[${name}] is exist in model!`);
+                console.warn(`Transliterator: computed is not fully extended, computed[${name}] is exist in model!`);
                 return;
             }
             if (computed[alias] && !computed[alias].transliteratedFieldsClass) {
-                console.error(`Transliterator: computed is not fully extended, computed[${alias}] is exist in model!`);
+                console.warn(`Transliterator: computed is not fully extended, computed[${alias}] is exist in model!`);
                 return;
             }
 
