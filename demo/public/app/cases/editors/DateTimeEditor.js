@@ -12,13 +12,13 @@ export default function() {
             key: 'dateTimeValue',
             autocommit: true,
             hours: {
-                text: 'hours'
+                text: ':'
             },
             minutes: {
-                text: 'minutes'
+                text: ':'
             },
             seconds: {
-                text: 'seconds'
+                text: ':'
             }
         }),
         presentation: "{{dateTimeValue}}",

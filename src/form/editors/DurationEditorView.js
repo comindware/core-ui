@@ -81,6 +81,10 @@ const defaultOptions = {
     fillZero: false,
     normalTime: false,
     max: undefined,
+    days: undefined,
+    hours: undefined,
+    minutes: undefined,
+    seconds: undefined,
     min: 0
     // allFocusableParts: undefined,
     // seconds: undefined // days, minutes, hours
