@@ -9,20 +9,24 @@
     overflow : hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 }
 
 .galleryButton {
     position : absolute;
-    top:5px;
-    right: 5px;
+    top: 0;
+    right: 0;
     width:24px;
     height: 24px;
-    line-height: 100px;
-    overflow: hidden;
-    cursor:pointer
+    line-height: 24px;
+    text-align: center;
+    cursor:pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
 }
+
 .galleryButton:hover {
 }
 .galleryMove {
@@ -47,13 +51,9 @@
 }
 
 
-.galleryImage{
-    flex: 1 1;
-    display: flex;
-    text-align: center;
-    vertical-align: middle;
-    overflow: hidden;
-    padding: 20px;
+.galleryImage {
+    padding: 25px;
+    position: relative;
 }
 .galleryImage img{
     border: 2px solid #fff;
@@ -64,8 +64,6 @@
     max-width: 100%;
     max-height: 100%;
 }
-
-
 
 .galleryImageBuffer {
     position : absolute;
@@ -115,28 +113,6 @@
 .galleryThumbnailInfo span{
     color:#999;
     padding: 0 10px;
-}
-
-.galleryImageDownload{
-    text-align: center;
-    z-index: 1;
-    width: 100%;
-    margin: 10px 0 20px;
-}
-
-.galleryImageDownload span{
-    display: inline-block;
-    text-align: center;
-    color: #fff;
-    font-size: 18px;
-    line-height: 20px;
-    cursor: pointer;
-    padding: 1px 1px 1px 28px;
-}
-
-.galleryImageDownload span:hover{
-    background-position: 0 -25px;
-    text-decoration:underline;
 }
 
 .dev-l-loader-image-gallery .l-loader {
