@@ -273,10 +273,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     async __fetchUpdateFilter(fetchedDataForSearchText) {
-        if (this.isFetchCompleted === false) {
-            return false;
-        }
-        this.isFetchCompleted = false;
         this.panelCollection.pointOff();
 
         try {
@@ -284,7 +280,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 text: fetchedDataForSearchText,
                 getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
             });
-            this.isFetchCompleted = true;
 
             this.resetPanelCollection(data);
 
@@ -297,7 +292,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             this.triggerReady(); //don't move to finally, recursively.
             return true;
         } catch(e) {
-            this.isFetchCompleted = true;
             this.isLastFetchSuccess = false;
             this.triggerReady();
             return false;
@@ -505,7 +499,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        this.debouncedFetchUpdateFilter(this.fakeInputModel.get('searchText'), true);
+        this.fetchUpdateFilter('', true);
     },
 
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {
