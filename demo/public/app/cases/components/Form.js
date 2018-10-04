@@ -77,6 +77,7 @@ export default function () {
                         },
                         dropdown: {
                             type: 'Datalist',
+                            valueType: 'id',
                             title: 'Dropdown',
                             collection: [
                                 { id: 'd.1', text: 'Text 1' },
@@ -91,7 +92,7 @@ export default function () {
                         },
                         wrongInstance: {
                             type: 'Datalist',
-                            title: 'Dropdown',
+                            title: 'WrongInstance',
                             helpText: 'Some help information'
                         },
                         dateTime2: {

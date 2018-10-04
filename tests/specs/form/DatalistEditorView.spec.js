@@ -1,5 +1,6 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import 'jasmine-expect';
 import { keyCode } from 'utils';
 
 describe('Editors', () => {
@@ -7,8 +8,26 @@ describe('Editors', () => {
     const getButton = view => view.dropdownView.button.$el;
     const getBubble = (view, index) => getElement(view, `.bubbles__i:eq(${index})`);
     const getBubbleDelete = view => getElement(view, '.js-bubble-delete');
+    const getItemOfList = index => getElement(Backbone, `.dd-list__i:eq(${index})`);
+    const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
 
-    const findInput = view => getElement(view, '.js-input');
+    const getInput = view => getElement(view, '.js-input');
+
+    const startSearch = (input, string) => {
+        input.click();
+        input.val(string);
+        input.keydown();
+    };
+
+    const wait = (options = {}) => {
+        const first = setInterval(() => {
+            typeof options.action === 'function' && options.action();
+            if (typeof options.condition === 'function' ? options.condition() : true) {
+                clearTimeout(first);
+                typeof options.callback === 'function' && options.callback();
+            }
+        }, options.delay);
+    };
 
     const show = view => window.app
                                 .getView()
@@ -73,7 +92,7 @@ describe('Editors', () => {
 
             view.focus();
             view.on('view:ready', () => {
-                expect(findInput(view)).toBeFocused();
+                expect(getInput(view)).toBeFocused();
                 expect(view.hasFocus).toEqual(true, 'Must have focus.');
                 done();
             });
@@ -97,10 +116,32 @@ describe('Editors', () => {
 
             view.on('view:ready', () => {
                 view.blur();
-                expect(findInput(view)).not.toBeFocused();
+                expect(getInput(view)).not.toBeFocused();
                 expect(view.hasFocus).toEqual(false, 'Must have focus.');
                 done();
             });
+        });
+
+        it('should clean input value onblur', () => {
+            const model = new Backbone.Model({
+                value: [{ id: 1, name: 1 }]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: Infinity
+            });
+
+            show(view);
+
+            const input = getInput(view);
+
+            startSearch(input, 'somesearch');
+            expect(input.val()).toEqual('somesearch');
+            view.blur();
+            expect(input.val()).toEqual('');
         });
 
         it('should show empty model placeholder on empty value', () => {
@@ -252,7 +293,7 @@ describe('Editors', () => {
             view.focus();
         });
 
-        it('should change value on panel item select', done => {
+        it('should change value on panel item click', done => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -270,9 +311,100 @@ describe('Editors', () => {
 
             view.on('view:ready', () => {
                 expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
-                view.panelCollection.at(1).select();
+                getItemOfList(1).click();
                 expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
                 done();
+            });
+        });
+
+        it('should close panel and clean on panel item click if maxQuantitySelected === 1', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: 1
+            });
+
+            show(view);
+
+            const input = getInput(view);
+
+            view.on('dropdown:close', () => {
+                expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
+                expect(view.dropdownView.isOpen).toBeFalse();
+                // expect(getItemOfList(0).length).toEqual(0);
+                done();
+            });
+
+            view.on('view:ready', () => {
+                if (getTextElOfInputList(0).text() !== '2') {
+                    return;
+                }
+                getItemOfList(0).click();
+            });
+
+            startSearch(input, '2');
+        });
+
+        it('should close panel and clean on panel item click if maxQuantitySelected not exceeded', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: 5
+            });
+
+            show(view);
+
+            const input = getInput(view);
+            startSearch(input, '2')
+
+            view.on('view:ready', () => {
+                if (getTextElOfInputList(0).text() !== '2') {
+                    return;
+                }
+                getTextElOfInputList(0).click();
+                expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
+                expect(view.dropdownView.isOpen).toBeTrue();
+                // expect(getItemOfList(0).length).toEqual(1);
+                done();
+            });
+        });
+
+        it('should close panel and clean on panel item click if maxQuantitySelected is exceeded', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: 2
+            });
+
+            show(view);
+
+            const input = getInput(view);
+            startSearch(input, '')
+
+            view.on('view:ready', () => {
+                view.on('dropdown:close', () => {
+                    expect(view.getValue()).toEqual([{ id: 1, name: 1 }, { id: 2, name: 2 }]);
+                    expect(view.dropdownView.isOpen).toBeFalse();
+                    // expect(getItemOfList(0).length).toEqual(0);
+                    done();
+                });
+                getItemOfList(0).click();
+                getItemOfList(1).click();
             });
         });
 
@@ -530,7 +662,7 @@ describe('Editors', () => {
             });
 
             view.on('attach', () => {
-                const input = findInput(view);
+                const input = getInput(view);
                 input.click();
                 input.val('1');
                 input.keydown();
@@ -562,7 +694,7 @@ describe('Editors', () => {
             });
 
             view.on('attach', () => {
-                const input = findInput(view);
+                const input = getInput(view);
                 input.click();
                 input.val('d');
                 input.keydown();
@@ -597,7 +729,7 @@ describe('Editors', () => {
                 const length = view.dropdownView.button.collectionView.collection.length;
                 expect(length).toEqual(2); //selected + input
 
-                const input = findInput(view);   
+                const input = getInput(view);   
                     input.click();
                     input.val('d');
                     input.keydown();
@@ -632,7 +764,7 @@ describe('Editors', () => {
             });
 
             view.on('attach', () => {
-                const input = findInput(view);
+                const input = getInput(view);
                 expect(input.length).toEqual(1);
                 done();
             });
@@ -672,12 +804,259 @@ describe('Editors', () => {
             });
 
             view.on('attach', () => {
-                const input = findInput(view);
+                const input = getInput(view);
                 expect(input.length).toEqual(1);
                 done();
             });
 
             show(view);
         });
+
+        describe('should always has view.value type is Array with Object', () => {
+            it('maxQuantitySelected: 1, valueType: id', done => {
+                const model = new Backbone.Model({
+                    value: 1
+                });
+    
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData),
+                    key: 'value',
+                    allowEmptyValue: false,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 1
+                });
+    
+                view.on('attach', () => {
+                    expect(view.value).toBeArrayOfObjects();
+                    expect(view.value).toBeArrayOfSize(1);
+                    done();
+                });
+    
+                show(view);
+            });
+
+            it('maxQuantitySelected > 1, valueType: id', done => {
+                const model = new Backbone.Model({
+                    value: [ 1, 2, 3 ]
+                });
+    
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData),
+                    key: 'value',
+                    allowEmptyValue: false,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 3
+                });
+    
+                view.on('attach', () => {
+                    expect(view.value).toBeArrayOfObjects();
+                    expect(view.value).toBeArrayOfSize(3);
+                    done();
+                });
+    
+                show(view);
+            });
+
+            it('maxQuantitySelected > 1, valueType: normal', done => {
+                const model = new Backbone.Model({
+                    DatalistValue: [
+                        {
+                            id: 'task.1',
+                            text: 'Test Reference 1'
+                        },
+                        {
+                            id: 'task.2',
+                            text: 'Test Reference 2'
+                        },
+                        {
+                            id: 'task.3',
+                            text: 'Test Reference 3'
+                        }
+                    ]
+                });
+    
+                const view = new core.form.editors.DatalistEditor({
+                    model: model,
+                    key: 'DatalistValue',
+                    autocommit: true,
+                    showEditButton: true,
+                    showAddNewButton: true,
+                    showCheckboxes: true,
+                    maxQuantitySelected: 3,
+                    controller: new dynamicController({
+                        collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                    })
+                });
+    
+                view.on('attach', () => {
+                    expect(view.value).toBeArrayOfObjects();
+                    expect(view.value).toBeArrayOfSize(3);
+                    done();
+                });
+    
+                show(view);
+            });
+
+            it('maxQuantitySelected = 1, valueType: normal', done => {
+                const model = new Backbone.Model({
+                    DatalistValue: [
+                        {
+                            id: 'task.1',
+                            text: 'Test Reference 1'
+                        }
+                    ]
+                });
+    
+                const view = new core.form.editors.DatalistEditor({
+                    model: model,
+                    key: 'DatalistValue',
+                    autocommit: true,
+                    showEditButton: true,
+                    showAddNewButton: true,
+                    showCheckboxes: true,
+                    maxQuantitySelected: 3,
+                    controller: new dynamicController({
+                        collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                    })
+                });
+    
+                view.on('attach', () => {
+                    expect(view.value).toBeArrayOfObjects();
+                    expect(view.value).toBeArrayOfSize(1);
+                    done();
+                });
+    
+                show(view);
+            });
+        });
+
+        // describe('should set correct value to model on select', () => {
+        //     it('maxQuantitySelected: 1, valueType: id', done => {
+        //         const model = new Backbone.Model({
+        //             value: undefined
+        //         });
+    
+        //         const view = new core.form.editors.DatalistEditor({
+        //             model,
+        //             collection: collectionData,
+        //             key: 'value',
+        //             allowEmptyValue: false,
+        //             autocommit: true,
+        //             valueType: 'id',
+        //             maxQuantitySelected: 1
+        //         });
+    
+        //         view.on('attach', () => {
+        //             getButton(view).click();
+        //             view.on('view:ready', () => {
+        //                 expect(view.dropdownView.isOpen).toEqual(true);
+        //                 getItemOfList(0).click();
+        //                 expect(model.get('value')).toBeNumber();
+        //                 done();
+        //             });
+        //         });
+    
+        //         show(view);
+        //     });
+
+        //     it('maxQuantitySelected > 1, valueType: id', done => {
+        //         const model = new Backbone.Model({
+        //             value: undefined
+        //         });
+    
+        //         const view = new core.form.editors.DatalistEditor({
+        //             model,
+        //             collection: new Backbone.Collection(collectionData),
+        //             key: 'value',
+        //             allowEmptyValue: false,
+        //             autocommit: true,
+        //             valueType: 'id',
+        //             maxQuantitySelected: 3
+        //         });
+    
+        //         view.on('attach', () => {
+        //             getButton(view).click();
+        //             view.on('view:ready', () => {
+        //                 expect(view.dropdownView.isOpen).toEqual(true);
+        //                 getItemOfList(0).click();
+        //                 getItemOfList(1).click();
+        //                 expect(model.get('value')).toBeArrayOfNumbers();
+        //                 expect(model.get('value')).toBeArrayOfSize(2);
+        //                 done();
+        //             });
+        //         });
+    
+        //         show(view);
+        //     });
+
+            // it('maxQuantitySelected > 1, valueType: normal', done => {
+            //     const model = new Backbone.Model({
+            //         DatalistValue: undefined
+            //     });
+    
+            //     const view = new core.form.editors.DatalistEditor({
+            //         model: model,
+            //         key: 'DatalistValue',
+            //         autocommit: true,
+            //         showEditButton: true,
+            //         showAddNewButton: true,
+            //         showCheckboxes: true,
+            //         maxQuantitySelected: 3,
+            //         controller: new dynamicController({
+            //             collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+            //         })
+            //     });
+    
+            //     view.on('attach', () => {
+            //         getButton(view).click();
+            //         view.on('view:ready', () => {
+            //             expect(view.dropdownView.isOpen).toEqual(true);
+            //             getItemOfList(0).click();
+            //             getItemOfList(1).click();
+            //             expect(model.get('value')).toBeArrayOfObjects();
+            //             expect(model.get('value')).toBeArrayOfSize(2);
+            //             done();
+            //         });
+            //     });
+
+            //     show(view);
+            // });
+
+            // it('maxQuantitySelected = 1, valueType: normal', done => {
+            //     const model = new Backbone.Model({
+            //         DatalistValue: undefined
+            //     });
+    
+            //     const view = new core.form.editors.DatalistEditor({
+            //         model: model,
+            //         key: 'DatalistValue',
+            //         autocommit: true,
+            //         showEditButton: true,
+            //         showAddNewButton: true,
+            //         showCheckboxes: true,
+            //         maxQuantitySelected: 3,
+            //         controller: new dynamicController({
+            //             collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+            //         })
+            //     });
+    
+            //     view.on('attach', () => {
+            //         getButton(view).click();
+            //         view.on('view:ready', () => {
+            //             expect(view.dropdownView.isOpen).toEqual(true);
+            //             getItemOfList(0).click();
+            //             expect(model.get('value')).toBeArrayOfObjects();
+            //             expect(model.get('value')).toBeArrayOfSize(1);
+            //             done();
+            //         });
+            //     });
+    
+            //     show(view);
+            // });
+        // });
     });
 });

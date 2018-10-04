@@ -15,7 +15,8 @@ import StaticController from './impl/datalist/controllers/StaticController';
 
 type DataValue = {
     id: string,
-    name?: string
+    name?: string,
+    text?: string
 };
 
 type DatalistValue = Array<DataValue>;
@@ -50,7 +51,13 @@ const defaultOptions = {
     customTemplate: undefined,
     minAvailableHeight: undefined
 };
+/* Some DOCS
+    Datalist value (this.value) is array type.
+    Datalist fetch [searched] data from controller on click
 
+    ToDo:
+    1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
+*/
 /**
  * @name DatalistView
  * @member of module:core.form.editors
@@ -249,8 +256,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     focus(): void {
         this.hasFocus = true;
         this.onFocus();
-        this.__onButtonClick();
-        this.__focusButton();
     },
 
     blur(): void {
@@ -258,21 +263,32 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.onBlur({
             triggerChange: false
         });
-        this.dropdownView.close();
-        this.__blurButton();
     },
 
-    async fetchUpdateFilter(value, forceCompareText) {
+    onFocus() {
+        BaseLayoutEditorView.prototype.onFocus.apply(this, arguments);
+        this.__onButtonClick();
+        this.__focusButton();
+    },
+
+    onBlur() {
+        BaseLayoutEditorView.prototype.onBlur.apply(this, arguments);
+        this.dropdownView.close();
+        this.__blurButton();
+        this.updateButtonInput('');
+    },
+
+    async fetchUpdateFilter(value, forceCompareText, isDontOpenPanel) {
         this.searchText = (value || '').trim();
         if (this.fakeInputModel.get('searchText') === this.searchText && !forceCompareText) {
             return;
         }
         this.triggerNotReady();
         this.fakeInputModel.set('searchText', this.searchText);
-        return this.__fetchUpdateFilter(this.searchText);
+        return this.__fetchUpdateFilter(this.searchText, isDontOpenPanel);
     },
 
-    async __fetchUpdateFilter(fetchedDataForSearchText) {
+    async __fetchUpdateFilter(fetchedDataForSearchText, isDontOpenPanel) {
         this.panelCollection.pointOff();
 
         try {
@@ -288,7 +304,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
-            this.open();
+            if (!isDontOpenPanel) {
+                this.open();
+            }
             this.triggerReady(); //don't move to finally, recursively.
             return true;
         } catch(e) {
@@ -425,13 +443,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
         const setted = this.__value(value, true);
-        if (!options.isSilent && setted) {
-            this.__clearSearch();
-        }
         this.__updateFakeInputModel();
 
         if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
             this.dropdownView.close();
+            this.updateButtonInput('');
             this.__focusButton();
             return;
         }
@@ -439,8 +455,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         const stopAddItems = canAddItemOldValue !== this.__canAddItem();
         if (stopAddItems) {
             this.dropdownView.close();
+            this.updateButtonInput('');
         } else if (!options.isSilent) {
             this.__focusButton();
+            this.__clearSearch();
         }
     },
 
@@ -476,7 +494,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         });
     },
 
-    __getDisplayText(value, displayAttribute) {
+    __getDisplayText(value, displayAttribute): string {
         if (value == null) {
             return '';
         }
