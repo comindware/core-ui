@@ -3,7 +3,6 @@
     height: 100%;
     position : absolute;
     border : 1px solid gray;
-    background : url(/resources/icons/client/gallery_mask.png?i20140716) 0 0 repeat;
     top : 0;
     left : 0;
     z-index : 100500;
@@ -22,11 +21,9 @@
     height: 24px;
     line-height: 100px;
     overflow: hidden;
-    background : url(/resources/icons/client/gallery_close.png?i20140716) 0 0 no-repeat;
     cursor:pointer
 }
 .galleryButton:hover {
-    background : url(/resources/icons/client/gallery_close.png?i20140716) -24px 0 no-repeat;
 }
 .galleryMove {
     position: absolute;
@@ -35,7 +32,6 @@
     height: 80px;
     overflow: hidden;
     border:none;
-    background : url(/resources/icons/client/gallery_move_buttons.png?i20140716) -20px 45px no-repeat;
     cursor:pointer;
     bottom: 37px;
     right:3px;
@@ -136,7 +132,6 @@
     line-height: 20px;
     cursor: pointer;
     padding: 1px 1px 1px 28px;
-    background: url(/resources/icons/client/gallery_download.png?i20140716) 0 -1px no-repeat;
 }
 
 .galleryImageDownload span:hover{
@@ -150,5 +145,4 @@
 
 .dev-l-loader-image-gallery .loader {
     color: #fff;
-    background: url(../images/loading-white.gif) 50% 100% no-repeat;
 }
