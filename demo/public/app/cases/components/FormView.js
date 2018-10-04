@@ -7,7 +7,7 @@ export default function() {
         blocked: true
     });
 
-    const view = new core.layout.Form({
+    const view = new Core.layout.Form({
         model,
         schema: [
             {

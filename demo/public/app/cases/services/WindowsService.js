@@ -24,11 +24,11 @@ export default function() {
         },
 
         __closePopup() {
-            core.services.WindowService.closePopup();
+            Core.services.WindowService.closePopup();
         },
 
         __showPopup() {
-            core.services.WindowService.showPopup(new PopupView({
+            Core.services.WindowService.showPopup(new PopupView({
                 index: this.index + 1 || 1
             }));
         }
@@ -42,7 +42,7 @@ export default function() {
         },
 
         __showPopup() {
-            core.services.WindowService.showPopup(new PopupView());
+            Core.services.WindowService.showPopup(new PopupView());
         }
     });
 

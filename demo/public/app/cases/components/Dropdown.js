@@ -1,7 +1,7 @@
 export default function() {
-    return new core.layout.VerticalLayout({
+    return new Core.layout.VerticalLayout({
         rows: [
-            new core.form.editors.DatalistEditor({
+            new Core.form.editors.DatalistEditor({
                 name: 'Say hello!',
                 collection: new Backbone.Collection([
                     {

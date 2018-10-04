@@ -3,7 +3,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 const showInfo = function () {
     const description = 'Confirm your action';
 
-    core.ToastNotifications.add({
+    Core.ToastNotifications.add({
         text: description//,
         //title: 'Info'
     }, 'Info');
@@ -16,7 +16,7 @@ const showSuccess = function () {
 
 Росс Эклер также указывает на другие похожие задачи, например, нахождение слова с наибольшим числом неповторяющихся букв[3].`;
 
-    core.ToastNotifications.add({
+    Core.ToastNotifications.add({
         text: description,
         title: 'Success'
     }, 'Success');
@@ -25,7 +25,7 @@ const showSuccess = function () {
 const showError = function () {
     const description = 'Error message';
 
-    core.ToastNotifications.add({
+    Core.ToastNotifications.add({
         text: description,
         title: 'Error'
     }, 'Error');

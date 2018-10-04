@@ -33,9 +33,9 @@ export default function () {
         },
         SystemView: systemView
     };
-    Object.keys(core.form.editors).forEach(key => {
+    Object.keys(Core.form.editors).forEach(key => {
         components[key] = {
-            view: core.form.editors[key],
+            view: Core.form.editors[key],
             model: Backbone.Model
         };
     });
@@ -60,12 +60,12 @@ export default function () {
         })
     };
 
-    return new core.components.LayoutDesigner.Controller({
+    return new Core.components.LayoutDesigner.Controller({
         editorModel: new Backbone.Model(),
         detachedToolbar: true,
         palette: {
             toolbar: {},
-            collection: new Backbone.Collection(Object.keys(core.form.editors).map(key => ({ fieldType: key, name: key }))),
+            collection: new Backbone.Collection(Object.keys(Core.form.editors).map(key => ({ fieldType: key, name: key }))),
             elementsCollection: new Backbone.Collection(),
             size: 'small'
         },

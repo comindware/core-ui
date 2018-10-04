@@ -99,7 +99,7 @@ export default () => {
             simplified: true,
             required: true,
             customClass: 'dropdown_root',
-            controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
+            controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             showCheckboxes: true,
             autocommit: true,
@@ -111,7 +111,7 @@ export default () => {
     const collection = new Backbone.Collection(dataArray);
 
     // 3. Create grid
-    const gridController = new core.list.controllers.GridController({
+    const gridController = new Core.list.controllers.GridController({
         columns,
         transliteratedFields: {
             textCell: 'aliasCell'

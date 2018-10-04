@@ -2,7 +2,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     return new CanvasView({
-        view: new core.form.editors.ContextSelectEditor({
+        view: new Core.form.editors.ContextSelectEditor({
             key: 'context',
             usePropertyTypes: false,
             context: {

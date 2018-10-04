@@ -6,7 +6,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.DurationEditor({
+        view: new Core.form.editors.DurationEditor({
             model,
             key: 'durationValue',
             autocommit: true,

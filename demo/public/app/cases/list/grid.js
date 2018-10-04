@@ -60,7 +60,7 @@ export default function() {
     ];
 
     // 4. Create grid
-    const gridView = core.list.factory.createDefaultGrid({
+    const gridView = Core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
             childHeight: 40,

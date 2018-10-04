@@ -1,5 +1,5 @@
 export default function () {
-    return new core.components.Toolbar({
+    return new Core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
             {
                 iconClass: 'plus',

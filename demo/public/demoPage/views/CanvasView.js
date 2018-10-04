@@ -44,7 +44,7 @@ export default Marionette.View.extend({
         }
 
         if (this.getOption('isEditor')) {
-            const editorModeView = new core.form.editors.RadioGroupEditor({
+            const editorModeView = new Core.form.editors.RadioGroupEditor({
                 value: 'none',
                 radioOptions: [
                     {
@@ -72,7 +72,7 @@ export default Marionette.View.extend({
         }
 
         if (this.getOption('showFormat')) {
-            const formatSelectionView = new core.form.editors.DatalistEditor({
+            const formatSelectionView = new Core.form.editors.DatalistEditor({
                 value: 'none',
                 maxQuantitySelected: 1,
                 collection: new Backbone.Collection(this.getOption('formats'))

@@ -67,7 +67,7 @@ export default function() {
             title: 'Datalist',
             validators: ['required'],
             required: true, // to display the asterisk left from title
-            controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
+            controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController()
         },
         textArea: {
             type: 'TextArea',
@@ -89,7 +89,7 @@ export default function() {
             fullName: 'Foo Bar',
             autoUpload: true,
             refreshPreviewAfterUpload: true,
-            controller: new core.form.editors.avatar.controllers.DemoAvatarEditorController({
+            controller: new Core.form.editors.avatar.controllers.DemoAvatarEditorController({
                 defaultURL: '/resources/images/defaultAvatar.png'
             })
         },
@@ -139,29 +139,29 @@ export default function() {
     };
 
     // Step 3. Build form layout
-    const view = new core.layout.Form({
+    const view = new Core.layout.Form({
         model,
         schema: formSchema,
-        content: new core.layout.VerticalLayout({
+        content: new Core.layout.VerticalLayout({
             rows: [
-                core.layout.createFieldAnchor('boolean'),
-                core.layout.createFieldAnchor('dropdown'),
-                core.layout.createFieldAnchor('membersBubble'),
-                core.layout.createFieldAnchor('memberSelect'),
-                core.layout.createFieldAnchor('number'),
-                core.layout.createFieldAnchor('radioGroup'),
-                core.layout.createFieldAnchor('reference'),
-                core.layout.createFieldAnchor('textArea'),
-                core.layout.createFieldAnchor('text'),
-                core.layout.createFieldAnchor('avatar'),
-                core.layout.createFieldAnchor('date'),
-                core.layout.createFieldAnchor('dateTime'),
-                core.layout.createFieldAnchor('duration'),
-                core.layout.createFieldAnchor('mention'),
-                core.layout.createFieldAnchor('multiSelect'),
-                core.layout.createFieldAnchor('password'),
-                core.layout.createFieldAnchor('time'),
-                new core.layout.Button({
+                Core.layout.createFieldAnchor('boolean'),
+                Core.layout.createFieldAnchor('dropdown'),
+                Core.layout.createFieldAnchor('membersBubble'),
+                Core.layout.createFieldAnchor('memberSelect'),
+                Core.layout.createFieldAnchor('number'),
+                Core.layout.createFieldAnchor('radioGroup'),
+                Core.layout.createFieldAnchor('reference'),
+                Core.layout.createFieldAnchor('textArea'),
+                Core.layout.createFieldAnchor('text'),
+                Core.layout.createFieldAnchor('avatar'),
+                Core.layout.createFieldAnchor('date'),
+                Core.layout.createFieldAnchor('dateTime'),
+                Core.layout.createFieldAnchor('duration'),
+                Core.layout.createFieldAnchor('mention'),
+                Core.layout.createFieldAnchor('multiSelect'),
+                Core.layout.createFieldAnchor('password'),
+                Core.layout.createFieldAnchor('time'),
+                new Core.layout.Button({
                     text: 'Validate',
                     handler() {
                         view.form.validate();

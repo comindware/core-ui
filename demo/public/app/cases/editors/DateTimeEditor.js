@@ -5,7 +5,7 @@ const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
 
 export default function() {
     return new CanvasView({
-        view: new core.form.editors.DateTimeEditor({
+        view: new Core.form.editors.DateTimeEditor({
             model: new Backbone.Model({
                 dateTimeValue: '2015-07-20T10:46:37Z'
             }),

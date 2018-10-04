@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.RadioGroupEditor({
+        view: new Core.form.editors.RadioGroupEditor({
             model,
             key: 'radioValue',
             changeMode: 'keydown',

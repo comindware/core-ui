@@ -11,7 +11,7 @@ export default function() {
     });
 
     const createPopup = () =>
-        new core.layout.Popup({
+        new Core.layout.Popup({
             size: {
                 width: '800px',
                 height: '700px'
@@ -24,7 +24,7 @@ export default function() {
                     text: 'Cancel',
                     customClass: 'btn-small btn-outline',
                     handler() {
-                        core.services.WindowService.closePopup();
+                        Core.services.WindowService.closePopup();
                     }
                 },
                 {
@@ -40,13 +40,13 @@ export default function() {
                         setTimeout(() => {
                             popup.setLoading(false);
                             popup.content.form.commit();
-                            core.services.WindowService.closePopup();
+                            Core.services.WindowService.closePopup();
                             alert(JSON.stringify(model.toJSON(), null, 4));
                         }, 1000);
                     }
                 }
             ],
-            content: new core.layout.Form({
+            content: new Core.layout.Form({
                 model,
                 transliteratedFields: {
                     name: 'alias'
@@ -152,7 +152,7 @@ export default function() {
 
         events: {
             'click .js-show-popup'() {
-                core.services.WindowService.showPopup(createPopup());
+                Core.services.WindowService.showPopup(createPopup());
             }
         }
     });

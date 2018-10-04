@@ -1,7 +1,7 @@
 
 
 export default function() {
-    return new core.components.NavigationDrawer({
+    return new Core.components.NavigationDrawer({
         collection: [
             {
                 id: 1,

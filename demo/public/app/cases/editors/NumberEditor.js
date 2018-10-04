@@ -8,7 +8,7 @@ export default function () {
     });
 
     return new CanvasView({
-        view: new core.form.editors.NumberEditor({
+        view: new Core.form.editors.NumberEditor({
             model,
             key: 'numberValue',
             changeMode: 'keydown',

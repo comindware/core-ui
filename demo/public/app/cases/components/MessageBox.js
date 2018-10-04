@@ -1,7 +1,7 @@
 export default function() {
-    return new core.layout.VerticalLayout({
+    return new Core.layout.VerticalLayout({
         rows: [
-            new core.layout.Button({
+            new Core.layout.Button({
                 text: 'Leaving warnng',
                 customClass: 'btn-large',
                 handler() {
@@ -10,7 +10,7 @@ export default function() {
                     });
                 }
             }),
-            new core.layout.Button({
+            new Core.layout.Button({
                 text: 'Generic message',
                 customClass: 'btn-large',
                 handler() {

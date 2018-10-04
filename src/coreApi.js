@@ -2,6 +2,7 @@
 import '../resources/styles/date-picker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
+import '../resources/styles/gallery.css';
 import '../resources/styles/services/messageService.css';
 import '../resources/styles/services/windowService.css';
 import '../resources/styles/form.css';

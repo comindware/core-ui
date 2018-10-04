@@ -37,7 +37,7 @@ export default function () {
 
         behaviors: {
             BackboneFormBehavior: {
-                behaviorClass: core.form.behaviors.BackboneFormBehavior,
+                behaviorClass: Core.form.behaviors.BackboneFormBehavior,
                 transliteratedFields: { 
                     name: 'alias'
                 }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}

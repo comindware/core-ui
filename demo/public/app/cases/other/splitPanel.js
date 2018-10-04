@@ -15,7 +15,7 @@ export default function() {
         className: 'demo-split-panel demo-split-panel_right'
     });
 
-    const MySplitPanel = core.views.SplitPanelView.extend({
+    const MySplitPanel = Core.views.SplitPanelView.extend({
         options: {
             panel1Min: 100,
             panel2Min: 100

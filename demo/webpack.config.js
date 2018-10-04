@@ -239,6 +239,10 @@ module.exports = () => {
                 {
                     from: `${__dirname}/../dist/themes`,
                     to: pathResolver.client('themes')
+                },
+                {
+                    from: `${__dirname}/../demo/public/ajaxStub/image.jpg`,
+                    to: pathResolver.client('images')
                 }
             ])
         ],

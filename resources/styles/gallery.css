@@ -1,0 +1,154 @@
+.galleryWindow {
+    width: 100%;
+    height: 100%;
+    position : absolute;
+    border : 1px solid gray;
+    background : url(/resources/icons/client/gallery_mask.png?i20140716) 0 0 repeat;
+    top : 0;
+    left : 0;
+    z-index : 100500;
+    overflow : hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.galleryButton {
+    position : absolute;
+    top:5px;
+    right: 5px;
+    width:24px;
+    height: 24px;
+    line-height: 100px;
+    overflow: hidden;
+    background : url(/resources/icons/client/gallery_close.png?i20140716) 0 0 no-repeat;
+    cursor:pointer
+}
+.galleryButton:hover {
+    background : url(/resources/icons/client/gallery_close.png?i20140716) -24px 0 no-repeat;
+}
+.galleryMove {
+    position: absolute;
+    z-index: 100500;
+    width:20px;
+    height: 80px;
+    overflow: hidden;
+    border:none;
+    background : url(/resources/icons/client/gallery_move_buttons.png?i20140716) -20px 45px no-repeat;
+    cursor:pointer;
+    bottom: 37px;
+    right:3px;
+    opacity: 0.6
+}
+.galleryMove:hover {
+    opacity: 1.0
+}
+.leftMove {
+    background-position: 0 45px;
+    right:auto;
+    left:3px;
+}
+
+
+.galleryImage{
+    flex: 1 1;
+    display: flex;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    padding: 20px;
+}
+.galleryImage img{
+    border: 2px solid #fff;
+    margin: auto;
+    position: static;
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+
+.galleryImageBuffer {
+    position : absolute;
+    z-index : -100500;
+}
+.galleryStripe {
+    position : absolute;
+    bottom : 20px;
+    text-align: center;
+    padding :0 20px;
+    height : 80px;
+    width : 100%;
+    overflow : hidden;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.galleryThumbnail {
+    margin-top : 5px;
+    margin-bottom : 5px;
+    margin-right : 5px;
+    border : 2px solid white;
+    background : black;
+    width : 64px;
+    height : 64px;
+    color : white;
+    font : bold 14px verdana;
+    display: inline-block;
+}
+
+.galleryThumbnail:hover {
+    border : 2px solid yellow;
+}
+
+.galleryThumbnailInfo {
+    position : absolute;
+    height : 20px;
+    color : white;
+    text-align: center;
+    width : 100%;
+    bottom : 0;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+.galleryThumbnailInfo span{
+    color:#999;
+    padding: 0 10px;
+}
+
+.galleryImageDownload{
+    text-align: center;
+    z-index: 1;
+    width: 100%;
+    margin: 10px 0 20px;
+}
+
+.galleryImageDownload span{
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    line-height: 20px;
+    cursor: pointer;
+    padding: 1px 1px 1px 28px;
+    background: url(/resources/icons/client/gallery_download.png?i20140716) 0 -1px no-repeat;
+}
+
+.galleryImageDownload span:hover{
+    background-position: 0 -25px;
+    text-decoration:underline;
+}
+
+.dev-l-loader-image-gallery .l-loader {
+    background: none;
+}
+
+.dev-l-loader-image-gallery .loader {
+    color: #fff;
+    background: url(../images/loading-white.gif) 50% 100% no-repeat;
+}

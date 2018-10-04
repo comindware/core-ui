@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.DateEditor({
+        view: new Core.form.editors.DateEditor({
             model,
             key: 'dateValue',
             autocommit: true

@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.BooleanEditor({
+        view: new Core.form.editors.BooleanEditor({
             model,
             key: 'booleanValue',
             changeMode: 'keydown',

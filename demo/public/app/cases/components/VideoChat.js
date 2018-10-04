@@ -1,3 +1,3 @@
 export default function() {
-    return new core.components.VideoChat({});
+    return new Core.components.VideoChat({});
 }

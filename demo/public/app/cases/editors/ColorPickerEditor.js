@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.ColorPickerEditor({
+        view: new Core.form.editors.ColorPickerEditor({
             model,
             key: 'value',
             autocommit: true

@@ -27,7 +27,6 @@ export default Marionette.Object.extend({
                 imagesCollection: new Backbone.Collection(model.collection.filter(m => this.__isImage(m))),
                 model
             });
-            this.__togglePopupRegion(true);
             Core.services.WindowService.showPopup(this.view);
             return false;
         }
@@ -35,7 +34,6 @@ export default Marionette.Object.extend({
     },
 
     __closeGallery() {
-        this.__togglePopupRegion(false);
         Core.services.WindowService.closePopup();
     },
 
@@ -53,10 +51,6 @@ export default Marionette.Object.extend({
         });
         this.imagesBuffer[modelId] = image;
         return image;
-    },
-
-    __togglePopupRegion(show) {
-        window.application.ui.popupRegion.toggleClass(classes.HIDDEN, !show);
     },
 
     __isImage(model) {

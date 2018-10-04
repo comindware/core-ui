@@ -10,6 +10,6 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     onRender() {
-        this.showChildView('dateEditorRegion', new core.form.editors.DateTimeEditor());
+        this.showChildView('dateEditorRegion', new Core.form.editors.DateTimeEditor());
     }
 });

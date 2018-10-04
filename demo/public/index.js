@@ -1,14 +1,14 @@
 import 'styles/defaultFontawesome.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/solid.css';
-import '../../dist/core.css';
+import '../../dist/Core.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';
-import core from 'comindware/core';
+import Core from 'comindware/core';
 
 const root = typeof global !== 'undefined' ? global : window;
 
-root.core = core;
+root.Core = Core;
 
 import Application from './Application';
 import AppRouter from './AppRouter';
