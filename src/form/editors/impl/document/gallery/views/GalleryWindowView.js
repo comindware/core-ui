@@ -2,6 +2,7 @@
 import { helpers } from 'utils';
 import template from '../templates/galleryWindow.html';
 import LoadingView from './LoadingView';
+import GlobalEventService from '../../../../../../services/GlobalEventService';
 
 const classes = {
     GALLERY_WINDOW: 'js-gallery-window galleryWindow'
@@ -11,6 +12,7 @@ export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
     },
 
     className: classes.GALLERY_WINDOW,
@@ -79,5 +81,11 @@ export default Marionette.View.extend({
 
     __addImage(model) {
         this.ui.image.empty().append(this.reqres.request('image:get', model));
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.__onClose();
+        }
     }
 });
