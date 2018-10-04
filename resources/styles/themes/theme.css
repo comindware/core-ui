@@ -580,6 +580,7 @@ svg.svg-grid-icons {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bubbles .bubbles__caret,
