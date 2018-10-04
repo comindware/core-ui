@@ -17,7 +17,7 @@ export default function() {
                 extension: 'jpg',
                 id: 'document.6',
                 name: 'image',
-                url: '/images/image.jpg'
+                url: 'images/image.jpg'
             }
         ]
     });
