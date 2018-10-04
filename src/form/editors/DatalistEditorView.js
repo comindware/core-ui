@@ -280,11 +280,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     async fetchUpdateFilter(value, forceCompareText, isDontOpenPanel) {
         this.searchText = (value || '').trim();
-        if (this.fakeInputModel.get('searchText') === this.searchText && !forceCompareText) {
+        if (this.fakeInputModel?.get('searchText') === this.searchText && !forceCompareText) {
             return;
         }
         this.triggerNotReady();
-        this.fakeInputModel.set('searchText', this.searchText);
+        this.fakeInputModel?.set('searchText', this.searchText);
         return this.__fetchUpdateFilter(this.searchText, isDontOpenPanel);
     },
 
