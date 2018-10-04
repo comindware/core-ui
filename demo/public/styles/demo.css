@@ -15,12 +15,6 @@ body {
     display: flex;
     width: 100%;
 }
-@media screen and (max-width: 999px) {
-    body, input, textarea, select {
-        font: normal 16px/1.4 'OpenSans', sans-serif;
-    }
-}
-
 
 .header-container {
     width: 100%;
@@ -241,10 +235,7 @@ body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-/*-----------
-
-
---------------*/
+/*-------------------------*/
 .demo-content__attributes{
     position: relative;
     padding: 10px;
@@ -259,9 +250,6 @@ body {
     width: 100%;
     display: flex;
     padding: 0 15px 15px 15px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    box-sizing: border-box;
     justify-content: space-between;
 }
 .demo-content__function {
@@ -571,11 +559,6 @@ body {
     flex: 1;
     width: 100%;
     overflow: hidden;
-}
-
-
-.new-expression-editor-field {
-    width: 100%;
 }
 
 .header-content {
