@@ -1,4 +1,4 @@
-import { sortDirection } from '../../../Meta';
+import { sortDirection } from '../../meta';
 import template from '../../templates/filterPanel/configPanelSort.html';
 
 export default Marionette.View.extend({

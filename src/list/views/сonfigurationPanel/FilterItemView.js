@@ -1,5 +1,5 @@
 import template from '../../templates/filterPanel/filterItem.html';
-import { columnTypes, filterPredicates } from '../../../Meta';
+import { columnTypes, filterPredicates } from '../../meta';
 import FilterValueItemView from './FilterValueItemView';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 

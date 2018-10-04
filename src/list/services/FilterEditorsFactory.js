@@ -1,5 +1,6 @@
 import DatasetViewReferenceCollection from '../collections/DatasetViewReferenceCollection';
-import { filterPredicates, aggregationPredicates, booleanDropdown, columnTypes, objectPropertyFormats as dateFormats } from '../meta';
+import { filterPredicates, aggregationPredicates, booleanDropdown, columnTypes } from '../meta';
+import { objectPropertyFormats as dateFormats } from '../../Meta';
 import formatService from 'services/FormatService';
 
 const constants = {

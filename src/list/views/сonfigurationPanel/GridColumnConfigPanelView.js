@@ -1,4 +1,4 @@
-import { columnTypes, queryBuilderActions } from '../../../Meta';
+import { columnTypes, queryBuilderActions } from '../../meta';
 import ConfigPanelSortView from './ConfigPanelSortView';
 import template from '../../templates/filterPanel/gridColumnConfigPanel.html';
 import ConfigPanelGroupView from './ConfigPanelGroupView';

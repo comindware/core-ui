@@ -4,6 +4,18 @@ export const contextTypes = {
     one: 'one'
 };
 
+export const queryBuilderActions = {
+    sort: 'sort',
+    group: 'group',
+    filter: 'filters',
+    aggregation: 'aggregation'
+};
+
+export const sortDirection = {
+    ascending: 'Asc',
+    descending: 'Desc'
+};
+
 export const columnTypes = {
     STRING: 'string',
     NUMBER: 'number',
