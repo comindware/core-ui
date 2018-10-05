@@ -15,6 +15,7 @@ describe('Editors', () => {
 
     const startSearch = (input, string) => {
         input.click();
+        input.focus();
         input.val(string);
         input.keydown();
     };
@@ -98,7 +99,7 @@ describe('Editors', () => {
             });
         });
 
-        it('should lose focus when blur() is called', done => {
+        it('should lose focus and trigger blur when blur() is called', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
@@ -112,10 +113,15 @@ describe('Editors', () => {
 
             show(view);
 
+            view.__focusBlurDelay = 1;
+
             view.focus();
 
             view.on('view:ready', () => {
                 view.blur();
+            });
+
+            view.on('blur', () => {
                 expect(getInput(view)).not.toBeFocused();
                 expect(view.hasFocus).toEqual(false, 'Must have focus.');
                 done();
@@ -141,7 +147,9 @@ describe('Editors', () => {
             startSearch(input, 'somesearch');
             expect(input.val()).toEqual('somesearch');
             view.blur();
-            expect(input.val()).toEqual('');
+            view.on('blur', () => {
+                expect(input.val()).toEqual('');
+            });
         });
 
         it('should show empty model placeholder on empty value', () => {
@@ -309,7 +317,7 @@ describe('Editors', () => {
 
             view.focus();
 
-            view.on('view:ready', () => {
+            view.listenToOnce(view, 'view:ready', () => {
                 expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
                 getItemOfList(1).click();
                 expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
@@ -408,7 +416,7 @@ describe('Editors', () => {
             });
         });
 
-        it('should trigger change on remove icon item click', done => {
+        it('should trigger change and open panel on remove icon item click', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
@@ -426,8 +434,10 @@ describe('Editors', () => {
             show(view);
 
             view.on('change', () => {
-                expect(true).toEqual(true);
-                done();
+                view.on('dropdown:open', () => {
+                    expect(view.dropdownView.isOpen).toEqual(true);
+                    done();
+                });
             });
 
             view.$('.bubbles__i:eq(0)').trigger('mouseenter');
@@ -461,7 +471,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should open panel on click if view is ready', done => {
+        it('should open panel on focus if view is ready', done => {
             //this test is correct if controller has delay
             const model = new Backbone.Model({
                 DatalistValue: [
@@ -496,13 +506,109 @@ describe('Editors', () => {
             });
 
             view.on('attach', () => {
-                const button = getButton(view);
-                button.click();
+                view.focus();
                 expect(!!view.isReady).toEqual(false);
                 expect(!!view.dropdownView.isOpen).toEqual(false);
             });
 
             show(view);
+        });
+
+        it('should fetch data on every outer focus', done => {
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    }
+                ]
+            });
+
+            async function sleep(fn, ...args) {
+                await timeout(100);
+                return fn(...args);
+            }
+
+            const AnotherDynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
+                fetchCounter: 0,
+
+                async fetch() {
+                    this.fetchCounter++;
+                    return new Promise(resolve => {
+                        this.collection.reset(collectionData);
+        
+                        this.totalCount = 3;
+                        return sleep(resolve, {
+                            collection: collectionData,
+                            totalCount: this.totalCount
+                        });
+                    });
+                }
+            });
+
+            const anotherDynamicController = new AnotherDynamicController({
+                collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                maxQuantitySelected: 5,
+                controller: anotherDynamicController
+            });
+
+            const anotherView = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                maxQuantitySelected: 5,
+                controller: anotherDynamicController
+            });
+
+            let counter = 0;
+
+            view.on('view:ready', () => {
+                counter++;
+                expect(view.controller.fetchCounter).toEqual(counter);
+                expect(view.isReady).toEqual(true);
+                expect(view.dropdownView.isOpen).toEqual(true);
+                if (counter < 3) {
+                    view.blur();
+                } else {
+                    done();
+                }
+            });
+
+            view.on('blur', () => {
+                _.delay(anotherView.focus.bind(view), 50);
+            });
+
+            anotherView.on('focus', () => {
+                expect(view.isThisFocus()).toEqual(false);
+                _.delay(view.focus.bind(view), 50);
+            });
+
+            view.on('attach', () => {
+                expect(view.controller.fetchCounter).toEqual(0);
+                view.focus();
+                expect(!!view.isReady).toEqual(false);
+                expect(!!view.dropdownView.isOpen).toEqual(false);
+            });
+
+            show(new Core.layout.HorizontalLayout({
+                columns: [ view, anotherView ]
+            }));
         });
         /*
         it('should set size for panel', () => {
@@ -663,9 +769,7 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 const input = getInput(view);
-                input.click();
-                input.val('1');
-                input.keydown();
+                startSearch(input, '1');
                 const first = setInterval(() => {
                     if (view.panelCollection.length === 1) {
                         clearTimeout(first);
@@ -695,9 +799,7 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 const input = getInput(view);
-                input.click();
-                input.val('d');
-                input.keydown();
+                startSearch(input, 'd');
                 const first = setInterval(() => {
                     if (view.panelCollection.length === 0) {
                         clearTimeout(first);
@@ -730,9 +832,7 @@ describe('Editors', () => {
                 expect(length).toEqual(2); //selected + input
 
                 const input = getInput(view);   
-                    input.click();
-                    input.val('d');
-                    input.keydown();
+                    startSearch(input, 'd');
                 const first = setInterval(() => {
                     if (view.panelCollection.length === 0) {
                         clearTimeout(first);
@@ -807,6 +907,52 @@ describe('Editors', () => {
                 const input = getInput(view);
                 expect(input.length).toEqual(1);
                 done();
+            });
+
+            show(view);
+        });
+
+        it('should not open panel if after focus on blur', done => {
+            //this test is correct if controller has delay
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    }
+                ]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                maxQuantitySelected: 5,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.__focusBlurDelay = 1;
+
+            view.on('view:ready', () => {
+                expect(view.isReady).toEqual(true);
+                expect(!!view.dropdownView.isOpen).toEqual(false);
+                done();
+            });
+
+            view.on('attach', () => {
+                view.focus();
+                expect(!!view.isReady).toEqual(false);
+                expect(!!view.dropdownView.isOpen).toEqual(false);
+                view.blur();
             });
 
             show(view);

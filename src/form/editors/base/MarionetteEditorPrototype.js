@@ -29,8 +29,9 @@ const onRender = function() {
         this.$el.on('blur', this.focusElement, this.onBlur);
         this.$el.on('keyup', this.focusElement, this.onKeyup);
     } else if (this.focusElement !== null) {
-        this.$el.on('focus', this.onFocus);
-        this.$el.on('blur', this.onBlur);
+        this.__renderTimeStamp = new Date();
+        this.$el.on('focusin', event => this.isEventReal(event) && this.onFocus(event));
+        this.$el.on('focusout', event => this.isEventReal(event) && this.onBlur(event));
         this.$el.on('keyup', this.onKeyup);
     }
     this.__updateEmpty();
@@ -438,6 +439,17 @@ export default {
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             },
+
+            isEventReal(event) {
+                if (event.timeStamp > this.__renderTimeStamp) {
+                    return false;
+                }
+                const isReal = event.timeStamp - (this.__focusBlurTimeStamp || 0) > this.__focusBlurDelay;
+                this.__focusBlurTimeStamp = event.timeStamp;
+                return isReal;
+            },
+
+            __focusBlurDelay: 50,
 
             renderIcons(...iconTemplates) {
                 this.el.insertAdjacentHTML('beforeend', iconTemplates.join(' '));

@@ -18,7 +18,7 @@
 
 <http://comindware.com/text/core/form#newForm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Новая форма"; l10n:originalData "newForm"].
 
-<http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите имя..."; l10n:originalData "Enter a name..."].
+<http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "Search"].
 
 <http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
 

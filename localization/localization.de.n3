@@ -16,7 +16,7 @@
 
 <http://comindware.com/text/core/form/editors#dropdown> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
-<http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
+<http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/collection#addNewItem> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
