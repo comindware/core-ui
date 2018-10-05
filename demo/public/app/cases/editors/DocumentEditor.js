@@ -9,15 +9,16 @@ export default function() {
                 url: 'GetDocument/1'
             },
             {
+                extension: 'jpg',
                 id: 'document.3',
-                name: 'Document 1',
-                url: 'GetDocument/1'
+                name: 'image',
+                url: 'images/image.jpg'
             },
             {
                 extension: 'jpg',
-                id: 'document.6',
-                name: 'image',
-                url: 'images/image.jpg'
+                id: 'document.2',
+                name: 'image2',
+                url: 'images/image2.jpg'
             }
         ]
     });
