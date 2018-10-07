@@ -10,6 +10,11 @@ import PanelView from './impl/datalist/views/PanelView';
 import MultiselectItemView from './impl/document/views/MultiselectItemView';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 
+const classes = {
+    dropZone: 'documents__drop-zone',
+    activeDropZone: 'documents__drop-zone--active'
+};
+
 const MultiselectAddButtonView = Marionette.View.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
     tagName: 'button',
@@ -42,7 +47,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.initcollection();
+        this.initCollection();
 
         this.on('change', this.checkEmpty.bind(this));
         this.on('uploaded', documents => {
@@ -96,7 +101,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     collapsed: true,
 
     ui: {
-        addRegion: '.js-add-region',
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
         form: '.js-file-form',
@@ -118,8 +122,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         keydown: '__handleKeydown',
         'change @ui.fileUpload': 'onSelectFiles',
         'click @ui.fileUploadButton': '__onItemClick',
-        dragover: '__onDargover',
-        drop: '__onDrop'
+        'dragenter @ui.form': '__onDragenter',
+        'dragover @ui.form': '__onDragover',
+        'dragleave @ui.form': '__onDragleave',
+        'drop @ui.form': '__onDrop'
     },
 
     childViewEvents: {
@@ -139,7 +145,17 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.renderUploadButton(this.options.readonly);
     },
 
-    __onDargover(e) {
+    __onDragenter(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.ui.form.addClass(classes.activeDropZone);
+    },
+
+    __onDragover(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         const dataTransfer = e.originalEvent.dataTransfer;
 
         if (!dataTransfer.items.length || !dataTransfer.types.includes('Files')) {
@@ -150,23 +166,32 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         } else {
             dataTransfer.dropEffect = 'move';
         }
+    },
+
+    __onDragleave(e) {
         e.preventDefault();
+        e.stopPropagation();
+
+        if (e.target.classList.contains(classes.dropZone)) {
+            this.ui.form.removeClass(classes.activeDropZone);
+        }
     },
 
     __onDrop(e) {
-        const files = e.originalEvent.dataTransfer.files;
+        e.preventDefault();
+        e.stopPropagation();
 
+        const files = e.originalEvent.dataTransfer.files;
+        this.ui.form.removeClass(classes.activeDropZone);
         if (!files.length) {
             return;
         }
-
         if (this.__validate(files) && !this.readonly) {
             this._uploadFiles(files);
         }
-        e.preventDefault();
     },
 
-    initcollection() {
+    initCollection() {
         if (!this.value) {
             this.collection = new DocumentReferenceCollection();
         } else {
@@ -196,7 +221,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderUploadButton(isReadonly) {
-        this.ui.addRegion.toggle(!isReadonly);
+        this.ui.fileUploadButton.toggle(!isReadonly);
     },
 
     addItem(items) {

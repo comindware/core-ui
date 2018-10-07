@@ -8,6 +8,13 @@ import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html'
 
 const savedDocumentPrefix = 'document';
 
+const fileIconClasses = {
+    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
+    word: 'docx doc rtf',
+    excel: 'xls xlsx xlsm xlsb',
+    pdf: 'pdf'
+};
+
 export default Marionette.View.extend({
     initialize(options) {
         this.revisionCollection = new Backbone.Collection();
@@ -27,7 +34,8 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            text: this.model.get('text') || this.model.get('name')
+            text: this.model.get('text') || this.model.get('name'),
+            icon: this.__getExtIcon()
         };
     },
 
@@ -48,6 +56,21 @@ export default Marionette.View.extend({
         'click @ui.link': '__showPreview',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
+    },
+
+    __getExtIcon() {
+        const ext = this.model.get('ext');
+        let icon;
+
+        if (ext) {
+            Object.keys(fileIconClasses).forEach(key => {
+                if (fileIconClasses[key].indexOf(ext.toLowerCase()) !== -1) {
+                    icon = key;
+                }
+            });
+        }
+
+        return icon || 'file';
     },
 
     __getDocumentRevision() {
