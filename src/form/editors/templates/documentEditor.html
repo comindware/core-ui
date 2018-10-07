@@ -3,8 +3,8 @@
         <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
             style="display: none">
 
-        <span class="documents__text">Перетащите файл для загрузки <br> или 
-            <span class="documents__upload js-file-button" title="{{displayText}}">выберите файл</span>
+        <span class="documents__text">{{{placeHolderText}}}
+            <span class="documents__upload js-file-button" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
         </span>
     </div>
 </form>

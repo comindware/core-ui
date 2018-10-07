@@ -113,7 +113,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
             multiple: this.options.multiple,
-            fileFormat: this.__adjustFileFormat(this.options.fileFormat)
+            fileFormat: this.__adjustFileFormat(this.options.fileFormat),
+            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE')
         });
     },
 
