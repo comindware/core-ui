@@ -250,7 +250,7 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return `${this.options.class || ''} fr-collection`;
+        return `${this.options.class || ''} grid-container`;
     },
 
     template: Handlebars.compile(template),

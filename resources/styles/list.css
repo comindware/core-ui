@@ -295,10 +295,10 @@
 /* /Empty View */
 
 /* Editable Grid */
-.fr-collection{
+.grid-container{
     position: relative;
     height: 100%;
-    display: flex;
+    display: block;
     flex-direction: column;
     flex: 1;
 }
@@ -490,7 +490,7 @@
     align-items: center;
 }
 
-.fr-collection .cell{
+.grid-container .cell{
     font-size: 13px;
 }
 
@@ -553,45 +553,45 @@
 }
 
 /*-- Compact list --*/
-.compact.fr-collection .cell .input,
-.compact.fr-collection .cell .bubbles__input,
-.compact.fr-collection .cell a{
+.compact.grid-container .cell .input,
+.compact.grid-container .cell .bubbles__input,
+.compact.grid-container .cell a{
     font-size: 12px;
 }
 
-.compact.fr-collection .grid-header,
-.compact.fr-collection .grid-selection-cell-all,
-.compact.fr-collection .cell{
+.compact.grid-container .grid-header,
+.compact.grid-container .grid-selection-cell-all,
+.compact.grid-container .cell{
     height: 26px;
     line-height: 26px;
     font-size: 12px;
 }
-.compact.fr-collection .grid-header-column-content{
+.compact.grid-container .grid-header-column-content{
     line-height: 26px;
     font-size: 12px;
 }
 
-.compact.fr-collection .cell .checkbox {
+.compact.grid-container .cell .checkbox {
     height: 13px;
     width: 13px;
 }
-.compact.fr-collection .btn.btn-icon {
+.compact.grid-container .btn.btn-icon {
     height: calc(100% - 4px);
     margin: 2px 0;
 }
-.compact.fr-collection .btn.btn-icon .fa{
+.compact.grid-container .btn.btn-icon .fa{
     vertical-align: top;
 }
-.compact.fr-collection  .cell__dots svg {
+.compact.grid-container  .cell__dots svg {
     transform: scale(.7) translate(-8px, -5px);
 }
 
-.compact.fr-collection .sort_down,
-.compact.fr-collection .sort_up{
+.compact.grid-container .sort_down,
+.compact.grid-container .sort_up{
     top: 3px;
 }
 
-.compact.fr-collection .toolbar {
+.compact.grid-container .toolbar {
     padding: 0 5px;
     height: 38px;
 }
