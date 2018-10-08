@@ -27,7 +27,7 @@ const variables = {
     'disabled-text-color': 'var(--grey-400)',
 
     'border-color': 'var(--grey-400)',
-    border: '1px solid var(--border-color)',
+    border: '1px solid #dfe4e8',
     'border-radius': '2px',
 
     // font
