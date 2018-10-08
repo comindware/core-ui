@@ -651,6 +651,7 @@
     color: #434343;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
 }
 
 .extend_info {
