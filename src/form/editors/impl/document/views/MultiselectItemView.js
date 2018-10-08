@@ -59,7 +59,7 @@ export default Marionette.View.extend({
     },
 
     __getExtIcon() {
-        const ext = this.model.get('ext');
+        const ext = this.model.get('extension');
         let icon;
 
         if (ext) {
