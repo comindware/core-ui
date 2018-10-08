@@ -60,7 +60,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     template: Handlebars.compile(template),
 
-    className: 'editor context_select',
+    className: 'editor context_select dropdown_root',
 
     events: {
         'click @ui.clearButton': '__clear'
@@ -197,8 +197,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         const collection = deepContext[recordTypeId];
 
         collection.on('expand', model => {
-            model.children &&
-                model.children.forEach(child => {
+            model.children
+                && model.children.forEach(child => {
                     if (child.get('type') === 'Instance') {
                         const newChild = deepContext[child.get('instanceTypeId')];
 
