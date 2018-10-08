@@ -40,7 +40,7 @@ const variables = {
     'border-color': 'var(--grey-400)',
     'border-radius': '4px',
     'border-radius-big': '7px',
-    border: '1px solid var(--border-color)',
+    border: '1px solid #c1c1c1',
 
     // font
     'base-font-size': '14px',
