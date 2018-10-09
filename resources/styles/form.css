@@ -109,6 +109,8 @@ rgba(5,117,189,.5) // user avatar btn
     min-width: 200px;
     max-width: 400px;
     padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .form-label__error-panel {
