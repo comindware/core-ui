@@ -413,7 +413,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.options.showDate !== false) {
             this.__createDateDropdownEditor();
             //calendar button readonly as don't develop mask validation
-            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', -1);
+            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', 0);
         } else {
             this.getRegion('dateDropdownRegion').reset();
         }
