@@ -151,7 +151,7 @@ export default function($, dates) {
         },
 
         setDate(d) {
-            this.setUTCDate(new Date(d.getTime() - moment().utcOffset() * 60000));
+            this.setUTCDate(d);
         },
 
         setUTCDate(d) {
@@ -296,7 +296,7 @@ export default function($, dates) {
             const startMonth = this.startDate.getUTCMonth();
             const endYear = this.endDate.getUTCFullYear();
             const endMonth = this.endDate.getUTCMonth() + 1;
-            const currentDate = new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate()).valueOf();
+            const currentDate = new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), moment(this.date).date()).valueOf();
             const today = new Date();
 
             this.setTitle('.datetimepicker-days', `${dates[this.language].months[month]} ${year}`);
