@@ -382,7 +382,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __value(value: DataValue, triggerChange: boolean): void {
         if (this.isValueIncluded(value)) {
-            this.panelCollection.set('value', this.value);
             return false;
         }
         const adjustedValue = this.__adjustValue(value);
@@ -398,7 +397,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
 
         this.selectedButtonCollection.add(this.value);
-        this.panelCollection.set('value', this.value);
 
         if (triggerChange) {
             this.__triggerChange();
@@ -434,7 +432,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onValueSet(model?: Backbone.Model, options = {}): void {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
-        const setted = this.__value(value, true);
+
+        this.__value(value, true);
         this.__updateFakeInputModel();
 
         if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
@@ -531,7 +530,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selected.splice(removingModelIndex, 1);
         }
         this.value = selected;
-        this.panelCollection.set('value', this.value);
+
         this.__triggerChange();
 
         this.__updateFakeInputModel();
