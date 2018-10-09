@@ -151,7 +151,7 @@ export default function($, dates) {
         },
 
         setDate(d) {
-            this.setUTCDate(new Date(d.getTime() - d.getTimezoneOffset() * 60000));
+            this.setUTCDate(new Date(d.getTime() - moment().utcOffset() * 60000));
         },
 
         setUTCDate(d) {
