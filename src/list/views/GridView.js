@@ -28,6 +28,10 @@ import transliterator from 'utils/transliterator';
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
+const defaultOptions = () => ({
+    focusSearchOnAttach: !MobileService.isMobile
+});
+
 /**
  * @name GridView
  * @memberof module:core.list.views
@@ -57,6 +61,7 @@ import transliterator from 'utils/transliterator';
 
 export default Marionette.View.extend({
     initialize(options) {
+        _.defaults(options, defaultOptions());
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
@@ -250,7 +255,7 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return `${this.options.class || ''} fr-collection`;
+        return `${this.options.class || ''} grid-container`;
     },
 
     template: Handlebars.compile(template),
@@ -311,7 +316,7 @@ export default Marionette.View.extend({
         });
         document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
-        if (this.options.showSearch) {
+        if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);

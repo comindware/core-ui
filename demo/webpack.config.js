@@ -241,7 +241,7 @@ module.exports = () => {
                     to: pathResolver.client('themes')
                 },
                 {
-                    from: `${__dirname}/../demo/public/ajaxStub/image.jpg`,
+                    from: `${__dirname}/../demo/public/ajaxStub`,
                     to: pathResolver.client('images')
                 }
             ])

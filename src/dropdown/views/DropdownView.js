@@ -173,6 +173,7 @@ export default Marionette.View.extend({
             panelEl.style.minWidth = `${panelWidth}px`;
         }
 
+        let leftOffset = buttonRect.left;
         let offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
@@ -236,7 +237,11 @@ export default Marionette.View.extend({
         }
 
         panelEl.style.top = `${top}px`;
-        panelEl.style.left = `${buttonRect.left - (panelWidth - buttonRect.width)}px`;
+
+        if (panelWidth > buttonRect.width) {
+            leftOffset -= panelWidth - buttonRect.width;
+        }
+        panelEl.style.left = `${leftOffset}px`;
 
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.el);
@@ -339,7 +344,12 @@ export default Marionette.View.extend({
     },
 
     __handleBlur() {
-        if (!this.options.externalBlurHandler(document.activeElement) && !this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+        if (
+            !this.options.externalBlurHandler(document.activeElement)
+            && !this.__suppressHandlingBlur
+            && !this.__isNestedInButton(document.activeElement)
+            && !this.__isNestedInPanel(document.activeElement)
+        ) {
             this.close();
         }
     },

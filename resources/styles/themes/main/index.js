@@ -19,13 +19,15 @@ const variables = {
 
     'text-color': '#384650',
     'link-color': 'var(--blue-200)',
+    'link-hover-color': 'var(--blue-100)',
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
     'warning-color': '#ffda44',
     'selected-background-color': 'var(--blue-extra-light)',
     'disabled-text-color': 'var(--grey-400)',
 
-    border: '1px solid var(--grey-400)',
+    'border-color': 'var(--grey-400)',
+    border: '1px solid #dfe4e8',
     'border-radius': '2px',
 
     // font
@@ -172,15 +174,15 @@ module.exports.apply = {
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
         border: `1px solid ${variables['grey-400']}`,
-        'border-radius': '2px',
+        'border-radius': '2px'
     },
     'button-strong': {
         'background-color': variables['grey-100'],
-        color: variables['text-color'],
+        color: variables['text-color']
     },
     'button-pale': {
         'background-color': variables['text-color'],
-        color: variables['grey-100'],
+        color: variables['grey-100']
     },
     'button-strong-hover-theme': {
         'border-color': variables['grey-600'],
@@ -364,5 +366,13 @@ module.exports.apply = {
         top: '4px',
         border: '1px solid transparent',
         'border-radius': '2px'
+    },
+    'drop-zone-theme': {
+        'background-color': variables['grey-100'],
+        height: '80px',
+        padding: '6px'
+    },
+    'drop-zone-active-theme': {
+        'background-color': variables['grey-500']
     }
 };

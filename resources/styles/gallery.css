@@ -11,6 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .galleryButton {
@@ -55,13 +56,13 @@
     padding: 25px;
     position: relative;
 }
-.galleryImage img{
+.galleryImage img {
     border: 2px solid #fff;
     margin: auto;
     position: static;
     height: auto;
-    width: auto;
-    max-width: 100%;
+    width: 100%;
+    max-width: 800px;
     max-height: 100%;
 }
 

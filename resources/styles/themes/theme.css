@@ -1011,3 +1011,31 @@ svg.svg-grid-icons {
 .task-links__link:hover {
   color: var(--link-color);
 }
+
+.documents__drop-zone {
+  @apply --drop-zone-theme;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  text-align: center;
+}
+.documents__drop-zone.documents__drop-zone--active {
+  @apply --drop-zone-active-theme;
+}
+
+.documents__wrapper {
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 20px;
+  height: 100%;
+}
+
+.documents__upload {
+  cursor: pointer;
+  color: var(--link-color);
+}
+.documents__upload:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline
+}
