@@ -325,6 +325,10 @@ export default Marionette.View.extend({
         // }
     },
 
+    getChildren() {
+        return this.listView.children;
+    },
+
     __executeAction(model) {
         this.trigger('execute:action', model);
     },

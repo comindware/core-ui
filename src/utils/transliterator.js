@@ -21,7 +21,7 @@ export default {
             }
         }
         if (options.model) {
-            this.extendComputed(options.model, options.transliteratedFields, options.schema);
+            this.extendComputed(options.model, options.transliteratedFields, options.schema || options.schemaForExtendComputed);
             options.model.computedFields = new Backbone.ComputedFields(options.model);
         }
 
