@@ -104,8 +104,9 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.context = context;
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
 
+        panelModel.set('instanceTypeId', recordTypeId);
+
         if (this.__isInstanceInContext(this.value)) {
-            panelModel.set('instanceTypeId', recordTypeId);
             this.__updateDisplayValue();
         } else {
             this.setValue();
@@ -130,7 +131,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         let text = '';
 
         selectedItem.forEach((item, index) => {
-            const searchItem = this.context[instanceTypeId].find(contextItem => contextItem.id === item);
+            const searchItem = this.context[instanceTypeId]?.find(contextItem => contextItem.id === item);
+
             if (searchItem) {
                 text += index ? ` - ${searchItem.name}` : searchItem.name;
                 instanceTypeId = searchItem.instanceTypeId;
@@ -197,8 +199,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         const collection = deepContext[recordTypeId];
 
         collection.on('expand', model => {
-            model.children
-                && model.children.forEach(child => {
+            model.children &&
+                model.children.forEach(child => {
                     if (child.get('type') === 'Instance') {
                         const newChild = deepContext[child.get('instanceTypeId')];
 
