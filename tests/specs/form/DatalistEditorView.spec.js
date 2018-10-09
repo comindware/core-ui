@@ -220,7 +220,7 @@ describe('Editors', () => {
 
             view.focus();
             view.on('view:ready', () => {
-                expect(view.viewModel.panel.get('collection').toJSON()).toEqual(collectionData);
+                expect(view.panelCollection.toJSON()).toEqual(collectionData);
                 done();
             });
         });

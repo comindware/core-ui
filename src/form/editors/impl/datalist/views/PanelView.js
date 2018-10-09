@@ -43,7 +43,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.collection = this.model.get('collection');
+        this.collection = this.getOption('collection');
 
         this.listView = list.factory.createDefaultList({
             collection: this.collection,

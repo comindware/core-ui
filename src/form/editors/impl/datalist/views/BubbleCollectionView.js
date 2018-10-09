@@ -6,7 +6,7 @@ import FakeInputModel from '../models/FakeInputModel';
 export default Marionette.CollectionView.extend({
     initialize(options) {
         this.reqres = options.reqres;
-        this.collection = this.model.selected;
+        this.collection = options.collection;
     },
 
     className: 'bubbles__list',
