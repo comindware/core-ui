@@ -7,7 +7,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.TextAreaEditor({
+        view: new Core.form.editors.TextAreaEditor({
             model,
             key: 'textAreaValue',
             changeMode: 'keydown',

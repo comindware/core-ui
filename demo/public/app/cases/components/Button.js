@@ -1,29 +1,29 @@
 
 
 export default function() {
-    return new core.layout.VerticalLayout({
+    return new Core.layout.VerticalLayout({
         rows: [
-            new core.form.editors.TextEditor({
+            new Core.form.editors.TextEditor({
                 value: 'foo'
             }),
-            new core.layout.HorizontalLayout({
+            new Core.layout.HorizontalLayout({
                 columns: [
-                    new core.form.editors.NumberEditor({
+                    new Core.form.editors.NumberEditor({
                         value: 123
                     }),
-                    new core.form.editors.DateTimeEditor({
+                    new Core.form.editors.DateTimeEditor({
                         value: '2015-07-20T10:46:37Z'
                     })
                 ]
             }),
-            new core.form.editors.TextAreaEditor({
+            new Core.form.editors.TextAreaEditor({
                 value: 'bar\nbaz'
             }),
-            new core.form.editors.BooleanEditor({
+            new Core.form.editors.BooleanEditor({
                 value: true,
                 displayText: 'Make me some tea!'
             }),
-            new core.layout.Button({
+            new Core.layout.Button({
                 text: 'Say hello!',
                 iconClass: 'plus',
                 handler() {

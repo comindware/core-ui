@@ -60,7 +60,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     template: Handlebars.compile(template),
 
-    className: 'editor context_select',
+    className: 'editor context_select dropdown_root',
 
     events: {
         'click @ui.clearButton': '__clear'
@@ -104,8 +104,9 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.context = context;
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
 
+        panelModel.set('instanceTypeId', recordTypeId);
+
         if (this.__isInstanceInContext(this.value)) {
-            panelModel.set('instanceTypeId', recordTypeId);
             this.__updateDisplayValue();
         } else {
             this.setValue();
@@ -115,10 +116,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __value(value, triggerChange, newValue) {
-        if (this.value === value) {
-            return;
-        }
         this.value = newValue || value;
+
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -132,7 +131,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         let text = '';
 
         selectedItem.forEach((item, index) => {
-            const searchItem = this.context[instanceTypeId].find(contextItem => contextItem.id === item);
+            const searchItem = this.context[instanceTypeId]?.find(contextItem => contextItem.id === item);
+
             if (searchItem) {
                 text += index ? ` - ${searchItem.name}` : searchItem.name;
                 instanceTypeId = searchItem.instanceTypeId;
@@ -149,10 +149,14 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __applyContext(selected) {
+        const propertyTypes = this.options.propertyTypes;
+        if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length && !propertyTypes.includes(selected.get('type'))) {
+            return;
+        }
         const newValue = this.__collectPropertyPath(selected);
 
         this.popoutView.close();
-        this.__value(selected.get('id'), true, newValue);
+        this.__value(selected.id, true, newValue);
     },
 
     __onContextChange(newData) {
@@ -166,9 +170,14 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         }
 
         const deepContext = _.cloneDeep(context);
+        const propertyTypes = this.options.propertyTypes;
 
         Object.keys(deepContext).forEach(key => {
-            deepContext[key] = new Backbone.Collection(deepContext[key]);
+            let items = deepContext[key];
+            if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length) {
+                items = items.filter(item => propertyTypes.includes(item.type) || item.type === 'Instance');
+            }
+            deepContext[key] = new Backbone.Collection(items);
         });
 
         Object.values(deepContext).forEach(entry =>
@@ -222,7 +231,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __clear() {
-        this.__value(null, true);
+        this.__value(null, true, null);
         return false;
     }
 }));

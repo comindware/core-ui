@@ -27,7 +27,7 @@ export default function() {
         //Add loading behavior to your view
         behaviors: {
             LoadingBehavior: {
-                behaviorClass: core.views.behaviors.LoadingBehavior,
+                behaviorClass: Core.views.behaviors.LoadingBehavior,
                 region: 'loadingRegion',
                 text: 'Loading' //optional value, default value is 'CORE.VIEWS.BEHAVIORS.LOADING.DEFAULTLOADINGSMALL'
 

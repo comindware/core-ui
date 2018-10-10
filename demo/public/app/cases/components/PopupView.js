@@ -1,7 +1,6 @@
 export default function() {
     const model = new Backbone.Model({
         name: '',
-        idealDays: 12,
         dueDate: '2015-07-20T10:46:37Z',
         description: 'no-op',
         computed: false,
@@ -12,11 +11,16 @@ export default function() {
         name: {
             title: 'Name',
             type: 'Text',
+            autocommit: true,
+            required: true,
             validators: ['required']
         },
         idealDays: {
             title: 'Ideal Days',
-            type: 'Number'
+            type: 'Number',
+            autocommit: true,
+            required: true,
+            validators: ['required']
         },
         dueDate: {
             title: 'Due Date',
@@ -31,16 +35,24 @@ export default function() {
             displayText: 'Computed via expression'
         },
         expression: {
-            type: 'TextArea'
+            type: 'Code',
+            title: 'Expression',
+            autocommit: true,
+            required: true,
+            validators: ['required']
         },
         ref: {
             type: 'Datalist',
-            collection: new Backbone.Collection()
+            title: 'Datalist',
+            autocommit: true,
+            collection: new Backbone.Collection(),
+            required: true,
+            validators: ['required']
         }
     };
 
     const createPopup = () =>
-        new core.layout.Popup({
+        new Core.layout.Popup({
             size: {
                 width: '800px',
                 height: '700px'
@@ -53,7 +65,7 @@ export default function() {
                     text: 'Cancel',
                     customClass: 'btn-small btn-outline',
                     handler() {
-                        core.services.WindowService.closePopup();
+                        Core.services.WindowService.closePopup();
                     }
                 },
                 {
@@ -61,7 +73,7 @@ export default function() {
                     text: 'Save',
                     customClass: 'btn-small',
                     handler(popup) {
-                        const error = popup.content.form.validate();
+                        const error = popup.validate();
                         if (error) {
                             return;
                         }
@@ -69,43 +81,43 @@ export default function() {
                         setTimeout(() => {
                             popup.setLoading(false);
                             popup.content.form.commit();
-                            core.services.WindowService.closePopup();
+                            Core.services.WindowService.closePopup();
                             alert(JSON.stringify(model.toJSON(), null, 4));
                         }, 1000);
                     }
                 }
             ],
-            content: new core.layout.Form({
+            content: new Core.layout.Form({
                 model,
                 schema: formSchema,
                 transliteratedFields: {
                     description: 'name'
                 },
-                content: new core.layout.TabLayout({
+                content: new Core.layout.TabLayout({
                     tabs: [
                         {
                             id: 'general',
                             name: 'General',
-                            view: new core.layout.VerticalLayout({
+                            view: new Core.layout.VerticalLayout({
                                 rows: [
-                                    core.layout.createFieldAnchor('name'),
-                                    new core.layout.HorizontalLayout({
-                                        columns: [core.layout.createFieldAnchor('idealDays'), core.layout.createFieldAnchor('dueDate')]
+                                    Core.layout.createFieldAnchor('name'),
+                                    new Core.layout.HorizontalLayout({
+                                        columns: [Core.layout.createFieldAnchor('idealDays'), Core.layout.createFieldAnchor('dueDate')]
                                     }),
-                                    core.layout.createFieldAnchor('description'),
-                                    core.layout.createEditorAnchor('computed')
+                                    Core.layout.createFieldAnchor('description'),
+                                    Core.layout.createEditorAnchor('computed')
                                 ]
                             })
                         },
                         {
                             id: 'expression',
                             name: 'Computed Expression',
-                            view: core.layout.createEditorAnchor('expression')
+                            view: Core.layout.createFieldAnchor('expression')
                         },
                         {
                             id: 'ref',
                             name: 'Datalist editor',
-                            view: core.layout.createEditorAnchor('ref')
+                            view: Core.layout.createFieldAnchor('ref')
                         }
                     ]
                 })
@@ -117,7 +129,7 @@ export default function() {
 
         events: {
             'click .js-show-popup'() {
-                core.services.WindowService.showPopup(createPopup());
+                Core.services.WindowService.showPopup(createPopup());
             }
         }
     });

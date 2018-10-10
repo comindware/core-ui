@@ -6,7 +6,7 @@ import FakeInputModel from '../models/FakeInputModel';
 export default Marionette.CollectionView.extend({
     initialize(options) {
         this.reqres = options.reqres;
-        this.collection = this.model.selected;
+        this.collection = options.collection;
     },
 
     className: 'bubbles__list',
@@ -18,14 +18,14 @@ export default Marionette.CollectionView.extend({
         return BubbleItemView;
     },
 
-    focus() {
+    focus(options) {
         const fakeInputModel = this.__findFakeInputModel();
         if (!fakeInputModel) {
             return;
         }
         const input = this.children.findByModel(fakeInputModel);
         if (input && input.focus) {
-            input.focus();
+            input.focus(options);
         }
     },
 

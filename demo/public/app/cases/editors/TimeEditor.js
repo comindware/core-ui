@@ -8,12 +8,12 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.TimeEditor({
+        view: new Core.form.editors.TimeEditor({
             model,
             key: 'timeValue',
             autocommit: true
         }),
-        presentation: "{{#isNull timeValue}}null{{else}}'{{timeValue}}'{{/isNull}}",
+        presentation: "{{timeValue}}",
         isEditor: true
     });
 }

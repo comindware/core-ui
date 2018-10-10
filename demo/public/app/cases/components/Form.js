@@ -37,7 +37,7 @@ export default function () {
 
         behaviors: {
             BackboneFormBehavior: {
-                behaviorClass: core.form.behaviors.BackboneFormBehavior,
+                behaviorClass: Core.form.behaviors.BackboneFormBehavior,
                 transliteratedFields: { 
                     name: 'alias'
                 }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
@@ -77,6 +77,7 @@ export default function () {
                         },
                         dropdown: {
                             type: 'Datalist',
+                            valueType: 'id',
                             title: 'Dropdown',
                             collection: [
                                 { id: 'd.1', text: 'Text 1' },
@@ -91,7 +92,7 @@ export default function () {
                         },
                         wrongInstance: {
                             type: 'Datalist',
-                            title: 'Dropdown',
+                            title: 'WrongInstance',
                             helpText: 'Some help information'
                         },
                         dateTime2: {

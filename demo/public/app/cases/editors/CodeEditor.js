@@ -1,7 +1,7 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
-    const editorView = new core.form.Field({
+    const editorView = new Core.form.Field({
         model: new Backbone.Model({
             code: 'true'
         }),

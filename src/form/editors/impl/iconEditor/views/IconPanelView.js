@@ -30,14 +30,23 @@ export default Marionette.View.extend({
             autocommit: true
         });
 
-        this.colorPicker = new Core.form.editors.ColorPickerEditor({
-            model: this.model,
-            key: 'color',
-            changeMode: 'keydown',
-            autocommit: true
-        });
+        if (this.options.showColorPicker) {
+            this.getRegion('colorPickerRegion').$el.show();
+            this.$('.icons-panel-head__title').show();
 
-        this.showChildView('colorPickerRegion', this.colorPicker);
+            this.colorPicker = new Core.form.editors.ColorPickerEditor({
+                model: this.model,
+                key: 'color',
+                changeMode: 'keydown',
+                autocommit: true
+            });
+
+            this.showChildView('colorPickerRegion', this.colorPicker);
+        } else {
+            this.getRegion('colorPickerRegion').$el.hide();
+            this.$('.icons-panel-head__title:eq(0)').hide();
+        }
+
         this.showChildView('searchInputRegion', this.search);
 
         const iconCollectionView = new IconCollectionView({

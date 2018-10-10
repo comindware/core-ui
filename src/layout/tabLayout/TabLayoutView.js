@@ -129,6 +129,21 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    validate() {
+        let result;
+        Object.entries(this.tabs).forEach(entrie => {
+            const view = entrie[1];
+            if (view && typeof view.validate === 'function') {
+                const error = view.validate();
+                this.setTabError(entrie[0], error);
+                if (error) {
+                    result = true;
+                }
+            }
+        });
+        return result;
+    },
+
     getViewById(tabId: string) {
         return this.__findTab(tabId).get('view');
     },

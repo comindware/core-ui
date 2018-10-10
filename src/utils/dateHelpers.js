@@ -140,29 +140,16 @@ const dateTimeFormats = {
 };
 
 export default /** @lends module:core.utils.dateHelpers */ {
-    /**
-     * Takes a date in the format that momentJS supports and converts it into a JavaScript <code>Date</code> object.
-     * @param {String|Date|Object} date Date string in ISO8601 format, JavaScript or momentJS date object.
-     * @return {Date} JavaScript <code>Date</code> object.
-     * */
-    dateToISOString(date) {
-        return moment(date).toISOString();
-    },
-
-    /**
-     * Takes a date string in ISO8601 format and converts it into a JavaScript <code>Date</code> object.
-     * @param {String} dateIsoString Date in ISO8601 format.
-     * @return {Date} JavaScript <code>Date</code> object.
-     * */
-    dateISOToDate(dateIsoString) {
-        return moment(dateIsoString).toDate();
-    },
-
     durationISOToObject(duration) {
         if (!duration) {
             return null;
         }
+        return this.durationToObject(duration);
+    },
+
+    durationToObject(duration) {
         const val = moment.duration(duration);
+
         return {
             // we don't use moment.days() here because it returns only up to 30 days
             days: Math.floor(val.asDays()),
@@ -175,6 +162,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     dateISOToDuration(dateIsoString, options) {
         const opt = _.defaults(options, {seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
         const mom = moment(dateIsoString);
+
         return moment.duration({
             seconds: opt.seconds && mom.seconds(),
             minutes: opt.minutes && mom.minutes(),
@@ -184,6 +172,13 @@ export default /** @lends module:core.utils.dateHelpers */ {
             months: opt.months && mom.month(),
             years: opt.years && mom.years()
         });
+    },
+
+    isFormatHasSeconds(format) {
+        if (typeof format !== 'string') {
+            return false;
+        }
+        return format.includes('s') || format.includes('S');
     },
 
     getWeekStartDay() {
@@ -202,30 +197,18 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return startDay;
     },
 
-    getRelativeDate(val) {
-        const lang = LocalizationService.langCode;
-        const now = moment();
-        const daysFromNow = now.diff(val, 'days');
-
-        if (daysFromNow < 2) {
-            return moment(val).locale(lang).calendar();
-        }
-        const format = dateTimeFormats[lang].condensedDate.general;
-        return moment(val).locale(lang).format(format);
-    },
-
     getDisplayDate(val) {
         const lang = LocalizationService.langCode;
         const format = dateTimeFormats[lang].condensedDate.general;
 
-        return val ? moment(val).locale(lang).format(format) : '';
+        return val ? moment(val).format(format) : '';
     },
 
     getDisplayTime(time) {
         const lang = LocalizationService.langCode;
         const format = dateTimeFormats[lang].fullDateShortTime.time;
 
-        return time.locale(lang).format(format);
+        return time.format(format);
     },
 
     getTimeEditFormat(hasSeconds) {
@@ -234,22 +217,8 @@ export default /** @lends module:core.utils.dateHelpers */ {
             : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
-    getDateEditFormat() {
-        return dateTimeFormats[LocalizationService.langCode].generalDateShortTime.date;
-    },
-
     dateToDateTimeString(date, formatName) {
         const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
-    },
-
-    dateToDateString(date, formatName) {
-        const lang = LocalizationService.langCode;
-        return moment(date).format(dateTimeFormats[lang][formatName].date);
-    },
-
-    dateToTimeString(date, formatName) {
-        const lang = LocalizationService.langCode;
-        return moment(date).format(dateTimeFormats[lang][formatName].time);
     }
 };

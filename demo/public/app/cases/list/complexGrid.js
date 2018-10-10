@@ -37,6 +37,7 @@ export default function () {
             key: 'textCell',
             type: 'Datalist',
             dataType: 'Instance',
+            helpText: 'Boolean Cell',
             title: 'TextCell',
             sorting: 'asc',
             editable: true,
@@ -46,6 +47,7 @@ export default function () {
             key: 'numberCell',
             type: 'Number',
             title: 'Number Cell',
+            helpText: 'Boolean Cell',
             editable: true,
             width: 100
         },
@@ -53,6 +55,7 @@ export default function () {
             key: 'dateTimeCell',
             type: 'DateTime',
             title: 'DateTime Cell',
+            helpText: 'Boolean Cell',
             editable: true,
             width: 100
         },
@@ -60,6 +63,7 @@ export default function () {
             key: 'durationCell',
             type: 'Duration',
             title: 'Duration Cell',
+            helpText: 'Boolean Cell',
             editable: true,
             width: 100
         },
@@ -74,6 +78,7 @@ export default function () {
             key: 'referenceCell',
             type: 'Datalist',
             title: 'Reference Cell',
+            helpText: 'Reference Cell',
             editable: true,
             width: 100
         },
@@ -81,6 +86,7 @@ export default function () {
             key: 'documentCell',
             type: 'Document',
             title: 'Document Cell',
+            helpText: 'Document Cell',
             editable: true,
             showAll: true,
             width: 100
@@ -88,6 +94,7 @@ export default function () {
         {
             key: 'propertyRule',
             type: 'NewExpression',
+            helpText: 'Expression',
             title: 'Expression',
             required: false,
             autocommit: true,
@@ -277,7 +284,7 @@ export default function () {
     ];
 
     // 3. Create grid
-    const nativeGridView = core.list.factory.createDefaultGrid({
+    const nativeGridView = Core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
             selectableBehavior: 'multi',
@@ -287,8 +294,9 @@ export default function () {
             showSearch: true,
             showCheckbox: true,
             showRowIndex: true,
-            childrenAttribute: 'children'
-        },
+            childrenAttribute: 'children',
+            title: 'Complex grid'
+    },
         collection: data
     });
 

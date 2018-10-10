@@ -17,11 +17,11 @@ export default function() {
     const ListView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i">{{title}}</div>'),
 
-        behaviors: [ core.list.views.behaviors.ListItemViewBehavior]
+        behaviors: [ Core.list.views.behaviors.ListItemViewBehavior]
     });
 
     // 5. At last, create list view bundle (ListView and ScrollbarView)
-    const listView = core.list.factory.createDefaultList({
+    const listView = Core.list.factory.createDefaultList({
         collection: data, // Take a note that in simple scenario you can pass in
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {

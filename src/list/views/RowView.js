@@ -1,5 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
+import transliterator from 'utils/transliterator';
 
 const classes = {
     selected: 'selected',
@@ -118,10 +119,18 @@ export default Marionette.View.extend({
     },
 
     _renderTemplate() {
+        if (typeof this.options.transliteratedFields === 'object') {
+            transliterator.initializeTransliteration({
+                model: this.model,
+                transliteratedFields: this.options.transliteratedFields,
+                schemaForExtendComputed: this.options.columns
+            });
+        }
         if (this.cellViews) {
             this.cellViews.forEach(view => view.destroy());
         }
         this.cellViews = [];
+        this.cellViewsByKey = {};
 
         const isTree = this.getOption('isTree');
 
@@ -162,6 +171,7 @@ export default Marionette.View.extend({
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
 
+            this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
     },

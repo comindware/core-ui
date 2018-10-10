@@ -1,5 +1,5 @@
 export default function() {
-    return new core.layout.Form({
+    return new Core.layout.Form({
         model: new Backbone.Model({
             1: 'text',
             2: 123,

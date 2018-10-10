@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.NewExpressionEditor({
+        view: new Core.form.editors.NewExpressionEditor({
             title: 'Multi-Editor editor',
             collection: new Backbone.Collection(),
             required: true,

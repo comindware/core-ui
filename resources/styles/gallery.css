@@ -1,0 +1,125 @@
+.galleryWindow {
+    width: 100%;
+    height: 100%;
+    position : absolute;
+    border : 1px solid gray;
+    top : 0;
+    left : 0;
+    z-index : 100500;
+    overflow : hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.galleryButton {
+    position : absolute;
+    top: 0;
+    right: 0;
+    width:24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor:pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.galleryButton:hover {
+}
+.galleryMove {
+    position: absolute;
+    z-index: 100500;
+    width:20px;
+    height: 80px;
+    overflow: hidden;
+    border:none;
+    cursor:pointer;
+    bottom: 37px;
+    right:3px;
+    opacity: 0.6
+}
+.galleryMove:hover {
+    opacity: 1.0
+}
+.leftMove {
+    background-position: 0 45px;
+    right:auto;
+    left:3px;
+}
+
+
+.galleryImage {
+    padding: 25px;
+    position: relative;
+}
+.galleryImage img {
+    border: 2px solid #fff;
+    margin: auto;
+    position: static;
+    height: auto;
+    width: 100%;
+    max-width: 800px;
+    max-height: 100%;
+}
+
+.galleryImageBuffer {
+    position : absolute;
+    z-index : -100500;
+}
+.galleryStripe {
+    position : absolute;
+    bottom : 20px;
+    text-align: center;
+    padding :0 20px;
+    height : 80px;
+    width : 100%;
+    overflow : hidden;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.galleryThumbnail {
+    margin-top : 5px;
+    margin-bottom : 5px;
+    margin-right : 5px;
+    border : 2px solid white;
+    background : black;
+    width : 64px;
+    height : 64px;
+    color : white;
+    font : bold 14px verdana;
+    display: inline-block;
+}
+
+.galleryThumbnail:hover {
+    border : 2px solid yellow;
+}
+
+.galleryThumbnailInfo {
+    position : absolute;
+    height : 20px;
+    color : white;
+    text-align: center;
+    width : 100%;
+    bottom : 0;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+.galleryThumbnailInfo span{
+    color:#999;
+    padding: 0 10px;
+}
+
+.dev-l-loader-image-gallery .l-loader {
+    background: none;
+}
+
+.dev-l-loader-image-gallery .loader {
+    color: #fff;
+}

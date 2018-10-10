@@ -34,7 +34,6 @@ module.exports = options => {
                         pathResolver.source('external'),
                         pathResolver.source('collections'),
                         pathResolver.source('Meta.js'),
-                        pathResolver.source('utils'),
                         pathResolver.source('form/editors/impl/dateTime/views/initializeDatePicker.js'),
                         pathResolver.tests(),
                         pathResolver.demo()
@@ -52,15 +51,18 @@ module.exports = options => {
                     exclude: [pathResolver.node_modules()],
                     options: {
                         presets: [
-                            ['flow'],
-                            [
-                                'env',
-                                {
-                                    targets: {
-                                        browsers: ['ie 11', '> 0.25%', 'not chrome 29']
-                                    }
+                            '@babel/preset-flow',
+                            ['@babel/preset-env', {
+                                targets: {
+                                    ie: 11,
+                                    chrome: 58
                                 }
-                            ]
+                            }]
+                        ],
+                        plugins: [
+                            require('@babel/plugin-proposal-optional-chaining'),
+                            require('@babel/plugin-proposal-object-rest-spread'),
+                            require('@babel/plugin-transform-parameters')
                         ],
                         cacheDirectory: true
                     }
@@ -221,15 +223,6 @@ module.exports = options => {
                     ]
                 },
                 {
-                    test: /underscore\.js/,
-                    use: [
-                        {
-                            loader: 'expose-loader',
-                            options: '_'
-                        }
-                    ]
-                },
-                {
                     test: /jquery\.js/,
                     use: [
                         {
@@ -267,7 +260,7 @@ module.exports = options => {
     };
 
     if (!TEST) {
-        webpackConfig.entry = ['babel-polyfill', pathResolver.source('coreApi.js')];
+        webpackConfig.entry = ['@babel/polyfill', pathResolver.source('coreApi.js')];
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,

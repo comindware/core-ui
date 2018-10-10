@@ -99,7 +99,12 @@ describe('Transliterator:', () => {
         expect(Boolean(validator(resultWithNumber))).toEqual(false);
     });
 
-    it('setOptionsToComputedTransliteratedFields (default) should return schema with correct value to name and alias input of schema', () => {
+    it('setOptionsToComputedTransliteratedFields (default) should return schema with correct value to name and alias input of schema. should throw warn owerwritten', () => {
+        const originalWarn = console.warn;
+        const messages = [];
+        console.warn = function(string) {
+            messages.push(string);
+        };
         const instance = _.cloneDeep(schema);
         transliterator.setOptionsToComputedTransliteratedFields(instance);
 
@@ -111,6 +116,9 @@ describe('Transliterator:', () => {
         expect(instance.alias.autocommit).toEqual(true);
         expect(instance.alias.forceCommit).toEqual(true);
         expect(instance.alias.transliteratorChangedSomeProperties).toEqual(true);
+
+        expect(messages.length).toEqual(6);
+        console.warn = originalWarn;
     });
 
     it('setOptionsToComputedTransliteratedFields should return schema with correct value to transliteratedFields input of schema', () => {
@@ -147,7 +155,8 @@ describe('Transliterator:', () => {
         const model = new Model({
             name: ruName,
             alias: correctAlias
-        })
+        });
+
         expect(model.get('alias')).toEqual(correctAlias);
         expect(model.get('name')).toEqual(ruName);
     });
@@ -163,7 +172,7 @@ describe('Transliterator:', () => {
         const model = new Model({
             name: 'Иван Иванович',
             alias: ''
-        })
+        });
 
         expect(Boolean(model.get('alias'))).toEqual(true);
 
@@ -176,7 +185,7 @@ describe('Transliterator:', () => {
         const model = new Model({
             name: correctAlias,
             alias: ''
-        })
+        });
 
         expect(model.get('name')).toEqual(correctAlias);
         expect(model.get('alias')).toEqual(correctAlias);
@@ -186,7 +195,7 @@ describe('Transliterator:', () => {
         const model = new Model({
             name: ruName,
             alias: ''
-        })
+        });
 
         const answer = transliterator.systemNameFiltration(ruName);
 
@@ -197,11 +206,92 @@ describe('Transliterator:', () => {
         const model = new Model({
             name: correctAlias,
             alias: ruName
-        })
+        });
 
         const answer = transliterator.systemNameFiltration(ruName);
 
         expect(model.get('alias')).toEqual(answer);
         expect(model.get('name')).toEqual(correctAlias);
+    });
+
+    it('should throw warn if schema has no input for transliterated fields', () => {
+        const originalWarn = console.warn;
+        const messages = [];
+        console.warn = string => messages.push(string);
+
+        const instance = _.cloneDeep(schema);
+        transliterator.setOptionsToComputedTransliteratedFields(instance, { unknown: 'nonexistent'});
+
+        expect(instance.unknown).toEqual(undefined);
+        expect(instance.nonexistent).toEqual(undefined);
+
+        expect(messages.length).toEqual(2);
+        console.warn = originalWarn;
+    });
+
+    it('should not set computed to model if model has original computed alias, throw warning', () => {
+        const model = new Backbone.Model({
+            name: ruName,
+            alias: correctAlias
+        });
+
+        model.computed = {
+            alias: {
+                depends: 'name',
+                get: function(fields) {
+                    if (fields[name]) {
+                        return fields[name];
+                    }
+                    return fields[alias];
+                },
+                someFlag: true
+            }
+        };
+
+        const originalWarn = console.warn;
+        const messages = [];
+        console.warn = string => messages.push(string);
+
+        transliterator.extendComputed(model);
+
+        expect(model.computed.name).toEqual(undefined);
+        expect(model.computed.alias.someFlag).toEqual(true);
+        expect(model.computed.alias.transliteratedFieldsClass).toEqual(undefined);       
+
+        expect(messages.length).toEqual(1);
+        console.warn = originalWarn;
+    });
+    
+    it('should not set computed to model if model has original computed name, throw warning', () => {
+        const model = new Backbone.Model({
+            name: ruName,
+            alias: correctAlias
+        });
+
+        model.computed = {
+            name: {
+                depends: 'alias',
+                get: function(fields) {
+                    if (fields[name]) {
+                        return fields[name];
+                    }
+                    return fields[alias];
+                },
+                someFlag: true
+            }
+        };
+
+        const originalWarn = console.warn;
+        const messages = [];
+        console.warn = string => messages.push(string);
+
+        transliterator.extendComputed(model);
+
+        expect(model.computed.alias).toEqual(undefined);
+        expect(model.computed.name.someFlag).toEqual(true);
+        expect(model.computed.name.transliteratedFieldsClass).toEqual(undefined);       
+
+        expect(messages.length).toEqual(1);
+        console.warn = originalWarn;
     });
 });

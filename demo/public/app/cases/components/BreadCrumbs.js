@@ -1,7 +1,7 @@
 
 
 export default function() {
-    return new core.components.BreadCrumbs({
+    return new Core.components.BreadCrumbs({
         collection: [
             {
                 id: 1,

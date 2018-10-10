@@ -48,10 +48,6 @@ export default {
         marionetteApp.defaultContentView = options.contentView;
         marionetteApp.options = options;
 
-        const langCode = options.localizationService.langCode;
-
-        moment.locale(langCode);
-
         CTEventsService.initialize();
         MobileService.initialize();
 

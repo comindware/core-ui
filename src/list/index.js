@@ -1,14 +1,12 @@
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
-import GridColumnHeaderView from './views/GridColumnHeaderView';
+import GridColumnHeaderView from './views/header/GridColumnHeaderView';
 import GridHeaderView from './views/GridHeaderView';
 import GridView from './views/GridView';
 import ListView from './views/CollectionView';
 import RowView from './views/RowView';
 import EditableGridFieldView from './views/EditableGridFieldView';
-import ListItemViewBehavior from './views/behaviors/ListItemViewBehavior';
-import LoadingRowModel from './models/LoadingRowModel';
-import ListItemBehavior from './models/behaviors/ListItemBehavior';
+import ListItemViewBehavior from './behaviors/ListItemViewBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
@@ -47,16 +45,5 @@ export default {
             ListItemViewBehavior
         }
     },
-    /**
-     * Backbone-модели списка
-     * @namespace
-     * */
-    models: {
-        LoadingRowModel,
-        behaviors: {
-            ListItemBehavior
-        }
-    },
-
     meta
 };

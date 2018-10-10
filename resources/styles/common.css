@@ -922,6 +922,38 @@ a:hover {
 /* End Two Columns Switch */
 
 /* Toolbar component */
+.toolbar {
+    height: 50px;
+    padding: 0 17px;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    background: #d6e7f2;
+    color:#636262;
+    box-sizing: border-box;
+    z-index: 55; /*bigger then grid*/;
+    flex: none;
+}
+
+
+.toolbar__i{
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.toolbar__i_left{
+    flex-grow: 1;
+}
+.toolbar__i_center{
+    flex-grow: 2;
+    text-align: center;
+}
+
+
+
 
 .toolbar-items-wrp {
     display: flex;
@@ -1084,7 +1116,7 @@ a:hover {
     top:20px;
 }
 
-.data-source-popout-view .fr-collection{
+.data-source-popout-view .grid-container{
     min-height: 200px;
     max-height: 400px;
 }
@@ -1182,4 +1214,14 @@ a:hover {
 
 .hidden {
     display: none !important;
+}
+
+.btn.disabled,
+.btn.disabled:hover,
+.btn.disabled:hover:active{
+    cursor: default;
+    background-color: #a3abb0;
+    border-color: #a3abb0;
+    box-shadow: none;
+    pointer-events: none
 }

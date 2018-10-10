@@ -79,7 +79,7 @@ export default Marionette.View.extend({
 
     ui: {
         toolbar: '.js-code-toolbar-container',
-        editor: '.js-code-editor-container',
+        editor: '.js-code-editor-container'
     },
 
     template: Handlebars.compile(template),
@@ -622,13 +622,15 @@ export default Marionette.View.extend({
     __onKeyDown(editor, event) {
         const charCode = event.which === null ? event.keyCode : event.which;
         this.isExternalChange = !(
-            !event.altKey
-            && !event.ctrlKey
-            && !event.metaKey
-            && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
         );
         if (charCode === 27 && !this.hintIsShown) {
-            this.minimize();
+            if (!this.isDestroyed()) {
+                this.minimize();
+            }
             return;
         }
         this.__change();

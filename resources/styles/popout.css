@@ -13,7 +13,7 @@
     z-index: 5;
 }
 
-.popout__down {
+.popout__down, .popout__up {
     width: auto;
     font-size: 12px;
     position: fixed;

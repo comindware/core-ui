@@ -2,7 +2,7 @@
 const showConfirm = function () {
     const description = 'Confirm Message';
 
-    core.services.MessageService.confirm(description).then(result => {
+    Core.services.MessageService.confirm(description).then(result => {
         // Handle user response: result true or false
     });
 };
@@ -12,7 +12,7 @@ const showAskYesNo = function () {
     const description = 'Message question';
     const text = 'Question';
 
-    core.services.MessageService.askYesNo(description, text).then(result => {
+    Core.services.MessageService.askYesNo(description, text).then(result => {
         // Handle user response: result true or false
     });
 };
@@ -22,7 +22,7 @@ const showError = function () {
     const description = 'Error message';
     const text = 'Error';
 
-    core.services.MessageService.error(description, text).then(() => {
+    Core.services.MessageService.error(description, text).then(() => {
         // Handle user response
     });
 };
@@ -32,7 +32,7 @@ const showCustomMessageDialog = function () {
     const description = 'Message description';
     const text = 'Title';
 
-    core.services.MessageService.showMessageDialog(text, description, [
+    Core.services.MessageService.showMessageDialog(text, description, [
         // Array of buttons
         { id: 'buttonId', text: 'Ok' }
     ]).then(result => {

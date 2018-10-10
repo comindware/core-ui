@@ -977,6 +977,7 @@
     font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-transform: capitalize;
 }
 
 

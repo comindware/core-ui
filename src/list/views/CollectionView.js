@@ -107,7 +107,9 @@ export default Marionette.CompositeView.extend({
         keydown: '__handleKeydown'
     },
 
-    className: 'visible-collection',
+    className() {
+        return `visible-collection ${this.options.class || ''}`;
+    },
 
     template: Handlebars.compile(''),
 
@@ -402,6 +404,7 @@ export default Marionette.CompositeView.extend({
         }
 
         if (this.state.viewportHeight === oldViewportHeight || oldViewportHeight === undefined) {
+            this.scrollTo(0);
             return;
         }
 

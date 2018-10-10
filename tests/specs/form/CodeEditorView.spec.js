@@ -1,7 +1,6 @@
 /*eslint-ignore*/
-
 import core from 'coreApi';
-import 'jasmine-jquery';
+import OntologyService from '../../utils/OntologyService';
 
 describe('Editors', () => {
     describe('CodeEditorView', () => {
@@ -13,7 +12,8 @@ describe('Editors', () => {
             const view = new core.form.editors.CodeEditor({
                 model,
                 key: 'value',
-                autocommit: true
+                autocommit: true,
+                ontologyService: OntologyService
             });
 
             window.app

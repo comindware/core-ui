@@ -1,4 +1,4 @@
-/*eslint-ignore*/
+/*eslint-disable*/
 import LocalizationService from '../services/LocalizationService';
 
 const timeoutCache = {};
@@ -82,15 +82,18 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {...*} arguments Arguments that will replace the placeholders in text.
      * @return {String} Resulting string.
      * */
-    format(text) {
-        if (!_.isString(text)) {
+    format(string, ...values) {
+        if (!_.isString(string)) {
             return '';
         }
-        for (let i = 1; i < arguments.length; i++) {
-            const regexp = new RegExp(`\\{${i - 1}\\}`, 'gi');
-            text = text.replace(regexp, arguments[i]);
+        return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
+    },
+
+    replaceCurlyParameters(string, ...values) {
+        if (!_.isString(string)) {
+            return '';
         }
-        return text;
+        return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
     /**

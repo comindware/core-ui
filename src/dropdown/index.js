@@ -1,9 +1,6 @@
 import PopoutView from './views/PopoutView';
 import DropdownView from './views/DropdownView';
-import ListPanelView from './views/ListPanelView';
-import MenuItemView from './views/MenuItemView';
 import MenuPanelView from './views/MenuPanelView';
-import DefaultButtonView from './views/DefaultButtonView';
 import CustomAnchorBehavior from './views/behaviors/CustomAnchorBehavior';
 import factory from './factory';
 
@@ -22,10 +19,7 @@ export default /** @lends module:core.dropdown */ {
         },
         PopoutView,
         DropdownView,
-        ListPanelView,
-        MenuItemView,
-        MenuPanelView,
-        DefaultButtonView
+        MenuPanelView
     },
     factory
 };

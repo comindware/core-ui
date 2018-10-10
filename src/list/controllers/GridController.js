@@ -27,6 +27,14 @@ export default Marionette.Object.extend({
         this.view.setLoading(state);
     },
 
+    validate() {
+        return this.view.validate();
+    },
+
+    getChildren() {
+        return this.view.getChildren();
+    },
+
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const comparator = factory.getDefaultComparator(options.columns);
@@ -127,19 +135,27 @@ export default Marionette.Object.extend({
     },
 
     __updateActions(allToolbarActions, collection) {
-        const selected = this.__getSelectedItems(collection).length;
+        const selected = this.__getSelectedItems(collection);
+        const selectedLength = selected.length;
 
         allToolbarActions.filter(action => {
+            let isActionApplicable;
             switch (action.get('contextType')) {
-                case 'void':
-                    return true;
                 case 'one':
-                    return selected === 1;
+                    isActionApplicable = selectedLength === 1;
+                    break;
                 case 'any':
-                    return selected;
+                    isActionApplicable = selectedLength;
+                    break;
+                case 'void':
                 default:
-                    return true;
+                    isActionApplicable = true;
             }
+            const condition = action.get('condition');
+            if (isActionApplicable && condition && typeof condition === 'function') {
+                isActionApplicable = condition(selected);
+            }
+            return isActionApplicable;
         });
     },
 
@@ -198,7 +214,7 @@ export default Marionette.Object.extend({
     },
 
     __confirmUserAction(text, title, yesButtonText, noButtonText) {
-        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: true, text: yesButtonText || 'Yes' }, { id: false, text: noButtonText || 'No' }]);
+        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
     },
 
     __triggerAction(model, selected) {

@@ -1,13 +1,18 @@
 //@flow
+import form from 'form';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
+
+
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
+import ConfigurationPanel from './ConfigurationPanel';
+import transliterator from 'utils/transliterator';
 
 /*
     Public interface:
@@ -19,6 +24,10 @@ import SearchBarView from '../../views/SearchBarView';
         collection change (via Backbone.Collection events)
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
+
+const defaultOptions = () => ({
+    focusSearchOnAttach: !MobileService.isMobile
+});
 
 /**
  * @name GridView
@@ -49,12 +58,17 @@ import SearchBarView from '../../views/SearchBarView';
 
 export default Marionette.View.extend({
     initialize(options) {
+        _.defaults(options, defaultOptions());
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
 
         if (options.columns === undefined) {
             throw new Error('You must provide columns definition ("columns" option)');
+        }
+
+        if (typeof options.transliteratedFields === 'object') {
+            options.columns = transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
@@ -93,6 +107,7 @@ export default Marionette.View.extend({
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
+            transliteratedFields: options.transliteratedFields,
             gridEventAggregator: this,
             isTree: this.options.isTree,
             showCheckbox: this.options.showCheckbox
@@ -131,6 +146,10 @@ export default Marionette.View.extend({
             minimumVisibleRows: options.minimumVisibleRows
         });
 
+
+            if (this.options.showConfigurationPanel) {
+                this.__initializeConfigurationPanel();
+            }
         this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
             if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName].concat(eventArguments));
@@ -206,7 +225,7 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return `${this.options.class || ''} fr-collection`;
+        return `${this.options.class || ''} grid-container`;
     },
 
     template: Handlebars.compile(template),
@@ -243,18 +262,23 @@ export default Marionette.View.extend({
         }
 
         if (this.getOption('title')) {
+            this.ui.title.parent().show();
             this.ui.title.text(this.getOption('title') || '');
         } else {
-            this.ui.title.hide();
+            this.ui.title.parent().hide();
         }
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
     },
 
     onAttach() {
-        if (this.options.showSearch) {
+        if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
+    },
+
+    getChildren() {
+        return this.listView.children;
     },
 
     __executeAction(model) {
@@ -267,7 +291,9 @@ export default Marionette.View.extend({
             this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
     },
-
+    onDestroy() {
+        this.__configurationPanel && this.__configurationPanel.destroy();
+    },
     sortBy(columnIndex, sortingOtter) {
         let sorting = sortingOtter;
         const column = this.options.columns[columnIndex];
@@ -313,7 +339,52 @@ export default Marionette.View.extend({
     setLoading(state) {
         if (!this.isDestroyed()) {
             this.loading.setLoading(state);
+}
+    },
+
+    validate() {
+        if (!this.isEditable) {
+            return;
         }
+
+        return this.options.columns.some(column => {
+            if (!column.editable || !column.validators) {
+                return false;
+            }
+            const validators = [];
+            return column.validators.some(validator => {
+                let result;
+                if (typeof validator === 'function') {
+                    validators.push(validator);
+                } else {
+                    const predefined = form.repository.validators[validator];
+                    if (typeof predefined === 'function') {
+                        validators.push(predefined());
+                    }
+                }
+
+                this.collection.forEach(model => {
+                    if (model._events['validate:force']) {
+                        const e = {};
+                        model.trigger('validate:force', e);
+                        if (e.validationResult) {
+                            result = e.validationResult;
+                        }
+                    } else if (!model.isValid()) {
+                        result = model.validationResult;
+                    } else {
+                        validators.some(v => {
+                            const error = v(model.get(column.key), model.attributes);
+                            if (error) {
+                                result = model.validationResult = error;
+                            }
+                            return result;
+                        });
+                    }
+                });
+                return result;
+            });
+        });
     },
 
     __handleDragLeave(e) {
@@ -325,5 +396,9 @@ export default Marionette.View.extend({
             }
             this.collection.dragoverModel = null;
         }
+    },
+
+    __initializeConfigurationPanel() {
+        this.__configurationPanel = new ConfigurationPanel();
     }
 });

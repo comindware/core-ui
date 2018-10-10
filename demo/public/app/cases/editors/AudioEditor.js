@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.AudioEditor({
+        view: new Core.form.editors.AudioEditor({
             model,
             key: 'value'
         }),

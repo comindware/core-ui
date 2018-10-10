@@ -8,7 +8,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.RangeEditor({
+        view: new Core.form.editors.RangeEditor({
             model,
             key: 'value',
             autocommit: true,

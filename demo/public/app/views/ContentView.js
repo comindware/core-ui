@@ -3,7 +3,6 @@ const requireText = require.context('raw-loader!../cases', true);
 
 import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
-import markdown from 'markdown';
 
 export default Marionette.View.extend({
     className: 'demo-content_wrapper',
@@ -12,7 +11,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            description: markdown.toHTML(this.model.get('description') || '')
+            description: this.model.get('description') || ''
         };
     },
 
@@ -51,7 +50,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const toolbar = new core.components.Toolbar({
+        const toolbar = new Core.components.Toolbar({
             allItemsCollection: new Backbone.Collection([
                 {
                     iconClass: 'plus',
@@ -92,26 +91,26 @@ export default Marionette.View.extend({
                 key: 'attribute',
                 type: 'String',
                 title: 'Attribute',
-                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+                sortAsc: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Desc, 'textCell')
             },
             {
                 key: 'values',
                 type: 'String',
                 title: 'Possible values',
-                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+                sortAsc: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Desc, 'textCell')
             },
             {
                 key: 'default',
                 type: 'String',
                 title: 'Default value',
-                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
+                sortAsc: Core.utils.helpers.comparatorFor(Core.utils.comparators.numberComparator2Asc, 'numberCell'),
+                sortDesc: Core.utils.helpers.comparatorFor(Core.utils.comparators.numberComparator2Desc, 'numberCell')
             }
         ];
 
-        const gridController = new core.list.controllers.GridController({
+        const gridController = new Core.list.controllers.GridController({
             columns,
             collection: new Backbone.Collection(attributesConfig)
         });

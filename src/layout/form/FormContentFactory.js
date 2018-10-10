@@ -59,6 +59,10 @@ export default {
                         controller.listenTo(controller, 'execute', child.executeAction);
                     }
 
+                    if (child.viewEvents) {
+                        Object.keys(child.viewEvents).forEach(key => controller.on(key, child.viewEvents[key]));
+                    }
+
                     return controller.view;
                 }
                 case 'toolbar': {
