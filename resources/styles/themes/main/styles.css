@@ -288,6 +288,11 @@ svg.svg-grid-icons {
   z-index: 2;
 }
 
+.toolbar-btn__text{
+  display: inline-flex;
+  vertical-align: middle;
+}
+
 .grid-toolbar-region {
   padding-left: 5px;
 }
