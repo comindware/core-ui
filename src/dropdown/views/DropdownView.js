@@ -99,7 +99,8 @@ export default Marionette.View.extend({
     },
 
     events: {
-        blur: '__onBlur'
+        blur: '__onBlur',
+        click: '__triggerClick'
     },
 
     /**
@@ -430,5 +431,9 @@ export default Marionette.View.extend({
                 top: Math.floor(top)
             };
         }
+    },
+
+    __triggerClick() {
+        this.trigger('container:click');
     }
 });
