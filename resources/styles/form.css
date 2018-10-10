@@ -306,22 +306,15 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
 }
-.editor_date-time .dropdown.editor_date-time_date {
-    flex: 1 0 140px;
-}
+.editor_date-time .dropdown.editor_date-time_date,
 .editor_date-time .dropdown.editor_date-time_time {
-    flex: 1 0 70px;
+    flex: 1 1 auto;
 }
 
-.editor_date-time .input{
+.editor_date-time .input {
     border: 0;
     border-radius: 0;
 }
-
-.editor_date-time_date .input{
-    padding: 4px 10px;
-}
-
 
 /* /Date Time/ */
 

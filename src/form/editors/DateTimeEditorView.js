@@ -27,6 +27,8 @@ const defaultOptions = {
     }
 };
 
+const defaultClasses = 'editor editor_date-time dropdown_root';
+
 /**
  * @name DateTimeEditorView
  * @memberof module:core.form.editors
@@ -112,9 +114,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.options.showDate !== false) {
             this.__createDateDropdownEditor();
             //calendar button readonly as don't develop mask validation
-            this.calendarDropdownView.button.ui.input
-                .prop('readonly', true)
-                .prop('tabindex', -1);
+            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', -1);
         }
     },
 
@@ -282,18 +282,22 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: Object.assign({
-                allowDays: false,
-                allowHours: true,
-                allowMinutes: true,
-                allowSeconds: true,
-                showEmptyParts: true,
-                hideClearButton: true,
-                fillZero: true,
-                normalTime: true
-            }, this.options, {
-                model
-            }),
+            buttonViewOptions: Object.assign(
+                {
+                    allowDays: false,
+                    allowHours: true,
+                    allowMinutes: true,
+                    allowSeconds: true,
+                    showEmptyParts: true,
+                    hideClearButton: true,
+                    fillZero: true,
+                    normalTime: true
+                },
+                this.options,
+                {
+                    model
+                }
+            ),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',
@@ -325,7 +329,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
 
-    __updateTime(ISOstr) { //replace time of ISO string to time from timebutton
+    __updateTime(ISOstr) {
+        //replace time of ISO string to time from timebutton
         const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
         if (!valTimeModel) {
             return;
@@ -400,5 +405,32 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (!this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
         }
+    },
+
+    __presentView() {
+        this.__updateClearButton();
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
+
+        if (this.options.showTime !== false) {
+            this.__createTimeDropdownView();
+        } else {
+            this.getRegion('timeDropdownRegion').reset();
+        }
+
+        if (this.options.showDate !== false) {
+            this.__createDateDropdownEditor();
+            //calendar button readonly as don't develop mask validation
+            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', 0);
+        } else {
+            this.getRegion('dateDropdownRegion').reset();
+        }
+    },
+
+    __getClassName() {
+        return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
+            this.options.timeDisplayFormat
+        ] || ''}`;
     }
 }));

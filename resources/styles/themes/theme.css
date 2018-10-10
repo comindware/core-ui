@@ -228,6 +228,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
+  padding: var(--input-padding);
   overflow: hidden;
 }
 
@@ -236,6 +237,13 @@ body {
 .editor_readonly.editor_date-time,
 .editor_readonly.editor_date-time:hover {
   @apply --input-disabled-theme;
+}
+
+.editor_date-time .input {
+  padding: 0;
+}
+.editor_date-time_time .input {
+  padding-left: 5px;
 }
 
 /* /Date Time/ */
