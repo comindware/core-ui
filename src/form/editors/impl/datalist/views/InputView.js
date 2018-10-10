@@ -30,9 +30,7 @@ export default Marionette.View.extend({
     events: {
         'keydown @ui.input': '__search',
         'keyup @ui.input': '__commit',
-        'input @ui.input': '__search',
-        'focus @ui.input': '__focus',
-        'blur @ui.input': '__blur'
+        'input @ui.input': '__search'
     },
 
     modelEvents: {
@@ -45,22 +43,13 @@ export default Marionette.View.extend({
     },
 
     focus(options) {
-        this.ui.input.focus();
-        this.__focus(options);
-    },
-
-    __focus(options = {}) {
-        if (options.isShowLastSearch) {
-            this.updateInput(this.filterValue);
-        }
+        const focusin = Backbone.$.Event('focus');
+        _.defaults(focusin, options);
+        this.ui.input.trigger(focusin);
     },
 
     blur() {
         this.ui.input.blur();
-        this.__blur();
-    },
-
-    __blur() {
     },
 
     __getFilterValue() {
