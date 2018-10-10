@@ -322,6 +322,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
+        this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
