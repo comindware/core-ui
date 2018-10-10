@@ -120,13 +120,15 @@ export default Marionette.View.extend({
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.initializeTransliteration({
                 model: this.model,
-                transliteratedFields: this.options.transliteratedFields
+                transliteratedFields: this.options.transliteratedFields,
+                schemaForExtendComputed: this.options.columns
             });
         }
         if (this.cellViews) {
             this.cellViews.forEach(view => view.destroy());
         }
         this.cellViews = [];
+        this.cellViewsByKey = {};
 
         const isTree = this.getOption('isTree');
         this.options.columns.forEach((gridColumn, index) => {
@@ -157,6 +159,7 @@ export default Marionette.View.extend({
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
 
+            this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
     },
