@@ -1225,3 +1225,8 @@ a:hover {
     box-shadow: none;
     pointer-events: none
 }
+
+
+.output-tabs-region{
+    padding-top: 15px;
+}

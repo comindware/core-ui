@@ -51,6 +51,10 @@
     height: 100%;
 }
 
+.output-tabs-region .layout__tab-layout__panel-region > .grid-container {
+    overflow-x: auto;
+}
+
 .layout__tab-layout_move-button {
     position: absolute;
     cursor: pointer;

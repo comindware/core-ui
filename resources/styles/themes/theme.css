@@ -727,6 +727,7 @@ svg.svg-grid-icons {
   @apply --button-theme;
   @apply --button-strong;
   @apply --toolbar-btn-theme;
+  white-space: nowrap;
 }
 .toolbar-btn:last-child {
   margin-right: 0
