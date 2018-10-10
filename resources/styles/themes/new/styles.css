@@ -124,7 +124,9 @@
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.dropdown__wrp_reference.dropdown__wrp_down {
+.dropdown__wrp_reference,
+.dropdown__wrp_time,
+.dropdown__wrp_datepicker {
   margin-top: -1px;
 }
 
@@ -362,9 +364,25 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 /* Date Time */
 
-.editor_date-time .input.input_time,
-.editor_date-time .input.input_date {
-  padding: 0;
+.editor_date-time.LongDate .editor_date-time_date {
+  max-width: 250px;
+}
+.editor_date-time.ShortDate .editor_date-time_date,
+.editor_date-time.DateIso .editor_date-time_date {
+  max-width: 95px;
+}
+.editor_date-time.CondensedDate .editor_date-time_date {
+  max-width: 100px;
+}
+.editor_date-time.YearMonth .editor_date-time_date {
+  max-width: 140px;
+}
+
+.editor_date-time.ShortTime .editor_date-time_time .input {
+  max-width: 60px;
+}
+.editor_date-time.LongTime .editor_date-time_time .input {
+  max-width: 90px;
 }
 
 /* /Date Time/ */

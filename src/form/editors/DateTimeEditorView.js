@@ -28,7 +28,7 @@ const defaultOptions = {
     }
 };
 
-const defaultClasses = 'editor editor_date-time ';
+const defaultClasses = 'editor editor_date-time dropdown_root';
 
 /**
  * @name DateTimeEditorView
@@ -420,6 +420,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __getClassName() {
-        return `${defaultClasses}${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[this.options.timeDisplayFormat] || ''}`;
+        return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
+            this.options.timeDisplayFormat
+        ] || ''}`;
     }
 }));
