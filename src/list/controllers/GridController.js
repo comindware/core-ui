@@ -31,6 +31,10 @@ export default Marionette.Object.extend({
         return this.view.validate();
     },
 
+    getChildren() {
+        return this.view.getChildren();
+    },
+
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const comparator = factory.getDefaultComparator(options.columns);

@@ -28,6 +28,7 @@ const variables = {
     'blue-400': '#04619d',
     'text-color': '#404040',
     'link-color': 'var(--blue-300)',
+    'link-hover-color': 'var(--blue-200)',
     'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
     'warning-color': '#e19e35',
@@ -36,9 +37,10 @@ const variables = {
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
-    border: '1px solid #c1c1c1',
+    'border-color': 'var(--grey-400)',
     'border-radius': '4px',
     'border-radius-big': '7px',
+    border: '1px solid #c1c1c1',
 
     // font
     'base-font-size': '14px',
@@ -80,7 +82,7 @@ const variables = {
     // checkbox
     'checkbox-size': '18px',
     'checkbox-checked-color': 'var(--blue-300)',
-    'checkbox-border-color': 'var(--grey-400)',
+    'checkbox-border-color': 'var(--border-color)',
     'checkbox-radius': 'var(--border-radius)',
     'checkbox-intermediate-color': 'var(--blue-300)',
     'checkbox-intermediate-size': '10px',
@@ -436,5 +438,13 @@ module.exports.apply = {
         padding: '15px',
         'background-color': variables.white,
         'border-radius': variables['border-radius-big']
+    },
+    'drop-zone-theme': {
+        'background-color': variables['grey-100'],
+        height: '100px',
+        padding: '6px'
+    },
+    'drop-zone-active-theme': {
+        'background-color': variables['blue-100']
     }
 };

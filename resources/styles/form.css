@@ -109,6 +109,8 @@ rgba(5,117,189,.5) // user avatar btn
     min-width: 200px;
     max-width: 400px;
     padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .form-label__error-panel {
@@ -306,22 +308,15 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
 }
-.editor_date-time .dropdown.editor_date-time_date {
-    flex: 1 0 140px;
-}
+.editor_date-time .dropdown.editor_date-time_date,
 .editor_date-time .dropdown.editor_date-time_time {
-    flex: 1 0 70px;
+    flex: 1 1 auto;
 }
 
-.editor_date-time .input{
+.editor_date-time .input {
     border: 0;
     border-radius: 0;
 }
-
-.editor_date-time_date .input{
-    padding: 4px 10px;
-}
-
 
 /* /Date Time/ */
 
@@ -839,10 +834,6 @@ input[type="color"], .colorpicker{
     margin: 3px 0 0;
 }
 
-.field-documents__more {
-    cursor: pointer;
-}
-
 .task-links_doc {
     margin-bottom: 30px;
 }
@@ -924,11 +915,8 @@ input[type="color"], .colorpicker{
 }
 
 .documents {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-    max-width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 2em;
 }
 
 .dev-btn-document-revise{

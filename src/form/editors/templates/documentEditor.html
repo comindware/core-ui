@@ -1,12 +1,14 @@
-<span class="js-add-region js-file-button btn btn-strong btn-icon" title="{{displayText}}">
-    <i class="{{iconPrefixer 'paperclip'}}"></i>
-</span>
-<form class="js-file-form">
-    <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
-        style="display: none">
+<form class="js-file-form documents__drop-zone">
+    <div class="documents__wrapper">
+        <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
+            style="display: none">
+
+        <span class="documents__text">{{{placeHolderText}}}
+            <span class="documents__upload js-file-button" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
+        </span>
+    </div>
 </form>
-<ul class="documents js-collection-container"></ul>
-<div class="field-documents__more js-show-more">
+<ul class="documents fa-ul js-collection-container"></ul>
+<div class="btn field-documents__more js-show-more">
     <span class="js-show-more-text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWMORE'}}</span>
-    <span class="js-invisible-count show-more-counter"></span>
 </div>

@@ -243,6 +243,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
+  padding: var(--input-padding);
   overflow: hidden;
 }
 
@@ -251,6 +252,13 @@ body {
 .editor_readonly.editor_date-time,
 .editor_readonly.editor_date-time:hover {
   @apply --input-disabled-theme;
+}
+
+.editor_date-time .input {
+  padding: 0;
+}
+.editor_date-time_time .input {
+  padding-left: 5px;
 }
 
 /* /Date Time/ */
@@ -727,6 +735,7 @@ svg.svg-grid-icons {
   @apply --button-theme;
   @apply --button-strong;
   @apply --toolbar-btn-theme;
+  white-space: nowrap;
 }
 .toolbar-btn:last-child {
   margin-right: 0
@@ -1010,4 +1019,32 @@ svg.svg-grid-icons {
 
 .task-links__link:hover {
   color: var(--link-color);
+}
+
+.documents__drop-zone {
+  @apply --drop-zone-theme;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  text-align: center;
+}
+.documents__drop-zone.documents__drop-zone--active {
+  @apply --drop-zone-active-theme;
+}
+
+.documents__wrapper {
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  padding: 20px;
+  height: 100%;
+}
+
+.documents__upload {
+  cursor: pointer;
+  color: var(--link-color);
+}
+.documents__upload:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline
 }

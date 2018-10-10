@@ -28,7 +28,7 @@ const defaultOptions = {
     }
 };
 
-const defaultClasses = 'editor editor_date-time ';
+const defaultClasses = 'editor editor_date-time dropdown_root';
 
 /**
  * @name DateTimeEditorView
@@ -322,6 +322,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
+        this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
@@ -413,13 +414,15 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.options.showDate !== false) {
             this.__createDateDropdownEditor();
             //calendar button readonly as don't develop mask validation
-            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', -1);
+            this.calendarDropdownView.button.ui.input.prop('readonly', true).prop('tabindex', 0);
         } else {
             this.getRegion('dateDropdownRegion').reset();
         }
     },
 
     __getClassName() {
-        return `${defaultClasses}${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[this.options.timeDisplayFormat] || ''}`;
+        return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
+            this.options.timeDisplayFormat
+        ] || ''}`;
     }
 }));

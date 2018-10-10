@@ -1116,7 +1116,7 @@ a:hover {
     top:20px;
 }
 
-.data-source-popout-view .fr-collection{
+.data-source-popout-view .grid-container{
     min-height: 200px;
     max-height: 400px;
 }
@@ -1224,4 +1224,9 @@ a:hover {
     border-color: #a3abb0;
     box-shadow: none;
     pointer-events: none
+}
+
+
+.output-tabs-region{
+    padding-top: 15px;
 }

@@ -38,6 +38,28 @@ export default () => {
             // autocommit: true //property autocommit:true will be set for transliteratedFields
         },
         {
+            key: 'textCell',
+            type: 'TextArea',
+            dataType: 'String',
+            title: 'TextCell',
+            required: true,
+            sorting: 'asc',
+            editable: true,
+            helpText: 'Text cell'
+            // autocommit: true //property autocommit:true will be set for transliteratedFields
+        },
+        {
+            key: 'textCell',
+            type: 'Text',
+            dataType: 'String',
+            title: 'TextCell',
+            required: true,
+            sorting: 'asc',
+            editable: true,
+            helpText: 'Text cell'
+            // autocommit: true //property autocommit:true will be set for transliteratedFields
+        },
+        {
             key: 'aliasCell',
             type: 'Text',
             dataType: 'String',
@@ -87,7 +109,6 @@ export default () => {
             type: 'Document',
             dataType: 'Document',
             title: 'Document',
-            simplified: true,
             editable: true,
             autocommit: true
         },
@@ -96,7 +117,6 @@ export default () => {
             type: 'Datalist',
             dataType: 'Instance',
             title: 'Reference Cell',
-            simplified: true,
             required: true,
             customClass: 'dropdown_root',
             controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController(),
