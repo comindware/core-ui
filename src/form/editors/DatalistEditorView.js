@@ -52,11 +52,13 @@ const defaultOptions = {
     minAvailableHeight: undefined
 };
 /* Some DOCS
-    Datalist value (this.value) is array type.
+    Datalist value (this.value) is array type. (DatalistValue)
     Datalist fetch [searched] data from controller on click
 
     ToDo:
     1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
+    2.Develop readonly for input (like TextEditorView).
+    3.If used fetchUpdateFilter as api, then value added, not reseted.
 */
 /**
  * @name DatalistView
@@ -248,40 +250,44 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     focus(): void {
         this.hasFocus = true;
+        this.__focusButton();
         this.onFocus();
     },
 
     blur(): void {
         this.hasFocus = false;
+        this.updateButtonInput('');
+        this.__blurButton();
         this.onBlur({
             triggerChange: false
         });
     },
 
-    onFocus() {
-        BaseLayoutEditorView.prototype.onFocus.apply(this, arguments);
-        this.__onButtonClick();
-        this.__focusButton();
+    isButtonFocus() {
+        const inputView = this.dropdownView.button && this.dropdownView.button.collectionView.getInputView();
+        return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
-    onBlur() {
-        BaseLayoutEditorView.prototype.onBlur.apply(this, arguments);
-        this.dropdownView.close();
-        this.__blurButton();
-        this.updateButtonInput('');
+    isThisFocus() {
+        return this.el.contains(document.activeElement);
     },
 
-    async fetchUpdateFilter(value, forceCompareText, isDontOpenPanel) {
+    isPanelFocus() {
+        return this.dropdownView.panelEl && this.dropdownView.panelEl.contains(document.activeElement);
+    },
+
+    async fetchUpdateFilter(value, forceCompareText) {
         this.searchText = (value || '').trim();
         if (this.fakeInputModel?.get('searchText') === this.searchText && !forceCompareText) {
+            this.open();
             return;
         }
         this.triggerNotReady();
         this.fakeInputModel?.set('searchText', this.searchText);
-        return this.__fetchUpdateFilter(this.searchText, isDontOpenPanel);
+        return this.__fetchUpdateFilter(this.searchText);
     },
 
-    async __fetchUpdateFilter(fetchedDataForSearchText, isDontOpenPanel) {
+    async __fetchUpdateFilter(fetchedDataForSearchText) {
         this.panelCollection.pointOff();
 
         try {
@@ -290,14 +296,15 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
             });
 
+            if (this.searchText !== fetchedDataForSearchText) {
+                throw new Error('searched was updated');
+            }
+
             this.resetPanelCollection(data);
 
-            if (this.searchText !== fetchedDataForSearchText) {
-                return this.__fetchUpdateFilter(this.searchText);
-            }
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
-            if (!isDontOpenPanel) {
+            if (this.isThisFocus()) {
                 this.open();
             }
             this.triggerReady(); //don't move to finally, recursively.
@@ -354,6 +361,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             return;
         }
         this.dropdownView.open();
+        this.__focusButton();
     },
 
     close() {
@@ -402,6 +410,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             this.__triggerChange();
         }
 
+        this.__updateFakeInputModel();
+
         return true;
     },
 
@@ -437,6 +447,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__updateFakeInputModel();
 
         if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
+            this.__checkSelectedState(model);
             this.dropdownView.close();
             this.updateButtonInput('');
             this.__focusButton();
@@ -450,6 +461,17 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         } else if (!options.isSilent) {
             this.__focusButton();
             this.__clearSearch();
+        }
+    },
+
+    __checkSelectedState(model) {
+        const selected = Object.values(model.collection.selected);
+        if (selected.length > 1) {
+            selected.forEach(selectedModel => selectedModel.selected = false);
+            model.selected = true;
+            model.collection.selected = {
+                [model.cid]: model
+            };
         }
     },
 
@@ -534,7 +556,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__triggerChange();
 
         this.__updateFakeInputModel();
-        this.focus();
+        this.open();
     },
 
     __updateFakeInputModel(): void {
@@ -579,9 +601,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         if (collection.indexOf(this.panelCollection.lastPointedModel) === 0) {
             this.dropdownView.close();
-            this.__focusButton({
-                isShowLastSearch: true
-            });
+            this.__focusButton();
         } else {
             this.__sendPanelCommand('up');
         }
@@ -624,11 +644,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onDropdownOpen(): void {
+        this.focus();
         this.__tryPointFirstRow();
         this.trigger('dropdown:open');
     },
 
     __onDropdownClose() {
+        this.blur();
         this.panelCollection.pointOff();
         this.trigger('dropdown:close');
     },
