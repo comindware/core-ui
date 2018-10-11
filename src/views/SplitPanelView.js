@@ -1,5 +1,5 @@
 //@flow
-import template from '../templates/splitPanel.hbs';
+import template from './templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
 const config = {

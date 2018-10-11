@@ -1,5 +1,5 @@
 //@flow
-import template from '../templates/searchBar.hbs';
+import template from './templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
 const defaultOptions = () => ({
