@@ -89,14 +89,19 @@ const GridHeaderView = Marionette.View.extend({
         this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(
-                Object.assign(this.gridColumnHeaderViewOptions || {}, {
-                    title: column.title,
-                    column,
-                    gridEventAggregator: this.gridEventAggregator
-                })
+                _.defaultsPure(
+                    {
+                        title: column.title,
+                        column,
+                        gridEventAggregator: this.gridEventAggregator
+                    },
+                    this.gridColumnHeaderViewOptions || {},
+                    this.options)
             );
             this.__columnEls.push(view);
-            this.listenTo(view, 'columnSort', this.__handleColumnSort);
+            if (this.options.columnSort !== false) {
+                this.listenTo(view, 'columnSort', this.__handleColumnSort);
+            }
             el.appendChild(view.render().el);
             el.classList.add(column.columnClass);
         });

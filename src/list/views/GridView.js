@@ -94,7 +94,7 @@ export default Marionette.View.extend({
         }
 
         if (this.options.showHeader) {
-            this.headerView = new HeaderView({
+            this.headerView = new HeaderView(_.defaultsPure({
                 columns: options.columns,
                 gridEventAggregator: this,
                 checkBoxPadding: options.checkBoxPadding || 0,
@@ -102,7 +102,7 @@ export default Marionette.View.extend({
                 uniqueId: this.uniqueId,
                 isTree: this.options.isTree,
                 expandOnShow: options.expandOnShow
-            });
+            }, this.options));
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);

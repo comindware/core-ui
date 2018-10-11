@@ -26,6 +26,7 @@ const heightOptions = {
 
 const defaultOptions = {
     height: heightOptions.FIXED,
+    columnSort: true,
     maxRows: 100,
     defaultElHeight: 300,
     useSlidingWindow: true
