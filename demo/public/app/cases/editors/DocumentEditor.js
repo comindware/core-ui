@@ -10,15 +10,21 @@ export default function() {
             },
             {
                 extension: 'jpg',
-                id: 'document.3',
+                id: 'document.2',
                 name: 'image',
                 url: 'images/image.jpg'
             },
             {
                 extension: 'jpg',
-                id: 'document.2',
+                id: 'document.3',
                 name: 'image2',
                 url: 'images/image2.jpg'
+            },
+            {
+                extension: 'jpg',
+                id: 'document.4',
+                name: '4k_16:9_image',
+                url: 'images/image3.jpg'
             }
         ]
     });
@@ -28,7 +34,8 @@ export default function() {
             model,
             key: 'value',
             autocommit: true,
-            displayText: 'Document Editor'
+            displayText: 'Document Editor',
+            title: 'My images'
         }),
         presentation: "'{{value}}'",
         isEditor: true
