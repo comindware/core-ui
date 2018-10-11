@@ -298,7 +298,7 @@ export default {
         const cleanUrl = url.replace('#', '');
         const prefix = cleanUrl.split('/')[0];
         const urlParts = window.location.hash.split('&nxt');
-        const replaceIndex = urlParts.indexOf(prefix);
+        const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
         if (replaceIndex !== -1) {
             urlParts.splice(replaceIndex, 1, cleanUrl);
