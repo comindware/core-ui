@@ -302,6 +302,7 @@ svg.svg-grid-icons {
 
 .grid-header {
   height: var(--grid-header-height);
+  overflow: hidden;
 }
 
 .grid-header-column {
@@ -356,6 +357,7 @@ svg.svg-grid-icons {
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   box-shadow: var(--grid-cell-border-first);
+  padding: 0 17px;
 }
 
 .grid__headless .cell_selection:first-child {

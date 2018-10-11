@@ -54,10 +54,11 @@
 }
 
 .grid-content-wrp {
-    position: relative;
     display: flex;
     flex: 1 1 auto;
     min-height: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .grid-header-wrp {
