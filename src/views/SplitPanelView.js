@@ -78,7 +78,7 @@ export default Marionette.View.extend({
         }
 
         const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
-        const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
+        const leftWidthPx = (newPanel1Width / ctx.containerWidth) * 100;
         const rightWidthPx = 100 - leftWidthPx;
 
         this.ui.resizer.css('left', `${leftWidthPx}%`);
@@ -156,8 +156,7 @@ export default Marionette.View.extend({
                 routeRegExp: pair.routeRegExp,
                 region
             });
-
-            pair.callback(pair.route);
+            setTimeout(() => pair.callback(pair.route));
         });
     }
 });

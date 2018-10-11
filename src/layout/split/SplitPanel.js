@@ -33,11 +33,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const handlerRoutPairs = this.options.handlerRoutPairs;
-
-        if (handlerRoutPairs && handlerRoutPairs.length) {
-            this.__initializeViews(handlerRoutPairs);
-        }
+        this.__initializeViews(this.getOption('items'));
     },
 
     __handleResizerMousedown(event) {
@@ -121,8 +117,8 @@ export default Marionette.View.extend({
         this.__updatePanelClasses(this.ui.panel2);
     },
 
-    __initializeViews(handlerRoutPairs) {
-        handlerRoutPairs.forEach((pair, i) => {
+    __initializeViews(views) {
+        views.forEach((view, i) => {
             const regionEl = document.createElement('div');
             regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
 
@@ -131,12 +127,8 @@ export default Marionette.View.extend({
             const region = this.addRegion(`js-tile${i + 1}-region`, {
                 el: regionEl
             });
-            this.regionModulesMap.push({
-                routeRegExp: pair.routeRegExp,
-                region
-            });
 
-            pair.callback(pair.route);
+            region.show(views);
         });
     }
 });

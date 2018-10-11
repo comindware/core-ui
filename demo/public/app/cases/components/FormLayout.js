@@ -79,12 +79,12 @@ export default function() {
                     },
                     {
                         type: 'grid',
-                        class: 'my-custon__class',
+                        class: 'my-custom__class',
                         columns: [
                             {
                                 key: '11',
                                 dataType: 'String',
-                                title: 'My awsome column'
+                                title: 'My awesome column'
                             }
                         ],
                         collection: new Backbone.Collection([{}, {}, {}, {}, {}, {}]),
