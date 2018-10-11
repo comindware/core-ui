@@ -59,6 +59,9 @@ const defaultOptions = {
     1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
     2.Develop readonly for input (like TextEditorView).
     3.If used fetchUpdateFilter as api, then value added, not reseted.
+    4.resetPanelCollection don't work as panelCollection.reset.
+    5.staticController has no addNewItem function.
+    6.If showsearch = false, keyup, keydown not move pointer on panel.
 */
 /**
  * @name DatalistView
@@ -304,9 +307,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
-            if (this.isThisFocus()) {
-                this.open();
-            }
+            this.open();
             this.triggerReady(); //don't move to finally, recursively.
             return true;
         } catch(e) {
@@ -353,7 +354,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     getIsOpenAllowed() {
-        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen;
+        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && this.isThisFocus();
     },
 
     open() {
@@ -476,7 +477,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onValueUnset(model: Backbone.Model): void {
-        this.dropdownView.close();
         this.__focusButton();
         this.__onBubbleDelete(model);
     },
@@ -500,11 +500,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onAddNewItem(): void {
         this.dropdownView.close();
-        this.controller.addNewItem(createdValue => {
-            if (createdValue) {
-                this.__value(createdValue, true);
-            }
-        });
+        if (typeof this.controller.addNewItem === 'function') {
+            this.controller.addNewItem(createdValue => {
+                if (createdValue) {
+                    this.__value(createdValue, true);
+                }
+            });
+        }
     },
 
     __getDisplayText(value, displayAttribute): string {
@@ -556,7 +558,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__triggerChange();
 
         this.__updateFakeInputModel();
-        this.open();
+
+        if (!this.hasFocus) {
+            this.__focusButton();
+            this.__onButtonClick();
+        }
     },
 
     __updateFakeInputModel(): void {
