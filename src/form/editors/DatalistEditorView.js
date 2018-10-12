@@ -370,19 +370,40 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __adjustValue(value: DataValue): any {
-        if ((typeof value === 'string' || typeof value === 'number') && value !== undefined) {
-            return this.panelCollection.get(value) || [];
-        }
         if (_.isUndefined(value) || value === null) {
             return [];
         }
+        if (this.getOption('valueType') === 'id') {
+            return this.__adjustValueForIdMode(value);
+        }
+        return value;
+    },
+
+    __adjustValueForIdMode(value) {
+        if (!this.isLastFetchSuccess) {
+            this.fetchUpdateFilter('', true);
+            this.listenToOnce(this, 'view:ready', () => {
+                this.setValue(this._adjustValueForIdMode(value));
+            });
+            return [];
+        }
+        return this._adjustValueForIdMode(value);
+    },
+
+    _adjustValueForIdMode(value) {
+        if (typeof value === 'string' || typeof value === 'number') {
+            return this.panelCollection.get(value) || [];
+        }
         if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
             if (Array.isArray(value)) {
-                return value.map(v => this.panelCollection.get(v) || v);
+                return value.map(v => this.panelCollection.get(v) || this.__tryToCreateAdjustedValue(v));
             }
             return this.panelCollection.get(value && value.id !== undefined ? value.id : value);
         }
-        return value;
+    },
+
+    __tryToCreateAdjustedValue(value) {
+        return value instanceof Backbone.Model ? value : new Backbone.Model({ id: value });
     },
 
     isValueIncluded(value) {
@@ -629,14 +650,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     triggerNotReady() {
         this.isReady = false;
-        this.dropdownView.buttonView.setLoading(true);
+        this.dropdownView?.buttonView?.setLoading(true);
         this.trigger('view:notReady');
         return false;
     },
 
     triggerReady() {
         this.isReady = true;
-        this.dropdownView.buttonView.setLoading(false);
+        this.dropdownView?.buttonView?.setLoading(false);
         this.trigger('view:ready');
         return true;
     },
