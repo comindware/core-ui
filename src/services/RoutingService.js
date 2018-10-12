@@ -71,19 +71,13 @@ export default {
 
     // options: replace (history), trigger (routing)
     navigateToUrl(url, options = {}) {
-        let newUrl = url;
-
         if (options.trigger === undefined) {
             options.trigger = true;
         }
 
         shouldCheckUrl = options.trigger || activeUrl === url;
 
-        if (!shouldCheckUrl) {
-            newUrl = this.__getUpdatedUrl(url);
-        }
-
-        Backbone.history.navigate(newUrl, options);
+        Backbone.history.navigate(this.__getUpdatedUrl(url), options);
     },
 
     getPreviousUrl() {
@@ -294,7 +288,7 @@ export default {
         }
     },
 
-    __getUpdatedUrl(url) {
+    __getUpdatedUrl(url = '') {
         const cleanUrl = url.replace('#', '');
         const prefix = cleanUrl.split('/')[0];
         const urlParts = window.location.hash.split('&nxt');
