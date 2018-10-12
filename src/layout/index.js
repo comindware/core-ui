@@ -16,5 +16,6 @@ export { default as Form } from './form/FormView';
 export { default as Popup } from './popup/PopupView';
 export { default as Group } from './group/GroupView';
 export { default as PlainText } from './plainText/PlainTextView';
+export { default as SplitPanel } from './split/SplitPanel';
 
 export * from './factory';

@@ -1205,7 +1205,6 @@ a:hover {
     flex: 1;
     min-width: 500px;
     min-height: 500px;
-    padding: 0 10px;
 }
 
 .split-panel_container .content-view {
@@ -1229,4 +1228,17 @@ a:hover {
 
 .output-tabs-region{
     padding-top: 15px;
+}
+
+.split-panel-resizer_container {
+    width: 5px;
+    background-color: #4d4d4d;
+}
+
+.split-panel_resizer {
+    cursor: e-resize;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    z-index: 5;
 }

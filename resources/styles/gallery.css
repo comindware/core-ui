@@ -55,15 +55,20 @@
 .galleryImage {
     padding: 25px;
     position: relative;
+    max-height: 90%;
+    display: flex;
+    flex: 1 1 auto;
+    text-align: center;
 }
 .galleryImage img {
     border: 2px solid #fff;
     margin: auto;
     position: static;
     height: auto;
-    width: 100%;
-    max-width: 800px;
+    max-width: 100%;
     max-height: 100%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .galleryImageBuffer {

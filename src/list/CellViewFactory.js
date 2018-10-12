@@ -279,7 +279,7 @@ export default (factory = {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
@@ -288,7 +288,7 @@ export default (factory = {
                 } else if (value && value.name) {
                     adjustedValue = value.name;
                 }
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue || ''}">${adjustedValue || ''}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value.length > 0) {
                     adjustedValue = value
@@ -303,13 +303,13 @@ export default (factory = {
                             }
                             return member.text;
                         }, null);
-                    return `<div class="cell ${column.columnClass}" title="${adjustedValue} || ''">${adjustedValue}</div>`;
+                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
                 } else if (value.name) {
-                    return `<div class="cell ${column.columnClass}" title="${value.name}">${value.name}</div>`;
+                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, value.name)}">${value.name}</div>`;
                 }
             case objectPropertyTypes.ENUM:
                 adjustedValue = value ? value.valueExplained : '';
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -328,7 +328,7 @@ export default (factory = {
                         }
                         return value;
                     }).join(', ');
-                return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell cell-right ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -366,7 +366,7 @@ export default (factory = {
                     .join(', ')
                     .trim();
 
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             }
             case objectPropertyTypes.BOOLEAN:
                 adjustedValue = Array.isArray(value) ? value : [value || ''];
@@ -393,7 +393,7 @@ export default (factory = {
                         }
                         return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
                     }).join(', ');
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
                     return `<div class="cell ${column.columnClass}">${value
@@ -407,7 +407,7 @@ export default (factory = {
                 }
             default:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}">${adjustedValue || ''}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
         }
     },
 
@@ -416,7 +416,7 @@ export default (factory = {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${adjustedValue}">
+            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">
             <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
             <div class="extend_cell_text">
                 <span class="extend_cell_header">${adjustedValue}</span>
@@ -430,5 +430,18 @@ export default (factory = {
             return value.join(', ');
         }
         return value;
+    },
+
+    __getTitle(column, model, adjustedValue) {
+        let title;
+        if (column.format === 'HTML') {
+            title = '';
+        } else if (column.titleAttribute) {
+            title = model.get(column.titleAttribute);
+        } else {
+            title = adjustedValue;
+        }
+        title = title !== null && title !== undefined ? title.toString().replace(/"/g, '&quot;') : '';
+        return title;
     }
 });

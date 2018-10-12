@@ -175,6 +175,11 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
+        it('should not open panel after set value and then blur', () => {
+            //Todo test
+            expect(true).toEqual(true);
+        });
+
         it('should have `value` matched with initial value', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]

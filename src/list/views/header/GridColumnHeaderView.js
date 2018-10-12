@@ -65,6 +65,9 @@ export default Marionette.View.extend({
     },
 
     __handleSorting(e) {
+        if (this.options.columnSort === false) {
+            return;
+        }
         if (e.target.className.includes('js-collapsible-button')) {
             return;
         }

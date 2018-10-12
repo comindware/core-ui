@@ -81,6 +81,9 @@ export default {
 
         if (!shouldCheckUrl) {
             newUrl = this.__getUpdatedUrl(url);
+            if (url !== newUrl) {
+                shouldCheckUrl = true;
+            }
         }
 
         Backbone.history.navigate(newUrl, options);
@@ -103,9 +106,11 @@ export default {
         const urlParts = url.split('&nxt').splice(1);
         const matchingUrls = [];
 
-        return (Backbone.history.handlers
-            .filter(handler => urlParts.some(part => (handler.route.test(part) && matchingUrls.push(part)))) || [])
-            .map((h, i) => ({ callback: h.callback, route: matchingUrls[i], routeRegExp: h.route }));
+        return (Backbone.history.handlers.filter(handler => urlParts.some(part => handler.route.test(part) && matchingUrls.push(part))) || []).map((h, i) => ({
+            callback: h.callback,
+            route: matchingUrls[i],
+            routeRegExp: h.route
+        }));
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
@@ -224,7 +229,8 @@ export default {
             this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
             return false;
         }
-        if (!subModulePresented) { //do not trigger events and cancel requests for submodules
+        if (!subModulePresented) {
+            //do not trigger events and cancel requests for submodules
             this.trigger('module:leave', {
                 page: this.activeModule ? this.activeModule.moduleId : null
             });
@@ -294,11 +300,11 @@ export default {
         }
     },
 
-    __getUpdatedUrl(url) {
+    __getUpdatedUrl(url = '') {
         const cleanUrl = url.replace('#', '');
         const prefix = cleanUrl.split('/')[0];
         const urlParts = window.location.hash.split('&nxt');
-        const replaceIndex = urlParts.indexOf(prefix);
+        const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
         if (replaceIndex !== -1) {
             urlParts.splice(replaceIndex, 1, cleanUrl);
