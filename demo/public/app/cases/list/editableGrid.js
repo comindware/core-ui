@@ -81,7 +81,6 @@ export default () => {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
-            simplified: true,
             dataType: 'DateTime',
             title: 'DateTime Cell',
             editable: true,
