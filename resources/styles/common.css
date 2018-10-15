@@ -1235,13 +1235,14 @@ a:hover {
     background-color: #4d4d4d;
     position: absolute;
     height: 100%;
-    z-index: 1;
+    z-index: 60;
+    cursor: e-resize;
 }
 
 .split-panel_resizer {
-    cursor: e-resize;
-    height: 100%;
-    width: 100%;
-    right: 0;
     z-index: 5;
+    height: 40px;
+    width: 3px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 25%;
 }
