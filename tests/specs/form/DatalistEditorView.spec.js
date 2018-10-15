@@ -823,7 +823,7 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should not delete selected value on blur if search result is none', done => {
+        it('should has selected items length as model values length', done => {
             const model = new Backbone.Model({
                 value: 3
             });
@@ -833,27 +833,69 @@ describe('Editors', () => {
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 allowEmptyValue: false,
-                autocommit: true,
+                autocommit: false,
                 valueType: 'id'
             });
 
-            view.on('attach', () => {
-                const length = view.dropdownView.button.collectionView.collection.length;
-                expect(length).toEqual(2); //selected + input
+            let counter = 0;
 
-                const input = getInput(view);   
-                    startSearch(input, 'd');
+            view.checkChange = () => counter++;
+
+            view.on('attach', () => {
+                actionForOpen(view);
+            });
+
+            view.on('view:ready', () => {
                 const first = setInterval(() => {
-                    if (view.panelCollection.length === 0) {
+                    if (view.panelCollection.length) {
                         clearTimeout(first);
                         setTimeout(() => {
-                            view.blur();
-                            const length = view.dropdownView.button.collectionView.collection.length;
-                            expect(length).toEqual(2); //selected + input
+                            expect(view.dropdownView.button.collectionView.collection.length).toEqual(2); //selected + input
                             done();
                         }, 100);
                     }
-                }, 10);
+                }, 20);
+            });
+
+            show(view);
+        });
+
+        it('should not triggerChange on blur', done => {
+            const model = new Backbone.Model({
+                value: 3
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                autocommit: false,
+                valueType: 'id'
+            });
+
+            let counter = 0;
+
+            view.checkChange = () => counter++;
+
+            view.on('attach', () => {
+                actionForOpen(view);
+            });
+
+            view.on('view:ready', () => {
+                const first = setInterval(() => {
+                    if (view.panelCollection.length) {
+                        clearTimeout(first);
+                        setTimeout(() => {
+                            view.blur();
+                        }, 100);
+                    }
+                }, 20);
+            });
+
+            view.on('blur', () => {
+                expect(counter).toEqual(0);
+                done();
             });
 
             show(view);
@@ -982,7 +1024,7 @@ describe('Editors', () => {
                     maxQuantitySelected: 1
                 });
     
-                view.on('attach', () => {
+                view.on('view:ready', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(1);
                     done();
@@ -1006,7 +1048,7 @@ describe('Editors', () => {
                     maxQuantitySelected: 3
                 });
     
-                view.on('attach', () => {
+                view.on('view:ready', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(3);
                     done();
