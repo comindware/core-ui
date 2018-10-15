@@ -42,6 +42,7 @@ export default Marionette.View.extend({
                 el: regionEl
             });
             this.regionModulesMap.push({
+                pair,
                 routeRegExp: pair.routeRegExp,
                 region
             });

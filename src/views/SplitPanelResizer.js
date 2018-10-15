@@ -2,9 +2,7 @@ const constants = {
     DEFAULT_MODE_WIDTH: 250,
     COMPACT_MODE_WIDTH: 50,
     MODE_CHANGE_DURATION_MS: 200,
-    MIN_WIDTH: 100,
-    MAX_WIDTH: 700,
-    RESIZER_WIDTH: 5
+    MIN_WIDTH: 500
 };
 
 export default Marionette.View.extend({

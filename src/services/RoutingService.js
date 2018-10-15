@@ -201,14 +201,19 @@ export default {
                 return;
             }
         }
-        try {
-            if (activeSubModule) {
-                this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
-            } else {
-                this.__callRoutingActionForActiveModule(callbackName, routingArgs);
+
+        if (!this.__isCurrentModuleSplit() || activeSubModule) {
+            try {
+                if (activeSubModule) {
+                    this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
+                } else {
+                    this.__callRoutingActionForActiveModule(callbackName, routingArgs);
+                }
+            } catch (e) {
+                Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
-        } catch (e) {
-            Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
+        } else {
+            this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
         }
 
         this.__setupComponentQuery(componentQuery);
@@ -313,5 +318,22 @@ export default {
         }
 
         return url;
+    },
+
+    __isCurrentModuleSplit() {
+        return activeUrl.startsWith('#custom');
+    },
+
+    __invalidateSubModules(regionModulesMap) {
+        regionModulesMap.forEach(module => {
+            const cleanUrl = module.pair.route.replace('#', '');
+            const prefix = cleanUrl.split('/')[0];
+            const urlParts = activeUrl.split('&nxt');
+            const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
+
+            if (replaceIndex !== -1 && urlParts[replaceIndex] !== window.location.hash.replace('#', '').split('&nxt')[replaceIndex]) {
+                setTimeout(() => module.pair.callback(module.pair.route));
+            }
+        });
     }
 };

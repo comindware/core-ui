@@ -1233,10 +1233,13 @@ a:hover {
 .split-panel-resizer_container {
     width: 5px;
     background-color: #4d4d4d;
-    position: absolute;
+    position: absolute !important;
     height: 100%;
     z-index: 60;
     cursor: e-resize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .split-panel_resizer {
