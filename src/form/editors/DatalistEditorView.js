@@ -369,20 +369,34 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.dropdownView.close();
     },
 
-    __adjustValue(value: DataValue): any {
-        if ((typeof value === 'string' || typeof value === 'number') && value !== undefined) {
-            return this.panelCollection.get(value) || [];
-        }
+    __adjustValue(value: any): DataValue {
         if (_.isUndefined(value) || value === null) {
             return [];
         }
-        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
-            if (Array.isArray(value)) {
-                return value.map(v => this.panelCollection.get(v) || v);
-            }
-            return this.panelCollection.get(value && value.id !== undefined ? value.id : value);
+        const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value) : value;
+        return Array.isArray(result) ? result : [result];
+    },
+
+    __adjustValueForIdMode(value) {
+        if (!this.isLastFetchSuccess) {
+            this.fetchUpdateFilter('', true);
+            this.listenToOnce(this, 'view:ready', () => {
+                this.setValue(this.__adjustValueFromLoaded(value));
+            });
+            return [];
         }
-        return value;
+        return this.__adjustValueFromLoaded(value);
+    },
+
+    __adjustValueFromLoaded(value) {
+        if (Array.isArray(value)) {
+            return value.map(v => this.panelCollection.get(v) || this.__tryToCreateAdjustedValue(v));
+        }
+        return [this.panelCollection.get(value) || this.__tryToCreateAdjustedValue(value)];
+    },
+
+    __tryToCreateAdjustedValue(value) {
+        return value instanceof Backbone.Model ? value : new Backbone.Model({ id: value });
     },
 
     isValueIncluded(value) {
@@ -400,7 +414,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             if (firstModel !== this.fakeInputModel) {
                 this.selectedButtonCollection.remove(firstModel);
             }
-            this.value = Array.isArray(adjustedValue) ? adjustedValue : [adjustedValue];
+            this.value = adjustedValue;
         } else {
             this.value = this.getValue().concat(adjustedValue);
         }
@@ -629,14 +643,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     triggerNotReady() {
         this.isReady = false;
-        this.dropdownView.buttonView.setLoading(true);
+        this.dropdownView?.buttonView?.setLoading(true);
         this.trigger('view:notReady');
         return false;
     },
 
     triggerReady() {
         this.isReady = true;
-        this.dropdownView.buttonView.setLoading(false);
+        this.dropdownView?.buttonView?.setLoading(false);
         this.trigger('view:ready');
         return true;
     },
