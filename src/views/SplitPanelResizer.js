@@ -18,6 +18,10 @@ export default Marionette.View.extend({
     template: Handlebars.compile('<div class="js-resizer split-panel_resizer"></div>'),
 
     onRender() {
+        this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
+        this.originalPanel1Width = this.firstPanel.el.getBoundingClientRect().width;
+        this.$el.css('left', `${this.originalPanel1Width}px`);
+
         this.$el.draggable({
             axis: 'x',
             drag: (event, ui) => this.__onResizerDrag(ui),
@@ -26,20 +30,19 @@ export default Marionette.View.extend({
     },
 
     __onResizerDrag(ui) {
-        const totalWidth = this.firstPanel.parentEl().offsetWidth;
-        let width = totalWidth - ui.position.left;
+        const totalWidth = this.originalParentWidth;
+        let width = ui.position.left;
 
         if (width < constants.MIN_WIDTH) {
             width = constants.MIN_WIDTH;
             ui.position.left = totalWidth - width;
         }
 
-        const otherElementsMinWidth = constants.MIN_WIDTH + this.firstPanel.el.offsetWidth;
-        const maxWidth = totalWidth - otherElementsMinWidth;
+        const maxWidth = totalWidth - constants.MIN_WIDTH;
 
         if (width > maxWidth) {
             width = maxWidth;
-            ui.position.left = otherElementsMinWidth;
+            //ui.position.left = otherElementsMinWidth;
         }
 
         this.firstPanel.$el.css('flex', `0 0 ${width}px`);
