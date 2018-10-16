@@ -7,6 +7,8 @@ export default FieldView.extend({
 
     className: 'editable-grid-field',
 
+    tagName: 'td',
+
     onRender() {
         this.showChildView('editorRegion', this.editor);
         this.__rendered = true;

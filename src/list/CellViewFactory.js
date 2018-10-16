@@ -4,282 +4,45 @@ import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
+import SelectionCellView from './views/selections/SelectionCellView';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 
 let factory;
-
-type CellExtention = {
-    templateContext(): Object
-};
 
 type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            return column.simplified ? SimplifiedFieldView : EditableGridFieldView;
+            return new (column.simplified ? SimplifiedFieldView : EditableGridFieldView)({
+                className: `cell_editable ${column.customClass || ''}`,
+                schema: column,
+                model,
+                key: column.key
+            });
         }
 
         return factory.getCellHtml(column, model);
     },
 
-    getCellViewByDataType(type: string) {
-        //Used by Product server Grid
-        let result;
-
-        switch (type) {
-            case objectPropertyTypes.STRING:
-                result = factory.getTextCellView();
-                break;
-            case objectPropertyTypes.INSTANCE:
-                result = factory.getReferenceCellView();
-                break;
-            case objectPropertyTypes.ACCOUNT:
-                result = factory.getUserCellView();
-                break;
-            case objectPropertyTypes.ENUM:
-                result = factory.getEnumCellView();
-                break;
-            case objectPropertyTypes.INTEGER:
-            case objectPropertyTypes.DOUBLE:
-            case objectPropertyTypes.DECIMAL:
-                result = factory.getNumberCellView();
-                break;
-            case objectPropertyTypes.DURATION:
-                result = factory.getDurationCellView();
-                break;
-            case objectPropertyTypes.BOOLEAN:
-                result = factory.getBooleanCellView();
-                break;
-            case objectPropertyTypes.DATETIME:
-                result = factory.getDateTimeCellView();
-                break;
-            case objectPropertyTypes.DOCUMENT:
-                result = factory.getDocumentCellView();
-                break;
-            default:
-                result = factory.getHtmlCellView();
-                break;
-        }
-
-        return result;
-    },
-
-    getTextCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
-    },
-
-    getReferenceCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
-    },
-
-    getUserCellView() {
-        return factory.__getAccountView();
-    },
-
-    getEnumCellView() {
-        return factory.__getEnumView();
-    },
-
-    getNumberCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{value}}', extention);
-    },
-
-    getDurationCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{renderShortDuration value}}', extention);
-    },
-
-    getBooleanCellView() {
-        const extention = {
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                return {
-                    value,
-                    showIcon: _.isBoolean(value)
-                };
-            }
-        };
-
-        return factory.__getSimpleView(
-            '{{#if showIcon}}' +
-            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}',
-            extention
-        );
-    },
-
-    getDateTimeCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
-    },
-
-    getDocumentCellView() {
-        return factory.__getDocumentView();
-    },
-
-    __getSimpleView(simpleTemplate: string, extention: CellExtention) {
-        return Marionette.View.extend({
-            template: Handlebars.compile(simpleTemplate),
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange',
-                highlighted: '__handleHighlightedFragmentChange',
-                unhighlighted: '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell',
-            templateContext: extention.templateContext
-        });
-    },
-
-    __getAccountView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{text}}'),
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                let text = '';
-                if (value && value.length > 0) {
-                    text = _.chain(value)
-                        .map(item => ({
-                            id: item.id,
-                            text: item.text || item.name || (item.columns && item.columns[0])
-                        }))
-                        .sortBy(member => member.text)
-                        .reduce((memo, member) => {
-                            if (memo) {
-                                return `${memo}, ${member.text}`;
-                            }
-                            return member.text;
-                        }, null)
-                        .value();
-                } else if (value && value.name) {
-                    text = value.name;
-                }
-
-                return {
-                    text
-                };
-            },
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    __getDocumentView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{#each documents}}<a href="{{url}}" target="_blank">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
-
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                let documents = [];
-                if (value && value.length > 0) {
-                    documents = value
-                        .map(item => ({
-                            id: item.id,
-                            text: item.text || item.name || (item.columns && item.columns[0]),
-                            url: item.url || (item.columns && item.columns[1])
-                        }))
-                        .sort((a, b) => a.text > b.text);
-                }
-
-                return {
-                    documents
-                };
-            },
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    __getEnumView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                return {
-                    value,
-                    valueExplained: value.valueExplained
-                };
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    getHtmlCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return this.__getSimpleView('{{{value}}}', extention);
+    getSelectionCell(model) {
+        return new SelectionCellView(model);
     },
 
     getCellHtml(column: Column, model: Backbone.Model) {
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {
-            return `<div class="cell ${column.columnClass}"></div>`;
+            return '<td></td>';
         }
+
         let adjustedValue = value;
 
-        switch (column.dataType || column.type) {
+        switch (column.type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
@@ -288,7 +51,7 @@ export default (factory = {
                 } else if (value && value.name) {
                     adjustedValue = value.name;
                 }
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</td>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value.length > 0) {
                     adjustedValue = value
@@ -303,13 +66,13 @@ export default (factory = {
                             }
                             return member.text;
                         }, null);
-                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                    return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
                 } else if (value.name) {
-                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, value.name)}">${value.name}</div>`;
+                    return `<td title="${this.__getTitle(column, model, value.name)}">${value.name}</td>`;
                 }
             case objectPropertyTypes.ENUM:
                 adjustedValue = value ? value.valueExplained : '';
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -327,8 +90,9 @@ export default (factory = {
                             }
                         }
                         return value;
-                    }).join(', ');
-                return `<div class="cell cell-right ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                    })
+                    .join(', ');
+                return `<td class="cell-right" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -366,7 +130,7 @@ export default (factory = {
                     .join(', ')
                     .trim();
 
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             }
             case objectPropertyTypes.BOOLEAN:
                 adjustedValue = Array.isArray(value) ? value : [value || ''];
@@ -381,7 +145,7 @@ export default (factory = {
                         return result;
                     })
                     .join(', ');
-                return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
+                return `<td>${adjustedValue}</td>`;
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -392,22 +156,23 @@ export default (factory = {
                             return `${dateDisplayValue} ${timeDisplayValue}`;
                         }
                         return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
-                    }).join(', ');
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                    })
+                    .join(', ');
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
-                    return `<div class="cell ${column.columnClass}">${value
+                    return `<td>${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
                             return `<a href="${url}" target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
-                        .join(', ')}</div>`;
+                        .join(', ')}</td>`;
                 }
             default:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
+                return `<td title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</td>`;
         }
     },
 
@@ -416,13 +181,13 @@ export default (factory = {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">
+            <td class="js-extend_cell_content extend_cell_content}" title="${this.__getTitle(column, model, adjustedValue)}">
             <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
-            <div class="extend_cell_text">
+            <td class="extend_cell_text">
                 <span class="extend_cell_header">${adjustedValue}</span>
                 <span class="extend_info">${model.get('alias') || ''}</span>
-            </div>
-            </div>`;
+            </td>
+            </td>`;
     },
 
     __adjustValue(value: Array<string | number> | string) {

@@ -29,10 +29,10 @@
 .visible-collection {
     height: 100%;
     width: 100%;
-    position: relative;
+    transform: translateZ(0);
 }
 
-.visible-collection-wrp, .selection-panel-wrp {
+.selection-panel-wrp {
     position: relative;
     will-change: top;
 }
@@ -54,11 +54,11 @@
 }
 
 .grid-content-wrp {
-    display: flex;
+    display: table;
     flex: 1 1 auto;
     min-height: 0;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .grid-header-wrp {
@@ -415,15 +415,11 @@
 /* /Editable Grid */
 
 /* New grid */
-.row {
-    display: flex;
-}
-
-.row.selected{
+tr.selected{
     background: transparent;
 }
 
-.cell {
+td {
     position: relative;
     display: inline-block;
     text-overflow: ellipsis;
@@ -437,12 +433,13 @@
     align-items: center;
 }
 .cell_selection {
-    position: relative;
     display: flex;
     align-items: center;
     flex: none;
     min-width: inherit;
     padding: 0;
+    position: fixed;
+    z-index: 3000;
 }
 
 .cell-focused {
@@ -456,46 +453,46 @@
     padding-left: 0;
 }
 
-.cell.selected{
+td.selected{
     outline-offset: -1px;
 }
 
-.cell .editor{
+td .editor{
     height: 100%;
     line-height: initial;
     border: none;
     background-color: transparent;
 }
-.cell .js-tree-first-cell {
+td .js-tree-first-cell {
     flex: none;
 }
-.cell .js-tree-first-cell + .editor {
+td .js-tree-first-cell + .editor {
     flex: 1 1 auto;
 }
-.dragover .cell,
-.dragover.cell,
+.dragover td,
+.dragover td,
 .dragover .grid-header-column{
     border-bottom: 1px solid #ff0000;
 }
 
-.cell > .editor:after{
+td > .editor:after{
     display: none;
 }
 
-.cell .editor_checkbox.editor_focused{
+td .editor_checkbox.editor_focused{
     outline: none;
 }
 
-.cell .editor_checkbox {
+td .editor_checkbox {
     display: flex;
     align-items: center;
 }
 
-.grid-container .cell{
+.grid-container td{
     font-size: 13px;
 }
 
-.cell .input{
+td .input{
     border: none;
     height: 100%;
     line-height: inherit;
@@ -503,11 +500,11 @@
     font-size: 13px;
 }
 
-.cell a{
+td a{
     font-size: 13px;
 }
 
-.cell p{
+td p{
     margin-bottom: 0;
 }
 
@@ -521,7 +518,7 @@
     cursor: move;
 }
 
-.cell:hover .cell__dots{
+td:hover .cell__dots{
     visibility: visible;
 }
 
@@ -535,7 +532,7 @@
     font-size: 13px;
 }
 
-.cell .checkbox_cell-selection {
+td.checkbox_cell-selection {
     margin: 0 auto;
     z-index: 2;
 }
@@ -549,14 +546,14 @@
     text-align: right;
 }
 
-.cell .collapsible-btn{
+td.collapsible-btn{
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKCAYAAACXDi8zAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjZGREJCMUI0OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjZGREJCMUI1OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NkZEQkIxQjI5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NkZEQkIxQjM5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz447xZHAAAAO0lEQVR42mJmYGCoBmJxIL7GgAZ4gHgBEIcwYAHESzIjSfwC4j1AXADiMDEQAbDaQ7wgA9SDGIIAAQYAdcoKZphNcRcAAAAASUVORK5CYII=');
 }
 
 /*-- Compact list --*/
-.compact.grid-container .cell .input,
-.compact.grid-container .cell .bubbles__input,
-.compact.grid-container .cell a{
+.compact.grid-container td.input,
+.compact.grid-container td.bubbles__input,
+.compact.grid-container tda{
     font-size: 12px;
 }
 
@@ -572,7 +569,7 @@
     font-size: 12px;
 }
 
-.compact.grid-container .cell .checkbox {
+.compact.grid-container td.checkbox {
     height: 13px;
     width: 13px;
 }

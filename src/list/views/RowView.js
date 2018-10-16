@@ -8,7 +8,6 @@ const classes = {
     collapsible: 'js-collapsible-button',
     collapsibleIcon: 'js-tree-first-cell',
     dragover: 'dragover',
-    hover: 'hover',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable'
 };
@@ -34,7 +33,7 @@ const defaultOptions = {
  * @param {Number} [options.paddingRight=10] Правый отступ
  * */
 export default Marionette.View.extend({
-    className: 'row',
+    tagName: 'tr',
 
     ui: {
         cells: '.js-grid-cell',
@@ -49,8 +48,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave',
         contextmenu: '__handleContextMenu'
     },
 
@@ -66,8 +63,6 @@ export default Marionette.View.extend({
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave',
         'toggle:collapse': 'updateCollapsed'
     },
 
@@ -76,10 +71,6 @@ export default Marionette.View.extend({
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
-
-        // TODO: think about implementation in tree or grouped grids
-        // this.listenTo(this.model, 'checked', this.__onModelChecked);
-        // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },
 
     getValue(id) {
@@ -87,15 +78,14 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const model = this.model;
-        if (model.selected) {
+        if (this.model.selected) {
             this.__handleSelection();
             if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
                 this.__selectPointed(this.gridEventAggregator.pointedCell);
             }
         }
-        if (model.highlighted) {
-            this.__handleHighlight(model.highlightedFragment);
+        if (this.model.highlighted) {
+            this.__handleHighlight(this.model.highlightedFragment);
         }
     },
 
@@ -131,37 +121,40 @@ export default Marionette.View.extend({
         this.cellViewsByKey = {};
 
         const isTree = this.getOption('isTree');
-        this.options.columns.forEach((gridColumn, index) => {
+
+        if (this.getOption('showCheckbox')) {
+            const selectionCell = CellViewFactory.getSelectionCell({ collection: this.getOption('collection'), currentIndex: 1 });
+
+            selectionCell.render();
+            this.el.insertAdjacentElement('beforeend', selectionCell.el);
+            selectionCell.triggerMethod('attach');
+
+            this.cellViews.push(selectionCell);
+        }
+
+        this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
-                if (isTree && index === 0) {
-                    this.insertFirstCellHtml();
-                }
                 return;
             }
 
-            let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
-            if (gridColumn.editable) cellClasses += classes.cellEditable;
+            cell.render();
+            this.el.insertAdjacentElement('beforeend', cell.el);
+            cell.triggerMethod('attach');
 
-            const cellView = new cell({
-                className: `cell ${gridColumn.columnClass} ${cellClasses}`,
-                schema: gridColumn,
-                model: this.model,
-                key: gridColumn.key
-            });
-
-            if (isTree && index === 0) {
-                cellView.on('render', () => this.insertFirstCellHtml(true));
-            }
-            cellView.render();
-            this.el.insertAdjacentElement('beforeend', cellView.el);
-            cellView.triggerMethod('attach');
-
-            this.cellViewsByKey[gridColumn.key] = cellView;
-            this.cellViews.push(cellView);
+            this.cellViewsByKey[gridColumn.key] = cell;
+            this.cellViews.push(cell);
         });
+
+        if (isTree) {
+            if (this.cellViews[0]) {
+                this.cellViews[0].on('render', () => this.insertFirstCellHtml(true));
+            } else {
+                this.insertFirstCellHtml();
+            }
+        }
     },
 
     __handleChange() {
@@ -227,8 +220,7 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model)
-            || event.relatedTarget.classList.contains('js-grid-content-view')) {
+        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) || event.relatedTarget.classList.contains('js-grid-content-view')) {
             this.model.trigger('dragleave', event);
             delete this.model.dragover;
         }
@@ -288,7 +280,7 @@ export default Marionette.View.extend({
                         el.insertAdjacentHTML(
                             'beforeend',
                             `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
-                            this.model.collapsed === false ? classes.expanded : ''
+                                this.model.collapsed === false ? classes.expanded : ''
                             }"></span></div>`
                         );
                     }
@@ -297,7 +289,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                        this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
@@ -443,21 +435,5 @@ export default Marionette.View.extend({
             parent = current.parentElement;
         }
         return result;
-    },
-
-    __handleMouseEnter() {
-        this.model.trigger('mouseenter');
-    },
-
-    __handleModelMouseEnter() {
-        this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        this.model.trigger('mouseleave');
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
     }
 });

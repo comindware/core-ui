@@ -16,12 +16,13 @@ const classes = {
 
 export default Marionette.View.extend({
     initialize(options) {
+        this.model = this.collection.at(options.currentIndex);
         if (options.selectionType === selectionTypes.all) {
             this.collection = options.collection;
             this.selectAllCell = true;
         } else {
-            this.collection = options.model.collection;
-            this.model.currentIndex = this.model.collection.indexOf(this.model) + 1;
+            this.collection = options.collection;
+            this.currentIndex = options.currentIndex;
         }
     },
 
@@ -30,7 +31,7 @@ export default Marionette.View.extend({
     templateContext() {
         let index = '';
         if (this.getOption('showRowIndex') && this.model) {
-            index = this.model.collection.indexOf(this.model) + 1;
+            index = this.currentIndex;
         }
         return {
             draggable: this.getOption('draggable'),
@@ -38,13 +39,15 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'cell cell_selection',
+    className: 'cell_selection',
 
     ui: {
         checkbox: '.js-checkbox',
         dots: '.js-dots',
         index: '.js-index'
     },
+
+    tagName: 'td',
 
     events: {
         'click @ui.checkbox': '__handleCheckboxClick',
@@ -56,8 +59,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave',
         contextmenu: '__handleContextMenu'
     },
 
@@ -67,9 +68,7 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave'
+        drop: '__handleModelDrop'
     },
 
     onRender() {
@@ -163,10 +162,10 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget)
-            && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined))
-            || event.relatedTarget.classList.contains('js-grid-content-view')
-            || event.relatedTarget.classList.contains('js-grid-selection-panel-view')
+        if (
+            (!this.el.contains(event.relatedTarget) && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined)) ||
+            event.relatedTarget.classList.contains('js-grid-content-view') ||
+            event.relatedTarget.classList.contains('js-grid-selection-panel-view')
         ) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragleave:head', event);
@@ -237,25 +236,5 @@ export default Marionette.View.extend({
                 this.ui.checkbox.removeClass(classes.checked_some);
                 break;
         }
-    },
-
-    __handleMouseEnter() {
-        if (this.model) {
-            this.model.trigger('mouseenter');
-        }
-    },
-
-    __handleModelMouseEnter() {
-        this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        if (this.model) {
-            this.model.trigger('mouseleave');
-        }
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
     }
 });

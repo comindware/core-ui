@@ -2,7 +2,6 @@
 import { comparators, helpers } from 'utils';
 import GridColumnHeaderView from './header/GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
-import GlobalEventService from '../../services/GlobalEventService';
 
 /*
 *
@@ -28,7 +27,7 @@ const classes = {
     dragover: 'dragover'
 };
 
-const GridHeaderView = Marionette.View.extend({
+export default Marionette.View.extend({
     initialize(options) {
         if (!options.columns) {
             throw new Error('You must provide columns definition ("columns" option)');
@@ -39,21 +38,20 @@ const GridHeaderView = Marionette.View.extend({
 
         this.gridEventAggregator = options.gridEventAggregator;
         this.gridColumnHeaderView = options.gridColumnHeaderView || GridColumnHeaderView;
-        this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
         this.collection = options.gridEventAggregator.collection;
 
-        this.styleSheet = options.styleSheet;
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
         this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
         this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
     template: Handlebars.compile(template),
 
     className: 'grid-header',
+
+    tagName: 'thead',
 
     ui: {
         gridHeaderColumn: '.grid-header-column'
@@ -92,30 +90,25 @@ const GridHeaderView = Marionette.View.extend({
                 _.defaultsPure(
                     {
                         title: column.title,
-                        column,
-                        gridEventAggregator: this.gridEventAggregator
+                        column
                     },
-                    this.gridColumnHeaderViewOptions || {},
-                    this.options)
+                    this.options
+                )
             );
             this.__columnEls.push(view);
             if (this.options.columnSort !== false) {
-                this.listenTo(view, 'columnSort', this.__handleColumnSort);
+                this.listenTo(view, 'columnSort', this.__handleColumnSort.bind(this));
             }
+            el.style.width = `${this.options.columnsWidth[i]}px`;
             el.appendChild(view.render().el);
-            el.classList.add(column.columnClass);
         });
 
         if (this.options.isTree) {
             this.__columnEls[0].el.insertAdjacentHTML(
                 'afterbegin',
-                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>&nbsp;`
+                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>`
             );
         }
-
-        // if (this.options.expandOnShow) {
-        //     this.__updateCollapseAll(false);
-        // }
     },
 
     onDestroy() {
@@ -171,8 +164,8 @@ const GridHeaderView = Marionette.View.extend({
 
         dragger.classList.add('active');
 
-        document.addEventListener('mousemove', this.__draggerMouseMove);
-        document.addEventListener('mouseup', this.__draggerMouseUp);
+        document.addEventListener('mousemove', this.__draggerMouseMove.bind(this));
+        document.addEventListener('mouseup', this.__stopDrag.bind(this));
     },
 
     __stopDrag() {
@@ -183,8 +176,8 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
 
-        document.removeEventListener('mousemove', this.__draggerMouseMove);
-        document.removeEventListener('mouseup', this.__draggerMouseUp);
+        document.removeEventListener('mousemove', this.__draggerMouseMove.bind(this));
+        document.removeEventListener('mouseup', this.__stopDrag.bind(this));
     },
 
     __draggerMouseMove(e) {
@@ -198,22 +191,13 @@ const GridHeaderView = Marionette.View.extend({
         if (delta !== 0) {
             const index = ctx.draggedColumn.index;
 
-            this.updateColumnAndNeighbourWidths(index, delta);
+            this.__updateColumnAndNeighbourWidths(index, delta);
         }
 
         return false;
     },
 
-    __draggerMouseUp() {
-        this.__stopDrag();
-        return false;
-    },
-
-    __getFullWidth() {
-        return this.el.clientWidth;
-    },
-
-    updateColumnAndNeighbourWidths(index, delta) {
+    __updateColumnAndNeighbourWidths(index, delta) {
         const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
@@ -221,8 +205,6 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         this.trigger('update:width', index, newColumnWidth);
-
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
         this.columns[index].width = newColumnWidth;
@@ -237,6 +219,7 @@ const GridHeaderView = Marionette.View.extend({
         this.collapsed = collapsed;
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
+
     __handleDragOver(event) {
         if (!this.collection.draggingModel) {
             return;
@@ -286,5 +269,3 @@ const GridHeaderView = Marionette.View.extend({
         }
     }
 });
-
-export default GridHeaderView;

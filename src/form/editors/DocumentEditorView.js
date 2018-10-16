@@ -2,7 +2,7 @@
 import template from './templates/documentEditor.html';
 import DocumentReferenceModel from './impl/document/models/DocumentReferenceModel';
 import DocumentReferenceCollection from './impl/document/collections/DocumentReferenceCollection';
-import BaseCompositeEditorView from './base/BaseCompositeEditorView';
+import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
@@ -43,7 +43,7 @@ const defaultOptions = {
     displayText: ''
 };
 
-export default (formRepository.editors.Document = BaseCompositeEditorView.extend({
+export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -237,12 +237,12 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     __setEnabled(enabled) {
-        BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseCollectionEditorView.prototype.__setEnabled.call(this, enabled);
         this.renderUploadButton(!enabled);
     },
 
     __setReadonly(readonly) {
-        BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.renderUploadButton(readonly);
         }

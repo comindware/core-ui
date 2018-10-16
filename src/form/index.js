@@ -5,7 +5,6 @@ import SimpleFieldView from './fields/SimplifiedFieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';
 import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
-import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
 import BooleanEditorView from './editors/BooleanEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
@@ -91,8 +90,7 @@ const api = /** @lends module:core.form */ {
         base: {
             BaseItemEditorView,
             BaseLayoutEditorView,
-            BaseCollectionEditorView,
-            BaseCompositeEditorView
+            BaseCollectionEditorView
         },
         /**
          * Avatar editor data providers and internal implementation.

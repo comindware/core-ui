@@ -201,18 +201,18 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 .required .form-label__txt::after,
 .form-label_required .form-label__txt::after,
-.cell.required::before {
+td.required::before {
   content: '*';
   color: var(--error-color);
 }
-.cell.required::before {
+td.required::before {
   position: absolute;
   top: 50%;
   left: 2px;
   transform: translateY(-50%);
 }
 
-.cell.error.required::before {
+td.error.required::before {
   display: none;
 }
 
@@ -253,14 +253,14 @@ svg.svg-grid-icons.svg-icons_flag-none {
   opacity: 1;
 }
 
-.cell .date-view,
-.cell .time-view,
-.cell > div,
+td .date-view,
+td .time-view,
+td > div,
 .editable-grid-field {
     height: 100%;
 }
 
-.cell > .editor {
+td > .editor {
   position: absolute;
   top: 0;
   left: 0;
@@ -268,18 +268,18 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 0 20px 0 15px;
 }
 
-.cell > .context_select {
+td > .context_select {
   position: static;
   padding: 4px 20px 4px 10px;
 }
 
-.cell > .editor.editor_document {
+td > .editor.editor_document {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.cell > .editor.editor_document > .documents {
+td > .editor.editor_document > .documents {
   margin-top: 0;
   margin-bottom: 0;
   display: flex;
@@ -287,16 +287,16 @@ svg.svg-grid-icons.svg-icons_flag-none {
   flex-wrap: nowrap;
 }
 
-.cell > .editor.editor_document > .documents .task-links__i {
+td > .editor.editor_document > .documents .task-links__i {
   margin-bottom: 0;
   margin-right: 2em;
 }
 
-.cell .documents__text {
+td .documents__text {
   display: none;
 }
 
-.cell .documents__drop-zone {
+td .documents__drop-zone {
   height: auto;
   position: absolute;
   left: 0;
@@ -306,23 +306,23 @@ svg.svg-grid-icons.svg-icons_flag-none {
   background-color: transparent; 
 }
 
-.cell .documents__wrapper {
+td .documents__wrapper {
   padding: 0;
   border: none;
 }
 
-.cell .js-tree-first-cell + .editor {
+td .js-tree-first-cell + .editor {
   position: static;
   display: inline-flex;
 }
-.cell .js-tree-first-cell + .editor,
-.cell .js-tree-first-cell + .editor.editor_bubble {
+td .js-tree-first-cell + .editor,
+td .js-tree-first-cell + .editor.editor_bubble {
   padding: 0;
 }
-.cell .dropdown {
+td .dropdown {
   width: 100%;
 }
-.cell .editor.editor_bubble {
+td .editor.editor_bubble {
   padding: 0 9px 0 15px;
 }
 
