@@ -25,7 +25,13 @@ export default class ThemeService {
 
     static _setStyle() {
         const url = `${this.url}/theme.css`;
-        document.head.insertAdjacentHTML('beforeend', `<link rel='stylesheet' type='text/css' id="core-ui-theme-styles" href="${url}">`);
+        const themeHtml = `<link rel='stylesheet' type='text/css' id="core-ui-theme-styles" href="${url}">`;
+
+        if (this.options.insertBefore) {
+            document.querySelector(this.options.insertBefore).insertAdjacentHTML('beforeBegin', themeHtml);
+        } else {
+            document.head.insertAdjacentHTML('beforeend', themeHtml);
+        }
     }
 
     static _setSprite() {
