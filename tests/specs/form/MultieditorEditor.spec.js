@@ -2,6 +2,7 @@
 
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 const context = {
     'oa.1': [
@@ -169,6 +170,24 @@ const context = {
 
 describe('Editors', () => {
     describe('Multieditor editor', () => {
+        FocusTests.runFocusTests({
+            initialize: () => new core.form.editors.NewExpressionEditor({
+                title: 'EE',
+                collection: new Backbone.Collection(),
+                required: true,
+                showValue: true,
+                showExpression: true,
+                showScript: true,
+                showContext: true,
+                context,
+                recordTypeId: 'oa.1',
+                propertyTypes: [],
+                usePropertyTypes: false,
+                popoutFlow: 'right',
+                autocommit: true,
+                ontologyService: null
+            })
+        });
         it('should initialize', () => {
             const view = new core.form.editors.NewExpressionEditor({
                 title: 'EE',

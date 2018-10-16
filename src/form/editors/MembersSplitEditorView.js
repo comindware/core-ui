@@ -33,8 +33,6 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
 
     className: 'member-split',
 
-    focusElement: null,
-
     attributes: {
         tabindex: 0
     },

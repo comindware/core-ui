@@ -2,6 +2,7 @@
 
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('NumberEditorView', () => {
@@ -9,49 +10,18 @@ describe('Editors', () => {
             return view.$('input');
         };
 
-        it('should get focus when focus() is called', () => {
-            // arrange
-            const model = new Backbone.Model({
-                data: 123
-            });
-            const view = new core.form.editors.NumberEditor({
-                model,
-                key: 'data'
-            });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    data: 123
+                });
 
-            // act
-            view.focus();
-
-            // assert
-            expect(findInput(view)).toBeFocused();
-            expect(view.hasFocus).toEqual(true, 'Must have focus.');
-        });
-
-        it('should lose focus when blur() is called', () => {
-            // arrange
-            const model = new Backbone.Model({
-                data: 123
-            });
-            const view = new core.form.editors.NumberEditor({
-                model,
-                key: 'data'
-            });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-            view.focus();
-
-            // act
-            view.blur();
-
-            // assert
-            expect(findInput(view)).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, "Mustn't have focus.");
+                return new core.form.editors.NumberEditor({
+                    model,
+                    key: 'data'
+                });
+            },
+            focusElement: 'input'
         });
 
         it('should have `value` matched with initial value', () => {

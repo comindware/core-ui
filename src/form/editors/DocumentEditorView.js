@@ -109,6 +109,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         showMoreText: '.js-show-more-text'
     },
 
+    focusElement: '.js-file-button',
+
     templateContext() {
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),

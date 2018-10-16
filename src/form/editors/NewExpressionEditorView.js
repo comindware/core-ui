@@ -55,6 +55,10 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         template: '.js-new-expression-template-container'
     },
 
+    attributes: {
+        tabindex: 0
+    },
+
     template: Handlebars.compile(template),
 
     templateContext() {

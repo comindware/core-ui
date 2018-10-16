@@ -1,5 +1,6 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('TextEditorView', () => {
@@ -7,47 +8,17 @@ describe('Editors', () => {
             return view.$('.input');
         };
 
-        it('should get focus when focus() is called', done => {
-            // arrange
-            const model = new Backbone.Model({
-                data: 'text'
-            });
-            const view = new core.form.editors.TextEditor({
-                model,
-                key: 'data'
-            });
-
-            // act
-            view.on('dom:refresh', () => {
-                view.focus();
-
-                expect(findInput(view)).toBeFocused();
-                expect(view.hasFocus).toEqual(true, 'Must have focus.');
-                done();
-            });
-
-            window.app.getView().showChildView('contentRegion', view);
-        });
-
-        it('should lose focus when blur() is called', () => {
-            // arrange
-            const model = new Backbone.Model({
-                data: 'text'
-            });
-            const view = new core.form.editors.TextEditor({
-                model,
-                key: 'data'
-            });
-            window.app.getView().showChildView('contentRegion', view);
-
-            view.focus();
-
-            // act
-            view.blur();
-
-            // assert
-            expect(findInput(view)).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, "Mustn't have focus.");
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    data: 'text'
+                });
+                return new core.form.editors.TextEditor({
+                    model,
+                    key: 'data'
+                });
+            },
+            focusElement: '.input'
         });
 
         it('should have `value` matched with initial value', () => {

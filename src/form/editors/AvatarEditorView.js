@@ -33,8 +33,6 @@ export default (formRepository.editors.Avatar = BaseItemEditorView.extend({
         tabindex: 0
     },
 
-    focusElement: null,
-
     template: Handlebars.compile(template),
 
     ui: {

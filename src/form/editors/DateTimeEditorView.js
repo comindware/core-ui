@@ -100,7 +100,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.__presentView();
     },
 
-    focusElement: null,
+    focusElement: '.editor_date-time_date input',
 
     focus(): void {
         if (this.enabled && !this.readonly) {
@@ -113,10 +113,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     blur(): void {
         this.__dateBlur();
         this.__timeBlur();
-    },
-
-    onFocus(): void {
-        BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
     setFormat(newFormat) {
@@ -132,10 +128,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.__presentView();
 
         this.$el.attr('class', this.__getClassName());
-    },
-
-    hasFocus() {
-        return this.el.contains(document.activeElement);
     },
 
     __keyAction(event) {
@@ -262,10 +254,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __dateBlur() {
         this.calendarDropdownView.close();
+        this.calendarDropdownView.button.blur();
     },
 
     __timeBlur() {
         this.timeDropdownView.close();
+        this.timeDropdownView.button.blur();
     },
 
     __createTimeDropdownView() {

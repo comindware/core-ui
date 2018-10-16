@@ -5,6 +5,7 @@ import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import keyCode from '../../../src/utils/keyCode';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
@@ -34,8 +35,13 @@ export default BaseLayoutEditorView.extend({
         deleteIconButton: '.js-delete-icon'
     },
 
+    attributes: {
+        tabindex: 0
+    },
+
     events: {
-        'click @ui.deleteIconButton': '__onDeleteIconClick'
+        'click @ui.deleteIconButton': '__onDeleteIconClick',
+        keydown: '__keydown'
     },
 
     onRender() {
@@ -68,7 +74,20 @@ export default BaseLayoutEditorView.extend({
         }
     },
 
+    __keydown(event) {
+        if (event.keyCode === keyCode.ENTER) {
+            this.open();
+        }
+    },
+
+    getIsOpenAllowed() {
+        return this.getEnabled() && !this.getReadonly() && !this.popupPanel.isOpen;
+    },
+
     open() {
+        if (!this.getIsOpenAllowed()) {
+            return;
+        }
         this.popupPanel.open();
     },
 

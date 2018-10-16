@@ -40,6 +40,8 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
         editorContainer: '.js-code-codemirror-container'
     },
 
+    focusElement: 'textarea',
+
     ui: {
         editor: '.js-code-codemirror-container',
         editBtn: '.js-code-button-edit',
@@ -84,6 +86,11 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
             this.ui.clearBtn.hide();
         }
         this.__setEditBtnText();
+    },
+
+    focus() {
+        this.editor.codemirror.focus();
+        this.hasFocus = true;
     },
 
     __value(value, updateUi, triggerChange) {

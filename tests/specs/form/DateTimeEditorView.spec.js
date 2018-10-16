@@ -1,6 +1,7 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 import DateTimeService from '../../../src/form/editors/services/DateTimeService';
+import FocusTests from './FocusTests';
 
 const someDate = moment('1986-09-04T17:30:00.000Z');
 const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
@@ -107,14 +108,25 @@ describe('Editors', () => {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
-        const show = view => {
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-        };
+        const show = view => window.app
+                                        .getView()
+                                        .getRegion('contentRegion')
+                                        .show(view);
 
-        it('should get focus when focus() is called', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    data: '2015-07-20T10:46:37.000Z'
+                });
+                return new core.form.editors.DateTimeEditor({
+                    model,
+                    key: 'data'
+                });
+            },
+            focusElement: '.editor_date-time_date input'
+        });
+
+        it('should open date panel on focus', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -129,10 +141,49 @@ describe('Editors', () => {
 
             expect(findDateInput(view)).toBeFocused();
             expect(view.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
-            expect(view.hasFocus()).toEqual(true, 'Must have focus.');
+            expect(!!view.timeDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
+            expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', () => {
+        it('should open date panel on focus date input', () => {
+            // arrange
+            const model = new Backbone.Model({
+                data: '2015-07-20T10:46:37.000Z'
+            });
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                key: 'data'
+            });
+
+            show(view);
+            const dateInput = findDateInput(view);
+            dateInput.focus();
+
+            expect(dateInput).toBeFocused();
+            expect(view.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
+            expect(!!view.timeDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
+        });
+
+        it('should open time panel on focus time input', () => {
+            // arrange
+            const model = new Backbone.Model({
+                data: '2015-07-20T10:46:37.000Z'
+            });
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                key: 'data'
+            });
+
+            show(view);
+            const timeInput = findTimeInput(view);
+            timeInput.focus();
+
+            expect(timeInput).toBeFocused();
+            expect(!!view.calendarDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
+            expect(view.timeDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
+        });
+
+        it('should close all panels on blur', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -146,9 +197,8 @@ describe('Editors', () => {
             view.focus();
             view.blur();
 
-            expect(findDateInput(view)).toBeFocused(); // Closing dropdown doesn't clear activeDocument to keep dropdown nesting
-            expect(view.calendarDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
-            //expect(view.hasFocus()).toEqual(false, "Mustn't have focus.");
+            expect(!!view.calendarDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
+            expect(!!view.timeDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
         });
 
         it('should have `value` matched with initial value', () => {

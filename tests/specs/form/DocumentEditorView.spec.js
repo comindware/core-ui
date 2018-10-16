@@ -1,8 +1,30 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('DocumentEditorView', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    value: [
+                        {
+                            id: 'document.1',
+                            name: 'Document 1',
+                            url: 'GetDocument/1'
+                        }
+                    ]
+                });
+    
+                return new core.form.editors.DocumentEditor({
+                    model,
+                    key: 'value',
+                    autocommit: true
+                });
+            },
+            focusElement: '.js-file-button'
+        });
+
         it('should initialize', () => {
             const model = new Backbone.Model({
                 value: [
