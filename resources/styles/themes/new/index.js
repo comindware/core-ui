@@ -182,16 +182,17 @@ module.exports.apply = {
         'font-size': '15px',
         'line-height': '1.5',
         padding: '3px 15px',
-        'border-radius': '4px'
+        'border-radius': '4px',
+        'text-shadow': 'none'
     },
     'button-strong': {
         'background-color': variables['blue-300'],
-        color: variables['blue-100'],
+        color: `${variables['blue-100']} !important`,
         border: `1px solid ${variables['blue-300']}`
     },
     'button-pale': {
         'background-color': variables.white,
-        color: variables['blue-300'],
+        color: `${variables['blue-300']} !important`,
         border: `1px solid ${variables['grey-400']}`
     },
     'button-strong-hover-theme': {

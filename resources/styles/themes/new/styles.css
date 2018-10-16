@@ -43,13 +43,13 @@
 
 /* Buttons */
 
-.btn.btn-outline, .sp-cancel {
+.btn.btn-outline{
   @apply --button-outline-theme;
 }
-.btn.btn-outline:hover, .sp-cancel:hover {
+.btn.btn-outline:hover{
   @apply --button-outline-hover-theme;
 }
-.btn.btn-outline:active, .sp-cancel:active {
+.btn.btn-outline:active{
   @apply --button-outline-active-theme;
 }
 

@@ -1005,6 +1005,15 @@ svg.svg-grid-icons {
   @apply --button-strong-active-theme;
   background-image: none;
 }
+.sp-container .sp-cancel{
+  @apply --button-pale;
+}
+.sp-container .sp-cancel:hover{
+  @apply --button-pale-hover-theme;
+}
+.sp-container .sp-cancel:active{
+  @apply --button-pale-active-theme;
+}
 .sp-dragger {
   width: 7px;
   height: 7px;

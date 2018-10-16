@@ -174,15 +174,16 @@ module.exports.apply = {
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
         border: `1px solid ${variables['grey-400']}`,
-        'border-radius': '2px'
+        'border-radius': '2px',
+        'text-shadow': 'none'
     },
     'button-strong': {
         'background-color': variables['grey-100'],
-        color: variables['text-color']
+        color: `${variables['text-color']} !important`
     },
     'button-pale': {
         'background-color': variables['text-color'],
-        color: variables['grey-100']
+        color: `${variables['grey-100']} !important`
     },
     'button-strong-hover-theme': {
         'border-color': variables['grey-600'],
