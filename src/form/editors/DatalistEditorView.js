@@ -275,11 +275,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.el.contains(document.activeElement);
     },
 
-    isPanelFocus() {
-        return this.dropdownView.panelEl && this.dropdownView.panelEl.contains(document.activeElement);
-    },
-
-    async fetchUpdateFilter(value, forceCompareText) {
+    async fetchUpdateFilter(value, forceCompareText, openOnRender) {
         this.searchText = (value || '').trim();
         if (this.fakeInputModel?.get('searchText') === this.searchText && !forceCompareText) {
             this.open();
@@ -287,10 +283,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         this.triggerNotReady();
         this.fakeInputModel?.set('searchText', this.searchText);
-        return this.__fetchUpdateFilter(this.searchText);
+        return this.__fetchUpdateFilter(this.searchText, openOnRender);
     },
 
-    async __fetchUpdateFilter(fetchedDataForSearchText) {
+    async __fetchUpdateFilter(fetchedDataForSearchText, openOnRender) {
         this.panelCollection.pointOff();
 
         try {
@@ -307,10 +303,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
-            this.open();
+            this.open(openOnRender);
             this.triggerReady(); //don't move to finally, recursively.
             return true;
-        } catch(e) {
+        } catch (e) {
             this.isLastFetchSuccess = false;
             this.triggerReady();
             return false;
@@ -343,7 +339,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     onAttach() {
         if (this.options.openOnRender) {
-            this.__onButtonClick();
+            this.__onButtonClick('', false, true);
         }
     },
 
@@ -357,12 +353,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && this.isThisFocus();
     },
 
-    open() {
-        if (!this.getIsOpenAllowed()) {
-            return;
+    open(openOnRender) {
+        if (openOnRender || this.getIsOpenAllowed()) {
+            this.dropdownView.open();
+            this.__focusButton();
         }
-        this.dropdownView.open();
-        this.__focusButton();
     },
 
     close() {
@@ -545,8 +540,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __onButtonClick(): void {
-        this.fetchUpdateFilter('', true);
+    __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
+        this.fetchUpdateFilter(filterValue, forceCompareText, openOnRender);
     },
 
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {
