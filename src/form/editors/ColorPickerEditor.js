@@ -21,6 +21,8 @@ import colorPicker from './templates/colorPicker.hbs';
 export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     template: Handlebars.compile(colorPicker),
 
+    focusElement: '.hexcolor',
+
     ui: {
         hexcolor: '.hexcolor',
         colorpicker: '.colorpicker'

@@ -1,8 +1,24 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('ColorPickerEditorView', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    value: null
+                });
+    
+                return new core.form.editors.ColorPickerEditor({
+                    model,
+                    key: 'value',
+                    autocommit: true
+                });
+            },
+            focusElement: '.hexcolor'
+        });
+
         it('should initialize', () => {
             const model = new Backbone.Model({
                 value: null

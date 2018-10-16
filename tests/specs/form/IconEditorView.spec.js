@@ -2,9 +2,24 @@
 
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('IconEditorView', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    iconClass: 'user'
+                });
+    
+                return new core.form.editors.IconEditor({
+                    modelIconProperty: 'iconClass',
+                    model
+                });
+            },
+            // focusElement: '.js-input'
+        });
+
         it('should render', () => {
             const model = new Backbone.Model({
                 iconClass: 'user'

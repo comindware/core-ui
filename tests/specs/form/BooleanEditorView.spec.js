@@ -2,51 +2,25 @@
 
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('BooleanEditorView', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    data: false
+                });
+                return new core.form.editors.BooleanEditor({
+                    model,
+                    key: 'data'
+                });
+            }
+        });
+
         const findButton = function(view) {
             return view.$el;
         };
-
-        it('should get focus when focus() is called', () => {
-            const model = new Backbone.Model({
-                data: false
-            });
-            const view = new core.form.editors.BooleanEditor({
-                model,
-                key: 'data'
-            });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-
-            view.focus();
-
-            expect(view.$el).toBeFocused();
-            expect(view.hasFocus).toEqual(true, 'Must have focus.');
-        });
-
-        it('should lose focus when blur() is called', () => {
-            const model = new Backbone.Model({
-                data: false
-            });
-            const view = new core.form.editors.BooleanEditor({
-                model,
-                key: 'data'
-            });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-            view.focus();
-
-            view.blur();
-
-            expect(view.$el).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, "Mustn't have focus.");
-        });
 
         it('should have `value` matched with initial value', () => {
             const model = new Backbone.Model({

@@ -2,6 +2,7 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 import 'jasmine-expect';
 import { keyCode } from 'utils';
+import FocusTests from './FocusTests';
 
 const controllerDelay = 700;
 
@@ -81,54 +82,22 @@ describe('Editors', () => {
     });
 
     describe('DatalistEditorView', () => {
-        it('should get focus when focus() is called', done => {
-            const model = new Backbone.Model({
-                value: [{ id: 1, name: 1 }]
-            });
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    value: [{ id: 1, name: 1 }]
+                });
 
-            const view = new core.form.editors.DatalistEditor({
-                model,
-                collection: new Backbone.Collection(collectionData),
-                key: 'value',
-                maxQuantitySelected: Infinity
-            });
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData),
+                    key: 'value',
+                    maxQuantitySelected: Infinity
+                });
 
-            view.on('view:ready', () => {
-                expect(getInput(view)).toBeFocused();
-                expect(view.hasFocus).toEqual(true, 'Must have focus.');
-                done();
-            });
-
-            show(view);
-
-            actionForOpen(view);
-        });
-
-        it('should lose focus and trigger blur when blur() is called', done => {
-            const model = new Backbone.Model({
-                value: [{ id: 1, name: 1 }]
-            });
-
-            const view = new core.form.editors.DatalistEditor({
-                model,
-                collection: new Backbone.Collection(collectionData),
-                key: 'value',
-                maxQuantitySelected: Infinity
-            });
-
-            view.on('view:ready', () => {
-                view.blur();
-            });
-
-            view.on('blur', () => {
-                expect(getInput(view)).not.toBeFocused();
-                expect(view.hasFocus).toEqual(false, 'Must have focus.');
-                done();
-            });
-
-            show(view);
-
-            actionForOpen(view);
+                return view;
+            },
+            focusElement: '.js-input'
         });
 
         it('should clean input value onblur', () => {

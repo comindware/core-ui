@@ -44,8 +44,6 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.__updateDisplayValue();
     },
 
-    focusElement: null,
-
     ui: {
         clearButton: '.js-clear-button'
     },

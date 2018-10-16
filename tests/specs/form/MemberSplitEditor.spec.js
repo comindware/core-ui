@@ -2,9 +2,26 @@
 
 import core from 'coreApi';
 import 'jasmine-jquery';
+import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
+        FocusTests.runFocusTests({
+            initialize: () => {
+                const model = new Backbone.Model({
+                    selected: []
+                });
+    
+                return new core.form.editors.MembersSplitEditor({
+                    model,
+                    key: 'selected',
+                    autocommit: true,
+                    users: core.services.UserService.listUsers(),
+                    groups: new Backbone.Collection()
+                });
+            }
+        });
+
         it('should be initialized', () => {
             const model = new Backbone.Model({
                 selected: []

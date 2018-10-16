@@ -15,7 +15,7 @@ export default function () {
             groups: Core.services.UserService.listGroups(),
             showMode: 'button'
         }),
-        presentation: '\'{{memberValue}}\'',
+        presentation: '\'{{selected}}\'',
         isEditor: true
     });
 }
