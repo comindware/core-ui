@@ -311,7 +311,7 @@ export default {
         const urlParts = window.location.hash.split('&nxt');
         const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
-        if (replaceIndex !== -1) {
+        if (replaceIndex !== -1 && urlParts.includes(part => part.includes('#custom'))) {
             urlParts.splice(replaceIndex, 1, cleanUrl);
 
             return urlParts.join('&nxt');
@@ -321,7 +321,7 @@ export default {
     },
 
     __isCurrentModuleSplit() {
-        return activeUrl.startsWith('#custom');
+        return activeUrl?.startsWith('#custom');
     },
 
     __invalidateSubModules(regionModulesMap) {
