@@ -21,13 +21,21 @@
 	},
 	"animals": {
 		"icons": [
+			"cat",
 			"crow",
+			"dog",
 			"dove",
+			"dragon",
 			"feather",
 			"feather-alt",
 			"fish",
 			"frog",
-			"kiwi-bird"
+			"hippo",
+			"horse",
+			"kiwi-bird",
+			"otter",
+			"paw",
+			"spider"
 		],
 		"label": "Animals"
 	},
@@ -170,6 +178,7 @@
 			"undo-alt",
 			"video",
 			"volume-down",
+			"volume-mute",
 			"volume-off",
 			"volume-up",
 			"youtube"
@@ -200,6 +209,22 @@
 		],
 		"label": "Automotive"
 	},
+	"autumn": {
+		"icons": [
+			"apple-alt",
+			"campground",
+			"cloud-sun",
+			"drumstick-bite",
+			"football-ball",
+			"hiking",
+			"mountain",
+			"tractor",
+			"tree",
+			"wind",
+			"wine-bottle"
+		],
+		"label": "Autumn"
+	},
 	"buildings": {
 		"icons": [
 			"building",
@@ -208,6 +233,7 @@
 			"home",
 			"hospital",
 			"hospital-alt",
+			"house-damage",
 			"industry",
 			"mosque",
 			"place-of-worship",
@@ -459,6 +485,7 @@
 			"euro-sign",
 			"gg",
 			"gg-circle",
+			"hryvnia",
 			"lira-sign",
 			"money-bill",
 			"money-bill-alt",
@@ -702,6 +729,27 @@
 		],
 		"label": "Files"
 	},
+	"gaming-tabletop": {
+		"icons": [
+			"acquisitions-incorporated",
+			"book-dead",
+			"critical-role",
+			"d-and-d",
+			"dice-d20",
+			"dice-d6",
+			"dragon",
+			"dungeon",
+			"fantasy-flight-games",
+			"fist-raised",
+			"hat-wizard",
+			"penny-arcade",
+			"ring",
+			"scroll",
+			"skull-crossbones",
+			"wizards-of-the-coast"
+		],
+		"label": "Tabletop Gaming"
+	},
 	"gender": {
 		"icons": [
 			"genderless",
@@ -720,9 +768,26 @@
 		],
 		"label": "Genders"
 	},
+	"halloween": {
+		"icons": [
+			"book-dead",
+			"broom",
+			"cat",
+			"cloud-moon",
+			"crow",
+			"ghost",
+			"hat-wizard",
+			"mask",
+			"skull-crossbones",
+			"spider",
+			"toilet-paper"
+		],
+		"label": "Halloween"
+	},
 	"hands": {
 		"icons": [
 			"allergies",
+			"fist-raised",
 			"hand-holding",
 			"hand-lizard",
 			"hand-paper",
@@ -934,6 +999,7 @@
 			"user-alt",
 			"user-circle",
 			"volume-down",
+			"volume-mute",
 			"volume-off",
 			"volume-up",
 			"wifi",
@@ -1203,6 +1269,7 @@
 			"blender",
 			"bomb",
 			"book",
+			"book-dead",
 			"bookmark",
 			"briefcase",
 			"broadcast-tower",
@@ -1231,6 +1298,8 @@
 			"cubes",
 			"cut",
 			"dice",
+			"dice-d20",
+			"dice-d6",
 			"dice-five",
 			"dice-four",
 			"dice-one",
@@ -1269,8 +1338,8 @@
 			"glasses",
 			"globe",
 			"graduation-cap",
+			"hat-wizard",
 			"hdd",
-			"headphones",
 			"headphones",
 			"headphones-alt",
 			"headset",
@@ -1309,7 +1378,6 @@
 			"mobile",
 			"mobile-alt",
 			"money-bill",
-			"money-bill",
 			"money-bill-alt",
 			"money-check",
 			"money-check-alt",
@@ -1331,6 +1399,7 @@
 			"plug",
 			"print",
 			"puzzle-piece",
+			"ring",
 			"road",
 			"rocket",
 			"ruler-combined",
@@ -1339,12 +1408,14 @@
 			"save",
 			"school",
 			"screwdriver",
+			"scroll",
 			"search",
 			"shield-alt",
 			"shopping-bag",
 			"shopping-basket",
 			"shopping-cart",
 			"shower",
+			"skull-crossbones",
 			"snowflake",
 			"space-shuttle",
 			"star",
@@ -1445,6 +1516,7 @@
 			"dove",
 			"gopuram",
 			"hamsa",
+			"hanukiah",
 			"haykal",
 			"jedi",
 			"journal-whills",
@@ -1607,6 +1679,7 @@
 			"video",
 			"video-slash",
 			"volume-down",
+			"volume-mute",
 			"volume-off",
 			"volume-up",
 			"wifi"
@@ -1684,6 +1757,7 @@
 			"user-edit",
 			"user-friends",
 			"user-graduate",
+			"user-injured",
 			"user-lock",
 			"user-md",
 			"user-minus",

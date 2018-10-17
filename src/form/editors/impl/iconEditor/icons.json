@@ -48,6 +48,28 @@
     "unicode": "f369",
     "label": "Accusoft"
   },
+  "acquisitions-incorporated": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "game",
+        "gaming",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f6af",
+    "label": "Acquisitions Incorporated"
+  },
   "ad": {
     "changes": [
       "5.3.0"
@@ -687,6 +709,7 @@
       "terms": [
         "food",
         "fruit",
+        "mac",
         "osx"
       ]
     },
@@ -702,7 +725,14 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "fall",
+        "food",
+        "fruit",
+        "fuji",
+        "macintosh",
+        "seasonal"
+      ]
     },
     "styles": [
       "solid"
@@ -1567,6 +1597,7 @@
       "terms": [
         "alcohol",
         "bar",
+        "beverage",
         "drink",
         "liquor",
         "mug",
@@ -1840,6 +1871,24 @@
     "unicode": "f517",
     "label": "Blender"
   },
+  "blender-phone": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "appliance",
+        "fantasy",
+        "silly"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6b6",
+    "label": "Blender Phone"
+  },
   "blind": {
     "changes": [
       "4.6",
@@ -2015,6 +2064,35 @@
     ],
     "unicode": "f02d",
     "label": "book"
+  },
+  "book-dead": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "crossbones",
+        "d&d",
+        "dark arts",
+        "death",
+        "dnd",
+        "documentation",
+        "evil",
+        "fantasy",
+        "halloween",
+        "holiday",
+        "read",
+        "skull",
+        "spell"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6b7",
+    "label": "Book of the Dead"
   },
   "book-open": {
     "changes": [
@@ -2229,7 +2307,17 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "clean",
+        "firebolt",
+        "fly",
+        "halloween",
+        "holiday",
+        "nimbus 2000",
+        "quidditch",
+        "sweep",
+        "witch"
+      ]
     },
     "styles": [
       "solid"
@@ -2554,6 +2642,7 @@
     "search": {
       "terms": [
         "delete",
+        "negative",
         "remove"
       ]
     },
@@ -2574,7 +2663,8 @@
       "terms": [
         "add",
         "create",
-        "new"
+        "new",
+        "positive"
       ]
     },
     "styles": [
@@ -2642,6 +2732,26 @@
     ],
     "unicode": "f083",
     "label": "Retro Camera"
+  },
+  "campground": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "camping",
+        "fall",
+        "outdoors",
+        "seasonal",
+        "tent"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6bb",
+    "label": "Campground"
   },
   "cannabis": {
     "changes": [
@@ -2721,7 +2831,7 @@
       "solid"
     ],
     "unicode": "f5de",
-    "label": "Car Alt"
+    "label": "Alternate Car"
   },
   "car-battery": {
     "changes": [
@@ -2951,6 +3061,7 @@
         "add",
         "create",
         "new",
+        "positive",
         "shopping"
       ]
     },
@@ -2959,6 +3070,28 @@
     ],
     "unicode": "f217",
     "label": "Add to Shopping Cart"
+  },
+  "cat": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "feline",
+        "halloween",
+        "holiday",
+        "kitten",
+        "kitty",
+        "meow",
+        "pet"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6be",
+    "label": "Cat"
   },
   "cc-amazon-pay": {
     "changes": [
@@ -3141,6 +3274,23 @@
     ],
     "unicode": "f0a3",
     "label": "certificate"
+  },
+  "chair": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "furniture",
+        "seat"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6c0",
+    "label": "Chair"
   },
   "chalkboard": {
     "changes": [
@@ -3918,6 +4068,46 @@
     "unicode": "f381",
     "label": "Alternate Cloud Download"
   },
+  "cloud-moon": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "evening",
+        "halloween",
+        "holiday",
+        "night",
+        "sky"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6c3",
+    "label": "Cloud with Moon"
+  },
+  "cloud-sun": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "day",
+        "daytime",
+        "fall",
+        "outdoors",
+        "seasonal"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6c4",
+    "label": "Cloud with Sun"
+  },
   "cloud-upload-alt": {
     "changes": [
       "5.0.0",
@@ -3985,6 +4175,7 @@
     "search": {
       "terms": [
         "alcohol",
+        "beverage",
         "drink"
       ]
     },
@@ -4074,11 +4265,14 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "beverage",
         "breakfast",
         "cafe",
         "drink",
+        "fall",
         "morning",
         "mug",
+        "seasonal",
         "tea"
       ]
     },
@@ -4194,7 +4388,6 @@
       "terms": [
         "bubble",
         "chat",
-        "commenting",
         "commenting",
         "conversation",
         "feedback",
@@ -4495,7 +4688,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "furniture",
+        "sofa"
+      ]
     },
     "styles": [
       "solid"
@@ -4702,6 +4898,21 @@
     "unicode": "f4f2",
     "label": "Creative Commons Share"
   },
+  "creative-commons-zero": {
+    "changes": [
+      "5.0.11",
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f4f3",
+    "label": "Creative Commons CC0"
+  },
   "credit-card": {
     "changes": [
       "2",
@@ -4725,6 +4936,28 @@
     ],
     "unicode": "f09d",
     "label": "Credit Card"
+  },
+  "critical-role": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "game",
+        "gaming",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f6c9",
+    "label": "Critical Role"
   },
   "crop": {
     "changes": [
@@ -4803,6 +5036,9 @@
       "terms": [
         "bird",
         "bullfrog",
+        "fauna",
+        "halloween",
+        "holiday",
         "toad"
       ]
     },
@@ -4900,7 +5136,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "scissors",
         "scissors"
       ]
     },
@@ -5052,6 +5287,20 @@
     "unicode": "f108",
     "label": "Desktop"
   },
+  "dev": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f6cc",
+    "label": "DEV"
+  },
   "deviantart": {
     "changes": [
       "4.1",
@@ -5117,6 +5366,52 @@
     ],
     "unicode": "f522",
     "label": "Dice"
+  },
+  "dice-d20": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "chance",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "gambling",
+        "game",
+        "roll"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6cf",
+    "label": "Dice D20"
+  },
+  "dice-d6": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "chance",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "gambling",
+        "game",
+        "roll"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6d1",
+    "label": "Dice D6"
   },
   "dice-five": {
     "changes": [
@@ -5398,6 +5693,28 @@
     "unicode": "f395",
     "label": "Docker"
   },
+  "dog": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "canine",
+        "fauna",
+        "mammmal",
+        "pet",
+        "pooch",
+        "puppy",
+        "woof"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6d3",
+    "label": "Dog"
+  },
   "dollar-sign": {
     "changes": [
       "3.2",
@@ -5520,8 +5837,8 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "animal",
         "bird",
+        "fauna",
         "flying",
         "peace"
       ]
@@ -5580,6 +5897,25 @@
     ],
     "unicode": "f568",
     "label": "Drafting Compass"
+  },
+  "dragon": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6d5",
+    "label": "Dragon"
   },
   "draw-polygon": {
     "changes": [
@@ -5683,6 +6019,20 @@
     "unicode": "f56a",
     "label": "Drum Steelpan"
   },
+  "drumstick-bite": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6d7",
+    "label": "Drumstick with Bite Taken Out"
+  },
   "drupal": {
     "changes": [
       "4.1",
@@ -5717,6 +6067,28 @@
     ],
     "unicode": "f44b",
     "label": "Dumbbell"
+  },
+  "dungeon": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "door",
+        "entrance",
+        "fantasy",
+        "gate"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6d9",
+    "label": "Dungeon"
   },
   "dyalog": {
     "changes": [
@@ -6113,7 +6485,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "eur",
         "eur"
       ]
     },
@@ -6441,6 +6812,28 @@
     "unicode": "f082",
     "label": "Facebook Square"
   },
+  "fantasy-flight-games": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "game",
+        "gaming",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f6dc",
+    "label": "Fantasy Flight-games"
+  },
   "fast-backward": {
     "changes": [
       "1",
@@ -6534,7 +6927,7 @@
       "solid"
     ],
     "unicode": "f56b",
-    "label": "Feather Alt"
+    "label": "Alternate Feather"
   },
   "female": {
     "changes": [
@@ -6702,6 +7095,22 @@
     ],
     "unicode": "f56c",
     "label": "File Contract"
+  },
+  "file-csv": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "spreadsheets"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6dd",
+    "label": "File CSV"
   },
   "file-download": {
     "changes": [
@@ -7067,7 +7476,9 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "caliente",
         "flame",
+        "heat",
         "hot",
         "popular"
       ]
@@ -7174,13 +7585,42 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "fauna",
+        "gold",
+        "swimming"
+      ]
     },
     "styles": [
       "solid"
     ],
     "unicode": "f578",
     "label": "Fish"
+  },
+  "fist-raised": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "hand",
+        "ki",
+        "monk",
+        "resist",
+        "strength",
+        "unarmed combat"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6de",
+    "label": "Raised Fist"
   },
   "flag": {
     "changes": [
@@ -7314,7 +7754,7 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": null
+      "terms": []
     },
     "styles": [
       "solid",
@@ -7332,6 +7772,7 @@
       "terms": [
         "archive",
         "delete",
+        "negative",
         "remove"
       ]
     },
@@ -7366,7 +7807,8 @@
       "terms": [
         "add",
         "create",
-        "new"
+        "new",
+        "positive"
       ]
     },
     "styles": [
@@ -7492,7 +7934,11 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "fall",
+        "pigskin",
+        "seasonal"
+      ]
     },
     "styles": [
       "solid"
@@ -7618,10 +8064,14 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "amphibian",
         "bullfrog",
+        "fauna",
+        "hop",
         "kermit",
         "kiss",
         "prince",
+        "ribbit",
         "toad",
         "wart"
       ]
@@ -7882,6 +8332,30 @@
     "unicode": "f261",
     "label": "GG Currency Circle"
   },
+  "ghost": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "apparition",
+        "blinky",
+        "clyde",
+        "floating",
+        "halloween",
+        "holiday",
+        "inky",
+        "pinky",
+        "spirit"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6e2",
+    "label": "Ghost"
+  },
   "gift": {
     "changes": [
       "1",
@@ -8041,6 +8515,7 @@
       "terms": [
         "alcohol",
         "bar",
+        "beverage",
         "drink",
         "glass",
         "liquor",
@@ -8065,7 +8540,7 @@
       "solid"
     ],
     "unicode": "f57b",
-    "label": "Glass Martini-alt"
+    "label": "Alternate Glass Martini"
   },
   "glasses": {
     "changes": [
@@ -8929,6 +9404,26 @@
     "unicode": "f5f7",
     "label": "Hackerrank"
   },
+  "hammer": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "admin",
+        "fix",
+        "repair",
+        "settings",
+        "tool"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6e3",
+    "label": "Hammer"
+  },
   "hamsa": {
     "changes": [
       "5.3.0"
@@ -9255,6 +9750,26 @@
     "unicode": "f2b5",
     "label": "Handshake"
   },
+  "hanukiah": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "candle",
+        "hanukkah",
+        "jewish",
+        "judaism",
+        "light"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6e6",
+    "label": "Hanukiah"
+  },
   "hashtag": {
     "changes": [
       "4.5",
@@ -9269,6 +9784,34 @@
     ],
     "unicode": "f292",
     "label": "Hashtag"
+  },
+  "hat-wizard": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "buckle",
+        "cloth",
+        "clothing",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "halloween",
+        "holiday",
+        "mage",
+        "magic",
+        "pointy",
+        "witch"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6e8",
+    "label": "Wizard's Hat"
   },
   "haykal": {
     "changes": [
@@ -9319,7 +9862,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "header",
         "header"
       ]
     },
@@ -9368,7 +9910,7 @@
       "solid"
     ],
     "unicode": "f58f",
-    "label": "Headphones Alt"
+    "label": "Alternate Headphones"
   },
   "headset": {
     "changes": [
@@ -9476,6 +10018,46 @@
     "unicode": "f591",
     "label": "Highlighter"
   },
+  "hiking": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "activity",
+        "backpack",
+        "fall",
+        "fitness",
+        "outdoors",
+        "seasonal",
+        "walking"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6ec",
+    "label": "Hiking"
+  },
+  "hippo": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "fauna",
+        "hungry",
+        "mammmal"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6ed",
+    "label": "Hippo"
+  },
   "hips": {
     "changes": [
       "5.0.5"
@@ -9578,6 +10160,25 @@
     ],
     "unicode": "f592",
     "label": "Hornbill"
+  },
+  "horse": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "equus",
+        "fauna",
+        "mammmal",
+        "neigh"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6f0",
+    "label": "Horse"
   },
   "hospital": {
     "changes": [
@@ -9737,6 +10338,23 @@
     "unicode": "f251",
     "label": "Hourglass Start"
   },
+  "house-damage": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "devastation",
+        "home"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6f1",
+    "label": "House Damage"
+  },
   "houzz": {
     "changes": [
       "4.4",
@@ -9752,6 +10370,22 @@
     ],
     "unicode": "f27c",
     "label": "Houzz"
+  },
+  "hryvnia": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "money"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6f2",
+    "label": "Hryvnia"
   },
   "html5": {
     "changes": [
@@ -9861,7 +10495,6 @@
       "terms": [
         "album",
         "photo",
-        "picture",
         "picture"
       ]
     },
@@ -10494,7 +11127,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "bird",
+        "fauna"
+      ]
     },
     "styles": [
       "solid"
@@ -10574,7 +11210,6 @@
         "mac",
         "macbook",
         "machine",
-        "pc",
         "pc"
       ]
     },
@@ -10747,6 +11382,7 @@
     "search": {
       "terms": [
         "eco",
+        "flora",
         "nature",
         "plant"
       ]
@@ -10953,7 +11589,8 @@
   "linkedin-in": {
     "changes": [
       "2",
-      "5.0.0"
+      "5.0.0",
+      "5.4.1"
     ],
     "ligatures": [],
     "search": {
@@ -11007,7 +11644,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "try",
         "try",
         "turkish"
       ]
@@ -11074,7 +11710,6 @@
     "search": {
       "terms": [
         "checklist",
-        "list",
         "list",
         "numbers",
         "ol",
@@ -11307,6 +11942,10 @@
       "terms": [
         "autocomplete",
         "automatic",
+        "mage",
+        "magic",
+        "spell",
+        "witch",
         "wizard"
       ]
     },
@@ -11475,7 +12114,7 @@
       "solid"
     ],
     "unicode": "f5a0",
-    "label": "Map Marked-alt"
+    "label": "Alternate Map Marked"
   },
   "map-marker": {
     "changes": [
@@ -11683,6 +12322,27 @@
     ],
     "unicode": "f22a",
     "label": "Mars Stroke Vertical"
+  },
+  "mask": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "costume",
+        "disguise",
+        "halloween",
+        "holiday",
+        "secret",
+        "super hero"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6fa",
+    "label": "Mask"
   },
   "mastodon": {
     "changes": [
@@ -11916,12 +12576,14 @@
   },
   "menorah": {
     "changes": [
-      "5.3.0"
+      "5.3.0",
+      "5.4.0"
     ],
     "ligatures": [],
     "search": {
       "terms": [
         "candle",
+        "hanukkah",
         "jewish",
         "judaism",
         "light"
@@ -12088,8 +12750,8 @@
         "collapse",
         "delete",
         "hide",
-        "hide",
         "minify",
+        "negative",
         "remove",
         "trash"
       ]
@@ -12110,6 +12772,7 @@
       "terms": [
         "delete",
         "hide",
+        "negative",
         "remove",
         "trash"
       ]
@@ -12131,8 +12794,8 @@
         "collapse",
         "delete",
         "hide",
-        "hide",
         "minify",
+        "negative",
         "remove",
         "trash"
       ]
@@ -12475,6 +13138,20 @@
     "unicode": "f21c",
     "label": "Motorcycle"
   },
+  "mountain": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6fc",
+    "label": "Mountain"
+  },
   "mouse-pointer": {
     "changes": [
       "4.4",
@@ -12539,6 +13216,20 @@
     ],
     "unicode": "f612",
     "label": "Neos"
+  },
+  "network-wired": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6ff",
+    "label": "Wired Network"
   },
   "neuter": {
     "changes": [
@@ -12888,6 +13579,23 @@
     "unicode": "f41a",
     "label": "Open Source Initiative"
   },
+  "otter": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "fauna",
+        "mammmal"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f700",
+    "label": "Otter"
+  },
   "outdent": {
     "changes": [
       "1",
@@ -12926,6 +13634,7 @@
     "search": {
       "terms": [
         "eco",
+        "flora",
         "leaf",
         "leaves",
         "nature",
@@ -13211,6 +13920,7 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "animal",
         "pet"
       ]
     },
@@ -13382,6 +14092,29 @@
     ],
     "unicode": "f5ae",
     "label": "Pencil Ruler"
+  },
+  "penny-arcade": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "game",
+        "gaming",
+        "pax",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f704",
+    "label": "Penny Arcade"
   },
   "people-carry": {
     "changes": [
@@ -13889,7 +14622,8 @@
         "add",
         "create",
         "expand",
-        "new"
+        "new",
+        "positive"
       ]
     },
     "styles": [
@@ -13909,7 +14643,8 @@
         "add",
         "create",
         "expand",
-        "new"
+        "new",
+        "positive"
       ]
     },
     "styles": [
@@ -13929,7 +14664,8 @@
         "add",
         "create",
         "expand",
-        "new"
+        "new",
+        "positive"
       ]
     },
     "styles": [
@@ -14034,7 +14770,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "gbp",
         "gbp"
       ]
     },
@@ -14814,6 +15549,30 @@
     "unicode": "f4d6",
     "label": "Ribbon"
   },
+  "ring": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "Gollum",
+        "band",
+        "binding",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "jewelry",
+        "precious"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f70b",
+    "label": "Ring"
+  },
   "road": {
     "changes": [
       "1",
@@ -14948,7 +15707,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "rub",
         "rub"
       ]
     },
@@ -15013,6 +15771,23 @@
     ],
     "unicode": "f548",
     "label": "Ruler Vertical"
+  },
+  "running": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "jog",
+        "sprint"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f70c",
+    "label": "Running"
   },
   "rupee-sign": {
     "changes": [
@@ -15158,7 +15933,6 @@
     "search": {
       "terms": [
         "admin",
-        "container",
         "fix",
         "repair",
         "settings",
@@ -15185,6 +15959,27 @@
     ],
     "unicode": "f28a",
     "label": "Scribd"
+  },
+  "scroll": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "announcement",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "paper"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f70e",
+    "label": "Scroll"
   },
   "search": {
     "changes": [
@@ -15245,6 +16040,7 @@
     "search": {
       "terms": [
         "minify",
+        "negative",
         "smaller",
         "zoom",
         "zoom out"
@@ -15267,6 +16063,7 @@
         "bigger",
         "enlarge",
         "magnify",
+        "positive",
         "zoom",
         "zoom in"
       ]
@@ -15457,7 +16254,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "ils",
         "ils"
       ]
     },
@@ -15474,7 +16270,12 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "shield"
+        "achievement",
+        "award",
+        "block",
+        "defend",
+        "security",
+        "winner"
       ]
     },
     "styles": [
@@ -15844,6 +16645,38 @@
     "unicode": "f54c",
     "label": "Skull"
   },
+  "skull-crossbones": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "alert",
+        "bones",
+        "d&d",
+        "danger",
+        "dead",
+        "deadly",
+        "death",
+        "dnd",
+        "fantasy",
+        "halloween",
+        "holiday",
+        "jolly-roger",
+        "pirate",
+        "poison",
+        "skeleton",
+        "warning"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f714",
+    "label": "Skull & Crossbones"
+  },
   "skyatlas": {
     "changes": [
       "4.3",
@@ -15911,6 +16744,20 @@
     ],
     "unicode": "f3ef",
     "label": "Slack Hashtag"
+  },
+  "slash": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f715",
+    "label": "Slash"
   },
   "sliders-h": {
     "changes": [
@@ -15980,7 +16827,8 @@
       "terms": [
         "emoticon",
         "face",
-        "happy"
+        "happy",
+        "positive"
       ]
     },
     "styles": [
@@ -16325,6 +17173,7 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "flora",
         "mindfullness",
         "plant",
         "wellness"
@@ -16359,7 +17208,8 @@
   },
   "speakap": {
     "changes": [
-      "5.0.0"
+      "5.0.0",
+      "5.4.0"
     ],
     "ligatures": [],
     "search": {
@@ -16370,6 +17220,28 @@
     ],
     "unicode": "f3f3",
     "label": "Speakap"
+  },
+  "spider": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "arachnid",
+        "bug",
+        "charlotte",
+        "crawl",
+        "eight",
+        "halloween",
+        "holiday"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f717",
+    "label": "Spider"
   },
   "spinner": {
     "changes": [
@@ -18112,6 +18984,28 @@
     "unicode": "f205",
     "label": "Toggle On"
   },
+  "toilet-paper": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "bathroom",
+        "halloween",
+        "holiday",
+        "lavatory",
+        "prank",
+        "restroom",
+        "roll"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f71e",
+    "label": "Toilet Paper"
+  },
   "toolbox": {
     "changes": [
       "5.0.13"
@@ -18187,6 +19081,20 @@
     ],
     "unicode": "f6a1",
     "label": "Torii Gate"
+  },
+  "tractor": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f722",
+    "label": "Tractor"
   },
   "trade-federation": {
     "changes": [
@@ -18331,7 +19239,15 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "bark",
+        "fall",
+        "flora",
+        "forest",
+        "nature",
+        "plant",
+        "seasonal"
+      ]
     },
     "styles": [
       "solid"
@@ -19087,6 +20003,24 @@
     "unicode": "f501",
     "label": "User Graduate"
   },
+  "user-injured": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "cast",
+        "ouch",
+        "sling"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f728",
+    "label": "User Injured"
+  },
   "user-lock": {
     "changes": [
       "5.0.11"
@@ -19134,6 +20068,7 @@
     "search": {
       "terms": [
         "delete",
+        "negative",
         "remove"
       ]
     },
@@ -19153,6 +20088,7 @@
         "assassin",
         "avatar",
         "dangerous",
+        "deadly",
         "sneaky"
       ]
     },
@@ -19172,6 +20108,7 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "positive",
         "sign up",
         "signup"
       ]
@@ -19227,7 +20164,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "ban",
+        "remove"
+      ]
     },
     "styles": [
       "solid"
@@ -19484,7 +20424,7 @@
       "brands"
     ],
     "unicode": "f2a9",
-    "label": "Viadeo"
+    "label": "Video"
   },
   "viadeo-square": {
     "changes": [
@@ -19499,7 +20439,7 @@
       "brands"
     ],
     "unicode": "f2aa",
-    "label": "Viadeo Square"
+    "label": "Video Square"
   },
   "vial": {
     "changes": [
@@ -19730,6 +20670,20 @@
     ],
     "unicode": "f027",
     "label": "Volume Down"
+  },
+  "volume-mute": {
+    "changes": [
+      "5.3.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f6a9",
+    "label": "Volume Mute"
   },
   "volume-off": {
     "changes": [
@@ -20004,6 +20958,26 @@
     "unicode": "f266",
     "label": "Wikipedia W"
   },
+  "wind": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "air",
+        "blow",
+        "breeze",
+        "fall",
+        "seasonal"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f72e",
+    "label": "Wind"
+  },
   "window-close": {
     "changes": [
       "4.7",
@@ -20085,6 +21059,26 @@
     "unicode": "f17a",
     "label": "Windows"
   },
+  "wine-bottle": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "alcohol",
+        "beverage",
+        "drink",
+        "glass",
+        "grapes"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f72f",
+    "label": "Wine Bottle"
+  },
   "wine-glass": {
     "changes": [
       "5.0.9",
@@ -20092,7 +21086,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "alcohol",
+        "beverage",
+        "drink",
+        "grapes"
+      ]
     },
     "styles": [
       "solid"
@@ -20106,13 +21105,18 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "alcohol",
+        "beverage",
+        "drink",
+        "grapes"
+      ]
     },
     "styles": [
       "solid"
     ],
     "unicode": "f5ce",
-    "label": "Wine Glass-alt"
+    "label": "Alternate Wine Glas"
   },
   "wix": {
     "changes": [
@@ -20128,6 +21132,28 @@
     "unicode": "f5cf",
     "label": "Wix"
   },
+  "wizards-of-the-coast": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "game",
+        "gaming",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f730",
+    "label": "Wizards of the Coast"
+  },
   "wolf-pack-battalion": {
     "changes": [
       "5.0.12"
@@ -20140,7 +21166,7 @@
       "brands"
     ],
     "unicode": "f514",
-    "label": "Wolf Pack-battalion"
+    "label": "Wolf Pack Battalion"
   },
   "won-sign": {
     "changes": [
@@ -20150,7 +21176,6 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "krw",
         "krw"
       ]
     },
@@ -20400,7 +21425,7 @@
     "search": {
       "terms": [
         "jpy",
-        "jpy"
+        "money"
       ]
     },
     "styles": [
