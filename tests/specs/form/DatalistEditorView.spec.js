@@ -870,7 +870,7 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should have input for search in single value mode', done => {
+        it('should has input for search in single value mode', done => {
             const model = new Backbone.Model({
                 value: 54
             });
@@ -893,7 +893,31 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should have input for search in multi value mode', done => {
+        it('should has no input for search in single value mode if options.showSearch = false', done => {
+            const model = new Backbone.Model({
+                value: 54
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                allowEmptyValue: false,
+                showSearch: false,
+                autocommit: true,
+                valueType: 'id',
+            });
+
+            view.on('attach', () => {
+                const input = getInput(view);
+                expect(input.length).toEqual(0);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should has input for search in multi value mode', done => {
             const model = new Backbone.Model({
                 DatalistValue: [
                     {
@@ -927,6 +951,142 @@ describe('Editors', () => {
             view.on('attach', () => {
                 const input = getInput(view);
                 expect(input.length).toEqual(1);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should has no input for search in multi value mode if options.showSearch = false', done => {
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    },
+                    {
+                        id: 'task.3',
+                        text: 'Test Reference 3'
+                    }
+                ]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                showSearch: false,
+                maxQuantitySelected: 3,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.on('attach', () => {
+                const input = getInput(view);
+                expect(input.length).toEqual(0);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should open panel on render if options.openOnRender = true', done => {
+            const model = new Backbone.Model({
+                DatalistValue: [
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    },
+                    {
+                        id: 'task.2',
+                        text: 'Test Reference 2'
+                    },
+                    {
+                        id: 'task.3',
+                        text: 'Test Reference 3'
+                    }
+                ]
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                openOnRender: true,
+                maxQuantitySelected: 3,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.on('view:ready', () => {
+                expect(view.dropdownView.isOpen).toEqual(true);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should not open panel on render if options.openOnRender = undefined', done => {
+            const model = new Backbone.Model({
+                DatalistValue: ['task.1', 'task.2', 'task.3']
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                valueType: 'id',
+                maxQuantitySelected: 3,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.on('view:ready', () => {
+                expect(!!view.dropdownView.isOpen).toEqual(false);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should not open panel on render if options.openOnRender = false', done => {
+            const model = new Backbone.Model({
+                DatalistValue: ['task.1', 'task.2', 'task.3']
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model: model,
+                key: 'DatalistValue',
+                autocommit: true,
+                showEditButton: true,
+                showAddNewButton: true,
+                showCheckboxes: true,
+                openOnRender: false,
+                valueType: 'id',
+                maxQuantitySelected: 3,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                })
+            });
+
+            view.on('view:ready', () => {
+                expect(!!view.dropdownView.isOpen).toEqual(false);
                 done();
             });
 
