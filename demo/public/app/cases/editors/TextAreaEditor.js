@@ -14,7 +14,7 @@ export default function() {
             autocommit: true,
             maxHeight: 10
         }),
-        presentation: '<div style="display: inline-block"><span style="color: darkgreen">{{{renderAsHtml textAreaValue}}}</span></div>',
+        presentation: '<div style="display: inline-block"><span style="color: darkgreen">{{{textAreaValue}}}</span></div>',
         isEditor: true
     });
 }
