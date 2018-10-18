@@ -475,9 +475,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __checkSelectedState(model) {
-        const selected = Object.values(model.collection.selected);
-        if (selected.length > 1) {
-            selected.forEach(selectedModel => selectedModel.selected = false);
+        const selectedModels = model.collection.selected;
+
+        if (selectedModels && selectedModels.length > 1) {
+            const selected = Object.values(selectedModels);
+
+            selected.forEach(selectedModel => (selectedModel.selected = false));
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -549,7 +552,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
+            //length = 1 + fakeInputModel
             return;
         }
 
@@ -586,11 +590,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
             return;
         }
-        collection.add(
-            this.isFakeInputModelWrong(collection) ?
-                this.fakeInputModel = new FakeInputModel() :
-                this.fakeInputModel
-        );
+        collection.add(this.isFakeInputModelWrong(collection) ? (this.fakeInputModel = new FakeInputModel()) : this.fakeInputModel);
 
         this.__updateFakeInputModel();
     },
