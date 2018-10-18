@@ -1183,6 +1183,9 @@ input[type="color"], .colorpicker{
     margin-top: -1px;
     margin-left: -1px;
 }
+.simplified-button_grid .row {
+    pointer-events: none;
+}
 
 .simplified-button_grid .row + .row {
     margin-right: -8px;

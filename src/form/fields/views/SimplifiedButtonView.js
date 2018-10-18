@@ -51,6 +51,7 @@ export default Marionette.View.extend({
 
         this.showChildView('gridRegion', grid);
         this.__updateCounter(showCounter, counterValue);
+        this.el.setAttribute('title', this.__getTitle());
     },
 
     __formatValues(schema, values) {
@@ -58,25 +59,29 @@ export default Marionette.View.extend({
 
         switch (schema.type) {
             case 'Datalist': {
-                return Array.isArray(values) ? values.map(v => ({
-                    value: `
-                <div class="user-edit-wrp" title="${v.name}">
+                return Array.isArray(values)
+                    ? values.map(v => ({
+                          value: `
+                <div class="user-edit-wrp">
                     <div class="simple-field_container">
                     ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
                  ${v.name}
             </div>`
-                })) : [{ value: values.name }];
+                      }))
+                    : [{ value: values.name }];
             }
             case 'Document': {
-                return Array.isArray(values) ? values.map(v => ({
-                    value: `
-                <div class="user-edit-wrp" title="${v.name}">
+                return Array.isArray(values)
+                    ? values.map(v => ({
+                          value: `
+                <div class="user-edit-wrp">
                     <div class="simple-field_container">
                     ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
                 </div>
             </div>`
-                })) : [{ value: values.name }];
+                      }))
+                    : [{ value: values.name }];
             }
             default:
                 return Array.isArray(values) ? values : [values];
@@ -97,6 +102,7 @@ export default Marionette.View.extend({
 
         this.collection.reset(collectionValues);
         this.__updateCounter(showCounter, counterValue);
+        this.el.setAttribute('title', this.__getTitle());
     },
 
     __updateCounter(showCounter, counterValue) {
@@ -108,5 +114,14 @@ export default Marionette.View.extend({
                 this.ui.counterRegion.hide();
             }
         }
+    },
+
+    __getTitle() {
+        const values = this.options.editor.getValue();
+
+        if (Array.isArray(values)) {
+            return values.map(v => v.name || v.id).join(', ');
+        }
+        return values.name || values.id;
     }
 });

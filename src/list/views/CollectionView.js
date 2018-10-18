@@ -90,7 +90,7 @@ export default Marionette.CompositeView.extend({
             this.collection.updatePosition(0);
         }
 
-        this.debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
+        this.debouncedHandleResize = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
         this.listenTo(this.collection, 'filter', this.__handleFilter);
@@ -327,11 +327,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __onScroll(e) {
-        if (this.state.viewportHeight === undefined
-            || e.target.scrollLe
-            || this.collection.length <= this.state.viewportHeight
-            || this.internalScroll
-            || this.isDestroyed()) {
+        if (this.state.viewportHeight === undefined || e.target.scrollLe || this.collection.length <= this.state.viewportHeight || this.internalScroll || this.isDestroyed()) {
             return;
         }
 
@@ -364,9 +360,9 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop
-                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
-                * this.childHeight;
+            const scrollTop =
+                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
+                this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -377,7 +373,7 @@ export default Marionette.CompositeView.extend({
         return newPosition;
     },
 
-    handleResize() {
+    handleResize(shouldUpdateScroll) {
         if (!this.collection.isSliding) {
             return;
         }
@@ -415,7 +411,8 @@ export default Marionette.CompositeView.extend({
         }
 
         if (this.state.viewportHeight === oldViewportHeight) {
-            this.scrollTo(0);
+            // scroll in case of search, do not scroll in case of collapse
+            shouldUpdateScroll !== false && this.scrollTo(0);
             return;
         }
 
@@ -525,7 +522,7 @@ export default Marionette.CompositeView.extend({
             this.gridEventAggregator.trigger('update:collapse:all', collapsed);
             this.gridEventAggregator.trigger('collapse:change');
         }
-        this.debouncedHandleResize();
+        this.debouncedHandleResize(false);
     },
 
     __handleFilter() {
