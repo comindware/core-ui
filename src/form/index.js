@@ -25,7 +25,6 @@ import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
-import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
@@ -150,7 +149,6 @@ const api = /** @lends module:core.form */ {
         ContextSelectEditor: ContextSelectEditorView,
         BooleanSwitchEditor: BooleanSwitchEditorView,
         MembersSplitEditor: MembersSplitEditorView,
-        ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
         IconEditor: IconEditorView,
