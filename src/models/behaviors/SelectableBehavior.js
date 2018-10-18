@@ -15,11 +15,11 @@ const SelectableBehavior = {};
 // deselected.
 
 SelectableBehavior.SingleSelect = function(collection) {
+    this.selected = {};
     this.collection = collection;
 };
 
 _.extend(SelectableBehavior.SingleSelect.prototype, {
-
     // Select a model, deselecting any previously
     // selected model
     select(model) {
@@ -27,8 +27,9 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
 
         this.deselect();
 
-        this.selected = model;
-        this.selected.select();
+        this.selected[model.cid] = model;
+        this.selected[model.cid].select();
+
         this.lastSelectedModel = model.cid;
         this.cursorCid = model.cid;
         this.trigger('select:one', model);
@@ -37,9 +38,9 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
     // Deselect a model, resulting in no model
     // being selected
     deselect(model) {
-        if (!this.selected) { return; }
+        if (!this.lastSelectedModel) { return; }
 
-        model = model || this.selected;
+        model = model || this.selected[this.lastSelectedModel];
         if (this.selected !== model) { return; }
 
         this.lastSelectedModel = undefined;
@@ -65,7 +66,6 @@ SelectableBehavior.MultiSelect = function(collection) {
 };
 
 _.extend(SelectableBehavior.MultiSelect.prototype, {
-
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
     // the selected model.
