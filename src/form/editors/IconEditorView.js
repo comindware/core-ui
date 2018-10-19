@@ -6,13 +6,15 @@ import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
 import BaseEditorView from './base/BaseEditorView';
 import keyCode from '../../../src/utils/keyCode';
+import formRepository from '../formRepository';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
 };
 
-export default BaseEditorView.extend({
+export default (formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
+        _.defaults(this.options, options.schema || options);
         const modelIconProperty = options.modelIconProperty;
 
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
@@ -103,11 +105,9 @@ export default BaseEditorView.extend({
         const iconService = window.application.options.iconService;
         const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
-            Object.values(this.iconsCategories)
-            .map(category => ({
+            Object.values(this.iconsCategories).map(category => ({
                 name: category.label,
-                groupItems: category.icons
-                .reduce((arr, icon) => {
+                groupItems: category.icons.reduce((arr, icon) => {
                     const metaIcon = this.iconsMeta[icon];
                     const isBrand = metaIcon ? metaIcon.styles.includes('brands') : true;
                     if (!useBrands && isBrand) {
@@ -116,7 +116,7 @@ export default BaseEditorView.extend({
                     arr.push({
                         id: icon,
                         name: metaIcon ? metaIcon.label : icon,
-                        filter: metaIcon ? metaIcon.search.terms : [icon],
+                        filter: metaIcon ? metaIcon.search.terms : [icon]
                     });
 
                     return arr;
@@ -130,4 +130,4 @@ export default BaseEditorView.extend({
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
     }
-});
+}));
