@@ -23,7 +23,9 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
     // Select a model, deselecting any previously
     // selected model
     select(model) {
-        if (model && this.selected === model) { return; }
+        if (model && this.selected === model) {
+            return;
+        }
 
         this.deselect();
 
@@ -38,20 +40,25 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
     // Deselect a model, resulting in no model
     // being selected
     deselect(model) {
-        if (!this.lastSelectedModel) { return; }
+        if (!this.lastSelectedModel) {
+            return;
+        }
 
         model = model || this.selected[this.lastSelectedModel];
-        if (this.selected !== model) { return; }
 
+        if (this.selected[this.lastSelectedModel] !== model) {
+            return;
+        }
+
+        this.selected[this.lastSelectedModel].deselect();
         this.lastSelectedModel = undefined;
         this.cursorCid = undefined;
-        this.selected.deselect();
-        if (this.selected !== undefined) {
-            this.trigger('deselect:one', this.selected);
-            delete this.selected;
+
+        if (this.selected[this.lastSelectedModel] !== undefined) {
+            this.trigger('deselect:one', this.selected[this.lastSelectedModel]);
+            delete this.selected[this.lastSelectedModel];
         }
     }
-
 });
 
 // SelectableBehavior.MultiSelect
@@ -70,7 +77,9 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // model knows it's selected, and hold on to
     // the selected model.
     select(model, ctrlPressed, shiftPressed, selectOnCursor) {
-        if (this.selected[model.cid]) { return; }
+        if (this.selected[model.cid]) {
+            return;
+        }
 
         this.selected[model.cid] = model;
         model.select();
@@ -150,7 +159,9 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // model knows it has been deselected, and remove
     // the model from the selected list.
     deselect(model) {
-        if (!this.selected[model.cid]) { return; }
+        if (!this.selected[model.cid]) {
+            return;
+        }
 
         delete this.selected[model.cid];
         model.deselect();
@@ -159,13 +170,17 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 
     // Select all models in this collection
     selectAll() {
-        this.each(model => { model.select(); });
+        this.each(model => {
+            model.select();
+        });
         calculateSelectedLength(this);
     },
 
     // Deselect all models in this collection
     selectNone() {
-        this.each(model => { model.deselect(); });
+        this.each(model => {
+            model.deselect();
+        });
         calculateSelectedLength(this);
     },
 
@@ -196,11 +211,12 @@ SelectableBehavior.Selectable = function(model) {
 };
 
 _.extend(SelectableBehavior.Selectable.prototype, {
-
     // Select this model, and tell our
     // collection that we're selected
     select() {
-        if (this.selected) { return; }
+        if (this.selected) {
+            return;
+        }
 
         this.selected = true;
         this.trigger('selected', this);
@@ -213,7 +229,9 @@ _.extend(SelectableBehavior.Selectable.prototype, {
     // Deselect this model, and tell our
     // collection that we're deselected
     deselect() {
-        if (!this.selected) { return; }
+        if (!this.selected) {
+            return;
+        }
 
         this.selected = false;
         this.trigger('deselected', this);
@@ -250,7 +268,7 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // Calculate the number of selected items in a collection
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
-const calculateSelectedLength = _.debounce((collection) => {
+const calculateSelectedLength = _.debounce(collection => {
     collection.selectedLength = _.filter(collection.models, model => model.selected).length;
 
     const selectedLength = collection.selectedLength;
