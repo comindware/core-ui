@@ -2,7 +2,7 @@
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
@@ -119,7 +119,7 @@ const stateModes = {
  * @param {Object, String, Number} [max, min] Max, min value. Type - like arg for moment.duration
  * */
 
-export default (formRepository.editors.Duration = BaseItemEditorView.extend({
+export default (formRepository.editors.Duration = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -157,7 +157,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     setPermissions(enabled, readonly) {
-        BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         if (enabled && !readonly && !this.options.hideClearButton) {
             this.ui.clear.show();
         } else {
@@ -166,12 +166,12 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.input.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
             this.ui.input.prop('tabindex', readonly ? -1 : 0);

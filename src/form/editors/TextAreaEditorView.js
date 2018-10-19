@@ -1,6 +1,6 @@
 // @flow
 import template from './templates/textAreaEditor.hbs';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import { keyCode, helpers } from 'utils';
 import { autosize } from 'lib';
@@ -53,7 +53,7 @@ const defaultOptions = () => ({
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
+export default (formRepository.editors.TextArea = BaseEditorView.extend({
     initialize(options = {}) {
         const defOps = defaultOptions();
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
@@ -107,7 +107,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
         }
     },
     setPermissions(enabled, readonly) {
-        BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
 
@@ -125,13 +125,13 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
 
     __setEnabled(enabled) {
         //noinspection Eslint
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.textarea.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
         //noinspection Eslint
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.textarea.prop('readonly', readonly);
             this.ui.textarea.prop('tabindex', readonly ? -1 : 0);

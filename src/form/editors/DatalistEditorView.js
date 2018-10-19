@@ -3,7 +3,7 @@ import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
 import template from './templates/datalistEditor.hbs';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
@@ -79,7 +79,7 @@ const defaultOptions = {
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * @param {String} [options.valueType = 'normal'] type of value (id or [{ id, name }]).
  * */
-export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Datalist = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
         helpers.ensureOption(options, 'collection');
@@ -238,14 +238,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     setReadonly(readonly: Boolean): void {
-        BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
+        BaseEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
     },
 
     setEnabled(enabled: Boolean): void {
-        BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
+        BaseEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);

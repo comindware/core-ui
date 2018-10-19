@@ -3,7 +3,7 @@ import template from './templates/contextSelectEditor.html';
 import PopoutButtonView from './impl/context/views/PopoutButtonView';
 import PopoutWrapperView from './impl/context/views/PopoutWrapperView';
 import formRepository from '../formRepository';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import dropdownFactory from '../../dropdown/factory';
 
 const defaultOptions = {
@@ -16,7 +16,7 @@ const defaultOptions = {
     instanceRecordTypeId: undefined
 };
 
-export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
+export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 

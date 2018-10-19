@@ -1,6 +1,6 @@
 // @flow
 import template from './impl/newExpressionEditor/templates/newExpression.html';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import DatalistEditorView from './DatalistEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
@@ -34,7 +34,7 @@ const defaultOptions = {
     ontologyService: null
 };
 
-export default (formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
+export default (formRepository.editors.NewExpression = BaseEditorView.extend({
     className: 'new-expression-editor-field layout__vertical-layout',
 
     regions: {
@@ -313,7 +313,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
     },
 
     __setReadonly(readonly) {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
 
         this.typeEditor.setReadonly(readonly);
         switch (this.value && this.value.type) {

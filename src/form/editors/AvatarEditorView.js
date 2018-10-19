@@ -1,6 +1,6 @@
 // @flow
 import { helpers } from 'utils';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import template from './templates/avatarEditor.hbs';
 import formRepository from '../formRepository';
 
@@ -26,7 +26,7 @@ const defaultOptions = {
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
 
-export default (formRepository.editors.Avatar = BaseItemEditorView.extend({
+export default (formRepository.editors.Avatar = BaseEditorView.extend({
     className: 'user-avatar-wrp',
 
     attributes: {

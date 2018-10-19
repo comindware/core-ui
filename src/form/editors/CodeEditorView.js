@@ -1,7 +1,7 @@
 // @flow
 import CodemirrorView from './impl/codeEditor/views/CodemirrorView';
 import template from './impl/codeEditor/templates/codeEditor.html';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import { keyCode } from 'utils';
@@ -26,14 +26,14 @@ const defaultOptions = {
  * @name NumberEditorView
  * @memberof module:Core.form.editors
  * @class Редактор выражений и скриптов. Поддерживаемый тип данных: <code>Sting</code>.
- * @extends module:Core.form.editors.base.BaseLayoutEditorView
+ * @extends module:Core.form.editors.base.BaseEditorView
  * @param {String} [options.mode='expression'] Определяет тип редактора:<ul>
  *     <li><code>'expression'</code> - редактор выражений.</li>
  *     <li><code>'script'</code> - редактор C#-скриптов.</li></ul>
  * @param {Number} [options.height=150] Высота редактора в пикселях.
  * */
 
-export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Code = BaseEditorView.extend({
     className: 'dev-code-editor-field editor',
 
     regions: {
@@ -150,7 +150,7 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
     },
 
     __setReadonly(readonly) {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.editor.setReadonly(readonly);
     }
 }));

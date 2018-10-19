@@ -1,5 +1,5 @@
 ﻿// @flow
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
@@ -18,7 +18,7 @@ import colorPicker from './templates/colorPicker.hbs';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
+export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
     template: Handlebars.compile(colorPicker),
 
     focusElement: '.hexcolor',
@@ -74,7 +74,7 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     },
 
     __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled() && this.getReadonly()) {
             this.ui.colorpicker.spectrum('disable');
         }
@@ -82,7 +82,7 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.colorpicker.spectrum('enable');
     },
 

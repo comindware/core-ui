@@ -1,5 +1,5 @@
 import template from './templates/numberEditor.hbs';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
@@ -56,7 +56,7 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.Number = BaseItemEditorView.extend({
+export default (formRepository.editors.Number = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     focusElement: '.js-input',
@@ -180,12 +180,12 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.input.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
             this.ui.input.prop('tabindex', readonly ? -1 : 0);

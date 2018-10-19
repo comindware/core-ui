@@ -1,7 +1,7 @@
 // @flow
 import keyCode from '../../utils/keyCode';
 import template from './templates/booleanEditor.html';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
@@ -25,7 +25,7 @@ const classes = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
+export default (formRepository.editors.Boolean = BaseEditorView.extend(
     {
         initialize(options = {}) {
             _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
@@ -97,7 +97,7 @@ export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
         },
 
         __setReadonly(readonly) {
-            BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+            BaseEditorView.prototype.__setReadonly.call(this, readonly);
             if (this.getEnabled()) {
                 this.$el.prop('tabindex', readonly ? -1 : 0);
             }

@@ -66,8 +66,7 @@ const onChange = function() {
  * While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul>
  * <li><code>BaseCollectionEditorView</code></li>
  * <li><code>BaseCompositeEditorView</code></li>
- * <li><code>BaseLayoutEditorView</code></li>
- * <li><code>BaseItemEditorView</code></li></ul>
+ * <li><code>BaseEditorView</code></li></ul>
  * Possible events:<ul>
  * <li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
  * This event doesn't imply any change in model (!).</li>
@@ -99,7 +98,7 @@ const onChange = function() {
  * */
 
 export default {
-    create(viewClass: Marionette.View | Marionette.View | Marionette.CollectionView | Marionette.CompositeView) {
+    create(viewClass: Marionette.View | Marionette.CollectionView | Marionette.CompositeView) {
         return {
             classes: {
                 disabled: 'editor_disabled',

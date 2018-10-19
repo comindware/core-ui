@@ -1,6 +1,6 @@
 import { maskInput, emailMask } from 'lib';
 import LocalizationService from '../../services/LocalizationService';
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
@@ -44,7 +44,7 @@ const defaultOptions = () => ({
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.Text = BaseItemEditorView.extend({
+export default (formRepository.editors.Text = BaseEditorView.extend({
     initialize() {
         const defOps = defaultOptions();
         const editorOptions = this.options.schema ? this.options.schema : this.options;
@@ -120,7 +120,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     setPermissions(enabled, readonly) {
-        BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
 
@@ -136,12 +136,12 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.input.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
             this.ui.input.prop('tabindex', readonly ? -1 : 0);

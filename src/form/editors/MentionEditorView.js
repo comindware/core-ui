@@ -2,7 +2,7 @@
 import template from './templates/mentionEditor.hbs';
 import dropdown from 'dropdown';
 import { keyCode } from 'utils';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import UserService from 'services/UserService';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
@@ -24,7 +24,7 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
-export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Mention = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -240,14 +240,14 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
     },
 
     __setEnabled(enabled: boolean): void {
-        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
             this.dropdownView.button.setEnabled(enabled);
         }
     },
 
     __setReadonly(readonly: boolean): void {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
             this.dropdownView.button.setReadonly(readonly);
         }

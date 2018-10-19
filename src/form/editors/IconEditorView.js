@@ -4,14 +4,14 @@ import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import keyCode from '../../../src/utils/keyCode';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
 };
 
-export default BaseLayoutEditorView.extend({
+export default BaseEditorView.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
 

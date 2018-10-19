@@ -1,5 +1,5 @@
 // @flow
-import BaseItemEditorView from './base/BaseItemEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 
 /**
@@ -14,7 +14,7 @@ import formRepository from '../formRepository';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.RangeEditor = BaseItemEditorView.extend({
+export default (formRepository.editors.RangeEditor = BaseEditorView.extend({
         tagName: 'input',
 
         template: false,

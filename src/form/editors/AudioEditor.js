@@ -1,17 +1,17 @@
 // @flow
 import formRepository from '../formRepository';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 
 /**
  * @name AudioEditor
  * @memberof module:core.form.editors
  * @class Slider editor. Supported data type: <code>Number</code>.
- * @extends module:core.form.editors.base.BaseLayoutEditorView
+ * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend({
+export default (formRepository.editors.AudioEditor = BaseEditorView.extend({
     tagName: 'audio',
 
     template: false,

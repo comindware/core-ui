@@ -2,8 +2,7 @@
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
 import FieldView from './fields/FieldView';
 import SimpleFieldView from './fields/SimplifiedFieldView';
-import BaseItemEditorView from './editors/base/BaseItemEditorView';
-import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
+import BaseEditorView from './editors/base/BaseEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
 import BooleanEditorView from './editors/BooleanEditorView';
@@ -23,7 +22,6 @@ import AvatarEditorView from './editors/AvatarEditorView';
 import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
-import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
@@ -88,8 +86,7 @@ const api = /** @lends module:core.form */ {
          * @namespace
          * */
         base: {
-            BaseItemEditorView,
-            BaseLayoutEditorView,
+            BaseEditorView,
             BaseCollectionEditorView,
             BaseCompositeEditorView
         },
@@ -147,7 +144,6 @@ const api = /** @lends module:core.form */ {
         DocumentEditor: DocumentEditorView,
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
-        BooleanSwitchEditor: BooleanSwitchEditorView,
         MembersSplitEditor: MembersSplitEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,

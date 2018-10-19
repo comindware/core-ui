@@ -1,7 +1,7 @@
 // @flow
 import template from './templates/dateTimeEditor.hbs';
 import DateTimeService from './services/DateTimeService';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapDate from './iconsWraps/iconWrapDate.html';
@@ -47,7 +47,7 @@ const defaultClasses = 'editor editor_date-time dropdown_root';
  * @param {Object} [days, minutes, hours, seconds] Params for time editor's part. Like Duration Editor Options.
  * */
 
-export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
+export default (formRepository.editors.DateTime = BaseEditorView.extend({
     initialize() {
         this.value = this.__adjustValue(this.value);
         this.enabled = this.getEnabled();
@@ -169,7 +169,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __setEnabled(enabled: boolean): void {
-        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.enabled = this.getEnabled();
         //__setEnabled() from descendants
         // this.calendarDropdownView && this.calendarDropdownView.button.setEnabled(enabled);
@@ -177,7 +177,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __setReadonly(readonly: boolean): void {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.readonly = this.getReadonly();
         //__setReadonly() from descendants
         // this.calendarDropdownView.button.setReadonly(readonly);

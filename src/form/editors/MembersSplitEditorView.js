@@ -2,7 +2,7 @@
 import template from './templates/membersSplitPanelEditor.html';
 import MembersSplitController from './impl/membersSplit/controller/MembersSplitController';
 import formRepository from '../formRepository';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
 
 // used as function because Localization service is not initialized yet
@@ -26,7 +26,7 @@ const defaultOptions = () => ({
     getDisplayText: null
 });
 
-export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
+export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     initialize(options = {}) {
         this.__initializeController(options);
     },
