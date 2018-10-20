@@ -33,8 +33,11 @@ export const contextIconType = {
     undefined: 'dot-circle',
     task: 'tasks',
     record: 'list-alt',
+    recordtemplate: 'list-alt',
     process: 'cogs',
-    case: 'cube'
+    case: 'cube',
+    list: 'align-justify',
+    group: 'clone'
 };
 
 export const objectPropertyTypes = {

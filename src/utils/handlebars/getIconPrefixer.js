@@ -1,6 +1,6 @@
 import icons from '../../form/editors/impl/iconEditor/icons';
 
-export default options => {
+export default (options = {}) => {
     const iconService = options.iconService;
     const style = (iconService && iconService.style) || 'solid';
 
