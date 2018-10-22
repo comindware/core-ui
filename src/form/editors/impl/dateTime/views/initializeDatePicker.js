@@ -137,7 +137,7 @@ export default function($, dates) {
         },
 
         getDate() {
-            const d = this.getUTCDate();
+            const d = this.getDate();
 
             if (d === null) {
                 return null;
@@ -146,7 +146,7 @@ export default function($, dates) {
             return new Date(d.getTime() + moment().utcOffset() * 60000);
         },
 
-        getUTCDate() {
+        getDate() {
             return this.date;
         },
 
@@ -279,7 +279,7 @@ export default function($, dates) {
             let html = '';
             const d = new Date(this.viewDate);
             for (let i = 0; i < 12; i++) {
-                d.setUTCMonth(i);
+                d.setMonth(i);
                 const classes = this.onRenderMonth(d);
                 html += `<span class="${classes.join(' ')}">${dates[this.language].monthsShort[i]}</span>`;
             }
@@ -291,12 +291,12 @@ export default function($, dates) {
             let year = d.getFullYear();
             let html = [];
             let classes;
-            const month = d.getMonth();
+            const month = moment(d).month();
             const startYear = this.startDate.getFullYear();
             const startMonth = this.startDate.getMonth();
             const endYear = this.endDate.getFullYear();
             const endMonth = this.endDate.getMonth() + 1;
-            const currentDate = new UTCDate(this.date.getFullYear(), this.date.getMonth(), moment(this.date).date()).valueOf();
+            const currentDate = new UTCDate(this.date.getFullYear(), moment(this.date).month(), moment(this.date).date()).valueOf();
             const today = new Date();
 
             this.setTitle('.datetimepicker-days', `${dates[this.language].months[month]} ${year}`);
@@ -307,10 +307,10 @@ export default function($, dates) {
             this.fillMonths();
             const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
             const day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
-            prevMonth.setUTCDate(day);
-            prevMonth.setUTCDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
+            prevMonth.setDate(day);
+            prevMonth.setDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
             let nextMonth = new Date(prevMonth);
-            nextMonth.setUTCDate(nextMonth.getUTCDate() + 42);
+            nextMonth.setDate(nextMonth.getDate() + 42);
             nextMonth = nextMonth.valueOf();
 
             while (prevMonth.valueOf() < nextMonth) {
@@ -329,7 +329,7 @@ export default function($, dates) {
                     classes.push('new');
                 }
                 // Compare internal UTC date with local today, not UTC today
-                if (UTCFullYear === today.getFullYear() && UTCMonth === today.getMonth() && prevMonth.getUTCDate() === today.getDate()) {
+                if (UTCFullYear === today.getFullYear() && UTCMonth === today.getMonth() && prevMonth.getDate() === today.getDate()) {
                     classes.push('today');
                 }
                 if (prevMonth.valueOf() === currentDate) {
@@ -343,11 +343,11 @@ export default function($, dates) {
                 ) {
                     classes.push('disabled');
                 }
-                html.push(`<td class="${classes.join(' ')}">${prevMonth.getUTCDate()}</td>`);
+                html.push(`<td class="${classes.join(' ')}">${prevMonth.getDate()}</td>`);
                 if (UTCDay === this.weekEnd) {
                     html.push('</tr>');
                 }
-                prevMonth.setUTCDate(prevMonth.getUTCDate() + 1);
+                prevMonth.setDate(prevMonth.getDate() + 1);
             }
             this.picker
                 .find('.datetimepicker-days tbody')
@@ -382,7 +382,7 @@ export default function($, dates) {
             year -= 1;
             d = new Date(this.viewDate);
             for (let i = -1; i < 11; i++) {
-                d.setUTCFullYear(year);
+                d.setFullYear(year);
                 classes = this.onRenderYear(d);
                 if (i === -1 || i === 10) {
                     classes.push(old);
@@ -397,29 +397,29 @@ export default function($, dates) {
             const d = new Date(this.viewDate);
             const year = d.getFullYear();
             const month = d.getMonth();
-            const day = d.getUTCDate();
+            const day = d.getDate();
             const hour = d.getUTCHours();
 
             switch (this.viewMode) {
                 case 0:
-                    if (year <= this.startDate.getFullYear() && month <= this.startDate.getMonth() && day <= this.startDate.getUTCDate() && hour <= this.startDate.getUTCHours()) {
+                    if (year <= this.startDate.getFullYear() && month <= this.startDate.getMonth() && day <= this.startDate.getDate() && hour <= this.startDate.getUTCHours()) {
                         this.picker.find('.prev').css({ visibility: 'hidden' });
                     } else {
                         this.picker.find('.prev').css({ visibility: 'visible' });
                     }
-                    if (year >= this.endDate.getFullYear() && month >= this.endDate.getMonth() && day >= this.endDate.getUTCDate() && hour >= this.endDate.getUTCHours()) {
+                    if (year >= this.endDate.getFullYear() && month >= this.endDate.getMonth() && day >= this.endDate.getDate() && hour >= this.endDate.getUTCHours()) {
                         this.picker.find('.next').css({ visibility: 'hidden' });
                     } else {
                         this.picker.find('.next').css({ visibility: 'visible' });
                     }
                     break;
                 case 1:
-                    if (year <= this.startDate.getFullYear() && month <= this.startDate.getMonth() && day <= this.startDate.getUTCDate()) {
+                    if (year <= this.startDate.getFullYear() && month <= this.startDate.getMonth() && day <= this.startDate.getDate()) {
                         this.picker.find('.prev').css({ visibility: 'hidden' });
                     } else {
                         this.picker.find('.prev').css({ visibility: 'visible' });
                     }
-                    if (year >= this.endDate.getFullYear() && month >= this.endDate.getMonth() && day >= this.endDate.getUTCDate()) {
+                    if (year >= this.endDate.getFullYear() && month >= this.endDate.getMonth() && day >= this.endDate.getDate()) {
                         this.picker.find('.next').css({ visibility: 'hidden' });
                     } else {
                         this.picker.find('.next').css({ visibility: 'visible' });
@@ -531,7 +531,7 @@ export default function($, dates) {
                         if (!target.is('.disabled')) {
                             let year = this.viewDate.getFullYear();
                             let month = this.viewDate.getMonth();
-                            let day = this.viewDate.getUTCDate();
+                            let day = this.viewDate.getDate();
 
                             if (target.is('.month')) {
                                 this.viewDate.setUTCDate(1);
@@ -539,8 +539,8 @@ export default function($, dates) {
                                     .parent()
                                     .find('span')
                                     .index(target);
-                                day = this.viewDate.getUTCDate();
-                                this.viewDate.setUTCMonth(month);
+                                day = this.viewDate.getDate();
+                                this.viewDate.setMonth(month);
                                 this.element.trigger({
                                     type: 'changeMonth',
                                     date: this.viewDate
@@ -590,7 +590,7 @@ export default function($, dates) {
                                 }
                             }
                             this.viewDate.setUTCFullYear(year);
-                            this.viewDate.setUTCMonth(month, day);
+                            this.viewDate.setMonth(month, day);
                             this.element.trigger({
                                 type: 'changeDay',
                                 date: this.viewDate
@@ -625,14 +625,14 @@ export default function($, dates) {
             if (!dir) return date;
             const new_date = new Date(date.valueOf());
             //dir = dir > 0 ? 1 : -1;
-            new_date.setUTCDate(new_date.getUTCDate() + dir);
+            new_date.setUTCDate(new_date.getDate() + dir);
             return new_date;
         },
 
         moveMonth(date, dir) {
             if (!dir) return date;
             let new_date = new Date(date.valueOf());
-            let day = new_date.getUTCDate();
+            let day = new_date.getDate();
             const month = new_date.getMonth();
             const mag = Math.abs(dir);
             let new_month;
@@ -653,7 +653,7 @@ export default function($, dates) {
                               return new_date.getMonth() !== new_month;
                           };
                 new_month = month + dir;
-                new_date.setUTCMonth(new_month);
+                new_date.setMonth(new_month);
                 // Dec -> Jan (12) or Jan -> Dec (-1) -- limit expected date to 0-11
                 if (new_month < 0 || new_month > 11) new_month = (new_month + 12) % 12;
             } else {
@@ -676,7 +676,7 @@ export default function($, dates) {
             // end of month
             while (test()) {
                 new_date.setUTCDate(--day);
-                new_date.setUTCMonth(new_month);
+                new_date.setMonth(new_month);
             }
             return new_date;
         },
@@ -967,13 +967,13 @@ export default function($, dates) {
                     dir = parseInt(part[1]);
                     switch (part[2]) {
                         case 'd':
-                            date.setUTCDate(date.getUTCDate() + dir);
+                            date.setUTCDate(date.getDate() + dir);
                             break;
                         case 'm':
                             date = Datetimepicker.prototype.moveMonth.call(Datetimepicker.prototype, date, dir);
                             break;
                         case 'w':
-                            date.setUTCDate(date.getUTCDate() + dir * 7);
+                            date.setUTCDate(date.getDate() + dir * 7);
                             break;
                         case 'y':
                             date = Datetimepicker.prototype.moveYear.call(Datetimepicker.prototype, date, dir);
@@ -982,7 +982,7 @@ export default function($, dates) {
                             break;
                     }
                 }
-                return UTCDate(date.getFullYear(), date.getMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), 0);
+                return UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
             }
             parts = (date && date.toString().match(this.nonpunctuation)) || [];
             var date = new Date(0, 0, 0, 0, 0, 0, 0);
@@ -1023,10 +1023,10 @@ export default function($, dates) {
                     v -= 1;
                     while (v < 0) v += 12;
                     v %= 12;
-                    d.setUTCMonth(v);
+                    d.setMonth(v);
                     while (d.getMonth() !== v) {
                         if (isNaN(d.getMonth())) return d;
-                        d.setUTCDate(d.getUTCDate() - 1);
+                        d.setUTCDate(d.getDate() - 1);
                     }
                     return d;
                 },
@@ -1034,7 +1034,7 @@ export default function($, dates) {
                     return d.setUTCDate(v);
                 },
                 p(d, v) {
-                    return d.setUTCHours(v === 1 ? d.getUTCHours() + 12 : d.getUTCHours());
+                    return d.setUTCHours(v === 1 ? d.getHours() + 12 : d.getHours());
                 },
                 z() {
                     return timezone;
@@ -1110,7 +1110,7 @@ export default function($, dates) {
                     M: dates[language].monthsShort[date.getMonth()],
                     MM: dates[language].months[date.getMonth()],
                     // day
-                    d: date.getUTCDate(),
+                    d: date.getDate(),
                     D: dates[language].daysShort[date.getDay()],
                     DD: dates[language].days[date.getDay()],
                     p: dates[language].meridiem.length === 2 ? dates[language].meridiem[date.getUTCHours() < 12 ? 0 : 1] : '',
@@ -1152,12 +1152,12 @@ export default function($, dates) {
                     n: date.getMonth() + 1,
                     t: DPGlobal.getDaysInMonth(date.getFullYear(), date.getMonth()),
                     // day
-                    j: date.getUTCDate(),
+                    j: date.getDate(),
                     l: dates[language].days[date.getDay()],
                     D: dates[language].daysShort[date.getDay()],
                     w: date.getDay(), // 0 -> 6
                     N: date.getDay() === 0 ? 7 : date.getDay(), // 1 -> 7
-                    S: date.getUTCDate() % 10 <= dates[language].suffix.length ? dates[language].suffix[(date.getUTCDate() % 10) - 1] : '',
+                    S: date.getDate() % 10 <= dates[language].suffix.length ? dates[language].suffix[(date.getDate() % 10) - 1] : '',
                     // hour
                     a: dates[language].meridiem.length === 2 ? dates[language].meridiem[date.getUTCHours() < 12 ? 0 : 1] : '',
                     g: date.getUTCHours() % 12 === 0 ? 12 : date.getUTCHours() % 12,
