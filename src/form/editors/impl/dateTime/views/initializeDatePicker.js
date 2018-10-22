@@ -146,7 +146,7 @@ export default function($, dates) {
             return new Date(d.getTime() + moment().utcOffset() * 60000);
         },
 
-        getDate() {
+        getUTCDate() {
             return this.date;
         },
 
@@ -293,7 +293,7 @@ export default function($, dates) {
             let classes;
             const month = moment(d).month();
             const startYear = this.startDate.getFullYear();
-            const startMonth = this.startDate.getMonth();
+            const startMonth = moment(this.startDate).month();
             const endYear = this.endDate.getFullYear();
             const endMonth = this.endDate.getMonth() + 1;
             const currentDate = new UTCDate(this.date.getFullYear(), moment(this.date).month(), moment(this.date).date()).valueOf();
@@ -306,7 +306,7 @@ export default function($, dates) {
             this.updateNavArrows();
             this.fillMonths();
             const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
-            const day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
+            const day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), moment(prevMonth).month());
             prevMonth.setDate(day);
             prevMonth.setDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
             let nextMonth = new Date(prevMonth);
@@ -315,7 +315,7 @@ export default function($, dates) {
 
             while (prevMonth.valueOf() < nextMonth) {
                 const UTCDay = prevMonth.getDay();
-                const UTCMonth = prevMonth.getMonth();
+                const UTCMonth = moment(prevMonth).month();
                 const UTCFullYear = prevMonth.getFullYear();
 
                 if (UTCDay === this.weekStart) {
@@ -329,7 +329,7 @@ export default function($, dates) {
                     classes.push('new');
                 }
                 // Compare internal UTC date with local today, not UTC today
-                if (UTCFullYear === today.getFullYear() && UTCMonth === today.getMonth() && prevMonth.getDate() === today.getDate()) {
+                if (UTCFullYear === today.getFullYear() && UTCMonth ===  moment().month() && prevMonth.getDate() === today.getDate()) {
                     classes.push('today');
                 }
                 if (prevMonth.valueOf() === currentDate) {
@@ -571,8 +571,8 @@ export default function($, dates) {
                     case 'td':
                         if (target.is('.day') && !target.is('.disabled')) {
                             const day = parseInt(target.text(), 10) || 1;
-                            let year = this.viewDate.getFullYear();
-                            let month = this.viewDate.getMonth();
+                            let year = moment(this.viewDate).year();
+                            let month = moment(this.viewDate).month();
 
                             if (target.is('.old')) {
                                 if (month === 0) {
