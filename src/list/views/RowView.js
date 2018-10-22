@@ -60,6 +60,7 @@ export default Marionette.View.extend({
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
+        'selected:enter': '__handleEnter',
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
         change: '__handleChange',
@@ -147,6 +148,9 @@ export default Marionette.View.extend({
 
             const cellView = new cell({
                 className: `cell ${gridColumn.columnClass} ${cellClasses}`,
+                attributes: {
+                    tabindex: -1
+                },
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key
@@ -169,10 +173,10 @@ export default Marionette.View.extend({
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
-                    const elements = this.el.getElementsByClassName(this.columnClasses[index]);
-                    if (elements.length) {
-                        elements[0].insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
-                        this.el.removeChild(elements[0]);
+                    const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+                    if (element) {
+                        element.insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
+                        this.el.removeChild(element);
                         if (this.getOption('isTree') && index === 0) {
                             this.insertFirstCellHtml(true);
                         }
@@ -227,8 +231,7 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model)
-            || event.relatedTarget.classList.contains('js-grid-content-view')) {
+        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) || event.relatedTarget.classList.contains('js-grid-content-view')) {
             this.model.trigger('dragleave', event);
             delete this.model.dragover;
         }
@@ -288,7 +291,7 @@ export default Marionette.View.extend({
                         el.insertAdjacentHTML(
                             'beforeend',
                             `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
-                            this.model.collapsed === false ? classes.expanded : ''
+                                this.model.collapsed === false ? classes.expanded : ''
                             }"></span></div>`
                         );
                     }
@@ -297,7 +300,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                        this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
@@ -311,12 +314,6 @@ export default Marionette.View.extend({
 
     __handleModelClick(e) {
         const model = this.model;
-
-        if (model.selected) {
-            model.deselect();
-            this.trigger('click', this.model);
-            return;
-        }
 
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
@@ -342,9 +339,7 @@ export default Marionette.View.extend({
 
     __handleDeselection() {
         this.el.classList.remove(classes.selected);
-        if (this.lastPointedEl) {
-            this.lastPointedEl.classList.remove(classes.cellFocused);
-        }
+        this.__deselectPointed();
     },
 
     __toggleCollapse() {
@@ -402,32 +397,46 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed) {
+    __deselectPointed() {
         if (this.lastPointedEl) {
             const lastEditor = this.lastPointedEl.querySelector('input') || this.lastPointedEl.querySelector('[class~=editor]');
-            if (lastEditor) {
+            if (lastEditor && lastEditor === document.activeElement) {
                 lastEditor.blur();
             }
             this.lastPointedEl.classList.remove(classes.cellFocused);
         }
-        const pointedEls = this.el.getElementsByClassName(this.columnClasses[pointed]);
-        if (pointedEls && pointedEls.length) {
-            const pointedEl = pointedEls[0];
-            const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
+    },
 
-            if (editor) {
-                const view = this.cellViews[pointed];
-                if (view && view.editor && view.editor.hidden) {
-                    view.model.trigger('select:hidden');
-                    return false;
-                }
-                if (!pointedEl.contains(document.activeElement)) {
-                    editor.focus();
-                }
-            }
-            pointedEl.classList.add(classes.cellFocused);
-            this.lastPointedEl = pointedEl;
+    __selectPointed(pointed, isFocusEditor) {
+        const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
+        if (pointedEl == null) return;
+
+        if (this.lastPointedEl && this.lastPointedEl !== pointedEl) {
+            this.__deselectPointed();
         }
+
+        const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
+
+        if (editor) {
+            const view = this.cellViews[pointed];
+            if (view && view.editor && view.editor.hidden) {
+                view.model.trigger('select:hidden');
+                return false;
+            }
+            if (pointedEl.contains(editor) && isFocusEditor) {
+                editor.focus();
+            }
+        }
+        if (document.activeElement !== editor && !isFocusEditor) {
+            pointedEl.focus();
+        }
+
+        pointedEl.classList.add(classes.cellFocused);
+        this.lastPointedEl = pointedEl;
+    },
+
+    __handleEnter() {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
     },
 
     __getFocusedCellIndex(e) {

@@ -94,15 +94,20 @@ export default Marionette.View.extend({
         }
 
         if (this.options.showHeader) {
-            this.headerView = new HeaderView(_.defaultsPure({
-                columns: options.columns,
-                gridEventAggregator: this,
-                checkBoxPadding: options.checkBoxPadding || 0,
-                gridColumnHeaderView: options.gridColumnHeaderView,
-                uniqueId: this.uniqueId,
-                isTree: this.options.isTree,
-                expandOnShow: options.expandOnShow
-            }, this.options));
+            this.headerView = new HeaderView(
+                _.defaultsPure(
+                    {
+                        columns: options.columns,
+                        gridEventAggregator: this,
+                        checkBoxPadding: options.checkBoxPadding || 0,
+                        gridColumnHeaderView: options.gridColumnHeaderView,
+                        uniqueId: this.uniqueId,
+                        isTree: this.options.isTree,
+                        expandOnShow: options.expandOnShow
+                    },
+                    this.options
+                )
+            );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
@@ -138,6 +143,7 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
+            this.listenTo(this.collection, 'keydown', () => this.__onKeydown());
         }
 
         this.listView = new ListView({
@@ -214,13 +220,28 @@ export default Marionette.View.extend({
     },
 
     __onCursorMove(delta) {
+        const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
-        const newPosition = Math.min(this.editableCellsIndexes.length - 1, Math.max(0, currentSelectedIndex + delta));
+        const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
         const newSelectedIndex = this.editableCellsIndexes[newPosition];
-        this.pointedCell = newSelectedIndex;
-        const pointed = this.collection.find(model => model.cid === this.collection.cursorCid);
-        if (pointed) {
-            pointed.trigger('select:pointed', this.pointedCell);
+        const currentModel = this.collection.find(model => model.cid === this.collection.cursorCid);
+
+        if (currentModel) {
+            if (newSelectedIndex === currentSelectedIndex && delta !== 0) {
+                this.pointedCell = 0;
+                this.collection.trigger('nextModel');
+                return;
+            }
+            this.pointedCell = newSelectedIndex;
+
+            currentModel.trigger('select:pointed', this.pointedCell);
+        }
+    },
+
+    __onKeydown() {
+        const selectedModel = this.collection.find(model => model.cid === this.collection.cursorCid);
+        if (selectedModel) {
+            selectedModel.trigger('selected:enter');
         }
     },
 
