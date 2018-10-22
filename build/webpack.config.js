@@ -52,12 +52,15 @@ module.exports = options => {
                     options: {
                         presets: [
                             '@babel/preset-flow',
-                            ['@babel/preset-env', {
-                                targets: {
-                                    ie: 11,
-                                    chrome: 58
+                            [
+                                '@babel/preset-env',
+                                {
+                                    targets: {
+                                        ie: 11,
+                                        chrome: 58
+                                    }
                                 }
-                            }]
+                            ]
                         ],
                         plugins: [
                             require('@babel/plugin-proposal-optional-chaining'),
@@ -234,7 +237,8 @@ module.exports = options => {
                             options: 'jQuery'
                         }
                     ]
-                }
+                },
+                { test: /\.tsx?$/, loader: 'awesome-typescript-loader' }
             ]
         },
         plugins: [
@@ -251,7 +255,8 @@ module.exports = options => {
                 'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
-            }
+            },
+            extensions: ['.ts', '.js', '.json']
         },
         devServer: {
             noInfo: true,
