@@ -443,13 +443,13 @@ svg.svg-grid-icons {
 }
 
 .cell-focused {
-  outline: 1px solid #0575bd;
+  outline: 1px solid #0575bd !important;
 }
 .cell.selected:not(.cell_selection){
-  outline: 1px solid #0575bd;
+  outline: 1px solid #0575bd !important;
 }
 .cell-focused.error{
-  outline-color: #e61212;
+  outline-color: #e61212 !important;
 }
 
 

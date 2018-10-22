@@ -94,6 +94,7 @@ export default Marionette.CompositeView.extend({
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
         this.listenTo(this.collection, 'filter', this.__handleFilter);
+        this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
         // this.on('render', this.__onRender);
     },
 
@@ -166,49 +167,27 @@ export default Marionette.CompositeView.extend({
         return childView;
     },
 
-    up(e) {
-        this.moveCursorBy(-1, e.shiftKey);
-    },
-
-    down(e) {
-        this.moveCursorBy(+1, e.shiftKey);
-    },
-
-    pageup(e) {
-        const delta = Math.ceil(this.state.viewportHeight * 0.8);
-        this.moveCursorBy(-delta, e.shiftKey);
-    },
-
-    pagedown(e) {
-        const delta = Math.ceil(this.state.viewportHeight * 0.8);
-        this.moveCursorBy(delta, e.shiftKey);
-    },
-
-    home(e) {
-        this.__moveCursorTo(0, e.shiftKey);
-    },
-
-    end(e) {
-        this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
-    },
-
     __handleKeydown(e) {
-        let delta;
-        const handle = (!this.getOption('isEditable') || e.ctrlKey) && this.collection.isSliding;
-        const eventResult = !handle && e.target.tagName === 'INPUT';
-        const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
         e.stopPropagation();
+        let delta;
+        let handle;
+        const isGrid = Boolean(this.gridEventAggregator);
+        const isEditable = this.getOption('isEditable');
+
+        handle = isGrid && isEditable ? e.target.classList.contains('cell') || e.ctrlKey : true;
+        handle = handle && this.collection.isSliding;
+
         switch (e.keyCode) {
             case keyCode.UP:
                 if (handle) {
                     this.moveCursorBy(-1, e.shiftKey);
                 }
-                return eventResult;
+                return !handle;
             case keyCode.DOWN:
                 if (handle) {
                     this.moveCursorBy(1, e.shiftKey);
                 }
-                return eventResult;
+                return !handle;
             case keyCode.PAGE_UP:
                 delta = Math.ceil(this.state.viewportHeight - 1);
                 this.moveCursorBy(-delta, e.shiftKey);
@@ -219,19 +198,20 @@ export default Marionette.CompositeView.extend({
                 return false;
             case keyCode.SPACE:
                 if (handle) {
+                    const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
                     selectedModels.forEach(model => model.toggleChecked());
                 }
-                return eventResult;
+                return !handle;
             case keyCode.LEFT:
                 if (handle) {
                     this.collection.trigger('move:left');
                 }
-                return eventResult;
+                return !handle;
             case keyCode.RIGHT:
                 if (handle) {
                     this.collection.trigger('move:right');
                 }
-                return eventResult;
+                return !handle;
             case keyCode.TAB:
                 this.collection.trigger('move:right');
                 return false;
@@ -249,13 +229,16 @@ export default Marionette.CompositeView.extend({
                 if (handle) {
                     this.__moveCursorTo(0, e.shiftKey);
                 }
-                return eventResult;
+                return !handle;
             case keyCode.END:
                 if (handle) {
                     this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
                 }
-                return eventResult;
+                return !handle;
             default:
+                if (isEditable && handle) {
+                    this.collection.trigger('keydown');
+                }
                 break;
         }
     },
@@ -380,8 +363,8 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight =
-            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
+        const availableHeight
+            = this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
                 ? this.el.parentElement.clientHeight
                 : window.innerHeight;
 
