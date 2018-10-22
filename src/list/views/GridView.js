@@ -328,7 +328,9 @@ export default Marionette.View.extend({
         if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
-        this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
+        this.ui.content.parent().css('maxHeight', this.options.maxHeight || window.innerHeight);
+
+        this.ui.content.parent().on('scroll', this.__onScroll.bind(this));
     },
 
     getChildren() {
@@ -521,5 +523,9 @@ export default Marionette.View.extend({
 
     __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
+    },
+
+    __onScroll(e) {
+        this.listView.__onScroll(e);
     }
 });

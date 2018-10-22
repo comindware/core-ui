@@ -113,7 +113,6 @@ export default Marionette.CollectionView.extend({
 
     onAttach() {
         this.handleResize();
-        this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
 
     _showCollection() {
@@ -382,7 +381,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.height(allItemsHeight || '');
+            this.$el.parent().height(allItemsHeight || '');
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {

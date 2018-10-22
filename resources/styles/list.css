@@ -27,8 +27,6 @@
 }
 
 .visible-collection {
-    height: 100%;
-    width: 100%;
     transform: translateZ(0);
 }
 
@@ -53,8 +51,7 @@
     flex-direction: column;
 }
 
-.grid-content-wrp {
-    display: table;
+.grid-content-container {
     flex: 1 1 auto;
     min-height: 0;
     position: relative;
@@ -182,15 +179,7 @@
     display: none;
 }
 
-.grid-header {
-    display: inline-flex;
-    position: relative;
-    width: 100%;
-}
-
 .grid-header-column {
-    display: inline-block;
-    position: relative;
     min-width: 50px;
 }
 
@@ -419,14 +408,15 @@ tr.selected{
     background: transparent;
 }
 
+tr {
+    height: 35px;
+}
+
 td {
-    position: relative;
-    display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: default;
     overflow: hidden;
-    min-width: 50px;
 }
 .cell_editable {
     display: flex;
