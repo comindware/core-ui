@@ -223,16 +223,18 @@ export default Marionette.View.extend({
         const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
         const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
-        const newSelectedIndex = this.editableCellsIndexes[newPosition];
+
+        const currentSelectedValue = this.editableCellsIndexes[currentSelectedIndex];
+        const newSelectedValue = this.editableCellsIndexes[newPosition];
         const currentModel = this.collection.find(model => model.cid === this.collection.cursorCid);
 
         if (currentModel) {
-            if (newSelectedIndex === currentSelectedIndex && delta !== 0) {
+            if (newSelectedValue === currentSelectedValue && delta !== 0) {
                 this.pointedCell = 0;
                 this.collection.trigger('nextModel');
                 return;
             }
-            this.pointedCell = newSelectedIndex;
+            this.pointedCell = newSelectedValue;
 
             currentModel.trigger('select:pointed', this.pointedCell);
         }
