@@ -213,6 +213,7 @@ module.exports.apply = {
         padding: '2px 5px',
         transition: 'padding-right .2s'
     },
+    'cell-input-disabled-theme': {},
     'input-theme': {
         'border-bottom': `1px solid ${variables['grey-200']}`,
         border: '0',
