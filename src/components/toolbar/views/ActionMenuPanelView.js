@@ -6,8 +6,6 @@ export default Marionette.CollectionView.extend({
         return `toolbar-panel_container ${this.options.class || ''}`;
     },
 
-    template: false,
-
     childView: ActionPanelChildView,
 
     childViewEvents: {

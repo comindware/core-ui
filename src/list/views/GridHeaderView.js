@@ -49,8 +49,6 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'grid-header',
-
     tagName: 'thead',
 
     ui: {
@@ -239,8 +237,7 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== undefined)
-            || event.relatedTarget.classList.contains('js-grid-content-view')) {
+        if ((!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== undefined) || event.relatedTarget.classList.contains('js-grid-content-view')) {
             this.collection.trigger('dragleave:head', event);
         }
     },

@@ -1,5 +1,3 @@
-//@flow
-import template from '../templates/customActionGroupView.html';
 import CustomActionItemView from './CustomActionItemView';
 import ToolbarActionMenuView from '../views/ToolbarActionMenuView';
 import ToolbarCheckboxItemView from '../views/ToolbarCheckboxItemView';
@@ -9,8 +7,6 @@ import meta from '../meta';
 
 export default Marionette.CollectionView.extend({
     className: 'js-icon-container toolbar-items-wrp',
-
-    template: Handlebars.compile(template),
 
     childView(model) {
         switch (model.get('type')) {
