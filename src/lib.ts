@@ -28,7 +28,7 @@ import 'backbone-associations';
 import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 
-import * as $_ from 'jquery';
+import jquery from 'jquery';
 // @ts-ignore
 import autosize from 'autosize';
 
@@ -45,7 +45,7 @@ const api = {
     'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
-    $: $_,
+    $: jquery,
     Backbone: backbone,
     Marionette: Marionette_,
     codemirror: CodeMirror,
