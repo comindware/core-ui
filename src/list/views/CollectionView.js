@@ -95,6 +95,7 @@ export default Marionette.CompositeView.extend({
         this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
+        this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
         // this.on('render', this.__onRender);
     },
 
@@ -213,7 +214,7 @@ export default Marionette.CompositeView.extend({
                 }
                 return !handle;
             case keyCode.TAB:
-                this.collection.trigger('move:right');
+                this.collection.trigger(e.shiftKey ? 'move:left' : 'move:right');
                 return false;
             case keyCode.ENTER:
                 if (handle) {
@@ -243,23 +244,20 @@ export default Marionette.CompositeView.extend({
         }
     },
 
+    __getIndexSelectedModel() {
+        const model = this.collection.get(this.collection.cursorCid);
+        return this.collection.indexOf(model);
+    },
+
     __moveCursorTo(newCursorIndex, shiftPressed) {
-        const cid = this.collection.cursorCid;
-        let index = 0;
-        this.collection.find((x, i) => {
-            if (x.cid === cid) {
-                index = i;
-                return true;
-            }
-            return false;
-        });
+        const index = this.__getIndexSelectedModel();
 
         const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
         if (nextIndex !== index) {
             const model = this.collection.at(nextIndex);
             const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed);
+                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
             this.scrollTo(nextIndex);
         }
@@ -267,26 +265,9 @@ export default Marionette.CompositeView.extend({
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
     moveCursorBy(cursorIndexDelta, shiftPressed) {
-        const cid = this.collection.cursorCid;
-        let index = 0;
-        this.collection.find((x, i) => {
-            if (x.cid === cid) {
-                index = i;
-                return true;
-            }
-            return false;
-        });
-
-        const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
-        if (nextIndex !== index) {
-            const model = this.collection.at(nextIndex);
-            const selectFn = this.collection.selectSmart || this.collection.select;
-            if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
-            }
-
-            this.scrollTo(nextIndex);
-        }
+        const index = this.__getIndexSelectedModel();
+        const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta, true);
+        this.__moveCursorTo(nextIndex, shiftPressed);
     },
 
     scrollTo(index) {
@@ -305,8 +286,17 @@ export default Marionette.CompositeView.extend({
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
-    __normalizeCollectionIndex(index) {
-        return Math.max(0, Math.min(this.collection.length - 1, index));
+    __normalizeCollectionIndex(index, loop) {
+        const maxIndex = this.collection.length - 1;
+        const normalizeIndex = Math.max(0, Math.min(maxIndex, index));
+
+        if (loop) {
+            if (index < 0) {
+                return maxIndex;
+            }
+            return maxIndex < index ? 0 : normalizeIndex;
+        }
+        return normalizeIndex;
     },
 
     __onScroll(e) {
@@ -343,9 +333,9 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop =
-                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
-                this.childHeight;
+            const scrollTop
+                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
+                * this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -363,8 +353,8 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight
-            = this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
+        const availableHeight =
+            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
                 ? this.el.parentElement.clientHeight
                 : window.innerHeight;
 

@@ -230,10 +230,12 @@ export default Marionette.View.extend({
 
         if (currentModel) {
             if (newSelectedValue === currentSelectedValue && delta !== 0) {
-                this.pointedCell = 0;
-                this.collection.trigger('nextModel');
+                const isPositiveDelta = delta >= 1;
+                this.pointedCell = isPositiveDelta ? 0 : this.editableCellsIndexes[this.editableCellsIndexes.length - 1];
+                this.collection.trigger(isPositiveDelta ? 'nextModel' : 'prevModel');
                 return;
             }
+
             this.pointedCell = newSelectedValue;
 
             currentModel.trigger('select:pointed', this.pointedCell);
