@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const FlowWebpackPlugin = require('flow-webpack-plugin');
 const pathResolver = require('./pathResolver');
 
 const jsFileName = 'core.js';
@@ -46,12 +45,13 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /\.js$/,
+                    test: /\.(ts)|(js)$/,
                     loader: 'babel-loader',
                     exclude: [pathResolver.node_modules()],
                     options: {
                         presets: [
                             '@babel/preset-flow',
+                            '@babel/typescript',
                             [
                                 '@babel/preset-env',
                                 {
@@ -237,8 +237,7 @@ module.exports = options => {
                             options: 'jQuery'
                         }
                     ]
-                },
-                { test: /\.tsx?$/, loader: 'awesome-typescript-loader' }
+                }
             ]
         },
         plugins: [
