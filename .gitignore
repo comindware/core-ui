@@ -5,3 +5,4 @@ localization/.backup/
 demo/public/assets/
 reports/
 dist/
+!dist/localization/

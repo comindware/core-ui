@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import form from 'form';
+import { columnWidthByType } from '../meta';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -519,7 +520,20 @@ export default Marionette.View.extend({
                 widthCell = `max-width: ${width}px`;
             }
         } else {
-            basis = '0%';
+            const column = this.options.columns[index];
+
+            if (column.format === 'HTML') {
+                basis = '0%';
+            } else {
+                const defaultWidth = columnWidthByType[column.dataType];
+
+                if (defaultWidth) {
+                    widthCell = `max-width: ${defaultWidth}px`;
+                    basis = `${defaultWidth}px`;
+                } else {
+                    basis = '0%';
+                }
+            }
         }
 
         const grow = width > 0 ? 0 : 1;

@@ -1,3 +1,5 @@
+import { objectPropertyTypes } from '../Meta';
+
 export const contextTypes = {
     void: 'void',
     any: 'any',
@@ -35,6 +37,22 @@ export const columnTypes = {
     document: 'DocumentProperty',
     collection: 'Collection',
     id: 'id'
+};
+
+export const columnWidthByType = {
+    [objectPropertyTypes.ACCOUNT]: 120,
+    [objectPropertyTypes.BOOLEAN]: 120,
+    [objectPropertyTypes.COLLECTION]: 120,
+    [objectPropertyTypes.DATETIME]: 120,
+    [objectPropertyTypes.DECIMAL]: 120,
+    [objectPropertyTypes.DOCUMENT]: 120,
+    [objectPropertyTypes.DOUBLE]: 120,
+    [objectPropertyTypes.DURATION]: 120,
+    [objectPropertyTypes.ENUM]: 120,
+    [objectPropertyTypes.EXTENDED_STRING]: 120,
+    [objectPropertyTypes.INSTANCE]: 120,
+    [objectPropertyTypes.INTEGER]: 120,
+    [objectPropertyTypes.STRING]: 120
 };
 
 export const getDefaultActions = () => [
