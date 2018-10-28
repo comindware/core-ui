@@ -249,6 +249,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             this.calendarDropdownView.open();
             this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
             this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
+            this.calendarDropdownView.adjustPosition();
         }
     },
 

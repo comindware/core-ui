@@ -4,3 +4,4 @@ node_modules/
 localization/.backup/
 demo/public/assets/
 reports/
+dist/
