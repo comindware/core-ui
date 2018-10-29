@@ -35,9 +35,9 @@ const defaultClasses = 'editor editor_date-time dropdown_root';
  * @memberof module:core.form.editors
  * @class Combined date and time editor. Supported data type: <code>String</code> in ISO8601 format
  * (for example, '2015-07-20T10:46:37Z').
- * @extends module:core.form.editors.base.BaseEditorView
+ * @extends module:core.form.editors.base.BaseLayoutEditorView
  * @param {Object} options Options object.
- * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * All the properties of {@link module:core.form.editors.base.BaseLayoutEditorView BaseLayoutEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
@@ -47,7 +47,7 @@ const defaultClasses = 'editor editor_date-time dropdown_root';
  * @param {Object} [days, minutes, hours, seconds] Params for time editor's part. Like Duration Editor Options.
  * */
 
-export default (formRepository.editors.DateTime = BaseEditorView.extend({
+export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     initialize() {
         this.value = this.__adjustValue(this.value);
         this.enabled = this.getEnabled();
