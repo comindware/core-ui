@@ -4,7 +4,6 @@ import template from './impl/codeEditor/templates/codeEditor.html';
 import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
-import { keyCode } from 'utils';
 
 const showModes = {
     normal: 'normal',
@@ -19,7 +18,8 @@ const defaultOptions = {
     mode: 'expression',
     height: 300,
     showMode: showModes.normal,
-    ontologyService: null
+    ontologyService: null,
+    lineSeparator: undefined
 };
 
 /**
@@ -69,6 +69,7 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         this.editor = new CodemirrorView({
             mode: this.options.mode,
             height: this.options.height,
+            lineSeparator: this.options.lineSeparator,
             ontologyService: this.options.ontologyService
         });
 
