@@ -275,7 +275,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: _.defaultsPure(
+            buttonViewOptions: Object.assign(
+                {},
                 {
                     allowDays: false,
                     allowHours: true,
