@@ -10,6 +10,14 @@
 
 <http://comindware.com/text/core/bootstrapper/errors/default#description> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не удается выполнить запрошенное действие из-за ошибки сервера. Просмотрите подробные сведения в журнале событий на сервере или обратитесь к системному администратору."; l10n:originalData "The requested action failed due to server error. Please contact your system administrator or view the Event Log on the server."].
 
+<http://comindware.com/text/core/common#dragMe> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащить"; l10n:originalData "Drag and drop"].
+
+<http://comindware.com/text/core/common#hideAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть всё"; l10n:originalData "Hide all"].
+
+<http://comindware.com/text/core/common#save> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
+
+<http://comindware.com/text/core/common#showAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать всё"; l10n:originalData "Show all"].
+
 <http://comindware.com/text/core/demo/cases/other#localizationService> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Демо Текст"; l10n:originalData "Demo Text"].
 
 <http://comindware.com/text/core/demo/cases/other/localizationService#daysPlural> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "день,дня,дней"; l10n:originalData "day,days"].

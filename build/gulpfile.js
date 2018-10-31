@@ -102,6 +102,17 @@ gulp.task('start', callback =>
     )
 );
 
+gulp.task('develop', callback =>
+    runSequence(
+        'localization',
+        'build:core:dev',
+        'generateSprites',
+        'generateThemes',
+        ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes'],
+        callback
+    )
+);
+
 gulp.task('build', callback => runSequence('build:core:prod', 'localization', 'generateSprites', 'generateThemes', callback));
 
 gulp.task('build:min', callback => runSequence('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', callback));

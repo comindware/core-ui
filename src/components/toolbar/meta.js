@@ -156,7 +156,8 @@ export default {
         GROUP: 'Group',
         SPLITTER: 'Splitter',
         POPUP: 'Popup',
-        CHECKBOX: 'Checkbox'
+        CHECKBOX: 'Checkbox',
+        BLINKCHECKBOX: 'BlinkCheckbox'
     },
     severity,
     icons
