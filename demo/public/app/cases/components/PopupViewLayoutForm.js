@@ -2,6 +2,7 @@ export default function() {
     const model = new Backbone.Model({
         name: '',
         alias: 'МирТрудаМай62',
+        login: '',
         properties: new Backbone.Collection(
             new Backbone.Collection({
                 name: 'propName',
@@ -72,6 +73,15 @@ export default function() {
                                         title: 'Alias',
                                         required: true,
                                         validators: ['required', 'systemName'],
+                                        readonly: model.isEmpty()
+                                    },
+                                    {
+                                        key: 'login',
+                                        type: 'Text-field',
+                                        helpText: Localizer.get('CORE.FORM.VALIDATION.LOGIN'),
+                                        title: 'Login',
+                                        required: true,
+                                        validators: ['required', 'login'],
                                         readonly: model.isEmpty()
                                     }
                                 ]
