@@ -53,7 +53,8 @@ export default function () {
                         alias: {
                             title: 'Alias',
                             type: 'Text',
-                            autocommit: true
+                            autocommit: true,
+                            returnRawValue: true //property for transliteratedFields, not filter typed value.
                         },
                         number: {
                             type: 'Number',

@@ -123,7 +123,7 @@ export default {
         const getTranslite = (name, alias) =>
             (fields) => {
                 if (fields[alias]) {
-                    return this.systemNameFiltration(fields[alias]);
+                    return schema[alias] && schema[alias].returnRawValue ? fields[alias] : this.systemNameFiltration(fields[alias]);
                 }
                 return this.systemNameFiltration(fields[name]);
             };

@@ -6,7 +6,7 @@ import SystemNameValidator from './validators/systemNameValidator';
 import EmailValidator from './validators/emailValidator';
 import CodeValidation from './validators/codeValidation';
 import RegExpValidator from './validators/regExpValidator';
-
+import LoginValidator from './validators/loginValidator';
 
 export default {
     editors: {},
@@ -18,6 +18,7 @@ export default {
         systemName: SystemNameValidator,
         email: EmailValidator,
         code: CodeValidation,
-        regexp: RegExpValidator
+        regexp: RegExpValidator,
+        login: LoginValidator
     }
 };

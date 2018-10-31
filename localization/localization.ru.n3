@@ -254,6 +254,8 @@
 
 <http://comindware.com/text/core/form/validation#letters> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Можно использовать только буквы."; l10n:originalData "Only letters are allowed."].
 
+<http://comindware.com/text/core/form/validation#login> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Логин должен содержать не более 20 символов и не должен содержать пробелы, буквы не латинского алфавита и следующие символы: \"/ \\ [ ] : ; | = , + * ? < >"; l10n:originalData "The login must be 20 latin characters or less, and cannot contain space and any of these characters: \"/ \\ [ ] : ; | = , + * ? < >"].
+
 <http://comindware.com/text/core/form/validation#password> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Пароль должен содержать не менее восьми символов."; l10n:originalData "Password must be at least 8 characters long."].
 
 <http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат телефонного номера"; l10n:originalData "Invalid phone number"].

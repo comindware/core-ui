@@ -294,4 +294,57 @@ describe('Transliterator:', () => {
         expect(messages.length).toEqual(1);
         console.warn = originalWarn;
     });
+
+    it('should not systemNameFiltration typed value if returnRawValue = true in schema for this input', () => {
+        const model = new Backbone.Model({
+            name: ruName,
+            alias: correctAlias
+        });
+
+        const schema = {
+            name: {
+                type: 'Text',
+                title: 'Text',
+                helpText: 'Some help information'
+            },
+            alias: {
+                type: 'Text',
+                title: 'Alias',
+                helpText: 'Some help information',
+                returnRawValue: true
+            }
+        };
+
+        transliterator.initializeTransliteration({ model, schema });
+
+        model.set('alias', ruName);
+
+        expect(model.get('alias')).toEqual(ruName);
+    });
+
+    it('should systemNameFiltration typed value if returnRawValue = undefined in schema for this input', () => {
+        const model = new Backbone.Model({
+            name: ruName,
+            alias: 'someValue'
+        });
+
+        const schema = {
+            name: {
+                type: 'Text',
+                title: 'Text',
+                helpText: 'Some help information'
+            },
+            alias: {
+                type: 'Text',
+                title: 'Alias',
+                helpText: 'Some help information'
+            }
+        };
+
+        transliterator.initializeTransliteration({ model, schema });
+
+        model.set('alias', ruName);
+
+        expect(model.get('alias')).toEqual(transliterator.systemNameFiltration(ruName));
+    });
 });

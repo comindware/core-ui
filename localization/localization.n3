@@ -391,6 +391,8 @@
 
 <http://comindware.com/text/core/form/validation#letters> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:54:53.7720877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Only letters are allowed."].
 
+<http://comindware.com/text/core/form/validation#login> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T11:13:08.4089525Z"; l10n:modificationDate "2018-10-31T11:14:52.2059927Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "The login must be 20 latin characters or less, and cannot contain space, non-latin letters and any of these characters: \"/ \\ [ ] : ; | = , + * ? < >"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/validation#password> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-07T06:37:10.6112211Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Password must be at least 8 characters long."].
 
 <http://comindware.com/text/core/form/validation#phone> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:56:53.1220877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Invalid phone number"].
