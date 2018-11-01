@@ -9,8 +9,6 @@ export default Marionette.View.extend({
 
     template: false,
 
-    className: 'form-field',
-
     attributes() {
         return {
             'data-editors': this.options.key,

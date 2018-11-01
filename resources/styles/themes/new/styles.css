@@ -172,13 +172,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
   order: 2;
 }
 
-.form-group {
-  min-width: 200px;
-}
-.form-field {
-  margin-bottom: 15px;
-}
-
 /*------------------ Form Label ------------------*/
 .form-label__info-button,
 .form-label__error-button {
@@ -223,15 +216,14 @@ svg.svg-grid-icons.svg-icons_flag-none {
   display: none;
 }
 
-.layout__horizontal-layout {
-  margin-left: -5px;
-  margin-right: -5px;
+.layout__horizontal-layout > div:not(:last-child),
+.layout__horizontal-layout-list-item:not(:last-child) {
+  margin-right: 10px;
 }
 
-.layout__horizontal-layout > div,
-.layout__horizontal-layout-list-item {
-  padding-left: 5px;
-  padding-right: 5px;
+.layout__vertical-layout > div,
+.layout__vertical-layout-item {
+  margin-bottom: 20px;
 }
 
 .group-toggle {
