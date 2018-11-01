@@ -12,6 +12,7 @@ import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
 import '../resources/styles/layout-designer.css';
 import '../resources/styles/notifications.css';
+import '../resources/styles/blink-checkbox.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';

@@ -8,6 +8,18 @@
 
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 
+<http://comindware.com/text/core#components> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "components"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/components#toolbar> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "toolbar"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/components/toolbar#blinkCheckbox> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "blinkCheckbox"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/components/toolbar/blinkCheckbox#hideAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/components/toolbar/blinkCheckbox#hideAllColumns> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/components/toolbar/blinkCheckbox#showAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Show all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors#icon> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "icon"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/document/documentRevision#download> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Download"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].

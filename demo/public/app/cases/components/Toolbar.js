@@ -1,4 +1,26 @@
 export default function () {
+    const blinkColumns = new Backbone.Collection([
+        {
+            id: 'blink.1',
+            name: 'First',
+            isHidden: false
+        },
+        {
+            id: 'blink.2',
+            name: 'Second',
+            isHidden: true
+        },
+        {
+            id: 'blink.3',
+            name: 'Third',
+            isHidden: false
+        }
+    ]);
+
+    const channel = new Backbone.Radio.channel('some');
+    channel.on('all', eventName => console.log(eventName));
+
+    blinkColumns.on('change:isHidden', (model, value) => alert(`isHidden = ${value}`));
     return new Core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
             {
@@ -27,19 +49,21 @@ export default function () {
                 }
             },
             {
-                iconClass: 'plus',
+                // iconClass: 'plus',
                 id: '3',
-                name: 'Update',
-                type: 'Action',
+                name: 'Eyes',
+                type: 'BlinkCheckbox',
                 severity: 'Normal',
                 resultType: 'CustomClientAction',
-                context: 'Void'
+                context: 'Void',
+                columns: blinkColumns,
+                channel: channel
             },
             {
                 type: 'Splitter'
             },
             {
-                iconClass: 'plus',
+                iconClass: 'minus',
                 id: '4',
                 name: 'Delete',
                 type: 'Action',

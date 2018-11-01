@@ -20,6 +20,7 @@
   "main": "dist/core.bundle.min.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development DEBUG=true gulp --gulpfile build/gulpfile.js start",
+    "develop": "cross-env NODE_ENV=development DEBUG=true gulp --gulpfile build/gulpfile.js develop",
     "build": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js build",
     "build:min": "cross-env NODE_ENV=development DEBUG=false gulp --gulpfile build/gulpfile.js build:min",
     "deploy": "cross-env BUILD_ENV=deploy NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy",

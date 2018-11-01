@@ -1,5 +1,6 @@
 //@flow
 import template from '../templates/customActionGroupView.html';
+import BlinkCheckboxView from './BlinkCheckboxView';
 import CustomActionItemView from './CustomActionItemView';
 import ToolbarActionMenuView from '../views/ToolbarActionMenuView';
 import ToolbarCheckboxItemView from '../views/ToolbarCheckboxItemView';
@@ -24,6 +25,8 @@ export default Marionette.CollectionView.extend({
                 return ToolbarPopupView;
             case meta.toolbarItemType.CHECKBOX:
                 return ToolbarCheckboxItemView;
+            case meta.toolbarItemType.BLINKCHECKBOX:
+                return BlinkCheckboxView;
             default:
                 return CustomActionItemView;
         }
