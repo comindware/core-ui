@@ -302,9 +302,11 @@ export default Marionette.View.extend({
         this.showChildView('contentRegion', this.listView);
 
         if (this.options.showHeader) {
+            this.getRegion('headerRegion').$el.show();
             this.showChildView('headerRegion', this.headerView);
         } else {
             this.el.classList.add('grid__headless');
+            this.getRegion('headerRegion').$el.hide();
         }
 
         if (this.options.showCheckbox) {
