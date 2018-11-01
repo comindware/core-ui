@@ -302,11 +302,9 @@ export default Marionette.View.extend({
         this.showChildView('contentRegion', this.listView);
 
         if (this.options.showHeader) {
-            this.$el.find('.js-grid-header').show(); //becase backbone selector is dumb
             this.showChildView('headerRegion', this.headerView);
         } else {
             this.el.classList.add('grid__headless');
-            this.$el.find('.js-grid-header').hide(); //becase backbone selector is dumb
         }
 
         if (this.options.showCheckbox) {

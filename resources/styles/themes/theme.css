@@ -352,6 +352,10 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-headless);
 }
 
+.grid__headless > .grid-header-wrp {
+  display: none;
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
