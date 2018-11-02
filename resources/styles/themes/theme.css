@@ -510,6 +510,7 @@ svg.svg-grid-icons {
 }
 
 .dd-list__i,
+.toolbar-panel_container__select-state .toolbar-btn,
 .popout-menu__txt {
   padding: var(--dropdown-item-padding);
   font-size: var(--dropdown-font-size);
@@ -735,16 +736,20 @@ svg.svg-grid-icons {
 
 /* Toolbar component */
 
-.toolbar-btn {
+.toolbar-btn{
   @apply --button-theme;
   @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
 }
-.toolbar-btn:last-child {
+.toolbar-items-wrp > div:last-child.toolbar-btn,
+.toolbar-items-wrp > div:last-child .toolbar-btn{
   margin-right: 0
 }
-
+.toolbar-buttons_container__const .toolbar-items-wrp > div:first-child.toolbar-btn,
+.toolbar-items-wrp > div:first-child .toolbar-btn{
+  margin-left: 5px;
+}
 .toolbar-btn:hover {
   @apply --button-strong-hover-theme;
 }
@@ -839,6 +844,20 @@ svg.svg-grid-icons {
 .btn-separator {
   display: inline-block;
   width: var(--btn-separator-width);
+}
+
+.toolbar-panel_container__select-state .toolbar-btn{
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.toolbar-panel_container__select-state .toolbar-btn:not(.toolbar-btn_headline):hover{
+  background-color: var(--grey-100);
+  color: var(--blue-300);
+}
+
+.toolbar-panel_container__select-state .toolbar-btn_headline:active{
+  box-shadow: none;
 }
 
 /* Group */

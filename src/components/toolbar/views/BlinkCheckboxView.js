@@ -8,20 +8,11 @@ export default Marionette.View.extend({
         });
         const view = this.__createView(options);
 
-        const channel = options.model.get('channel');
-
-        channel && view.listenTo(view, 'before:open', () => channel.trigger('columns:before:open'));
-
-        view.listenTo(view, 'panel:save:columns', () => {
-            channel && channel.trigger('columns:save:dataset', options.model);
-            view.close();
-        });
-
         return view;
     },
 
     __createView(options) {
-        return Core.dropdown.factory.createPopout({
+        const view = Core.dropdown.factory.createPopout({
             buttonView: ButtonView,
             panelView: BlinkCheckboxPopoutPanelView,
             customAnchor: true,
@@ -32,5 +23,15 @@ export default Marionette.View.extend({
                 model: options.model
             }
         });
+
+        view.listenTo(view, 'panel:save:columns', () => {
+            view.trigger('action:click', options.model, { type: 'panel:save:columns' });
+            view.close();
+        });
+        view.listenTo(view, 'before:open', () => {
+            view.trigger('action:click', options.model, { type: 'before:open' });
+        });
+
+        return view;
     }
 });

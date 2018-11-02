@@ -17,11 +17,8 @@ export default function () {
         }
     ]);
 
-    const channel = new Backbone.Radio.channel('some');
-    channel.on('all', eventName => console.log(eventName));
-
     blinkColumns.on('change:isHidden', (model, value) => alert(`isHidden = ${value}`));
-    return new Core.components.Toolbar({
+    const toolbarView = new Core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
             {
                 iconClass: 'plus',
@@ -34,30 +31,25 @@ export default function () {
                 description: 'createComponent'
             },
             {
-                iconType: 'Undefined',
+                iconClass: 'dog',
                 id: '2',
-                name: 'name',
-                severity: 'None',
-                defaultTheme: true,
-                type: 'Popup',
-                options: {
-                    collection: new Backbone.Collection(),
-                    diagramId: '1',
-                    solutionId: '2',
-                    buttonView: Marionette.View.extend({ template: false }),
-                    panelView: Marionette.View.extend({ template: false })
-                }
+                name: 'Some',
+                type: 'Action',
+                severity: 'Low',
+                resultType: 'CustomClientAction',
+                context: 'Void',
+                description: 'createComponent'
             },
             {
                 // iconClass: 'plus',
                 id: '3',
                 name: 'Eyes',
+                kind: 'const',
                 type: 'BlinkCheckbox',
                 severity: 'Normal',
                 resultType: 'CustomClientAction',
                 context: 'Void',
-                columns: blinkColumns,
-                channel: channel
+                columns: blinkColumns
             },
             {
                 type: 'Splitter'
@@ -72,11 +64,38 @@ export default function () {
                 context: 'Void'
             },
             {
-                iconType: 'Undefined',
-                type: 'Action',
+                iconClass: 'Undefined', //will be set by selected state.
+                type: 'SelectState',
                 id: '5',
-                name: 'Check the checkbox',
-                severity: 'Critical'
+                name: 'SelectState',
+                severity: 'Critical',
+                items: [
+                    {
+                        id: 'headLine',
+                        type: 'Headline',
+                        name: 'some header'
+                    },
+                    {
+                        id: 'firstState',
+                        iconClass: 'align-left',
+                        name: 'Left'
+                    },
+                    {
+                        id: 'secondState',
+                        iconClass: 'align-center',
+                        name: 'Center'
+                    },
+                    {
+                        id: 'thirdState',
+                        iconClass: 'align-right',
+                        name: 'Right'
+                    },
+                    {
+                        id: 'fourthState',
+                        iconClass: 'align-justify',
+                        name: 'Justify'
+                    }
+                ]
             },
             {
                 iconType: 'Undefined',
@@ -93,11 +112,25 @@ export default function () {
                 severity: 'Fatal'
             },
             {
-                name: 'Группа', class: 'buttonclass', dropdownClass: 'dropdownClass', order: 5, type: 'Group', iconType: 'Undefined', iconClass: 'low-vision', severity: 'None', items: [{ userCommandId: 'event.176', name: 'Delete', class: 'buttonClass', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.1', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
-                { userCommandId: 'event.176', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.176', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }]
+                name: 'Группа',
+                class: 'buttonclass',
+                dropdownClass: 'dropdownClass',
+                order: 5,
+                type: 'Group',
+                iconType: 'Undefined',
+                iconClass: 'low-vision',
+                severity: 'None',
+                items: [
+                    { userCommandId: 'event.1', name: 'Delete', class: 'buttonClass', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                    { userCommandId: 'event.2', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
+                    { userCommandId: 'event.3', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'Low', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                    { userCommandId: 'event.4', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'Fatal', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }
+                ]
             }
         ])
     });
+
+    toolbarView.on('command:execute', (model, options) => console.log(model.id || model.get('userCommandId'), options));
+
+    return toolbarView;
 }

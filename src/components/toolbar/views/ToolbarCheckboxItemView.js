@@ -1,13 +1,13 @@
 //@flow
 import ButtonView from './ButtonView';
 
-const classes = {
-    CHECKED: 'editor_checked'
-};
-
 export default ButtonView.extend({
     ui: {
         check: '.js-check'
+    },
+
+    classes: {
+        CHECKED: 'editor_checked'
     },
 
     templateContext() {
@@ -17,7 +17,7 @@ export default ButtonView.extend({
     },
 
     onRender() {
-        this.ui.check.toggleClass(classes.CHECKED, !!this.model.get('isChecked'));
+        this.ui.check.toggleClass(this.classes.CHECKED, !!this.model.get('isChecked'));
     },
 
     events: {
@@ -27,7 +27,7 @@ export default ButtonView.extend({
     __handleClick() {
         const newState = !this.model.get('isChecked');
         this.model.set('isChecked', newState);
-        this.ui.check.toggleClass(classes.CHECKED, newState);
+        this.ui.check.toggleClass(this.classes.CHECKED, newState);
         this.trigger('action:click', this.model);
     }
 });
