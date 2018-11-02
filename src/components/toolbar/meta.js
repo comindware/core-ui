@@ -1,4 +1,14 @@
 //@flow
+import BlinkCheckboxView from './views/BlinkCheckboxView';
+import ActionView from './views/ActionView';
+import ActionMenuView from './views/ActionMenuView';
+import ToolbarCheckboxItemView from './views/ToolbarCheckboxItemView';
+import ToolbarSplitterView from './views/ToolbarSplitterView';
+import ToolbarPopupView from './views/ToolbarPopupView';
+import StateSelectView from './views/StateSelectView';
+import ToolbarSelectItemView from './views/ToolbarSelectItemView';
+import ButtonView from './views/ButtonView';
+
 export const severity = {
     None: {
         class: 'toolbar-btn',
@@ -150,15 +160,46 @@ export const icons = {
     Book: { text: 'Book', id: 'Book' }
 };
 
+const toolbarItemType = {
+    ACTION: 'Action',
+    GROUP: 'Group',
+    SPLITTER: 'Splitter',
+    POPUP: 'Popup',
+    CHECKBOX: 'Checkbox',
+    SELECTITEM: 'SelectItem',
+    BLINKCHECKBOX: 'BlinkCheckbox',
+    SELECTSTATE: 'SelectState',
+    HEADLINE: 'Headline'
+};
+
+const getViewByModel = model => {
+    switch (model.get('type')) {
+        case toolbarItemType.ACTION:
+            return ActionView;
+        case toolbarItemType.GROUP:
+            return ActionMenuView;
+        case toolbarItemType.SPLITTER:
+            return ToolbarSplitterView;
+        case toolbarItemType.POPUP:
+            return ToolbarPopupView;
+        case toolbarItemType.CHECKBOX:
+            return ToolbarCheckboxItemView;
+        case toolbarItemType.SELECTITEM:
+            return ToolbarSelectItemView;
+        case toolbarItemType.BLINKCHECKBOX:
+            return BlinkCheckboxView;
+        case toolbarItemType.SELECTSTATE:
+            return StateSelectView;
+        case toolbarItemType.HEADLINE:
+            return ButtonView;
+        default:
+            return ActionView;
+    }
+};
+
 export default {
-    toolbarItemType: {
-        ACTION: 'Action',
-        GROUP: 'Group',
-        SPLITTER: 'Splitter',
-        POPUP: 'Popup',
-        CHECKBOX: 'Checkbox',
-        BLINKCHECKBOX: 'BlinkCheckbox'
-    },
+    toolbarItemType,
+    getViewByModel,
     severity,
     icons
 };

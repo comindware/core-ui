@@ -990,6 +990,10 @@ a:hover {
     display: flex;
 }
 
+.toolbar-buttons_container__const{
+    margin-left: auto;
+}
+
 .toolbar-panel_container {
     padding: 5px;
     min-width: 200px;
@@ -1002,12 +1006,35 @@ a:hover {
     z-index: 600;
 }
 
+.toolbar-panel_container__select-state{
+    padding: 0;
+}
+
 .toolbar-panel_container .toolbar-btn {
     width: calc(100% - 6px);
     margin: 3px;
 }
 
-.toolbar-container .popout__action-btn {
+.toolbar-panel_container__select-state .toolbar-btn{
+    width: 100%;
+    margin: 0;
+    border: none;
+}
+
+.toolbar-panel_container__select-state .toolbar-btn.toolbar-btn_headline{
+    font-weight: bold;
+}
+
+.toolbar-panel_container__select-state .checkbox{
+    background: unset;
+    border: none;
+}
+
+.toolbar-panel_container__select-state .toolbar-btn .editor_checked.editor_checkbox .checkbox{
+    background: unset;
+}
+
+.toolbar-menu-actions .popout__action-btn {
     padding: 0 10px;
     line-height: 30px;
 }

@@ -51,7 +51,6 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
         }
 
         this.selected[this.lastSelectedModel].deselect();
-        this.lastSelectedModel = undefined;
         this.cursorCid = undefined;
 
         if (this.selected[this.lastSelectedModel] !== undefined) {

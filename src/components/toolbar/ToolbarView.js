@@ -2,22 +2,24 @@
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
+import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
 
 const actionsMenuLabel = '⋮';
-const elementsMargin = 5;
 
 export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
         this.allItemsCollection = this.options.allItemsCollection;
-        this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
-        this.menuItemsCollection = new Backbone.Collection();
+        this.toolbarItemsCollection = new ToolbarItemsCollection();
+        this.menuItemsCollection = new ToolbarItemsCollection();
+        this.toolbarConstItemsCollection = new ToolbarItemsCollection();
+        this.__resetCollections(); 
 
-        this.toolbarActions = this.__createActionsGroupsView();
+        this.toolbarActions = this.__createActionsGroupsView(this.toolbarItemsCollection);
+        this.constToolbarActions = this.__createActionsGroupsView(this.toolbarConstItemsCollection);
         this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
-        this.listenTo(this.toolbarActions, 'actionSelected', model => this.trigger('command:execute', model));
-        this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
+
         this.debounceRebuildLong = _.debounce(this.rebuildView, 300);
         this.debounceRebuildShort = _.debounce(this.rebuildView, 5);
         this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuildLong);
@@ -30,7 +32,8 @@ export default Marionette.View.extend({
 
     regions: {
         toolbarItemsRegion: '.js-toolbar-items',
-        popupMenuRegion: '.js-menu-actions-region'
+        popupMenuRegion: '.js-menu-actions-region',
+        toolbarConstItemsRegion: '.js-toolbar-const-items'
     },
 
     onAttach() {
@@ -40,33 +43,40 @@ export default Marionette.View.extend({
     onRender() {
         this.showChildView('toolbarItemsRegion', this.toolbarActions);
         this.showChildView('popupMenuRegion', this.popupMenu);
+        this.showChildView('toolbarConstItemsRegion', this.constToolbarActions);
         this.getRegion('popupMenuRegion').$el.hide();
     },
 
-    __createActionsGroupsView() {
-        return new CustomActionGroupView({
-            collection: this.toolbarItemsCollection,
+    __createActionsGroupsView(collection) {
+        const view = new CustomActionGroupView({
+            collection,
             reqres: this.options.reqres
         });
+        this.listenTo(view, 'actionSelected', (model, options = {}) => this.trigger('command:execute', model, options));
+        return view;
     },
 
     rebuildView() {
         if (this.isDestroyed()) {
             return false;
         }
-        this.toolbarItemsCollection.reset(this.allItemsCollection.models);
+
+        this.__resetCollections();
         const toolbarActions = this.getRegion('toolbarItemsRegion')
             .$el.children()
             .children();
         if (toolbarActions.length === 0) {
             return;
         }
-        const toolbarWidth = this.$el.width();
-        const menuActionsWidth = this.menuActionsWidth ? this.menuActionsWidth : this.menuActionsWidth = this.getRegion('popupMenuRegion').$el.width();
+        let toolbarWidth = this.$el.width();
+        const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
+        constItemsEl.length && (toolbarWidth -= constItemsEl.outerWidth());
+        const menuActionsWidth = this.getRegion('popupMenuRegion').$el.outerWidth();
+
         let childWidth = 0;
         let notFitItem = -1;
         toolbarActions.each((i, val) => {
-            childWidth += val.offsetWidth + elementsMargin;
+            childWidth += val.offsetWidth;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 if (i === toolbarActions.length - 1) {
                     if (childWidth < toolbarWidth) {
@@ -80,19 +90,29 @@ export default Marionette.View.extend({
 
         if (notFitItem >= 0) {
             this.getRegion('popupMenuRegion').$el.show();
-            this.menuItemsCollection.reset(this.allItemsCollection.models.slice(notFitItem));
-            this.toolbarItemsCollection.reset(this.allItemsCollection.models.slice(0, notFitItem));
+            this.menuItemsCollection.reset(this.toolbarItemsCollection.models.slice(notFitItem));
+            this.toolbarItemsCollection.reset(this.toolbarItemsCollection.models.slice(0, notFitItem));
         } else {
             this.getRegion('popupMenuRegion').$el.hide();
         }
     },
 
+    __resetCollections() {
+        const rawCollection = this.allItemsCollection.toJSON();
+        this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== 'const'));
+        this.menuItemsCollection.reset();
+        this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === 'const'));
+    },
+
     __createDropdownActionsView() {
-        return Core.dropdown.factory.createMenu({
+        const view = Core.dropdown.factory.createMenu({
             text: actionsMenuLabel,
             items: this.menuItemsCollection,
             popoutFlow: 'right',
             customAnchor: true
         });
+
+        this.listenTo(view, 'execute', (action, model, options = {}) => this.trigger('command:execute', model, options));
+        return view;
     }
 });
