@@ -415,19 +415,19 @@ export default Marionette.View.extend({
             this.__deselectPointed();
         }
 
-        const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
+        const editors = pointedEl.querySelectorAll('input') || pointedEl.querySelectorAll('[class~=editor]');
 
-        if (editor) {
+        if (editors.length) {
             const view = this.cellViews[pointed];
             if (view && view.editor && view.editor.hidden) {
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (pointedEl.contains(editor) && isFocusEditor) {
-                editor.focus();
+            if (pointedEl.contains(editors[0]) && isFocusEditor) {
+                editors[0].focus();
             }
         }
-        if (document.activeElement !== editor && !isFocusEditor) {
+        if (!Array.prototype.includes.call(editors, document.activeElement) && !isFocusEditor) {
             pointedEl.focus();
         }
 
