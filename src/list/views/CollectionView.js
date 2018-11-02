@@ -1,5 +1,5 @@
 //@flow
-import { keyCode, helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import template from '../templates/collection.hbs';
 
@@ -69,8 +69,7 @@ export default Marionette.CompositeView.extend({
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
-        // this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        // this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
@@ -96,7 +95,6 @@ export default Marionette.CompositeView.extend({
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
-        // this.on('render', this.__onRender);
     },
 
     attributes() {
@@ -138,7 +136,6 @@ export default Marionette.CompositeView.extend({
 
     // override default method to correct add twhen index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
-        // `index` is present when adding with `at` since BB 1.2; indexOf fallback for < 1.2
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 
         if (this.filter || index === false) {
@@ -401,38 +398,6 @@ export default Marionette.CompositeView.extend({
                 paddingRight: scrollBarWidth
             });
         }
-    },
-
-    getAdjustedElementHeight(elementHeight) {
-        let adjustedElementHeight;
-        if (this.height !== heightOptions.AUTO) {
-            if (elementHeight) {
-                adjustedElementHeight = elementHeight;
-            } else {
-                let parent = this.el.offsetParent;
-                let clientHeight = parent.clientHeight;
-                while (parent && !clientHeight && parent !== document.body) {
-                    parent = parent.offsetParent;
-                    clientHeight = parent.clientHeight;
-                }
-                const parentStyles = getComputedStyle(parent);
-                const contentHeight = clientHeight - parseFloat(parentStyles.paddingTop) - parseFloat(parentStyles.paddingBottom);
-                adjustedElementHeight = contentHeight || defaultOptions.defaultElHeight;
-            }
-        } else {
-            const computedViewportHeight = Math.min(this.maxRows, this.collection.length);
-            let minHeight = 0;
-            let outerBoxAdjustments = 0;
-
-            if (this.isEmpty()) {
-                minHeight = this.$el.find('.empty-view').height();
-            }
-
-            outerBoxAdjustments = this.ui.visibleCollection.outerHeight() % this.childHeight;
-
-            adjustedElementHeight = Math.max(this.childHeight * computedViewportHeight + outerBoxAdjustments, minHeight);
-        }
-        return adjustedElementHeight;
     },
 
     onAddChild(view, child) {

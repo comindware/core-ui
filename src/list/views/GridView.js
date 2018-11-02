@@ -346,9 +346,6 @@ export default Marionette.View.extend({
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
-        // if (this.collection.visibleLength) {
-        //     this.collection.select(this.collection.at(0), false, false, false);
-        // }
     },
 
     getChildren() {
