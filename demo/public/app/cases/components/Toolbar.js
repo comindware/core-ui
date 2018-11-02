@@ -44,7 +44,7 @@ export default function () {
                 // iconClass: 'plus',
                 id: '3',
                 name: 'Eyes',
-                kind: 'const',
+                kind: 'Const',
                 type: 'BlinkCheckbox',
                 severity: 'Normal',
                 resultType: 'CustomClientAction',
