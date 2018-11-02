@@ -67,6 +67,7 @@
     overflow-y: scroll;
     -ms-scrollbar-arrow-color: white;
     -ms-scrollbar-track-color: white;
+    position: relative;
 }
 
 .grid-content-view {
