@@ -3,6 +3,7 @@ import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
+import meta from './meta';
 
 const actionsMenuLabel = '⋮';
 
@@ -99,9 +100,9 @@ export default Marionette.View.extend({
 
     __resetCollections() {
         const rawCollection = this.allItemsCollection.toJSON();
-        this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== 'const'));
+        this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== meta.kinds.CONST));
         this.menuItemsCollection.reset();
-        this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === 'const'));
+        this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === meta.kinds.CONST));
     },
 
     __createDropdownActionsView() {

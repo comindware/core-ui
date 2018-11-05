@@ -5,7 +5,6 @@ import ActionMenuView from './views/ActionMenuView';
 import ToolbarCheckboxItemView from './views/ToolbarCheckboxItemView';
 import ToolbarSplitterView from './views/ToolbarSplitterView';
 import ToolbarPopupView from './views/ToolbarPopupView';
-import StateSelectView from './views/StateSelectView';
 import ToolbarSelectItemView from './views/ToolbarSelectItemView';
 import ButtonView from './views/ButtonView';
 
@@ -177,6 +176,7 @@ const getViewByModel = model => {
         case toolbarItemType.ACTION:
             return ActionView;
         case toolbarItemType.GROUP:
+        case toolbarItemType.SELECTSTATE:
             return ActionMenuView;
         case toolbarItemType.SPLITTER:
             return ToolbarSplitterView;
@@ -188,8 +188,6 @@ const getViewByModel = model => {
             return ToolbarSelectItemView;
         case toolbarItemType.BLINKCHECKBOX:
             return BlinkCheckboxView;
-        case toolbarItemType.SELECTSTATE:
-            return StateSelectView;
         case toolbarItemType.HEADLINE:
             return ButtonView;
         default:
@@ -197,9 +195,14 @@ const getViewByModel = model => {
     }
 };
 
+const kinds = {
+    CONST: 'Const'
+};
+
 export default {
     toolbarItemType,
     getViewByModel,
     severity,
+    kinds,
     icons
 };
