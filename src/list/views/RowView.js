@@ -321,7 +321,7 @@ export default Marionette.View.extend({
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1) {
                     this.gridEventAggregator.pointedCell = cellIndex;
-                    this.__selectPointed(cellIndex);
+                    this.__selectPointed(cellIndex); //todo remove event duplications!!
                 }
             }
             selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
@@ -416,6 +416,7 @@ export default Marionette.View.extend({
         }
 
         const editors = pointedEl.querySelectorAll('input') || pointedEl.querySelectorAll('[class~=editor]');
+        const doesContains = pointedEl.contains(editors[0]);
 
         if (editors.length) {
             const view = this.cellViews[pointed];
@@ -423,11 +424,12 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (pointedEl.contains(editors[0]) && isFocusEditor) {
+            if (doesContains && isFocusEditor) {
                 editors[0].focus();
             }
         }
-        if (!Array.prototype.includes.call(editors, document.activeElement) && !isFocusEditor) {
+
+        if (!doesContains && !isFocusEditor) {
             pointedEl.focus();
         }
 

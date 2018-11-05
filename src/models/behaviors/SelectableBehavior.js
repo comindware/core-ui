@@ -23,7 +23,7 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
     // Select a model, deselecting any previously
     // selected model
     select(model) {
-        if (model && this.selected === model) {
+        if (model && this.selected && this.selected[model.cid] === model) {
             return;
         }
 
@@ -51,6 +51,7 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
         }
 
         this.selected[this.lastSelectedModel].deselect();
+        this.lastSelectedModel = undefined;
         this.cursorCid = undefined;
 
         if (this.selected[this.lastSelectedModel] !== undefined) {
