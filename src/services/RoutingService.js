@@ -311,7 +311,7 @@ export default {
         const urlParts = window.location.hash.split('&nxt');
         const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
-        if (replaceIndex !== -1 && urlParts.includes(part => part.includes('#custom'))) {
+        if (replaceIndex !== -1 && urlParts.some(part => part.startsWith('#custom'))) {
             urlParts.splice(replaceIndex, 1, cleanUrl);
 
             return urlParts.join('&nxt');
