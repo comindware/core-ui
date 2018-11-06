@@ -22,6 +22,9 @@ describe('Editors', () => {
             }
         });
 
+        const isAvailableListEmpty = view => view.$('.js-available-items-list-region .js-visible-collection-wrp').hasClass('empty');
+        const isSelectedListEmpty = view => view.$('.js-selected-items-list-region .js-visible-collection-wrp').hasClass('empty');
+
         it('should be initialized', () => {
             const model = new Backbone.Model({
                 selected: []
@@ -80,11 +83,11 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-available-items-list-region').length) {
+                        if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
                             view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
+                                if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
@@ -117,13 +120,14 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
+                    const gridCollection = view.$('.js-selected-items-list-region .js-visible-collection-wrp');
                     const first = setInterval(() => {
-                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
+                        if (gridCollection.children().length && !gridCollection.hasClass('empty')) {
                             clearTimeout(first);
-                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
+                            gridCollection.children().first().click().dblclick();
 
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
+                                if (gridCollection.hasClass('empty')) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
@@ -156,12 +160,12 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-available-items-list-region').length) {
+                        if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
                             view.$('.js-available-items-list-region .js-selection-panel-wrp').children().first().children().click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
+                                if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
@@ -194,11 +198,11 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length) {
+                        if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
                             view.$('.js-move-right-all-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
+                                if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue().sort()).toEqual(core.services.UserService.listUsers().map(user => user.id).sort());
                                     done();
@@ -231,12 +235,12 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 1) {
+                        if (!isSelectedListEmpty(view)) {
                             clearTimeout(first);
                             view.$('.js-selected-items-list-region .js-selection-panel-wrp').children().first().children().click();
                             view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
+                                if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue().length).toEqual(0);
                                     done();
@@ -273,7 +277,7 @@ describe('Editors', () => {
                             clearTimeout(first);
                             view.$('.js-move-left-all-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
+                                if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
@@ -300,13 +304,13 @@ describe('Editors', () => {
                 key: 'selected',
                 autocommit: true,
                 users: core.services.UserService.listUsers().slice(0, 3),
-                groups: core.services.UserService.listGroups().slice(0, 3)
+                groups: core.services.UserService.listGroups().slice(0, 5)
             });
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
+                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 8) {
                             clearTimeout(first);
                             view.$('.js-users-button').click();
 
@@ -316,7 +320,7 @@ describe('Editors', () => {
                                     view.$('.js-groups-button').click();
 
                                     const third = setInterval(() => {
-                                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
+                                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 5) {
                                             clearTimeout(third);
                                             expect(true).toEqual(true);
                                             done();

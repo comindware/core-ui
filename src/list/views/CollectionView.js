@@ -29,7 +29,12 @@ const defaultOptions = {
     columnSort: true,
     maxRows: 100,
     defaultElHeight: 300,
-    useSlidingWindow: true
+    useSlidingWindow: true,
+    childHeight: 35
+};
+
+const classes = {
+    empty: 'empty'
 };
 
 /**
@@ -81,7 +86,7 @@ export default Marionette.CompositeView.extend({
             this.height = defaultOptions.height;
         }
 
-        this.childHeight = options.childHeight || 25;
+        this.childHeight = options.childHeight || defaultOptions.childHeight;
         this.state = {
             position: 0
         };
@@ -92,7 +97,11 @@ export default Marionette.CompositeView.extend({
 
         this.debouncedHandleResize = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
-        this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
+        this.debouncedUpdateParentCollection = _.debounce(shouldUpdateScroll => {
+            this.updateEmpty();
+            this.handleResize(shouldUpdateScroll);
+        }, 20);
+        this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedUpdateParentCollection);
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
@@ -125,6 +134,11 @@ export default Marionette.CompositeView.extend({
         this.handleResize();
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
+        this.updateEmpty();
+    },
+
+    updateEmpty() {
+        typeof this.ui.childViewContainer.toggleClass === 'function' && this.ui.childViewContainer.toggleClass(classes.empty, this.isEmpty());
     },
 
     _showCollection() {
