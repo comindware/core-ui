@@ -37,6 +37,10 @@
     will-change: top;
 }
 
+.visible-collection-wrp.empty{
+    height: 100%;
+}
+
 .visible-collection-view {
     height: inherit;
 }
@@ -290,7 +294,7 @@
     font-size: 18px;
     font-weight: 300;
     color: #70787F;
-    min-height: 30px;
+    min-height: 25px;
 }
 /* /Empty View */
 

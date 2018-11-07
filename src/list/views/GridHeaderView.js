@@ -220,7 +220,7 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.trigger('update:width', index, newColumnWidth);
+        this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
 
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 

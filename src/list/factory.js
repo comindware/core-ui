@@ -125,11 +125,7 @@ const factory = {
                 headerView: options.headerView,
                 childView: options.childView,
                 childViewSelector: options.childViewSelector,
-                gridColumnHeaderView: GridColumnHeaderView,
-                emptyView: EmptyGridView,
-                emptyViewOptions: {
-                    text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
-                }
+                gridColumnHeaderView: GridColumnHeaderView
             },
             options.gridViewOptions
         );
