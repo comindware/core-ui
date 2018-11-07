@@ -33,7 +33,7 @@ const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
     emptyView: EmptyGridView,
     emptyViewOptions: {
-        text: () => options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')
+        text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
     }
 });
 
@@ -548,7 +548,7 @@ export default Marionette.View.extend({
     },
 
     __updateEmptyView(allColumnsWidth) {
-        if (this.options.emptyView == null) {
+        if (!this.options.emptyView) {
             return;
         }
         if (this.listView.isEmpty()) {
