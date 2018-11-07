@@ -1,6 +1,5 @@
 //@flow
 import template from '../templates/emptyGrid.hbs';
-import LocalizationService from '../../services/LocalizationService';
 
 /**
  * Some description for initializer
@@ -15,10 +14,10 @@ import LocalizationService from '../../services/LocalizationService';
  * */
 
 export default Marionette.View.extend({
-    initialize(options) {
-        this.model = new Backbone.Model({
-            text: options.text || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')
-        });
+    templateContext() {
+        return {
+            text: _.result(this.options, 'text', Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY'))
+        };
     },
 
     template: Handlebars.compile(template),

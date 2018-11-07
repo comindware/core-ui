@@ -9,7 +9,6 @@ import RowView from './RowView';
 import SelectionPanelView from './selections/SelectionPanelView';
 import SelectionCellView from './selections/SelectionCellView';
 import GridHeaderView from './GridHeaderView';
-import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 import MobileService from '../../services/MobileService';
@@ -17,6 +16,7 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import transliterator from 'utils/transliterator';
+import EmptyGridView from '../views/EmptyGridView';
 
 /*
     Public interface:
@@ -29,8 +29,12 @@ import transliterator from 'utils/transliterator';
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-const defaultOptions = () => ({
-    focusSearchOnAttach: !MobileService.isMobile
+const defaultOptions = options => ({
+    focusSearchOnAttach: !MobileService.isMobile,
+    emptyView: EmptyGridView,
+    emptyViewOptions: {
+        text: () => options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')
+    }
 });
 
 /**
@@ -43,7 +47,7 @@ const defaultOptions = () => ({
  * @param {Object} options Constructor options
  * @param {Array} options.collection массив элементов списка
  * @param {Array} options.columns массив колонок
- * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+ * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк) или не инициализированы колонки.
  * @param {Number} options.childHeight высота строки списка (childView)
  * @param {Number} options.maxHeight максимальная высота всего списка
  * @param {Backbone.View} [options.childView] view строки списка
@@ -53,8 +57,6 @@ const defaultOptions = () => ({
  * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
  * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
  * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
- * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
- * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию.
  * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
@@ -62,7 +64,7 @@ const defaultOptions = () => ({
 
 export default Marionette.View.extend({
     initialize(options) {
-        _.defaults(options, defaultOptions());
+        _.defaults(options, defaultOptions(options));
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
@@ -114,13 +116,6 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
         }
 
-        if (options.noColumnsView) {
-            this.noColumnsView = options.noColumnsView;
-        } else {
-            this.noColumnsView = NoColumnsDefaultView;
-        }
-        options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
-
         const childView = options.childView || RowView;
 
         const showRowIndex = this.getOption('showRowIndex');
@@ -154,8 +149,6 @@ export default Marionette.View.extend({
             childViewSelector: options.childViewSelector,
             emptyView: options.emptyView,
             emptyViewOptions: options.emptyViewOptions,
-            noColumnsView: options.noColumnsView,
-            noColumnsViewOptions: options.noColumnsViewOptions,
             childHeight: options.childHeight,
             childViewOptions,
             loadingChildView: options.loadingChildView || LoadingChildView,
@@ -260,7 +253,6 @@ export default Marionette.View.extend({
         contentRegion: '.js-grid-content-view',
         selectionPanelRegion: '.js-grid-selection-panel-view',
         selectionHeaderRegion: '.js-grid-selection-header-view',
-        noColumnsViewRegion: '.js-nocolumns-view-region',
         toolbarRegion: {
             el: '.js-grid-tools-toolbar-region',
             replaceElement: true
@@ -294,11 +286,6 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.options.columns.length === 0) {
-            const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-            this.noColumnsViewRegion.show(noColumnsView);
-        }
-
         this.showChildView('contentRegion', this.listView);
 
         if (this.options.showHeader) {
@@ -502,7 +489,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __setColumnWidth(index, width = 0) {
+    __setColumnWidth(index, width = 0, allColumnWidth) {
         const style = this.styleSheet;
         const columnClass = this.columnClasses[index];
         const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
@@ -552,6 +539,21 @@ export default Marionette.View.extend({
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
         } else {
             style.innerHTML += newValue;
+        }
+
+        if (this.listView.isEmpty()) {
+            this.emptyViewClass = this.emptyViewClass || (() => `.${(new this.options.emptyView()).className}`)();
+            const empty$el = this.listView.$el.find(this.emptyViewClass);
+            empty$el && empty$el.width(allColumnWidth);
+            this.ui.content.css({
+                'min-height': `${this.listView.childHeight}px`,
+                height: '100%'
+            });
+        } else {
+            this.ui.content.css({
+                'min-height': '',
+                height: ''
+            });
         }
     },
 

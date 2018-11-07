@@ -5,19 +5,19 @@ import ListCanvasView from 'demoPage/views/ListCanvasView';
 export default function() {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 1000; i++) {
-        dataArray.push({
-            textCell: `Text Cell ${i}`,
-            numberCell: i + 1,
-            dateTimeCell: '2015-07-24T08:13:13.847Z',
-            durationCell: 'P12DT5H42M',
-            booleanCell: true,
-            userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
-            enumCell: { valueExplained: ['123'] },
-            documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
-        });
-    }
+    // for (let i = 0; i < 1000; i++) {
+    //     dataArray.push({
+    //         textCell: `Text Cell ${i}`,
+    //         numberCell: i + 1,
+    //         dateTimeCell: '2015-07-24T08:13:13.847Z',
+    //         durationCell: 'P12DT5H42M',
+    //         booleanCell: true,
+    //         userCell: [{ id: 'user.1', columns: ['J. J.'] }],
+    //         referenceCell: { name: 'Ref 1' },
+    //         enumCell: { valueExplained: ['123'] },
+    //         documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+    //     });
+    // }
 
     // 2. Create columns
     const columns = [

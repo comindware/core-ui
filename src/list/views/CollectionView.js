@@ -29,7 +29,12 @@ const defaultOptions = {
     columnSort: true,
     maxRows: 100,
     defaultElHeight: 300,
-    useSlidingWindow: true
+    useSlidingWindow: true,
+    childHeight: 35
+};
+
+const classes = {
+    empty: 'empty'
 };
 
 /**
@@ -80,7 +85,7 @@ export default Marionette.CompositeView.extend({
             this.height = defaultOptions.height;
         }
 
-        this.childHeight = options.childHeight || 25;
+        this.childHeight = options.childHeight || defaultOptions.childHeight;
         this.state = {
             position: 0
         };
@@ -123,6 +128,20 @@ export default Marionette.CompositeView.extend({
         this.handleResize();
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
+    },
+
+    _showEmptyView() {
+        this.__updateEmpty(true);
+        Marionette.CompositeView.prototype._showEmptyView.apply(this, arguments);
+    },
+
+    _destroyEmptyView() {
+        this.__updateEmpty(false);
+        Marionette.CompositeView.prototype._destroyEmptyView.apply(this, arguments);
+    },
+
+    __updateEmpty(isEmpty) {
+        typeof this.ui.childViewContainer.toggleClass === 'function' && this.ui.childViewContainer.toggleClass(classes.empty, isEmpty);
     },
 
     _showCollection() {
