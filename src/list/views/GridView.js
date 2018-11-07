@@ -548,7 +548,7 @@ export default Marionette.View.extend({
     },
 
     __updateEmptyView(allColumnsWidth) {
-        if (this.options.emptyView == null) {
+        if (!this.options.emptyView) {
             return;
         }
         if (this.listView.isEmpty()) {
