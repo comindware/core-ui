@@ -17,6 +17,7 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import transliterator from 'utils/transliterator';
+import EmptyGridView from '../views/EmptyGridView';
 
 /*
     Public interface:
@@ -30,7 +31,8 @@ import transliterator from 'utils/transliterator';
  */
 
 const defaultOptions = () => ({
-    focusSearchOnAttach: !MobileService.isMobile
+    focusSearchOnAttach: !MobileService.isMobile,
+    emptyView: EmptyGridView
 });
 
 /**
@@ -505,7 +507,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __setColumnWidth(index, width = 0) {
+    __setColumnWidth(index, width = 0, allColumnWidth) {
         const style = this.styleSheet;
         const columnClass = this.columnClasses[index];
         const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
@@ -555,6 +557,21 @@ export default Marionette.View.extend({
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
         } else {
             style.innerHTML += newValue;
+        }
+
+        if (this.listView.isEmpty()) {
+            this.emptyViewClass = this.emptyViewClass || (() => `.${(new EmptyGridView()).className}`)();
+            const empty$el = this.listView.$el.find(this.emptyViewClass);
+            empty$el && empty$el.width(allColumnWidth);
+            this.ui.content.css({
+                'min-height': `${this.listView.childHeight}px`,
+                height: '100%'
+            });
+        } else {
+            this.ui.content.css({
+                'min-height': '',
+                height: ''
+            });
         }
     },
 
