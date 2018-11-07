@@ -492,7 +492,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __setColumnWidth(index, width = 0, allColumnWidth) {
+    __setColumnWidth(index, width = 0, allColumnsWidth) {
         const style = this.styleSheet;
         const columnClass = this.columnClasses[index];
         const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
@@ -544,10 +544,17 @@ export default Marionette.View.extend({
             style.innerHTML += newValue;
         }
 
+        this.__updateEmptyView(allColumnsWidth);
+    },
+
+    __updateEmptyView(allColumnsWidth) {
+        if (this.options.emptyView == null) {
+            return;
+        }
         if (this.listView.isEmpty()) {
             this.emptyViewClass = this.emptyViewClass || (() => `.${(new this.options.emptyView()).className}`)();
             const empty$el = this.listView.$el.find(this.emptyViewClass);
-            empty$el && empty$el.width(allColumnWidth);
+            empty$el && empty$el.width(allColumnsWidth);
             this.ui.content.css({
                 'min-height': `${this.listView.childHeight}px`,
                 height: '100%'
