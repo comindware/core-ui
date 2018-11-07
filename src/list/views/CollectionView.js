@@ -1,7 +1,6 @@
 //@flow
 import { keyCode, helpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
-import template from '../templates/collection.hbs';
 
 /*
     Public interface:
@@ -60,7 +59,7 @@ const classes = {
  * должны быть указаны cellView для каждой колонки.
  * */
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -108,14 +107,6 @@ export default Marionette.CompositeView.extend({
         };
     },
 
-    template: Handlebars.compile(template),
-
-    childViewContainer: '.js-visible-collection-wrp',
-
-    ui: {
-        childViewContainer: '.js-visible-collection-wrp'
-    },
-
     events: {
         keydown: '__handleKeydown'
     },
@@ -141,7 +132,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateEmpty(isEmpty) {
-        typeof this.ui.childViewContainer.toggleClass === 'function' && this.ui.childViewContainer.toggleClass(classes.empty, isEmpty);
+        typeof this.$el.toggleClass === 'function' && this.$el.toggleClass(classes.empty, isEmpty);
     },
 
     _showCollection() {
@@ -327,7 +318,7 @@ export default Marionette.CompositeView.extend({
 
     __updateTop() {
         const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-        this.ui.childViewContainer[0].style.top = `${top}px`;
+        this.el.style.paddingTop = `${top}px`;
 
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:top', top);
@@ -349,13 +340,12 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop
-                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
-                * this.childHeight;
+            const scrollTop =
+                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
+                this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
-            this.__updateTop();
             _.delay(() => (this.internalScroll = false), 100);
         }
 
@@ -407,16 +397,6 @@ export default Marionette.CompositeView.extend({
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
         this.handleResize();
-    },
-
-    __updatePadding() {
-        if (this.el.scrollHeight > this.el.offsetHeight) {
-            const scrollBarWidth = this.el.offsetWidth - this.el.clientWidth;
-            this.$el.css({
-                width: `calc(100% + ${scrollBarWidth}px)`,
-                paddingRight: scrollBarWidth
-            });
-        }
     },
 
     onAddChild(view, child) {

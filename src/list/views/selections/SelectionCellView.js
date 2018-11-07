@@ -67,9 +67,7 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave'
+        drop: '__handleModelDrop'
     },
 
     onRender() {
@@ -163,10 +161,10 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget)
-            && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined))
-            || event.relatedTarget.classList.contains('js-grid-content-view')
-            || event.relatedTarget.classList.contains('js-grid-selection-panel-view')
+        if (
+            (!this.el.contains(event.relatedTarget) && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined)) ||
+            event.relatedTarget.classList.contains('js-grid-content-view') ||
+            event.relatedTarget.classList.contains('js-grid-selection-panel-view')
         ) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragleave:head', event);
@@ -245,17 +243,9 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleModelMouseEnter() {
-        this.el.classList.add(classes.hover);
-    },
-
     __handleMouseLeave() {
         if (this.model) {
             this.model.trigger('mouseleave');
         }
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
     }
 });
