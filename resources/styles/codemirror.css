@@ -502,6 +502,7 @@ li.CodeMirror-hint-active {
 
 .dev-codemirror {
     font-size: 12px;
+    background-color: white;
 }
 
 .dev-code-editor-toolbar {
