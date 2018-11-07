@@ -228,7 +228,6 @@ input[type="checkbox"].checkbox {
     display: flex;
     cursor: pointer;
     align-items: center;
-    width: fit-content;
 }
 
 .radiobutton {
