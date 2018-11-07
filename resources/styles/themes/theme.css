@@ -375,7 +375,7 @@ svg.svg-grid-icons {
   background-color: var(--grid-row-selected-color);
 }
 
-.row.hover .cell, .cell_selection.hover {
+.row:hover .cell, .cell_selection:hover {
   background-color: var(--grid-row-hover-color);
 }
 

@@ -3,7 +3,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 export default () => {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 100; i++) {
         dataArray.push({
             textCell: `Текст Яч. ${i}`,
             aliasCell: `Alias_Cell_${i}`,
@@ -12,7 +12,15 @@ export default () => {
             durationCell: 'P12DT5H42M',
             booleanCell: i % 2,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: [{ id: 'task.1', name: 'Ref 1', abbreviation: 'AB' }, { id: 'task.2', name: 'Ref 2' }, { id: 'task.3', name: 'Ref 3' }, { id: 'task.4', name: 'Ref 4' }, { id: 'task.5', name: 'Ref 5' }, { id: 'task.6', name: 'Ref 6' }, { id: 'task.7', name: 'Ref 7' }],
+            referenceCell: [
+                { id: 'task.1', name: 'Ref 1', abbreviation: 'AB' },
+                { id: 'task.2', name: 'Ref 2' },
+                { id: 'task.3', name: 'Ref 3' },
+                { id: 'task.4', name: 'Ref 4' },
+                { id: 'task.5', name: 'Ref 5' },
+                { id: 'task.6', name: 'Ref 6' },
+                { id: 'task.7', name: 'Ref 7' }
+            ],
             enumCell: { valueExplained: ['123'] },
             documentCell: [
                 {

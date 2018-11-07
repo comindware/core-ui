@@ -549,7 +549,7 @@ export default Marionette.View.extend({
             return;
         }
         if (this.listView.isEmpty()) {
-            this.emptyViewClass = this.emptyViewClass || (() => `.${(new this.options.emptyView()).className}`)();
+            this.emptyViewClass = this.emptyViewClass || (() => `.${new this.options.emptyView().className}`)();
             const empty$el = this.listView.$el.find(this.emptyViewClass);
             empty$el && empty$el.width(allColumnsWidth);
             this.ui.content.css({
