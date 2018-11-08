@@ -44,12 +44,12 @@
     }
   ],
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.1.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.0.0",
     "@babel/plugin-transform-parameters": "^7.1.0",
     "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@types/autosize": "^3.0.6",
@@ -112,7 +112,7 @@
     "postcss-apply": "^0.11.0",
     "postcss-custom-properties": "^7.0.0",
     "postcss-loader": "^3.0.0",
-    "prettier": "^1.14.3",
+    "prettier": "^1.15.1",
     "puppeteer": "^1.10.0",
     "run-sequence": "^2.2.1",
     "source-map-loader": "^0.2.4",

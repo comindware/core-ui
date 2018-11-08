@@ -1,9 +1,6 @@
-//@flow
-import template from '../../templates/selectionPanel.hbs';
-
 import SelectionCellView from './SelectionCellView';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         this.gridEventAggregator = options.gridEventAggregator;
         this.listenTo(this.gridEventAggregator, 'update:height', this.__updateHeight);
@@ -13,14 +10,6 @@ export default Marionette.CompositeView.extend({
     className: 'grid-selection-panel',
 
     childView: SelectionCellView,
-
-    template: Handlebars.compile(template),
-
-    childViewContainer: '.js-selection-panel-wrp',
-
-    ui: {
-        childViewContainer: '.js-selection-panel-wrp'
-    },
 
     _showCollection() {
         const models = this.collection.visibleModels;
@@ -58,6 +47,6 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateTop(top) {
-        this.ui.childViewContainer[0].style.top = `${top}px`;
+        this.el.style.paddingTop = `${top}px`;
     }
 });
