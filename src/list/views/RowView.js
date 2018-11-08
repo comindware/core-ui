@@ -67,6 +67,8 @@ export default Marionette.View.extend({
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
+        mouseenter: '__handleModelMouseEnter',
+        mouseleave: '__handleModelMouseLeave',
         'toggle:collapse': 'updateCollapsed'
     },
 
@@ -456,6 +458,14 @@ export default Marionette.View.extend({
 
     __handleMouseEnter() {
         this.model.trigger('mouseenter');
+    },
+
+    __handleModelMouseEnter() {
+        this.el.classList.add(classes.hover);
+    },
+
+    __handleMouseLeave() {
+        this.model.trigger('mouseleave');
     },
 
     __handleModelMouseLeave() {
