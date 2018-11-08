@@ -17,11 +17,13 @@ export default Marionette.View.extend({
 
     ui: {
         eye: '.js-eye',
+        text: '.js-text',
         dragger: '.js-dragger'
     },
 
     events: {
-        'click @ui.eye': '__onEyeClick',
+        'click @ui.eye': '__onClick',
+        'click @ui.text': '__onClick',
         'mousedown @ui.dragger': '__onDrag'
     },
 
@@ -29,7 +31,7 @@ export default Marionette.View.extend({
         this.__displayVisibility(!this.model.get('isHidden'));
     },
 
-    __onEyeClick() {
+    __onClick() {
         this.model.set('isHidden', !this.model.get('isHidden'));
         this.__displayVisibility(!this.model.get('isHidden'));
         this.trigger('click', this.model);

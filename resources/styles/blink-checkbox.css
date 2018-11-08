@@ -90,7 +90,7 @@
 .eyes-list-txt{
     display: inline-block;
     height: 100%;
-    cursor: default;
+    cursor: pointer;
     width: calc(100% - 50px);
     padding-right: 20px;
     white-space: nowrap;

@@ -26,8 +26,6 @@ export default function () {
                 name: 'Create',
                 type: 'Action',
                 severity: 'Low',
-                resultType: 'CustomClientAction',
-                context: 'Void',
                 description: 'createComponent'
             },
             {
@@ -36,8 +34,6 @@ export default function () {
                 name: 'Some',
                 type: 'Action',
                 severity: 'Low',
-                resultType: 'CustomClientAction',
-                context: 'Void',
                 description: 'createComponent'
             },
             {
@@ -47,8 +43,6 @@ export default function () {
                 kind: 'Const',
                 type: 'BlinkCheckbox',
                 severity: 'Normal',
-                resultType: 'CustomClientAction',
-                context: 'Void',
                 columns: blinkColumns
             },
             {
@@ -60,7 +54,6 @@ export default function () {
                 name: 'Delete',
                 type: 'Action',
                 severity: 'Major',
-                resultType: 'CustomClientAction',
                 context: 'Void'
             },
             {
@@ -121,10 +114,10 @@ export default function () {
                 iconClass: 'low-vision',
                 severity: 'None',
                 items: [
-                    { userCommandId: 'event.1', name: 'Delete', class: 'buttonClass', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                    { userCommandId: 'event.2', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
-                    { userCommandId: 'event.3', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'Low', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                    { userCommandId: 'event.4', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'Fatal', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }
+                    { userCommandId: 'event.1', name: 'Delete', class: 'buttonClass', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                    { userCommandId: 'event.2', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create' },
+                    { userCommandId: 'event.3', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'Low', skipValidation: false, kind: 'Delete', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                    { userCommandId: 'event.4', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'Fatal', skipValidation: false, kind: 'Delete', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }
                 ]
             }
         ])

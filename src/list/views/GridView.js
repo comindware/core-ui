@@ -342,8 +342,8 @@ export default Marionette.View.extend({
         return this.listView.children;
     },
 
-    __executeAction(model) {
-        this.trigger('execute:action', model);
+    __executeAction(...args) {
+        this.trigger('execute:action', ...args);
     },
 
     __onSearch(text) {
