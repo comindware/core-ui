@@ -62,6 +62,13 @@ const defaultOptions = {
     4.resetPanelCollection don't work as panelCollection.reset.
     5.staticController has no addNewItem function.
     6.If showsearch = false, keyup, keydown not move pointer on panel.
+    7.resetSelectedCollection doesn't work. I have no idea how it works.
+    8.tryToCreateAdjustedValue created uncorrect model if value - object.
+    9.defaultOptions:displayAttribute should be text.
+    10.comparator selected collection should be compare for getDisplayText
+    11.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
+    12.string 389. setValue (...toJSON)
+    13.getDisolayText should return string always. (String(returnedValue))
 */
 /**
  * @name DatalistView
@@ -387,7 +394,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (Array.isArray(value)) {
             return value.map(v => this.panelCollection.get(v) || this.__tryToCreateAdjustedValue(v));
         }
-        return [this.panelCollection.get(value) || this.__tryToCreateAdjustedValue(value)];
+        return [this.panelCollection.get(value) ||
+            (_.isObject(value) && this.panelCollection.findWhere(value)) ||
+            this.__tryToCreateAdjustedValue(value)];
     },
 
     __tryToCreateAdjustedValue(value) {
