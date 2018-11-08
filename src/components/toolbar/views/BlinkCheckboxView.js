@@ -1,11 +1,15 @@
 import ButtonView from './ButtonView';
 import BlinkCheckboxPopoutPanelView from './blinkCheckbox/BlinkCheckboxPopoutPanelView';
 
+const defaultOptions = {
+    iconClass: 'eye',
+    draggable: false,
+    triggerBeforeOpen: false
+};
+
 export default Marionette.View.extend({
     constructor(options = {}) {
-        _.defaults(options.model.attributes, {
-            iconClass: 'eye'
-        });
+        _.defaults(options.model.attributes, defaultOptions);
         const view = this.__createView(options);
 
         return view;
@@ -28,9 +32,11 @@ export default Marionette.View.extend({
             view.trigger('action:click', options.model, { type: 'panel:save:columns' });
             view.close();
         });
-        view.listenTo(view, 'before:open', () => {
-            view.trigger('action:click', options.model, { type: 'before:open' });
-        });
+        if (options.model.get('triggerBeforeOpen')) {
+            view.listenTo(view, 'before:open', () => {
+                view.trigger('action:click', options.model, { type: 'before:open' });
+            });
+        }
 
         return view;
     }

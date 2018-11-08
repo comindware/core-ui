@@ -1,5 +1,7 @@
 <span class="eyes-list-eye js-eye"></span>
-<span class="eyes-list-txt">
+<span class="eyes-list-txt js-text">
     {{name}}
 </span>
+{{#if draggable}}
 <span class="eyes-list-draggable js-dragger" title="{{localize 'CORE.COMMON.DRAGME'}}"></span>
+{{/if}}

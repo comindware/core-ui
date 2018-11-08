@@ -15,7 +15,8 @@ const constants = {
 
 export default Marionette.CompositeView.extend({
     initialize() {
-        this.collection = this.options.model.get('columns');
+        const columns = this.options.model.get('columns');
+        this.collection = columns instanceof Backbone.Collection ? columns : new Backbone.Collection(columns);
         this.listenTo(this, 'childview:click', this.__itemClick);
         _.bindAll(this, '__documentMouseMove', '__documentMouseUp');
     },

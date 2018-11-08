@@ -59,7 +59,7 @@ export default Marionette.Object.extend({
         );
 
         this.listenTo(this.view, 'search', text => this.__onSearch(text, options.columns, collection));
-        this.listenTo(this.view, 'execute:action', model => this.__executeAction(model, collection));
+        this.listenTo(this.view, 'execute:action', (model, ...rest) => this.__executeAction(model, collection, ...rest));
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
         this.listenTo(this.view, 'drag:drop', this.__onItemMoved);
@@ -167,7 +167,7 @@ export default Marionette.Object.extend({
         return Object.values(selected);
     },
 
-    __executeAction(model, collection) {
+    __executeAction(model, collection, ...rest) {
         const selected = this.__getSelectedItems(collection);
         switch (model.get('id')) {
             case 'delete':
@@ -178,7 +178,7 @@ export default Marionette.Object.extend({
                     Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model, selected);
+                        this.__triggerAction(model, selected, ...rest);
                     }
                 });
                 break;
@@ -190,7 +190,7 @@ export default Marionette.Object.extend({
                     Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model, selected);
+                        this.__triggerAction(model, selected, ...rest);
                     }
                 });
                 break;
@@ -202,13 +202,13 @@ export default Marionette.Object.extend({
                     Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model, selected);
+                        this.__triggerAction(model, selected, ...rest);
                     }
                 });
                 break;
             case 'add':
             default:
-                this.__triggerAction(model, selected);
+                this.__triggerAction(model, selected, ...rest);
                 break;
         }
     },
@@ -217,8 +217,8 @@ export default Marionette.Object.extend({
         return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
     },
 
-    __triggerAction(model, selected) {
-        this.trigger('execute', model, selected);
+    __triggerAction(model, selected, ...rest) {
+        this.trigger('execute', model, selected, ...rest);
     },
 
     __onItemClick(model) {
