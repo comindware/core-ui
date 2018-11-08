@@ -22,8 +22,8 @@ describe('Editors', () => {
             }
         });
 
-        const isAvailableListEmpty = view => view.$('.js-available-items-list-region .js-visible-collection-wrp').hasClass('empty');
-        const isSelectedListEmpty = view => view.$('.js-selected-items-list-region .js-visible-collection-wrp').hasClass('empty');
+        const isAvailableListEmpty = view => view.$('.js-available-items-list-region .visible-collection').hasClass('empty');
+        const isSelectedListEmpty = view => view.$('.js-selected-items-list-region .visible-collection').hasClass('empty');
 
         it('should be initialized', () => {
             const model = new Backbone.Model({
@@ -85,7 +85,7 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
+                            view.$('.js-available-items-list-region .visible-collection').children().first().click().dblclick();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
@@ -120,7 +120,7 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
-                    const gridCollection = view.$('.js-selected-items-list-region .js-visible-collection-wrp');
+                    const gridCollection = view.$('.js-selected-items-list-region .visible-collection');
                     const first = setInterval(() => {
                         if (gridCollection.children().length && !gridCollection.hasClass('empty')) {
                             clearTimeout(first);
@@ -162,7 +162,7 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .js-selection-panel-wrp').children().first().children().click();
+                            view.$('.js-available-items-list-region .grid-selection-panel').children().first().children().click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
@@ -237,7 +237,7 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isSelectedListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-selected-items-list-region .js-selection-panel-wrp').children().first().children().click();
+                            view.$('.js-selected-items-list-region .grid-selection-panel').children().first().children().click();
                             view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
                                 if (isSelectedListEmpty(view)) {
@@ -273,7 +273,7 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 5) {
+                        if (view.$('.js-selected-items-list-region .visible-collection').children().length === 5) {
                             clearTimeout(first);
                             view.$('.js-move-left-all-button').click();
                             const second = setInterval(() => {
@@ -310,17 +310,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 8) {
+                        if (view.$('.js-available-items-list-region .visible-collection').children().length === 8) {
                             clearTimeout(first);
                             view.$('.js-users-button').click();
 
                             const second = setInterval(() => {
-                                if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
+                                if (view.$('.js-available-items-list-region .visible-collection').children().length === 3) {
                                     clearTimeout(second);
                                     view.$('.js-groups-button').click();
 
                                     const third = setInterval(() => {
-                                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 5) {
+                                        if (view.$('.js-available-items-list-region .visible-collection').children().length === 5) {
                                             clearTimeout(third);
                                             expect(true).toEqual(true);
                                             done();
