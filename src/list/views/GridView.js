@@ -354,7 +354,7 @@ export default Marionette.View.extend({
     },
 
     __bindListRegionScroll() {
-        const headerRegionEl = this.options.showHeader && this.getRegion('headerRegion').el;
+        const headerRegionEl = this.options.showHeader && this.headerView.el;
         const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
 
         this.getRegion('contentRegion').el.addEventListener('scroll', event => {
