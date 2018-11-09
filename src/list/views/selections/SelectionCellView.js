@@ -11,7 +11,8 @@ const classes = {
     checked_some: 'editor_checked_some',
     selected: 'selected',
     dragover: 'dragover',
-    hover: 'hover'
+    hover: 'hover',
+    rowChecked: 'row-checked'
 };
 
 export default Marionette.View.extend({
@@ -69,7 +70,9 @@ export default Marionette.View.extend({
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
         mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave'
+        mouseleave: '__handleModelMouseLeave',
+        checked: '__addCheckedClass',
+        unchecked: '__removeCheckedClass'
     },
 
     onRender() {
@@ -257,5 +260,13 @@ export default Marionette.View.extend({
 
     __handleModelMouseLeave() {
         this.el.classList.remove(classes.hover);
+    },
+
+    __addCheckedClass() {
+        this.el.classList.add(classes.rowChecked);
+    },
+
+    __removeCheckedClass() {
+        this.el.classList.remove(classes.rowChecked);
     }
 });

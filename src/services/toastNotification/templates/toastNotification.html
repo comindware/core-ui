@@ -1,8 +1,5 @@
 <div class="icon-container">
-    {{#if isSuccess}}
-    <i class="fas fa-check-circle"></i>{{/if}} {{#if isInfo}}
-    <i class="fas fa-info-circle"></i>{{/if}} {{#if isError}}
-    <i class="fas fa-exclamation-circle"></i>{{/if}}
+    <i class="{{iconPrefixer iconClass}}"></i>
 </div>
 <div class="notification-body_container">
     {{#if title}}
@@ -11,4 +8,7 @@
     <div class="text-container">
         {{text}}
     </div>
+</div>
+<div class="icon-close">
+    <i class="{{iconPrefixer iconCloseClass}}"></i>
 </div>

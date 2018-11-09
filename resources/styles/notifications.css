@@ -59,11 +59,11 @@
     color: #eb6c16;
 }
 
-.dev-alert_success {
+.alert_success {
     background-color: #74C365;
 }
 
-.fr-alert.dev-alert_success .icon-container {
+.fr-alert.alert_success .icon-container {
     color: #74C365;
 }
 
@@ -88,4 +88,8 @@
     font-weight: 600;
     overflow-y: auto;
     max-height: calc(1em + 1rem);
+}
+
+.icon-close {
+    padding: 0 5px;
 }

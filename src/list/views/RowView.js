@@ -10,7 +10,8 @@ const classes = {
     dragover: 'dragover',
     hover: 'hover',
     cellFocused: 'cell-focused',
-    cellEditable: 'cell_editable'
+    cellEditable: 'cell_editable',
+    checked: 'row-checked'
 };
 
 const defaultOptions = {
@@ -69,7 +70,9 @@ export default Marionette.View.extend({
         drop: '__handleModelDrop',
         mouseenter: '__handleModelMouseEnter',
         mouseleave: '__handleModelMouseLeave',
-        'toggle:collapse': 'updateCollapsed'
+        'toggle:collapse': 'updateCollapsed',
+        checked: '__addCheckedClass',
+        unchecked: '__removeCheckedClass'
     },
 
     initialize() {
@@ -470,5 +473,13 @@ export default Marionette.View.extend({
 
     __handleModelMouseLeave() {
         this.el.classList.remove(classes.hover);
+    },
+
+    __addCheckedClass() {
+        this.el.classList.add(classes.checked);
+    },
+
+    __removeCheckedClass() {
+        this.el.classList.remove(classes.checked);
     }
 });
