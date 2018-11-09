@@ -445,8 +445,6 @@ svg.svg-grid-icons {
 
 .cell__dots{
   left: 0;
-  top: 0;
-  bottom: 0;
   width: var(--grid-dots-width);
   padding: var(--grid-dots-padding);
 }

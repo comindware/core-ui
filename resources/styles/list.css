@@ -71,13 +71,10 @@
     overflow-y: scroll;
     -ms-scrollbar-arrow-color: white;
     -ms-scrollbar-track-color: white;
-    position: relative;
 }
 
 .grid-content-view {
-    position: relative;
     flex: 1 1 auto;
-    display: flex;
     overflow: scroll;
 }
 
@@ -430,8 +427,6 @@
 }
 
 .cell {
-    position: relative;
-    display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: default;
@@ -441,6 +436,7 @@
 .cell_editable {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .cell_selection {
     position: relative;
@@ -520,8 +516,6 @@
 .cell__dots{
     position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
     visibility: hidden;
     z-index: 1;
     cursor: move;
