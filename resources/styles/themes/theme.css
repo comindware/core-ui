@@ -370,13 +370,22 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
+.row-checked .cell,
+.cell_selection.row-checked {
+  background-color: #d6e7f2;
+  box-shadow: inset -1px -1px 0 0 #ccc;
+}
+
 .selected .cell,
 .cell_selection.selected {
   background-color: var(--grid-row-selected-color);
+  background-color: #d6e7f2;
+  box-shadow: inset -1px -1px 0 0 #ccc;
 }
 
 .row.hover .cell, .cell_selection.hover {
   background-color: var(--grid-row-hover-color);
+  background-color: #eaf3f8;
 }
 
 .sort_down, .sort_up {
