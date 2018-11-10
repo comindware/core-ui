@@ -40,6 +40,28 @@ import * as jsencrypt from 'jsencrypt';
 import * as jqui from 'jquery-ui';
 
 (<any>window)._ = _underscore.mixin(mixin.default);
+// @ts-ignore
+Marionette_.setDomApi({
+    detachEl(el: HTMLElement) {
+        el.remove();
+    },
+
+    hasContents(el: HTMLElement) {
+        return el.hasChildNodes();
+    },
+
+    appendContents(el: HTMLElement, contents: HTMLElement) {
+        el.append(contents);
+    },
+
+    setContents(el: HTMLElement, html: string) {
+        el.innerHTML = html;
+    },
+
+    findEl(el: HTMLElement, selector: string) {
+        return el.querySelectorAll(selector);
+    }
+});
 
 const api = {
     'jquery-ui': jqui,
