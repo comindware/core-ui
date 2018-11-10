@@ -51,12 +51,12 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
         }
 
         this.selected[this.lastSelectedModel].deselect();
-        this.lastSelectedModel = undefined;
         this.cursorCid = undefined;
 
         if (this.selected[this.lastSelectedModel] !== undefined) {
             this.trigger('deselect:one', this.selected[this.lastSelectedModel]);
             delete this.selected[this.lastSelectedModel];
+            this.lastSelectedModel = undefined;
         }
     }
 });
