@@ -60,9 +60,7 @@
     position: relative;
     display: flex;
     flex: 1 1 auto;
-    min-height: 0;
     overflow: hidden;
-
 }
 
 .grid-header-wrp {
@@ -79,7 +77,6 @@
 }
 
 .grid-selection-panel-region {
-    position: relative;
     overflow: hidden;
     flex-shrink: 0;
     overflow-x: scroll;
@@ -121,8 +118,6 @@
 }
 
 .grid-selection-cell-all {
-    min-width: 26px;
-    position: relative;
     flex: none;
 }
 
@@ -186,13 +181,11 @@
 
 .grid-header {
     display: inline-flex;
-    position: relative;
     width: 100%;
     overflow: hidden;
 }
 
 .grid-header-column {
-    display: inline-block;
     position: relative;
     min-width: 50px;
 }
@@ -454,9 +447,6 @@
     outline: none;
 }
 
-.grid-selection-cell-all.cell_selection-index{
-    padding-left: 0;
-}
 
 .cell.selected{
     outline-offset: -1px;

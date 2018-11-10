@@ -300,10 +300,6 @@ svg.svg-grid-icons {
   width: 100%;
 }
 
-.grid-header {
-  height: var(--grid-header-height);
-}
-
 .grid-header-column {
   background-color: var(--grid-header-bg);
   box-shadow: var(--grid-header-border);

@@ -71,7 +71,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "cssnano": "^4.1.7",
-    "eslint": "^5.8.0",
+    "eslint": "^5.9.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-flowtype-errors": "^3.6.0",
@@ -119,7 +119,7 @@
     "style-loader": "^0.23.1",
     "typescript": "^3.1.6",
     "url-loader": "^1.1.2",
-    "webpack": "^4.24.0"
+    "webpack": "^4.25.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
