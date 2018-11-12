@@ -73,7 +73,6 @@ export default Marionette.View.extend({
 
         if (this.getOption('showFormat')) {
             const formatSelectionView = new Core.form.editors.DatalistEditor({
-                value: 'none',
                 maxQuantitySelected: 1,
                 collection: new Backbone.Collection(this.getOption('formats'))
             });

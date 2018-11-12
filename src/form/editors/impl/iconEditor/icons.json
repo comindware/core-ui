@@ -1980,7 +1980,8 @@
   "bolt": {
     "changes": [
       "2",
-      "5.0.0"
+      "5.0.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
@@ -3947,7 +3948,7 @@
       "solid"
     ],
     "unicode": "f46c",
-    "label": "Clipboard Check"
+    "label": "Clipboard with Check"
   },
   "clipboard-list": {
     "changes": [
@@ -4059,7 +4060,7 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "cloud-download"
+        "import"
       ]
     },
     "styles": [
@@ -4068,16 +4069,33 @@
     "unicode": "f381",
     "label": "Alternate Cloud Download"
   },
+  "cloud-meatball": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f73b",
+    "label": "Cloud with (a chance of) Meatball"
+  },
   "cloud-moon": {
     "changes": [
-      "5.4.0"
+      "5.4.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
       "terms": [
+        "crescent",
         "evening",
         "halloween",
         "holiday",
+        "lunar",
         "night",
         "sky"
       ]
@@ -4088,9 +4106,58 @@
     "unicode": "f6c3",
     "label": "Cloud with Moon"
   },
+  "cloud-moon-rain": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f73c",
+    "label": "Cloud with Moon and Rain"
+  },
+  "cloud-rain": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "precipitation"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f73d",
+    "label": "Cloud with Rain"
+  },
+  "cloud-showers-heavy": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "precipitation",
+        "rain",
+        "storm"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f740",
+    "label": "Cloud with Heavy Showers"
+  },
   "cloud-sun": {
     "changes": [
-      "5.4.0"
+      "5.4.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
@@ -4107,6 +4174,20 @@
     ],
     "unicode": "f6c4",
     "label": "Cloud with Sun"
+  },
+  "cloud-sun-rain": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f743",
+    "label": "Cloud with Sun and Rain"
   },
   "cloud-upload-alt": {
     "changes": [
@@ -5173,6 +5254,27 @@
     "unicode": "f38d",
     "label": "Dungeons & Dragons"
   },
+  "d-and-d-beyond": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "Dungeons & Dragons",
+        "d&d",
+        "dnd",
+        "fantasy",
+        "gaming",
+        "tabletop"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f6ca",
+    "label": "D&D Beyond"
+  },
   "dashcube": {
     "changes": [
       "4.3",
@@ -5233,6 +5335,30 @@
     ],
     "unicode": "f1a5",
     "label": "Delicious Logo"
+  },
+  "democrat": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "american",
+        "democratic party",
+        "donkey",
+        "election",
+        "left",
+        "left-wing",
+        "liberal",
+        "politics",
+        "usa"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f747",
+    "label": "Democrat"
   },
   "deploydog": {
     "changes": [
@@ -7630,10 +7756,13 @@
     "ligatures": [],
     "search": {
       "terms": [
+        "country",
         "notice",
         "notification",
         "notify",
-        "report"
+        "pole",
+        "report",
+        "symbol"
       ]
     },
     "styles": [
@@ -7654,7 +7783,10 @@
         "notice",
         "notification",
         "notify",
-        "report"
+        "pole",
+        "racing",
+        "report",
+        "symbol"
       ]
     },
     "styles": [
@@ -7662,6 +7794,27 @@
     ],
     "unicode": "f11e",
     "label": "flag-checkered"
+  },
+  "flag-usa": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "betsy ross",
+        "country",
+        "old glory",
+        "stars",
+        "stripes",
+        "symbol"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f74d",
+    "label": "United States of America Flag"
   },
   "flask": {
     "changes": [
@@ -8182,7 +8335,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "politics",
+        "star wars"
+      ]
     },
     "styles": [
       "brands"
@@ -8196,7 +8352,9 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "star wars"
+      ]
     },
     "styles": [
       "brands"
@@ -10353,7 +10511,7 @@
       "solid"
     ],
     "unicode": "f6f1",
-    "label": "House Damage"
+    "label": "Damaged House"
   },
   "houzz": {
     "changes": [
@@ -11161,7 +11319,8 @@
       "terms": [
         "building",
         "historic",
-        "memoroable"
+        "memoroable",
+        "politics"
       ]
     },
     "styles": [
@@ -12612,6 +12771,20 @@
     "unicode": "f223",
     "label": "Mercury"
   },
+  "meteor": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f753",
+    "label": "Meteor"
+  },
   "microchip": {
     "changes": [
       "4.7",
@@ -13068,7 +13241,9 @@
     "search": {
       "terms": [
         "contrast",
+        "crescent",
         "darker",
+        "lunar",
         "night"
       ]
     },
@@ -13478,7 +13653,10 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "politics",
+        "star wars"
+      ]
     },
     "styles": [
       "brands"
@@ -14175,6 +14353,28 @@
     "unicode": "f3da",
     "label": "Periscope"
   },
+  "person-booth": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "changing",
+        "changing room",
+        "election",
+        "human",
+        "person",
+        "vote",
+        "voting"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f756",
+    "label": "Person Entering Booth"
+  },
   "phabricator": {
     "changes": [
       "5.0.0"
@@ -14696,7 +14896,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "results",
+        "survey",
+        "vote",
+        "voting"
+      ]
     },
     "styles": [
       "solid"
@@ -14710,7 +14915,12 @@
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "results",
+        "survey",
+        "vote",
+        "voting"
+      ]
     },
     "styles": [
       "solid"
@@ -14732,6 +14942,24 @@
     ],
     "unicode": "f2fe",
     "label": "Poo"
+  },
+  "poo-storm": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "mess",
+        "poop",
+        "shit"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f75a",
+    "label": "Poo Storm"
   },
   "poop": {
     "changes": [
@@ -15170,6 +15398,20 @@
     "unicode": "f4f7",
     "label": "R Project"
   },
+  "rainbow": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f75b",
+    "label": "Rainbow"
+  },
   "random": {
     "changes": [
       "1",
@@ -15216,6 +15458,20 @@
     ],
     "unicode": "f41b",
     "label": "React"
+  },
+  "reacteurope": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f75d",
+    "label": "ReactEurope"
   },
   "readme": {
     "changes": [
@@ -15394,20 +15650,6 @@
     "unicode": "f25d",
     "label": "Registered Trademark"
   },
-  "rendact": {
-    "changes": [
-      "5.0.0"
-    ],
-    "ligatures": [],
-    "search": {
-      "terms": []
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f3e4",
-    "label": "Rendact"
-  },
   "renren": {
     "changes": [
       "3.2",
@@ -15466,6 +15708,30 @@
     ],
     "unicode": "f3e6",
     "label": "replyd"
+  },
+  "republican": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "american",
+        "conservative",
+        "election",
+        "elephant",
+        "politics",
+        "republican party",
+        "right",
+        "right-wing",
+        "usa"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f75e",
+    "label": "Republican"
   },
   "researchgate": {
     "changes": [
@@ -15624,7 +15890,8 @@
   },
   "rocketchat": {
     "changes": [
-      "5.0.0"
+      "5.0.0",
+      "5.4.2"
     ],
     "ligatures": [],
     "search": {
@@ -16857,6 +17124,22 @@
     "unicode": "f4da",
     "label": "Winking Face"
   },
+  "smog": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "dragon"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f75f",
+    "label": "Smog"
+  },
   "smoking": {
     "changes": [
       "5.0.7"
@@ -16940,11 +17223,16 @@
   "snowflake": {
     "changes": [
       "4.7",
-      "5.0.0"
+      "5.0.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
-      "terms": []
+      "terms": [
+        "precipitation",
+        "seasonal",
+        "winter"
+      ]
     },
     "styles": [
       "solid",
@@ -17979,7 +18267,8 @@
   "sun": {
     "changes": [
       "3.2",
-      "5.0.0"
+      "5.0.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
@@ -17988,6 +18277,9 @@
         "contrast",
         "day",
         "lighter",
+        "sol",
+        "solar",
+        "star",
         "weather"
       ]
     },
@@ -18467,6 +18759,42 @@
     "unicode": "f3fe",
     "label": "Telegram Plane"
   },
+  "temperature-high": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "mercury",
+        "thermometer",
+        "warm"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f769",
+    "label": "High Temperature"
+  },
+  "temperature-low": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "cool",
+        "mercury",
+        "thermometer"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f76b",
+    "label": "Low Temperature"
+  },
   "tencent-weibo": {
     "changes": [
       "4.1",
@@ -18659,7 +18987,8 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "fever",
+        "mercury",
+        "status",
         "temperature"
       ]
     },
@@ -18677,7 +19006,9 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "status"
+        "mercury",
+        "status",
+        "temperature"
       ]
     },
     "styles": [
@@ -18694,7 +19025,10 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "status"
+        "fever",
+        "mercury",
+        "status",
+        "temperature"
       ]
     },
     "styles": [
@@ -18711,7 +19045,9 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "status"
+        "mercury",
+        "status",
+        "temperature"
       ]
     },
     "styles": [
@@ -18728,7 +19064,9 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "status"
+        "mercury",
+        "status",
+        "temperature"
       ]
     },
     "styles": [
@@ -18745,7 +19083,9 @@
     "ligatures": [],
     "search": {
       "terms": [
-        "status"
+        "mercury",
+        "status",
+        "temperature"
       ]
     },
     "styles": [
@@ -18753,6 +19093,20 @@
     ],
     "unicode": "f2c8",
     "label": "Thermometer 3/4 Full"
+  },
+  "think-peaks": {
+    "changes": [
+      "5.4.2"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f731",
+    "label": "Think Peaks"
   },
   "thumbs-down": {
     "changes": [
@@ -19818,6 +20172,7 @@
         "account",
         "avatar",
         "head",
+        "human",
         "man",
         "person",
         "profile"
@@ -19842,6 +20197,7 @@
         "account",
         "avatar",
         "head",
+        "human",
         "man",
         "person",
         "profile"
@@ -19914,6 +20270,7 @@
         "account",
         "avatar",
         "head",
+        "human",
         "man",
         "person",
         "profile"
@@ -20729,6 +21086,45 @@
     "unicode": "f028",
     "label": "Volume Up"
   },
+  "vote-yea": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "accept",
+        "cast",
+        "election",
+        "politics",
+        "positive",
+        "yes"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f772",
+    "label": "Vote Yea"
+  },
+  "vr-cardboard": {
+    "changes": [
+      "5.4.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "google",
+        "reality",
+        "virtual"
+      ]
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f729",
+    "label": "Cardboard VR"
+  },
   "vuejs": {
     "changes": [
       "5.0.0"
@@ -20784,6 +21180,20 @@
     ],
     "unicode": "f494",
     "label": "Warehouse"
+  },
+  "water": {
+    "changes": [
+      "5.5.0"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": []
+    },
+    "styles": [
+      "solid"
+    ],
+    "unicode": "f773",
+    "label": "Water"
   },
   "weebly": {
     "changes": [
@@ -20960,7 +21370,8 @@
   },
   "wind": {
     "changes": [
-      "5.4.0"
+      "5.4.0",
+      "5.5.0"
     ],
     "ligatures": [],
     "search": {
@@ -21258,6 +21669,22 @@
     ],
     "unicode": "f298",
     "label": "WPForms"
+  },
+  "wpressr": {
+    "changes": [
+      "5.4.2"
+    ],
+    "ligatures": [],
+    "search": {
+      "terms": [
+        "rendact"
+      ]
+    },
+    "styles": [
+      "brands"
+    ],
+    "unicode": "f3e4",
+    "label": "wpressr"
   },
   "wrench": {
     "changes": [
