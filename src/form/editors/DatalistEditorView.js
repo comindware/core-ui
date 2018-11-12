@@ -333,6 +333,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.panelCollection.totalCount = data.totalCount;
         this.panelCollection.reset(data.collection);
 
+        if (this.options.maxQuantitySelected === 1) {
+            return;
+        }
+
         if (this.panelCollection.length > 0 && this.value) {
             this.value.forEach(editorValue => {
                 const id = editorValue && editorValue.id !== undefined ? editorValue.id : editorValue;

@@ -317,6 +317,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'DropdownMultiEditor',
+                    displayName: 'Dropdown Multi Editor',
+                    description: 'Dropdown Multi editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'RadioGroupEditor',
                     displayName: 'Radio Group Editor',
                     description: 'Radio Group Editor',
@@ -343,6 +355,18 @@ export default {
                 {
                     id: 'DatalistEditor',
                     displayName: 'Reference Bubble Editor',
+                    description: 'Data list editor with search',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
+                    id: 'DatalistSingleEditor',
+                    displayName: 'Reference Single Editor',
                     description: 'Data list editor with search',
                     attributesConfig: [
                         {
