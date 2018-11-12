@@ -60,8 +60,25 @@ Marionette_.setDomApi({
 
     findEl(el: HTMLElement, selector: string) {
         return el.querySelectorAll(selector);
+    },
+
+    detachContents(el: HTMLElement) {
+        el.innerHTML = '';
     }
 });
+// @ts-ignore
+window.Backbone.View.prototype.delegate = function(eventName, selector, listener) {
+    if (selector) {
+        const child = this.el.querySelector(selector);
+
+        if (child) {
+            child.addEventListener(eventName, listener);
+            return this;
+        }
+    }
+    this.el.addEventListener(eventName, listener);
+    return this;
+}
 
 const api = {
     'jquery-ui': jqui,
