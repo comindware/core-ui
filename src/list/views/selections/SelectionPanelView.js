@@ -43,7 +43,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __updateHeight(height) {
-        this.$el.height(height);
+        this.$el.css({ height });
     },
 
     __updateTop(top) {

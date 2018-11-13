@@ -2,6 +2,10 @@
 import CellViewFactory from '../CellViewFactory';
 import transliterator from 'utils/transliterator';
 
+const config = {
+    TRANSITION_DELAY: 400
+};
+
 const classes = {
     selected: 'selected',
     expanded: 'collapsible-btn_expanded',
@@ -9,6 +13,7 @@ const classes = {
     collapsibleIcon: 'js-tree-first-cell',
     dragover: 'dragover',
     hover: 'hover',
+    hover__transition: 'hover__transition',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
     checked: 'row-checked'
@@ -70,6 +75,7 @@ export default Marionette.View.extend({
         drop: '__handleModelDrop',
         mouseenter: '__handleModelMouseEnter',
         mouseleave: '__handleModelMouseLeave',
+        blink: '__blink',
         'toggle:collapse': 'updateCollapsed',
         checked: '__addCheckedClass',
         unchecked: '__removeCheckedClass'
@@ -473,6 +479,13 @@ export default Marionette.View.extend({
 
     __handleModelMouseLeave() {
         this.el.classList.remove(classes.hover);
+    },
+
+    __blink() {
+        this.el.classList.add(classes.hover__transition);
+        this.el.classList.add(classes.hover);
+        setTimeout(() => this.el.classList.remove(classes.hover), config.TRANSITION_DELAY);
+        setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
     },
 
     __addCheckedClass() {
