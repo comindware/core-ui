@@ -68,7 +68,10 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        ediorHeaderContainer: '.js-code-header-container',
+        ediorHeaderContainer: {
+            replaceElement: true,
+            el: '.js-code-header-container'
+        },
         toolbarContainer: '.js-code-toolbar-container',
         tooltipContainer: '.js-code-tooltip-container',
         editorContainer: '.js-code-editor-container',

@@ -39,33 +39,11 @@ import * as jsencrypt from 'jsencrypt';
 // @ts-ignore
 import * as jqui from 'jquery-ui';
 
+import domapi from './utils/DOMApi';
+
 (<any>window)._ = _underscore.mixin(mixin.default);
 // @ts-ignore
-Marionette_.setDomApi({
-    detachEl(el: HTMLElement) {
-        el.remove();
-    },
-
-    hasContents(el: HTMLElement) {
-        return el.hasChildNodes();
-    },
-
-    appendContents(el: HTMLElement, contents: HTMLElement) {
-        el.append(contents);
-    },
-
-    setContents(el: HTMLElement, html: string) {
-        el.innerHTML = html;
-    },
-
-    findEl(el: HTMLElement, selector: string) {
-        return el.querySelectorAll(selector);
-    },
-
-    detachContents(el: HTMLElement) {
-        el.innerHTML = '';
-    }
-});
+Marionette_.setDomApi(domapi);
 
 const api = {
     'jquery-ui': jqui,
