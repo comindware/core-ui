@@ -54,20 +54,18 @@ const defaultOptions = {
 /* Some DOCS
     Datalist value (this.value) is array type. (DatalistValue)
     Datalist fetch [searched] data from controller on click
+    __resetPanelVirtualCollection don't work as panelCollection.reset.
+    for this you can just reset passed collection.
 
     ToDo:
     1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
     2.Develop readonly for input (like TextEditorView).
     3.If used fetchUpdateFilter as api, then value added, not reseted.
-    4.resetPanelCollection don't work as panelCollection.reset.
     5.staticController has no addNewItem function.
     6.If showsearch = false, keyup, keydown not move pointer on panel.
-    7.resetSelectedCollection doesn't work. I have no idea how it works.
-    8.tryToCreateAdjustedValue created uncorrect model if value - object.
     9.defaultOptions:displayAttribute should be text.
     10.comparator selected collection should be compare for getDisplayText
     11.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    12.string 389. setValue (...toJSON)
     13.getDisolayText should return string always. (String(returnedValue))
 */
 /**
@@ -211,7 +209,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.resetSelectedCollection();
+        this.__resetSelectedCollection();
         this.__value(value, false);
     },
 
@@ -297,7 +295,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.panelCollection.pointOff();
 
         try {
-            const data = await this.controller.fetch({
+            const complexData = await this.controller.fetch({
                 text: fetchedDataForSearchText,
                 getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
             });
@@ -306,7 +304,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 throw new Error('searched was updated');
             }
 
-            this.resetPanelCollection(data);
+            this.__resetPanelVirtualCollection(complexData);
 
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
@@ -320,8 +318,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    resetSelectedCollection(models) {
-        if (this.selectedButtonCollection) {
+    __resetSelectedCollection(models) {
+        if (!this.selectedButtonCollection) {
             return;
         }
 
@@ -329,9 +327,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__addFakeInputModel(this.selectedButtonCollection);
     },
 
-    resetPanelCollection(data) {
-        this.panelCollection.totalCount = data.totalCount;
-        this.panelCollection.reset(data.collection);
+    __resetPanelVirtualCollection(rawDataVirtual) {
+        this.panelCollection.totalCount = rawDataVirtual.totalCount;
+        this.panelCollection.reset(rawDataVirtual.collection);
 
         if (this.options.maxQuantitySelected === 1) {
             return;
@@ -387,7 +385,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isLastFetchSuccess) {
             this.fetchUpdateFilter('', true);
             this.listenToOnce(this, 'view:ready', () => {
-                this.setValue(this.__adjustValueFromLoaded(value));
+                this.setValue(this.__adjustValueFromLoaded(value).map(item => item.toJSON()));
             });
             return [];
         }
@@ -404,7 +402,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ? value : new Backbone.Model({ id: value });
+        return value instanceof Backbone.Model ? value : _.isObject(value) ? new Backbone.Model(value) : new Backbone.Model({ id: value });
     },
 
     isValueIncluded(value) {
@@ -427,7 +425,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.value = this.getValue().concat(adjustedValue);
         }
 
-        this.selectedButtonCollection.add(this.value);
+        this.__resetSelectedCollection(this.value);
 
         if (triggerChange) {
             this.__triggerChange();
@@ -442,16 +440,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(collection.models);
         if (value) {
-            const selectedItem = this.panelCollection.find(collectionItem => {
+            const selectedItems = this.panelCollection.parentCollection.filter(collectionItem => {
                 const itemId = collectionItem.get('id').toString();
                 if (Array.isArray(value)) {
                     return value.find(v => (v && v.id ? v.id : v === itemId));
                 }
                 return value === itemId;
             });
-            if (selectedItem) {
-                this.setValue(selectedItem.toJSON());
-                selectedItem.select();
+            if (selectedItems) {
+                this.setValue(selectedItems.map(item => item.toJSON()));
+                selectedItems.forEach(item => item.select({ isSilent: true }));
             }
         }
     },
