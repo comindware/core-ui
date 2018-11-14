@@ -406,7 +406,8 @@ svg.svg-grid-icons {
   transform: rotate(180deg);
 }
 
-.cell .checkbox {
+.cell_selection-index > .checkbox,
+.checkbox_cell-selection > .checkbox {
   font-size: var(--grid-checkbox-icon-size);
   width: var(--grid-checkbox-size);
   height: var(--grid-checkbox-size);
@@ -437,10 +438,10 @@ svg.svg-grid-icons {
 
 .cell_selection-index {
   width: var(--grid-selection-index-width);
-}
-
-.cell_selection.cell_selection-index{
   padding: 0 var(--grid-selection-index-padding-x);
+  color: var(--grid-selection-color);
+  background-color: var(--grid-selection-bg);
+  box-shadow: var(--grid-cell-border-first);
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {

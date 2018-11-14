@@ -71,6 +71,11 @@
     -ms-scrollbar-track-color: white;
 }
 
+.grid-header-wrp > .cell_selection, .grid-header-wrp > .cell_selection-index {
+    box-shadow: inset -1px 0 0 0 #90c3eb, inset 1px 1px 0 0 #0575bd;
+    background-color: #0575bd;
+}
+
 .grid-content-view {
     flex: 1 1 auto;
     overflow: scroll;
@@ -431,13 +436,15 @@
     align-items: center;
     position: relative;
 }
-.cell_selection {
+.cell_selection, .cell_selection-index {
     position: relative;
     display: flex;
     align-items: center;
     flex: none;
     min-width: inherit;
     padding: 0;
+    height: 35px;
+    line-height: 35px;
 }
 
 .cell-focused {

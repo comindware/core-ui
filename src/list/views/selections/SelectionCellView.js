@@ -44,7 +44,9 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'cell cell_selection',
+    className() {
+        return this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection';
+    },
 
     ui: {
         checkbox: '.js-checkbox',
@@ -83,10 +85,7 @@ export default Marionette.View.extend({
 
     onRender() {
         this.__updateState();
-        // todo: release it by stylesheet?
-        if (this.options.showRowIndex) {
-            this.el.classList.add('cell_selection-index');
-        }
+
         if (this.getOption('selectionType') === selectionTypes.all) {
             this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
             this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
