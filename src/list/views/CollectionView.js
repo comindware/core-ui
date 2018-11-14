@@ -97,7 +97,7 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ',
-            (model, collection, options) => this.debouncedHandleResizeShort(true, model, collection, options));
+            (model, collection, opt) => this.debouncedHandleResizeShort(true, model, collection, opt));
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
@@ -334,7 +334,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        newPosition = this.collection.updatePosition(Math.max(0, newPosition));
+        newPosition = this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE / 2));
         this.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;
@@ -398,7 +398,7 @@ export default Marionette.CollectionView.extend({
                 this.scrollTo(topElement, true);
                 model.trigger('blink');
             } else {
-                this.scrollTo(0);
+                this.scrollTo(0, true);
             }
             return;
         }
