@@ -42,7 +42,7 @@ describe('Editors', () => {
                                 .getRegion('contentRegion')
                                 .show(view);
 
-    const collectionData = [
+    const collectionData3 = [
         {
             id: 1,
             name: 1
@@ -57,6 +57,12 @@ describe('Editors', () => {
         }
     ];
 
+    const possibleItems15 = _.times(15, n => ({
+        id: n,
+        text: `Text ${n}`,
+        subtext: `subtext ${n}`
+    }));
+
     function timeout(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -68,11 +74,11 @@ describe('Editors', () => {
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         async fetch() {
             return new Promise(resolve => {
-                this.collection.reset(collectionData);
+                this.collection.reset(collectionData3);
 
                 this.totalCount = 3;
                 return sleep(resolve, {
-                    collection: collectionData,
+                    collection: collectionData3,
                     totalCount: this.totalCount
                 });
             });
@@ -92,7 +98,7 @@ describe('Editors', () => {
 
                 const view = new core.form.editors.DatalistEditor({
                     model,
-                    collection: new Backbone.Collection(collectionData),
+                    collection: new Backbone.Collection(collectionData3),
                     key: 'value',
                     maxQuantitySelected: Infinity
                 });
@@ -109,7 +115,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -158,7 +164,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -204,7 +210,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -213,7 +219,7 @@ describe('Editors', () => {
 
             actionForOpen(view);
             view.on('view:ready', () => {
-                expect(view.panelCollection.toJSON()).toEqual(collectionData);
+                expect(view.panelCollection.toJSON()).toEqual(collectionData3);
                 done();
             });
         });
@@ -223,7 +229,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const collection = new core.form.editors.reference.collections.BaseReferenceCollection(collectionData);
+            const collection = new core.form.editors.reference.collections.BaseReferenceCollection(collectionData3);
 
             const view = new core.form.editors.DatalistEditor({
                 model,
@@ -237,7 +243,7 @@ describe('Editors', () => {
             view.on('attach', () => {
                 actionForOpen(view);
                 view.on('view:ready', () => {
-                    expect(view.panelCollection.length).toEqual(collectionData.length);
+                    expect(view.panelCollection.length).toEqual(collectionData3.length);
                     done();
                 });
             });
@@ -252,7 +258,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -271,7 +277,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -293,7 +299,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -316,7 +322,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: 1
             });
@@ -349,7 +355,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: 5
             });
@@ -378,7 +384,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: 2
             });
@@ -436,7 +442,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
@@ -523,11 +529,11 @@ describe('Editors', () => {
                 async fetch() {
                     this.fetchCounter++;
                     return new Promise(resolve => {
-                        this.collection.reset(collectionData);
+                        this.collection.reset(collectionData3);
         
                         this.totalCount = 3;
                         return sleep(resolve, {
-                            collection: collectionData,
+                            collection: collectionData3,
                             totalCount: this.totalCount
                         });
                     });
@@ -599,7 +605,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
@@ -686,7 +692,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value'
             });
 
@@ -713,7 +719,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 showCheckboxes: true
             });
@@ -741,7 +747,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
@@ -776,7 +782,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
@@ -806,7 +812,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: false,
@@ -843,7 +849,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: false,
@@ -884,7 +890,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
@@ -907,7 +913,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                collection: new Backbone.Collection(collectionData),
+                collection: new Backbone.Collection(collectionData3),
                 key: 'value',
                 allowEmptyValue: false,
                 showSearch: false,
@@ -1145,13 +1151,7 @@ describe('Editors', () => {
         });
 
         //ToDo: repeat next test for another 3 modes.
-        it('should not open panel after reset passed collection should: -not open panel, -select all value items, -try adjust values', done => {
-            const possibleItems = _.times(15, n => ({
-                id: n,
-                text: `Text ${n}`,
-                subtext: `subtext ${n}`
-            }));
-        
+        it('after reset passed collection(mode: id, quan: many): -not open panel, -select all value items, -try adjust values', done => {
             const someCollection = new Backbone.Collection();
         
             const model = new Backbone.Model({
@@ -1175,8 +1175,8 @@ describe('Editors', () => {
                 });
                 view.on('view:ready', () => expect(false).toBeTrue());
     
-                someCollection.reset(possibleItems);
-                expect(view.panelCollection.length).toEqual(possibleItems.length);
+                someCollection.reset(possibleItems15);
+                expect(view.panelCollection.length).toEqual(possibleItems15.length);
                 expect(view.dropdownView.isOpen).toBeFalsy();
                 expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(3);
 
@@ -1184,6 +1184,132 @@ describe('Editors', () => {
                 view.value.forEach(val => {
                     expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeFalse();
                 });
+
+                done();
+            });
+
+            show(view);
+        });
+
+        it('after reset passed collection(mode: id, quan: one): -not open panel, -select all value items, -try adjust values', done => {
+            const someCollection = new Backbone.Collection();
+        
+            const model = new Backbone.Model({
+                dropdownValue: '1'
+            });
+        
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                key: 'dropdownValue',
+                autocommit: true,
+                collection: someCollection,
+                valueType: 'id',
+                maxQuantitySelected: 1,
+                allowEmptyValue: true
+            });
+
+            view.once('view:ready', () => {
+                expect(view.value).toBeArrayOfSize(1);
+                view.value.forEach(val => {
+                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
+                });
+                view.on('view:ready', () => expect(false).toBeTrue());
+    
+                someCollection.reset(possibleItems15);
+                expect(view.panelCollection.length).toEqual(possibleItems15.length);
+                expect(view.dropdownView.isOpen).toBeFalsy();
+                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(1);
+
+                expect(view.value).toBeArrayOfSize(1);
+                view.value.forEach(val => {
+                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeFalse();
+                });
+
+                done();
+            });
+
+            show(view);
+        });
+
+        it('after reset passed collection(mode: normal, quan: many): -not open panel, -select all value items', done => {
+            const someCollection = new Backbone.Collection();
+            const model = new Backbone.Model({
+                dropdownValue: [
+                    {
+                        id: '1',
+                        text: 'Text 1',
+                        subtext: 'subtext 1'
+                    },
+                    {
+                        id: '3',
+                        text: 'Text 3',
+                        subtext: 'subtext 3'
+                    },
+                    {
+                        id: '5',
+                        text: 'Text 5',
+                        subtext: 'subtext 5'
+                    }
+                ]
+            });
+        
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                key: 'dropdownValue',
+                autocommit: true,
+                collection: someCollection,
+                maxQuantitySelected: 4,
+                allowEmptyValue: true
+            });
+
+            view.once('attach', () => {
+                expect(view.value).toBeArrayOfSize(3);
+                view.on('view:ready', () => expect(false).toBeTrue());
+
+                someCollection.reset(possibleItems15);
+
+                expect(view.panelCollection.length).toEqual(possibleItems15.length);
+                expect(view.dropdownView.isOpen).toBeFalsy();
+                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(3);
+                expect(view.value).toBeArrayOfSize(3);
+
+                done();
+            });
+
+            show(view);
+        });
+
+        it('after reset passed collection(mode: normal, quan: one): -not open panel, -select all value items', done => {
+            const someCollection = new Backbone.Collection();
+            const model = new Backbone.Model({
+                dropdownValue: [
+                    {
+                        id: '1',
+                        text: 'Text 1',
+                        subtext: 'subtext 1'
+                    }
+                ]
+            });
+        
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                key: 'dropdownValue',
+                autocommit: true,
+                collection: someCollection,
+                maxQuantitySelected: 1,
+                allowEmptyValue: true
+            });
+
+            view.once('attach', () => {
+                expect(view.value).toBeArrayOfSize(1);
+                view.on('view:ready', () => expect(false).toBeTrue());
+
+                someCollection.reset(possibleItems15);
+
+                expect(view.panelCollection.length).toEqual(possibleItems15.length);
+                expect(view.dropdownView.isOpen).toBeFalsy();
+                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(1);
+                expect(view.value).toBeArrayOfSize(1);
 
                 done();
             });
@@ -1199,7 +1325,7 @@ describe('Editors', () => {
     
                 const view = new core.form.editors.DatalistEditor({
                     model,
-                    collection: new Backbone.Collection(collectionData),
+                    collection: new Backbone.Collection(collectionData3),
                     key: 'value',
                     allowEmptyValue: false,
                     autocommit: true,
@@ -1223,7 +1349,7 @@ describe('Editors', () => {
     
                 const view = new core.form.editors.DatalistEditor({
                     model,
-                    collection: new Backbone.Collection(collectionData),
+                    collection: new Backbone.Collection(collectionData3),
                     key: 'value',
                     allowEmptyValue: false,
                     autocommit: true,
@@ -1322,7 +1448,7 @@ describe('Editors', () => {
     
                 const view = new core.form.editors.DatalistEditor({
                     model,
-                    collection: collectionData,
+                    collection: collectionData3,
                     key: 'value',
                     allowEmptyValue: false,
                     autocommit: true,
@@ -1350,7 +1476,7 @@ describe('Editors', () => {
     
                 const view = new core.form.editors.DatalistEditor({
                     model,
-                    collection: new Backbone.Collection(collectionData),
+                    collection: new Backbone.Collection(collectionData3),
                     key: 'value',
                     allowEmptyValue: false,
                     autocommit: true,
