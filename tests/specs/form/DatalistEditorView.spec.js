@@ -32,8 +32,10 @@ describe('Editors', () => {
                 clearTimeout(first);
                 typeof options.callback === 'function' && options.callback();
             }
-        }, options.delay);
+        }, options.delay || 10);
     };
+
+    const stopped = delay => new Promise(resolve => setTimeout(resolve, delay));
 
     const show = view => window.app
                                 .getView()
@@ -743,20 +745,25 @@ describe('Editors', () => {
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
-                valueType: 'id',
+                valueType: 'id'
             });
 
-            view.on('attach', () => {
-                const input = getInput(view);
-                startSearch(input, '1');
-                const first = setInterval(() => {
-                    if (view.panelCollection.length === 1) {
-                        clearTimeout(first);
-                        input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
-                        expect(model.get('value')).toEqual(1);
-                        done();
-                    }
-                }, 10);
+            view.once('attach', () => {
+                actionForOpen(view);
+            });
+
+            view.once('view:ready', () => {
+                startSearch(view.$el.find('input'), '2');
+            });
+
+            view.on('view:ready', () => {
+                if (view.panelCollection.length !== 1) {
+                    return;
+                }
+                expect(view.panelCollection.length).toEqual(1);
+                view.$el.find('input').trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER})
+                expect(model.get('value')).toEqual(2);
+                done();
             });
 
             show(view);
@@ -1132,6 +1139,53 @@ describe('Editors', () => {
                 expect(!!view.isReady).toEqual(false);
                 expect(!!view.dropdownView.isOpen).toEqual(false);
                 view.blur();
+            });
+
+            show(view);
+        });
+
+        //ToDo: repeat next test for another 3 modes.
+        it('should not open panel after reset passed collection should: -not open panel, -select all value items, -try adjust values', done => {
+            const possibleItems = _.times(15, n => ({
+                id: n,
+                text: `Text ${n}`,
+                subtext: `subtext ${n}`
+            }));
+        
+            const someCollection = new Backbone.Collection();
+        
+            const model = new Backbone.Model({
+                dropdownValue: ['1', '3', '5']
+            });
+        
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                key: 'dropdownValue',
+                autocommit: true,
+                collection: someCollection,
+                valueType: 'id',
+                maxQuantitySelected: 4,
+                allowEmptyValue: true
+            });
+
+            view.once('view:ready', () => {
+                expect(view.value).toBeArrayOfSize(3);
+                view.value.forEach(val => {
+                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
+                });
+                view.on('view:ready', () => expect(false).toBeTrue());
+    
+                someCollection.reset(possibleItems);
+                expect(view.panelCollection.length).toEqual(possibleItems.length);
+                expect(view.dropdownView.isOpen).toBeFalsy();
+                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(3);
+
+                expect(view.value).toBeArrayOfSize(3);
+                view.value.forEach(val => {
+                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeFalse();
+                });
+
+                done();
             });
 
             show(view);
