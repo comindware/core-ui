@@ -367,10 +367,12 @@ svg.svg-grid-icons {
 }
 
 .row-checked .cell,
-.cell_selection.row-checked {
+.cell_selection.row-checked,
+.cell_selection-index.row-checked{
   background-color: #c2d7e5;
 }
-.cell_selection.row-checked {
+.cell_selection.row-checked,
+.cell_selection-index.row-checked{
   color: #666;
 }
 
@@ -386,7 +388,8 @@ svg.svg-grid-icons {
 }
 
 .cell_selection.row-checked.selected,
-.cell_selection.row-checked.hover {
+.cell_selection.row-checked.hover,
+.cell_selection-index.row-checked.hover{
   color: #c1c1c1;;
 }
 

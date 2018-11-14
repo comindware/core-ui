@@ -305,6 +305,10 @@
     flex: 1;
 }
 
+.grid-container > .form-label {
+    flex: none;
+}
+
 .grid-toolbar-wrp{
     display: flex;
     flex-direction: row;
