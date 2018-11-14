@@ -42,25 +42,33 @@ import * as jqui from 'jquery-ui';
 (<any>window)._ = _underscore.mixin(mixin.default);
 // @ts-ignore
 Marionette_.setDomApi({
-    detachEl(el: HTMLElement) {
-        el.remove();
-    },
+  detachEl(el: HTMLElement) {
+    const parentNode = el.parentNode;
 
-    hasContents(el: HTMLElement) {
-        return el.hasChildNodes();
-    },
-
-    appendContents(el: HTMLElement, contents: HTMLElement) {
-        el.append(contents);
-    },
-
-    setContents(el: HTMLElement, html: string) {
-        el.innerHTML = html;
-    },
-
-    findEl(el: HTMLElement, selector: string) {
-        return el.querySelectorAll(selector);
+    if (parentNode) {
+      parentNode.removeChild(el);
     }
+  },
+
+  hasContents(el: HTMLElement) {
+    return el.hasChildNodes();
+  },
+
+  appendContents(el: HTMLElement, contents: HTMLElement) {
+    el.appendChild(contents);
+  },
+
+  setContents(el: HTMLElement, html: string) {
+    el.innerHTML = html;
+  },
+
+  findEl(el: HTMLElement, selector: string) {
+    return el.querySelectorAll(selector);
+  },
+
+  detachContents(el: HTMLElement) {
+    el.innerHTML = '';
+  }
 });
 
 const api = {
