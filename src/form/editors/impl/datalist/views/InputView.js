@@ -1,13 +1,14 @@
 // @flow
 import { keyCode } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
+import TextEditorView from '../../../TextEditorView';
 import template from '../templates/input.hbs';
 
 const classes = {
     EMPTY: ' empty'
 };
 
-export default Marionette.View.extend({
+export default TextEditorView.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.parent = options.parent;

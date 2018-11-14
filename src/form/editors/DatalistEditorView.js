@@ -247,6 +247,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setReadonly(readonly);
     },
 
     setEnabled(enabled: Boolean): void {
@@ -254,6 +255,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setEnabled(enabled);
     },
 
     focus(): void {
@@ -272,12 +274,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isButtonFocus() {
-        const inputView = this.dropdownView.button && this.dropdownView.button.collectionView.getInputView();
+        const inputView = this.getInputView();
         return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
     isThisFocus() {
         return this.el.contains(document.activeElement);
+    },
+
+    getInputView() {
+        return this.dropdownView?.button?.collectionView?.getInputView();
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {

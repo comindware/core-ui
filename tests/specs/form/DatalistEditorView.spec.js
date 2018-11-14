@@ -251,6 +251,36 @@ describe('Editors', () => {
             show(view);
         });
 
+        it('should setReadonly when setReadonly is called', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                maxQuantitySelected: Infinity
+            });
+
+            view.on('attach', () => {
+                expect(view.readonly).toBeFalse();
+                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.getInputView().$el.find('input').attr('readonly')).toBeUndefined();
+                view.setReadonly(true);
+                expect(view.readonly).toBeTrue();
+                expect(view.getInputView().readonly).toBeTrue();
+                expect(view.getInputView().$el.find('input').attr('readonly')).toEqual('readonly');
+                view.setReadonly(false);
+                expect(view.readonly).toBeFalse();
+                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.getInputView().$el.find('input').attr('readonly')).toBeUndefined();
+                done();
+            });
+
+            show(view);
+        });
+
         it('should change value on setValue() get called', () => {
             const model = new Backbone.Model({
                 value: null
