@@ -93,9 +93,12 @@ export default Marionette.CollectionView.extend({
             this.collection.updatePosition(0);
         }
 
-        this.debouncedHandleResize = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
-        this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
-        this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
+        this.debouncedHandleResizeLong = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
+        this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
+        this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
+        this.listenTo(this.collection.parentCollection, 'add remove reset ',
+            (model, collection, options) => this.debouncedHandleResizeShort(true, model, collection, options));
+
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
@@ -277,14 +280,9 @@ export default Marionette.CollectionView.extend({
         this.__moveCursorTo(nextIndex, shiftPressed);
     },
 
-    scrollTo(index) {
-        const indexDelta = index - this.state.position;
-        const criticalOffset = 7;
-        if (indexDelta < criticalOffset || indexDelta > this.state.viewportHeight - criticalOffset) {
-            const centerItemDelta = Math.floor(this.state.viewportHeight / 2 - 1);
-            const newPosition = this.state.position + indexDelta - centerItemDelta;
-            this.__updatePositionInternal(newPosition, true);
-        }
+    scrollTo(index, shouldScrollElement = false) {
+        this.__updatePositionInternal(index, shouldScrollElement);
+        this.__updateTop();
     },
 
     __normalizePosition(position) {
@@ -329,7 +327,7 @@ export default Marionette.CollectionView.extend({
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updatePositionInternal(position, triggerEvents) {
+    __updatePositionInternal(position, shouldScrollElement) {
         let newPosition = position;
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position || !this.collection.isSliding) {
@@ -338,7 +336,7 @@ export default Marionette.CollectionView.extend({
 
         newPosition = this.collection.updatePosition(Math.max(0, newPosition));
         this.state.position = newPosition;
-        if (triggerEvents) {
+        if (shouldScrollElement) {
             this.internalScroll = true;
             const scrollTop =
                 Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
@@ -352,10 +350,11 @@ export default Marionette.CollectionView.extend({
         return newPosition;
     },
 
-    handleResize(shouldUpdateScroll) {
+    handleResize(shouldUpdateScroll, model, collection, options = {}) {
         if (!this.collection.isSliding) {
             return;
         }
+
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
@@ -381,7 +380,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.height(allItemsHeight || '');
+            this.$el.css({ height: allItemsHeight || '' });
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {
@@ -390,13 +389,22 @@ export default Marionette.CollectionView.extend({
         }
 
         if (this.state.viewportHeight === oldViewportHeight) {
+            if (shouldUpdateScroll === false) {
+                return;
+            }
             // scroll in case of search, do not scroll in case of collapse
-            shouldUpdateScroll !== false && this.scrollTo(0);
+            if (options.add) {
+                const topElement = collection.indexOf(model);
+                this.scrollTo(topElement, true);
+                model.trigger('blink');
+            } else {
+                this.scrollTo(0);
+            }
             return;
         }
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
-        this.handleResize();
+        this.handleResize(shouldUpdateScroll, model, collection, options);
     },
 
     onAddChild(view, child) {
@@ -427,7 +435,7 @@ export default Marionette.CollectionView.extend({
             this.gridEventAggregator.trigger('collapse:change');
         }
         this.collection.rebuild();
-        this.debouncedHandleResize();
+        this.debouncedHandleResizeShort();
     },
 
     __updateTreeCollapse(collection, collapsed) {
@@ -459,12 +467,12 @@ export default Marionette.CollectionView.extend({
             this.gridEventAggregator.trigger('update:collapse:all', collapsed);
             this.gridEventAggregator.trigger('collapse:change');
         }
-        this.debouncedHandleResize(false);
+        this.debouncedHandleResizeShort(false);
     },
 
     __handleFilter() {
         this.$el.parent().scrollTop(0);
         this.scrollTo(0);
-        this.debouncedHandleResize();
+        this.debouncedHandleResizeShort();
     }
 });

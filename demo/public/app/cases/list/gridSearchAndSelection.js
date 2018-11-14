@@ -105,9 +105,22 @@ export default function() {
         }
     });
 
-    canvasView.__executeAction = (model, selected) => {
+    canvasView.__counter = 0;
+    canvasView.__executeAction = function(model, selected) {
         switch (model.get('id')) {
             case 'add':
+                this.options.view.collection.add({
+                    textCell: `Some new ${this.__counter}`,
+                    numberCell: this.__counter + 1,
+                    dateTimeCell: '2015-07-24T08:13:13.847Z',
+                    durationCell: 'P12DT5H42M',
+                    booleanCell: !!(this.__counter % 2),
+                    userCell: [{ id: 'user.1', columns: ['J. J.'] }],
+                    referenceCell: { name: 'Ref 1' },
+                    enumCell: { valueExplained: ['123'] },
+                    documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+                });
+                this.__counter++;
                 //some code here
                 break;
             case 'archive':

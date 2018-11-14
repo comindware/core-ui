@@ -1,6 +1,10 @@
 //@flow
 import template from '../../templates/selectionCell.hbs';
 
+const config = {
+    TRANSITION_DELAY: 400
+};
+
 const selectionTypes = {
     all: 'all',
     single: 'single'
@@ -12,6 +16,7 @@ const classes = {
     selected: 'selected',
     dragover: 'dragover',
     hover: 'hover',
+    hover__transition: 'hover__transition',
     rowChecked: 'row-checked'
 };
 
@@ -71,6 +76,7 @@ export default Marionette.View.extend({
         drop: '__handleModelDrop',
         mouseenter: '__handleModelMouseEnter',
         mouseleave: '__handleModelMouseLeave',
+        blink: '__blink',
         checked: '__addCheckedClass',
         unchecked: '__removeCheckedClass'
     },
@@ -260,6 +266,13 @@ export default Marionette.View.extend({
 
     __handleModelMouseLeave() {
         this.el.classList.remove(classes.hover);
+    },
+
+    __blink() {
+        this.el.classList.add(classes.hover__transition);
+        this.el.classList.add(classes.hover);
+        setTimeout(() => this.el.classList.remove(classes.hover), config.TRANSITION_DELAY);
+        setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
     },
 
     __addCheckedClass() {
