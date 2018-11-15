@@ -22,23 +22,15 @@ export default Marionette.CollectionView.extend({
 
     // override default method to correct add when index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
-        // `index` is present when adding with `at` since BB 1.2; indexOf fallback for < 1.2
-        let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
+        let index = opts.at !== undefined && opts.index;
 
         if (this.filter || index === false) {
-            index = _.indexOf(this._filteredSortedModels(index), child);
+            index = this._filteredSortedModels(index).indexOf(child);
         }
 
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
             this._addChild(child, index);
-        }
-    },
-
-    onRender() {
-        // todo: find way to remove it
-        if (this.options.showRowIndex) {
-            this.el.classList.add('cell_selection-index');
         }
     },
 
