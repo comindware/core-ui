@@ -131,6 +131,7 @@ export default () => {
             showCheckboxes: true,
             autocommit: true,
             maxQuantitySelected: 5,
+            simplified: true,
             getReadonly: model => model.get('numberCell') % 2
         }
     ];

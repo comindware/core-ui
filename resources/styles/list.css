@@ -520,9 +520,11 @@
     visibility: hidden;
     z-index: 1;
     cursor: move;
+    height: 35px;
 }
 
-.cell:hover .cell__dots{
+.cell_selection:hover .cell__dots,
+.cell_selection-index:hover .cell__dots{
     visibility: visible;
 }
 
