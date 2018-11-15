@@ -377,12 +377,13 @@ svg.svg-grid-icons {
 }
 
 .selected .cell,
-.cell_selection.selected {
+.cell_selection.selected,
+.cell_selection-index.selected{
   background-color: var(--grid-row-selected-color);
   background-color: #eaf3f8;
 }
 
-.row.hover .cell, .cell_selection.hover {
+.row.hover .cell, .cell_selection.hover, .cell_selection-index.hover {
   background-color: var(--grid-row-hover-color);
   background-color: #efefef;
 }

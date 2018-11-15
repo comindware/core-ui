@@ -536,12 +536,12 @@
     font-size: 13px;
 }
 
-.cell .checkbox_cell-selection {
+.cell .checkbox {
     margin: 0 auto;
     z-index: 2;
 }
 
-.cell_selection-index .checkbox_cell-selection {
+.cell_selection-index .checkbox {
     margin: 0;
     margin-left: auto;
 }
