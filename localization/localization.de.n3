@@ -10,6 +10,8 @@
 
 <http://comindware.com/text/core/bootstrapper/errors/default#description> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die angeforderte Aktion ist wegen eines Serverfehlers fehlgeschlagen. Kontaktieren Sie Ihren Systemadministrator oder öffnen Sie das Ereignisprotokoll des Servers, um Details einzusehen."; l10n:originalData "The requested action failed due to server error. Please contact your system administrator or view the Event Log on the server."].
 
+<http://comindware.com/text/core/common#notset> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:isBeingTranslated true; l10n:originalData "notset"].
+
 <http://comindware.com/text/core/demo/cases/other#localizationService> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Demo Text"; l10n:originalData "Demo text"].
 
 <http://comindware.com/text/core/demo/cases/other/localizationService#daysPlural> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Tag,Tage"; l10n:originalData "day,days"].

@@ -45,6 +45,8 @@
 
 <http://comindware.com/text/core/common#hideAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:28:52.4734783Z"; l10n:modificationDate "2018-10-31T15:28:55.4544571Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/common#notset> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-09-11T11:42:04.3444162Z"; l10n:modificationDate "2018-11-15T14:43:25.7952562Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
+
 <http://comindware.com/text/core/common#save> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:18:21.4296605Z"; l10n:modificationDate "2018-10-31T15:18:36.4964440Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Save"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/common#showAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:29:17.7047675Z"; l10n:modificationDate "2018-10-31T15:29:27.9648631Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Show all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].

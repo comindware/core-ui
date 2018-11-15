@@ -408,7 +408,20 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ? value : _.isObject(value) ? new Backbone.Model(value) : new Backbone.Model({ id: value });
+        return value instanceof Backbone.Model ?
+            value :
+            (_.isObject(value) ?
+                new Backbone.Model(value) :
+                new Backbone.Model({
+                    id: value,
+                    text: this.__isValueEqualNotSet(value) ?
+                        Localizer.get('CORE.COMMON.NOTSET') :
+                        undefined
+                }));
+    },
+
+    __isValueEqualNotSet(value) {
+        return value == null || value === 'Undefined';
     },
 
     isValueIncluded(value) {
