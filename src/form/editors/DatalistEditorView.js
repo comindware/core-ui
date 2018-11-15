@@ -247,6 +247,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setReadonly(readonly);
     },
 
     setEnabled(enabled: Boolean): void {
@@ -254,6 +255,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setEnabled(enabled);
     },
 
     focus(): void {
@@ -272,12 +274,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isButtonFocus() {
-        const inputView = this.dropdownView.button && this.dropdownView.button.collectionView.getInputView();
+        const inputView = this.getInputView();
         return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
     isThisFocus() {
         return this.el.contains(document.activeElement);
+    },
+
+    getInputView() {
+        return this.dropdownView?.button?.collectionView?.getInputView();
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {
@@ -440,16 +446,19 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(collection.models);
         if (value) {
-            const selectedItems = this.panelCollection.parentCollection.filter(collectionItem => {
-                const itemId = collectionItem.get('id').toString();
-                if (Array.isArray(value)) {
-                    return value.find(v => (v && v.id ? v.id : v === itemId));
-                }
-                return value === itemId;
-            });
+            const selectedItems = this.getOption('valueType') === 'id' ? 
+                this.panelCollection.parentCollection.filter(collectionItem => {
+                    const itemId = collectionItem.get('id').toString();
+                    if (Array.isArray(value)) {
+                        return value.find(v => (v && v.id ? v.id : v === itemId));
+                    }
+                    return value === itemId;
+                })
+                :
+                value.map(item => this.panelCollection.get(item) || this.__tryToCreateAdjustedValue(item));
             if (selectedItems) {
                 this.setValue(selectedItems.map(item => item.toJSON()));
-                selectedItems.forEach(item => item.select({ isSilent: true }));
+                selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
             }
         }
     },
