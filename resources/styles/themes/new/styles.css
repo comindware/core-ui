@@ -146,7 +146,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   fill: var(--error-color);
 }
 
-.grid-header-column-content .collapsible-btn {
+.grid-header-column .collapsible-btn {
   background-image: var(--collapse-icon-header);
   top: -1px;
 }

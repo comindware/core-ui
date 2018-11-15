@@ -193,9 +193,6 @@
 .grid-header-column {
     position: relative;
     min-width: 50px;
-}
-
-.grid-header-column-content {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -449,6 +446,10 @@
     padding: 0;
     height: 35px;
     line-height: 35px;
+}
+
+.cell_selection {
+    justify-content: center;
 }
 
 .cell-focused {

@@ -8,7 +8,7 @@ import ListView from './CollectionView';
 import RowView from './RowView';
 import SelectionPanelView from './selections/SelectionPanelView';
 import SelectionCellView from './selections/SelectionCellView';
-import GridHeaderView from './GridHeaderView';
+import GridHeaderView from './header/GridHeaderView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 import MobileService from '../../services/MobileService';

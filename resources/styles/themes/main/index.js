@@ -108,7 +108,7 @@ const variables = {
     'grid-cell-height': '25px',
     'grid-cell-padding': '0 2px',
     'grid-cell-input-padding': '0 2px 0 0',
-    'grid-dots-width': '50px',
+    'grid-dots-width': '30px',
     'grid-dots-padding': '0 25px 0 2px',
     'grid-dots-color': 'var(--grey-600)',
     'grid-row-selected-color': 'var(--blue-extra-light)',

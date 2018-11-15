@@ -148,7 +148,7 @@ export default () => {
         showToolbar: true,
         showSearch: true,
         showCheckbox: true,
-        showRowIndex: true,
+        //showRowIndex: true,
         collection,
         title: 'Editable grid'
     });

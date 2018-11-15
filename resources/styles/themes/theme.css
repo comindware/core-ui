@@ -312,7 +312,7 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-header-border-last);
 }
 
-.grid-header-column-content {
+.grid-header-column {
   font-size: var(--grid-header-font-size);
   color: var(--grid-header-color);
   line-height: var(--grid-header-height);
@@ -456,9 +456,8 @@ svg.svg-grid-icons {
 }
 
 .cell__dots{
-  left: 0;
+  left: 2px;
   width: var(--grid-dots-width);
-  padding: var(--grid-dots-padding);
 }
 
 .cell__dots svg{
