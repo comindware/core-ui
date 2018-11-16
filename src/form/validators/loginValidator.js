@@ -1,3 +1,11 @@
+/* Specification
+
+    The login name used to support clients and servers running earlier versions of the operating system, such as Windows NT 4.0, Windows 95, Windows 98, and LAN Manager.
+    This attribute must be 20 characters or less to support earlier clients, and cannot contain any of these characters:
+    "/ \ [ ] : ; | = , + * ? < >
+    https://docs.microsoft.com/en-us/windows/desktop/adschema/a-samaccountname
+*/
+
 export default config => {
     const options = _.extend(
         {
