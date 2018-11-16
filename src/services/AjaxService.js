@@ -139,7 +139,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
                         window.dispatchEvent(unhandledRejectionEvent);
                     } else {
                         const unhandledRejectionEvent = new Event('unhandledrejection');
-                        Object.assign(unhandledRejectionEvent, error);
+                        Object.assign(unhandledRejectionEvent, error, { reason: error });
                         window.dispatchEvent(unhandledRejectionEvent);
                     }
                 }
