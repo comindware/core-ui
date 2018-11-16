@@ -239,6 +239,9 @@
     font-size: 15px;
     font-weight: 600;
     color: #434343;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .datalist-container-subtext {
