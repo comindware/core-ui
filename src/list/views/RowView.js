@@ -80,10 +80,6 @@ export default Marionette.View.extend({
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
-
-        // TODO: think about implementation in tree or grouped grids
-        // this.listenTo(this.model, 'checked', this.__onModelChecked);
-        // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },
 
     getValue(id) {
@@ -418,7 +414,11 @@ export default Marionette.View.extend({
             this.__deselectPointed();
         }
 
-        const editors = pointedEl.querySelectorAll('input') || pointedEl.querySelectorAll('[class~=editor]');
+        let editors = pointedEl.querySelectorAll('input');
+        if (editors.length === 0) {
+            editors = pointedEl.querySelectorAll('[class~=editor]');
+        }
+
         const doesContains = pointedEl.contains(editors[0]);
 
         if (editors.length) {

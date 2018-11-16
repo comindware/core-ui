@@ -58,7 +58,7 @@ export default Marionette.View.extend({
                 editor: this.editor,
                 model: this.model
             },
-            class: 'simplified-panel_container',
+            class: 'editor',
             autoopen: true,
             minAvailableHeight: 220
         });
