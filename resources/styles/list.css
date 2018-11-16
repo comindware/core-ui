@@ -60,7 +60,7 @@
     position: relative;
     display: flex;
     flex: 1 1 auto;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .grid-header-wrp {
@@ -512,8 +512,6 @@
 }
 
 .cell__dots{
-    position: absolute;
-    left: 0;
     visibility: hidden;
     z-index: 1;
     cursor: move;

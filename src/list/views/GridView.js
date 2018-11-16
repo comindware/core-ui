@@ -253,8 +253,14 @@ export default Marionette.View.extend({
             el: '.js-grid-header-view',
             replaceElement: true
         },
-        contentRegion: '.js-grid-content-view',
-        selectionPanelRegion: '.js-grid-selection-panel-view',
+        contentRegion: {
+            el: '.js-grid-content-view',
+            replaceElement: true
+        },
+        selectionPanelRegion: {
+            el: '.js-grid-selection-panel-view',
+            replaceElement: true
+        },
         selectionHeaderRegion: {
             el: '.js-grid-selection-header-view',
             replaceElement: true
@@ -355,14 +361,10 @@ export default Marionette.View.extend({
 
     __bindListRegionScroll() {
         const headerRegionEl = this.options.showHeader && this.headerView.el;
-        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
 
         this.getRegion('contentRegion').el.addEventListener('scroll', event => {
             if (headerRegionEl) {
                 headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
-            }
-            if (selectionPanelRegionEl) {
-                selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
             }
         });
     },
