@@ -8,7 +8,7 @@ export default Backbone.Model.extend({
         this.listenTo(itemsCollection, 'select:one', model => this.set('iconClass', model.get('iconClass')));
         this.set('items', itemsCollection);
 
-        const firstNotHeadlineModel = _.first(itemsCollection.filter(model => model.get('type') !== meta.toolbarItemType.HEADLINE));
+        const firstNotHeadlineModel = itemsCollection.find(model => model.get('type') !== meta.toolbarItemType.HEADLINE);
         itemsCollection.select(firstNotHeadlineModel);
 
         this.__addDropdownClass();

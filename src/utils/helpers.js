@@ -136,9 +136,9 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     enqueueOperation(operation, queueId) {
         if (queueCache[queueId] && queueCache[queueId].isPending()) {
-            queueCache[queueId] = queueCache[queueId].then(() => (_.isFunction(operation) ? operation() : operation));
+            queueCache[queueId] = queueCache[queueId].then(() => (typeof operation === 'function' ? operation() : operation));
         } else {
-            queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
+            queueCache[queueId] = Promise.resolve(typeof operation === 'function' ? operation() : operation);
         }
         return queueCache[queueId];
     },

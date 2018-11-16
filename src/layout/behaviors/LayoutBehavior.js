@@ -23,7 +23,7 @@ export default Marionette.Behavior.extend({
     __computeViewState(): { visible: boolean } {
         let visible = this.view.options.visible;
 
-        visible = _.isFunction(visible) ? visible.call(this.view) : visible;
+        visible = typeof visible === 'function' ? visible.call(this.view) : visible;
         if (_.isUndefined(visible)) {
             visible = true;
         }

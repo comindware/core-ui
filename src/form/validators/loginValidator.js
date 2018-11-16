@@ -12,7 +12,7 @@ export default config => {
 
         const err = {
             type: options.type,
-            message: _.isFunction(options.message) ? options.message(options) : options.message
+            message: typeof options.message === 'function' ? options.message(options) : options.message
         };
         if (value === null || value === undefined || value === false || value === '') {
             return;

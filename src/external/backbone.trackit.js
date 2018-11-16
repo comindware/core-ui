@@ -133,7 +133,7 @@
         // passed in, returning the attributes in that hash which differ
         // from the model.
         unsavedAttributes(attrs) {
-            if (!attrs) return _.isEmpty(this._unsavedChanges) ? false : _.clone(this._unsavedChanges);
+            if (!attrs) return _.isEmpty(this._unsavedChanges) ? false : Object.assign({},this._unsavedChanges);
             let val,
                 changed = false,
                 old = this._unsavedChanges;
@@ -145,7 +145,7 @@
         },
 
         _resetTracking() {
-            this._originalAttrs = _.clone(this.attributes);
+            this._originalAttrs = Object.assign({},this.attributes);
             this._unsavedChanges = {};
         },
 
@@ -153,7 +153,7 @@
         // supplying the result of whether there are unsaved
         // changes and a changed attributes hash.
         _triggerUnsavedChanges() {
-            this.trigger('unsavedChanges', !_.isEmpty(this._unsavedChanges), _.clone(this._unsavedChanges));
+            this.trigger('unsavedChanges', !_.isEmpty(this._unsavedChanges), Object.assign({},this._unsavedChanges));
             if (this.unsaved) updateUnsavedModels(this);
         }
     });
@@ -174,7 +174,7 @@ ret;
         options || (options = {});
 
         // Delegate to Backbone's set.
-        ret = oldSet.call(this, attrs, _.clone(options));
+        ret = oldSet.call(this, attrs, Object.assign({},options));
 
         if (this._trackingChanges && !options.silent && !options.trackit_silent) {
             _.each(

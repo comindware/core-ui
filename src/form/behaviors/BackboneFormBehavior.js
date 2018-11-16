@@ -351,26 +351,32 @@ export default Marionette.Behavior.extend({
 
     __renderForm() {
         let model = this.options.model;
-        if (_.isFunction(model)) {
+        if (typeof model === 'function') {
             model = model.call(this.view);
         }
 
         let schema = this.options.schema;
-        if (_.isFunction(schema)) {
+        if (typeof schema === 'function') {
             schema = schema.call(this.view);
         }
 
         let options = this.options.options;
-        if (_.isFunction(options)) {
+        if (typeof options === 'function') {
             options = options.call(this.view);
         }
 
-        const form = new Form(_.defaults({
-            model,
-            schema,
-            $target: this.$el,
-            view: this.view
-        }, this.options, options));
+        const form = new Form(
+            _.defaults(
+                {
+                    model,
+                    schema,
+                    $target: this.$el,
+                    view: this.view
+                },
+                this.options,
+                options
+            )
+        );
         this.view.form = this.form = form;
         if (this.view.initForm) {
             this.view.initForm();

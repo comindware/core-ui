@@ -170,10 +170,10 @@ export default Marionette.View.extend({
     },
 
     __updateExternalChange() {
-        if (_.isFunction(this.schema.getReadonly)) {
+        if (typeof this.schema.getReadonly === 'function') {
             this.editor.setReadonly(this.schema.getReadonly(this.model));
         }
-        if (_.isFunction(this.schema.getHidden)) {
+        if (typeof this.schema.getHidden === 'function') {
             this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
         }
     },

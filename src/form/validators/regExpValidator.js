@@ -5,18 +5,21 @@ const defaultRegExp = function(options) {
         throw new Error('Missing required "regexp" option for "regexp" validator');
     }
 
-    options = Object.assign({
-        type: 'regexp',
-        match: true,
-        message: 'Invalid'
-    }, options);
+    options = Object.assign(
+        {
+            type: 'regexp',
+            match: true,
+            message: 'Invalid'
+        },
+        options
+    );
 
     return function regexp(value) {
         options.value = value;
 
         const err = {
             type: options.type,
-            message: _.isFunction(options.message) ? options.message(options) : options.message
+            message: typeof options.message === 'function' ? options.message(options) : options.message
         };
 
         //Don't check empty values (add a 'required' validator for this)
@@ -29,7 +32,7 @@ const defaultRegExp = function(options) {
             options.regexp = new RegExp(options.regexp, options.flags);
         }
 
-        if ((options.match) ? !options.regexp.test(value) : options.regexp.test(value)) {
+        if (options.match ? !options.regexp.test(value) : options.regexp.test(value)) {
             return err;
         }
         return undefined;
@@ -41,4 +44,4 @@ export default function(options) {
         const val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
-};
+}

@@ -21,7 +21,7 @@ export default Marionette.Object.extend({
     },
 
     leave(isCalledByUnloadEvent) {
-        if (_.isFunction(this.onLeave)) {
+        if (typeof this.onLeave === 'function') {
             const moduleLeaveConfig = this.onLeave();
 
             if (typeof moduleLeaveConfig === 'boolean') {

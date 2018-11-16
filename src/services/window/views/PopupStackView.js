@@ -64,9 +64,10 @@ export default Marionette.View.extend({
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {
-            const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
-            if (lastFaded) {
-                lastFaded.regionEl.classList.remove(classes.POPUP_FADE);
+            const lastIndex = this.__stack.lastIndexOf(x => x.options.fadeBackground);
+
+            if (lastIndex !== -1) {
+                this.__stack[lastIndex].regionEl.classList.remove(classes.POPUP_FADE);
             } else {
                 this.__toggleFadedBackground(true);
             }
@@ -108,7 +109,7 @@ export default Marionette.View.extend({
         } else {
             // Close all transient popups and the top-most non-transient
             this.__removeTransientPopups();
-            const topMostNonTransient = _.last(this.__stack);
+            const topMostNonTransient = this.__stack[this.__stack.length - 1];
             if (topMostNonTransient) {
                 targets = [topMostNonTransient];
             }
@@ -117,9 +118,10 @@ export default Marionette.View.extend({
             this.__removePopup(pd);
         });
 
-        const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
-        if (lastFaded) {
-            lastFaded.regionEl.classList.add(classes.POPUP_FADE);
+        const lastIndex = this.__stack.lastIndexOf(x => x.options.fadeBackground);
+
+        if (lastIndex !== -1) {
+            this.__stack[lastIndex].regionEl.classList.add(classes.POPUP_FADE);
         } else {
             this.__toggleFadedBackground(this.__forceFadeBackground);
         }

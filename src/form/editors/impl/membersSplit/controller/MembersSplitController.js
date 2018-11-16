@@ -60,7 +60,7 @@ export default Marionette.Object.extend({
             selected = [];
         }
 
-        if (_.isFunction(this.options.getDisplayText)) {
+        if (typeof this.options.getDisplayText === 'function') {
             return this.options.getDisplayText(selected);
         }
 
@@ -131,7 +131,7 @@ export default Marionette.Object.extend({
     },
 
     updateMembers() {
-        const allSelectedModels = _.clone(this.model.get('selected'));
+        const allSelectedModels = Object.assign({}, this.model.get('selected'));
         //allSelectedModels.filter(null); todo figure it out, WHY?!
         this.options.selected = allSelectedModels.models.map(model => model.id);
         this.trigger('popup:ok');
@@ -172,7 +172,7 @@ export default Marionette.Object.extend({
 
     moveItems(typeFrom, typeTo, all, model) {
         const modelsTo = this.model.get(typeTo);
-        const allSelectedModels = _.clone(modelsTo);
+        const allSelectedModels = Object.assign({}, modelsTo);
         const modelsFrom = this.model.get(typeFrom);
 
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
@@ -289,7 +289,7 @@ export default Marionette.Object.extend({
     },
 
     __processValues() {
-        const items = _.clone(this.members);
+        const items = Object.assign({}, this.members);
         this.options.exclude.forEach(id => {
             if (items[id]) {
                 delete items[id];

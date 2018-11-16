@@ -1,9 +1,9 @@
 // @flow
 /*
-*
-* Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
-*
-* */
+ *
+ * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
+ *
+ * */
 
 import formRepository from '../../formRepository';
 import { keyCode } from 'utils';
@@ -394,7 +394,7 @@ export default {
                 }
 
                 //Functions can be used directly
-                if (_.isFunction(validator)) {
+                if (typeof validator === 'function') {
                     return validator;
                 }
 

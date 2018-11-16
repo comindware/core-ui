@@ -23,7 +23,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
 
             actionParameters.push('/*optional*/ callback');
             const actionBody = helpers.format(
-                'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}) || [], \'{3}\', \'{4}\', callback);',
+                "return window.Ajax.getJsApiResponse('{0}', [ {1} ], _.take(arguments, {2}) || [], '{3}', '{4}', callback);",
                 actionInfo.url,
                 actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
                 actionInfo.parameters.length,
@@ -31,12 +31,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
                 actionInfo.protocol
             );
             //noinspection JSUnresolvedVariable
-            const actionFn = helpers.format(
-                'function {0}_{1}({2}) {\r\n{3}\r\n}',
-                actionInfo.className,
-                actionInfo.methodName,
-                actionParameters.join(', '), actionBody
-            );
+            const actionFn = helpers.format('function {0}_{1}({2}) {\r\n{3}\r\n}', actionInfo.className, actionInfo.methodName, actionParameters.join(', '), actionBody);
 
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
@@ -89,10 +84,10 @@ export default (window.Ajax = new (Marionette.Object.extend({
     },
 
     getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
-        if (callback && !_.isFunction(callback)) {
+        if (typeof callback === 'function') {
             helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
         }
-        const parametersLength = _.last(parameters) === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
+        const parametersLength = parameters[parameters.length - 1] === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
         if (parametersLength < parameterNames.length) {
             helpers.throwFormatError(helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
         }

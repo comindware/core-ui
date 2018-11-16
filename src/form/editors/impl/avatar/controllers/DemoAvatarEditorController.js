@@ -17,11 +17,11 @@ export default BaseAvatarEditorController.extend({
     },
 
     getImage(value) {
-        if (_.isUndefined(value)) {
+        if (value === undefined) {
             return this.getOption('defaultURL');
         }
 
-        if (_.isString(value)) {
+        if (typeof value === 'string') {
             return `https://avatars.githubusercontent.com/u/${value}`;
         }
 

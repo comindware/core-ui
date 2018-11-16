@@ -79,7 +79,7 @@ export default Marionette.View.extend({
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
 
-        _.defaults(this.options, _.clone(defaultOptions), options);
+        _.defaults(this.options, Object.assign({}, defaultOptions), options);
 
         _.bindAll(this, 'open', 'close', '__onBlur');
 
@@ -346,10 +346,10 @@ export default Marionette.View.extend({
 
     __handleBlur() {
         if (
-            !this.options.externalBlurHandler(document.activeElement)
-            && !this.__suppressHandlingBlur
-            && !this.__isNestedInButton(document.activeElement)
-            && !this.__isNestedInPanel(document.activeElement)
+            !this.options.externalBlurHandler(document.activeElement) &&
+            !this.__suppressHandlingBlur &&
+            !this.__isNestedInButton(document.activeElement) &&
+            !this.__isNestedInPanel(document.activeElement)
         ) {
             this.close();
         }
