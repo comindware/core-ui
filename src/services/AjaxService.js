@@ -1,5 +1,6 @@
 import { helpers } from 'utils';
 import PromiseService from './PromiseService';
+import MobileService from './MobileService';
 
 const methodName = {
     mvc: 'Mvc',
@@ -23,7 +24,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
 
             actionParameters.push('/*optional*/ callback');
             const actionBody = helpers.format(
-                'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}) || [], \'{3}\', \'{4}\', callback);',
+                "return window.Ajax.getJsApiResponse('{0}', [ {1} ], _.take(arguments, {2}) || [], '{3}', '{4}', callback);",
                 actionInfo.url,
                 actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
                 actionInfo.parameters.length,
@@ -31,12 +32,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
                 actionInfo.protocol
             );
             //noinspection JSUnresolvedVariable
-            const actionFn = helpers.format(
-                'function {0}_{1}({2}) {\r\n{3}\r\n}',
-                actionInfo.className,
-                actionInfo.methodName,
-                actionParameters.join(', '), actionBody
-            );
+            const actionFn = helpers.format('function {0}_{1}({2}) {\r\n{3}\r\n}', actionInfo.className, actionInfo.methodName, actionParameters.join(', '), actionBody);
 
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
@@ -134,6 +130,19 @@ export default (window.Ajax = new (Marionette.Object.extend({
                 error.errorType = result.errorType;
                 error.errorData = result.errorData;
                 error.source = result;
+
+                if (window.onunhandledrejection === undefined) {
+                    if (MobileService.isIE) {
+                        const unhandledRejectionEvent = document.createEvent('Event');
+                        unhandledRejectionEvent.initEvent('submit', false, true);
+                        Object.assign(unhandledRejectionEvent, error);
+                        window.dispatchEvent(unhandledRejectionEvent);
+                    } else {
+                        const unhandledRejectionEvent = new Event('unhandledrejection');
+                        Object.assign(unhandledRejectionEvent, error);
+                        window.dispatchEvent(unhandledRejectionEvent);
+                    }
+                }
                 throw error;
             }
             return result ? result.data : result;
