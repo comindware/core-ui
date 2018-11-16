@@ -7,7 +7,9 @@ export default Marionette.CollectionView.extend({
         this.listenTo(this.gridEventAggregator, 'update:top', this.__updateTop);
     },
 
-    className: 'grid-selection-panel',
+    className() {
+        return `grid-selection-panel${this.options.showRowIndex ? ' cell_selection-index' : ''}`;
+    },
 
     childView: SelectionCellView,
 

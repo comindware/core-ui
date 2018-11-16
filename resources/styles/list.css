@@ -198,7 +198,6 @@
     white-space: nowrap;
     text-align: left;
     cursor: default;
-    height: 100%;
 }
 
 .grid-header-dragger {
@@ -438,12 +437,9 @@
     position: relative;
 }
 .cell_selection, .cell_selection-index {
-    position: relative;
     display: flex;
     align-items: center;
     flex: none;
-    min-width: inherit;
-    padding: 0;
     height: 35px;
     line-height: 35px;
 }

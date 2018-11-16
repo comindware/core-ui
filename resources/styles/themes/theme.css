@@ -303,6 +303,9 @@ svg.svg-grid-icons {
 .grid-header-column {
   background-color: var(--grid-header-bg);
   box-shadow: var(--grid-header-border);
+  color: var(--grid-header-color);
+  line-height: var(--grid-header-height);
+  padding: var(--grid-header-padding);
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
@@ -310,13 +313,6 @@ svg.svg-grid-icons {
 }
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:last-child {
   box-shadow: var(--grid-header-border-last);
-}
-
-.grid-header-column {
-  font-size: var(--grid-header-font-size);
-  color: var(--grid-header-color);
-  line-height: var(--grid-header-height);
-  padding: var(--grid-header-padding);
 }
 
 .row.selected{
@@ -354,6 +350,7 @@ svg.svg-grid-icons {
 
 .cell_selection {
   color: var(--grid-selection-color);
+  width: var(--grid-selection-width);
   background-color: var(--grid-selection-bg);
   box-shadow: var(--grid-cell-border-first);
 }
@@ -411,7 +408,7 @@ svg.svg-grid-icons {
 }
 
 .cell_selection-index > .checkbox,
-.checkbox_cell-selection > .checkbox {
+.cell_selection > .checkbox {
   font-size: var(--grid-checkbox-icon-size);
   width: var(--grid-checkbox-size);
   height: var(--grid-checkbox-size);
