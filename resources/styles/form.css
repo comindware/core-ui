@@ -1060,7 +1060,7 @@ input[type="color"], .colorpicker{
     background-color: white;
 }
 
-.simplified-panel_container[noSelected].dropdown_root.dropdown__wrp_up .simplified-panel-subtitle {
+.simplified-panel_container[noSelected].dropdown_root.dropdown__wrp_up .simplified-panel-title_container {
     margin-top: -310px;
 }
 
