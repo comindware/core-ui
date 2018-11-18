@@ -30,7 +30,7 @@ export default Marionette.View.extend({
 
         let presentationView;
         if (this.options.presentation) {
-            if (_.isString(this.options.presentation)) {
+            if (typeof this.options.presentation === 'string') {
                 presentationView = new PresentationItemView({
                     model: this.view.model,
                     template: Handlebars.compile(`<span style="vertical-align: top;">model[${this.view.key}]: </span><span>${this.options.presentation}</span>`)

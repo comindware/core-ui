@@ -362,11 +362,11 @@ export default Marionette.View.extend({
     __bindListRegionScroll() {
         const headerRegionEl = this.options.showHeader && this.headerView.el;
 
-        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
-            if (headerRegionEl) {
+        if (headerRegionEl) {
+            this.listView.el.addEventListener('scroll', event => {
                 headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
-            }
-        });
+            });
+        }
     },
 
     onDestroy() {

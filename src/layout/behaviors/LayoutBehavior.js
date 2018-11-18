@@ -24,7 +24,7 @@ export default Marionette.Behavior.extend({
         let visible = this.view.options.visible;
 
         visible = typeof visible === 'function' ? visible.call(this.view) : visible;
-        if (_.isUndefined(visible)) {
+        if (visible === undefined) {
             visible = true;
         }
         return {

@@ -179,7 +179,7 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
         URL.revokeObjectURL(this.__previewURL);
         let previewURL;
 
-        if (_.isString(image)) {
+        if (typeof image === 'string') {
             // URL
             previewURL = image;
         } else if (_.isObject(image) && {}.toString.call(image).slice(8, -1) === 'File') {

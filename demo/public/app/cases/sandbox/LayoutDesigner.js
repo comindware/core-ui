@@ -1,4 +1,4 @@
-export default function () {
+export default function() {
     const customView = Marionette.View;
 
     const systemView = Marionette.CollectionView.extend({
@@ -52,7 +52,7 @@ export default function () {
             },
 
             parse(data) {
-                if (_.isArray(data.rows)) {
+                if (Array.isArray(data.rows)) {
                     data.rows = new Backbone.Collection(data.rows);
                 }
                 return data;
@@ -86,7 +86,8 @@ export default function () {
                                 {
                                     type: 'v-container',
                                     items: []
-                                }]
+                                }
+                            ]
                         });
                     }
                 },

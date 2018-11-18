@@ -22,7 +22,7 @@ export default Marionette.View.extend({
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId, _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
+        this.__createEditor(options, this.fieldId, typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type);
     },
 
     templateContext() {

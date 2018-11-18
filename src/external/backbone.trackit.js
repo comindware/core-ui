@@ -32,7 +32,7 @@
         // boolean value, a function, or the name of a function on the model.
         const evaluateModelFn = function(model, fn) {
             if (_.isBoolean(fn)) return fn;
-            return (_.isString(fn) ? model[fn] : fn).apply(model, args);
+            return (typeof fn === 'string' ? model[fn] : fn).apply(model, args);
         };
         _.find(unsavedModels, model => {
             if (evaluateModelFn(model, model._unsavedConfig[fnName])) {
@@ -133,7 +133,7 @@
         // passed in, returning the attributes in that hash which differ
         // from the model.
         unsavedAttributes(attrs) {
-            if (!attrs) return _.isEmpty(this._unsavedChanges) ? false : Object.assign({},this._unsavedChanges);
+            if (!attrs) return _.isEmpty(this._unsavedChanges) ? false : Object.assign({}, this._unsavedChanges);
             let val,
                 changed = false,
                 old = this._unsavedChanges;
@@ -145,7 +145,7 @@
         },
 
         _resetTracking() {
-            this._originalAttrs = Object.assign({},this.attributes);
+            this._originalAttrs = Object.assign({}, this.attributes);
             this._unsavedChanges = {};
         },
 
@@ -153,7 +153,7 @@
         // supplying the result of whether there are unsaved
         // changes and a changed attributes hash.
         _triggerUnsavedChanges() {
-            this.trigger('unsavedChanges', !_.isEmpty(this._unsavedChanges), Object.assign({},this._unsavedChanges));
+            this.trigger('unsavedChanges', !_.isEmpty(this._unsavedChanges), Object.assign({}, this._unsavedChanges));
             if (this.unsaved) updateUnsavedModels(this);
         }
     });
@@ -161,8 +161,7 @@
     // Wrap `model.set()` and update the internal
     // unsaved changes record keeping.
     Backbone.Model.prototype.set = _.wrap(Backbone.Model.prototype.set, function(oldSet, key, val, options) {
-        let attrs, 
-ret;
+        let attrs, ret;
         if (key == null) return this;
         // Handle both `"key", value` and `{key: value}` -style arguments.
         if (typeof key === 'object') {
@@ -174,7 +173,7 @@ ret;
         options || (options = {});
 
         // Delegate to Backbone's set.
-        ret = oldSet.call(this, attrs, Object.assign({},options));
+        ret = oldSet.call(this, attrs, Object.assign({}, options));
 
         if (this._trackingChanges && !options.silent && !options.trackit_silent) {
             _.each(

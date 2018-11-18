@@ -29,6 +29,7 @@
 .visible-collection {
     height: 100%;
     width: 100%;
+    overflow-x: auto;
 }
 
 .visible-collection-wrp, .selection-panel-wrp {
@@ -61,6 +62,7 @@
     display: flex;
     flex: 1 1 auto;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .grid-header-wrp {

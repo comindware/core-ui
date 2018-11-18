@@ -1,20 +1,20 @@
 //@flow
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
-    return _.isString(it)
-        ? function (model) {
-            return model.get(it) || model[it];
-        }
+    return typeof it === 'string'
+        ? function(model) {
+              return model.get(it) || model[it];
+          }
         : it;
 };
 
 const getNormalizedGroupingComparator = function getNormalizedGroupingComparator(groupingOptions) {
     const cmp = groupingOptions.comparator;
     return cmp !== undefined
-        ? _.isString(cmp)
-            ? function (model) {
-                return model.get(cmp) || model[cmp];
-            }
+        ? typeof cmp === 'string'
+            ? function(model) {
+                  return model.get(cmp) || model[cmp];
+              }
             : cmp
         : groupingOptions.iterator;
 };
@@ -22,20 +22,20 @@ const getNormalizedGroupingComparator = function getNormalizedGroupingComparator
 const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFactory(groupingOptions) {
     const modelFactory = groupingOptions.modelFactory;
     return modelFactory !== undefined
-        ? _.isString(modelFactory)
-            ? function (model) {
-                return new Backbone.Model({
-                    displayText: model.get(modelFactory),
-                    groupingModel: true
-                });
-            }
+        ? typeof modelFactory === 'string'
+            ? function(model) {
+                  return new Backbone.Model({
+                      displayText: model.get(modelFactory),
+                      groupingModel: true
+                  });
+              }
             : modelFactory
-        : function (model) {
-            return new Backbone.Model({
-                displayText: groupingOptions.iterator(model),
-                groupingModel: true
-            });
-        };
+        : function(model) {
+              return new Backbone.Model({
+                  displayText: groupingOptions.iterator(model),
+                  groupingModel: true
+              });
+          };
 };
 
 export default function fixGroupingOptions(groupingOptions) {
@@ -45,13 +45,13 @@ export default function fixGroupingOptions(groupingOptions) {
     if (!groupingOptions.affectedAttributes) {
         groupingOptions.affectedAttributes = [];
     }
-    if (_.isString(groupingOptions.iterator)) {
+    if (typeof groupingOptions.iterator === 'string') {
         groupingOptions.affectedAttributes.push(groupingOptions.iterator);
     }
-    if (_.isString(groupingOptions.comparator)) {
+    if (typeof groupingOptions.comparator === 'string') {
         groupingOptions.affectedAttributes.push(groupingOptions.comparator);
     }
-    if (_.isString(groupingOptions.modelFactory)) {
+    if (typeof groupingOptions.modelFactory === 'string') {
         groupingOptions.affectedAttributes.push(groupingOptions.modelFactory);
     }
     groupingOptions.affectedAttributes = _.uniq(groupingOptions.affectedAttributes);

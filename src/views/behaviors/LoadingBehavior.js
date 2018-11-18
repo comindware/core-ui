@@ -15,7 +15,7 @@ export default Marionette.Behavior.extend({
     },
 
     setLoading(visible) {
-        if (_.isBoolean(visible)) {
+        if (typeof visible === 'boolean') {
             if (visible) {
                 this.view.getRegion(this.options.region).show(new LoadingView(this.loadingViewOptions));
             } else {

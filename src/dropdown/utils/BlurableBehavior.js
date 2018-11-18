@@ -52,7 +52,7 @@ export default Marionette.Behavior.extend({
         _.defer(() => {
             this.view.isFocused = false;
             const callback = this.options.onBlur;
-            if (_.isString(callback)) {
+            if (typeof callback === 'string') {
                 this.view[callback].call(this.view);
             } else {
                 callback.call(this.view);

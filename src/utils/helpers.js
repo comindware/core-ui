@@ -83,14 +83,14 @@ export default /** @lends module:core.utils.helpers */ {
      * @return {String} Resulting string.
      * */
     format(string, ...values) {
-        if (!_.isString(string)) {
+        if (typeof string !== 'string') {
             return '';
         }
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
     replaceCurlyParameters(string, ...values) {
-        if (!_.isString(string)) {
+        if (typeof string !== 'string') {
             return '';
         }
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
