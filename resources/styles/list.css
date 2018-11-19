@@ -432,11 +432,11 @@
     cursor: default;
     overflow: hidden;
     min-width: 50px;
+    position: relative;
 }
 .cell_editable {
     display: flex;
     align-items: center;
-    position: relative;
 }
 .cell_selection, .cell_selection-index {
     display: flex;

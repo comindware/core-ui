@@ -54,7 +54,6 @@ const defaultOptions = options => ({
  * @param {Backbone.View} [options.childViewOptions] опции для childView
  * @param {Function} options.childViewSelector ?
  * @param {Object} [options.emptyViewOptions] опции для emptyView
- * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
  * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
  * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
@@ -103,7 +102,6 @@ export default Marionette.View.extend({
                         columns: options.columns,
                         gridEventAggregator: this,
                         checkBoxPadding: options.checkBoxPadding || 0,
-                        gridColumnHeaderView: options.gridColumnHeaderView,
                         uniqueId: this.uniqueId,
                         isTree: this.options.isTree,
                         expandOnShow: options.expandOnShow

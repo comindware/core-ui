@@ -1,6 +1,8 @@
 //@flow
 import { comparators, helpers } from 'utils';
 import template from '../../templates/gridheader.hbs';
+import InfoButtonView from './InfoButtonView';
+import InfoMessageView from './InfoMessageView';
 
 /**
  * @name GridHeaderView
@@ -57,7 +59,7 @@ const GridHeaderView = Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         mouseover: '__handleColumnSelect',
-        click: '__handleSorting',
+        'click .grid-header-column': '__handleColumnSort',
         'click .js-help-text-region': '__handleHelpMenuClick'
     },
 
@@ -80,14 +82,38 @@ const GridHeaderView = Marionette.View.extend({
                     `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>&nbsp;`
                 );
         }
+
+        this.ui.gridHeaderColumn.each((i, el) => {
+            const column = this.columns[i];
+            const helpText = column.helpText;
+
+            if (helpText) {
+                const infoPopout = Core.dropdown.factory.createPopout({
+                    buttonView: InfoButtonView,
+                    panelView: InfoMessageView,
+                    panelViewOptions: {
+                        text: helpText
+                    },
+                    popoutFlow: 'right',
+                    customAnchor: true
+                });
+                el.appendChild(infoPopout.render().el);
+            }
+        });
     },
 
     updateSorting() {
         this.render();
     },
 
-    __handleColumnSort(sender, args) {
-        const column = args.column;
+    __handleColumnSort(event) {
+        if (this.options.columnSort === false) {
+            return;
+        }
+        if (event.target.className.includes('js-collapsible-button')) {
+            return;
+        }
+        const column = this.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)];
         const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
         this.columns.forEach(c => (c.sorting = null));
         column.sorting = sorting;
@@ -242,18 +268,6 @@ const GridHeaderView = Marionette.View.extend({
         if (this.collection.draggingModel) {
             this.trigger('drag:drop', this.collection.draggingModel, this.model);
         }
-    },
-
-    __handleSorting(e) {
-        if (this.options.columnSort === false) {
-            return;
-        }
-        if (e.target.className.includes('js-collapsible-button')) {
-            return;
-        }
-        this.trigger('columnSort', this, {
-            column: this.column
-        });
     },
 
     __handleColumnSelect(event) {
