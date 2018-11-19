@@ -4,19 +4,10 @@
 
 const CheckableBehavior = {};
 
-function __updateChecked() {
-    this.checked = {};
-    this.collection.each(model => {
-        if (model.checked) {
-            this.checked[model.cid] = model;
-        }
-    });
-    this.__triggerCheck();
-}
-
 CheckableBehavior.CheckableCollection = function(collection) {
     this.collection = collection;
     this.__updateChecked();
+    this.__debounceUpdateChecked = _.debounce(this.__updateChecked, 10);
     collection.on('add remove reset update', function() {
         if (this.internalCheck || collection.internalUpdate) {
             return;
@@ -116,9 +107,15 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         }
     },
 
-    __debounceUpdateChecked: _.debounce(__updateChecked, 10),
-
-    __updateChecked,
+    __updateChecked() {
+        this.checked = {};
+        this.collection.each(model => {
+            if (model.checked) {
+                this.checked[model.cid] = model;
+            }
+        });
+        this.__triggerCheck();
+    },
 
     __triggerCheck() {
         const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
