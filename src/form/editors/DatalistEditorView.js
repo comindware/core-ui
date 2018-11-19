@@ -400,15 +400,32 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __adjustValueFromLoaded(value) {
         if (Array.isArray(value)) {
-            return value.map(v => this.panelCollection.get(v) || this.__tryToCreateAdjustedValue(v));
+            return value.map(v => this.__getValueFromPanelCollection(v));
         }
-        return [this.panelCollection.get(value) ||
-            (_.isObject(value) && this.panelCollection.findWhere(value)) ||
-            this.__tryToCreateAdjustedValue(value)];
+        return [this.__getValueFromPanelCollection(value)];
+    },
+
+    __getValueFromPanelCollection(value) {
+        return this.panelCollection.get(value) ||
+            (_.isObject(value) && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
+            this.__tryToCreateAdjustedValue(value);
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ? value : _.isObject(value) ? new Backbone.Model(value) : new Backbone.Model({ id: value });
+        return value instanceof Backbone.Model ?
+            value :
+            (_.isObject(value) ?
+                new Backbone.Model(value) :
+                new Backbone.Model({
+                    id: value,
+                    text: this.__isValueEqualNotSet(value) ?
+                        Localizer.get('CORE.COMMON.NOTSET') :
+                        undefined
+                }));
+    },
+
+    __isValueEqualNotSet(value) {
+        return value == null || value === 'Undefined';
     },
 
     isValueIncluded(value) {
@@ -455,7 +472,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                     return value === itemId;
                 })
                 :
-                value.map(item => this.panelCollection.get(item) || this.__tryToCreateAdjustedValue(item));
+                value.map(item => this.__getValueFromPanelCollection(item));
             if (selectedItems) {
                 this.setValue(selectedItems.map(item => item.toJSON()));
                 selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
