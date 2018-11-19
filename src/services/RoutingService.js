@@ -69,7 +69,7 @@ export default {
         Backbone.history.history.back();
     },
 
-    // options: replace (history), trigger (routing)
+    // options: replace (history), trigger (routing), split (show in split)
     navigateToUrl(url, options = {}) {
         let newUrl = url;
 
@@ -79,8 +79,14 @@ export default {
 
         shouldCheckUrl = options.trigger || activeUrl === url;
 
+        if (options.split) {
+            newUrl = this.__getSplitModuleUrl(url);
+        }
         if (!shouldCheckUrl) {
-            newUrl = this.__getUpdatedUrl(url);
+            if (!options.split) {
+                newUrl = this.__getUpdatedUrl(url);
+            }
+
             if (url !== newUrl) {
                 shouldCheckUrl = true;
             }
@@ -305,21 +311,6 @@ export default {
         }
     },
 
-    __getUpdatedUrl(url = '') {
-        const cleanUrl = url.replace('#', '');
-        const prefix = cleanUrl.split('/')[0];
-        const urlParts = window.location.hash.split('&nxt');
-        const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
-
-        if (replaceIndex !== -1 && urlParts.some(part => part.startsWith('#custom'))) {
-            urlParts.splice(replaceIndex, 1, cleanUrl);
-
-            return urlParts.join('&nxt');
-        }
-
-        return url;
-    },
-
     __isCurrentModuleSplit() {
         return activeUrl?.startsWith('#custom');
     },
@@ -335,5 +326,28 @@ export default {
                 setTimeout(() => module.pair.callback(module.pair.route));
             }
         });
+    },
+
+    __getSplitModuleUrl(nextModuleUrl) {
+        if (this.__isCurrentModuleSplit()) {
+            return this.__getUpdatedUrl(nextModuleUrl);
+        }
+
+        return `#custom/&nxt${window.location.hash.replace('#', '')}&nxt${nextModuleUrl.replace('#', '')}`;
+    },
+
+    __getUpdatedUrl(url = '') {
+        const cleanUrl = url.replace('#', '');
+        const prefix = cleanUrl.split('/')[0];
+        const urlParts = window.location.hash.split('&nxt');
+        const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
+
+        if (replaceIndex !== -1 && urlParts.some(part => part.startsWith('#custom'))) {
+            urlParts.splice(replaceIndex, 1, cleanUrl);
+
+            return urlParts.join('&nxt');
+        }
+
+        return url;
     }
 };
