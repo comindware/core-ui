@@ -355,6 +355,9 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
+.cell_selection[draggable], .cell_selection-index[draggable] {
+  cursor: move;
+}
 .grid__headless .cell_selection:first-child {
   box-shadow: var(--grid-cell-border-first-headless);
 }
@@ -453,8 +456,9 @@ svg.svg-grid-icons {
 }
 
 .cell__dots{
-  left: 2px;
-  width: var(--grid-dots-width);
+  left: -6px;
+  width: 2px;
+  position: relative;
 }
 
 .cell__dots svg{

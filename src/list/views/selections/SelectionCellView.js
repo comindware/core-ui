@@ -33,6 +33,12 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    attributes() {
+        return {
+            draggable: this.getOption('draggable')
+        };
+    },
+
     templateContext() {
         let index = '';
         if (this.getOption('showRowIndex') && this.model) {
@@ -45,7 +51,7 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection';
+        return `${this.getOption('draggable') ? 'js-dots' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
     },
 
     ui: {
