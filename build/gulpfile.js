@@ -1,45 +1,28 @@
-/*
-* Usage
-*
-* gulp start - builds a development version of the library, then starts watchers.
-* gulp deploy - updates dist and doc directories with the latest artifacts. Builds both development & production versions of the library.
-* gulp test - performs single run of tests using Karma.
-* gulp test:watch - starts Karma in watcher mode, debug through http://localhost:9876.
-*
-* default task: gulp start
-*
-* */
-
 const gulp = require('gulp');
-const runSequence = require('run-sequence');
 const karma = require('karma');
 
 const pathResolver = require('./pathResolver');
 
-// ###
-// Worker tasks
-// ###
-
 gulp.task('localization', require('./tasks/localizationTask'));
 gulp.task('watch:localization', () => {
-    gulp.watch(pathResolver.localizationSource('*'), ['localization']);
+    gulp.watch(pathResolver.localizationSource('*'), gulp.series('localization'));
 });
 
 gulp.task('generateSprites', require('./tasks/generateSpritesTask'));
 gulp.task('watch:generateSprites', () => {
-    gulp.watch(pathResolver.resources('sprites/*'), ['generateSprites']);
+    gulp.watch(pathResolver.resources('sprites/*'), gulp.series('generateSprites'));
 });
 
 gulp.task('generateThemes', require('./tasks/generateThemesTask'));
 gulp.task('watch:generateThemes', () => {
-    gulp.watch(pathResolver.resources('styles/themes/**/*'), ['generateThemes']);
+    gulp.watch(pathResolver.resources('styles/themes/**/*'), gulp.series('generateThemes'));
 });
 
 gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
-    gulp.watch([pathResolver.source('**/*'), pathResolver.resources('**/*')], ['build:core:dev', 'generateSprites']);
+    gulp.watch([pathResolver.source('**/*'), pathResolver.resources('**/*')], gulp.parallel('build:core:dev', 'generateSprites'));
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));
@@ -91,34 +74,32 @@ gulp.task('test:watch', done => {
     ).start();
 });
 
-gulp.task('start', callback =>
-    runSequence(
+gulp.task(
+    'start',
+    gulp.series(
         'localization',
         'build:core:dev',
         'generateSprites',
         'generateThemes',
-        ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes', 'test:watch'],
-        callback
+        gulp.parallel('watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes', 'test:watch')
     )
 );
 
-gulp.task('develop', callback =>
-    runSequence(
+gulp.task(
+    'develop',
+    gulp.series(
         'localization',
         'build:core:dev',
         'generateSprites',
         'generateThemes',
-        ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes'],
-        callback
+        gulp.parallel('watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes')
     )
 );
 
-gulp.task('build', callback => runSequence('build:core:prod', 'localization', 'generateSprites', 'generateThemes', callback));
+gulp.task('build', gulp.series('build:core:prod', 'localization', 'generateSprites', 'generateThemes'));
 
-gulp.task('build:min', callback => runSequence('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', callback));
+gulp.task('build:min', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes'));
 
-gulp.task('deploy', callback =>
-    runSequence('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback)
-);
+gulp.task('deploy', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish'));
 
-gulp.task('default', ['start']);
+gulp.task('default', gulp.series('start'));
