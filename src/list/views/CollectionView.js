@@ -119,7 +119,7 @@ export default Marionette.CollectionView.extend({
     },
 
     onAttach() {
-        this.handleResize();
+        this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
@@ -362,13 +362,6 @@ export default Marionette.CollectionView.extend({
             this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
                 ? this.el.parentElement.clientHeight
                 : window.innerHeight;
-
-        if (this.children && this.children.length && !this.isEmpty()) {
-            const firstChild = this.children.first().el;
-            if (firstChild && firstChild.offsetHeight) {
-                this.childHeight = firstChild.offsetHeight;
-            }
-        }
 
         if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
             helpers.throwInvalidOperationError("ListView configuration error: you have passed option height: AUTO into ListView control but didn't specify maxRows option.");
