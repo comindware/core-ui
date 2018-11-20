@@ -61,10 +61,9 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
         this.__value(value, true, false);
     },
 
-    onAttach() {
-        const value = this.getValue() || '';
+    onRender() {
         this.ui.colorpicker.spectrum({
-            color: value.toString(),
+            color: (this.value || '').toString(),
             showInput: true,
             allowEmpty: true,
             showInitial: true,

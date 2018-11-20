@@ -329,6 +329,7 @@ export default Marionette.View.extend({
     },
 
     __handleClick() {
+        this.trigger('click');
         if (this.options.autoOpen) {
             this.open();
         }

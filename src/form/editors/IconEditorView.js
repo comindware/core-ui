@@ -43,6 +43,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
 
     events: {
         'click @ui.deleteIconButton': '__onDeleteIconClick',
+        click: 'open',
         keydown: '__keydown'
     },
 
@@ -60,7 +61,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
                 showColorPicker: this.options.showColorPicker,
                 model: this.model
             },
-            autoOpen: true
+            autoOpen: false
         });
 
         this.popupPanel.on('panel:click:item', id => {
@@ -69,6 +70,8 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
             this.trigger('click:item', id);
             this.close();
         });
+
+        this.listenTo(this.popupPanel, 'click', this.open);
 
         this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
         if (!this.model.get('iconClass')) {
