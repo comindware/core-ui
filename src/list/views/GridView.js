@@ -126,7 +126,7 @@ export default Marionette.View.extend({
             isTree: this.options.isTree
         });
 
-        this.isEditable = _.isBoolean(options.editable) ? options.editable : options.columns.some(column => column.editable);
+        this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
         if (this.isEditable) {
             this.editableCellsIndexes = [];
             this.options.columns.forEach((column, index) => {

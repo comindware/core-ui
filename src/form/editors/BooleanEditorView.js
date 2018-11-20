@@ -80,7 +80,7 @@ export default (formRepository.editors.Boolean = BaseEditorView.extend(
         },
 
         isEmptyValue() {
-            return !_.isBoolean(this.getValue());
+            return typeof this.getValue() !== 'boolean';
         },
 
         __updateState() {

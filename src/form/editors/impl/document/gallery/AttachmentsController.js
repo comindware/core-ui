@@ -39,7 +39,7 @@ export default Marionette.Object.extend({
 
     __getImage(model) {
         const modelId = model.get('id');
-        if (_.has(this.imagesBuffer, modelId)) {
+        if (modelId in this.imagesBuffer) {
             return this.imagesBuffer[modelId];
         }
         this.view.setLoading(true);

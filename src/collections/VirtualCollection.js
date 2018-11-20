@@ -503,7 +503,7 @@ const VirtualCollection = Backbone.Collection.extend({
             }
         });
 
-        let rebuildRequired = _.any(changed, key => attrsAffectedByGrouping.indexOf(key) !== -1);
+        let rebuildRequired = changed.some(key => attrsAffectedByGrouping.indexOf(key) !== -1);
 
         if (!rebuildRequired && this.comparator) {
             const previousModel = new model.constructor(model.previousAttributes(), model.options);

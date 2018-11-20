@@ -31,7 +31,7 @@
         // Evaluate and return a boolean result. The given `fn` may be a
         // boolean value, a function, or the name of a function on the model.
         const evaluateModelFn = function(model, fn) {
-            if (_.isBoolean(fn)) return fn;
+            if (typeof fn === 'boolean') return fn;
             return (typeof fn === 'string' ? model[fn] : fn).apply(model, args);
         };
         _.find(unsavedModels, model => {

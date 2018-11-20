@@ -95,9 +95,10 @@ const GridHeaderView = Marionette.View.extend({
                         text: helpText
                     },
                     popoutFlow: 'right',
-                    customAnchor: true
+                    customAnchor: true,
+                    class: 'collection-grid-header__help'
                 });
-                el.appendChild(infoPopout.render().el);
+                el.appendChild(infoPopout.render().el); //todo destroy it
             }
         });
     },

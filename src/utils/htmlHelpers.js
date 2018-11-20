@@ -51,7 +51,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        const membersByUserName = _.reduce(UserService.listUsers(), (memo, user) => {
+        const membersByUserName = UserService.listUsers().reduce((memo, user) => {
             if (user.userName) {
                 memo[user.userName] = user;
             }

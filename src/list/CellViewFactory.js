@@ -123,16 +123,16 @@ export default (factory = {
                 const value = this.model.get(this.options.key);
                 return {
                     value,
-                    showIcon: _.isBoolean(value)
+                    showIcon: typeof value === 'boolean'
                 };
             }
         };
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}',
+                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+                '{{/if}}',
             extention
         );
     },
@@ -327,7 +327,8 @@ export default (factory = {
                             }
                         }
                         return value;
-                    }).join(', ');
+                    })
+                    .join(', ');
                 return `<div class="cell cell-right ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
@@ -392,7 +393,8 @@ export default (factory = {
                             return `${dateDisplayValue} ${timeDisplayValue}`;
                         }
                         return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
-                    }).join(', ');
+                    })
+                    .join(', ');
                 return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
