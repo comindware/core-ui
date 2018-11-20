@@ -96,8 +96,7 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeLong = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
-        this.listenTo(this.collection.parentCollection, 'add remove reset ',
-            (model, collection, opt) => this.debouncedHandleResizeShort(true, model, collection, opt));
+        this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => this.debouncedHandleResizeShort(true, model, collection, opt));
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
@@ -130,9 +129,11 @@ export default Marionette.CollectionView.extend({
     },
 
     _destroyEmptyView() {
-        this.__updateEmpty(false);
-        this.trigger('empty:view:destroyed');
-        Marionette.CollectionView.prototype._destroyEmptyView.apply(this, arguments);
+        if (this._showingEmptyView) {
+            this.__updateEmpty(false);
+            this.trigger('empty:view:destroyed');
+            Marionette.CollectionView.prototype._destroyEmptyView.apply(this, arguments);
+        }
     },
 
     __updateEmpty(isEmpty) {
