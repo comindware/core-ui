@@ -58,9 +58,10 @@ const GridHeaderView = Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        mouseover: '__handleColumnSelect',
+        'mouseover .grid-header-column': '__handleColumnSelect',
         'click .grid-header-column': '__handleColumnSort',
-        'click .js-help-text-region': '__handleHelpMenuClick'
+        'click .js-help-text-region': '__handleHelpMenuClick',
+        mouseleave: '__onMouseLeaveHeader'
     },
 
     constants: {
@@ -131,6 +132,7 @@ const GridHeaderView = Marionette.View.extend({
     __handleDraggerMousedown(e) {
         this.__stopDrag();
         this.__startDrag(e);
+        this.trigger('header:columnResizeStarted');
         return false;
     },
 
@@ -191,6 +193,7 @@ const GridHeaderView = Marionette.View.extend({
 
     __draggerMouseUp() {
         this.__stopDrag();
+        this.trigger('header:columnResizeFinished');
         return false;
     },
 
@@ -273,9 +276,14 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleColumnSelect(event) {
         this.trigger('handleColumnSelect', {
-            view: this,
-            event
+            event,
+            el: event.currentTarget,
+            model: this.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
         });
+    },
+
+    __onMouseLeaveHeader(event) {
+        this.trigger('handleLeave', event);
     }
 });
 
