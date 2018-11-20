@@ -126,12 +126,13 @@ export default Marionette.CollectionView.extend({
 
     _showEmptyView() {
         this.__updateEmpty(true);
-        Marionette.CompositeView.prototype._showEmptyView.apply(this, arguments);
+        Marionette.CollectionView.prototype._showEmptyView.apply(this, arguments);
     },
 
     _destroyEmptyView() {
         this.__updateEmpty(false);
-        Marionette.CompositeView.prototype._destroyEmptyView.apply(this, arguments);
+        this.trigger('empty:view:destroyed');
+        Marionette.CollectionView.prototype._destroyEmptyView.apply(this, arguments);
     },
 
     __updateEmpty(isEmpty) {

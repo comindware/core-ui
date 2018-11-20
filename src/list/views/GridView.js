@@ -192,6 +192,9 @@ export default Marionette.View.extend({
             if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName].concat(eventArguments));
             }
+            if (eventName === 'empty:view:destroyed') {
+                this.__resetViewStyle();
+            }
         });
 
         if (this.collection.length) {
@@ -560,15 +563,17 @@ export default Marionette.View.extend({
                 'min-height': `${this.listView.childHeight}px`,
                 height: '100%'
             });
-        } else {
-            this.ui.content.css({
-                'min-height': '',
-                height: ''
-            });
         }
     },
 
     __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
+    },
+
+    __resetViewStyle() {
+        this.ui.content.css({
+            'min-height': '',
+            height: ''
+        });
     }
 });
