@@ -15,6 +15,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 
 const config = {
     VISIBLE_COLLECTION_RESERVE: 20,
+    VISIBLE_COLLECTION_RESERVE_HALF: 10,
     VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
 };
 
@@ -96,7 +97,12 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeLong = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
-        this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => this.debouncedHandleResizeShort(true, model, collection, opt));
+        this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
+            if (collection?.diff?.length) {
+                return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true }));
+            }
+            return this.debouncedHandleResizeShort(true, model, collection, opt);
+        });
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
@@ -289,7 +295,7 @@ export default Marionette.CollectionView.extend({
 
     __normalizePosition(position) {
         const maxPos = Math.max(0, this.collection.length - Math.max(this.minimumVisibleRows, this.state.visibleCollectionSize));
-        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE / 2));
+        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE_HALF));
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
@@ -311,7 +317,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        const newPosition = Math.max(0, Math.floor(this.$el.parent().scrollTop() / this.childHeight));
+        const newPosition = Math.max(0, Math.ceil(this.$el.parent().scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
         this.__updateTop();
     },
@@ -336,7 +342,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        newPosition = this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE / 2));
+        newPosition = this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
         this.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;

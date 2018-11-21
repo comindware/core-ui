@@ -63,7 +63,7 @@ export default function() {
     const gridView = Core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
-            childHeight: 40,
+            childHeight: 35,
             useDefaultRowView: true,
             minimumVisibleRows: 100
         },
