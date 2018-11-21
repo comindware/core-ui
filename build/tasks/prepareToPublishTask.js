@@ -5,7 +5,7 @@ const pathResolver = require('../pathResolver');
 
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
-module.exports = () => {
+module.exports = callback => {
     exec('git tag -l 1.12.* --sort=v:refname', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
@@ -19,7 +19,7 @@ module.exports = () => {
             console.log(stderr);
         }
 
-        const matchResult = (stdout.split('\n')).filter(i => i);
+        const matchResult = stdout.split('\n').filter(i => i);
         if (!matchResult || !matchResult.length) {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
             return;
@@ -30,5 +30,6 @@ module.exports = () => {
         const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
         packageJson.version = version;
         fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
+        callback();
     });
 };
