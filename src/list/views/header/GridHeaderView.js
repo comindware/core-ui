@@ -34,6 +34,7 @@ const GridHeaderView = Marionette.View.extend({
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
         this.collection = options.gridEventAggregator.collection;
+        this.popoutsCollection = [];
 
         this.styleSheet = options.styleSheet;
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
@@ -70,7 +71,12 @@ const GridHeaderView = Marionette.View.extend({
 
     templateContext() {
         return {
-            columns: this.columns
+            columns: this.columns.map(column =>
+                Object.assign({}, column, {
+                    sortingAsc: column.sorting === 'asc',
+                    sortingDesc: column.sorting === 'desc'
+                })
+            )
         };
     },
 
@@ -99,7 +105,8 @@ const GridHeaderView = Marionette.View.extend({
                     customAnchor: true,
                     class: 'collection-grid-header__help'
                 });
-                el.appendChild(infoPopout.render().el); //todo destroy it
+                this.popoutsCollection.push(infoPopout);
+                el.appendChild(infoPopout.render().el);
             }
         });
     },
@@ -199,6 +206,10 @@ const GridHeaderView = Marionette.View.extend({
 
     __getFullWidth() {
         return this.el.clientWidth;
+    },
+
+    onDestroy() {
+        this.popoutsCollection.forEach(popout => popout.destroy());
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
