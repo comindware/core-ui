@@ -5,7 +5,7 @@ const pathResolver = require('../pathResolver');
 
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
-module.exports = () => {
+module.exports = callback => {
     exec('git tag -l 1.13.* --sort=v:refname', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
@@ -30,5 +30,6 @@ module.exports = () => {
         const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
         packageJson.version = version;
         fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
+        callback();
     });
 };
