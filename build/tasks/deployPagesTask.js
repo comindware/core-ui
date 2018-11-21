@@ -34,7 +34,7 @@ const copyDoc = resolver => {
     copySyncRecursive(pathResolver.root('doc'), resolver('doc'));
 };
 
-module.exports = () => {
+module.exports = callback => {
     const token = process.env.GH_TOKEN;
     const ref = process.env.GH_REF;
 
@@ -49,4 +49,5 @@ module.exports = () => {
     run('git add -A', pagesDir);
     run('git commit -m "Auto-deploy to Github Pages"', pagesDir);
     run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, pagesDir);
+    callback();
 };
