@@ -155,7 +155,7 @@
 
 <http://comindware.com/text/core/form/editors/code/output#info> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:24:46.0450292Z"; l10n:modificationDate "2018-07-17T08:24:46.0450292Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "info"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/form/editors/code/output#message> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:24:37.9883060Z"; l10n:modificationDate "2018-07-17T08:24:37.9883060Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "message"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/form/editors/code/output#message> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2018-07-17T08:24:37.9883060Z"; l10n:modificationDate "2018-11-22T12:06:24.4173391Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "message"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/code/output#warnings> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:28:23.7451255Z"; l10n:modificationDate "2018-07-17T08:28:23.7451255Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "warnings"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
@@ -166,6 +166,14 @@
 <http://comindware.com/text/core/form/editors/code/output/errors#message> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:27:19.2824977Z"; l10n:modificationDate "2018-07-17T08:27:21.8018037Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Message"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/code/output/errors#messcode> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:26:44.2899115Z"; l10n:modificationDate "2018-07-17T08:26:46.3303074Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Messcode"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/code/output/info#column> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vasiliy Zorin"; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2018-11-22T11:36:42.4917857Z"; l10n:modificationDate "2018-11-22T11:37:39.5270602Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Column"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/code/output/info#line> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vasiliy Zorin"; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2018-11-22T11:36:59.1025156Z"; l10n:modificationDate "2018-11-22T11:37:55.0082697Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Line"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/code/output/info#message> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vasiliy Zorin"; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2018-11-22T11:37:15.2524995Z"; l10n:modificationDate "2018-11-22T11:38:07.6259186Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Message"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/code/output/info#messcode> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vasiliy Zorin"; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2018-11-22T11:37:10.2529659Z"; l10n:modificationDate "2018-11-22T11:38:22.3803395Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Messcode"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/code/output/warnings#column> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:28:57.9817558Z"; l10n:modificationDate "2018-07-17T08:29:04.4351691Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Column"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
