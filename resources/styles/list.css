@@ -425,6 +425,7 @@
     cursor: default;
     overflow: hidden;
     min-width: 50px;
+    position: relative;
 }
 .cell_editable {
     display: flex;
