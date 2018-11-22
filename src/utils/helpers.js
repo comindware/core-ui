@@ -89,6 +89,13 @@ export default /** @lends module:core.utils.helpers */ {
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
+    replaceParams(string, ...values) {
+        if (typeof string !== 'string') {
+            return '';
+        }
+        return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
+    },
+
     replaceCurlyParameters(string, ...values) {
         if (typeof string !== 'string') {
             return '';

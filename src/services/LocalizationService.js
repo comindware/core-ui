@@ -1,3 +1,5 @@
+import helpers from '../utils/helpers';
+
 //@flow
 const global = window;
 const defaultLangCode = 'en';
@@ -22,6 +24,8 @@ type LocalizationService = {
     localizationMap?: Object,
 
     get(locId: string): string,
+
+    replaceParams(locId: string): string,
 
     tryGet(locId: string): ?string,
 
@@ -70,6 +74,10 @@ const service: LocalizationService = {
             return `<missing:${locId}>`;
         }
         return text;
+    },
+
+    replaceParams(locId: string, zero, one, two, ...args) {
+        return helpers.replaceParams(this.get(locId), zero, one, two, ...args);
     },
 
     tryGet(locId: string) {
