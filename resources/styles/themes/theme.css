@@ -394,9 +394,9 @@ svg.svg-grid-icons {
   color: #c1c1c1;;
 }
 
-.row.hover__transition .cell, .cell_selection.hover__transition {
+.row.hover__transition .cell, .cell_selection.hover__transition, .cell_selection-index.hover__transition {
   /* delay used in js TRANSITION_DELAY*/
-  transition: background-color 400ms ease-in-out;
+  transition: background-color 300ms ease-in-out;
 }
 
 .sort_down, .sort_up {
