@@ -16,19 +16,31 @@ export default {
         return this.askYesNo(description, LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
     },
 
-    askYesNo(description, text) {
+    ask(options) {
+        return this.askYesNo(
+            options.description,
+            options.title,
+            options.yesText,
+            options.noText
+        );
+    },
+
+    askYesNo(description, text,
+        yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'),
+        noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')
+    ) {
         return this.showMessageDialog(
             description,
             text,
             [
                 {
                     id: false,
-                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
+                    text: noText,
                     default: true
                 },
                 {
                     id: true,
-                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
+                    text: yesText
                 }
             ],
             iconIds.QUESTION
@@ -60,6 +72,10 @@ export default {
                 }, //don't use min-values if fullscreenToggleDisabled: false
                 fullscreenToggleDisabled: true,
                 header: text || description,
+                onClose() {
+                    resolve(false);
+                    return true;
+                },
                 buttons: buttons.map(button => ({
                     id: button.id,
                     text: button.text,
