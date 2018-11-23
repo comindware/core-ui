@@ -167,17 +167,19 @@
     width: 55px;
 }
 
-
-.grid-header-column-content-view {
-    cursor: pointer !important;
-}
-
 .grid-header-view {
     position: relative;
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
     flex: none;
+    display: flex;
+}
+
+.grid-header-column-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .grid-header-view:empty {
@@ -199,6 +201,8 @@
     text-align: left;
     cursor: default;
     height: 35px;
+    display: flex;
+    align-items: center;
 }
 
 .grid-header-dragger {
@@ -225,6 +229,7 @@
     display: inline-block;
     position: relative;
     background-repeat: no-repeat;
+    flex-shrink: 0;
 }
 
 .filter-sort-btn {
