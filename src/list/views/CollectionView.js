@@ -285,6 +285,7 @@ export default Marionette.CollectionView.extend({
             const newPosition = this.state.position + indexDelta - centerItemDelta;
             this.__updatePositionInternal(newPosition, true);
         }
+        this.__updateTop();
     },
 
     __normalizePosition(position) {
