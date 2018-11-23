@@ -6,7 +6,8 @@ import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
 
 const defaultOptions = {
-    radioOptions: [{ id: '', displayText: '' }]
+    radioOptions: [{ id: '', displayText: '' }],
+    class: undefined
 };
 
 /**
