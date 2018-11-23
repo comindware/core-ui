@@ -256,6 +256,7 @@ body {
 
 .editor_date-time .input {
   padding: 0;
+  min-width: 250px;
 }
 .editor_date-time_time .input {
   padding-left: 5px;
