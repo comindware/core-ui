@@ -1,5 +1,4 @@
-//@flow
-import { comparators, helpers } from 'utils';
+import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
@@ -60,7 +59,7 @@ const GridHeaderView = Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseover .grid-header-column': '__handleColumnSelect',
-        'click .grid-header-column': '__handleColumnSort',
+        'click .grid-header-column-title': '__handleColumnSort',
         'click .js-help-text-region': '__handleHelpMenuClick',
         mouseleave: '__onMouseLeaveHeader'
     },
@@ -95,6 +94,8 @@ const GridHeaderView = Marionette.View.extend({
             const helpText = column.helpText;
 
             if (helpText) {
+                this.addRegion(`popoutRegion${i}`, { el: el.querySelector('.js-help-text-region') });
+
                 const infoPopout = Core.dropdown.factory.createPopout({
                     buttonView: InfoButtonView,
                     panelView: InfoMessageView,
@@ -105,8 +106,7 @@ const GridHeaderView = Marionette.View.extend({
                     customAnchor: true,
                     class: 'collection-grid-header__help'
                 });
-                this.popoutsCollection.push(infoPopout);
-                el.appendChild(infoPopout.render().el);
+                this.showChildView(`popoutRegion${i}`, infoPopout);
             }
         });
     },
