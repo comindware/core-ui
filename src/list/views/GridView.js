@@ -17,6 +17,7 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import transliterator from 'utils/transliterator';
 import EmptyGridView from '../views/EmptyGridView';
+import stickybits from 'stickybits';
 
 /*
     Public interface:
@@ -340,6 +341,9 @@ export default Marionette.View.extend({
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
+
+        stickybits(this.el.querySelector('.grid-header-wrp'));
+        stickybits(this.el.querySelector('.js-grid-tools'));
     },
 
     getChildren() {
