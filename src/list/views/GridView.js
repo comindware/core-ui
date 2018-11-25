@@ -3,6 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
+import { stickybits } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -17,7 +18,6 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import transliterator from 'utils/transliterator';
 import EmptyGridView from '../views/EmptyGridView';
-import stickybits from 'stickybits';
 
 /*
     Public interface:
