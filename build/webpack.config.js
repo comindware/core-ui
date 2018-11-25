@@ -58,7 +58,9 @@ module.exports = options => {
                                     targets: {
                                         ie: 11,
                                         chrome: 58
-                                    }
+                                    },
+                                    useBuiltIns: 'usage',
+                                    modules: false
                                 }
                             ]
                         ],

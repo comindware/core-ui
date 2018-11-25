@@ -343,9 +343,11 @@ export default Marionette.View.extend({
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
-        
+
         stickybits(this.el.querySelector('.grid-header-wrp'), { stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset });
-        stickybits(this.el.querySelector('.js-grid-tools'));
+        if (toolbarShowed) {
+            stickybits(this.el.querySelector('.js-grid-tools'));
+        }
     },
 
     getChildren() {
