@@ -35,7 +35,8 @@ const defaultOptions = options => ({
     emptyView: EmptyGridView,
     emptyViewOptions: {
         text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
-    }
+    },
+    stickyToolbarOffset: 0
 });
 
 /**
@@ -341,8 +342,9 @@ export default Marionette.View.extend({
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
-
-        stickybits(this.el.querySelector('.grid-header-wrp'));
+        const toolbarShowed = this.options.showToolbar || this.options.showSearch;
+        
+        stickybits(this.el.querySelector('.grid-header-wrp'), { stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset });
         stickybits(this.el.querySelector('.js-grid-tools'));
     },
 

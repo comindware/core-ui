@@ -69,6 +69,7 @@
     overflow-y: scroll;
     -ms-scrollbar-arrow-color: white;
     -ms-scrollbar-track-color: white;
+    z-index: 1;
 }
 
 .grid-header-wrp > .cell_selection, .grid-header-wrp > .cell_selection-index {
