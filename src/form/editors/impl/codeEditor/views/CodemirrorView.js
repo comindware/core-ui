@@ -229,6 +229,10 @@ export default Marionette.View.extend({
         }
     },
 
+    onAttach() {
+        this.parentElement = this.el.parentElement;
+    },
+
     __checkVisibleAndRefresh() {
         if (this.$el.height()) {
             this.codemirror.refresh();
@@ -246,13 +250,14 @@ export default Marionette.View.extend({
         $(this.regions.editorOutputContainer).css('height', '30%');
         $(this.regions.output).css('height', '100%');
         $(this.regions.outputTabs).css('height', '100%');
-
+        this.$el.appendTo('body');
         this.codemirror.refresh();
         this.codemirror.focus();
     },
 
     __onMinimize() {
         this.trigger('minimize', this);
+        this.$el.appendTo(this.parentElement);
         this.$el.removeClass(classes.maximized);
         this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();

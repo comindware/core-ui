@@ -10,7 +10,12 @@ export default Marionette.View.extend({
     },
 
     ui: {
-        panelSelectedContainer: '.panel-selected_container'
+        panelSelectedContainer: '.panel-selected_container',
+        closeButton: '.js-close_users'
+    },
+
+    events: {
+        'click @ui.closeButton': '__closeUsersPanel'
     },
 
     className: 'simplified-panel_container simplified-panel_panel dropdown_root',
@@ -20,7 +25,8 @@ export default Marionette.View.extend({
             showSearch: false,
             openOnRender: true,
             panelClass: 'simplified-panel_wrapper',
-            customTemplate: '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
+            customTemplate:
+                '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
 
@@ -47,6 +53,10 @@ export default Marionette.View.extend({
         };
     },
 
+    onAttach() {
+        this.getRegion('searchBarRegion').currentView.focus();
+    },
+
     __onSearch(text, editor) {
         editor.reqres.request('input:search', text, false);
     },
@@ -67,5 +77,9 @@ export default Marionette.View.extend({
                 editor.adjustPosition(true);
             }
         }
+    },
+
+    __closeUsersPanel() {
+        this.trigger('dropdown:close');
     }
 });
