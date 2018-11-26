@@ -293,11 +293,6 @@ export default Marionette.CollectionView.extend({
         this.__updateTop();
     },
 
-    __normalizePosition(position) {
-        const maxPos = Math.max(0, this.collection.length - Math.max(this.minimumVisibleRows, this.state.visibleCollectionSize));
-        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE_HALF));
-    },
-
     // normalized the index so that it fits in range [0, this.collection.length - 1]
     __normalizeCollectionIndex(index, loop) {
         const maxIndex = this.collection.length - 1;
@@ -336,19 +331,16 @@ export default Marionette.CollectionView.extend({
     },
 
     __updatePositionInternal(position, shouldScrollElement) {
-        let newPosition = position;
-        newPosition = this.__normalizePosition(newPosition);
+        const newPosition = this.__checkFillingViewport(position);
         if (newPosition === this.state.position || !this.collection.isSliding) {
             return;
         }
 
-        newPosition = this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
         this.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;
-            const scrollTop =
-                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
-                this.childHeight;
+            const scrollTop = newPosition * this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -356,6 +348,11 @@ export default Marionette.CollectionView.extend({
         }
 
         return newPosition;
+    },
+
+    __checkFillingViewport(position) {
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.visibleCollectionSize);
+        return Math.max(0, Math.min(maxPosFirstRow, position));
     },
 
     handleResize(shouldUpdateScroll, model, collection, options = {}) {
@@ -395,8 +392,8 @@ export default Marionette.CollectionView.extend({
             }
             // scroll in case of search, do not scroll in case of collapse
             if (options.add) {
-                const topElement = collection.indexOf(model);
-                this.scrollTo(topElement, true);
+                const row = collection.indexOf(model);
+                this.scrollTo(row, true);
                 model.trigger('blink');
             } else {
                 this.scrollTo(0, true);
