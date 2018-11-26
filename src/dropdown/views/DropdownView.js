@@ -307,11 +307,12 @@ export default Marionette.View.extend({
 
         this.el.classList.remove(classes.OPEN);
 
+        this.stopListening(WindowService);
         WindowService.closePopup(this.popupId);
 
         this.__stopListeningToElementMove();
         this.stopListening(GlobalEventService);
-        this.stopListening(WindowService);
+
         this.stopListening(this.panelView);
         this.button.$el.focus();
         this.isOpen = false;
