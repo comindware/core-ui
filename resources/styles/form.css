@@ -378,6 +378,7 @@ input[type="checkbox"].checkbox {
     display: flex;
     position: relative;
     flex: 0 0 auto;
+    height: 22px;
 }
 
 .bubbles__link {
