@@ -211,7 +211,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.resetSelectedCollection();
+        this.__resetSelectedCollection();
         this.__value(value, false);
     },
 
@@ -274,12 +274,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isButtonFocus() {
-        const inputView = this.dropdownView.button && this.dropdownView.button.collectionView.getInputView();
+        const inputView = this.getInputView();
         return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
     isThisFocus() {
         return this.el.contains(document.activeElement);
+    },
+
+    getInputView() {
+        return this.dropdownView?.button?.collectionView?.getInputView();
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {
@@ -297,7 +301,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.panelCollection.pointOff();
 
         try {
-            const data = await this.controller.fetch({
+            const complexData = await this.controller.fetch({
                 text: fetchedDataForSearchText,
                 getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
             });
@@ -306,7 +310,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 throw new Error('searched was updated');
             }
 
-            this.resetPanelCollection(data);
+            this.__resetPanelVirtualCollection(complexData);
 
             this.__tryPointFirstRow();
             this.isLastFetchSuccess = true;
@@ -320,8 +324,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    resetSelectedCollection(models) {
-        if (this.selectedButtonCollection) {
+    __resetSelectedCollection(models) {
+        if (!this.selectedButtonCollection) {
             return;
         }
 
@@ -329,9 +333,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__addFakeInputModel(this.selectedButtonCollection);
     },
 
-    resetPanelCollection(data) {
-        this.panelCollection.totalCount = data.totalCount;
-        this.panelCollection.reset(data.collection);
+    __resetPanelVirtualCollection(rawDataVirtual) {
+        this.panelCollection.totalCount = rawDataVirtual.totalCount;
+        this.panelCollection.reset(rawDataVirtual.collection);
+
+        if (this.options.maxQuantitySelected === 1) {
+            return;
+        }
 
         if (this.panelCollection.length > 0 && this.value) {
             this.value.forEach(editorValue => {
@@ -383,7 +391,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isLastFetchSuccess) {
             this.fetchUpdateFilter('', true);
             this.listenToOnce(this, 'view:ready', () => {
-                this.setValue(this.__adjustValueFromLoaded(value));
+                this.setValue(this.__adjustValueFromLoaded(value).map(item => item.toJSON()));
             });
             return [];
         }
@@ -392,15 +400,32 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __adjustValueFromLoaded(value) {
         if (Array.isArray(value)) {
-            return value.map(v => this.panelCollection.get(v) || this.__tryToCreateAdjustedValue(v));
+            return value.map(v => this.__getValueFromPanelCollection(v));
         }
-        return [this.panelCollection.get(value) ||
-            (_.isObject(value) && this.panelCollection.findWhere(value)) ||
-            this.__tryToCreateAdjustedValue(value)];
+        return [this.__getValueFromPanelCollection(value)];
+    },
+
+    __getValueFromPanelCollection(value) {
+        return (
+            this.panelCollection.get(value) ||
+            (_.isObject(value) && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
+            this.__tryToCreateAdjustedValue(value)
+        );
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ? value : new Backbone.Model({ id: value });
+        return value instanceof Backbone.Model
+            ? value
+            : _.isObject(value)
+            ? new Backbone.Model(value)
+            : new Backbone.Model({
+                  id: value,
+                  text: this.__isValueEqualNotSet(value) ? Localizer.get('CORE.COMMON.NOTSET') : undefined
+              });
+    },
+
+    __isValueEqualNotSet(value) {
+        return value == null || value === 'Undefined';
     },
 
     isValueIncluded(value) {
@@ -423,7 +448,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.value = this.getValue().concat(adjustedValue);
         }
 
-        this.selectedButtonCollection.add(this.value);
+        this.__resetSelectedCollection(this.value);
 
         if (triggerChange) {
             this.__triggerChange();
@@ -438,16 +463,19 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(collection.models);
         if (value) {
-            const selectedItem = this.panelCollection.find(collectionItem => {
-                const itemId = collectionItem.get('id').toString();
-                if (Array.isArray(value)) {
-                    return value.find(v => (v && v.id ? v.id : v === itemId));
-                }
-                return value === itemId;
-            });
-            if (selectedItem) {
-                this.setValue(selectedItem.toJSON());
-                selectedItem.select();
+            const selectedItems =
+                this.getOption('valueType') === 'id'
+                    ? this.panelCollection.parentCollection.filter(collectionItem => {
+                          const itemId = collectionItem.get('id').toString();
+                          if (Array.isArray(value)) {
+                              return value.find(v => (v && v.id ? v.id : v === itemId));
+                          }
+                          return value === itemId;
+                      })
+                    : value.map(item => this.__getValueFromPanelCollection(item));
+            if (selectedItems) {
+                this.setValue(selectedItems.map(item => item.toJSON()));
+                selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
             }
         }
     },
@@ -486,7 +514,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __checkSelectedState(model) {
         const selected = Object.values(model.collection.selected);
         if (selected.length > 1) {
-            selected.forEach(selectedModel => selectedModel.selected = false);
+            selected.forEach(selectedModel => (selectedModel.selected = false));
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -558,7 +586,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
+            //length = 1 + fakeInputModel
             return;
         }
 
@@ -595,11 +624,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             }
             return;
         }
-        collection.add(
-            this.isFakeInputModelWrong(collection) ?
-                this.fakeInputModel = new FakeInputModel() :
-                this.fakeInputModel
-        );
+        collection.add(this.isFakeInputModelWrong(collection) ? (this.fakeInputModel = new FakeInputModel()) : this.fakeInputModel);
 
         this.__updateFakeInputModel();
     },

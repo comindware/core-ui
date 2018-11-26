@@ -732,36 +732,6 @@ describe('Editors', () => {
         });
         */
 
-        it('should set value of first founded of search on Enter keyup', done => {
-            const model = new Backbone.Model({
-                value: 3
-            });
-
-            const view = new core.form.editors.DatalistEditor({
-                model,
-                collection: new Backbone.Collection(collectionData),
-                key: 'value',
-                allowEmptyValue: false,
-                autocommit: true,
-                valueType: 'id',
-            });
-
-            view.on('attach', () => {
-                const input = getInput(view);
-                startSearch(input, '1');
-                const first = setInterval(() => {
-                    if (view.panelCollection.length === 1) {
-                        clearTimeout(first);
-                        input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
-                        expect(model.get('value')).toEqual(1);
-                        done();
-                    }
-                }, 10);
-            });
-
-            show(view);
-        });
-
         it('should not set value on Enter keyup if search result is empty', done => {
             const model = new Backbone.Model({
                 value: 3
