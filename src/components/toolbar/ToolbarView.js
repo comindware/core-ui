@@ -113,7 +113,14 @@ export default Marionette.View.extend({
             customAnchor: true
         });
 
-        this.listenTo(view, 'execute', (action, model, options = {}) => this.trigger('command:execute', model, options));
+        this.listenTo(view, 'execute', this.__executeDropdownCommand);
         return view;
+    },
+
+    __executeDropdownCommand(action, model, options = {}) {
+        if (model.get('type') === meta.toolbarItemType.CHECKBOX) {
+            model.toggleChecked && model.toggleChecked();
+        }
+        this.trigger('command:execute', model, options);
     }
 });
