@@ -3,7 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
-import { stickybits } from 'utils';
+import { stickybits, keyCode } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -139,7 +139,7 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
-            this.listenTo(this.collection, 'keydown', () => this.__onKeydown());
+            this.listenTo(this.collection, 'keydown', this.__onKeydown);
         }
 
         this.listView = new ListView({
@@ -236,7 +236,11 @@ export default Marionette.View.extend({
         }
     },
 
-    __onKeydown() {
+    __onKeydown(e) {
+        //some keys exclude in collection trigger this
+        if ([keyCode.SHIFT].includes(e.keyCode)) {
+            return;
+        }
         const selectedModel = this.collection.find(model => model.cid === this.collection.cursorCid);
         if (selectedModel) {
             selectedModel.trigger('selected:enter');

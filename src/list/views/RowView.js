@@ -1,6 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
-import transliterator from 'utils/transliterator';
+import { transliterator } from 'utils';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -326,7 +326,7 @@ export default Marionette.View.extend({
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1) {
                     this.gridEventAggregator.pointedCell = cellIndex;
-                    this.__selectPointed(cellIndex); //todo remove event duplications!!
+                    this.__selectPointed(cellIndex, true, e); //todo remove event duplications!!
                 }
             }
             selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
@@ -412,7 +412,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor) {
+    __selectPointed(pointed, isFocusEditor, event = {}) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -426,6 +426,7 @@ export default Marionette.View.extend({
         }
 
         const doesContains = pointedEl.contains(editors[0]);
+        const editorNeedFocus = doesContains && isFocusEditor;
 
         if (editors.length) {
             const view = this.cellViews[pointed];
@@ -433,12 +434,12 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (doesContains && isFocusEditor) {
+            if (editorNeedFocus) {
                 editors[0].focus();
             }
         }
 
-        if (!doesContains && !isFocusEditor) {
+        if (!editorNeedFocus) {
             pointedEl.focus();
         }
 
