@@ -182,6 +182,7 @@ export default {
                     config,
                     region: customModuleRegion
                 });
+                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
             } else {
                 this.activeModule = new Module({
                     config,
@@ -218,7 +219,7 @@ export default {
             } catch (e) {
                 Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
-        } else {
+        } else if (this.activeModule.moduleRegion.currentView) {
             this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
         }
 
