@@ -40,7 +40,6 @@ export default Marionette.View.extend({
     __keyup(buttonView, event) {
         if ([keyCode.ENTER, keyCode.SPACE].includes(event.keyCode)) {
             this.open();
-            return;
         }
     }
 });

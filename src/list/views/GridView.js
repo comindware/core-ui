@@ -75,7 +75,7 @@ export default Marionette.View.extend({
         }
 
         if (typeof options.transliteratedFields === 'object') {
-            options.columns = transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
+            transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line

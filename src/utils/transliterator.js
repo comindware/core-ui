@@ -58,26 +58,30 @@ export default {
     },
 
     setOptionsToFieldsOfNewSchema(newSchema, transliteratedFields, inputSettings) {
-        const changedSchemaOldType = this.setOptionsToComputedTransliteratedFields(this.mapNewSchemaToOld(newSchema), transliteratedFields, inputSettings);
-        return this.mapOldSchemaToNew(changedSchemaOldType);
+        this.setOptionsToComputedTransliteratedFields(this.mapNewSchemaToOld(newSchema), transliteratedFields, inputSettings);
+        return newSchema;
     },
 
     isShemaNew(schema) {
         return Array.isArray(schema);
     },
 
-    mapNewSchemaToOld(newSchema) {
+    mapNewSchemaToOld(newSchema, initObject = {}) {
         return newSchema.reduce((oldShema, input) => {
-            oldShema[input.key] = _.omit(input, 'key');
+            oldShema[input.key] = input;
             return oldShema;
-        }, {});
+        }, initObject);
     },
 
-    mapOldSchemaToNew(oldShema) {
-        return Object.entries(oldShema).map(keyValue => {
-            keyValue[1].key = keyValue[0];
-            return keyValue[1];
-        });
+    mapOldSchemaToNew(oldShema, initArray = []) {
+        initArray.length = 0;
+        return Object.entries(oldShema).reduce((newSchema, keyValue) => {
+            const key = keyValue[0];
+            const input = keyValue[1];
+            input.key = input.key || key;
+            newSchema.push(input);
+            return newSchema;
+        }, initArray);
     },  
 
     systemNameFiltration(string) {
