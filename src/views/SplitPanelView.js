@@ -10,6 +10,7 @@ const orientationClasses = {
 export default Marionette.View.extend({
     initialize() {
         this.regionModulesMap = [];
+        this.resisersList = [];
     },
 
     template: Handlebars.compile(template),
@@ -24,6 +25,11 @@ export default Marionette.View.extend({
         if (handlerRoutPairs && handlerRoutPairs.length) {
             this.__initializeViews(handlerRoutPairs);
         }
+    },
+
+    toggleOrientation(type) {
+        this.el.className = `split-panel_container ${type === 'horizontal' ? orientationClasses.horizontal : orientationClasses.vertical}`;
+        this.resisersList.forEach(resizer => resizer.toggleOrientation(type));
     },
 
     onAttach() {
@@ -50,14 +56,14 @@ export default Marionette.View.extend({
     },
 
     __initializeResizers() {
-        for (let i = 0; i < this.regionModulesMap.length - 1; i++) { //after each, except last
-            this.regionModulesMap[i].region.el.insertAdjacentElement(
-                'afterEnd',
-                new SplitPanelResizer({
-                    firstPanel: this.regionModulesMap[i].region,
-                    secondPanel: this.regionModulesMap[i + 1]?.region
-                }).render().el
-            );
+        for (let i = 0; i < this.regionModulesMap.length - 1; i++) {
+            //after each, except last
+            const resizer = new SplitPanelResizer({
+                firstPanel: this.regionModulesMap[i].region,
+                secondPanel: this.regionModulesMap[i + 1]?.region
+            });
+            this.resisersList.push(resizer);
+            this.regionModulesMap[i].region.el.insertAdjacentElement('afterEnd', resizer.render().el);
         }
     }
 });
