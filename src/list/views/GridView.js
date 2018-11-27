@@ -3,6 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
+import { stickybits } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -34,7 +35,8 @@ const defaultOptions = options => ({
     emptyView: EmptyGridView,
     emptyViewOptions: {
         text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
-    }
+    },
+    stickyToolbarOffset: 0
 });
 
 /**
@@ -197,9 +199,6 @@ export default Marionette.View.extend({
             }
         });
 
-        if (this.collection.length) {
-            //this.__presortCollection(options.columns); TODO WFT
-        }
         this.collection = options.collection;
 
         if (options.showToolbar) {
@@ -340,6 +339,12 @@ export default Marionette.View.extend({
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
+        const toolbarShowed = this.options.showToolbar || this.options.showSearch;
+
+        stickybits(this.el.querySelector('.grid-header-wrp'), { stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset });
+        if (toolbarShowed) {
+            stickybits(this.el.querySelector('.js-grid-tools'));
+        }
     },
 
     getChildren() {
@@ -474,17 +479,6 @@ export default Marionette.View.extend({
         });
     },
 
-    __presortCollection(columns) {
-        const sortingColumn = columns.find(column => column.sorting);
-        if (sortingColumn) {
-            if (sortingColumn.sorting === 'asc') {
-                this.onColumnSort(sortingColumn, sortingColumn.sortAsc);
-            } else {
-                this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
-            }
-        }
-    },
-
     __handleDragLeave(e) {
         if (!this.el.contains(e.relatedTarget)) {
             if (this.collection.dragoverModel) {
@@ -529,18 +523,6 @@ export default Marionette.View.extend({
 
         const grow = width > 0 ? 0 : 1;
         const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
-
-        if (MobileService.isIE) {
-            if (widthCell) {
-                const regexpCells = new RegExp(`.cell.${columnClass} { max-width: [0-9]*\\.?[0-9]*[%,px;]* } `);
-                const newCellValue = `.cell.${columnClass} { ${widthCell}; } `;
-                if (regexpCells.test(style.innerHTML)) {
-                    style.innerHTML = style.innerHTML.replace(regexpCells, newCellValue);
-                } else {
-                    style.innerHTML += newCellValue;
-                }
-            }
-        }
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);

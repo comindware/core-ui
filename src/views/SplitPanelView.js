@@ -2,6 +2,11 @@
 import template from './templates/splitPanel.hbs';
 import SplitPanelResizer from './SplitPanelResizer';
 
+const orientationClasses = {
+    vertical: 'split-panel_vertical',
+    horizontal: 'split-panel_horizontal'
+};
+
 export default Marionette.View.extend({
     initialize() {
         this.regionModulesMap = [];
@@ -9,14 +14,8 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'split-panel_container',
-
-    ui: {
-        splitPanelWrapper: '.split-panel_wrapper'
-    },
-
-    events: {
-        'mousedown @ui.resizer': '__handleResizerMousedown'
+    className() {
+        return `split-panel_container ${this.options.horizontal ? orientationClasses.horizontal : orientationClasses.vertical}`;
     },
 
     onRender() {
@@ -36,7 +35,7 @@ export default Marionette.View.extend({
             const regionEl = document.createElement('div');
             regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
 
-            this.ui.splitPanelWrapper.append(regionEl);
+            this.el.append(regionEl);
 
             const region = this.addRegion(`js-tile${i + 1}-region`, {
                 el: regionEl
@@ -51,14 +50,14 @@ export default Marionette.View.extend({
     },
 
     __initializeResizers() {
-        this.regionModulesMap.forEach((pair, i) => {
-            pair.region.el.insertAdjacentElement(
+        for (let i = 0; i < this.regionModulesMap.length - 1; i++) { //after each, except last
+            this.regionModulesMap[i].region.el.insertAdjacentElement(
                 'afterEnd',
                 new SplitPanelResizer({
-                    firstPanel: pair.region,
+                    firstPanel: this.regionModulesMap[i].region,
                     secondPanel: this.regionModulesMap[i + 1]?.region
                 }).render().el
             );
-        });
+        }
     }
 });
