@@ -1,15 +1,9 @@
-import ButtonView from './ButtonView';
+import TriggerButtonView from './TriggerButtonView';
 import BlinkCheckboxPopoutPanelView from './blinkCheckbox/BlinkCheckboxPopoutPanelView';
-
-const defaultOptions = {
-    iconClass: 'eye',
-    draggable: false,
-    triggerBeforeOpen: false
-};
+import keyCode from '../../../utils/keyCode';
 
 export default Marionette.View.extend({
     constructor(options = {}) {
-        _.defaults(options.model.attributes, defaultOptions);
         const view = this.__createView(options);
 
         return view;
@@ -17,7 +11,7 @@ export default Marionette.View.extend({
 
     __createView(options) {
         const view = Core.dropdown.factory.createPopout({
-            buttonView: ButtonView,
+            buttonView: TriggerButtonView,
             panelView: BlinkCheckboxPopoutPanelView,
             customAnchor: true,
             buttonViewOptions: {
@@ -38,6 +32,15 @@ export default Marionette.View.extend({
             });
         }
 
+        view.listenTo(view, 'button:keyup', this.__keyup);
+
         return view;
+    },
+
+    __keyup(buttonView, event) {
+        if ([keyCode.ENTER, keyCode.SPACE].includes(event.keyCode)) {
+            this.open();
+            return;
+        }
     }
 });

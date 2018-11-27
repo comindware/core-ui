@@ -1,7 +1,7 @@
 //@flow
-import ButtonView from './ButtonView';
+import ActionView from './ActionView';
 
-export default ButtonView.extend({
+export default ActionView.extend({
     ui: {
         check: '.js-check'
     },
@@ -18,10 +18,6 @@ export default ButtonView.extend({
 
     onRender() {
         this.ui.check.toggleClass(this.classes.CHECKED, !!this.model.get('isChecked'));
-    },
-
-    events: {
-        click: '__handleClick'
     },
 
     __handleClick() {

@@ -1,7 +1,7 @@
 //@flow
-import ButtonView from '../ButtonView';
+import TriggerButtonView from '../TriggerButtonView';
 
-export default ButtonView.extend({
+export default TriggerButtonView.extend({
     initialize() {
         this.listenTo(this.model, 'change:iconClass', this.render);
     },
