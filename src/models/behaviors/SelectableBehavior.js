@@ -22,39 +22,37 @@ SelectableBehavior.SingleSelect = function(collection) {
 _.extend(SelectableBehavior.SingleSelect.prototype, {
     // Select a model, deselecting any previously
     // selected model
-    select(model) {
+    select(model, ctrlPressed, shiftPressed, selectOnCursor, options) {
         if (model && this.selected && this.selected[model.cid] === model) {
             return;
         }
 
-        this.deselect();
+        this.deselect(undefined, options);
 
         this.selected[model.cid] = model;
-        this.selected[model.cid].select();
+        this.selected[model.cid].select(options);
 
         this.lastSelectedModel = model.cid;
         this.cursorCid = model.cid;
-        this.trigger('select:one', model);
+        this.trigger('select:one', model, options);
     },
 
     // Deselect a model, resulting in no model
     // being selected
-    deselect(model) {
+    deselect(model = this.selected[this.lastSelectedModel], options) {
         if (!this.lastSelectedModel) {
             return;
         }
-
-        model = model || this.selected[this.lastSelectedModel];
 
         if (this.selected[this.lastSelectedModel] !== model) {
             return;
         }
 
-        this.selected[this.lastSelectedModel].deselect();
+        this.selected[this.lastSelectedModel].deselect(options);
         this.cursorCid = undefined;
 
         if (this.selected[this.lastSelectedModel] !== undefined) {
-            this.trigger('deselect:one', this.selected[this.lastSelectedModel]);
+            this.trigger('deselect:one', this.selected[this.lastSelectedModel], options);
             delete this.selected[this.lastSelectedModel];
             this.lastSelectedModel = undefined;
         }
