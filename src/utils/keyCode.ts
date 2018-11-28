@@ -3,6 +3,7 @@ export default {
     COMMA: 188,
     DELETE: 46,
     DOWN: 40,
+    E: 69,
     END: 35,
     ENTER: 13,
     ESCAPE: 27,
@@ -23,12 +24,12 @@ export default {
     PERIOD: 190,
     RIGHT: 39,
     SPACE: 32,
+    SHIFT: 16,
     TAB: 9,
     UP: 38,
     CTRL: 17,
     ALT: 18,
     ADD: 187,
     SUBTRACT: 189,
-    SLASH: 191,
-    E: 69
+    SLASH: 191
 };

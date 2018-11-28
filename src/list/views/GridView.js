@@ -3,7 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
-import { stickybits } from 'utils';
+import { stickybits, keyCode } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -75,7 +75,7 @@ export default Marionette.View.extend({
         }
 
         if (typeof options.transliteratedFields === 'object') {
-            options.columns = transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
+            transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
@@ -138,8 +138,8 @@ export default Marionette.View.extend({
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
-            this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
-            this.listenTo(this.collection, 'keydown', () => this.__onKeydown());
+            this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
+            this.listenTo(this.collection, 'keydown', this.__onKeydown);
         }
 
         this.listView = new ListView({
@@ -213,7 +213,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __onCursorMove(delta) {
+    __onCursorMove(delta, options = {}) {
         const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
         const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
@@ -232,11 +232,15 @@ export default Marionette.View.extend({
 
             this.pointedCell = newSelectedValue;
 
-            currentModel.trigger('select:pointed', this.pointedCell);
+            !options.isModelClick && currentModel.trigger('select:pointed', this.pointedCell, false);
         }
     },
 
-    __onKeydown() {
+    __onKeydown(e) {
+        //some keys exclude in collection trigger this
+        if ([keyCode.SHIFT].includes(e.keyCode)) {
+            return;
+        }
         const selectedModel = this.collection.find(model => model.cid === this.collection.cursorCid);
         if (selectedModel) {
             selectedModel.trigger('selected:enter');

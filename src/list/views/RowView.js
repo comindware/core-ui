@@ -1,6 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
-import transliterator from 'utils/transliterator';
+import { transliterator } from 'utils';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -322,14 +322,19 @@ export default Marionette.View.extend({
 
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, undefined, {
+                isModelClick: true
+            });
             if (this.gridEventAggregator.isEditable) {
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1) {
                     this.gridEventAggregator.pointedCell = cellIndex;
-                    this.__selectPointed(cellIndex); //todo remove event duplications!!
+                    setTimeout(
+                        () => this.__selectPointed(cellIndex, true),
+                        11 //need more than debounce delay in selectableBehavior calculateLength
+                    );
                 }
             }
-            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
         }
         this.trigger('click', this.model);
     },
@@ -426,6 +431,7 @@ export default Marionette.View.extend({
         }
 
         const doesContains = pointedEl.contains(editors[0]);
+        const editorNeedFocus = doesContains && isFocusEditor;
 
         if (editors.length) {
             const view = this.cellViews[pointed];
@@ -433,17 +439,24 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (doesContains && isFocusEditor) {
+            if (editorNeedFocus && !this.__someFocused(editors)) {
                 editors[0].focus();
             }
         }
 
-        if (!doesContains && !isFocusEditor) {
+        if (!editorNeedFocus) {
             pointedEl.focus();
         }
 
         pointedEl.classList.add(classes.cellFocused);
         this.lastPointedEl = pointedEl;
+    },
+
+    __someFocused(nodeList) {
+        let state = false;
+        const someFunction = node => !state && (state = document.activeElement === node);
+        Array.prototype.forEach.call(nodeList, someFunction);
+        return state;
     },
 
     __handleEnter() {
