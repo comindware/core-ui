@@ -72,9 +72,9 @@ const variables = {
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
-    'textarea-padding': '8px var(--form-input-padding)',
+    'textarea-padding': '4px 20px 4px 10px',
     'textarea-line-height': 'inherit',
-    'textarea-min-height': '45px',
+    'textarea-min-height': '29px',
 
     // custom control
     'custom-control-spacer-y': '10px',
