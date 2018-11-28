@@ -322,14 +322,19 @@ export default Marionette.View.extend({
 
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, undefined, {
+                isModelClick: true
+            });
             if (this.gridEventAggregator.isEditable) {
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1) {
                     this.gridEventAggregator.pointedCell = cellIndex;
-                    this.__selectPointed(cellIndex, true, e); //todo remove event duplications!!
+                    setTimeout(
+                        () => this.__selectPointed(cellIndex, true),
+                        11 //need more than debounce delay in selectableBehavior calculateLength
+                    );
                 }
             }
-            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
         }
         this.trigger('click', this.model);
     },
@@ -412,7 +417,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor, event = {}) {
+    __selectPointed(pointed, isFocusEditor) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -434,7 +439,7 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (editorNeedFocus) {
+            if (editorNeedFocus && !this.__someFocused(editors)) {
                 editors[0].focus();
             }
         }
@@ -445,6 +450,13 @@ export default Marionette.View.extend({
 
         pointedEl.classList.add(classes.cellFocused);
         this.lastPointedEl = pointedEl;
+    },
+
+    __someFocused(nodeList) {
+        let state = false;
+        const someFunction = node => !state && (state = document.activeElement === node);
+        Array.prototype.forEach.call(nodeList, someFunction);
+        return state;
     },
 
     __handleEnter() {
