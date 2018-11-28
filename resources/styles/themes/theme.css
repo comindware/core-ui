@@ -875,6 +875,7 @@ svg.svg-grid-icons {
 
 .layout-group__content {
   @apply --group-content-theme;
+  background-color: #f9f9f9;
 }
 
 .layout__group-collapsed__button svg {
