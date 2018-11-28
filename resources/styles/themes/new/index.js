@@ -17,6 +17,7 @@ const variables = {
     red: '#e1462c',
     'red-dark': '#d63a1f',
 
+    'grey-50': '#f9f9f9',
     'grey-100': '#f5f5f5',
     'grey-200': '#efefef',
     'grey-300': '#e2e2e2',
@@ -418,7 +419,7 @@ module.exports.apply = {
     'group-content-theme': {
         padding: '20px',
         'border-radius': '7px',
-        'background-color': variables['grey-100']
+        'background-color': variables['grey-50']
     },
 
     'popup-header-theme': {
