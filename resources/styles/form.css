@@ -276,6 +276,9 @@ input[type="checkbox"].checkbox {
     color: rgba(0,0,0,.3) !important;
     opacity: 1;
 }
+.editor_empty{
+    color: rgba(0,0,0,.3)
+}
 
 
 /* input */
