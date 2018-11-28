@@ -119,6 +119,10 @@ export default {
         }));
     },
 
+    isCurrentModuleSplit() {
+        return activeUrl?.startsWith('#custom');
+    },
+
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
@@ -209,7 +213,7 @@ export default {
             }
         }
 
-        if (!this.__isCurrentModuleSplit() || activeSubModule) {
+        if (!this.isCurrentModuleSplit() || activeSubModule) {
             try {
                 if (activeSubModule) {
                     this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
@@ -312,10 +316,6 @@ export default {
         }
     },
 
-    __isCurrentModuleSplit() {
-        return activeUrl?.startsWith('#custom');
-    },
-
     __invalidateSubModules(regionModulesMap) {
         regionModulesMap.forEach(module => {
             const cleanUrl = module.pair.route.replace('#', '');
@@ -330,7 +330,7 @@ export default {
     },
 
     __getSplitModuleUrl(nextModuleUrl) {
-        if (this.__isCurrentModuleSplit()) {
+        if (this.isCurrentModuleSplit()) {
             return this.__getUpdatedUrl(nextModuleUrl);
         }
 

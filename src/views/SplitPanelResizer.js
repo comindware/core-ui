@@ -22,7 +22,7 @@ export default Marionette.View.extend({
 
             this.$el.css('left', '');
             this.$el.css('top', `${originalPanel1Height + this.firstPanel.el.offsetTop}px`);
-            this.originalParentHeight = this.firstPanel.parentEl().offsetTop;
+            this.originalParentHeight = this.firstPanel.parentEl().offsetHeight + this.firstPanel.parentEl().getBoundingClientRect().top;
             this.minimumTop = this.firstPanel.el.offsetTop + constants.MIN_HEIGHT;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
 
@@ -71,7 +71,6 @@ export default Marionette.View.extend({
     },
 
     __onResizerDragHorizontal(ui) {
-        const totalHeight = this.originalParentHeight;
         let top = ui.position.top;
 
         if (top < constants.MIN_HEIGHT) {
@@ -79,13 +78,13 @@ export default Marionette.View.extend({
             ui.position.top = this.minimumTop;
         }
 
-        const maxHeight = totalHeight - constants.MIN_HEIGHT;
+        const maxHeight = this.originalParentHeight - constants.MIN_HEIGHT;
 
         if (top > maxHeight) {
             top = maxHeight;
-            ui.position.top = this.firstPanel.el.offsetLeft + maxHeight;
+            ui.position.top = maxHeight;
         }
 
-        this.firstPanel.$el.css('flex', `0 0 ${maxHeight}px`);
+        this.firstPanel.$el.css('flex', `0 0 ${top}px`);
     }
 });

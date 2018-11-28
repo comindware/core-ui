@@ -1234,7 +1234,7 @@ a:hover {
 .split-panel_tile {
     flex: 1;
     min-width: 500px;
-    min-height: 500px;
+    min-height: 300px;
 }
 
 .split-panel_container .content-view {
