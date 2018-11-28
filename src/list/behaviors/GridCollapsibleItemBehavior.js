@@ -13,7 +13,7 @@ export default function () {
             this.trigger('selected', this, options);
 
             if (this.collection) {
-                this.collection.select(this);
+                this.collection.select(this, undefined, undefined, undefined, options);
             }
         },
 
@@ -29,7 +29,7 @@ export default function () {
             this.trigger('deselected', this, options);
 
             if (this.collection && this.collection.deselect) {
-                this.collection.deselect(this);
+                this.collection.deselect(this, undefined, undefined, undefined, options);
             }
         },
 
@@ -45,11 +45,11 @@ export default function () {
 
         // Change selected to the opposite of what
         // it currently is
-        toggleSelected() {
+        toggleSelected(options) {
             if (this.selected) {
-                this.deselect();
+                this.deselect(options);
             } else {
-                this.select();
+                this.select(options);
             }
         },
 

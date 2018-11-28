@@ -256,7 +256,7 @@ export default Marionette.CollectionView.extend({
                 return !handle;
             default:
                 if (isEditable && handle) {
-                    this.collection.trigger('keydown');
+                    this.collection.trigger('keydown', e);
                 }
                 break;
         }
@@ -277,7 +277,6 @@ export default Marionette.CollectionView.extend({
             if (selectFn) {
                 selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
-            this.scrollTo(nextIndex);
         }
     },
 

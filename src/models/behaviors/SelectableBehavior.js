@@ -76,24 +76,24 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
     // the selected model.
-    select(model, ctrlPressed, shiftPressed, selectOnCursor) {
+    select(model, ctrlPressed, shiftPressed, selectOnCursor, options) {
         if (this.selected[model.cid]) {
             return;
         }
 
         this.selected[model.cid] = model;
-        model.select();
+        model.select(options);
         if (selectOnCursor === false) {
             this.pointOff();
             model.pointTo();
             this.lastPointedModel = model;
             this.cursorCid = model.cid;
         }
-        calculateSelectedLength(this);
+        calculateSelectedLength(this, options);
     },
 
     // Select a specified model and update selection for the whole collection according to the key modifiers
-    selectSmart(model, ctrlPressed, shiftPressed, selectOnCursor) {
+    selectSmart(model, ctrlPressed, shiftPressed, selectOnCursor, options) {
         const collection = this;
         if (selectOnCursor === false) {
             collection.pointOff();
@@ -105,10 +105,10 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
             // collection.selectNone();
             Object.values(collection.selected).forEach(selected => {
                 if (selected !== model) {
-                    selected.deselect();
+                    selected.deselect(options);
                 }
             });
-            model.select();
+            model.select(options);
             collection.lastSelectedModel = model.cid;
             collection.cursorCid = model.cid;
         } else if (shiftPressed) {
@@ -118,10 +118,10 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
                 // we select this item alone if this is the first click
                 Object.values(collection.selected).forEach(selected => {
                     if (selected !== model) {
-                        selected.deselect();
+                        selected.deselect(options);
                     }
                 });
-                model.select();
+                model.select(options);
                 collection.cursorCid = model.cid;
             } else {
                 // if not, we select the range
@@ -140,17 +140,17 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
                 const models = collection.models;
                 Object.values(collection.selected).forEach(selected => {
                     if (selected !== model) {
-                        selected.deselect();
+                        selected.deselect(options);
                     }
                 });
                 for (let i = startIndex; i <= endIndex; i++) {
-                    models[i].select();
+                    models[i].select(options);
                 }
                 collection.cursorCid = models[thisIndex].cid;
             }
         } else if (ctrlPressed) {
             // adding this item to the multiple selection list
-            model.select();
+            model.select(options);
             collection.lastSelectedModel = model.cid;
         }
     },
@@ -158,30 +158,30 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Deselect a specified model, make sure the
     // model knows it has been deselected, and remove
     // the model from the selected list.
-    deselect(model) {
+    deselect(model, options) {
         if (!this.selected[model.cid]) {
             return;
         }
 
         delete this.selected[model.cid];
-        model.deselect();
-        calculateSelectedLength(this);
+        model.deselect(options);
+        calculateSelectedLength(this, options);
     },
 
     // Select all models in this collection
-    selectAll() {
+    selectAll(options) {
         this.each(model => {
-            model.select();
+            model.select(options);
         });
-        calculateSelectedLength(this);
+        calculateSelectedLength(this, options);
     },
 
     // Deselect all models in this collection
-    selectNone() {
+    selectNone(options) {
         this.each(model => {
-            model.deselect();
+            model.deselect(options);
         });
-        calculateSelectedLength(this);
+        calculateSelectedLength(this, options);
     },
 
     pointOff() {
@@ -192,11 +192,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Toggle select all / none. If some are selected, it
     // will select all. If all are selected, it will select
     // none. If none are selected, it will select all.
-    toggleSelectAll() {
+    toggleSelectAll(options) {
         if (this.selectedLength === this.length) {
-            this.selectNone();
+            this.selectNone(options);
         } else {
-            this.selectAll();
+            this.selectAll(options);
         }
     }
 });
@@ -213,31 +213,31 @@ SelectableBehavior.Selectable = function(model) {
 _.extend(SelectableBehavior.Selectable.prototype, {
     // Select this model, and tell our
     // collection that we're selected
-    select() {
+    select(options) {
         if (this.selected) {
             return;
         }
 
         this.selected = true;
-        this.trigger('selected', this);
+        this.trigger('selected', this, options);
 
         if (this.collection) {
-            this.collection.select(this);
+            this.collection.select(this, undefined, undefined, undefined, options);
         }
     },
 
     // Deselect this model, and tell our
     // collection that we're deselected
-    deselect() {
+    deselect(options) {
         if (!this.selected) {
             return;
         }
 
         this.selected = false;
-        this.trigger('deselected', this);
+        this.trigger('deselected', this, options);
 
         if (this.collection) {
-            this.collection.deselect(this);
+            this.collection.deselect(this, undefined, undefined, undefined, options);
         }
     },
 
@@ -253,11 +253,11 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 
     // Change selected to the opposite of what
     // it currently is
-    toggleSelected() {
+    toggleSelected(options) {
         if (this.selected) {
-            this.deselect();
+            this.deselect(options);
         } else {
-            this.select();
+            this.select(options);
         }
     }
 });
@@ -268,24 +268,24 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // Calculate the number of selected items in a collection
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
-const calculateSelectedLength = _.debounce(collection => {
+const calculateSelectedLength = _.debounce((collection, options) => {
     collection.selectedLength = _.filter(collection.models, model => model.selected).length;
 
     const selectedLength = collection.selectedLength;
     const length = collection.length;
 
     if (selectedLength === length) {
-        collection.trigger('select:all', collection);
+        collection.trigger('select:all', collection, options);
         return;
     }
 
     if (selectedLength === 0) {
-        collection.trigger('select:none', collection);
+        collection.trigger('select:none', collection, options);
         return;
     }
 
     if (selectedLength > 0 && selectedLength < length) {
-        collection.trigger('select:some', collection);
+        collection.trigger('select:some', collection, options);
     }
 }, 10);
 

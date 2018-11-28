@@ -144,9 +144,16 @@ describe('Transliterator:', () => {
         expect(instance.duration.transliteratorChangedSomeProperties).toEqual(true);
     });
 
-    it('setOptionsToComputedTransliteratedFields should return object in first arguments', () => {
+    it('setOptionsToComputedTransliteratedFields should return object in first arguments (be not pure)', () => {
         const instance = _.cloneDeep(schema);
         const returned = transliterator.setOptionsToComputedTransliteratedFields(instance, { dateTime: 'duration' });
+
+        expect(returned).toEqual(instance);
+    });
+
+    it('setOptionsToFieldsOfNewSchema should return object in first arguments (be not pure)', () => {
+        const instance = transliterator.mapOldSchemaToNew(_.cloneDeep(schema));
+        const returned = transliterator.setOptionsToFieldsOfNewSchema(instance, { dateTime: 'duration' });
 
         expect(returned).toEqual(instance);
     });
