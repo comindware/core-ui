@@ -16,7 +16,8 @@ const classes = {
     hover__transition: 'hover__transition',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
-    checked: 'row-checked'
+    checked: 'row-checked',
+    cell: 'cell'
 };
 
 const defaultOptions = {
@@ -152,14 +153,13 @@ export default Marionette.View.extend({
             if (gridColumn.editable) cellClasses += classes.cellEditable;
 
             const cellView = new cell({
-                className: `cell ${gridColumn.columnClass} ${cellClasses}`,
-                attributes: {
-                    tabindex: -1
-                },
+                className: `${classes.cell} ${gridColumn.columnClass} ${cellClasses}`,
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key
             });
+
+            cellView.el.setAttribute('tabindex', -1);
 
             if (isTree && index === 0) {
                 cellView.on('render', () => this.insertFirstCellHtml(true));
@@ -327,7 +327,7 @@ export default Marionette.View.extend({
             });
             if (this.gridEventAggregator.isEditable) {
                 const cellIndex = this.__getFocusedCellIndex(e);
-                if (cellIndex > -1) {
+                if (cellIndex > -1 && this.getOption('columns')[cellIndex].editable) {
                     this.gridEventAggregator.pointedCell = cellIndex;
                     setTimeout(
                         () => this.__selectPointed(cellIndex, true),
@@ -464,16 +464,24 @@ export default Marionette.View.extend({
     },
 
     __getFocusedCellIndex(e) {
-        let current = e.target;
-        let result = -1;
-        let parent = current.parentElement;
-        while (current && parent && parent !== this.el) {
-            const index = this.columnClasses.findIndex(className => parent.className.includes(className));
-            if (index > -1 && this.getOption('columns')[index].editable) {
+        const cells = this.el.querySelectorAll(`.${classes.cell}`);
+        return this.__findContainsIndex(cells, e.target);
+    },
+
+    __findContainsIndex(parentNodeList, child) {
+        let result = false;
+        const someFunction = (node, index) => {
+            if (node.contains(child)) {
+                if (result !== false) {
+                    console.warn('Some grid cells are parent for this child');
+                }
                 result = index;
             }
-            current = parent;
-            parent = current.parentElement;
+        };
+        Array.prototype.forEach.call(parentNodeList, someFunction);
+        if (result === false) {
+            console.warn('There are no parents cells for this child');
+            result = -1;
         }
         return result;
     },
