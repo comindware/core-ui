@@ -223,7 +223,7 @@ export default {
             } catch (e) {
                 Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
-        } else if (this.isCurrentModuleSplit()) {
+        } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
             this.__callRoutingActionForActiveModule(callbackName, routingArgs);
         } else {
             this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
