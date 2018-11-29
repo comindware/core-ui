@@ -566,13 +566,11 @@
 }
 
 .compact.grid-container .grid-header,
-.compact.grid-container .grid-selection-cell-all,
-.compact.grid-container .cell{
+.compact.grid-container .cell_selection-index,
+.compact.grid-container .cell_selection,
+.compact.grid-container .cell,
+.compact.grid-container .grid-header-column{
     height: 26px;
-    line-height: 26px;
-    font-size: 12px;
-}
-.compact.grid-container .grid-header-column-content{
     line-height: 26px;
     font-size: 12px;
 }
