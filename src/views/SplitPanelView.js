@@ -28,12 +28,21 @@ export default Marionette.View.extend({
     },
 
     toggleOrientation(type) {
-        this.el.className = `split-panel_container ${type === 'horizontal' ? orientationClasses.horizontal : orientationClasses.vertical}`;
-        this.resisersList.forEach(resizer => resizer.toggleOrientation(type));
+        if (type === 'no') {
+            this.__hidePanels();
+        } else {
+            this.__showPanels();
+            this.el.className = `split-panel_container ${type === 'horizontal' ? orientationClasses.horizontal : orientationClasses.vertical}`;
+            this.resisersList.forEach(resizer => resizer.toggleOrientation(type));
+        }
     },
 
     onAttach() {
         this.__initializeResizers();
+    },
+
+    onDestroy() {
+        this.resisersList.forEach(resizer => resizer.destroy());
     },
 
     __initializeViews(handlerRoutPairs) {
@@ -64,6 +73,30 @@ export default Marionette.View.extend({
             });
             this.resisersList.push(resizer);
             this.regionModulesMap[i].region.el.insertAdjacentElement('afterEnd', resizer.render().el);
+        }
+    },
+
+    __hidePanels() {
+        const regions = Object.values(this.regions);
+        $(regions[0].el).css('flex', '');
+
+        for (let i = 1; i < regions.length; i++) {
+            this.resisersList[i - 1].$el.hide();
+            $(regions[i].el).hide();
+        }
+    },
+
+    __showPanels() {
+        const regions = Object.values(this.regions);
+        $(regions[0].el).css('flex', '');
+
+        for (let i = 1; i < regions.length; i++) {
+            const resizer = this.resisersList[i - 1];
+
+            resizer.$el.show();
+            $(regions[i].el).show();
+
+            resizer.doManualResize();
         }
     }
 });

@@ -51,6 +51,10 @@ export default Marionette.View.extend({
         this.render();
     },
 
+    doManualResize() {
+        this.render();
+    },
+
     __onResizerDragVertical(ui) {
         const totalWidth = this.originalParentWidth;
         let width = ui.position.left;
