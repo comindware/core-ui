@@ -105,8 +105,8 @@ export default Marionette.CollectionView.extend({
         });
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
-        this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
-        this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
+        this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
+        this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
     },
 
     attributes() {
@@ -199,21 +199,21 @@ export default Marionette.CollectionView.extend({
         switch (e.keyCode) {
             case keyCode.UP:
                 if (handle) {
-                    this.moveCursorBy(-1, e.shiftKey);
+                    this.moveCursorBy(-1, { shiftPressed: e.shiftKey, isLoop: true });
                 }
                 return !handle;
             case keyCode.DOWN:
                 if (handle) {
-                    this.moveCursorBy(1, e.shiftKey);
+                    this.moveCursorBy(1, { shiftPressed: e.shiftKey, isLoop: true });
                 }
                 return !handle;
             case keyCode.PAGE_UP:
                 delta = Math.floor(this.state.viewportHeight);
-                this.moveCursorBy(-delta, e.shiftKey);
+                this.moveCursorBy(-delta, { shiftPressed: e.shiftKey });
                 return false;
             case keyCode.PAGE_DOWN:
                 delta = Math.floor(this.state.viewportHeight);
-                this.moveCursorBy(delta, e.shiftKey);
+                this.moveCursorBy(delta, { shiftPressed: e.shiftKey });
                 return false;
             case keyCode.SPACE:
                 if (handle) {
@@ -238,7 +238,7 @@ export default Marionette.CollectionView.extend({
                 if (handle) {
                     this.collection.trigger('enter');
                 }
-                this.moveCursorBy(1, false);
+                this.moveCursorBy(1, { shiftPressed: false });
                 return false;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
@@ -246,12 +246,12 @@ export default Marionette.CollectionView.extend({
                 break;
             case keyCode.HOME:
                 if (handle) {
-                    this.__moveCursorTo(0, e.shiftKey);
+                    this.__moveCursorTo(0, { shiftPressed: e.shiftKey });
                 }
                 return !handle;
             case keyCode.END:
                 if (handle) {
-                    this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
+                    this.__moveCursorTo(this.collection.length - 1, { shiftPressed: e.shiftKey });
                 }
                 return !handle;
             default:
@@ -268,27 +268,44 @@ export default Marionette.CollectionView.extend({
     },
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
-    moveCursorBy(cursorIndexDelta, shiftPressed) {
+    moveCursorBy(cursorIndexDelta, {
+        shiftPressed,
+        isLoop = false
+    }) {
         const indexCurrentModel = this.__getIndexSelectedModel();
         const nextIndex = indexCurrentModel + cursorIndexDelta;
-        this.__moveCursorTo(nextIndex, shiftPressed, {
+        this.__moveCursorTo(nextIndex, {
+            shiftPressed,
             isPositiveDelta: cursorIndexDelta > 0,
-            indexCurrentModel
+            indexCurrentModel,
+            isLoop
         });
     },
 
-    __moveCursorTo(newCursorIndex, shiftPressed, {
+    __moveCursorTo(newCursorIndex, {
+        shiftPressed,
         isPositiveDelta = false,
-        indexCurrentModel = this.__getIndexSelectedModel()
+        indexCurrentModel = this.__getIndexSelectedModel(),
+        isLoop = false
     }) {
-        const nextIndex = this.__checkMaxMinIndex(newCursorIndex);
+        let correctIndex;
+        let isOverflow;
+        if (isLoop) {
+            ({ correctIndex, isOverflow } = this.__checkLoopOverflow(newCursorIndex));
+        } else {
+            correctIndex = this.__checkMaxMinIndex(newCursorIndex);
+        }
 
-        if (nextIndex !== indexCurrentModel) {
-            this.__selectModelByIndex(nextIndex, shiftPressed);
-            if (this.__getIsModelInScrollByIndex(nextIndex)) {
-                isPositiveDelta ?
-                    this.scrollToByLast(nextIndex) :
-                    this.scrollToByFirst(nextIndex);
+        const isInverseScrollLogic = isOverflow;
+
+        if (correctIndex !== indexCurrentModel) {
+            this.__selectModelByIndex(correctIndex, shiftPressed);
+            if (this.__getIsModelInScrollByIndex(correctIndex)) {
+                (isInverseScrollLogic ?
+                    !isPositiveDelta :
+                    isPositiveDelta) ?
+                        this.scrollToByLast(correctIndex) :
+                        this.scrollToByFirst(correctIndex);
             }
         }
     },
@@ -319,6 +336,27 @@ export default Marionette.CollectionView.extend({
         if (selectFn) {
             selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
         }
+    },
+
+    // normalized the index so that it fits in range [0, this.collection.length - 1] with loop
+    __checkLoopOverflow(index) {
+        const maxIndex = this.collection.length - 1;
+        let isOverflow = false;
+        let correctIndex = index;
+
+        if (index < 0) {
+            isOverflow = true;
+            correctIndex = maxIndex;
+        }
+        if (index > maxIndex) {
+            isOverflow = true;
+            correctIndex = 0;
+        }
+        //notOverflow
+        return {
+            correctIndex,
+            isOverflow
+        };
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
