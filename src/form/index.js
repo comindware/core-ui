@@ -26,8 +26,6 @@ import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
-import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
-import editorsImplCommonMemberModel from './editors/impl/members/models/MemberModel';
 import IconEditorView from './editors/IconEditorView';
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
@@ -70,12 +68,6 @@ const api = /** @lends module:core.form */ {
         impl: {
             common: {
                 members: {
-                    collections: {
-                        MembersCollection: editorsImplCommonMembersCollection
-                    },
-                    models: {
-                        MemberModel: editorsImplCommonMemberModel
-                    },
                     factory: editorsImplCommonMembersFactory
                 },
                 initializeDatePicker

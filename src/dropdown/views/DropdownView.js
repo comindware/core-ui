@@ -453,7 +453,7 @@ export default Marionette.View.extend({
     __triggerClick() {
         this.trigger('container:click');
 
-        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+        if (this.options.showDropdownAnchor) {
             this.__handleClick();
         }
     }
