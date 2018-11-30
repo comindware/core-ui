@@ -1,7 +1,3 @@
-
-
-import ListCanvasView from 'demoPage/views/ListCanvasView';
-
 export default function() {
     // 1. Get some data
     const dataArray = [];
@@ -71,7 +67,5 @@ export default function() {
     });
 
     // 7. Show created views
-    return new ListCanvasView({
-        content: gridView
-    });
+    return gridView;
 }

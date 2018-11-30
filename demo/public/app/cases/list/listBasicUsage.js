@@ -1,7 +1,3 @@
-
-
-import ListCanvasView from 'demoPage/views/ListCanvasView';
-
 export default function() {
     // There are a lot of steps but it's not that complicated as it seems:
 
@@ -31,7 +27,5 @@ export default function() {
     });
 
     // 6. Show created views in corresponding regions
-    return new ListCanvasView({
-        content: listView
-    });
+    return listView;
 }

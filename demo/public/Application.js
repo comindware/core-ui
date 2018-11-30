@@ -18,8 +18,14 @@ const rootView = Marionette.View.extend({
     className: 'app-region-container',
 
     regions: {
-        headerRegion: '.js-header-region',
-        contentRegion: '.js-content-region',
+        headerRegion: {
+            el: '.js-header-region',
+            replaceElement: true
+        },
+        contentRegion: {
+            el: '.js-content-region',
+            replaceElement: true
+        },
         navigationDrawerRegion: '.js-navigation-drawer-region',
         toastNotificationRegion: '.js-toast-notification-region'
     }
