@@ -5,7 +5,7 @@ import { helpers, comparators } from 'utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import FakeInputModel from './impl/datalist/models/FakeInputModel';
-import ButtonView from './impl/datalist/views/ButtonView';
+import ButtonView from './impl/datalist/views/BubbleCollectionView';
 import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
@@ -246,7 +246,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         BaseEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.dropdownView.button.updateEnabled(isEnabled);
         this.getInputView()?.setReadonly(readonly);
     },
 
@@ -254,7 +254,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         BaseEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.dropdownView.button.updateEnabled(isEnabled);
         this.getInputView()?.setEnabled(enabled);
     },
 
@@ -638,7 +638,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     updateButtonInput(string): void {
         if (this.dropdownView.button) {
-            this.dropdownView.button.collectionView.updateInput(string);
+            this.dropdownView.button.updateInput(string);
         }
     },
 

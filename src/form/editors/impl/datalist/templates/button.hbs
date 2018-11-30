@@ -1,3 +1,12 @@
-<div class="js-collection-region"></div>
+{{#each items}}
+<div class="bubbles__i">
+    {{#if customTemplate}}{{{customTemplate}}}{{/if}}
+    {{#if url}}
+    <a href="{{url}}" target="_blank" tabindex="-1">{{text}}</a>
+    {{else}}
+    <span>{{text}}</span>
+    {{/if}}
+</div>
+{{/each}}
 <div class="js-datalist-loading-region"></div>
 <i class="fa fa-angle-down bubbles__caret"></i>
