@@ -182,7 +182,7 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
         if (typeof image === 'string') {
             // URL
             previewURL = image;
-        } else if (_.isObject(image) && {}.toString.call(image).slice(8, -1) === 'File') {
+        } else if (image instanceof Object && {}.toString.call(image).slice(8, -1) === 'File') {
             // file
             previewURL = this.__previewURL = URL.createObjectURL(image);
         }

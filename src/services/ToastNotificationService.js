@@ -26,7 +26,7 @@ export default class ToastNotificationService {
         }
         let text = message;
         let title = null;
-        if (_.isObject(message)) {
+        if (message instanceof Object) {
             text = message.text;
             title = message.title;
         }

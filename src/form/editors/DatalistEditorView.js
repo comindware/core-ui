@@ -380,7 +380,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValue(value: any): DataValue {
-        if (_.isUndefined(value) || value === null) {
+        if (value === undefined || value === null) {
             return [];
         }
         const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value) : value;
@@ -407,14 +407,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __getValueFromPanelCollection(value) {
         return this.panelCollection.get(value) ||
-            (_.isObject(value) && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
+            (value instanceof Object && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
             this.__tryToCreateAdjustedValue(value);
     },
 
     __tryToCreateAdjustedValue(value) {
         return value instanceof Backbone.Model ?
             value :
-            (_.isObject(value) ?
+            (value instanceof Object ?
                 new Backbone.Model(value) :
                 new Backbone.Model({
                     id: value,
@@ -429,7 +429,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isValueIncluded(value) {
-        return JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id));
+        return JSON.stringify(this.value) === JSON.stringify(value) || (value instanceof Object && this.value.find(v => v.id === value.id));
     },
 
     __value(value: DataValue, triggerChange: boolean): void {

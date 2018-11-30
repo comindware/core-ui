@@ -400,7 +400,7 @@ export default {
 
                 //Use a customised built-in validator if given an object
                 //noinspection JSUnresolvedVariable
-                if (_.isObject(validator) && validator.type) {
+                if (validator instanceof Object && validator.type) {
                     const config = validator;
 
                     //noinspection JSUnresolvedVariable

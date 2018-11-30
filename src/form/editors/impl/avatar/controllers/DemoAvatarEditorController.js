@@ -25,7 +25,7 @@ export default BaseAvatarEditorController.extend({
             return `https://avatars.githubusercontent.com/u/${value}`;
         }
 
-        if (_.isObject(value) && {}.toString.call(value).slice(8, -1) === 'File') {
+        if (value instanceof Object && {}.toString.call(value).slice(8, -1) === 'File') {
             return value;
         }
     }

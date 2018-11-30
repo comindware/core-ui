@@ -41,7 +41,7 @@ const defaultRegExp = function(options) {
 
 export default function(options) {
     return _.wrap(defaultRegExp(options), (func, opts) => {
-        const val = _.isObject(opts) ? opts.value : opts;
+        const val = opts instanceof Object ? opts.value : opts;
         return func(val);
     });
 }

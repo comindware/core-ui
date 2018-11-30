@@ -12,7 +12,7 @@ export default function(options) {
     );
 
     return function length(value) {
-        const val = _.isObject(value) ? value.value : value;
+        const val = value instanceof Object ? value.value : value;
         options.value = val;
         const err = {
             type: options.type,

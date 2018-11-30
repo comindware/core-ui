@@ -69,10 +69,10 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.extend(this, _.pick(options, 'field'));
-        if (_.isString(this.options.valueEditor)) {
+        if (typeof this.options.valueEditor === 'string') {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
         }
-        if (_.isString(this.options.templateEditor)) {
+        if (typeof this.options.templateEditor === 'string') {
             this.options.templateEditor = formRepository.editors[this.options.templateEditor];
         }
         if (!this.value || !Object.keys(this.value).length) {

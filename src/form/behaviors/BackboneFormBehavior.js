@@ -215,7 +215,7 @@ const Form = Marionette.Object.extend({
             const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                const isDictionary = _.isObject(modelErrors) && !Array.isArray(modelErrors);
+                const isDictionary = modelErrors instanceof Object && !Array.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {

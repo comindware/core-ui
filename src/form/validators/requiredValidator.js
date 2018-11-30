@@ -12,7 +12,7 @@ export default function(config) {
     );
 
     return function required(value) {
-        const val = _.isObject(value) && 'value' in value ? value.value : value;
+        const val = value instanceof Object && 'value' in value ? value.value : value;
         options.value = val;
 
         const err = {
