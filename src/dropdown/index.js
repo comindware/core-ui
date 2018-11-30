@@ -1,4 +1,3 @@
-import PopoutView from './views/PopoutView';
 import DropdownView from './views/DropdownView';
 import MenuPanelView from './views/MenuPanelView';
 import CustomAnchorBehavior from './views/behaviors/CustomAnchorBehavior';
@@ -17,7 +16,6 @@ export default /** @lends module:core.dropdown */ {
         behaviors: {
             CustomAnchorBehavior
         },
-        PopoutView,
         DropdownView,
         MenuPanelView
     },

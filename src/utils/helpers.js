@@ -28,15 +28,6 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.
-     * @param {Function} callback Callback to be called when the current call stack has cleared.
-     * @deprecated
-     * */
-    nextTick(callback) {
-        return setTimeout(callback, 10);
-    },
-
-    /**
      * Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
      * Look at the example for details.
      * @example
@@ -322,44 +313,5 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     throwArgumentError(message) {
         this.throwError(message || 'Invalid argument', 'ArgumentError');
-    },
-
-    /**
-     * Throws NotSupportedError. The exception should be thrown when an invoked method is not supported.
-     * For example: some class doesn't support all the methods of the interface it implements.
-     * @example
-     * // Inside of implementation of some Stream class
-     * seek() {
-     *     // Some code here ...
-     *     utils.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
-     *     // Some code here ...
-     * }
-     * @param {String} [message='The operation is not supported'] Error message.
-     * */
-    throwNotSupportedError(message) {
-        this.throwError(message || 'The operation is not supported', 'NotSupportedError');
-    },
-
-    /**
-     * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
-     * For example: a base class could have abstract methods that throws such error.
-     * @example
-     * // Inside of implementation of some base controller class.
-     * navigate() {
-     *     utils.this.throwNotImplementedError();
-     * }
-     * @param {String} [message='The operation is not implemented'] Error message.
-     * */
-    throwNotImplementedError(message) {
-        this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
-    },
-
-    /**
-     * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
-     * For example: we looked up in the database and could find a person with requested id.
-     * @param {String} [message='Object not found'] Error message.
-     * */
-    throwNotFoundError(message) {
-        this.throwError(message || 'Object not found', 'NotFoundError');
     }
 };

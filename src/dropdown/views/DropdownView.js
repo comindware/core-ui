@@ -11,7 +11,8 @@ const classes = {
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
     DROPDOWN_UP_OVER: 'dropdown__wrp_up-over',
-    VISIBLE_COLLECTION: 'visible-collection'
+    VISIBLE_COLLECTION: 'visible-collection',
+    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
@@ -131,6 +132,10 @@ export default Marionette.View.extend({
         this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
 
         el.on('click', this.__handleClick.bind(this));
+
+        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+            this.$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+        }
 
         this.$el.attr('tabindex', -1);
     },
@@ -447,5 +452,9 @@ export default Marionette.View.extend({
 
     __triggerClick() {
         this.trigger('container:click');
+
+        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+            this.__handleClick();
+        }
     }
 });
