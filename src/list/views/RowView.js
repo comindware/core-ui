@@ -464,26 +464,7 @@ export default Marionette.View.extend({
     },
 
     __getFocusedCellIndex(e) {
-        const cells = this.el.querySelectorAll(`.${classes.cell}`);
-        return this.__findContainsIndex(cells, e.target);
-    },
-
-    __findContainsIndex(parentNodeList, child) {
-        let result = false;
-        const someFunction = (node, index) => {
-            if (node.contains(child)) {
-                if (result !== false) {
-                    console.warn('Some grid cells are parent for this child');
-                }
-                result = index;
-            }
-        };
-        Array.prototype.forEach.call(parentNodeList, someFunction);
-        if (result === false) {
-            console.warn('There are no parents cells for this child');
-            result = -1;
-        }
-        return result;
+        return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
     },
 
     __handleMouseEnter() {
