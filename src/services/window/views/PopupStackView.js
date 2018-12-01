@@ -1,5 +1,6 @@
 //@flow
 import template from '../templates/PopupStack.hbs';
+import { TweenLite } from 'gsap';
 
 const classes = {
     POPUP_REGION: 'js-popup-region-',
@@ -61,8 +62,16 @@ export default Marionette.View.extend({
         this.addRegion(popupId, {
             el: regionEl
         });
-        this.getRegion(popupId).show(view);
+        this.listenTo(view, 'before:attach', () => {
+            view.$el.css({ opacity: 0 });
+        });
+        this.listenTo(view, 'attach', () => {
+            TweenLite.to(view.el, 0.2, {
+                opacity: 1
+            });
+        });
 
+        this.getRegion(popupId).show(view);
         if (fadeBackground) {
             const lastIndex = this.__stack.lastIndexOf(x => x.options.fadeBackground);
 
@@ -138,10 +147,15 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        this.removeRegion(popupDef.popupId);
-        this.el.removeChild(popupDef.regionEl);
-        this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-        this.trigger('popup:close', popupDef.popupId);
+        TweenLite.to(popupDef.view.el, 0.2, {
+            opacity: 0,
+            onComplete: () => {
+                this.removeRegion(popupDef.popupId);
+                this.el.removeChild(popupDef.regionEl);
+                this.__stack.splice(this.__stack.indexOf(popupDef), 1);
+                this.trigger('popup:close', popupDef.popupId);
+            }
+        });
     },
 
     get(popupId) {
