@@ -51,25 +51,25 @@ body {
 
 .demo-nav {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    color: #fff;
     background: #0575bd;
-    line-height: 36px;
+    line-height: 40px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow-x: auto;
     height: 40px;
 }
 
 .demo-nav__i:hover {
+    color: #fff;
+    text-decoration: none;
     background-color: #1b6595;
 }
 
 .demo-nav__i_selected {
+    color: #fff;
     background-color: #11547f
 }
 
-.demo-nav__i > a {
+.demo-nav__i {
     display: block;
     padding: 0 50px;
     line-height: inherit;

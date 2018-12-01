@@ -135,7 +135,7 @@
         "moment": "^2.22.2",
         "moment-timezone": "^0.5.23",
         "spectrum-colorpicker": "^1.8.0",
-        "stickybits": "^3.5.7",
+        "stickybits": "^3.5.8",
         "text-mask-addons": "^3.8.0",
         "underscore": "^1.9.1",
         "vanilla-text-mask": "^5.1.1"

@@ -7,7 +7,6 @@ import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 
 const classes = {
-    CLASS_NAME: 'bubbles',
     DISABLED: ' disabled'
 };
 
@@ -20,7 +19,7 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return `bubbles__list ${classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED)}`;
+        return `bubbles__list ${this.options.enabled ? '' : classes.DISABLED}`;
     },
 
     regions: {

@@ -363,11 +363,8 @@ input[type="checkbox"].checkbox {
     font-size: 11px;
 }
 
-.bubbles {
-    position: relative;
-}
-
 .bubbles__list {
+    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
@@ -432,23 +429,11 @@ input[type="checkbox"].checkbox {
 }
 
 /* /Bubbles/ */
-
-
-.editor_icon{
-
-}
-
 .icons-wrp{
     display: inline-block;
     cursor: pointer;
 }
-
-
-
 /* reference-field */
-.editor_reference{
-
-}
 .dropdown-reference {
     height: inherit;
     width: 100%;
@@ -1137,7 +1122,7 @@ input[type="color"], .colorpicker{
     background-color: white;
 }
 
-.simplified-panel_container .bubbles {
+.simplified-panel_container .bubbles__list {
     padding: 0 0 0 14px;
     max-height: 130px;
     overflow-y: scroll;

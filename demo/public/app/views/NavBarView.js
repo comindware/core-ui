@@ -1,7 +1,13 @@
-import NavBarItemView from './NavBarItemView';
+import template from 'text-loader!../templates/navBarItem.html';
 
-export default Marionette.CollectionView.extend({
+export default Marionette.View.extend({
     className: 'demo-nav',
 
-    childView: NavBarItemView
+    templateContext() {
+        return {
+            items: this.collection.toJSON()
+        };
+    },
+
+    template: Handlebars.compile(template)
 });
