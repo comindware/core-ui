@@ -50,11 +50,10 @@ body {
 /* NavBar */
 
 .demo-nav {
-    display: flex;
     background: #0575bd;
     line-height: 40px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    overflow-x: auto;
+    z-index: 1;
     height: 40px;
 }
 
@@ -70,7 +69,6 @@ body {
 }
 
 .demo-nav__i {
-    display: block;
     padding: 0 50px;
     line-height: inherit;
     color: #fff;
