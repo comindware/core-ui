@@ -17,6 +17,7 @@ const variables = {
     red: '#e1462c',
     'red-dark': '#d63a1f',
 
+    'grey-50': '#f9f9f9',
     'grey-100': '#f5f5f5',
     'grey-200': '#efefef',
     'grey-300': '#e2e2e2',
@@ -72,9 +73,9 @@ const variables = {
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
-    'textarea-padding': '8px var(--form-input-padding)',
+    'textarea-padding': '4px 20px 4px 10px',
     'textarea-line-height': 'inherit',
-    'textarea-min-height': '45px',
+    'textarea-min-height': '29px',
 
     // custom control
     'custom-control-spacer-y': '10px',
@@ -418,7 +419,7 @@ module.exports.apply = {
     'group-content-theme': {
         padding: '20px',
         'border-radius': '7px',
-        'background-color': variables['grey-100']
+        'background-color': variables['grey-50']
     },
 
     'popup-header-theme': {

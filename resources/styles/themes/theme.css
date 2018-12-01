@@ -163,10 +163,6 @@ body {
 /* /textarea/ */
 
 /* checkbox */
-.editor_checkbox {
- 
-}
-
 .checkbox {
   @apply --checkbox-theme;
   font-size: var(--base-font-size);
