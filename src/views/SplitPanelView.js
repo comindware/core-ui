@@ -50,7 +50,7 @@ export default Marionette.View.extend({
             const regionEl = document.createElement('div');
             regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
 
-            this.el.append(regionEl);
+            this.el.insertAdjacentElement('beforeEnd', regionEl);
 
             const region = this.addRegion(`js-tile${i + 1}-region`, {
                 el: regionEl
