@@ -7,6 +7,7 @@ const THROTTLE_DELAY = 100;
 
 const classes = {
     OPEN: 'open',
+    DROPDOWN: 'dropdown__wrp',
     DROPDOWN_DOWN: 'dropdown__wrp_down',
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
@@ -158,6 +159,7 @@ export default Marionette.View.extend({
     __adjustPosition(panelEl, isNeedToRefreshAnchorPosition) {
         panelEl.style.height = ''; //resetting custom height
 
+        panelEl.classList.add(classes.DROPDOWN);
         const viewportHeight = window.innerHeight;
         const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
         const dropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');

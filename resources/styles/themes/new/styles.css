@@ -111,11 +111,6 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.dropdown__wrp {
-  padding: 1px 0;
-  border: var(--border);
-  border-radius: var(--border-radius);
-}
 
 .dropdown__wrp.dropdown__wrp_down {
   border-radius: 0 0 var(--border-radius) var(--border-radius);

@@ -60,7 +60,8 @@ module.exports = options => {
                                         chrome: 58
                                     },
                                     useBuiltIns: 'usage',
-                                    modules: false
+                                    modules: false,
+                                    loose: true
                                 }
                             ]
                         ],

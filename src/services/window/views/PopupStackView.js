@@ -66,7 +66,7 @@ export default Marionette.View.extend({
             view.$el.css({ opacity: 0 });
         });
         this.listenTo(view, 'attach', () => {
-            TweenLite.to(view.el, 0.2, {
+            TweenLite.to(view.el, 0.15, {
                 opacity: 1
             });
         });
@@ -147,15 +147,15 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        TweenLite.to(popupDef.view.el, 0.2, {
+        TweenLite.to(popupDef.view.el, 0.15, {
             opacity: 0,
             onComplete: () => {
                 this.removeRegion(popupDef.popupId);
                 this.el.removeChild(popupDef.regionEl);
-                this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-                this.trigger('popup:close', popupDef.popupId);
             }
         });
+        this.__stack.splice(this.__stack.indexOf(popupDef), 1);
+        this.trigger('popup:close', popupDef.popupId);
     },
 
     get(popupId) {
