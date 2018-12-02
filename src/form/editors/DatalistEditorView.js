@@ -4,7 +4,6 @@ import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
-import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/BubbleCollectionView';
 import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
@@ -117,12 +116,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         this.selectedButtonCollection = new Backbone.Collection(this.value, {
             comparator: (a, b) => {
-                if (a instanceof FakeInputModel) {
-                    return 1;
-                }
-                if (b instanceof FakeInputModel) {
-                    return -1;
-                }
                 return text2AscComparatorSort(a, b);
             }
         });
@@ -218,10 +211,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 
         this.showChildView('dropdownRegion', this.dropdownView);
-
-        if (this.selectedButtonCollection) {
-            this.__addFakeInputModel(this.selectedButtonCollection);
-        }
     },
 
     isEmptyValue(): boolean {
@@ -330,7 +319,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         this.selectedButtonCollection.reset(models);
-        this.__addFakeInputModel(this.selectedButtonCollection);
     },
 
     __resetPanelVirtualCollection(rawDataVirtual) {
@@ -406,22 +394,22 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __getValueFromPanelCollection(value) {
-        return this.panelCollection.get(value) ||
+        return (
+            this.panelCollection.get(value) ||
             (value instanceof Object && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
-            this.__tryToCreateAdjustedValue(value);
+            this.__tryToCreateAdjustedValue(value)
+        );
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ?
-            value :
-            (value instanceof Object ?
-                new Backbone.Model(value) :
-                new Backbone.Model({
-                    id: value,
-                    text: this.__isValueEqualNotSet(value) ?
-                        Localizer.get('CORE.COMMON.NOTSET') :
-                        undefined
-                }));
+        return value instanceof Backbone.Model
+            ? value
+            : value instanceof Object
+            ? new Backbone.Model(value)
+            : new Backbone.Model({
+                  id: value,
+                  text: this.__isValueEqualNotSet(value) ? Localizer.get('CORE.COMMON.NOTSET') : undefined
+              });
     },
 
     __isValueEqualNotSet(value) {
@@ -440,9 +428,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         if (this.options.maxQuantitySelected === 1) {
             const firstModel = this.selectedButtonCollection.first();
-            if (firstModel !== this.fakeInputModel) {
-                this.selectedButtonCollection.remove(firstModel);
-            }
+            this.selectedButtonCollection.remove(firstModel);
             this.value = adjustedValue;
         } else {
             this.value = this.getValue().concat(adjustedValue);
@@ -454,8 +440,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.__triggerChange();
         }
 
-        this.__updateFakeInputModel();
-
         return true;
     },
 
@@ -463,16 +447,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const value = this.model ? this.model.get(this.key) : this.value;
         this.panelCollection.reset(collection.models);
         if (value) {
-            const selectedItems = this.getOption('valueType') === 'id' ? 
-                this.panelCollection.parentCollection.filter(collectionItem => {
-                    const itemId = collectionItem.get('id').toString();
-                    if (Array.isArray(value)) {
-                        return value.find(v => (v && v.id ? v.id : v === itemId));
-                    }
-                    return value === itemId;
-                })
-                :
-                value.map(item => this.__getValueFromPanelCollection(item));
+            const selectedItems =
+                this.getOption('valueType') === 'id'
+                    ? this.panelCollection.parentCollection.filter(collectionItem => {
+                          const itemId = collectionItem.get('id').toString();
+                          if (Array.isArray(value)) {
+                              return value.find(v => (v && v.id ? v.id : v === itemId));
+                          }
+                          return value === itemId;
+                      })
+                    : value.map(item => this.__getValueFromPanelCollection(item));
             if (selectedItems) {
                 this.setValue(selectedItems.map(item => item.toJSON()));
                 selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
@@ -491,7 +475,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const value = model ? model.toJSON() : null;
 
         this.__value(value, true);
-        this.__updateFakeInputModel();
 
         if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
             this.__checkSelectedState(model);
@@ -514,7 +497,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __checkSelectedState(model) {
         const selected = Object.values(model.collection.selected);
         if (selected.length > 1) {
-            selected.forEach(selectedModel => selectedModel.selected = false);
+            selected.forEach(selectedModel => (selectedModel.selected = false));
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -528,7 +511,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
+        const selectedItems = this.selectedButtonCollection.models;
         const isAccess = this.getEnabled() && !this.getReadonly();
         const maxQuantity = this.options.maxQuantitySelected;
 
@@ -586,7 +569,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
+            //length = 1 + fakeInputModel
             return;
         }
 
@@ -603,37 +587,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         this.__triggerChange();
 
-        this.__updateFakeInputModel();
-
         if (!this.hasFocus) {
             this.__focusButton();
             this.__onButtonClick();
         }
-    },
-
-    __updateFakeInputModel(): void {
-        this.fakeInputModel && this.fakeInputModel.updateEmpty();
-    },
-
-    __addFakeInputModel(collection) {
-        if (!this.options.showSearch) {
-            if (this.fakeInputModel) {
-                collection.remove(this.fakeInputModel);
-                delete this.fakeInputModel;
-            }
-            return;
-        }
-        collection.add(
-            this.isFakeInputModelWrong(collection) ?
-                this.fakeInputModel = new FakeInputModel() :
-                this.fakeInputModel
-        );
-
-        this.__updateFakeInputModel();
-    },
-
-    isFakeInputModelWrong(collection) {
-        return !this.fakeInputModel || !collection.has(this.fakeInputModel.id);
     },
 
     updateButtonInput(string): void {

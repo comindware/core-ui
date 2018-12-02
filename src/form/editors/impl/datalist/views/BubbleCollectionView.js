@@ -23,16 +23,11 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        loadingRegion: '.js-datalist-loading-region'
+        loadingRegion: '.js-datalist-loading-region',
+        searchRegion: '.js-datalist-search-region'
     },
 
     templateContext() {
-        /*
-                    if (model instanceof FakeInputModel) {
-            return InputView;
-        }
-        return BubbleItemView;
-        */
         return {
             items: this.collection.toJSON()
         };
@@ -51,6 +46,10 @@ export default Marionette.View.extend({
         drag: '__handleDrag',
         'mouseenter @ui.bubble': '__onMouseenter',
         'mouseleave @ui.bubble': '__onMouseleave'
+    },
+
+    onRender() {
+        this.showChildView('searchRegion', new InputView({ model: new FakeInputModel() }));
     },
 
     __click() {

@@ -34,7 +34,6 @@ import BaseReferenceEditorController from './editors/impl/datalist/controllers/B
 import BaseReferenceCollection from './editors/impl/datalist/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/datalist/models/DefaultReferenceModel';
 import LoadingView from './editors/impl/datalist/views/LoadingView';
-import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
@@ -116,8 +115,7 @@ const api = /** @lends module:core.form */ {
                 DefaultReferenceModel
             },
             views: {
-                LoadingView,
-                DatalistButtonView
+                LoadingView
             }
         },
         BooleanEditor: BooleanEditorView,
