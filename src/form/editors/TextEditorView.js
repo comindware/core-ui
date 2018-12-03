@@ -70,6 +70,10 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
 
     template: Handlebars.compile(template),
 
+    templateContext() {
+        return this.options;
+    },
+
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
