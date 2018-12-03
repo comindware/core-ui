@@ -41,7 +41,7 @@ export default TextEditorView.extend({
     },
 
     onRender() {
-        this.updateInput(this.model.get('searchText'));
+        this.updateInput();
         this.__updateInputPlaceholder();
     },
 
@@ -125,7 +125,7 @@ export default TextEditorView.extend({
     },
 
     __updateInputPlaceholder() {
-        const empty = this.model.get('empty');
+        const empty = false; //todo
         const placeholder = empty ? LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
         this.ui.input.attr({ placeholder }).toggleClass(classes.EMPTY, empty);
     }

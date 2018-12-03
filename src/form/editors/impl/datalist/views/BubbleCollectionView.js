@@ -1,7 +1,6 @@
 // @flow
 import template from '../templates/button.hbs';
 import InputView from './InputView';
-import FakeInputModel from '../models/FakeInputModel';
 import LoadingView from './LoadingView';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
@@ -16,6 +15,7 @@ export default Marionette.View.extend({
         this.collection = options.collection;
 
         this.listenTo(this.collection, 'add:child remove:child', () => this.trigger('change:content'));
+        this.listenTo(this.collection, 'add:child remove:child reset', this.render);
     },
 
     className() {
@@ -49,7 +49,8 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.showChildView('searchRegion', new InputView({ model: new FakeInputModel() }));
+        this.searchInputView = new InputView({ text: this.options.searchText, reqres: this.reqres });
+        this.showChildView('searchRegion', this.searchInputView);
     },
 
     __click() {
@@ -59,42 +60,15 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     focus(options) {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (!fakeInputModel) {
-            return;
-        }
-        const input = this.children.findByModel(fakeInputModel);
-        if (input && input.focus) {
-            input.focus(options);
-        }
+        this.searchInputView?.focus(options);
     },
 
     blur() {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (!fakeInputModel) {
-            return;
-        }
-        const input = this.children.findByModel(fakeInputModel);
-
-        if (input && input.blur) {
-            input.blur();
-        }
-    },
-
-    getInputView() {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (fakeInputModel) {
-            return this.children.findByModel(fakeInputModel);
-        }
+        this.searchInputView?.blur();
     },
 
     updateInput(string) {
-        const input = this.getInputView();
-        input && input.updateInput(string);
-    },
-
-    __findFakeInputModel() {
-        return this.collection.models.find(model => model instanceof FakeInputModel && model);
+        this.searchInputView?.updateInput(string);
     },
 
     updateEnabled(enabled) {
@@ -111,6 +85,14 @@ export default Marionette.View.extend({
         } else {
             this.getRegion('loadingRegion').reset();
         }
+    },
+
+    setReadonly(...args) {
+        this.searchInputView.setReadonly(...args);
+    },
+
+    setEnabled(...args) {
+        this.searchInputView.setEnabled(...args);
     },
 
     __onMouseenter(event) {
