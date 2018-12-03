@@ -450,7 +450,7 @@ export default Marionette.View.extend({
     },
 
     __someFocused(nodeList) {
-        const someFunction = node => document.activeElement === node || node.contains(document.activeElement)
+        const someFunction = node => document.activeElement === node || node.contains(document.activeElement);
         return Array.prototype.some.call(nodeList, someFunction);
     },
 
