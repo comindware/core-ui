@@ -66,9 +66,18 @@ export default Marionette.View.extend({
             view.$el.css({ opacity: 0 });
         });
         this.listenTo(view, 'attach', () => {
-            TweenLite.to(view.el, 0.15, {
-                opacity: 1
-            });
+            if (fadeBackground) {
+                view.$el.css({ top: -50 });
+
+                TweenLite.to(view.el, 0.15, {
+                    opacity: 1,
+                    top: 0
+                });
+            } else {
+                TweenLite.to(view.el, 0.15, {
+                    opacity: 1
+                });
+            }
         });
 
         this.getRegion(popupId).show(view);
@@ -147,13 +156,25 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        TweenLite.to(popupDef.view.el, 0.15, {
-            opacity: 0,
-            onComplete: () => {
-                this.removeRegion(popupDef.popupId);
-                this.el.removeChild(popupDef.regionEl);
-            }
-        });
+        if (popupDef.options.fadeBackground) {
+            TweenLite.to(popupDef.view.el, 0.15, {
+                opacity: 0,
+                top: -30,
+                onComplete: () => {
+                    this.removeRegion(popupDef.popupId);
+                    this.el.removeChild(popupDef.regionEl);
+                }
+            });
+        } else {
+            TweenLite.to(popupDef.view.el, 0.15, {
+                opacity: 0,
+                onComplete: () => {
+                    this.removeRegion(popupDef.popupId);
+                    this.el.removeChild(popupDef.regionEl);
+                }
+            });
+        }
+
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
         this.trigger('popup:close', popupDef.popupId);
     },
@@ -176,6 +197,18 @@ export default Marionette.View.extend({
     },
 
     __toggleFadedBackground(fade) {
-        this.ui.fadingPanel.toggleClass('fadingPanel_open', fade);
+        if (fade) {
+            TweenLite.to(this.ui.fadingPanel, 0.15, {
+                display: 'block',
+                opacity: 0.5
+            });
+        } else {
+            TweenLite.to(this.ui.fadingPanel, 0.15, {
+                opacity: 0,
+                onComplete: () => {
+                    this.ui.fadingPanel.css({ display: 'none' });
+                }
+            });
+        }
     }
 });
