@@ -425,10 +425,7 @@ export default Marionette.View.extend({
             this.__deselectPointed();
         }
 
-        let editors = pointedEl.querySelectorAll('input');
-        if (editors.length === 0) {
-            editors = pointedEl.querySelectorAll('[class~=editor]');
-        }
+        const editors = pointedEl.querySelectorAll('input,[class~=editor]');
 
         const doesContains = pointedEl.contains(editors[0]);
         const editorNeedFocus = doesContains && isFocusEditor;
@@ -453,10 +450,8 @@ export default Marionette.View.extend({
     },
 
     __someFocused(nodeList) {
-        let state = false;
-        const someFunction = node => !state && (state = document.activeElement === node);
-        Array.prototype.forEach.call(nodeList, someFunction);
-        return state;
+        const someFunction = node => document.activeElement === node || node.contains(document.activeElement)
+        return Array.prototype.some.call(nodeList, someFunction);
     },
 
     __handleEnter() {
