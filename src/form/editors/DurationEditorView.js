@@ -150,7 +150,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         'click @ui.clear': '__clear',
         'focus @ui.input': '__focus',
         'click @ui.input': '__onClick',
-        'blur @ui.input': '__blur',
+        'blur @ui.input': '__onBlur',
         'keydown @ui.input': '__keydown',
         'keyup @ui.input': '__keyup',
         mouseenter: '__onMouseenter'
@@ -205,7 +205,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         this.setCaretPos(pos);
     },
 
-    __blur() {
+    __onBlur() {
         if (this.state.mode === stateModes.VIEW) {
             return;
         }
@@ -302,7 +302,11 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
             segments.push('(\\S*)\\s+\\S*');
         }
         const regexStr = `^\\s*${segments.join('\\s+')}$`;
-        const result = new RegExp(regexStr, 'g').exec(this.ui.input.val());
+        let result = new RegExp(regexStr, 'g').exec(this.ui.input.val());
+        if (!result) {
+            result = this.focusableParts.map(() => '0');
+            result.push('0');
+        }
         return index !== undefined ? result[index + 1] : result.slice(1, this.focusableParts.length + 1);
     },
 
@@ -412,8 +416,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
                 });
                 return false;
             case keyCode.ENTER:
-                this.__blur();
-                return false;
+                return true;
             case keyCode.TAB: {
                 const delta = event.shiftKey ? -1 : 1;
                 if (this.focusableParts[index + delta]) {

@@ -68,6 +68,7 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
         'selected:enter': '__handleEnter',
+        'selected:exit': '__handleExit',
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
         change: '__handleChange',
@@ -417,7 +418,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor) {
+    __selectPointed(pointed, isFocusEditor, e) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -426,6 +427,7 @@ export default Marionette.View.extend({
         }
 
         const editors = pointedEl.querySelectorAll('input,[class~=editor]');
+        const input = pointedEl.querySelector('input');
 
         const doesContains = pointedEl.contains(editors[0]);
         const editorNeedFocus = doesContains && isFocusEditor;
@@ -437,7 +439,15 @@ export default Marionette.View.extend({
                 return false;
             }
             if (editorNeedFocus && !this.__someFocused(editors)) {
-                editors[0].focus();
+                if (input) {
+                    if (input.classList.contains('input_duration')) {
+                        setTimeout(() => input.focus(), 0);
+                    } else {
+                        input.focus();
+                    }
+                } else {
+                    editors[0].focus();
+                }
             }
         }
 
@@ -454,8 +464,12 @@ export default Marionette.View.extend({
         return Array.prototype.some.call(nodeList, someFunction);
     },
 
-    __handleEnter() {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
+    __handleEnter(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true, e);
+    },
+
+    __handleExit(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
     },
 
     __getFocusedCellIndex(e) {

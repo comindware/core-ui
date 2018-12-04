@@ -3,7 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
-import { stickybits, keyCode } from 'utils';
+import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -16,7 +16,6 @@ import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
-import transliterator from 'utils/transliterator';
 import EmptyGridView from '../views/EmptyGridView';
 
 /*
@@ -139,7 +138,8 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
-            this.listenTo(this.collection, 'keydown', this.__onKeydown);
+            this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
+            this.listenTo(this.collection, 'keydown:escape', (e) => this.__triggerSelectedModel('selected:exit', e));
         }
 
         this.listView = new ListView({
@@ -237,13 +237,13 @@ export default Marionette.View.extend({
     },
 
     __onKeydown(e) {
-        //some keys exclude in collection trigger this
-        if ([keyCode.SHIFT].includes(e.keyCode)) {
-            return;
-        }
+        this.__triggerSelectedModel('selected:enter', e);
+    },
+
+    __triggerSelectedModel(triggerEvent, ...args) {
         const selectedModel = this.collection.find(model => model.cid === this.collection.cursorCid);
         if (selectedModel) {
-            selectedModel.trigger('selected:enter');
+            selectedModel.trigger(triggerEvent, ...args);
         }
     },
 
