@@ -18,7 +18,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
      * @return {Function} Result function.
      * */
-    comparatorFor(comparatorFn, propertyName) {
+    comparatorFor(comparatorFn: Function, propertyName: string) {
         if (comparatorFn.length === 1) {
             return a => comparatorFn(a.get(propertyName));
         } else if (comparatorFn.length === 2) {
@@ -27,31 +27,14 @@ export default /** @lends module:core.utils.helpers */ {
         throw new Error('Invalid arguments count in comparator function.');
     },
 
-    /**
-     * Javascript version of the Microsoft .NET framework method <code>string.Format</code>.
-     * @example
-     * // returns 'Hello, Javascript!'
-     * core.utils.helpers.format('Hello, {0}!', 'Javascript');
-     * @param {String} text Formatted text that contains placeholders like <code>{i}</code>.
-     * Where <code>i</code> - index of the inserted argument (starts from zero).
-     * @param {...*} arguments Arguments that will replace the placeholders in text.
-     * @return {String} Resulting string.
-     * */
-    format(string, ...values) {
+    format(string: string, ...values: Array<any>): string {
         if (typeof string !== 'string') {
             return '';
         }
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
-    replaceParams(string, ...values) {
-        if (typeof string !== 'string') {
-            return '';
-        }
-        return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
-    },
-
-    replaceCurlyParameters(string, ...values) {
+    replaceCurlyParameters(string?: string, ...values) {
         if (typeof string !== 'string') {
             return '';
         }
@@ -141,7 +124,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} object An object to check.
      * @param {String} propertyName Property name or dot-separated property path.
      * */
-    ensureProperty(options, optionName) {
+    ensureProperty(options: Object, optionName: string) {
         if (!options) {
             this.throwError('The options object is required.', 'MissingOptionError');
         }
@@ -172,86 +155,32 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} propertyPath propertyName Property name or dot-separated property path.
      * @param {Object} obj An object to get the property from.
      * */
-    getPropertyOrDefault(propertyPath, obj) {
+    getPropertyOrDefault(propertyPath: string, obj: Object) {
         return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => (prev === undefined ? undefined : prev[curr]));
     },
 
-    /**
-     * Pre-validation helper that allows to check that function argument is not falsy.
-     * Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
-     * Throws <code>ArgumentFalsyError</code> if validation is failed.
-     * @example
-     * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
-     * @param {*} argumentValue Value to check.
-     * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
-     * */
-    assertArgumentNotFalsy(argumentValue, argumentName) {
+    assertArgumentNotFalsy(argumentValue: any, argumentName: string) {
         if (!argumentValue) {
             this.throwError(`Argument \`${argumentName}\` is falsy.`, 'ArgumentFalsyError');
         }
     },
 
-    /**
-     * Simplified way to throw an error. Throws an Error object with the specified name and message.
-     * @example
-     * core.utils.helpers.throwError('Request is invalid.');
-     * @param {String} message Error message.
-     * @param {String} [name='Error'] Error name (`name` attribute of Error object).
-     * */
-    throwError(message, name) {
+    throwError(message?: string, name?: string) {
         const error = new Error(message);
         error.name = name || 'Error';
+
         Core.InterfaceError.logError(error);
     },
 
-    /**
-     * Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.
-     * @example
-     * // Inside of implementation of some Marionette.View.
-     * addKeyboardListener: function (key, callback) {
-     *     if (!this.keyListener) {
-     *         utils.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-     *     }
-     *     var keys = key.split(',');
-     *     _.each(keys, function (k) {
-     *         this.keyListener.simple_combo(k, callback);
-     *     }, this);
-     * },
-     * // ...
-     * @param {String} [message='Invalid operation'] Error message.
-     * */
-    throwInvalidOperationError(message) {
+    throwInvalidOperationError(message?: string) {
         this.throwError(message || 'Invalid operation', 'InvalidOperationError');
     },
 
-    /**
-     * Throws FormatError. The exception should be thrown when the format of an argument is invalid, or when a is not well formed.
-     * @example
-     * function (url, parameterNames, parameters, callback) {
-     *     // Some code here ...
-     *     if (parameters.Length !== parameterNames.length) {
-     *         utils.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
-     *     }
-     *     // Some code here ...
-     * @param {String} [message='Invalid format'] Error message.
-     * */
-    throwFormatError(message) {
+    throwFormatError(message?: string) {
         this.throwError(message || 'Invalid format', 'FormatError');
     },
 
-    /**
-     * Throws ArgumentError. The exception should be thrown when one of the arguments provided to a method is not valid.
-     * Should be thrown only when one particular argument is invalid. If a combination of arguments is invalid use <code>FormatError</code>.
-     * @example
-     * function (url, parameterNames, parameters, callback) {
-     *     // Some code here ...
-     *     if (parameterNames.Length !== 2) {
-     *         utils.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
-     *     }
-     *     // Some code here ...
-     * @param {String} [message='Invalid argument'] Error message.
-     * */
-    throwArgumentError(message) {
+    throwArgumentError(message?: string) {
         this.throwError(message || 'Invalid argument', 'ArgumentError');
     }
 };

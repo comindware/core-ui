@@ -23,7 +23,10 @@ describe('Editors', () => {
         input.keydown();
     };
 
-    const actionForOpen = view => getInput(view).click().focus();
+    const actionForOpen = view =>
+        getInput(view)
+            .click()
+            .focus();
 
     const wait = (options = {}) => {
         const first = setInterval(() => {
@@ -37,10 +40,11 @@ describe('Editors', () => {
 
     const stopped = delay => new Promise(resolve => setTimeout(resolve, delay));
 
-    const show = view => window.app
-                                .getView()
-                                .getRegion('contentRegion')
-                                .show(view);
+    const show = view =>
+        window.app
+            .getView()
+            .getRegion('contentRegion')
+            .show(view);
 
     const collectionData3 = [
         {
@@ -266,15 +270,30 @@ describe('Editors', () => {
             view.on('attach', () => {
                 expect(view.readonly).toBeFalse();
                 expect(view.getInputView().readonly).toBeFalse();
-                expect(view.getInputView().$el.find('input').attr('readonly')).toBeUndefined();
+                expect(
+                    view
+                        .getInputView()
+                        .$el.find('input')
+                        .attr('readonly')
+                ).toBeUndefined();
                 view.setReadonly(true);
                 expect(view.readonly).toBeTrue();
                 expect(view.getInputView().readonly).toBeTrue();
-                expect(view.getInputView().$el.find('input').attr('readonly')).toEqual('readonly');
+                expect(
+                    view
+                        .getInputView()
+                        .$el.find('input')
+                        .attr('readonly')
+                ).toEqual('readonly');
                 view.setReadonly(false);
                 expect(view.readonly).toBeFalse();
                 expect(view.getInputView().readonly).toBeFalse();
-                expect(view.getInputView().$el.find('input').attr('readonly')).toBeUndefined();
+                expect(
+                    view
+                        .getInputView()
+                        .$el.find('input')
+                        .attr('readonly')
+                ).toBeUndefined();
                 done();
             });
 
@@ -393,7 +412,7 @@ describe('Editors', () => {
             show(view);
 
             const input = getInput(view);
-            startSearch(input, '2')
+            startSearch(input, '2');
 
             view.on('view:ready', () => {
                 if (getTextElOfInputList(0).text() !== '2') {
@@ -422,7 +441,7 @@ describe('Editors', () => {
             show(view);
 
             const input = getInput(view);
-            startSearch(input, '')
+            startSearch(input, '');
 
             view.on('view:ready', () => {
                 view.on('dropdown:close', () => {
@@ -560,7 +579,7 @@ describe('Editors', () => {
                     this.fetchCounter++;
                     return new Promise(resolve => {
                         this.collection.reset(collectionData3);
-        
+
                         this.totalCount = 3;
                         return sleep(resolve, {
                             collection: collectionData3,
@@ -623,9 +642,11 @@ describe('Editors', () => {
                 expect(!!view.dropdownView.isOpen).toEqual(false);
             });
 
-            show(new Core.layout.HorizontalLayout({
-                columns: [ view, anotherView ]
-            }));
+            show(
+                new Core.layout.HorizontalLayout({
+                    columns: [view, anotherView]
+                })
+            );
         });
         /*
         it('should set size for panel', () => {
@@ -797,7 +818,7 @@ describe('Editors', () => {
                     return;
                 }
                 expect(view.panelCollection.length).toEqual(1);
-                view.$el.find('input').trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER})
+                view.$el.find('input').trigger({ type: 'keyup', bubbles: true, keyCode: keyCode.ENTER });
                 expect(model.get('value')).toEqual(2);
                 done();
             });
@@ -816,7 +837,7 @@ describe('Editors', () => {
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
-                valueType: 'id',
+                valueType: 'id'
             });
 
             view.on('attach', () => {
@@ -825,7 +846,7 @@ describe('Editors', () => {
                 const first = setInterval(() => {
                     if (view.panelCollection.length === 0) {
                         clearTimeout(first);
-                        input.trigger({type: 'keyup', bubbles: true, keyCode: keyCode.ENTER});
+                        input.trigger({ type: 'keyup', bubbles: true, keyCode: keyCode.ENTER });
                         expect(model.get('value')).toEqual(3);
                         done();
                     }
@@ -924,7 +945,7 @@ describe('Editors', () => {
                 key: 'value',
                 allowEmptyValue: false,
                 autocommit: true,
-                valueType: 'id',
+                valueType: 'id'
             });
 
             view.on('attach', () => {
@@ -948,7 +969,7 @@ describe('Editors', () => {
                 allowEmptyValue: false,
                 showSearch: false,
                 autocommit: true,
-                valueType: 'id',
+                valueType: 'id'
             });
 
             view.on('attach', () => {
@@ -1183,11 +1204,11 @@ describe('Editors', () => {
         //ToDo: repeat next test for another 3 modes.
         it('after reset passed collection(mode: id, quan: many): -not open panel, -select all value items, -try adjust values', done => {
             const someCollection = new Backbone.Collection();
-        
+
             const model = new Backbone.Model({
                 dropdownValue: ['1', '3', '5']
             });
-        
+
             const view = new core.form.editors.DatalistEditor({
                 model,
                 key: 'dropdownValue',
@@ -1204,7 +1225,7 @@ describe('Editors', () => {
                     expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
                 });
                 view.on('view:ready', () => expect(false).toBeTrue());
-    
+
                 someCollection.reset(possibleItems15);
                 expect(view.panelCollection.length).toEqual(possibleItems15.length);
                 expect(view.dropdownView.isOpen).toBeFalsy();
@@ -1223,11 +1244,11 @@ describe('Editors', () => {
 
         it('after reset passed collection(mode: id, quan: one): -not open panel, -select all value items, -try adjust values', done => {
             const someCollection = new Backbone.Collection();
-        
+
             const model = new Backbone.Model({
                 dropdownValue: '1'
             });
-        
+
             const view = new core.form.editors.DatalistEditor({
                 model,
                 key: 'dropdownValue',
@@ -1244,7 +1265,7 @@ describe('Editors', () => {
                     expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
                 });
                 view.on('view:ready', () => expect(false).toBeTrue());
-    
+
                 someCollection.reset(possibleItems15);
                 expect(view.panelCollection.length).toEqual(possibleItems15.length);
                 expect(view.dropdownView.isOpen).toBeFalsy();
@@ -1282,7 +1303,7 @@ describe('Editors', () => {
                     }
                 ]
             });
-        
+
             const view = new core.form.editors.DatalistEditor({
                 model,
                 key: 'dropdownValue',
@@ -1320,7 +1341,7 @@ describe('Editors', () => {
                     }
                 ]
             });
-        
+
             const view = new core.form.editors.DatalistEditor({
                 model,
                 key: 'dropdownValue',
@@ -1352,7 +1373,7 @@ describe('Editors', () => {
                 const model = new Backbone.Model({
                     value: 1
                 });
-    
+
                 const view = new core.form.editors.DatalistEditor({
                     model,
                     collection: new Backbone.Collection(collectionData3),
@@ -1362,21 +1383,21 @@ describe('Editors', () => {
                     valueType: 'id',
                     maxQuantitySelected: 1
                 });
-    
+
                 view.on('view:ready', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(1);
                     done();
                 });
-    
+
                 show(view);
             });
 
             it('maxQuantitySelected > 1, valueType: id', done => {
                 const model = new Backbone.Model({
-                    value: [ 1, 2, 3 ]
+                    value: [1, 2, 3]
                 });
-    
+
                 const view = new core.form.editors.DatalistEditor({
                     model,
                     collection: new Backbone.Collection(collectionData3),
@@ -1386,13 +1407,13 @@ describe('Editors', () => {
                     valueType: 'id',
                     maxQuantitySelected: 3
                 });
-    
+
                 view.on('view:ready', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(3);
                     done();
                 });
-    
+
                 show(view);
             });
 
@@ -1413,7 +1434,7 @@ describe('Editors', () => {
                         }
                     ]
                 });
-    
+
                 const view = new core.form.editors.DatalistEditor({
                     model: model,
                     key: 'DatalistValue',
@@ -1426,13 +1447,13 @@ describe('Editors', () => {
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
-    
+
                 view.on('attach', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(3);
                     done();
                 });
-    
+
                 show(view);
             });
 
@@ -1445,7 +1466,7 @@ describe('Editors', () => {
                         }
                     ]
                 });
-    
+
                 const view = new core.form.editors.DatalistEditor({
                     model: model,
                     key: 'DatalistValue',
@@ -1458,13 +1479,13 @@ describe('Editors', () => {
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
-    
+
                 view.on('attach', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(1);
                     done();
                 });
-    
+
                 show(view);
             });
         });
