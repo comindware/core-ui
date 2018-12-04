@@ -188,6 +188,9 @@ export default Marionette.CollectionView.extend({
     },
 
     __handleKeydown(e) {
+        if (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode)) {
+            return;
+        }
         e.stopPropagation();
         let delta;
         // const isGrid = Boolean(this.gridEventAggregator);
@@ -235,14 +238,16 @@ export default Marionette.CollectionView.extend({
                 this.collection.trigger(e.shiftKey ? 'move:left' : 'move:right');
                 return false;
             case keyCode.ENTER:
-                if (handle) {
-                    this.collection.trigger('enter');
-                }
                 this.moveCursorBy(1, { shiftPressed: false });
+                return false;
+            case keyCode.ESCAPE:
+                if (isEditable && handle) {
+                    this.collection.trigger('keydown:escape', e);
+                }
                 return false;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
-            case keyCode.ESCAPE:
+            case keyCode.SHIFT:
                 break;
             case keyCode.HOME:
                 if (handle) {
@@ -256,7 +261,7 @@ export default Marionette.CollectionView.extend({
                 return !handle;
             default:
                 if (isEditable && handle) {
-                    this.collection.trigger('keydown', e);
+                    this.collection.trigger('keydown:default', e);
                 }
                 break;
         }
@@ -312,7 +317,7 @@ export default Marionette.CollectionView.extend({
 
     __getIsModelInScrollByIndex(modelIndex) {
         const modelTopOffset = modelIndex * this.childHeight;
-        const scrollTop =  this.parent$el.scrollTop();
+        const scrollTop = this.parent$el.scrollTop();
         return scrollTop > modelTopOffset || modelTopOffset > scrollTop + this.state.viewportHeight * this.childHeight;
     },
 
