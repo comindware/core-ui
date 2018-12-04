@@ -97,6 +97,20 @@ const service: LocalizationService = {
         }
 
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
+    },
+
+    /**
+     * Accepts string and duplicates it into every field of LocalizedText object.
+     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
+     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
+     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
+     * */
+    createLocalizedText(defaultText) {
+        return {
+            en: defaultText,
+            de: defaultText,
+            ru: defaultText
+        };
     }
 };
 

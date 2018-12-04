@@ -115,9 +115,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
 
         this.selectedButtonCollection = new Backbone.Collection(this.value, {
-            comparator: (a, b) => {
-                return text2AscComparatorSort(a, b);
-            }
+            comparator: (a, b) => text2AscComparatorSort(a, b)
         });
 
         const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
