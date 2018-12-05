@@ -35,7 +35,8 @@ export default function() {
             key: 'value',
             autocommit: true,
             displayText: 'Document Editor',
-            title: 'My images'
+            title: 'My images',
+            uploadUrl: null
         }),
         presentation: "'{{value}}'",
         isEditor: true

@@ -15,7 +15,7 @@ describe('Editors', () => {
                         }
                     ]
                 });
-    
+
                 return new core.form.editors.DocumentEditor({
                     model,
                     key: 'value',
@@ -203,15 +203,14 @@ describe('Editors', () => {
                         url: 'GetDocument/1'
                     },
                     {
-                        id: 'testFile1',
                         name: 'testFile',
-                        documentsId: ['testFile1'],
-                        url: null,
-                        type: 'testFile'
+                        type: 'testFile',
+                        streamId: 'testFile1',
+                        isLoading: false
                     }
                 ]);
                 done();
-            }, 100);
+            }, 1000);
         });
 
         it('show add values after twice upload by default', done => {
@@ -236,43 +235,38 @@ describe('Editors', () => {
             setTimeout(() => {
                 expect(view.getValue()).toEqual([
                     {
-                        id: 'firstFile1',
                         name: 'firstFile',
-                        documentsId: ['firstFile1', 'secondFile2'],
-                        url: null,
-                        type: 'firstFile'
+                        type: 'firstFile',
+                        streamId: 'firstFile1',
+                        isLoading: false
                     },
                     {
-                        id: 'secondFile2',
                         name: 'secondFile',
-                        documentsId: ['firstFile1', 'secondFile2'],
-                        url: null,
-                        type: 'secondFile'
+                        type: 'secondFile',
+                        streamId: 'secondFile2',
+                        isLoading: false
                     }
                 ]);
                 view._uploadFiles([new File([], 'thirdFile')]);
                 setTimeout(() => {
                     expect(view.getValue()).toEqual([
                         {
-                            id: 'firstFile1',
                             name: 'firstFile',
-                            documentsId: ['firstFile1', 'secondFile2'],
-                            url: null,
-                            type: 'firstFile'
+                            type: 'firstFile',
+                            streamId: 'firstFile1',
+                            isLoading: false
                         },
                         {
-                            id: 'secondFile2',
                             name: 'secondFile',
-                            documentsId: ['firstFile1', 'secondFile2'],
-                            url: null,
-                            type: 'secondFile'
+                            type: 'secondFile',
+                            streamId: 'secondFile2',
+                            isLoading: false
                         },
                         {
-                            id: 'thirdFile1',
                             name: 'thirdFile',
-                            documentsId: ['thirdFile1'],
-                            url: null,
-                            type: 'thirdFile'
+                            type: 'thirdFile',
+                            streamId: 'thirdFile1',
+                            isLoading: false
                         }
                     ]);
                     done();
@@ -303,22 +297,20 @@ describe('Editors', () => {
             setTimeout(() => {
                 expect(view.getValue()).toEqual([
                     {
-                        id: 'firstFile1',
                         name: 'firstFile',
-                        documentsId: ['firstFile1'],
-                        url: null,
-                        type: 'firstFile'
+                        type: 'firstFile',
+                        streamId: 'firstFile1',
+                        isLoading: false
                     }
                 ]);
                 view._uploadFiles([new File([], 'thirdFile')]);
                 setTimeout(() => {
                     expect(view.getValue()).toEqual([
                         {
-                            id: 'thirdFile1',
                             name: 'thirdFile',
-                            documentsId: ['thirdFile1'],
-                            url: null,
-                            type: 'thirdFile'
+                            type: 'thirdFile',
+                            streamId: 'thirdFile1',
+                            isLoading: false
                         }
                     ]);
                     done();

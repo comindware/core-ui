@@ -21,5 +21,6 @@ export default (options = {}) => {
         return prefixe;
     }, {});
 
-    return iconClass => ` ${prefixes[iconClass] || iconStyle[style]} fa-${iconClass} `;
+    // multiple classes must be declared like 'spinner pulse'
+    return iconClass => ` ${prefixes[iconClass] || iconStyle[style]} ${iconClass?.replace(/(^|\s)/g, ' fa-')} `;
 };

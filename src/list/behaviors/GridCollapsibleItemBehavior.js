@@ -107,7 +107,7 @@ export default function () {
             this.highlighted = true;
             this.highlightedFragment = text;
             this.set('highlightedFragment', text);
-            this.trigger('highlighted', this, {
+            this.trigger('highlighted', {
                 text
             });
         },
@@ -119,7 +119,7 @@ export default function () {
 
             this.highlighted = false;
             this.highlightedFragment = undefined;
-            this.trigger('unhighlighted', this);
+            this.trigger('unhighlighted');
         },
 
         collapse(internal: Boolean) {
