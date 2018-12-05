@@ -9,11 +9,17 @@ export default class AjaxStub {
                         files.push(config.data.get(`file${i}`));
                         i++;
                     }
-                    config.success.call(this, JSON.stringify({
-                        fileId: `${files[0].name}1`,
-                        fileIds: files.map((file, index) => `${file.name}${index + 1}`)
-                    }));
-                    break;
+                    const promise = new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            config.success(
+                                JSON.stringify({
+                                    fileId: `${files[0].name}1`,
+                                    fileIds: files.map((file, index) => `${file.name}${index + 1}`)
+                                })
+                            );
+                        }, 100);
+                    });
+                    return promise;
                 default:
                     config.success.call(this);
                     break;
