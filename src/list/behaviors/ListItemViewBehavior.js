@@ -59,7 +59,7 @@ export default Marionette.Behavior.extend({
         this.__debounceClickHandle(e);
     },
 
-    __handleHighlighting(sender, e) {
+    __handleHighlighting(e) {
         this.__highlight(e.text);
     },
 

@@ -1,6 +1,6 @@
 //@flow
 import dropdown from 'dropdown';
-import template from '../templates/MultiselectItem.html';
+import template from '../templates/documentBubbleItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
@@ -58,7 +58,14 @@ export default Marionette.View.extend({
         mouseleave: '__onMouseleave'
     },
 
+    modelEvents: {
+        'change:isLoading': 'render'
+    },
+
     __getExtIcon() {
+        if (this.model.get('isLoading')) {
+            return 'spinner pulse';
+        }
         const ext = this.model.get('extension');
         let icon;
 
@@ -74,7 +81,7 @@ export default Marionette.View.extend({
     },
 
     __getDocumentRevision() {
-        this.reqres.request('document:revise', this.model.get('id')).then(revisionList => {
+        this.reqres.request('document:revise', this.model.id).then(revisionList => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
             this.isRevisionOpen = true;
             this.documentRevisionPopout.open();
@@ -89,7 +96,7 @@ export default Marionette.View.extend({
         if (this.options.allowDelete) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
-        if (this.model.get('id').indexOf(savedDocumentPrefix) > -1 && this.options.showRevision) {
+        if (this.model.id?.indexOf(savedDocumentPrefix) > -1 && this.options.showRevision) {
             if (!this.isRevisonButtonShown) {
                 this.documentRevisionPopout = new dropdown.factory.createDropdown({
                     buttonView: DocumentRevisionButtonView,

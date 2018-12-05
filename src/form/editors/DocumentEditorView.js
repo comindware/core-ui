@@ -1,13 +1,12 @@
 // @flow
+import PromiseService from '../../services/PromiseService';
 import template from './templates/documentEditor.html';
-import DocumentReferenceModel from './impl/document/models/DocumentReferenceModel';
-import DocumentReferenceCollection from './impl/document/collections/DocumentReferenceCollection';
 import BaseCompositeEditorView from './base/BaseCompositeEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
 import PanelView from './impl/datalist/views/PanelView';
-import MultiselectItemView from './impl/document/views/MultiselectItemView';
+import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView.js';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 
 const classes = {
@@ -30,16 +29,8 @@ const defaultOptions = {
     fileFormat: undefined,
     showRevision: true,
     showAll: false,
-    createDocuments: documents =>
-        // todo: strange method
-        Promise.resolve(
-            documents.map(doc => ({
-                id: doc.id,
-                fileName: doc.fileName,
-                documentsId: documents.map(item => item.id)
-            }))
-        ),
-    removeDocuments: () => {},
+    createDocument: null,
+    removeDocument: null,
     displayText: ''
 };
 
@@ -47,17 +38,14 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.initCollection();
+        this.collection = new Backbone.Collection(this.value);
 
         this.on('change', this.checkEmpty.bind(this));
         this.on('uploaded', documents => {
             if (this.options.multiple === false) {
                 this.collection.reset();
-                if (this.value && this.value.length && this.value[0].id.indexOf(savedDocumentPrefix) > -1) {
-                    documents[0].documentId = this.value[0].id;
-                }
             }
-            this.uploadDocumentOnServer(documents);
+            this.addItems(documents);
         });
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
@@ -86,7 +74,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     template: Handlebars.compile(template),
 
-    childView: MultiselectItemView,
+    childView: DocumentBubbleItemView,
 
     childViewContainer: '.js-collection-container',
 
@@ -194,47 +182,21 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         }
     },
 
-    initCollection() {
-        if (!this.value) {
-            this.collection = new DocumentReferenceCollection();
-        } else {
-            this.collection = new DocumentReferenceCollection(this.value);
-        }
-    },
-
     syncValue() {
-        this.value = this.collection ? this.collection.toJSON() : [];
-    },
-
-    uploadDocumentOnServer(documents) {
-        this.options.createDocuments(documents).then(results => {
-            const tDocs = results.map(doc => {
-                const mappedObject = documents.find(uploadDoc => uploadDoc.id === doc.id);
-
-                return new DocumentReferenceModel({
-                    id: doc.id,
-                    documentsId: documents.map(item => item.id),
-                    name: doc.FileName || doc.fileName, // TODO fix API
-                    url: doc.DocumentLink || null,
-                    type: mappedObject ? mappedObject.type : null // TODO fix API
-                });
-            });
-            this.addItem(tDocs);
-        });
+        this.value = this.collection ? this.collection.toJSON().filter(model => !model.isLoading) : [];
     },
 
     renderUploadButton(isReadonly) {
         this.ui.fileUploadButton.toggle(!isReadonly);
     },
 
-    addItem(items) {
+    addItems(items) {
         this.onValueAdd(items);
-        this.__triggerChange();
     },
 
     removeItem(view) {
         this.collection.remove(view.model);
-        this.options.removeDocuments([view.model.get('id')]);
+        this.options.removeDocument?.(view.model.id);
         this.__triggerChange();
     },
 
@@ -350,14 +312,23 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     _sendFilesToServer(files) {
         const form = new FormData();
-        if (this.options.multiple === false) {
-            form.append('file1', files[0]);
-        } else {
-            for (let i = 0; i < files.length; i++) {
-                form.append(`file${i + 1}`, files[i]);
-            }
+        const length = this.options.multiple === false ? 1 : files.length;
+        const resultObjects = [];
+        for (let i = 0; i < length; i++) {
+            form.append(`file${i + 1}`, files[i]);
+            const currFileName = files[i].name;
+            const obj = {
+                name: currFileName,
+                type: currFileName ? currFileName.replace(/.*\./g, '') : '',
+                isLoading: true,
+                uniqueId: _.uniqueId('document-')
+            };
+
+            resultObjects.push(obj);
         }
-        $.ajax({
+        this.trigger('uploaded', resultObjects);
+
+        const config = {
             url: this.uploadUrl,
             data: form,
             processData: false,
@@ -367,27 +338,37 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             enctype: 'multipart/form-data',
             mimeType: 'multipart/form-data',
             success: data => {
+                if (this.isDestroyed()) {
+                    return;
+                }
                 const tempResult = JSON.parse(data);
-                const resultObjects = [];
+
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
-                    const currFileName = files[i].name;
-                    const obj = {
-                        id: tempResult.fileIds[i],
-                        fileName: currFileName,
-                        type: currFileName ? currFileName.replace(/.*\./g, '') : ''
-                    };
-                    resultObjects.push(obj);
+                    const model = this.collection.findWhere({ uniqueId: resultObjects[i]?.uniqueId });
+                    if (model) {
+                        model.set({
+                            streamId: tempResult.fileIds[i],
+                            isLoading: false
+                        });
+                        model.unset('uniqueId');
+                        const id = this.options.createDocument?.(model.toJSON());
+                        if (id) {
+                            model.set({ id });
+                        }
+                    }
                 }
                 this.internalChange = true;
                 this.ui.fileUpload[0].value = null;
                 this.internalChange = false;
                 this.ui.form.trigger('reset');
-                this.trigger('uploaded', resultObjects);
+                this.__triggerChange();
             },
             error: () => {
                 this.trigger('failed');
             }
-        });
+        };
+
+        PromiseService.registerPromise($.ajax(config), true);
     },
 
     __validate(files) {
