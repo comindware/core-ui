@@ -53,7 +53,11 @@ export default Marionette.View.extend({
         this.showChildView('searchRegion', this.searchInputView);
     },
 
-    __click() {
+    __click(e) {
+        if (e.target.tagName === 'A') {
+            e.stopPropagation();
+            return;
+        }
         this.reqres.request('button:click');
     },
 
@@ -99,7 +103,7 @@ export default Marionette.View.extend({
         if (this.options.showEditButton) {
             event.currentTarget.insertAdjacentHTML('beforeend', iconWrapPencil);
         }
-        if (this.options.enabled && this.options.showRemoveButton) {
+        if (this.options.enabled && this.options.canDeleteItem) {
             event.currentTarget.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
     },
@@ -108,8 +112,20 @@ export default Marionette.View.extend({
         if (this.options.showEditButton) {
             event.currentTarget.removeChild(event.currentTarget.lastElementChild);
         }
-        if (this.options.enabled && this.options.showRemoveButton) {
+        if (this.options.enabled && this.options.canDeleteItem) {
             event.currentTarget.removeChild(event.currentTarget.lastElementChild);
         }
+    },
+
+    __delete() {
+        this.reqres.request('bubble:delete', this.model);
+        return false;
+    },
+
+    __edit() {
+        if (this.reqres.request('value:edit', this.model.attributes)) {
+            return false;
+        }
+        return null;
     }
 });
