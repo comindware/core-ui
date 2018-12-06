@@ -3,8 +3,9 @@ export default {
 
     promiseQueue: [],
 
-    async registerPromise(promise) {
+    async registerPromise(promise, isNeedCheckBeforeLeave) {
         promise.id = _.uniqueId('promise_');
+        promise.isNeedCheckBeforeLeave = isNeedCheckBeforeLeave;
         this.promiseQueue.push(promise);
         try {
             const rejectPromise = new Promise((resolve, reject) => {
@@ -22,5 +23,9 @@ export default {
         this.promiseQueue.forEach(promise => {
             promise.reject({ isCanceled: true });
         });
+    },
+
+    checkBeforeLeave() {
+        return this.promiseQueue.some(promise => promise.isNeedCheckBeforeLeave);
     }
 };

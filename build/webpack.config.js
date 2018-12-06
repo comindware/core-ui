@@ -58,7 +58,9 @@ module.exports = options => {
                                     targets: {
                                         ie: 11,
                                         chrome: 58
-                                    }
+                                    },
+                                    useBuiltIns: 'usage',
+                                    modules: false
                                 }
                             ]
                         ],
@@ -245,7 +247,6 @@ module.exports = options => {
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
-            //new FlowWebpackPlugin()
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

@@ -1,5 +1,4 @@
-//@flow
-import { comparators, helpers } from 'utils';
+import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
@@ -31,10 +30,7 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         this.gridEventAggregator = options.gridEventAggregator;
-        this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
-        this.columns = options.columns;
         this.collection = options.gridEventAggregator.collection;
-        this.popoutsCollection = [];
 
         this.styleSheet = options.styleSheet;
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
@@ -60,7 +56,7 @@ const GridHeaderView = Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseover .grid-header-column': '__handleColumnSelect',
-        'click .grid-header-column': '__handleColumnSort',
+        'click .grid-header-column-title': '__handleColumnSort',
         'click .js-help-text-region': '__handleHelpMenuClick',
         mouseleave: '__onMouseLeaveHeader'
     },
@@ -71,7 +67,7 @@ const GridHeaderView = Marionette.View.extend({
 
     templateContext() {
         return {
-            columns: this.columns.map(column =>
+            columns: this.options.columns.map(column =>
                 Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc'
@@ -91,10 +87,12 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
-            const column = this.columns[i];
+            const column = this.options.columns[i];
             const helpText = column.helpText;
 
             if (helpText) {
+                this.addRegion(`popoutRegion${i}`, { el: el.querySelector('.js-help-text-region') });
+
                 const infoPopout = Core.dropdown.factory.createPopout({
                     buttonView: InfoButtonView,
                     panelView: InfoMessageView,
@@ -105,8 +103,7 @@ const GridHeaderView = Marionette.View.extend({
                     customAnchor: true,
                     class: 'collection-grid-header__help'
                 });
-                this.popoutsCollection.push(infoPopout);
-                el.appendChild(infoPopout.render().el);
+                this.showChildView(`popoutRegion${i}`, infoPopout);
             }
         });
     },
@@ -122,9 +119,9 @@ const GridHeaderView = Marionette.View.extend({
         if (event.target.className.includes('js-collapsible-button')) {
             return;
         }
-        const column = this.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)];
+        const column = this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.parentElement.children, event.currentTarget.parentElement)];
         const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
-        this.columns.forEach(c => (c.sorting = null));
+        this.options.columns.forEach(c => (c.sorting = null));
         column.sorting = sorting;
         let comparator = sorting === 'desc' ? column.sortDesc : column.sortAsc;
         if (!comparator) {
@@ -208,10 +205,6 @@ const GridHeaderView = Marionette.View.extend({
         return this.el.clientWidth;
     },
 
-    onDestroy() {
-        this.popoutsCollection.forEach(popout => popout.destroy());
-    },
-
     updateColumnAndNeighbourWidths(index, delta) {
         const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
@@ -224,7 +217,7 @@ const GridHeaderView = Marionette.View.extend({
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
-        this.columns[index].width = newColumnWidth;
+        this.options.columns[index].width = newColumnWidth;
     },
 
     __toggleCollapseAll() {
@@ -289,7 +282,7 @@ const GridHeaderView = Marionette.View.extend({
         this.trigger('handleColumnSelect', {
             event,
             el: event.currentTarget,
-            model: this.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
+            model: this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
         });
     },
 

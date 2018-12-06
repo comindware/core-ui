@@ -6,7 +6,7 @@ import AddNewButtonView from './AddNewButtonView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
-    CHILD_HEIGHT: 25
+    CHILD_HEIGHT: 35
 };
 
 const classes = {

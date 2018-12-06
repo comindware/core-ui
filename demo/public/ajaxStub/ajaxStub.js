@@ -8,9 +8,14 @@ export default {
 
                         while (true) {
                             if (request.data.has(`file${count + 1}`)) {
-                                count ++;
+                                count++;
                             } else {
-                                return request.success(JSON.stringify({ fileIds: _.times(count, () =>_.guid()) }));
+                                const promise = new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        request.success(JSON.stringify({ fileIds: _.times(count, () => _.guid()) }));
+                                    }, 5000);
+                                });
+                                return promise;
                             }
                         }
                     }

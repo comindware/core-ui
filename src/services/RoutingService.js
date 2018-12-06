@@ -119,6 +119,10 @@ export default {
         }));
     },
 
+    isCurrentModuleSplit() {
+        return activeUrl?.startsWith('#custom');
+    },
+
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
@@ -182,6 +186,7 @@ export default {
                     config,
                     region: customModuleRegion
                 });
+                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
             } else {
                 this.activeModule = new Module({
                     config,
@@ -208,7 +213,7 @@ export default {
             }
         }
 
-        if (!this.__isCurrentModuleSplit() || activeSubModule) {
+        if (!this.isCurrentModuleSplit() || activeSubModule) {
             try {
                 if (activeSubModule) {
                     this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
@@ -218,6 +223,8 @@ export default {
             } catch (e) {
                 Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
+        } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
+            this.__callRoutingActionForActiveModule(callbackName, routingArgs);
         } else {
             this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
         }
@@ -311,10 +318,6 @@ export default {
         }
     },
 
-    __isCurrentModuleSplit() {
-        return activeUrl?.startsWith('#custom');
-    },
-
     __invalidateSubModules(regionModulesMap) {
         regionModulesMap.forEach(module => {
             const cleanUrl = module.pair.route.replace('#', '');
@@ -329,7 +332,7 @@ export default {
     },
 
     __getSplitModuleUrl(nextModuleUrl) {
-        if (this.__isCurrentModuleSplit()) {
+        if (this.isCurrentModuleSplit()) {
             return this.__getUpdatedUrl(nextModuleUrl);
         }
 

@@ -3,6 +3,7 @@
 
 import form from 'form';
 import { columnWidthByType } from '../meta';
+import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -15,7 +16,6 @@ import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
-import transliterator from 'utils/transliterator';
 import EmptyGridView from '../views/EmptyGridView';
 
 /*
@@ -34,7 +34,8 @@ const defaultOptions = options => ({
     emptyView: EmptyGridView,
     emptyViewOptions: {
         text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
-    }
+    },
+    stickyToolbarOffset: 0
 });
 
 /**
@@ -73,7 +74,7 @@ export default Marionette.View.extend({
         }
 
         if (typeof options.transliteratedFields === 'object') {
-            options.columns = transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
+            transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
@@ -136,8 +137,9 @@ export default Marionette.View.extend({
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
-            this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
-            this.listenTo(this.collection, 'keydown', () => this.__onKeydown());
+            this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
+            this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
+            this.listenTo(this.collection, 'keydown:escape', (e) => this.__triggerSelectedModel('selected:exit', e));
         }
 
         this.listView = new ListView({
@@ -197,9 +199,6 @@ export default Marionette.View.extend({
             }
         });
 
-        if (this.collection.length) {
-            //this.__presortCollection(options.columns); TODO WFT
-        }
         this.collection = options.collection;
 
         if (options.showToolbar) {
@@ -214,7 +213,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __onCursorMove(delta) {
+    __onCursorMove(delta, options = {}) {
         const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
         const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
@@ -233,14 +232,18 @@ export default Marionette.View.extend({
 
             this.pointedCell = newSelectedValue;
 
-            currentModel.trigger('select:pointed', this.pointedCell);
+            !options.isModelClick && currentModel.trigger('select:pointed', this.pointedCell, false);
         }
     },
 
-    __onKeydown() {
+    __onKeydown(e) {
+        this.__triggerSelectedModel('selected:enter', e);
+    },
+
+    __triggerSelectedModel(triggerEvent, ...args) {
         const selectedModel = this.collection.find(model => model.cid === this.collection.cursorCid);
         if (selectedModel) {
-            selectedModel.trigger('selected:enter');
+            selectedModel.trigger(triggerEvent, ...args);
         }
     },
 
@@ -340,6 +343,12 @@ export default Marionette.View.extend({
             this.searchView.focus();
         }
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
+        const toolbarShowed = this.options.showToolbar || this.options.showSearch;
+
+        stickybits(this.el.querySelector('.grid-header-wrp'), { stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset });
+        if (toolbarShowed) {
+            stickybits(this.el.querySelector('.js-grid-tools'));
+        }
     },
 
     getChildren() {
@@ -474,17 +483,6 @@ export default Marionette.View.extend({
         });
     },
 
-    __presortCollection(columns) {
-        const sortingColumn = columns.find(column => column.sorting);
-        if (sortingColumn) {
-            if (sortingColumn.sorting === 'asc') {
-                this.onColumnSort(sortingColumn, sortingColumn.sortAsc);
-            } else {
-                this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
-            }
-        }
-    },
-
     __handleDragLeave(e) {
         if (!this.el.contains(e.relatedTarget)) {
             if (this.collection.dragoverModel) {
@@ -529,18 +527,6 @@ export default Marionette.View.extend({
 
         const grow = width > 0 ? 0 : 1;
         const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
-
-        if (MobileService.isIE) {
-            if (widthCell) {
-                const regexpCells = new RegExp(`.cell.${columnClass} { max-width: [0-9]*\\.?[0-9]*[%,px;]* } `);
-                const newCellValue = `.cell.${columnClass} { ${widthCell}; } `;
-                if (regexpCells.test(style.innerHTML)) {
-                    style.innerHTML = style.innerHTML.replace(regexpCells, newCellValue);
-                } else {
-                    style.innerHTML += newCellValue;
-                }
-            }
-        }
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);

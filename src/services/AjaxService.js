@@ -1,5 +1,6 @@
 import { helpers } from 'utils';
 import PromiseService from './PromiseService';
+import MobileService from './MobileService';
 
 const methodName = {
     mvc: 'Mvc',
@@ -84,7 +85,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
     },
 
     getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
-        if (typeof callback === 'function') {
+        if (callback && typeof callback !== 'function') {
             helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
         }
         const parametersLength = parameters[parameters.length - 1] === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
@@ -129,6 +130,19 @@ export default (window.Ajax = new (Marionette.Object.extend({
                 error.errorType = result.errorType;
                 error.errorData = result.errorData;
                 error.source = result;
+
+                if (window.onunhandledrejection === undefined) {
+                    if (MobileService.isIE) {
+                        const unhandledRejectionEvent = document.createEvent('Event');
+                        unhandledRejectionEvent.initEvent('submit', false, true);
+                        Object.assign(unhandledRejectionEvent, error);
+                        window.dispatchEvent(unhandledRejectionEvent);
+                    } else {
+                        const unhandledRejectionEvent = new Event('unhandledrejection');
+                        Object.assign(unhandledRejectionEvent, error, { reason: error });
+                        window.dispatchEvent(unhandledRejectionEvent);
+                    }
+                }
                 throw error;
             }
             return result ? result.data : result;

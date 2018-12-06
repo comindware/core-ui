@@ -5,24 +5,24 @@ const pathResolver = require('./pathResolver');
 
 gulp.task('localization', require('./tasks/localizationTask'));
 gulp.task('watch:localization', () => {
-    gulp.watch(pathResolver.localizationSource('*'), gulp.series('localization'));
+    gulp.watch('../localization/*', gulp.series('localization'));
 });
 
 gulp.task('generateSprites', require('./tasks/generateSpritesTask'));
 gulp.task('watch:generateSprites', () => {
-    gulp.watch(pathResolver.resources('sprites/*'), gulp.series('generateSprites'));
+    gulp.watch('../resources/sprites/*', gulp.series('generateSprites'));
 });
 
 gulp.task('generateThemes', require('./tasks/generateThemesTask'));
 gulp.task('watch:generateThemes', () => {
-    gulp.watch(pathResolver.resources('styles/themes/**/*'), gulp.series('generateThemes'));
+    gulp.watch('../resources/styles/themes/**/*', gulp.series('generateThemes'));
 });
 
 gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
-    gulp.watch([pathResolver.source('**/*'), pathResolver.resources('**/*')], gulp.parallel('build:core:dev', 'generateSprites'));
+    gulp.watch(['../src/**/*', '../resources/**/*'], gulp.parallel('build:core:dev', 'generateSprites'));
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));

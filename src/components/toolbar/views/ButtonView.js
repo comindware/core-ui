@@ -8,6 +8,10 @@ function unCapitalizeFirstLetter(string) {
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
+    attributes: {
+        tabindex: 0
+    },
+
     className() {
         const severityLevel = this.model.get('severity');
         const severityItem = severity[severityLevel] || severity.None;

@@ -105,8 +105,8 @@ export default Marionette.CollectionView.extend({
         });
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
-        this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1));
-        this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1));
+        this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
+        this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
     },
 
     attributes() {
@@ -126,7 +126,8 @@ export default Marionette.CollectionView.extend({
     onAttach() {
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.$el.parent().on('scroll', this.__onScroll.bind(this));
+        this.parent$el = this.$el.parent();
+        this.parent$el.on('scroll', this.__onScroll.bind(this));
     },
 
     _showEmptyView() {
@@ -187,33 +188,35 @@ export default Marionette.CollectionView.extend({
     },
 
     __handleKeydown(e) {
+        if (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode)) {
+            return;
+        }
         e.stopPropagation();
         let delta;
-        let handle;
-        const isGrid = Boolean(this.gridEventAggregator);
+        // const isGrid = Boolean(this.gridEventAggregator);
         const isEditable = this.getOption('isEditable');
 
-        handle = isGrid && isEditable ? e.target.classList.contains('cell') || e.ctrlKey : true;
-        handle = handle && this.collection.isSliding;
+        // handle = isGrid && isEditable ? e.target.classList.contains('cell') || e.ctrlKey : true;
+        const handle = this.collection.isSliding;
 
         switch (e.keyCode) {
             case keyCode.UP:
                 if (handle) {
-                    this.moveCursorBy(-1, e.shiftKey);
+                    this.moveCursorBy(-1, { shiftPressed: e.shiftKey, isLoop: true });
                 }
                 return !handle;
             case keyCode.DOWN:
                 if (handle) {
-                    this.moveCursorBy(1, e.shiftKey);
+                    this.moveCursorBy(1, { shiftPressed: e.shiftKey, isLoop: true });
                 }
                 return !handle;
             case keyCode.PAGE_UP:
-                delta = Math.ceil(this.state.viewportHeight - 1);
-                this.moveCursorBy(-delta, e.shiftKey);
+                delta = Math.floor(this.state.viewportHeight);
+                this.moveCursorBy(-delta, { shiftPressed: e.shiftKey });
                 return false;
             case keyCode.PAGE_DOWN:
-                delta = Math.ceil(this.state.viewportHeight - 1);
-                this.moveCursorBy(delta, e.shiftKey);
+                delta = Math.floor(this.state.viewportHeight);
+                this.moveCursorBy(delta, { shiftPressed: e.shiftKey });
                 return false;
             case keyCode.SPACE:
                 if (handle) {
@@ -235,28 +238,30 @@ export default Marionette.CollectionView.extend({
                 this.collection.trigger(e.shiftKey ? 'move:left' : 'move:right');
                 return false;
             case keyCode.ENTER:
-                if (handle) {
-                    this.collection.trigger('enter');
+                this.moveCursorBy(1, { shiftPressed: false });
+                return false;
+            case keyCode.ESCAPE:
+                if (isEditable && handle) {
+                    this.collection.trigger('keydown:escape', e);
                 }
-                this.moveCursorBy(1, false);
                 return false;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
-            case keyCode.ESCAPE:
+            case keyCode.SHIFT:
                 break;
             case keyCode.HOME:
                 if (handle) {
-                    this.__moveCursorTo(0, e.shiftKey);
+                    this.__moveCursorTo(0, { shiftPressed: e.shiftKey });
                 }
                 return !handle;
             case keyCode.END:
                 if (handle) {
-                    this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
+                    this.__moveCursorTo(this.collection.length - 1, { shiftPressed: e.shiftKey });
                 }
                 return !handle;
             default:
                 if (isEditable && handle) {
-                    this.collection.trigger('keydown');
+                    this.collection.trigger('keydown:default', e);
                 }
                 break;
         }
@@ -267,48 +272,103 @@ export default Marionette.CollectionView.extend({
         return this.collection.indexOf(model);
     },
 
-    __moveCursorTo(newCursorIndex, shiftPressed) {
-        const index = this.__getIndexSelectedModel();
+    // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
+    moveCursorBy(cursorIndexDelta, {
+        shiftPressed,
+        isLoop = false
+    }) {
+        const indexCurrentModel = this.__getIndexSelectedModel();
+        const nextIndex = indexCurrentModel + cursorIndexDelta;
+        this.__moveCursorTo(nextIndex, {
+            shiftPressed,
+            isPositiveDelta: cursorIndexDelta > 0,
+            indexCurrentModel,
+            isLoop
+        });
+    },
 
-        const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
-        if (nextIndex !== index) {
-            const model = this.collection.at(nextIndex);
-            const selectFn = this.collection.selectSmart || this.collection.select;
-            if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
+    __moveCursorTo(newCursorIndex, {
+        shiftPressed,
+        isPositiveDelta = false,
+        indexCurrentModel = this.__getIndexSelectedModel(),
+        isLoop = false
+    }) {
+        let correctIndex;
+        let isOverflow;
+        if (isLoop) {
+            ({ correctIndex, isOverflow } = this.__checkLoopOverflow(newCursorIndex));
+        } else {
+            correctIndex = this.__checkMaxMinIndex(newCursorIndex);
+        }
+
+        const isInverseScrollLogic = isOverflow;
+
+        if (correctIndex !== indexCurrentModel) {
+            this.__selectModelByIndex(correctIndex, shiftPressed);
+            if (this.__getIsModelInScrollByIndex(correctIndex)) {
+                (isInverseScrollLogic ?
+                    !isPositiveDelta :
+                    isPositiveDelta) ?
+                        this.scrollToByLast(correctIndex) :
+                        this.scrollToByFirst(correctIndex);
             }
-            this.scrollTo(nextIndex);
         }
     },
 
-    // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
-    moveCursorBy(cursorIndexDelta, shiftPressed) {
-        const index = this.__getIndexSelectedModel();
-        const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta, true);
-        this.__moveCursorTo(nextIndex, shiftPressed);
+    __getIsModelInScrollByIndex(modelIndex) {
+        const modelTopOffset = modelIndex * this.childHeight;
+        const scrollTop = this.parent$el.scrollTop();
+        return scrollTop > modelTopOffset || modelTopOffset > scrollTop + this.state.viewportHeight * this.childHeight;
     },
 
-    scrollTo(index, shouldScrollElement = false) {
-        this.__updatePositionInternal(index, shouldScrollElement);
-        this.__updateTop();
+    scrollTo(topIndex, shouldScrollElement = false) {
+        this.__updatePositionInternal(topIndex, shouldScrollElement);
     },
 
-    __normalizePosition(position) {
-        const maxPos = Math.max(0, this.collection.length - Math.max(this.minimumVisibleRows, this.state.visibleCollectionSize));
-        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE_HALF));
+    scrollToByFirst(topIndex) {
+        this.scrollTo(topIndex, true);
+    },
+
+    scrollToByLast(bottomIndex) {
+        //strange that size is equal index
+        const topIndex = this.__checkMaxMinIndex(bottomIndex - this.state.visibleCollectionSize);
+        this.scrollTo(topIndex, true);
+    },
+
+    __selectModelByIndex(index, shiftPressed) {
+        const model = this.collection.at(index);
+        const selectFn = this.collection.selectSmart || this.collection.select;
+        if (selectFn) {
+            selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
+        }
+    },
+
+    // normalized the index so that it fits in range [0, this.collection.length - 1] with loop
+    __checkLoopOverflow(index) {
+        const maxIndex = this.collection.length - 1;
+        let isOverflow = false;
+        let correctIndex = index;
+
+        if (index < 0) {
+            isOverflow = true;
+            correctIndex = maxIndex;
+        }
+        if (index > maxIndex) {
+            isOverflow = true;
+            correctIndex = 0;
+        }
+        //notOverflow
+        return {
+            correctIndex,
+            isOverflow
+        };
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
-    __normalizeCollectionIndex(index, loop) {
+    __checkMaxMinIndex(index) {
         const maxIndex = this.collection.length - 1;
         const normalizeIndex = Math.max(0, Math.min(maxIndex, index));
 
-        if (loop) {
-            if (index < 0) {
-                return maxIndex;
-            }
-            return maxIndex < index ? 0 : normalizeIndex;
-        }
         return normalizeIndex;
     },
 
@@ -317,9 +377,39 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        const newPosition = Math.max(0, Math.ceil(this.$el.parent().scrollTop() / this.childHeight));
+        const newPosition = Math.max(0, Math.ceil(this.parent$el.scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
+    },
+
+    updatePosition(newPosition) {
+        this.__updatePositionInternal(newPosition, false);
+    },
+
+    __updatePositionInternal(position, shouldScrollElement) {
+        const newPosition = this.__checkFillingViewport(position);
+        if (newPosition === this.state.position || !this.collection.isSliding) {
+            return;
+        }
+
+        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
         this.__updateTop();
+
+        this.state.position = newPosition;
+        if (shouldScrollElement) {
+            this.internalScroll = true;
+            const scrollTop = newPosition * this.childHeight;
+            if (this.el.parentNode) {
+                this.parent$el.scrollTop(scrollTop);
+            }
+            _.delay(() => (this.internalScroll = false), 100);
+        }
+
+        return newPosition;
+    },
+
+    __checkFillingViewport(position) {
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.visibleCollectionSize);
+        return Math.max(0, Math.min(maxPosFirstRow, position));
     },
 
     __updateTop() {
@@ -329,33 +419,6 @@ export default Marionette.CollectionView.extend({
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:top', top);
         }
-    },
-
-    updatePosition(newPosition) {
-        this.__updatePositionInternal(newPosition, false);
-    },
-
-    __updatePositionInternal(position, shouldScrollElement) {
-        let newPosition = position;
-        newPosition = this.__normalizePosition(newPosition);
-        if (newPosition === this.state.position || !this.collection.isSliding) {
-            return;
-        }
-
-        newPosition = this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
-        this.state.position = newPosition;
-        if (shouldScrollElement) {
-            this.internalScroll = true;
-            const scrollTop =
-                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
-                this.childHeight;
-            if (this.el.parentNode) {
-                this.$el.parent().scrollTop(scrollTop);
-            }
-            _.delay(() => (this.internalScroll = false), 100);
-        }
-
-        return newPosition;
     },
 
     handleResize(shouldUpdateScroll, model, collection, options = {}) {
@@ -395,8 +458,8 @@ export default Marionette.CollectionView.extend({
             }
             // scroll in case of search, do not scroll in case of collapse
             if (options.add) {
-                const topElement = collection.indexOf(model);
-                this.scrollTo(topElement, true);
+                const row = collection.indexOf(model);
+                this.scrollTo(row, true);
                 model.trigger('blink');
             } else {
                 this.scrollTo(0, true);
@@ -472,7 +535,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __handleFilter() {
-        this.$el.parent().scrollTop(0);
+        this.parent$el.scrollTop(0);
         this.scrollTo(0);
         this.debouncedHandleResizeShort();
     }

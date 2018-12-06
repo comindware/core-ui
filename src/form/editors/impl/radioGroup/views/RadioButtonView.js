@@ -4,7 +4,9 @@ import template from '../templates/radioButton.hbs';
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    className: 'editor editor_radiobutton',
+    className() {
+        return `editor editor_radiobutton ${this.options.class || ''}`;
+    },
 
     focusElement: null,
 

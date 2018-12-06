@@ -6,7 +6,8 @@ import diffHelper_ from './diffHelper';
 import keyCode_ from './keyCode';
 import './handlebars/all';
 import './codemirror';
-import transliterator from './transliterator';
+import transliterator_ from './transliterator';
+import stickybits_ from 'stickybits';
 
 export const comparators = comparators_;
 export const helpers = helpers_;
@@ -14,6 +15,8 @@ export const htmlHelpers = htmlHelpers_;
 export const dateHelpers = dateHelpers_;
 export const keyCode = keyCode_;
 export const diffHelper = diffHelper_;
+export const stickybits = stickybits_;
+export const transliterator = transliterator_;
 
 export default {
     /**
@@ -46,5 +49,7 @@ export default {
     keyCode,
     transliterator,
 
-    diffHelper
+    diffHelper,
+
+    stickybits
 };

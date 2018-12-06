@@ -163,10 +163,6 @@ body {
 /* /textarea/ */
 
 /* checkbox */
-.editor_checkbox {
- 
-}
-
 .checkbox {
   @apply --checkbox-theme;
   font-size: var(--base-font-size);
@@ -769,10 +765,12 @@ svg.svg-grid-icons {
 .toolbar-items-wrp > div:first-child .toolbar-btn{
   margin-left: 5px;
 }
-.toolbar-btn:hover {
+.toolbar-btn:hover{
   @apply --button-strong-hover-theme;
 }
-
+.toolbar-btn:focus{
+  outline: 1px solid #0575bd !important;
+}
 .toolbar-btn:active {
   @apply --button-strong-active-theme;
 }
@@ -785,53 +783,53 @@ svg.svg-grid-icons {
   color: #636262;
 } */
 
-.toolbar-btn_low {
+.toolbar-btn_low{
   @apply --toolbar-btn-low-theme;
 }
-.toolbar-btn_low:hover {
+.toolbar-btn_low:hover{
   @apply --toolbar-btn-low-hover-theme;
 }
-.toolbar-btn_low:active {
+.toolbar-btn_low:active{
   @apply --toolbar-btn-low-active-theme;
 }
 
-.toolbar-btn_normal {
+.toolbar-btn_normal{
   @apply --toolbar-btn-normal-theme;
 }
-.toolbar-btn_normal:hover {
+.toolbar-btn_normal:hover{
   @apply --toolbar-btn-normal-hover-theme;
 }
-.toolbar-btn_normal:active {
+.toolbar-btn_normal:active{
   @apply --toolbar-btn-normal-active-theme;
 }
 
-.toolbar-btn_major {
+.toolbar-btn_major{
   @apply --toolbar-btn-major-theme;
 }
-.toolbar-btn_major:hover {
+.toolbar-btn_major:hover{
   @apply --toolbar-btn-major-hover-theme;
 }
-.toolbar-btn_major:active {
+.toolbar-btn_major:active{
   @apply --toolbar-btn-major-active-theme;
 }
 
-.toolbar-btn_critical {
+.toolbar-btn_critical{
   @apply --toolbar-btn-critical-theme;
 }
-.toolbar-btn_critical:hover {
+.toolbar-btn_critical:hover{
   @apply --toolbar-btn-critical-hover-theme;
 }
-.toolbar-btn_critical:active {
+.toolbar-btn_critical:active{
   @apply --toolbar-btn-critical-active-theme;
 }
 
-.toolbar-btn_fatal {
+.toolbar-btn_fatal{
   @apply --toolbar-btn-fatal-theme;
 }
-.toolbar-btn_fatal:hover {
+.toolbar-btn_fatal:hover{
   @apply --toolbar-btn-fatal-hover-theme;
 }
-.toolbar-btn_fatal:active {
+.toolbar-btn_fatal:active{
   @apply --toolbar-btn-fatal-active-theme;
 }
 

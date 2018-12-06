@@ -25,7 +25,7 @@ const defaultOptions = () => ({
     disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
     maxLength: null,
     height: null,
-    minHeight: 2,
+    minHeight: 1,
     maxHeight: null,
     showTitle: true
 });

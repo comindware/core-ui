@@ -13,7 +13,7 @@ export default function () {
             this.trigger('selected', this, options);
 
             if (this.collection) {
-                this.collection.select(this);
+                this.collection.select(this, undefined, undefined, undefined, options);
             }
         },
 
@@ -29,7 +29,7 @@ export default function () {
             this.trigger('deselected', this, options);
 
             if (this.collection && this.collection.deselect) {
-                this.collection.deselect(this);
+                this.collection.deselect(this, undefined, undefined, undefined, options);
             }
         },
 
@@ -45,11 +45,11 @@ export default function () {
 
         // Change selected to the opposite of what
         // it currently is
-        toggleSelected() {
+        toggleSelected(options) {
             if (this.selected) {
-                this.deselect();
+                this.deselect(options);
             } else {
-                this.select();
+                this.select(options);
             }
         },
 
@@ -107,7 +107,7 @@ export default function () {
             this.highlighted = true;
             this.highlightedFragment = text;
             this.set('highlightedFragment', text);
-            this.trigger('highlighted', this, {
+            this.trigger('highlighted', {
                 text
             });
         },
@@ -119,7 +119,7 @@ export default function () {
 
             this.highlighted = false;
             this.highlightedFragment = undefined;
-            this.trigger('unhighlighted', this);
+            this.trigger('unhighlighted');
         },
 
         collapse(internal: Boolean) {

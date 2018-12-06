@@ -69,6 +69,7 @@
     overflow-y: scroll;
     -ms-scrollbar-arrow-color: white;
     -ms-scrollbar-track-color: white;
+    z-index: 1;
 }
 
 .grid-header-wrp > .cell_selection, .grid-header-wrp > .cell_selection-index {
@@ -167,17 +168,19 @@
     width: 55px;
 }
 
-
-.grid-header-column-content-view {
-    cursor: pointer !important;
-}
-
 .grid-header-view {
     position: relative;
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
     flex: none;
+    display: flex;
+}
+
+.grid-header-column-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .grid-header-view:empty {
@@ -199,6 +202,8 @@
     text-align: left;
     cursor: default;
     height: 35px;
+    display: flex;
+    align-items: center;
 }
 
 .grid-header-dragger {
@@ -225,6 +230,7 @@
     display: inline-block;
     position: relative;
     background-repeat: no-repeat;
+    flex-shrink: 0;
 }
 
 .filter-sort-btn {
@@ -536,7 +542,6 @@
 
 .cell .checkbox {
     margin: 0 auto;
-    z-index: 2;
 }
 
 .cell_selection-index .checkbox {
@@ -560,13 +565,11 @@
 }
 
 .compact.grid-container .grid-header,
-.compact.grid-container .grid-selection-cell-all,
-.compact.grid-container .cell{
+.compact.grid-container .cell_selection-index,
+.compact.grid-container .cell_selection,
+.compact.grid-container .cell,
+.compact.grid-container .grid-header-column{
     height: 26px;
-    line-height: 26px;
-    font-size: 12px;
-}
-.compact.grid-container .grid-header-column-content{
     line-height: 26px;
     font-size: 12px;
 }
@@ -616,6 +619,7 @@
     height: 54px;
     border-bottom: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
+    position: relative;
 }
 
 .extend_cell_content:hover {

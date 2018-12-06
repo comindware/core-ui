@@ -70,8 +70,6 @@ const onChange = function() {
  * Possible events:<ul>
  * <li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
  * This event doesn't imply any change in model (!).</li>
- * <li><code>'focus' (thisEditorView)</code> - fire when the editor gets the focus.</li>
- * <li><code>'blur' (thisEditorView)</code> - fire when the editor loses the focus.</li>
  * <li><code>'enabled' (enabled)</code> - fires when the property <code>enabled</code> is changed.</li>
  * <li><code>'readonly' (readonly)</code> - fires when the property <code>readonly</code> is changed.</li>
  * <li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - fires when the value is committed into the model.</li>

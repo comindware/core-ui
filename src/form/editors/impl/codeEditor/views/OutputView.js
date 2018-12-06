@@ -8,6 +8,7 @@ export default Marionette.View.extend({
         this.listenTo(this.editor, 'compile', compileOutput => {
             this.model.get('errors').reset(compileOutput.errors);
             this.model.get('warnings').reset(compileOutput.warnings);
+            this.model.get('info').reset(compileOutput.info);
         });
     },
 
@@ -34,25 +35,37 @@ export default Marionette.View.extend({
         });
         const warningsGrid = warningsGridController.view;
 
+        const infoGridController = new Core.list.controllers.GridController({
+            columns: this.__getInfoColumns(),
+            excludeActions: 'all',
+            collection: this.model.get('info')
+        });
+        const infoGrid = infoGridController.view;
+
         this.listenTo(errorsGridController, 'dblclick', model => {
             const cursorPos = {
                 ch: model.get('column') - 2,
                 line: model.get('line') - 1
             };
-            const type = 'error';
-            this.trigger('changeCursorPos', cursorPos, type);
+            this.trigger('changeCursorPos', cursorPos, 'error');
         });
         this.listenTo(warningsGridController, 'dblclick', model => {
             const cursorPos = {
                 ch: model.get('column') - 2,
                 line: model.get('line') - 1
             };
-            const type = 'warning';
-            this.trigger('changeCursorPos', cursorPos, type);
+            this.trigger('changeCursorPos', cursorPos, 'warning');
+        });
+        this.listenTo(infoGridController, 'dblclick', model => {
+            const cursorPos = {
+                ch: model.get('column') - 2,
+                line: model.get('line') - 1
+            };
+            this.trigger('changeCursorPos', cursorPos, 'info');
         });
 
         const tabsPanelsView = new Core.layout.TabLayout({
-            tabs: this.__getTabs(errorsGrid, warningsGrid)
+            tabs: this.__getTabs(errorsGrid, warningsGrid, infoGrid)
         });
 
         this.showChildView('tabsRegion', tabsPanelsView);
@@ -131,7 +144,41 @@ export default Marionette.View.extend({
         ];
     },
 
-    __getTabs(errorsGrid, warningsGrid) {
+    __getInfoColumns() {
+        return [
+            {
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.INFO.LINE'),
+                key: 'line',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.15
+            },
+            {
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.INFO.COLUMN'),
+                key: 'column',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.15
+            },
+            {
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.INFO.MESSCODE'),
+                key: 'messcode',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.2
+            },
+            {
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.INFO.MESSAGE'),
+                key: 'message',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.5
+            },
+        ];
+    },
+
+
+    __getTabs(errorsGrid, warningsGrid, infoGrid) {
         return [
             {
                 id: 'tab1',
@@ -146,46 +193,7 @@ export default Marionette.View.extend({
             {
                 id: 'tab3',
                 name: LocalizationService.get('CORE.FORM.EDITORS.CODE.INFO'),
-                view: new Core.list.factory.createDefaultGrid({
-                    gridViewOptions: {
-                        columns: [
-                            {
-                                title: 'Line',
-                                key: 'line',
-                                type: Core.meta.objectPropertyTypes.INTEGER,
-                                autocommit: true,
-                                width: 0.15
-                            },
-                            {
-                                title: 'Column',
-                                key: 'column',
-                                type: Core.meta.objectPropertyTypes.INTEGER,
-                                autocommit: true,
-                                width: 0.15
-                            },
-                            {
-                                title: 'Messcode',
-                                key: 'messcode',
-                                type: Core.meta.objectPropertyTypes.STRING,
-                                autocommit: true,
-                                width: 0.2
-                            },
-                            {
-                                title: 'Message',
-                                key: 'message',
-                                type: Core.meta.objectPropertyTypes.STRING,
-                                autocommit: true,
-                                width: 0.5
-                            }
-                        ],
-                        selectableBehavior: 'multi'
-                    },
-                    key: 'errors',
-                    collection: this.model.get('errors'),
-                    autocommit: true,
-                    height: 'auto',
-                    maxRows: 5
-                })
+                view: infoGrid
             }
         ];
     }

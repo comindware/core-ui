@@ -26,7 +26,9 @@ module.exports = {
         'arguments': true,
         'CKEDITOR': true,
         'Context': true,
-        'Core': true
+        'Core': true,
+        'expect': true,
+        'jasmine': true
     },
     'extends': [
         'prettier'

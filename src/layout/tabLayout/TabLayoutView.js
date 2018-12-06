@@ -277,7 +277,7 @@ export default Marionette.View.extend({
         // model.get('regionEl').classList.toggle(classes.HIDDEN, !selected); //second argument don't work in IE 11;
 
         // todo: find bettter way to initiate child resize
-        Core.services.GlobalEventService.trigger('window:resize');
+        Core.services.GlobalEventService.trigger('window:resize', false);
     },
 
     __handleStepperSelect(model: Backbone.Model): void {

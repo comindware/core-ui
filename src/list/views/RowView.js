@@ -1,6 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
-import transliterator from 'utils/transliterator';
+import { transliterator } from 'utils';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -16,7 +16,8 @@ const classes = {
     hover__transition: 'hover__transition',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
-    checked: 'row-checked'
+    checked: 'row-checked',
+    cell: 'cell'
 };
 
 const defaultOptions = {
@@ -67,6 +68,7 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
         'selected:enter': '__handleEnter',
+        'selected:exit': '__handleExit',
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
         change: '__handleChange',
@@ -152,14 +154,13 @@ export default Marionette.View.extend({
             if (gridColumn.editable) cellClasses += classes.cellEditable;
 
             const cellView = new cell({
-                className: `cell ${gridColumn.columnClass} ${cellClasses}`,
-                attributes: {
-                    tabindex: -1
-                },
+                className: `${classes.cell} ${gridColumn.columnClass} ${cellClasses}`,
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key
             });
+
+            cellView.el.setAttribute('tabindex', -1);
 
             if (isTree && index === 0) {
                 cellView.on('render', () => this.insertFirstCellHtml(true));
@@ -322,14 +323,19 @@ export default Marionette.View.extend({
 
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, undefined, {
+                isModelClick: true
+            });
             if (this.gridEventAggregator.isEditable) {
                 const cellIndex = this.__getFocusedCellIndex(e);
-                if (cellIndex > -1) {
+                if (cellIndex > -1 && this.getOption('columns')[cellIndex].editable) {
                     this.gridEventAggregator.pointedCell = cellIndex;
-                    this.__selectPointed(cellIndex); //todo remove event duplications!!
+                    setTimeout(
+                        () => this.__selectPointed(cellIndex, true),
+                        11 //need more than debounce delay in selectableBehavior calculateLength
+                    );
                 }
             }
-            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
         }
         this.trigger('click', this.model);
     },
@@ -412,7 +418,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor) {
+    __selectPointed(pointed, isFocusEditor, e) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -420,12 +426,11 @@ export default Marionette.View.extend({
             this.__deselectPointed();
         }
 
-        let editors = pointedEl.querySelectorAll('input');
-        if (editors.length === 0) {
-            editors = pointedEl.querySelectorAll('[class~=editor]');
-        }
+        const editors = pointedEl.querySelectorAll('input,[class~=editor]');
+        const input = pointedEl.querySelector('input');
 
         const doesContains = pointedEl.contains(editors[0]);
+        const editorNeedFocus = doesContains && isFocusEditor;
 
         if (editors.length) {
             const view = this.cellViews[pointed];
@@ -433,12 +438,20 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (doesContains && isFocusEditor) {
-                editors[0].focus();
+            if (editorNeedFocus && !this.__someFocused(editors)) {
+                if (input) {
+                    if (input.classList.contains('input_duration')) {
+                        setTimeout(() => input.focus(), 0);
+                    } else {
+                        input.focus();
+                    }
+                } else {
+                    editors[0].focus();
+                }
             }
         }
 
-        if (!doesContains && !isFocusEditor) {
+        if (!editorNeedFocus) {
             pointedEl.focus();
         }
 
@@ -446,23 +459,21 @@ export default Marionette.View.extend({
         this.lastPointedEl = pointedEl;
     },
 
-    __handleEnter() {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
+    __someFocused(nodeList) {
+        const someFunction = node => document.activeElement === node || node.contains(document.activeElement);
+        return Array.prototype.some.call(nodeList, someFunction);
+    },
+
+    __handleEnter(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true, e);
+    },
+
+    __handleExit(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
     },
 
     __getFocusedCellIndex(e) {
-        let current = e.target;
-        let result = -1;
-        let parent = current.parentElement;
-        while (current && parent && parent !== this.el) {
-            const index = this.columnClasses.findIndex(className => parent.className.includes(className));
-            if (index > -1 && this.getOption('columns')[index].editable) {
-                result = index;
-            }
-            current = parent;
-            parent = current.parentElement;
-        }
-        return result;
+        return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
     },
 
     __handleMouseEnter() {

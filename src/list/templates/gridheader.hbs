@@ -1,9 +1,10 @@
 {{#each columns}}
     <div class="grid-header-column {{columnClass}}" title="{{title}}">
-    {{#unless alignRight}}{{title}}{{/unless}}
+    {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
     {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
     {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
-    {{#if alignRight}}{{title}}{{/if}}
+        <span class="js-help-text-region collection-grid-header__help"></span>
+    {{#if alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/if}}
         <div class="grid-header-dragger"></div>
     </div>
 {{/each}}

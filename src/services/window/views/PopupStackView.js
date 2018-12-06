@@ -118,10 +118,11 @@ export default Marionette.View.extend({
             this.__removePopup(pd);
         });
 
-        const lastIndex = this.__stack.lastIndexOf(x => x.options.fadeBackground);
+        const filteredStackList = this.__stack.filter(x => x.options.fadeBackground);
+        const lastElement = filteredStackList && filteredStackList[filteredStackList.length - 1];
 
-        if (lastIndex !== -1) {
-            this.__stack[lastIndex].regionEl.classList.add(classes.POPUP_FADE);
+        if (lastElement) {
+            lastElement.regionEl.classList.add(classes.POPUP_FADE);
         } else {
             this.__toggleFadedBackground(this.__forceFadeBackground);
         }
