@@ -29,7 +29,8 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            items: this.collection.toJSON()
+            items: this.collection.toJSON(),
+            hidden: !(this.options.showSearch && this.options.maxQuantitySelected > this.collection.length)
         };
     },
 
@@ -49,8 +50,10 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.searchInputView = new InputView({ text: this.options.searchText, reqres: this.reqres });
-        this.showChildView('searchRegion', this.searchInputView);
+        if (this.options.showSearch && this.options.maxQuantitySelected > this.collection.length) {
+            this.searchInputView = new InputView({ text: this.options.searchText, reqres: this.reqres });
+            this.showChildView('searchRegion', this.searchInputView);
+        }
     },
 
     __click(e) {
@@ -117,13 +120,13 @@ export default Marionette.View.extend({
         }
     },
 
-    __delete() {
-        this.reqres.request('bubble:delete', this.model);
+    __delete(event) {
+        this.reqres.request('bubble:delete', this.collection.at(Array.prototype.indexOf.call(event.delegateTarget.children, event.currentTarget.parentElement)));
         return false;
     },
 
-    __edit() {
-        if (this.reqres.request('value:edit', this.model.attributes)) {
+    __edit(event) {
+        if (this.reqres.request('value:edit', this.collection.at(Array.prototype.indexOf.call(event.delegateTarget.children, event.currentTarget.parentElement)).attributes)) {
             return false;
         }
         return null;

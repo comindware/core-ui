@@ -269,28 +269,28 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 expect(view.readonly).toBeFalse();
-                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.button.searchInputView.readonly).toBeFalse();
                 expect(
                     view
-                        .getInputView()
+                        .button.searchInputView
                         .$el.find('input')
                         .attr('readonly')
                 ).toBeUndefined();
                 view.setReadonly(true);
                 expect(view.readonly).toBeTrue();
-                expect(view.getInputView().readonly).toBeTrue();
+                expect(view.button.searchInputView.readonly).toBeTrue();
                 expect(
                     view
-                        .getInputView()
+                      .button.searchInputView
                         .$el.find('input')
                         .attr('readonly')
                 ).toEqual('readonly');
                 view.setReadonly(false);
                 expect(view.readonly).toBeFalse();
-                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.button.searchInputView.readonly).toBeFalse();
                 expect(
                     view
-                        .getInputView()
+                        .button.searchInputView
                         .$el.find('input')
                         .attr('readonly')
                 ).toBeUndefined();

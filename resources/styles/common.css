@@ -1276,3 +1276,7 @@ a:hover {
     background-color: rgb(230, 230, 230);
     border-radius: 25%;
 }
+
+div[hidden] {
+    display: none;
+}

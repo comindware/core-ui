@@ -1,7 +1,7 @@
-// @flow
 import { helpers } from 'utils';
 import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import { TweenLite } from 'gsap';
 
 const defaults = {
     collapsed: false
@@ -78,10 +78,16 @@ export default Marionette.View.extend({
 
     __onCollapsedChange(model, collapsed) {
         this.ui.toggleCollapseButton.toggleClass(classes.COLLAPSED_CLASS, collapsed);
+
         if (collapsed) {
-            this.getRegion('containerRegion').$el.hide(200);
+            this.elHeight = this.getRegion('containerRegion').el.offsetHeight;
+            TweenLite.to(this.getRegion('containerRegion').el, 0.15, {
+                height: 0
+            });
         } else {
-            this.getRegion('containerRegion').$el.show(200);
+            TweenLite.to(this.getRegion('containerRegion').el, 0.15, {
+                height: this.elHeight || ''
+            });
         }
         return false;
     }

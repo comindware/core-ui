@@ -143,9 +143,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
                 customTemplate: this.options.customTemplate,
+                maxQuantitySelected: this.options.maxQuantitySelected,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
+                showSearch: this.options.showSearch,
                 readonly: this.getReadonly()
             },
             panelView: PanelView,
