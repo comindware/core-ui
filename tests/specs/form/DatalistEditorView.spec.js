@@ -269,31 +269,16 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 expect(view.readonly).toBeFalse();
-                expect(view.button.searchInputView.readonly).toBeFalse();
-                expect(
-                    view
-                        .button.searchInputView
-                        .$el.find('input')
-                        .attr('readonly')
-                ).toBeUndefined();
+                expect(view.dropdownView.button.searchInputView.readonly).toBeFalse();
+                expect(view.dropdownView.button.searchInputView.$el.find('input').attr('readonly')).toBeUndefined();
                 view.setReadonly(true);
                 expect(view.readonly).toBeTrue();
-                expect(view.button.searchInputView.readonly).toBeTrue();
-                expect(
-                    view
-                      .button.searchInputView
-                        .$el.find('input')
-                        .attr('readonly')
-                ).toEqual('readonly');
+                expect(view.dropdownView.button.searchInputView.readonly).toBeTrue();
+                expect(view.dropdownView.button.searchInputView.$el.find('input').attr('readonly')).toEqual('readonly');
                 view.setReadonly(false);
                 expect(view.readonly).toBeFalse();
-                expect(view.button.searchInputView.readonly).toBeFalse();
-                expect(
-                    view
-                        .button.searchInputView
-                        .$el.find('input')
-                        .attr('readonly')
-                ).toBeUndefined();
+                expect(view.dropdownView.button.searchInputView.readonly).toBeFalse();
+                expect(view.dropdownView.button.searchInputView.$el.find('input').attr('readonly')).toBeUndefined();
                 done();
             });
 

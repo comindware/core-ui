@@ -30,7 +30,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             items: this.collection.toJSON(),
-            hidden: !(this.options.showSearch && this.options.maxQuantitySelected > this.collection.length)
+            hidden: !this.options.showSearch
         };
     },
 
@@ -50,7 +50,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.options.showSearch && this.options.maxQuantitySelected > this.collection.length) {
+        if (this.options.showSearch) {
             this.searchInputView = new InputView({ text: this.options.searchText, reqres: this.reqres });
             this.showChildView('searchRegion', this.searchInputView);
         }
