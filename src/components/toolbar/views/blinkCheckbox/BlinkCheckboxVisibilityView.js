@@ -21,16 +21,16 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'eyes-list__i js-item',
+    className: 'filter-icon-list__i js-item',
 
     ui: {
-        eye: '.filter-icon',
+        filterIcon: '.filter-icon',
         text: '.js-text',
         dragger: '.js-dragger'
     },
 
     events: {
-        'click @ui.eye': '__onClick',
+        'click @ui.filterIcon': '__onClick',
         'click @ui.text': '__onClick',
         'mousedown @ui.dragger': '__onDrag'
     },
@@ -62,13 +62,13 @@ export default Marionette.View.extend({
     },
 
     __displayVisibility(isVisible) {
-        const eye = this.ui.eye;
+        const filterIcon = this.ui.filterIcon;
         if (isVisible) {
-            eye.removeClass(constants.colorIconClosed);
-            eye.addClass(constants.colorIconOpened);
+            filterIcon.removeClass(constants.colorIconClosed);
+            filterIcon.addClass(constants.colorIconOpened);
         } else {
-            eye.addClass(constants.colorIconClosed);
-            eye.removeClass(constants.colorIconOpened);
+            filterIcon.addClass(constants.colorIconClosed);
+            filterIcon.removeClass(constants.colorIconOpened);
         }
     }
 });

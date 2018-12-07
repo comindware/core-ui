@@ -16,5 +16,5 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'eyes-lists__dragging js-filters-list-dragging'
+    className: 'filter-icon-lists__dragging js-filters-list-dragging'
 });

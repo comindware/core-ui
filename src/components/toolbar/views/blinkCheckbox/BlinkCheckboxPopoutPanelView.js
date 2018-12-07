@@ -5,8 +5,8 @@ import BlinkCheckboxVisibilityDragView from './BlinkCheckboxVisibilityDragView';
 const constants = {
     dragElOffsetX: 190,
     dragElOffsetY: 20,
-    eyesListTop: 'eyes-list__i_area-top',
-    eyesListBottom: 'eyes-list__i_area-bottom',
+    filterIconListTop: 'filter-icon-list__i_area-top',
+    filterIconListBottom: 'filter-icon-list__i_area-bottom',
     colunmItem: 'js-item',
     filtersListDragging: '.js-filters-list-dragging',
     iconClassConst: 'filter',
@@ -37,7 +37,7 @@ export default Marionette.CompositeView.extend({
         visibilitySettings: '.js-visibility-settings'
     },
 
-    className: 'eyes-lists',
+    className: 'filter-icon-lists',
 
     template: Handlebars.compile(template),
 
@@ -102,10 +102,10 @@ export default Marionette.CompositeView.extend({
 
         const ctx = this.dragContext;
         if (ctx.topItem) {
-            ctx.topItem.removeClass(constants.eyesListTop);
+            ctx.topItem.removeClass(constants.filterIconListTop);
         }
         if (ctx.bottomItem) {
-            ctx.bottomItem.removeClass(constants.eyesListBottom);
+            ctx.bottomItem.removeClass(constants.filterIconListBottom);
         }
         $(document).unbind('mousemove', this.__documentMouseMove);
         $(document).unbind('mouseup', this.__documentMouseUp);
@@ -146,10 +146,10 @@ export default Marionette.CompositeView.extend({
         }
 
         if (ctx.topItem) {
-            ctx.topItem.removeClass(constants.eyesListTop);
+            ctx.topItem.removeClass(constants.filterIconListTop);
         }
         if (ctx.bottomItem) {
-            ctx.bottomItem.removeClass(constants.eyesListBottom);
+            ctx.bottomItem.removeClass(constants.filterIconListBottom);
         }
         if (itemEl[0] !== document) {
             const overTopHalf = event.pageY - itemEl.offset().y < itemEl.height() / 2;
@@ -164,8 +164,8 @@ export default Marionette.CompositeView.extend({
                 ctx.bottomItem = null;
                 ctx.topItem = null;
             } else {
-                ctx.topItem.addClass(constants.eyesListTop);
-                ctx.bottomItem.addClass(constants.eyesListBottom);
+                ctx.topItem.addClass(constants.filterIconListTop);
+                ctx.bottomItem.addClass(constants.filterIconListBottom);
             }
         }
 

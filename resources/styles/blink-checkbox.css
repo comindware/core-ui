@@ -1,5 +1,5 @@
-/* eye-list */
-.eyes-lists {
+/* filter-icon-list */
+.filter-icon-lists {
     width: 220px;
     max-height: 400px;
     display: flex;
@@ -8,13 +8,13 @@
     overflow-y: auto;
 }
 
-.eyes-lists__all{
+.filter-icon-lists__all{
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
     border-bottom: 1px solid #dee3e8;
 }
-.eyes-lists-all-txt{
+.filter-icon-lists-all-txt{
     display: inline-block;
     max-width: 100%;
     overflow: hidden;
@@ -26,13 +26,13 @@
     vertical-align: middle;
 }
 
-.eyes-lists__list{
+.filter-icon-lists__list{
     flex-grow: 1;
     overflow-y: auto;
     max-height: 310px;
 }
 
-.eyes-list__i{
+.filter-icon-list__i{
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -43,11 +43,11 @@
     white-space: nowrap;
 }
 
-.eyes-list__i:hover{
+.filter-icon-list__i:hover{
     background-color: #edf3fb;
 }
 
-.eyes-list-eye {
+.filter-icon-list-eye {
     display: inline-block;
     width: 50px;
     height: 40px;
@@ -55,7 +55,7 @@
 }
 
 
-.eyes-list-txt{
+.filter-icon-list-txt{
     display: inline-block;
     height: 100%;
     cursor: pointer;
@@ -67,12 +67,12 @@
     border-top: 1px solid #dee3e8;
 }
 
-.eyes-list__i:first-child .eyes-list-txt{
+.filter-icon-list__i:first-child .filter-icon-list-txt{
     border-top: none;
 }
 
 
-.eyes-list-draggable {
+.filter-icon-list-draggable {
     width: 20px;
     height: 100%;
     display: block;
@@ -84,12 +84,12 @@
     opacity: .6;
 }
 
-.eyes-list-draggable:hover {
+.filter-icon-list-draggable:hover {
     opacity: 1;
 }
 
 
-.eyes-lists__save{
+.filter-icon-lists__save{
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
@@ -98,18 +98,18 @@
     vertical-align: middle;
 }
 
-.eyes-lists-save-txt{
+.filter-icon-lists-save-txt{
     font-size: 13px;
     font-weight: 500;
     color: #0575bd;
     cursor: pointer;
     vertical-align: middle;
 }
-.eyes-lists-save-txt:hover{
+.filter-icon-lists-save-txt:hover{
     color: #009bfe;
 }
 
-.eyes-lists__dragging {
+.filter-icon-lists__dragging {
     width: 180px;
     height: 40px;
     position: fixed;
@@ -124,7 +124,6 @@
 .filter-icon {
     font-size: 17px;
     font-weight: 500;
-    /* color: #0575bd; */
     cursor: pointer;
     vertical-align: middle;
     padding: 10px;
@@ -146,5 +145,5 @@
     color: #dee3e8;
 }
 
-/* /eye-list */
+/* /filter-icon-list */
 
