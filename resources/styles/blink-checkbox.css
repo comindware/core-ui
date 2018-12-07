@@ -19,7 +19,7 @@
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 500;
     color: #0575bd;
     cursor: pointer;
@@ -27,20 +27,23 @@
 }
 
 .filter-icon-lists__list{
+
+    -ms-flex-positive: 1;
+    -webkit-box-flex: 1;
     flex-grow: 1;
     overflow-y: auto;
     max-height: 310px;
+    padding-left: 5px;
 }
 
 .filter-icon-list__i{
     width: 100%;
     height: 40px;
     line-height: 40px;
-    vertical-align: middle;
-    position: relative;
     cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
 }
 
 .filter-icon-list__i:hover{
@@ -59,12 +62,13 @@
     display: inline-block;
     height: 100%;
     cursor: pointer;
-    width: calc(100% - 50px);
     padding-right: 20px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     border-top: 1px solid #dee3e8;
+    flex: 1;
+    padding-left: 8px;
 }
 
 .filter-icon-list__i:first-child .filter-icon-list-txt{
@@ -130,11 +134,12 @@
 }
 
 .filter-icon-all {
-    padding-top: 15px;
+    font-size: 23px;
+    padding-top: 13px;
 }
 
 .filter-icon-item {
-    padding-bottom: 40px;
+    font-size: 15px;
 }
 
 .filter-opened {
