@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     const data = [];
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 500; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -163,7 +163,7 @@ describe('Components', () => {
                 .show(view);
 
             gridController.view.listView.collection.on('change', () => {
-                expect(gridController.view.listView.collection.length).toEqual(1111);
+                expect(gridController.view.listView.collection.length).toEqual(111);
                 done();
             });
 
