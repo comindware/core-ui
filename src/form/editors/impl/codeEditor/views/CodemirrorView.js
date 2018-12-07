@@ -5,6 +5,7 @@ import template from '../templates/codemirror.html';
 import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import LocalizationService from '../../../../../services/LocalizationService';
+import GlobalEventService from '../../../../../services/GlobalEventService';
 
 const modes = {
     expression: 'text/comindware_expression',
@@ -44,7 +45,8 @@ export default Marionette.View.extend({
             '__compile',
             '__noSuggestionHint',
             '__checkComments',
-            '__countLineAndColumn'
+            '__countLineAndColumn',
+            '__hideHintOnClick'
         );
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
@@ -102,7 +104,7 @@ export default Marionette.View.extend({
             this.trigger('maximize', this);
         });
         this.toolbar.on('minimize', this.__onMinimize);
-
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
         if (this.options.mode === 'script') {
             this.editor = this;
@@ -242,6 +244,17 @@ export default Marionette.View.extend({
         } else {
             this.refreshTimerId = setTimeout(() => this.__checkVisibleAndRefresh(), CHECK_VISIBILITY_DELAY);
         }
+    },
+
+    __hideHintOnClick(event) {
+        if (this.hintIsShown && !$(event).parents('.js-code-editor-container').length) {
+            this.__hideHint();
+        }
+    },
+
+    __hideHint() {
+        this.codemirror.showHint(''); //with that argument showHint actually hides instead
+        this.hintIsShown = false;
     },
 
     __onMaximize() {
