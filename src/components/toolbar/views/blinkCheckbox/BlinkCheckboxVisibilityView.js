@@ -1,8 +1,9 @@
 import template from '../../templates/blinkCheckbox/blinkCheckboxVisibility.html';
 
 const constants = {
-    eyeClose: 'eyes-list-eye_close',
-    eyeOpen: 'eyes-list-eye_open',
+    iconClassConst: 'filter',
+    colorIconOpened: 'filter-opened',
+    colorIconClosed: 'filter-closed',
     dragging: 'dragging'
 };
 
@@ -13,10 +14,17 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    templateContext() {
+        return {
+            iconClass: constants.iconClassConst,
+            iconColor: this.model.get('isHidden') ? constants.colorIconClosed : constants.colorIconOpened
+        };
+    },
+
     className: 'eyes-list__i js-item',
 
     ui: {
-        eye: '.js-eye',
+        eye: '.filter-icon',
         text: '.js-text',
         dragger: '.js-dragger'
     },
@@ -56,11 +64,11 @@ export default Marionette.View.extend({
     __displayVisibility(isVisible) {
         const eye = this.ui.eye;
         if (isVisible) {
-            eye.removeClass(constants.eyeClose);
-            eye.addClass(constants.eyeOpen);
+            eye.removeClass(constants.colorIconClosed);
+            eye.addClass(constants.colorIconOpened);
         } else {
-            eye.addClass(constants.eyeClose);
-            eye.removeClass(constants.eyeOpen);
+            eye.addClass(constants.colorIconClosed);
+            eye.removeClass(constants.colorIconOpened);
         }
     }
 });

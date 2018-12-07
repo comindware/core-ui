@@ -1,6 +1,6 @@
 export default Backbone.Model.extend({
     defaults: {
-        iconClass: 'eye',
+        iconClass: 'filter',
         draggable: false,
         triggerBeforeOpen: false
     }

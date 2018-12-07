@@ -1,4 +1,6 @@
-<span class="eyes-list-eye js-eye"></span>
+{{#if iconClass}}
+<i class="filter-icon filter-icon-item {{iconPrefixer iconClass}} {{iconColor}}" aria-hidden="true"></i>
+{{/if}}
 <span class="eyes-list-txt js-text">
     {{name}}
 </span>

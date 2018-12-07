@@ -9,8 +9,9 @@ const constants = {
     eyesListBottom: 'eyes-list__i_area-bottom',
     colunmItem: 'js-item',
     filtersListDragging: '.js-filters-list-dragging',
-    eyesListsOpen: 'eyes-lists-all-txt_open',
-    eyesListsClose: 'eyes-lists-all-txt_close'
+    iconClassConst: 'filter',
+    colorIconOpened: 'filter-opened',
+    colorIconClosed: 'filter-closed'
 };
 
 export default Marionette.CompositeView.extend({
@@ -36,30 +37,23 @@ export default Marionette.CompositeView.extend({
         visibilitySettings: '.js-visibility-settings'
     },
 
-    templateContext: {
-        text() {
-            let hideAll = true;
-            this.columns.each(value => {
-                hideAll = hideAll && value.get('isHidden') === true;
-            });
-
-            return hideAll
-                ? Localizer.get('CORE.COMMON.SHOWALL')
-                : Localizer.get('CORE.COMMON.HIDEALL');
-        },
-        showOrHideEyes() {
-            let hideAll = true;
-            this.columns.each(value => {
-                hideAll = hideAll && value.get('isHidden') === true;
-            });
-
-            return hideAll ? constants.eyesListsClose : constants.eyesListsOpen;
-        }
-    },
-
     className: 'eyes-lists',
 
     template: Handlebars.compile(template),
+
+    templateContext() {
+        let hideAll = true;
+
+        this.collection.models.forEach(value => {
+            hideAll = hideAll && value.get('isHidden') === true;
+        });
+
+        return {
+            text: hideAll ? Localizer.get('CORE.COMMON.HIDEALL') : Localizer.get('CORE.COMMON.SHOWALL'),
+            iconClass: constants.iconClassConst,
+            iconColor: hideAll ? constants.colorIconClosed : constants.colorIconOpened
+        };
+    },
 
     childViewContainer: '@ui.visibilitySettings',
 
