@@ -9,7 +9,7 @@ describe('Components', () => {
     });
 
     describe('PopupView', () => {
-        it('should open and close popup on base init', () => {
+        it('should open and close popup on base init', done => {
             const popupView = new core.layout.Popup({
                 size: {
                     width: 700,
@@ -41,15 +41,21 @@ describe('Components', () => {
             let popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
             expect(popupEl.length).toEqual(1);
             core.services.WindowService.closePopup();
-            popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
-            expect(popupEl.length).toEqual(0);
+            const int = setInterval(() => {
+                if ($('.js-core-ui__global-popup-region').find('.js-window').length === 0) {
+                    clearInterval(int);
+                    popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
+                    expect(popupEl.length).toEqual(0);
+                    done();
+                }
+            }, 100);
         });
 
         it('should match it configuration size', () => {
             const popupView = new core.layout.Popup({
                 size: {
-                    width: 701,
-                    height: 549
+                    width: 700,
+                    height: 550
                 },
                 header: 'My beautiful header',
                 buttons: [
@@ -76,8 +82,8 @@ describe('Components', () => {
 
             const popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
 
-            expect(popupEl.height()).toEqual(549);
-            expect(popupEl.width()).toEqual(701);
+            expect(popupEl.height()).toEqual(550);
+            expect(popupEl.width()).toEqual(700);
         });
         /*
         it('should set max width and height if configuration size is bad', () => {
