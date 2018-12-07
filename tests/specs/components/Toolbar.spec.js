@@ -1,8 +1,8 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-describe('Editors', () => {
-    describe('CodeEditorView', () => {
+describe('Components', () => {
+    describe('Toolbar', () => {
         it('should initialize', function () {
             const view = new core.components.Toolbar({
                 allItemsCollection: new Backbone.Collection([

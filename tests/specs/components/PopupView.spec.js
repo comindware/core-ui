@@ -4,11 +4,11 @@ import 'jasmine-jquery';
 const $ = core.lib.$;
 
 describe('Components', () => {
-    afterEach(() => {
-        core.services.WindowService.closePopup();
-    });
-
     describe('PopupView', () => {
+        afterEach(() => {
+            core.services.WindowService.closePopup();
+        });
+
         it('should open and close popup on base init', done => {
             const popupView = new core.layout.Popup({
                 size: {
@@ -38,14 +38,14 @@ describe('Components', () => {
             });
 
             core.services.WindowService.showPopup(popupView);
-            let popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
-            expect(popupEl.length).toEqual(1);
+
+            expect(document.contains(popupView.el)).toEqual(true);
             core.services.WindowService.closePopup();
+
             const int = setInterval(() => {
                 if ($('.js-core-ui__global-popup-region').find('.js-window').length === 0) {
                     clearInterval(int);
-                    popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
-                    expect(popupEl.length).toEqual(0);
+                    expect($('.js-core-ui__global-popup-region').find('.js-window').length).toEqual(0);
                     done();
                 }
             }, 100);
