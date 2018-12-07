@@ -134,7 +134,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
                 if (window.onunhandledrejection === undefined) {
                     if (MobileService.isIE) {
                         const unhandledRejectionEvent = document.createEvent('Event');
-                        unhandledRejectionEvent.initEvent('submit', false, true);
+                        unhandledRejectionEvent.initEvent('unhandledrejection', false, true);
                         Object.assign(unhandledRejectionEvent, error);
                         window.dispatchEvent(unhandledRejectionEvent);
                     } else {
