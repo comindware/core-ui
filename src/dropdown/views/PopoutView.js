@@ -533,6 +533,15 @@ export default Marionette.View.extend({
         });
         this.$el.addClass(classes.OPEN);
 
+        let panelModels = this.panelView.collection.models;
+        panelModels.forEach((m, i) => {
+            if (m.get('type') === 'Group') {
+                panelModels = panelModels.concat(m.attributes.items.models);
+                panelModels.splice(i, 1);
+            }
+        });
+        this.panelView.collection.models = panelModels;
+
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             fadeBackground: this.options.fade,
             hostEl: this.el
