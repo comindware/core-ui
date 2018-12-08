@@ -12,8 +12,9 @@
     margin: 0;
     background-color: #fff;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
-    position: fixed;
+    position: fixed!important;
     z-index: 600;
+    height: inherit!important;
 }
 .dropdown__wrp .dropdown__wrp_list {
     max-height: 400px;

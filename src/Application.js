@@ -43,7 +43,7 @@ export default {
         }
 
         options.userService && UserService.initialize(options.userService);
-        WindowService.initialize(options.animation);
+        WindowService.initialize({ animation: options.animation });
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
         marionetteApp.defaultContentView = options.contentView;

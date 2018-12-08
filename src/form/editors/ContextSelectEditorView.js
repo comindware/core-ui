@@ -89,7 +89,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         this.showChildView('contextPopoutRegion', this.popoutView);
 
-        this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
+        this.listenTo(this.popoutView, 'panel:childview:click', this.__applyContext);
     },
 
     setValue(value) {

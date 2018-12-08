@@ -63,7 +63,7 @@ export default Marionette.View.extend({
             el: regionEl
         });
 
-        if (options.animation) {
+        if (this.options.animation) {
             this.listenToOnce(view, 'before:attach', () => {
                 view.$el.css({ opacity: 0 });
             });
