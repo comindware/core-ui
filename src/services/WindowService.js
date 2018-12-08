@@ -1,7 +1,7 @@
 import PopupStackView from './window/views/PopupStackView';
 
 export default {
-    initialize() {
+    initialize(options = {}) {
         Object.assign(this, Backbone.Events);
 
         const __popupStackRegionEl = document.createElement('div');
@@ -15,7 +15,7 @@ export default {
             replaceElement: true
         });
 
-        this.__popupStackView = new PopupStackView();
+        this.__popupStackView = new PopupStackView(options);
 
         rootView.showChildView('popupStackRegion', this.__popupStackView);
 

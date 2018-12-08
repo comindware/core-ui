@@ -72,6 +72,7 @@ const Application = Marionette.Application.extend({
             },
             windowService: {
                 popupRegion: '.js-popup-region',
+                animation: false,
                 ui: {
                     contentContainer: $('.js-content-container'),
                     navigationContainer: $('.js-navigation-container'),

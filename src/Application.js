@@ -17,9 +17,10 @@ import initializeDatePicker from './form/editors/impl/dateTime/views/initializeD
 import 'backbone.trackit';
 
 export default {
-    async start(options) {
+    async start(options = {}) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
-
+        options.animation = options.animation !== false; //todo make it perfect
+        
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
@@ -42,7 +43,7 @@ export default {
         }
 
         options.userService && UserService.initialize(options.userService);
-        WindowService.initialize();
+        WindowService.initialize(options.animation);
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
         marionetteApp.defaultContentView = options.contentView;

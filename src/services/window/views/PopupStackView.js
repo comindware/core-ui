@@ -10,7 +10,7 @@ const classes = {
 const POPUP_ID_PREFIX = 'popup-region-';
 
 export default Marionette.View.extend({
-    initialize() {
+    initialize(options = {}) {
         this.__stack = [];
         this.__forceFadeBackground = false;
     },
@@ -62,23 +62,26 @@ export default Marionette.View.extend({
         this.addRegion(popupId, {
             el: regionEl
         });
-        this.listenTo(view, 'before:attach', () => {
-            view.$el.css({ opacity: 0 });
-        });
-        this.listenTo(view, 'attach', () => {
-            if (fadeBackground) {
-                view.$el.css({ top: -50 });
 
-                TweenLite.to(view.el, 0.15, {
-                    opacity: 1,
-                    top: 0
-                });
-            } else {
-                TweenLite.to(view.el, 0.15, {
-                    opacity: 1
-                });
-            }
-        });
+        if (options.animation) {
+            this.listenToOnce(view, 'before:attach', () => {
+                view.$el.css({ opacity: 0 });
+            });
+            this.listenToOnce(view, 'attach', () => {
+                if (fadeBackground) {
+                    view.$el.css({ top: -50 });
+
+                    TweenLite.to(view.el, 0.15, {
+                        opacity: 1,
+                        top: 0
+                    });
+                } else {
+                    TweenLite.to(view.el, 0.15, {
+                        opacity: 1
+                    });
+                }
+            });
+        }
 
         this.getRegion(popupId).show(view);
         if (fadeBackground) {
@@ -156,23 +159,28 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        if (popupDef.options.fadeBackground) {
-            TweenLite.to(popupDef.view.el, 0.15, {
-                opacity: 0,
-                top: -30,
-                onComplete: () => {
-                    this.removeRegion(popupDef.popupId);
-                    this.el.removeChild(popupDef.regionEl);
-                }
-            });
+        if (this.options.animation) {
+            if (popupDef.options.fadeBackground) {
+                TweenLite.to(popupDef.view.el, 0.15, {
+                    opacity: 0,
+                    top: -30,
+                    onComplete: () => {
+                        this.removeRegion(popupDef.popupId);
+                        this.el.removeChild(popupDef.regionEl);
+                    }
+                });
+            } else {
+                TweenLite.to(popupDef.view.el, 0.15, {
+                    opacity: 0,
+                    onComplete: () => {
+                        this.removeRegion(popupDef.popupId);
+                        this.el.removeChild(popupDef.regionEl);
+                    }
+                });
+            }
         } else {
-            TweenLite.to(popupDef.view.el, 0.15, {
-                opacity: 0,
-                onComplete: () => {
-                    this.removeRegion(popupDef.popupId);
-                    this.el.removeChild(popupDef.regionEl);
-                }
-            });
+            this.removeRegion(popupDef.popupId);
+            this.el.removeChild(popupDef.regionEl);
         }
 
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);

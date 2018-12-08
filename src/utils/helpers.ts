@@ -1,7 +1,6 @@
 /*eslint-disable*/
 import LocalizationService from '../services/LocalizationService';
 
-const timeoutCache = {};
 let getPluralFormIndex = null;
 
 export default /** @lends module:core.utils.helpers */ {
@@ -28,16 +27,10 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     format(string: string, ...values: Array<any>): string {
-        if (typeof string !== 'string') {
-            return '';
-        }
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
-    replaceCurlyParameters(string?: string, ...values) {
-        if (typeof string !== 'string') {
-            return '';
-        }
+    replaceCurlyParameters(string: string, ...values: Array<any>) {
         return string.replace(/\{(\d)\}/g, (s, num) => values[num]);
     },
 
@@ -72,7 +65,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} target Target instance that is getting behaviors applied.
      * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
      * */
-    applyBehavior(target) {
+    applyBehavior(target: Object) {
         const behaviors = _.rest(arguments, 1);
         _.each(behaviors, Behavior => {
             _.extend(target, new Behavior(target));
@@ -91,7 +84,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} options Options object to check.
      * @param {String} optionName Property name or dot-separated property path.
      * */
-    ensureOption(options, optionName) {
+    ensureOption(options: Object, optionName: string) {
         if (!options) {
             Core.InterfaceError.logError('The options object is required.', 'MissingOptionError');
         }

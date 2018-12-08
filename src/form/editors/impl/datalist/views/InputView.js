@@ -41,7 +41,6 @@ export default TextEditorView.extend({
     },
 
     onRender() {
-        this.updateInput();
         this.__updateInputPlaceholder();
     },
 
