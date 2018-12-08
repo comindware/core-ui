@@ -1,5 +1,3 @@
-
-
 import template from '../templates/membersButton.html';
 
 export default Marionette.View.extend({

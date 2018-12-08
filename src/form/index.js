@@ -25,7 +25,6 @@ import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
-import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import IconEditorView from './editors/IconEditorView';
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
@@ -66,9 +65,6 @@ const api = /** @lends module:core.form */ {
     editors: {
         impl: {
             common: {
-                members: {
-                    factory: editorsImplCommonMembersFactory
-                },
                 initializeDatePicker
             }
         },
