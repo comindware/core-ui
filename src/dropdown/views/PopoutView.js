@@ -527,11 +527,6 @@ export default Marionette.View.extend({
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);
-        this.panelView.on('all', (...args) => {
-            args[0] = `panel:${args[0]}`;
-            this.triggerMethod(...args);
-        });
-        this.$el.addClass(classes.OPEN);
 
         let panelModels = this.panelView.collection.models;
         panelModels.forEach((m, i) => {
@@ -541,6 +536,12 @@ export default Marionette.View.extend({
             }
         });
         this.panelView.collection.models = panelModels;
+
+        this.panelView.on('all', (...args) => {
+            args[0] = `panel:${args[0]}`;
+            this.triggerMethod(...args);
+        });
+        this.$el.addClass(classes.OPEN);
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             fadeBackground: this.options.fade,
