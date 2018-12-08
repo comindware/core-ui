@@ -6,7 +6,10 @@ describe('Components', () => {
         it('should initialize', () => {
             const view = new core.components.VideoChat();
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });
