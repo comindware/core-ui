@@ -1,8 +1,9 @@
 import template from '../../templates/blinkCheckbox/blinkCheckboxVisibility.html';
 
 const constants = {
-    eyeClose: 'eyes-list-eye_close',
-    eyeOpen: 'eyes-list-eye_open',
+    iconClassConst: 'filter',
+    colorIconEnabled: 'filter-enabled',
+    colorIconDisabled: 'filter-disabled',
     dragging: 'dragging'
 };
 
@@ -13,16 +14,23 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'eyes-list__i js-item',
+    templateContext() {
+        return {
+            iconClass: constants.iconClassConst,
+            iconColor: this.model.get('isHidden') ? constants.colorIconDisabled : constants.colorIconEnabled
+        };
+    },
+
+    className: 'filter-icon-list__i js-item',
 
     ui: {
-        eye: '.js-eye',
+        filterIcon: '.filter-icon',
         text: '.js-text',
         dragger: '.js-dragger'
     },
 
     events: {
-        'click @ui.eye': '__onClick',
+        'click @ui.filterIcon': '__onClick',
         'click @ui.text': '__onClick',
         'mousedown @ui.dragger': '__onDrag'
     },
@@ -54,13 +62,13 @@ export default Marionette.View.extend({
     },
 
     __displayVisibility(isVisible) {
-        const eye = this.ui.eye;
+        const filterIcon = this.ui.filterIcon;
         if (isVisible) {
-            eye.removeClass(constants.eyeClose);
-            eye.addClass(constants.eyeOpen);
+            filterIcon.removeClass(constants.colorIconDisabled);
+            filterIcon.addClass(constants.colorIconEnabled);
         } else {
-            eye.addClass(constants.eyeClose);
-            eye.removeClass(constants.eyeOpen);
+            filterIcon.addClass(constants.colorIconDisabled);
+            filterIcon.removeClass(constants.colorIconEnabled);
         }
     }
 });
