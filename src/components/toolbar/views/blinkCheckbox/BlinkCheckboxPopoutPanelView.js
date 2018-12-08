@@ -10,8 +10,8 @@ const constants = {
     colunmItem: 'js-item',
     filtersListDragging: '.js-filters-list-dragging',
     iconClassConst: 'filter',
-    colorIconOpened: 'filter-opened',
-    colorIconClosed: 'filter-closed'
+    colorIconEnabled: 'filter-enabled',
+    colorIconDisabled: 'filter-disabled'
 };
 
 export default Marionette.CompositeView.extend({
@@ -51,7 +51,7 @@ export default Marionette.CompositeView.extend({
         return {
             text: hideAll ? Localizer.get('CORE.COMMON.HIDEALL') : Localizer.get('CORE.COMMON.SHOWALL'),
             iconClass: constants.iconClassConst,
-            iconColor: hideAll ? constants.colorIconClosed : constants.colorIconOpened
+            iconColor: hideAll ? constants.colorIconDisabled : constants.colorIconEnabled
         };
     },
 

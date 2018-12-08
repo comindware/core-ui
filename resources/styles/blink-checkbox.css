@@ -142,11 +142,11 @@
     font-size: 15px;
 }
 
-.filter-opened {
+.filter-enabled {
     color: #0575bd;
 }
 
-.filter-closed {
+.filter-disabled {
     color: #dee3e8;
 }
 

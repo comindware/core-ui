@@ -2,8 +2,8 @@ import template from '../../templates/blinkCheckbox/blinkCheckboxVisibility.html
 
 const constants = {
     iconClassConst: 'filter',
-    colorIconOpened: 'filter-opened',
-    colorIconClosed: 'filter-closed',
+    colorIconEnabled: 'filter-enabled',
+    colorIconDisabled: 'filter-disabled',
     dragging: 'dragging'
 };
 
@@ -17,7 +17,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             iconClass: constants.iconClassConst,
-            iconColor: this.model.get('isHidden') ? constants.colorIconClosed : constants.colorIconOpened
+            iconColor: this.model.get('isHidden') ? constants.colorIconDisabled : constants.colorIconEnabled
         };
     },
 
@@ -64,11 +64,11 @@ export default Marionette.View.extend({
     __displayVisibility(isVisible) {
         const filterIcon = this.ui.filterIcon;
         if (isVisible) {
-            filterIcon.removeClass(constants.colorIconClosed);
-            filterIcon.addClass(constants.colorIconOpened);
+            filterIcon.removeClass(constants.colorIconDisabled);
+            filterIcon.addClass(constants.colorIconEnabled);
         } else {
-            filterIcon.addClass(constants.colorIconClosed);
-            filterIcon.removeClass(constants.colorIconOpened);
+            filterIcon.addClass(constants.colorIconDisabled);
+            filterIcon.removeClass(constants.colorIconEnabled);
         }
     }
 });

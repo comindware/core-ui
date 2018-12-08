@@ -2,8 +2,8 @@ import template from '../../templates/blinkCheckbox/blinkCheckboxVisibilityDrag.
 
 const constants = {
     iconClassConst: 'filter',
-    colorIconOpened: 'filter-opened',
-    colorIconClosed: 'filter-closed'
+    colorIconEnabled: 'filter-enabled',
+    colorIconDisabled: 'filter-disabled'
 };
 
 export default Marionette.View.extend({
@@ -12,7 +12,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             iconClass: constants.iconClassConst,
-            iconColor: this.isHidden ? constants.colorIconClosed : constants.colorIconOpened
+            iconColor: this.isHidden ? constants.colorIconDisabled : constants.colorIconEnabled
         };
     },
 
