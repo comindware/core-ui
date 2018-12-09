@@ -326,6 +326,7 @@ export default {
             const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
             if (replaceIndex !== -1 && urlParts[replaceIndex] !== window.location.hash.replace('#', '').split('&nxt')[replaceIndex]) {
+                module.pair.route =  urlParts[replaceIndex];
                 setTimeout(() => module.pair.callback(module.pair.route));
             }
         });
