@@ -17,7 +17,7 @@ export default function () {
         }
     ]);
 
-    blinkColumns.on('change:isHidden', (model, value) => alert(`isHidden = ${value}`));
+    blinkColumns.on('change:isHidden', (model, value) => console.log(`isHidden = ${value}`));
     const toolbarView = new Core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
             {

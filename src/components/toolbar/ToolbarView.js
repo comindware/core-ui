@@ -15,7 +15,7 @@ export default Marionette.View.extend({
         this.toolbarItemsCollection = new ToolbarItemsCollection();
         this.menuItemsCollection = new ToolbarItemsCollection();
         this.toolbarConstItemsCollection = new ToolbarItemsCollection();
-        this.__resetCollections(); 
+        this.__resetCollections();
 
         this.toolbarActions = this.__createActionsGroupsView(this.toolbarItemsCollection);
         this.constToolbarActions = this.__createActionsGroupsView(this.toolbarConstItemsCollection);
@@ -118,9 +118,11 @@ export default Marionette.View.extend({
     },
 
     __executeDropdownCommand(action, model, options = {}) {
-        if (model.get('type') === meta.toolbarItemType.CHECKBOX) {
-            model.toggleChecked && model.toggleChecked();
+        if (model.get('type') !== meta.toolbarItemType.SPLITTER) {
+            if (model.get('type') === meta.toolbarItemType.CHECKBOX) {
+                model.toggleChecked && model.toggleChecked();
+            }
+            this.trigger('command:execute', model, options);
         }
-        this.trigger('command:execute', model, options);
     }
 });
