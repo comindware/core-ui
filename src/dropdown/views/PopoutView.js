@@ -521,9 +521,21 @@ export default Marionette.View.extend({
         if (this.isOpen) {
             return;
         }
-        this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
+        this.trigger('before:open', this);
+        const popoutOptions = this.options.panelViewOptions;
+
+        const tempCollection = new Backbone.Collection();
+        popoutOptions.collection?.forEach(m => {
+            if (m.get('type') === 'Group') {
+                tempCollection.add(m.get('items').models);
+            } else {
+                tempCollection.add(m);
+            }
+        });
+        popoutOptions.collection.reset(tempCollection.models);
+
+        const panelViewOptions = _.extend(popoutOptions || {}, {
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);
