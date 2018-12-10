@@ -533,7 +533,7 @@ export default Marionette.View.extend({
                 tempCollection.add(m);
             }
         });
-        popoutOptions.collection.reset(tempCollection.models);
+        popoutOptions.collection?.reset(tempCollection.models);
 
         const panelViewOptions = _.extend(popoutOptions || {}, {
             parent: this
