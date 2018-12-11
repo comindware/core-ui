@@ -15,7 +15,7 @@ export default Marionette.View.extend({
         this.toolbarItemsCollection = new ToolbarItemsCollection();
         this.menuItemsCollection = new ToolbarItemsCollection();
         this.toolbarConstItemsCollection = new ToolbarItemsCollection();
-        this.__resetCollections(); 
+        this.__resetCollections();
 
         this.toolbarActions = this.__createActionsGroupsView(this.toolbarItemsCollection);
         this.constToolbarActions = this.__createActionsGroupsView(this.toolbarConstItemsCollection);
@@ -91,7 +91,20 @@ export default Marionette.View.extend({
 
         if (notFitItem >= 0) {
             this.getRegion('popupMenuRegion').$el.show();
-            this.menuItemsCollection.reset(this.toolbarItemsCollection.models.slice(notFitItem));
+
+            //Ungroup grouped items
+            const ungroupedCollection = new Backbone.Collection();
+            this.toolbarItemsCollection?.forEach(m => {
+                if (m.get('type') === meta.toolbarItemType.GROUP) {
+                    if (m.get('items').models) {
+                        ungroupedCollection.add(m.get('items').models);
+                    }
+                } else {
+                    ungroupedCollection.add(m);
+                }
+            });
+
+            this.menuItemsCollection.reset(ungroupedCollection.models.slice(notFitItem));
             this.toolbarItemsCollection.reset(this.toolbarItemsCollection.models.slice(0, notFitItem));
         } else {
             this.getRegion('popupMenuRegion').$el.hide();
@@ -112,7 +125,6 @@ export default Marionette.View.extend({
             popoutFlow: 'right',
             customAnchor: true
         });
-
         this.listenTo(view, 'execute', this.__executeDropdownCommand);
         return view;
     },
