@@ -18,58 +18,6 @@
         }
     };
 
-    // Unload Handlers
-    // ---------------
-
-    // Helper which returns a prompt message for an unload handler.
-    // Uses the given function name (one of the callback names
-    // from the `model.unsaved` configuration hash) to evaluate
-    // whether a prompt is needed/returned.
-    const getPromptConfig = function(fnName) {
-        let config,
-            args = _.rest(arguments);
-        // Evaluate and return a boolean result. The given `fn` may be a
-        // boolean value, a function, or the name of a function on the model.
-        const evaluateModelFn = function(model, fn) {
-            if (typeof fn === 'boolean') return fn;
-            return (typeof fn === 'string' ? model[fn] : fn).apply(model, args);
-        };
-        _.find(unsavedModels, model => {
-            if (evaluateModelFn(model, model._unsavedConfig[fnName])) {
-                config = {
-                    prompt: model._unsavedConfig.prompt,
-                    confirm: model._unsavedConfig.confirm
-                };
-                return true;
-            }
-
-            return false;
-        });
-        return config;
-    };
-
-    // Wrap Backbone.History.navigate so that in-app routing
-    // (`router.navigate('/path')`) can be intercepted with a
-    // confirmation if there are any unsaved models.
-    Backbone.History.prototype.navigate = _.wrap(Backbone.History.prototype.navigate, function(oldNav, fragment, options) {
-        const config = getPromptConfig('unloadRouterPrompt', fragment, options);
-        if (config) {
-            const confirm = config.confirm || window.confirm;
-            $.when(confirm(config.prompt)).done(doNavigate => {
-                doNavigate && oldNav.call(this, fragment, options);
-            });
-        } else {
-            oldNav.call(this, fragment, options);
-        }
-    });
-
-    // Create a browser unload handler which is triggered
-    // on the refresh, back, or forward button.
-    window.onbeforeunload = function(e) {
-        const config = getPromptConfig('unloadWindowPrompt', e);
-        return config && config.prompt;
-    };
-
     // Backbone.Model API
     // ------------------
 

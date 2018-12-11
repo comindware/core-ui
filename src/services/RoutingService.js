@@ -135,7 +135,7 @@ export default {
 
         if (!this.activeModule) {
             this.__showViewPlaceholder();
-        } else {
+        } else if (!customModuleRegion) {
             const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
             if (!isLeaved) {
                 return;
@@ -239,7 +239,7 @@ export default {
             .show(new ContentLoadingView());
     },
 
-    async __tryLeaveActiveModule(subModulePresented) {
+    async __tryLeaveActiveModule() {
         const canLeave = await this.activeModule.leave();
 
         if (!canLeave && this.getPreviousUrl()) {
@@ -247,16 +247,15 @@ export default {
             this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
             return false;
         }
-        if (!subModulePresented) {
-            //do not trigger events and cancel requests for submodules
-            this.trigger('module:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
-            //clear all promises of the previous module
-            Core.services.PromiseService.cancelAll();
-            if (!this.loadingContext.loaded) {
-                this.activeModule.view.setModuleLoading(true);
-            }
+
+        //do not trigger events and cancel requests for submodules
+        this.trigger('module:leave', {
+            page: this.activeModule ? this.activeModule.moduleId : null
+        });
+        //clear all promises of the previous module
+        Core.services.PromiseService.cancelAll();
+        if (!this.loadingContext.loaded) {
+            this.activeModule.view.setModuleLoading(true);
         }
         return true;
     },
@@ -326,7 +325,7 @@ export default {
             const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
 
             if (replaceIndex !== -1 && urlParts[replaceIndex] !== window.location.hash.replace('#', '').split('&nxt')[replaceIndex]) {
-                module.pair.route =  urlParts[replaceIndex];
+                module.pair.route = urlParts[replaceIndex];
                 setTimeout(() => module.pair.callback(module.pair.route));
             }
         });

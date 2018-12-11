@@ -60,7 +60,7 @@ export default Marionette.View.extend({
                 routeRegExp: pair.routeRegExp,
                 region
             });
-            setTimeout(() => pair.callback(pair.route));
+            pair.callback(pair.route);
         });
     },
 
