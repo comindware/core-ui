@@ -1,8 +1,6 @@
 // @flow
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
-import ToolbarSplitter from '../../components/toolbar/views/ToolbarSplitterView';
-import meta from '../../components/toolbar/meta';
 
 /**
  * @name MenuPanelView
@@ -26,7 +24,7 @@ export default ListPanelView.extend({
         if (model.get('customView')) {
             return model.get('customView');
         }
-        return model.get('type') !== meta.toolbarItemType.SPLITTER ? MenuItemView : ToolbarSplitter;
+        return MenuItemView;
     },
 
     childViewEvents: {
@@ -34,9 +32,7 @@ export default ListPanelView.extend({
     },
 
     __execute(model) {
-        if (model.get('type') !== meta.toolbarItemType.SPLITTER) {
-            this.options.parent.close();
-            this.options.parent.trigger('execute', model.id, model);
-        }
+        this.options.parent.close();
+        this.options.parent.trigger('execute', model.id, model);
     }
 });

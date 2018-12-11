@@ -4,6 +4,7 @@ import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
 import meta from './meta';
+import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
 
 const actionsMenuLabel = '⋮';
 
@@ -123,7 +124,8 @@ export default Marionette.View.extend({
             text: actionsMenuLabel,
             items: this.menuItemsCollection,
             popoutFlow: 'right',
-            customAnchor: true
+            customAnchor: true,
+            panelView: MenuPanelViewWithSplitter
         });
         this.listenTo(view, 'execute', this.__executeDropdownCommand);
         return view;
