@@ -560,7 +560,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return '';
         }
         if (typeof displayAttribute === 'function') {
-            return displayAttribute(value);
+            return displayAttribute(value, this.model);
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
