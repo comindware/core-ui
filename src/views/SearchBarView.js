@@ -1,6 +1,7 @@
 //@flow
 import template from './templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
+import keyCode from '../utils/keyCode';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
@@ -26,7 +27,7 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'keyup @ui.input': '__search',
+        'keyup @ui.input': '__trySearching',
         'click @ui.clear': '__clear'
     },
 
@@ -39,6 +40,16 @@ export default Marionette.View.extend({
     focus() {
         if (this.isRendered()) {
             this.ui.input.focus();
+        }
+    },
+
+    __trySearching(event) {
+        if (this.options.searchOnEnter === true) {
+            if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
+                this.__search();
+            }
+        } else {
+            this.__search();
         }
     },
 
