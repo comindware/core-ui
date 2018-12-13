@@ -9,7 +9,7 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     attributes() {
-        return Object.assign({ tabindex: 0 }, this.model.get('title') ? { title: this.model.get('title') } : {});
+        return Object.assign({ tabindex: 0 }, this.model.get('description') ? { title: this.model.get('description') } : {});
     },
 
     className() {
