@@ -8,8 +8,8 @@ function unCapitalizeFirstLetter(string) {
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    attributes: {
-        tabindex: 0
+    attributes() {
+        return Object.assign({ tabindex: 0 }, this.model.get('title') ? { title: this.model.get('title') } : {});
     },
 
     className() {
