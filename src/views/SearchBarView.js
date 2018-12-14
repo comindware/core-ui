@@ -5,7 +5,8 @@ import keyCode from '../utils/keyCode';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
-    delay: 300
+    delay: 300,
+    searchOnEnter: false
 });
 
 export default Marionette.View.extend({
@@ -40,6 +41,14 @@ export default Marionette.View.extend({
     focus() {
         if (this.isRendered()) {
             this.ui.input.focus();
+        }
+    },
+
+    clearInput(isClearingSilent) {
+        if (isClearingSilent) {
+            this.ui.input.val('');
+        } else {
+            this.__clear();
         }
     },
 
