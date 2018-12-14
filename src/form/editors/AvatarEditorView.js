@@ -48,7 +48,7 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, options.schema, defaultOptions);
 
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');
