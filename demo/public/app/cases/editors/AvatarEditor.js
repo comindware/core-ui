@@ -1,4 +1,3 @@
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
@@ -16,7 +15,7 @@ export default function() {
             autoUpload: true, // or use method 'upload' instead
             refreshPreviewAfterUpload: true,
             controller: new Core.form.editors.avatar.controllers.DemoAvatarEditorController({
-                defaultURL: '/resources/images/defaultAvatar.png'
+                defaultURL: ''
             })
         }),
 
