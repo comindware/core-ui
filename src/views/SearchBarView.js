@@ -12,15 +12,19 @@ const defaultOptions = () => ({
 export default Marionette.View.extend({
     initialize(options) {
         _.extend(this.options, defaultOptions(), options || {});
-        this.model = new Backbone.Model({
-            placeholder: this.options.placeholder
-        });
+
         this.__triggerSearch = _.debounce(this.__triggerSearch, this.options.delay);
     },
 
     template: Handlebars.compile(template),
 
-    className: 'search-view',
+    templateContext() {
+        return {
+            placeholder: this.options.placeholder
+        };
+    },
+
+    className: 'tr-search tr-search_mselect',
 
     ui: {
         input: '.js-search-input',
@@ -33,6 +37,9 @@ export default Marionette.View.extend({
     },
 
     onRender() {
+        if (this.options.searchText) {
+            this.ui.input.val(this.options.searchText);
+        }
         const value = this.ui.input.val();
         this.ui.clear.toggle(!!value);
         this.__updateInput(value);
@@ -47,6 +54,7 @@ export default Marionette.View.extend({
     clearInput(isClearingSilent) {
         if (isClearingSilent) {
             this.ui.input.val('');
+            this.ui.input.blur();
         } else {
             this.__clear();
         }

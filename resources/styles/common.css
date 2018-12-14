@@ -426,7 +426,6 @@ a:hover {
 
 /* --------------- Search ----------------*/
 .tr-search {
-    height: 100%;
     margin: 0;
     display: none;
     position: relative;
@@ -492,10 +491,6 @@ a:hover {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
-}
-
-.search-view {
-    position: relative;
 }
 /*-----//------*/
 
