@@ -20,12 +20,10 @@ import * as mixin from './utils/underscore';
 /* Core.Model utils */
 import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
-import 'backbone.modelbinder';
 import 'backbone-computedfields';
 import 'backbone.radio';
 import 'backbone-associations';
 /* --- */
-import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 
 import jquery from 'jquery';
