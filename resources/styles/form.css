@@ -655,6 +655,15 @@ input[type="checkbox"].checkbox {
 .user-avatar-editor__empty:hover{
     color:#cb4e30
 }
+
+.user-avatar-default-icon {
+    color: #70787F;
+    font-size: 46px;
+    position: absolute;
+    top: -3px;
+    left: 18px;
+
+}
 /* /Avatar editor/ */
 
 

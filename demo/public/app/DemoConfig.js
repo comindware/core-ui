@@ -343,7 +343,7 @@ export default {
                 {
                     id: 'MemberSelectEditor',
                     displayName: 'Member Select Editor',
-                    description: 'Simple text editor',
+                    description: 'Member select editor',
                     attributesConfig: [
                         {
                             attribute: 'autocommit',
@@ -379,7 +379,7 @@ export default {
                 {
                     id: 'AvatarEditor',
                     displayName: 'Avatar Editor',
-                    description: 'Simple text editor',
+                    description: 'Avatar editor',
                     attributesConfig: [
                         {
                             attribute: 'autocommit',
