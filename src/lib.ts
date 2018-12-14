@@ -36,8 +36,6 @@ import CodeMirror from 'codemirror';
 import 'innersvg-polyfill';
 // @ts-ignore
 import * as jsencrypt from 'jsencrypt';
-// @ts-ignore
-import * as jqui from 'jquery-ui';
 
 import domapi from './utils/DOMApi';
 
@@ -46,7 +44,6 @@ import domapi from './utils/DOMApi';
 Marionette_.setDomApi(domapi);
 
 const api = {
-    'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
     $: jquery,
