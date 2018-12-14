@@ -10,8 +10,8 @@ const defaultOptions = () => ({
 });
 
 export default Marionette.View.extend({
-    initialize(options) {
-        _.extend(this.options, defaultOptions(), options || {});
+    initialize(options = {}) {
+        _.extend(defaultOptions(), options);
 
         this.__triggerSearch = _.debounce(this.__triggerSearch, this.options.delay);
     },
@@ -55,6 +55,7 @@ export default Marionette.View.extend({
         if (isClearingSilent) {
             this.ui.input.val('');
             this.ui.input.blur();
+            this.__updateInput();
         } else {
             this.__clear();
         }
