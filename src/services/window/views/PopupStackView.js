@@ -1,7 +1,4 @@
 //@flow
-import template from '../templates/PopupStack.hbs';
-import { TweenLite } from 'gsap';
-
 const classes = {
     POPUP_REGION: 'js-popup-region-',
     POPUP_FADE: 'popup-fade'
@@ -15,11 +12,9 @@ export default Marionette.View.extend({
         this.__forceFadeBackground = false;
     },
 
-    template: Handlebars.compile(template),
+    className: 'fadingPanel js-fading-panel',
 
-    ui: {
-        fadingPanel: '.js-fading-panel'
-    },
+    template: false,
 
     showPopup(view, options) {
         const { fadeBackground, transient, hostEl } = options;
@@ -62,26 +57,6 @@ export default Marionette.View.extend({
         this.addRegion(popupId, {
             el: regionEl
         });
-
-        if (this.options.animation) {
-            this.listenToOnce(view, 'before:attach', () => {
-                view.$el.css({ opacity: 0 });
-            });
-            this.listenToOnce(view, 'attach', () => {
-                if (fadeBackground) {
-                    view.$el.css({ top: -50 });
-
-                    TweenLite.to(view.el, 0.15, {
-                        opacity: 1,
-                        top: 0
-                    });
-                } else {
-                    TweenLite.to(view.el, 0.15, {
-                        opacity: 1
-                    });
-                }
-            });
-        }
 
         this.getRegion(popupId).show(view);
         if (fadeBackground) {
@@ -159,30 +134,8 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        if (this.options.animation) {
-            if (popupDef.options.fadeBackground) {
-                TweenLite.to(popupDef.view.el, 0.15, {
-                    opacity: 0,
-                    top: -30,
-                    onComplete: () => {
-                        this.removeRegion(popupDef.popupId);
-                        this.el.removeChild(popupDef.regionEl);
-                    }
-                });
-            } else {
-                TweenLite.to(popupDef.view.el, 0.15, {
-                    opacity: 0,
-                    onComplete: () => {
-                        this.removeRegion(popupDef.popupId);
-                        this.el.removeChild(popupDef.regionEl);
-                    }
-                });
-            }
-        } else {
-            this.removeRegion(popupDef.popupId);
-            this.el.removeChild(popupDef.regionEl);
-        }
-
+        this.removeRegion(popupDef.popupId);
+        this.el.removeChild(popupDef.regionEl);
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
         this.trigger('popup:close', popupDef.popupId);
     },
@@ -205,18 +158,6 @@ export default Marionette.View.extend({
     },
 
     __toggleFadedBackground(fade) {
-        if (fade) {
-            TweenLite.to(this.ui.fadingPanel, 0.15, {
-                display: 'block',
-                opacity: 0.5
-            });
-        } else {
-            TweenLite.to(this.ui.fadingPanel, 0.15, {
-                opacity: 0,
-                onComplete: () => {
-                    this.ui.fadingPanel.css({ display: 'none' });
-                }
-            });
-        }
+        this.$el.toggleClass('fadingPanel_open', fade);
     }
 });

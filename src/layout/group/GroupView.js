@@ -1,7 +1,6 @@
 import { helpers } from 'utils';
 import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
-import { TweenLite } from 'gsap';
 
 const defaults = {
     collapsed: false

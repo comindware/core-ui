@@ -135,7 +135,7 @@ export default Marionette.View.extend({
         this.__expanded = !this.__expanded;
         this.__callWithTransition(
             () => {
-                this.ui.window.draggable('option', 'disabled', this.__expanded);
+                //this.ui.window.draggable('option', 'disabled', this.__expanded);
                 this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
                 this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
             },
@@ -178,11 +178,12 @@ export default Marionette.View.extend({
     },
 
     __initializeWindowDrag() {
+        /*
         this.ui.window.draggable({
             scroll: false,
             handle: '.js-header'
         });
-
+        */
         this.__debounceOnResize = _.debounce(this.__onResize, 300);
         this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
     },
@@ -199,12 +200,14 @@ export default Marionette.View.extend({
     },
 
     __setDraggableContainment() {
+        /*
         this.ui.window.draggable('option', 'containment', [
             sizeVisibleChunk - this.ui.window.outerWidth(),
             0,
             window.innerWidth - sizeVisibleChunk,
             window.innerHeight - sizeVisibleChunk
         ]);
+        */
     },
 
     __isNeedToPrevent() {

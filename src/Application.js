@@ -20,7 +20,8 @@ export default {
     async start(options = {}) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
         options.animation = options.animation !== false; //todo make it perfect
-        
+        LocalizationService.initialize(options.localizationService);
+
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
@@ -44,7 +45,6 @@ export default {
 
         options.userService && UserService.initialize(options.userService);
         WindowService.initialize({ animation: options.animation });
-        LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
         marionetteApp.defaultContentView = options.contentView;
         marionetteApp.options = options;
