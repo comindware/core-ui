@@ -101,7 +101,7 @@ export default Marionette.CollectionView.extend({
             if (collection?.diff?.length) {
                 return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
-            return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { search: collection.scroll })); //magic from prod collection
+            return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { scroll: collection.scroll })); //magic from prod collection
         });
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
