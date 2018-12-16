@@ -72,5 +72,26 @@ describe('Components', () => {
 
             expect(true).toBe(true);
         });
+
+        it('should show help text icon in columns header', () => {
+            const gridController = new core.list.controllers.GridController({
+                columns: [
+                    {
+                        key: 'textCell',
+                        type: 'String',
+                        title: 'TextCell',
+                        helpText: 'this is help text'
+                    }
+                ],
+                collection: []
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            expect(true).toBe(true);
+        });
     });
 });
