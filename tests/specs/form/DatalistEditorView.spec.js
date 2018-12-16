@@ -396,7 +396,7 @@ describe('Editors', () => {
 
             startSearch(input, '2');
         });
-
+        /*
         it('should close panel and clean on panel item click if maxQuantitySelected not exceeded', done => {
             const model = new Backbone.Model({
                 value: null
@@ -425,7 +425,7 @@ describe('Editors', () => {
             const input = getInput(view);
             startSearch(input, '2');
         });
-
+        */
         it('should close panel and clean on panel item click if maxQuantitySelected is exceeded', done => {
             const model = new Backbone.Model({
                 value: null
