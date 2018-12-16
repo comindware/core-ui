@@ -99,9 +99,9 @@ export default Marionette.CollectionView.extend({
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
             if (collection?.diff?.length) {
-                return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true }));
+                return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
-            return this.debouncedHandleResizeShort(true, model, collection, opt);
+            return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { search: collection.scroll })); //magic from prod collection
         });
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
@@ -273,10 +273,7 @@ export default Marionette.CollectionView.extend({
     },
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
-    moveCursorBy(cursorIndexDelta, {
-        shiftPressed,
-        isLoop = false
-    }) {
+    moveCursorBy(cursorIndexDelta, { shiftPressed, isLoop = false }) {
         const indexCurrentModel = this.__getIndexSelectedModel();
         const nextIndex = indexCurrentModel + cursorIndexDelta;
         this.__moveCursorTo(nextIndex, {
@@ -287,12 +284,7 @@ export default Marionette.CollectionView.extend({
         });
     },
 
-    __moveCursorTo(newCursorIndex, {
-        shiftPressed,
-        isPositiveDelta = false,
-        indexCurrentModel = this.__getIndexSelectedModel(),
-        isLoop = false
-    }) {
+    __moveCursorTo(newCursorIndex, { shiftPressed, isPositiveDelta = false, indexCurrentModel = this.__getIndexSelectedModel(), isLoop = false }) {
         let correctIndex;
         let isOverflow;
         if (isLoop) {
@@ -306,11 +298,7 @@ export default Marionette.CollectionView.extend({
         if (correctIndex !== indexCurrentModel) {
             this.__selectModelByIndex(correctIndex, shiftPressed);
             if (this.__getIsModelInScrollByIndex(correctIndex)) {
-                (isInverseScrollLogic ?
-                    !isPositiveDelta :
-                    isPositiveDelta) ?
-                        this.scrollToByLast(correctIndex) :
-                        this.scrollToByFirst(correctIndex);
+                (isInverseScrollLogic ? !isPositiveDelta : isPositiveDelta) ? this.scrollToByLast(correctIndex) : this.scrollToByFirst(correctIndex);
             }
         }
     },
@@ -461,7 +449,7 @@ export default Marionette.CollectionView.extend({
                 const row = collection.indexOf(model);
                 this.scrollTo(row, true);
                 model.trigger('blink');
-            } else {
+            } else if (options.scroll !== false) {
                 this.scrollTo(0, true);
             }
             return;
