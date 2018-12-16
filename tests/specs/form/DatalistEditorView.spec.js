@@ -409,8 +409,6 @@ describe('Editors', () => {
                 maxQuantitySelected: 5
             });
 
-            show(view);
-
             view.on('view:ready', () => {
                 if (getTextElOfInputList(0).text() !== '2') {
                     return;
@@ -421,6 +419,8 @@ describe('Editors', () => {
                 // expect(getItemOfList(0).length).toEqual(1);
                 done();
             });
+
+            show(view);
 
             const input = getInput(view);
             startSearch(input, '2');
