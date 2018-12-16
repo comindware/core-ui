@@ -84,6 +84,16 @@ describe('Components', () => {
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
             editable: true
+        },
+        {
+            key: 'referenceCell',
+            type: 'Datalist',
+            title: 'Reference Cell',
+            controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
+            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
+            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
+            editable: true,
+            simplified: true
         }
     ];
 

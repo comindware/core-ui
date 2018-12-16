@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     const data = [];
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 500; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -56,7 +56,7 @@ describe('Components', () => {
     ];
 
     describe('Simple grid', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const gridController = new core.list.controllers.GridController({
                 columns,
                 selectableBehavior: 'multi',
@@ -65,7 +65,10 @@ describe('Components', () => {
                 collection: new Backbone.Collection(data)
             });
 
-            window.app.getView().getRegion('contentRegion').show(gridController.view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
 
             expect(true).toBe(true);
         });
