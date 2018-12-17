@@ -8,6 +8,10 @@ export default Marionette.View.extend({
         return `layout__tab-layout__header-view-item ${this.model.get('tabClass') || ''}`;
     },
 
+    attributes() {
+        return Object.assign({}, this.model?.get('description') ? { title: this.model.get('description') } : {});
+    },
+
     template: Handlebars.compile(template),
 
     events: {
