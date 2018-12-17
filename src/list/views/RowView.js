@@ -330,8 +330,11 @@ export default Marionette.View.extend({
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1 && this.getOption('columns')[cellIndex].editable) {
                     this.gridEventAggregator.pointedCell = cellIndex;
+
+                    // todo: find more clear way to handle this case
+                    const isFocusChangeNeeded = !e.target.classList.contains('js-field-error-button');
                     setTimeout(
-                        () => this.__selectPointed(cellIndex, true),
+                        () => this.__selectPointed(cellIndex, true, isFocusChangeNeeded),
                         11 //need more than debounce delay in selectableBehavior calculateLength
                     );
                 }
@@ -418,7 +421,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor, e) {
+    __selectPointed(pointed, isFocusEditor, isFocusChangeNeeded = true) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -438,7 +441,7 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (editorNeedFocus && !this.__someFocused(editors)) {
+            if (editorNeedFocus && !this.__someFocused(editors) && isFocusChangeNeeded) {
                 if (input) {
                     if (input.classList.contains('input_duration')) {
                         setTimeout(() => input.focus(), 0);
@@ -451,7 +454,7 @@ export default Marionette.View.extend({
             }
         }
 
-        if (!editorNeedFocus) {
+        if (!editorNeedFocus && isFocusChangeNeeded) {
             pointedEl.focus();
         }
 
