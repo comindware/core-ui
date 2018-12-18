@@ -62,7 +62,8 @@ export default Marionette.View.extend({
         window: '.js-window',
         close: '.js-close',
         newTab: '.js-new-tab',
-        fullscreenToggle: '.js-fullscreen-toggle'
+        fullscreenToggle: '.js-fullscreen-toggle',
+        headerText: '.js-header-text'
     },
 
     events: {
@@ -114,6 +115,10 @@ export default Marionette.View.extend({
         if (content.validate) {
             return content.validate();
         }
+    },
+
+    setHeader(eventTitle) {
+        this.ui.headerText.text(eventTitle);
     },
 
     __keyAction(event) {
