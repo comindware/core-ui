@@ -361,12 +361,22 @@ export default Marionette.CollectionView.extend({
     },
 
     __onScroll(e) {
-        if (this.state.viewportHeight === undefined || e.target.scrollLe || this.collection.length <= this.state.viewportHeight || this.internalScroll || this.isDestroyed()) {
+        if (this.state.viewportHeight === undefined ||
+            this.isScrollHorizontal() ||
+            this.collection.length <= this.state.viewportHeight ||
+            this.internalScroll ||
+            this.isDestroyed()) {
             return;
         }
 
         const newPosition = Math.max(0, Math.ceil(this.parent$el.scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
+    },
+
+    isScrollHorizontal() {
+        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
+        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
+        return isHorisontal;
     },
 
     updatePosition(newPosition) {
