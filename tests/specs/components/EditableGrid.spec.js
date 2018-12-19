@@ -173,6 +173,45 @@ describe('Components', () => {
             expect(true).toBe(true);
         });
 
+        it('should send correct model on click on row', done => {
+            const tripleRowData = [
+                {
+                    textCell: 'Text Cell 1'
+                },
+                {
+                    textCell: 'Text Cell 2'
+                },
+                {
+                    textCell: 'Text Cell 3'
+                }
+            ];
+            const collection = new Backbone.Collection(tripleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+            function getSelectedModel(selectedModel) {
+                expect(gridController.view.collection.at(0)).toEqual(selectedModel);
+                gridController.off('click', getSelectedModel);
+                done();
+            }
+
+            gridController.on('click', getSelectedModel);
+            clickedElement.click();
+        });
+
         it('should trigger callback on click on row', () => {
             const clickCallback = jasmine.createSpy();
             const collection = new Backbone.Collection(singleRowData);
@@ -197,6 +236,37 @@ describe('Components', () => {
             clickedElement.click();
             gridController.off('click', clickCallback);
             expect(clickCallback.calls.count()).toEqual(1);
+        });
+
+        it('should trigger callback on double-click on row', () => {
+            const dblclickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+            const dblClickEvent = new MouseEvent('dblclick', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+
+            gridController.on('dblclick', dblclickCallback());
+            clickedElement.dispatchEvent(dblClickEvent);
+            gridController.off('dblclick', dblclickCallback);
+            expect(dblclickCallback.calls.count()).toEqual(1);
         });
 
         it('should select row on click on checkbox', () => {
