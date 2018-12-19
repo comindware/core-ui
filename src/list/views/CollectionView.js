@@ -124,11 +124,19 @@ export default Marionette.CollectionView.extend({
     },
 
     onAttach() {
+        this.__specifyChildHeight();
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.parent$el = this.$el.parent();
         this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
         this.parent$el.on('scroll', this.__onScroll.bind(this));
+    },
+
+    __specifyChildHeight() {
+        const childHeight = this.el.children[0]?.offsetHeight;
+        if (childHeight > 0) {
+            this.childHeight = childHeight;
+        }
     },
 
     _showEmptyView() {
