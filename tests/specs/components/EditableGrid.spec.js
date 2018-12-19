@@ -1,7 +1,7 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-describe('Components', () => {
+fdescribe('Components', () => {
     const data = [];
     for (let i = 0; i < 500; i++) {
         data.push({
@@ -132,7 +132,34 @@ describe('Components', () => {
         }
     ];
 
-    describe('EditableGrid', () => {
+    fdescribe('EditableGrid', () => {
+        fit('should select row when checkbox checked ', () => {
+            const doneFn = jasmine.createSpy();
+
+            const collection = new Backbone.Collection(data);
+
+            const gridController = new core.list.controllers.GridController({
+                columns,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const xxx = document.getElementsByClassName('grid-selection-panel-region')[0];
+
+            gridController.view.listenTo(xxx, 'click', doneFn());
+            xxx.click();
+            console.log('Hello Vlad!');
+            expect(doneFn.calls.count()).toEqual(1);
+        });
+
         it('should initialize', () => {
             const collection = new Backbone.Collection(data);
 
