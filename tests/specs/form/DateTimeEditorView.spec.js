@@ -96,22 +96,23 @@ const formats = [
 
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
-        const findDateInput = function (view) {
+        const findDateInput = function(view) {
             return view.$('input:first');
         };
 
-        const findTimeInput = function (view) {
+        const findTimeInput = function(view) {
             return view.$('input:last');
         };
 
-        const selectTodayOnOpenPanel = function (view) {
+        const selectTodayOnOpenPanel = function(view) {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
-        const show = view => window.app
-                                        .getView()
-                                        .getRegion('contentRegion')
-                                        .show(view);
+        const show = view =>
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
         FocusTests.runFocusTests({
             initialize: () => {
@@ -220,7 +221,11 @@ describe('Editors', () => {
             const expected = model.get('data');
             expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
             // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -239,7 +244,11 @@ describe('Editors', () => {
             // assert
             expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
             // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -257,12 +266,10 @@ describe('Editors', () => {
             show(view);
             view.on('change', onChangeCallback);
 
-            // act
             view.focus();
 
             selectTodayOnOpenPanel(view);
 
-            // assert
             expect(view.getValue()).toEqual(model.get('data'));
             expect(core.lib.moment(view.getValue()).year()).toEqual(core.lib.moment().year());
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
@@ -441,10 +448,13 @@ describe('Editors', () => {
 
             document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
 
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
         });
 
-                
         it('should hide clear button if hideClearButton = true', () => {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -463,7 +473,6 @@ describe('Editors', () => {
             expect(view.$('.js-clear-button').length).toEqual(0);
         });
 
-        
         it('should have no title options.showTitle false', () => {
             const dateTimeISO = '2015-07-20T10:46:37.000Z';
             const model = new Backbone.Model({
@@ -529,14 +538,32 @@ describe('Editors', () => {
             });
 
             show(view);
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithSeconds));
-            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(core.lib.moment(someDateTimeISO).format(formatWithSeconds));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith(':')
+            ).toEqual(false);
 
             view.setFormat({
                 timeDisplayFormat: formatWithoutSeconds
             });
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithoutSeconds));
-            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(core.lib.moment(someDateTimeISO).format(formatWithoutSeconds));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith(':')
+            ).toEqual(false);
         });
 
         it('should show custom minutes free from format', () => {
@@ -559,12 +586,22 @@ describe('Editors', () => {
             });
 
             show(view);
-            expect(findTimeInput(view).val().trim().includes('minutes')).toEqual(true);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .includes('minutes')
+            ).toEqual(true);
 
             view.setFormat({
                 timeDisplayFormat: formatWithoutSeconds
             });
-            expect(findTimeInput(view).val().trim().endsWith('minutes')).toEqual(true);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith('minutes')
+            ).toEqual(true);
         });
     });
 });

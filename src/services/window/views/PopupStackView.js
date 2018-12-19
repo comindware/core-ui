@@ -7,7 +7,7 @@ const classes = {
 const POPUP_ID_PREFIX = 'popup-region-';
 
 export default Marionette.View.extend({
-    initialize(options = {}) {
+    initialize() {
         this.__stack = [];
         this.__forceFadeBackground = false;
     },
@@ -53,7 +53,7 @@ export default Marionette.View.extend({
             }
         }
 
-        this.$el.append(regionEl);
+        $(document.body).append(regionEl);
         this.addRegion(popupId, {
             el: regionEl
         });
@@ -124,22 +124,6 @@ export default Marionette.View.extend({
         }
     },
 
-    __removeTransientPopups() {
-        this.__stack
-            .filter(x => x.options.transient)
-            .reverse()
-            .forEach(popupDef => {
-                this.__removePopup(popupDef);
-            });
-    },
-
-    __removePopup(popupDef) {
-        this.removeRegion(popupDef.popupId);
-        this.el.removeChild(popupDef.regionEl);
-        this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-        this.trigger('popup:close', popupDef.popupId);
-    },
-
     get(popupId) {
         const index = this.__stack.findIndex(x => x.popupId === popupId);
         if (index === -1) {
@@ -155,6 +139,22 @@ export default Marionette.View.extend({
     fadeBackground(fade) {
         this.__forceFadeBackground = fade;
         this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
+    },
+
+    __removeTransientPopups() {
+        this.__stack
+            .filter(x => x.options.transient)
+            .reverse()
+            .forEach(popupDef => {
+                this.__removePopup(popupDef);
+            });
+    },
+
+    __removePopup(popupDef) {
+        this.removeRegion(popupDef.popupId);
+        document.body.removeChild(popupDef.regionEl);
+        this.__stack.splice(this.__stack.indexOf(popupDef), 1);
+        this.trigger('popup:close', popupDef.popupId);
     },
 
     __toggleFadedBackground(fade) {
