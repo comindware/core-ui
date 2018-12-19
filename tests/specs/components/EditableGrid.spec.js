@@ -250,8 +250,9 @@ describe('Components', () => {
 
             gridController.view.listenTo(gridController.view.listView, 'click', clickCallback());
             clickedElement.click();
-            setInterval(() => {
+            const timer = setInterval(() => {
                 if (gridController.view.toolbarView.allItemsCollection.length !== 1) {
+                    clearTimeout(timer);
                     expect(gridController.view.toolbarView.allItemsCollection.length).toBe(4);
                     done();
                 }
