@@ -244,6 +244,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setReadonly(readonly: Boolean): void {
         BaseEditorView.prototype.setReadonly.call(this, readonly);
+        if (!this.isRendered()) {
+            return;
+        }
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
@@ -252,6 +255,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setEnabled(enabled: Boolean): void {
         BaseEditorView.prototype.setEnabled.call(this, enabled);
+        if (!this.isRendered()) {
+            return;
+        }
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
@@ -417,7 +423,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             (_.isObject(value) ?
                 new Backbone.Model(value) :
                 new Backbone.Model({
-                    id: value,
+                  id: value,
                     text: this.__isValueEqualNotSet(value) ?
                         Localizer.get('CORE.COMMON.NOTSET') :
                         undefined
@@ -465,12 +471,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (value) {
             const selectedItems = this.getOption('valueType') === 'id' ? 
                 this.panelCollection.parentCollection.filter(collectionItem => {
-                    const itemId = collectionItem.get('id').toString();
-                    if (Array.isArray(value)) {
-                        return value.find(v => (v && v.id ? v.id : v === itemId));
-                    }
-                    return value === itemId;
-                })
+                          const itemId = collectionItem.get('id').toString();
+                          if (Array.isArray(value)) {
+                              return value.find(v => (v && v.id ? v.id : v === itemId));
+                          }
+                          return value === itemId;
+                      })
                 :
                 value.map(item => this.__getValueFromPanelCollection(item));
             if (selectedItems) {
