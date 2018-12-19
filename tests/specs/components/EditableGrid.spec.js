@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     const data = [];
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 500; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -97,6 +97,25 @@ describe('Components', () => {
         }
     ];
 
+    const singleRowData = [
+        {
+            textCell: 'Text Cell'
+        }
+    ];
+
+    const singleColumn = [
+        {
+            key: 'textCell',
+            type: 'Text',
+            title: 'TextCell',
+            required: true,
+            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
+            sorting: 'asc',
+            editable: true
+        }
+    ];
+
     const dependantColumns = [
         {
             key: 'textCell',
@@ -132,12 +151,12 @@ describe('Components', () => {
         }
     ];
 
-    fdescribe('EditableGrid', () => {
+    describe('EditableGrid', () => {
         it('should initialize', () => {
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
 
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -156,9 +175,9 @@ describe('Components', () => {
 
         it('should trigger callback on click on row', () => {
             const clickCallback = jasmine.createSpy();
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -172,7 +191,7 @@ describe('Components', () => {
                 .getRegion('contentRegion')
                 .show(gridController.view);
 
-            const clickedElement = document.getElementsByClassName('row')[1];
+            const clickedElement = document.getElementsByClassName('row')[0];
 
             gridController.on('click', clickCallback());
             clickedElement.click();
@@ -182,9 +201,9 @@ describe('Components', () => {
 
         it('should select row on click on checkbox', () => {
             const clickCallback = jasmine.createSpy();
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -208,9 +227,9 @@ describe('Components', () => {
 
         it('should check checkbox if it was checked', () => {
             const clickCallback = jasmine.createSpy();
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -234,9 +253,9 @@ describe('Components', () => {
 
         it('should show additional Toolbar buttons if at least one of rows is checked', done => {
             const clickCallback = jasmine.createSpy();
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -244,7 +263,7 @@ describe('Components', () => {
                 collection,
                 title: 'Editable grid'
             });
- 
+
             window.app
                 .getView()
                 .getRegion('contentRegion')
@@ -264,7 +283,7 @@ describe('Components', () => {
             }, 100);
         });
 
-        xit('should search when typing in search box', done => {
+        it('should search when typing in search box', done => {
             const collection = new Backbone.Collection(data);
 
             const gridController = new core.list.controllers.GridController({
