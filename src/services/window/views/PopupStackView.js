@@ -53,7 +53,7 @@ export default Marionette.View.extend({
             }
         }
 
-        $(document.body).append(regionEl);
+        Backbone.$(document.body).append(regionEl);
         this.addRegion(popupId, {
             el: regionEl
         });
