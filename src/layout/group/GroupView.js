@@ -77,16 +77,10 @@ export default Marionette.View.extend({
 
     __onCollapsedChange(model, collapsed) {
         this.ui.toggleCollapseButton.toggleClass(classes.COLLAPSED_CLASS, collapsed);
-
         if (collapsed) {
-            this.elHeight = this.getRegion('containerRegion').el.offsetHeight;
-            TweenLite.to(this.getRegion('containerRegion').el, 0.15, {
-                height: 0
-            });
+            this.getRegion('containerRegion').$el.hide(200);
         } else {
-            TweenLite.to(this.getRegion('containerRegion').el, 0.15, {
-                height: this.elHeight || ''
-            });
+            this.getRegion('containerRegion').$el.show(200);
         }
         return false;
     }
