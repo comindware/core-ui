@@ -97,6 +97,25 @@ describe('Components', () => {
         }
     ];
 
+    const singleRowData = [
+        {
+            textCell: 'Text Cell'
+        }
+    ];
+
+    const singleColumn = [
+        {
+            key: 'textCell',
+            type: 'Text',
+            title: 'TextCell',
+            required: true,
+            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
+            sorting: 'asc',
+            editable: true
+        }
+    ];
+
     const dependantColumns = [
         {
             key: 'textCell',
@@ -134,10 +153,10 @@ describe('Components', () => {
 
     describe('EditableGrid', () => {
         it('should initialize', () => {
-            const collection = new Backbone.Collection(data);
+            const collection = new Backbone.Collection(singleRowData);
 
             const gridController = new core.list.controllers.GridController({
-                columns,
+                columns: singleColumn,
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
@@ -152,6 +171,185 @@ describe('Components', () => {
                 .show(gridController.view);
 
             expect(true).toBe(true);
+        });
+
+        it('should trigger callback on click on row', () => {
+            const clickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+
+            gridController.on('click', clickCallback());
+            clickedElement.click();
+            gridController.off('click', clickCallback);
+            expect(clickCallback.calls.count()).toEqual(1);
+        });
+
+        it('should trigger callback on double-click on row', () => {
+            const dblclickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+            const dblClickEvent = new MouseEvent('dblclick', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+
+            gridController.on('dblclick', dblclickCallback());
+            clickedElement.dispatchEvent(dblClickEvent);
+            gridController.off('dblclick', dblclickCallback);
+            expect(dblclickCallback.calls.count()).toEqual(1);
+        });
+
+        it('should select row on click on checkbox', () => {
+            const clickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('cell_selection')[1];
+
+            gridController.on('click', clickCallback());
+            clickedElement.click();
+            gridController.off('click', clickCallback);
+            expect(clickedElement.classList.contains('selected')).toBe(true);
+        });
+
+        it('should check checkbox if it was checked', () => {
+            const clickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.querySelector('.grid-selection-panel .cell_selection .checkbox');
+
+            gridController.on('click', clickCallback());
+            clickedElement.click();
+            gridController.off('click', clickCallback);
+            expect(clickedElement.classList.contains('editor_checked')).toBe(true);
+        });
+
+        it('should show additional Toolbar buttons if at least one of rows is checked', done => {
+            const clickCallback = jasmine.createSpy();
+            const collection = new Backbone.Collection(singleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.querySelector('.grid-selection-panel .cell_selection .checkbox');
+
+            gridController.on('click', clickCallback());
+            clickedElement.click();
+            gridController.off('click', clickCallback);
+            const timer = setInterval(() => {
+                if (gridController.view.toolbarView.allItemsCollection.length !== 1) {
+                    clearTimeout(timer);
+                    expect(gridController.view.toolbarView.allItemsCollection.length).toBe(4);
+                    done();
+                }
+            }, 100);
+        });
+
+        it('should send correct model on click on row', done => {
+            const tripleRowData = [
+                {
+                    textCell: 'Text Cell 1'
+                },
+                {
+                    textCell: 'Text Cell 2'
+                },
+                {
+                    textCell: 'Text Cell 3'
+                }
+            ];
+            const collection = new Backbone.Collection(tripleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+            function getSelectedModel(selectedModel) {
+                expect(collection.at(0)).toEqual(selectedModel);
+                gridController.off('click', getSelectedModel);
+                done();
+            }
+
+            gridController.on('click', getSelectedModel);
+            clickedElement.click();
         });
 
         it('should search when typing in search box', done => {
@@ -180,7 +378,6 @@ describe('Components', () => {
             const searchInput = document.getElementsByClassName('js-search-input')[0];
 
             searchInput.value = 'Text Cell 1';
-
             gridController.view.$(searchInput).trigger('keyup');
         });
         /*
