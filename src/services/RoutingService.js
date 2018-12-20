@@ -240,22 +240,21 @@ export default {
             this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
             return false;
         }
-        if (!subModulePresented) {
-            //do not trigger events and cancel requests for submodules
-            this.trigger('module:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
-            //clear all promises of the previous module
-            Core.services.PromiseService.cancelAll();
-            if (!this.loadingContext.loaded) {
-                this.activeModule.view.setModuleLoading(true);
-            }
+
+        //do not trigger events and cancel requests for submodules
+        this.trigger('module:leave', {
+            page: this.activeModule?.moduleId
+        });
+        //clear all promises of the previous module
+        Core.services.PromiseService.cancelAll();
+        if (!this.loadingContext.loaded) {
+            this.activeModule.view.setModuleLoading(true);
         }
         return true;
     },
 
     __tryGetSubmoduleRegion(config) {
-        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
+        if (this.activeModule?.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
