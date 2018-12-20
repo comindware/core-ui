@@ -1,7 +1,7 @@
 // @flow
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
-import { helpers, comparators } from 'utils';
+import { helpers } from 'utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import FakeInputModel from './impl/datalist/models/FakeInputModel';
@@ -24,8 +24,6 @@ type DatalistValue = Array<DataValue>;
 const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
-
-const text2AscComparatorSort = helpers.comparatorFor(comparators.stringComparator2Asc, 'text');
 
 const defaultOptions = {
     displayAttribute: 'name',
@@ -52,21 +50,16 @@ const defaultOptions = {
     minAvailableHeight: undefined
 };
 /* Some DOCS
-    Datalist value (this.value) is array type. (DatalistValue)
     Datalist fetch [searched] data from controller on click
-    __resetPanelVirtualCollection don't work as panelCollection.reset.
-    for this you can just reset passed collection.
+    Comparator selected collection should be change place for fakeInputModel.
 
     ToDo:
-    1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
-    2.Develop readonly for input (like TextEditorView).
-    3.If used fetchUpdateFilter as api, then value added, not reseted.
-    5.staticController has no addNewItem function.
-    6.If showsearch = false, keyup, keydown not move pointer on panel.
-    9.defaultOptions:displayAttribute should be text.
-    10.comparator selected collection should be compare for getDisplayText
-    11.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    13.getDisolayText should return string always. (String(returnedValue))
+    1.Prevent loading if readonly.
+    2.staticController has no addNewItem function.
+    3.If showsearch = false, keyup, keydown not move pointer on panel.
+    4.defaultOptions:displayAttribute should be text.
+    5.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
+    6.getDisolayText should return string always. (String(returnedValue))
 */
 /**
  * @name DatalistView
@@ -110,7 +103,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 displayAttribute: options.displayAttribute
             });
 
-        this.value = this.__adjustValue(this.value);
+        this.value = this.__adjustValue(this.value, true);
         this.debouncedFetchUpdateFilter = _.debounce(this.fetchUpdateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
@@ -123,7 +116,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 if (b instanceof FakeInputModel) {
                     return -1;
                 }
-                return text2AscComparatorSort(a, b);
+                return 0;
             }
         });
 
@@ -166,7 +159,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
-                canSelect: () => this.options.maxQuantitySelected === 1 || this.__canAddItem(),
+                canSelect: () => this.__canAddItem(),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
                     iconProperty: this.options.iconProperty
@@ -208,8 +201,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     setValue(value): void {
-        this.value = [];
-        this.__resetSelectedCollection();
         this.__value(value, false);
     },
 
@@ -226,20 +217,22 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     isEmptyValue(): boolean {
         const value = this.getValue();
-        if (this.getOption('valueType') === 'id') {
-            return value == null;
-        }
-        return value == null || !value.length;
+        return Array.isArray(value) ?
+            value == null || !value.length :
+            value == null;
     },
 
-    getValue() {
+    __convertToValue(estimatedObjects) {
         if (this.getOption('valueType') === 'id') {
-            if (this.getOption('maxQuantitySelected') === 1) {
-                return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
-            }
-            return Array.isArray(this.value) && this.value.map(value => (value && value.id !== undefined ? value.id : value));
+            return Array.isArray(estimatedObjects) ?
+                estimatedObjects.map(value => value && value.id) :
+                estimatedObjects && estimatedObjects.id;
         }
-        return this.value;
+        return estimatedObjects;
+    },
+
+    __convertToObject(value) {
+        this.__adjustValue(value);
     },
 
     setReadonly(readonly: Boolean): void {
@@ -342,6 +335,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __resetPanelVirtualCollection(rawDataVirtual) {
         this.panelCollection.totalCount = rawDataVirtual.totalCount;
         this.panelCollection.reset(rawDataVirtual.collection);
+        this.panelCollection.selected = {};
 
         if (this.options.maxQuantitySelected === 1) {
             return;
@@ -385,21 +379,21 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView.close();
     },
 
-    __adjustValue(value: any): DataValue {
+    __adjustValue(value: any, isLoadIfNeeded = false) {
         if (_.isUndefined(value) || value === null) {
-            return [];
+            return this.options.maxQuantitySelected === 1 ? undefined : [];
         }
-        const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value) : value;
-        return Array.isArray(result) ? result : [result];
+        const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;
+        return result;
     },
 
-    __adjustValueForIdMode(value) {
-        if (!this.isLastFetchSuccess) {
-            this.fetchUpdateFilter('', true);
+    __adjustValueForIdMode(value, isLoadIfNeeded) {
+        if (isLoadIfNeeded && !this.isLastFetchSuccess && this.panelCollection.length === 0) {
             this.listenToOnce(this, 'view:ready', () => {
-                this.setValue(this.__adjustValueFromLoaded(value).map(item => item.toJSON()));
+                const adjustedValue = this.__adjustValueFromLoaded(value);
+                this.setValue(Array.isArray(adjustedValue) ? adjustedValue.map(item => item.toJSON()) : adjustedValue);
             });
-            return [];
+            this.fetchUpdateFilter('', true);
         }
         return this.__adjustValueFromLoaded(value);
     },
@@ -408,7 +402,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (Array.isArray(value)) {
             return value.map(v => this.__getValueFromPanelCollection(v));
         }
-        return [this.__getValueFromPanelCollection(value)];
+        return this.__getValueFromPanelCollection(value);
     },
 
     __getValueFromPanelCollection(value) {
@@ -423,7 +417,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             (_.isObject(value) ?
                 new Backbone.Model(value) :
                 new Backbone.Model({
-                  id: value,
+                    id: value,
                     text: this.__isValueEqualNotSet(value) ?
                         Localizer.get('CORE.COMMON.NOTSET') :
                         undefined
@@ -435,55 +429,34 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isValueIncluded(value) {
-        return JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id));
+        if (this.options.valueType === 'id') {
+            if (_.isObject(value)) {
+                return this.value.some(v => v === value.id);
+            }
+            return this.value.includes(value);
+        }
+        return this.value.some(v => v.id === (_.isObject(value) ? value.id : value));
     },
 
-    __value(value: DataValue, triggerChange: boolean): void {
-        if (this.isValueIncluded(value)) {
-            return false;
-        }
+    __value(value, triggerChange) {
         const adjustedValue = this.__adjustValue(value);
+        this.value = this.__convertToValue(adjustedValue);
 
-        if (this.options.maxQuantitySelected === 1) {
-            const firstModel = this.selectedButtonCollection.first();
-            if (firstModel !== this.fakeInputModel) {
-                this.selectedButtonCollection.remove(firstModel);
-            }
-            this.value = adjustedValue;
-        } else {
-            this.value = this.getValue().concat(adjustedValue);
-        }
-
-        this.__resetSelectedCollection(this.value);
+        this.__resetSelectedCollection(adjustedValue);
 
         if (triggerChange) {
             this.__triggerChange();
         }
 
-        this.__updateFakeInputModel();
-
         return true;
     },
 
     resetCollection(collection) {
-        const value = this.model ? this.model.get(this.key) : this.value;
-        this.panelCollection.reset(collection.models);
-        if (value) {
-            const selectedItems = this.getOption('valueType') === 'id' ? 
-                this.panelCollection.parentCollection.filter(collectionItem => {
-                          const itemId = collectionItem.get('id').toString();
-                          if (Array.isArray(value)) {
-                              return value.find(v => (v && v.id ? v.id : v === itemId));
-                          }
-                          return value === itemId;
-                      })
-                :
-                value.map(item => this.__getValueFromPanelCollection(item));
-            if (selectedItems) {
-                this.setValue(selectedItems.map(item => item.toJSON()));
-                selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
-            }
-        }
+        this.__resetPanelVirtualCollection({
+            collection: collection.models,
+            totalCount: collection.length
+        });
+        this.__value(this.value);
     },
 
     __onValueSelect(): void {
@@ -492,26 +465,30 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __onValueSet(model?: Backbone.Model, options = {}): void {
-        const canAddItemOldValue = this.__canAddItem();
-        const value = model ? model.toJSON() : null;
-
-        this.__value(value, true);
-        this.__updateFakeInputModel();
-
-        if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
-            this.__checkSelectedState(model);
-            this.dropdownView.close();
-            this.updateButtonInput('');
-            this.__focusButton();
+    __onValueSet(model: Backbone.Model, options = {}): void {
+        if (options.isSilent) {
             return;
         }
+        if (this.__canAddItem()) {
+            const valueObject = model ? model.toJSON() : null;
+            const value = this.__convertToValue(valueObject);
 
-        const stopAddItems = canAddItemOldValue !== this.__canAddItem();
-        if (stopAddItems) {
+            if (this.options.maxQuantitySelected === 1) {
+                this.__value(value, true);
+                this.__checkSelectedState(model);
+                this.dropdownView.close();
+                this.updateButtonInput('');
+                this.__focusButton();
+                return;
+            }
+
+            this.__value(this.value.concat(value), true);
+        }
+
+        if (!this.__canAddItem()) {
             this.dropdownView.close();
             this.updateButtonInput('');
-        } else if (!options.isSilent) {
+        } else {
             this.__focusButton();
             this.__clearSearch();
         }
@@ -537,6 +514,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
         const isAccess = this.getEnabled() && !this.getReadonly();
         const maxQuantity = this.options.maxQuantitySelected;
+
+        if (maxQuantity === 1) {
+            return true;
+        }
 
         return isAccess && maxQuantity > selectedItems.length;
     },
