@@ -81,7 +81,7 @@ export default Marionette.View.extend({
                 </div>
             </div>`
                       }))
-                    : [{ value: values.name }];
+                    : [{ value: values?.name }];
             }
             default:
                 return Array.isArray(values) ? values : [values];
@@ -122,6 +122,6 @@ export default Marionette.View.extend({
         if (Array.isArray(values)) {
             return values.map(v => v.name || v.id).join(', ');
         }
-        return values.name || values.id;
+        return values && (values.name || values.id);
     }
 });
