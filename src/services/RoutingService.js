@@ -261,7 +261,7 @@ export default {
     },
 
     __tryGetSubmoduleRegion(config) {
-        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('module:custom')) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
