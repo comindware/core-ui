@@ -173,45 +173,6 @@ describe('Components', () => {
             expect(true).toBe(true);
         });
 
-        it('should send correct model on click on row', done => {
-            const tripleRowData = [
-                {
-                    textCell: 'Text Cell 1'
-                },
-                {
-                    textCell: 'Text Cell 2'
-                },
-                {
-                    textCell: 'Text Cell 3'
-                }
-            ];
-            const collection = new Backbone.Collection(tripleRowData);
-            const gridController = new core.list.controllers.GridController({
-                columns: singleColumn,
-                selectableBehavior: 'multi',
-                showToolbar: true,
-                showSearch: true,
-                showCheckbox: true,
-                collection,
-                title: 'Editable grid'
-            });
-
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(gridController.view);
-
-            const clickedElement = document.getElementsByClassName('row')[0];
-            function getSelectedModel(selectedModel) {
-                expect(gridController.view.collection.at(0)).toEqual(selectedModel);
-                gridController.off('click', getSelectedModel);
-                done();
-            }
-
-            gridController.on('click', getSelectedModel);
-            clickedElement.click();
-        });
-
         it('should trigger callback on click on row', () => {
             const clickCallback = jasmine.createSpy();
             const collection = new Backbone.Collection(singleRowData);
@@ -281,7 +242,6 @@ describe('Components', () => {
                 collection,
                 title: 'Editable grid'
             });
-
             window.app
                 .getView()
                 .getRegion('contentRegion')
@@ -351,6 +311,45 @@ describe('Components', () => {
                     done();
                 }
             }, 100);
+        });
+
+        it('should send correct model on click on row', done => {
+            const tripleRowData = [
+                {
+                    textCell: 'Text Cell 1'
+                },
+                {
+                    textCell: 'Text Cell 2'
+                },
+                {
+                    textCell: 'Text Cell 3'
+                }
+            ];
+            const collection = new Backbone.Collection(tripleRowData);
+            const gridController = new core.list.controllers.GridController({
+                columns: singleColumn,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showCheckbox: true,
+                collection,
+                title: 'Editable grid'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
+
+            const clickedElement = document.getElementsByClassName('row')[0];
+            function getSelectedModel(selectedModel) {
+                expect(collection.at(0)).toEqual(selectedModel);
+                gridController.off('click', getSelectedModel);
+                done();
+            }
+
+            gridController.on('click', getSelectedModel);
+            clickedElement.click();
         });
 
         it('should search when typing in search box', done => {
