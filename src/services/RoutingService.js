@@ -261,7 +261,7 @@ export default {
     },
 
     __tryGetSubmoduleRegion(config) {
-        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView && config.id === 'module:custom') {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
@@ -324,7 +324,6 @@ export default {
             const urlParts = activeUrl.split('&nxt');
             const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
             const newRoute = window.location.hash.replace('#', '').split('&nxt')[replaceIndex];
-
 
             if (replaceIndex !== -1 && urlParts[replaceIndex] !== newRoute) {
                 module.pair.route = newRoute;
