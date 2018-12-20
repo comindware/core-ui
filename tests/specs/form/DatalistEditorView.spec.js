@@ -4,7 +4,7 @@ import 'jasmine-expect';
 import { keyCode } from 'utils';
 import FocusTests from './FocusTests';
 
-const controllerDelay = 700;
+const controllerDelay = 300;
 
 describe('Editors', () => {
     const getElement = (view, selector) => view.$(selector);
@@ -75,7 +75,7 @@ describe('Editors', () => {
         return fn(...args);
     }
 
-    const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
+    const DynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         async fetch() {
             return new Promise(resolve => {
                 this.collection.reset(collectionData3);
@@ -185,7 +185,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 }),
                 key: 'value',
@@ -237,7 +237,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection
                 }),
                 key: 'value',
@@ -381,7 +381,7 @@ describe('Editors', () => {
             const input = getInput(view);
 
             view.on('dropdown:close', () => {
-                expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
+                expect(view.getValue()).toEqual({ id: 2, name: 2 });
                 expect(view.dropdownView.isOpen).toBeFalse();
                 // expect(getItemOfList(0).length).toEqual(0);
                 done();
@@ -462,7 +462,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 }),
                 key: 'value',
@@ -533,7 +533,7 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 5,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -612,7 +612,7 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 5,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -711,7 +711,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 }),
                 key: 'value',
@@ -1007,7 +1007,7 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 3,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1048,7 +1048,7 @@ describe('Editors', () => {
                 showCheckboxes: true,
                 showSearch: false,
                 maxQuantitySelected: 3,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1089,7 +1089,7 @@ describe('Editors', () => {
                 showCheckboxes: true,
                 openOnRender: true,
                 maxQuantitySelected: 3,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1116,7 +1116,7 @@ describe('Editors', () => {
                 showCheckboxes: true,
                 valueType: 'id',
                 maxQuantitySelected: 3,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1144,7 +1144,7 @@ describe('Editors', () => {
                 openOnRender: false,
                 valueType: 'id',
                 maxQuantitySelected: 3,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1180,7 +1180,7 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 5,
-                controller: new dynamicController({
+                controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
             });
@@ -1201,12 +1201,11 @@ describe('Editors', () => {
             show(view);
         });
 
-        //ToDo: repeat next test for another 3 modes.
         it('after reset passed collection(mode: id, quan: many): -not open panel, -select all value items, -try adjust values', done => {
             const someCollection = new Backbone.Collection();
 
             const model = new Backbone.Model({
-                dropdownValue: ['1', '3', '5']
+                dropdownValue: [1, 3, 5]
             });
 
             const view = new core.form.editors.DatalistEditor({
@@ -1219,24 +1218,26 @@ describe('Editors', () => {
                 allowEmptyValue: true
             });
 
-            view.once('view:ready', () => {
-                expect(view.value).toBeArrayOfSize(3);
-                view.value.forEach(val => {
-                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
-                });
-                view.on('view:ready', () => expect(false).toBeTrue());
+            view.once('attach', () => {
+                setTimeout(() => {
+                    expect(view.value).toBeArrayOfSize(3);
+                    view.$('.bubbles__i > span').each((i, el) => {
+                        expect(el.innerText.startsWith('#')).toBeTrue();
+                    });
+                    view.on('view:ready', () => expect(false).toBeTrue());
 
-                someCollection.reset(possibleItems15);
-                expect(view.panelCollection.length).toEqual(possibleItems15.length);
-                expect(view.dropdownView.isOpen).toBeFalsy();
-                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(3);
+                    someCollection.reset(possibleItems15);
+                    expect(view.panelCollection.length).toEqual(possibleItems15.length);
+                    expect(view.dropdownView.isOpen).toBeFalsy();
+                    expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(3);
 
-                expect(view.value).toBeArrayOfSize(3);
-                view.value.forEach(val => {
-                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeFalse();
-                });
+                    expect(view.value).toBeArrayOfSize(3);
+                    view.$('.bubbles__i > span').each((i, el) => {
+                        expect(el.innerText.startsWith('#')).toBeFalse();
+                    });
 
-                done();
+                    done();
+                }, 100);
             });
 
             show(view);
@@ -1246,7 +1247,7 @@ describe('Editors', () => {
             const someCollection = new Backbone.Collection();
 
             const model = new Backbone.Model({
-                dropdownValue: '1'
+                dropdownValue: 1
             });
 
             const view = new core.form.editors.DatalistEditor({
@@ -1259,24 +1260,29 @@ describe('Editors', () => {
                 allowEmptyValue: true
             });
 
-            view.once('view:ready', () => {
-                expect(view.value).toBeArrayOfSize(1);
-                view.value.forEach(val => {
-                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeTrue();
-                });
-                view.on('view:ready', () => expect(false).toBeTrue());
+            view.once('attach', () => {
+                setTimeout(() => {
+                    expect(view.value).toBeNumber();
+                    view.$('.bubbles__i > span').each((i, el) => {
+                        expect(el.innerText.startsWith('#')).toBeTrue();
+                    });
+                    view.on('view:ready', () => expect(false).toBeTrue());
 
-                someCollection.reset(possibleItems15);
-                expect(view.panelCollection.length).toEqual(possibleItems15.length);
-                expect(view.dropdownView.isOpen).toBeFalsy();
-                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(1);
+                    someCollection.reset(possibleItems15);
 
-                expect(view.value).toBeArrayOfSize(1);
-                view.value.forEach(val => {
-                    expect(view.__getDisplayText(val.attributes).startsWith('#')).toBeFalse();
-                });
+                    expect(view.panelCollection.length).toEqual(possibleItems15.length);
+                    expect(view.dropdownView.isOpen).toBeFalsy();
 
-                done();
+                    //if quan === 1 panelCollection not select this.value to prevent dblclick for close.
+                    expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(0);
+
+                    expect(view.value).toBeNumber();
+                    view.$('.bubbles__i > span').each((i, el) => {
+                        expect(el.innerText.startsWith('#')).toBeFalse();
+                    });
+
+                    done();
+                }, 100);
             });
 
             show(view);
@@ -1333,13 +1339,12 @@ describe('Editors', () => {
         it('after reset passed collection(mode: normal, quan: one): -not open panel, -select all value items', done => {
             const someCollection = new Backbone.Collection();
             const model = new Backbone.Model({
-                dropdownValue: [
-                    {
-                        id: '1',
-                        text: 'Text 1',
-                        subtext: 'subtext 1'
-                    }
-                ]
+                dropdownValue:
+                {
+                    id: '1',
+                    text: 'Text 1',
+                    subtext: 'subtext 1'
+                }
             });
 
             const view = new core.form.editors.DatalistEditor({
@@ -1352,15 +1357,18 @@ describe('Editors', () => {
             });
 
             view.once('attach', () => {
-                expect(view.value).toBeArrayOfSize(1);
+                expect(view.value).toBeObject();
                 view.on('view:ready', () => expect(false).toBeTrue());
 
                 someCollection.reset(possibleItems15);
 
                 expect(view.panelCollection.length).toEqual(possibleItems15.length);
                 expect(view.dropdownView.isOpen).toBeFalsy();
-                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(1);
-                expect(view.value).toBeArrayOfSize(1);
+
+                //if quan === 1 panelCollection not select this.value to prevent dblclick for close.
+                expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(0);
+
+                expect(view.value).toBeObject();
 
                 done();
             });
@@ -1368,8 +1376,8 @@ describe('Editors', () => {
             show(view);
         });
 
-        describe('should always has view.value type is Array with Object', () => {
-            it('maxQuantitySelected: 1, valueType: id', done => {
+        describe('should has view.value as', () => {
+            it('primitive if maxQuantitySelected: 1, valueType: id', done => {
                 const model = new Backbone.Model({
                     value: 1
                 });
@@ -1384,16 +1392,15 @@ describe('Editors', () => {
                     maxQuantitySelected: 1
                 });
 
-                view.on('view:ready', () => {
-                    expect(view.value).toBeArrayOfObjects();
-                    expect(view.value).toBeArrayOfSize(1);
+                view.on('attach', () => {
+                    expect(view.value).toBeNumber();
                     done();
                 });
 
                 show(view);
             });
 
-            it('maxQuantitySelected > 1, valueType: id', done => {
+            it('array with primitives if maxQuantitySelected > 1, valueType: id', done => {
                 const model = new Backbone.Model({
                     value: [1, 2, 3]
                 });
@@ -1408,8 +1415,8 @@ describe('Editors', () => {
                     maxQuantitySelected: 3
                 });
 
-                view.on('view:ready', () => {
-                    expect(view.value).toBeArrayOfObjects();
+                view.on('attach', () => {
+                    expect(view.value).toBeArrayOfNumbers();
                     expect(view.value).toBeArrayOfSize(3);
                     done();
                 });
@@ -1417,7 +1424,7 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('maxQuantitySelected > 1, valueType: normal', done => {
+            it('array of objects if maxQuantitySelected > 1, valueType: normal', done => {
                 const model = new Backbone.Model({
                     DatalistValue: [
                         {
@@ -1443,7 +1450,7 @@ describe('Editors', () => {
                     showAddNewButton: true,
                     showCheckboxes: true,
                     maxQuantitySelected: 3,
-                    controller: new dynamicController({
+                    controller: new DynamicController({
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
@@ -1457,14 +1464,13 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('maxQuantitySelected = 1, valueType: normal', done => {
+            it('object if maxQuantitySelected = 1, valueType: normal', done => {
                 const model = new Backbone.Model({
-                    DatalistValue: [
-                        {
-                            id: 'task.1',
-                            text: 'Test Reference 1'
-                        }
-                    ]
+                    DatalistValue:
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    }
                 });
 
                 const view = new core.form.editors.DatalistEditor({
@@ -1475,14 +1481,13 @@ describe('Editors', () => {
                     showAddNewButton: true,
                     showCheckboxes: true,
                     maxQuantitySelected: 3,
-                    controller: new dynamicController({
+                    controller: new DynamicController({
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
 
                 view.on('attach', () => {
-                    expect(view.value).toBeArrayOfObjects();
-                    expect(view.value).toBeArrayOfSize(1);
+                    expect(view.value).toBeObject();
                     done();
                 });
 
@@ -1563,7 +1568,7 @@ describe('Editors', () => {
                     showAddNewButton: true,
                     showCheckboxes: true,
                     maxQuantitySelected: 3,
-                    controller: new dynamicController({
+                    controller: new DynamicController({
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
@@ -1596,7 +1601,7 @@ describe('Editors', () => {
                     showAddNewButton: true,
                     showCheckboxes: true,
                     maxQuantitySelected: 3,
-                    controller: new dynamicController({
+                    controller: new DynamicController({
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
                 });
