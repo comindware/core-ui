@@ -69,7 +69,7 @@ export default Marionette.View.extend({
                  ${v.name}
             </div>`
                       }))
-                    : [{ value: values.name }];
+                    : [{ value: values?.name }];
             }
             case 'Document': {
                 return Array.isArray(values)
