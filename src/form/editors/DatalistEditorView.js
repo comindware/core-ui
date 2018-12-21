@@ -55,13 +55,12 @@ const defaultOptions = {
     Comparator selected collection should be change place for fakeInputModel.
 
     ToDo:
-    1.Prevent loading if readonly.
-    2.staticController has no addNewItem function.
-    3.If showsearch = false, keyup, keydown not move pointer on panel.
-    4.defaultOptions:displayAttribute should be text.
-    5.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    6.getDisolayText should return string always. (String(returnedValue)).
-    7.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
+    1.staticController has no addNewItem function.
+    2.If showsearch = false, keyup, keydown not move pointer on panel.
+    3.defaultOptions:displayAttribute should be text.
+    4.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
+    5.getDisolayText should return string always. (String(returnedValue)).
+    6.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
@@ -243,7 +242,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isRendered()) {
             return;
         }
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
         this.getInputView()?.setReadonly(readonly);
@@ -254,7 +253,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isRendered()) {
             return;
         }
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
         this.getInputView()?.setEnabled(enabled);
@@ -368,7 +367,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getIsOpenAllowed() {
-        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && this.isThisFocus();
+        return this.__getEditorEnabled() && !this.dropdownView.isOpen && this.isThisFocus();
+    },
+
+    __getEditorEnabled() {
+        return this.getEnabled() && !this.getReadonly();
     },
 
     open(openOnRender) {
@@ -520,7 +523,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __canAddItem(): boolean {
         const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
-        const isAccess = this.getEnabled() && !this.getReadonly();
+        const isAccess = this.__getEditorEnabled();
         const maxQuantity = this.options.maxQuantitySelected;
 
         if (maxQuantity === 1) {
@@ -573,6 +576,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
+        if (!this.__getEditorEnabled()) {
+            return;
+        }
         this.fetchUpdateFilter(filterValue, forceCompareText, openOnRender);
     },
 
