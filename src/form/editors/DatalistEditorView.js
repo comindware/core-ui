@@ -446,7 +446,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.value = this.__convertToValue(adjustedValue);
 
         if (this.options.storeArray && !Array.isArray(this.value)) {
-            this.value = [this.value];
+            this.value = this.value !== undefined ? [this.value] : [];
         }
 
         this.__resetSelectedCollection(adjustedValue);
