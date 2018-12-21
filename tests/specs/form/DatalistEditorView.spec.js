@@ -1495,6 +1495,38 @@ describe('Editors', () => {
             });
         });
 
+        it('should not fetchUpdate after select item if search was empty', done => {
+            const model = new Backbone.Model({
+                dropdownValue: ['1', '3', '5']
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                key: 'dropdownValue',
+                autocommit: true,
+                collection: possibleItems15,
+                maxQuantitySelected: Infinity,
+                valueType: 'id',
+                allowEmptyValue: true
+            });
+
+            view.once('attach', () => {
+                view.once('view:ready', () => {
+                    view.on('view:ready view:notReady', () => expect(false).toBeTrue('fetchUpdate is fired!'));
+                    model.on('change:dropdownValue', (model, dropdownValue) => {
+                        expect(dropdownValue).toBeArrayOfSize(4);
+                        expect(dropdownValue.includes(8)).toBeTrue();
+                    });
+                    const nonSelectedItem = getItemOfList(8);
+                    nonSelectedItem.click();
+                    setTimeout(() => done(), 100);
+                });
+                actionForOpen(view);
+            });
+
+            show(view);
+        });
+
         /*
         describe('should set correct value to model on select', () => {
             it('maxQuantitySelected: 1, valueType: id', done => {

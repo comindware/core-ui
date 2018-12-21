@@ -60,7 +60,8 @@ const defaultOptions = {
     3.If showsearch = false, keyup, keydown not move pointer on panel.
     4.defaultOptions:displayAttribute should be text.
     5.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    6.getDisolayText should return string always. (String(returnedValue))
+    6.getDisolayText should return string always. (String(returnedValue)).
+    7.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
@@ -610,6 +611,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __addFakeInputModel(collection) {
+        if (!collection) {
+            return;
+        }
         if (!this.options.showSearch) {
             if (this.fakeInputModel) {
                 collection.remove(this.fakeInputModel);
@@ -617,17 +621,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             }
             return;
         }
-        collection.add(
-            this.isFakeInputModelWrong(collection) ?
-                this.fakeInputModel = new FakeInputModel() :
-                this.fakeInputModel
-        );
+        this.fakeInputModel = this.fakeInputModel || new FakeInputModel();
+        collection.add(this.fakeInputModel);
 
         this.__updateFakeInputModel();
-    },
-
-    isFakeInputModelWrong(collection) {
-        return !this.fakeInputModel || !collection.has(this.fakeInputModel.id);
     },
 
     updateButtonInput(string): void {
