@@ -442,7 +442,6 @@ module.exports.apply = {
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],
-        height: '100px',
         padding: '6px'
     },
     'drop-zone-active-theme': {

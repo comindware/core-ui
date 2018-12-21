@@ -261,7 +261,7 @@ export default {
     },
 
     __tryGetSubmoduleRegion(config) {
-        if (this.activeModule && this.activeModule.moduleRegion.currentView) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
@@ -323,9 +323,10 @@ export default {
             const prefix = cleanUrl.split('/')[0];
             const urlParts = activeUrl.split('&nxt');
             const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
+            const newRoute = window.location.hash.replace('#', '').split('&nxt')[replaceIndex];
 
-            if (replaceIndex !== -1 && urlParts[replaceIndex] !== window.location.hash.replace('#', '').split('&nxt')[replaceIndex]) {
-                module.pair.route = urlParts[replaceIndex];
+            if (replaceIndex !== -1 && urlParts[replaceIndex] !== newRoute) {
+                module.pair.route = newRoute;
                 setTimeout(() => module.pair.callback(module.pair.route));
             }
         });

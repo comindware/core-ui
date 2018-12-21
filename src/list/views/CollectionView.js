@@ -99,6 +99,7 @@ export default Marionette.CollectionView.extend({
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
             if (collection?.diff?.length) {
+            this.__specifyChildHeight();
                 return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
             return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { scroll: collection.scroll })); //magic from prod collection
@@ -124,10 +125,23 @@ export default Marionette.CollectionView.extend({
     },
 
     onAttach() {
+        this.__specifyChildHeight();
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
         this.parent$el = this.$el.parent();
+        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
         this.parent$el.on('scroll', this.__onScroll.bind(this));
+    },
+
+    __specifyChildHeight() {
+        if (this.__isChildHeightSpecified || this.collection.length === 0) {
+            return;
+        }
+        const childHeight = this.el.children[0]?.offsetHeight;
+        if (childHeight > 0) {
+            this.childHeight = childHeight;
+            this.__isChildHeightSpecified = true;
+        }
     },
 
     _showEmptyView() {
@@ -361,12 +375,22 @@ export default Marionette.CollectionView.extend({
     },
 
     __onScroll(e) {
-        if (this.state.viewportHeight === undefined || e.target.scrollLe || this.collection.length <= this.state.viewportHeight || this.internalScroll || this.isDestroyed()) {
+        if (this.state.viewportHeight === undefined ||
+            this.isScrollHorizontal() ||
+            this.collection.length <= this.state.viewportHeight ||
+            this.internalScroll ||
+            this.isDestroyed()) {
             return;
         }
 
         const newPosition = Math.max(0, Math.ceil(this.parent$el.scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
+    },
+
+    isScrollHorizontal() {
+        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
+        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
+        return isHorisontal;
     },
 
     updatePosition(newPosition) {

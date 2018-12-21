@@ -11,7 +11,8 @@ export default Marionette.View.extend({
 
     ui: {
         panelSelectedContainer: '.panel-selected_container',
-        closeButton: '.js-close_users'
+        closeButton: '.js-close_users',
+        title: '.js-title'
     },
 
     events: {
@@ -21,9 +22,12 @@ export default Marionette.View.extend({
     className: 'simplified-panel_container simplified-panel_panel dropdown_root',
 
     onRender() {
+        const readonly = this.options.editor.getReadonly();
+        const enabled = this.options.editor.getEnabled();
+        const editable = enabled && !readonly;
         const customEditor = Object.assign({}, this.options.editorConfig, {
             showSearch: false,
-            openOnRender: true,
+            openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
             customTemplate:
                 '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
@@ -34,7 +38,13 @@ export default Marionette.View.extend({
         const searchView = new SearchBarView();
 
         this.showChildView('editorRegion', editor);
-        this.showChildView('searchBarRegion', searchView);
+        if (editable) {
+            this.showChildView('searchBarRegion', searchView);
+        } else {
+            editor.setReadonly(readonly);
+            editor.setEnabled(enabled);
+            this.ui.title.hide();
+        }
 
         this.listenTo(searchView, 'search', text => this.__onSearch(text, editor));
         this.listenTo(editor, 'dropdown:close', () => this.trigger('dropdown:close'));
@@ -54,7 +64,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.getRegion('searchBarRegion').currentView.focus();
+        this.getRegion('searchBarRegion').currentView?.focus();
     },
 
     __onSearch(text, editor) {

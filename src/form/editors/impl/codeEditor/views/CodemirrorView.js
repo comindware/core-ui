@@ -686,7 +686,8 @@ export default Marionette.View.extend({
             }
 
             this.tooltip = new tooltipView({ model: tooltipModel });
-            this.tooltipContainer.show(this.tooltip);
+            this.showChildView('tooltipContainer', this.tooltip);
+
             const documentWidth = document.body.offsetWidth;
             const documentHeight = document.body.offsetHeight;
             const tooltipWidth = this.tooltip.$el.width();
