@@ -553,7 +553,7 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should fetch data on every click', done => {
+        it('should fetch data on every click if not readonly', done => {
             const model = new Backbone.Model({
                 DatalistValue: [
                     {
@@ -612,6 +612,7 @@ describe('Editors', () => {
                 showAddNewButton: true,
                 showCheckboxes: true,
                 maxQuantitySelected: 5,
+                readonly: true,
                 controller: new DynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                 })
@@ -631,8 +632,9 @@ describe('Editors', () => {
                 }
             });
 
-            anotherView.on('view:ready', () => {
-                _.delay(() => actionForOpen(view), 20);
+            anotherView.on('view:ready', () => expect(false).toBeTrue('readonly view is fetched!'));
+            anotherView.$el.on('click', () => {
+                _.delay(() => actionForOpen(view), controllerDelay);
             });
 
             view.on('attach', () => {
