@@ -469,7 +469,7 @@
 
 .cell .editor{
     height: 100%;
-    line-height: initial;
+    line-height: normal;
     border: none;
     background-color: transparent;
 }
