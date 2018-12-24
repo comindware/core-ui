@@ -64,7 +64,8 @@ export default Marionette.View.extend({
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {
-            const lastIndex = this.__stack.lastIndexOf(x => x.options.fadeBackground);
+            let lastIndex = -1;
+            this.__stack.forEach((x, i) => (lastIndex = x.options.fadeBackground ? i : lastIndex));
 
             if (lastIndex !== -1) {
                 this.__stack[lastIndex].regionEl.classList.remove(classes.POPUP_FADE);
@@ -72,9 +73,12 @@ export default Marionette.View.extend({
                 this.__toggleFadedBackground(true);
             }
             regionEl.classList.add(classes.POPUP_FADE);
+            this.topPopupId = popupId;
         }
 
         this.__stack.push(config);
+        view.popupId = popupId;
+
         return popupId;
     },
 
@@ -123,8 +127,31 @@ export default Marionette.View.extend({
 
         if (lastElement) {
             lastElement.regionEl.classList.add(classes.POPUP_FADE);
+            this.topPopupId = lastElement.popupId;
         } else {
+            this.topPopupId = undefined;
             this.__toggleFadedBackground(this.__forceFadeBackground);
+        }
+    },
+
+    isPopupOnTop(popupId) {
+        return this.topPopupId === popupId;
+    },
+
+    async closeTopPopup() {
+        if (this.__stack.length === 0) {
+            return;
+        }
+        const config = this.__stack[this.__stack.length - 1];
+        if (!config.view.__isNeedToPrevent || !config.view.__isNeedToPrevent()) {
+            if (config.view.close) {
+                const results = await config.view.close();
+                if (results) {
+                    this.closePopup(config.popupId);
+                }
+            } else {
+                this.closePopup(config.popupId);
+            }
         }
     },
 

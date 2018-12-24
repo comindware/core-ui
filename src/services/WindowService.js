@@ -1,4 +1,5 @@
 import PopupStackView from './window/views/PopupStackView';
+import GlobalEventService from './GlobalEventService';
 
 export default {
     initialize() {
@@ -20,6 +21,7 @@ export default {
         rootView.showChildView('popupStackRegion', this.__popupStackView);
 
         this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
     },
 
     /**
@@ -71,5 +73,15 @@ export default {
 
     fadeBackground(fade) {
         this.__popupStackView.fadeBackground(fade);
+    },
+
+    isPopupOnTop(popupId) {
+        return this.__popupStackView.isPopupOnTop(popupId);
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.__popupStackView.closeTopPopup();
+        }
     }
 };
