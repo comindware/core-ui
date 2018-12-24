@@ -2,9 +2,9 @@
 
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     const model = new Backbone.Model({
-        radioValue: 'value2'
+        // radioValue: 'value2'
     });
 
     return new CanvasView({

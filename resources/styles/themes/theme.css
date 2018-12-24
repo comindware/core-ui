@@ -213,13 +213,9 @@ body {
 .radiobutton-text {
   line-height: var(--line-height);
 }
-.editor_disabled .radiobutton,
-.editor_readonly .radiobutton {
-  @apply --custom-cotrol-disabled-theme;
-}
 
-.editor_disabled .editor_checked .radiobutton,
-.editor_readonly .editor_checked .radiobutton {
+.editor_disabled .radiobutton,
+.editor_readonly .radiobutton{
   @apply --radio-disabled-theme;
 }
 
@@ -228,7 +224,6 @@ body {
   height: var(--radio-inner-size);
   background-color: var(--radio-checked-color);
 }
-
 
 .editor_disabled .editor_checked .radiobutton:after,
 .editor_readonly .editor_checked .radiobutton:after {

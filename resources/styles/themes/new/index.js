@@ -93,7 +93,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--grey-300)',
+    'radio-checked-disabled-color': 'var(--grey-400)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',

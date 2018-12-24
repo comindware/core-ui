@@ -258,10 +258,33 @@ input[type="checkbox"].checkbox {
     cursor: default;
 }
 
-.editor_disabled .editor_checked .radiobutton:after,
-.editor_readonly .editor_checked .radiobutton:after {
-    background: #70787f;
+.editor_disabled .editor_radiobutton,
+.editor_readonly .editor_radiobutton{
+  display: none;
 }
+.editor_disabled .editor_radiobutton.editor_checked,
+.editor_readonly .editor_radiobutton.editor_checked{
+  display: flex;
+}
+
+.editor_radiobutton.radio_empty-view{
+  display: none;
+}
+
+.editor_disabled.editor_empty .editor_radiobutton.radio_empty-view,
+.editor_readonly.editor_empty .editor_radiobutton.radio_empty-view{
+  display: flex;
+}
+
+.editor_disabled .editor_radiobutton.editor_checked .radiobutton,
+.editor_readonly .editor_radiobutton.editor_checked .radiobutton{
+  display: none;
+}
+.editor_disabled .editor_radiobutton.editor_checked .radiobutton-text,
+.editor_readonly .editor_radiobutton.editor_checked .radiobutton-text{
+  max-width: unset;
+}
+
 /* /radiobutton/ */
 
 
