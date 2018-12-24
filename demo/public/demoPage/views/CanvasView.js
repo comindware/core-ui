@@ -110,7 +110,7 @@ export default Marionette.View.extend({
     },
 
     __updateEditorFormat(formatSelectionView) {
-        this.view.setFormat && this.view.setFormat(formatSelectionView.getValue()[0]);
+        this.view.setFormat && this.view.setFormat(formatSelectionView.getValue());
     },
 
     __toggleCollapse() {
