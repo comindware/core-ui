@@ -56,12 +56,14 @@ export default TextEditorView.extend({
     },
 
     blur() {
-        this.ui.input.blur();
-        this.__blur();
+        if (this.ui.input.blur) {
+            //todo WTF
+            this.ui.input.blur();
+            this.__blur();
+        }
     },
 
-    __blur() {
-    },
+    __blur() {},
 
     __getFilterValue() {
         return (
@@ -76,7 +78,10 @@ export default TextEditorView.extend({
     },
 
     updateInput(value = '') {
-        this.ui.input.val(value);
+        if (this.ui.input.val) {
+            //todo WTF
+            this.ui.input.val(value);
+        }
     },
 
     __search(e) {

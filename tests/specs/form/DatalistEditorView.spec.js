@@ -12,7 +12,7 @@ describe('Editors', () => {
     const getBubble = (view, index) => getElement(view, `.bubbles__i:eq(${index})`);
     const getBubbleDelete = view => getElement(view, '.js-bubble-delete');
     const getItemOfList = index => getElement(Backbone, `.dd-list__i:eq(${index})`);
-    const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
+    const getTextElOfInputList = () => getElement(Backbone, `.js-input.bubbles__input`);
 
     const getInput = view => getElement(view, '.js-input');
 

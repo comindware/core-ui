@@ -103,7 +103,8 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     focusElement: '.editor_date-time_date input',
 
     focus(): void {
-        if (this.enabled && !this.readonly) {
+        if (this.enabled && !this.readonly && this.options.showDate !== false) {
+            //todo such many rulez.
             this.calendarDropdownView.open();
             this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
             this.calendarDropdownView.button.focus();

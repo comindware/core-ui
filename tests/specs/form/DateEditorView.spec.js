@@ -40,7 +40,6 @@ describe('Editors', () => {
             view.focus();
 
             expect(findDateInput(view)).toBeFocused();
-            expect(!!view.calendarDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
     });

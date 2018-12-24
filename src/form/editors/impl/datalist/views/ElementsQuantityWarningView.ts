@@ -1,4 +1,3 @@
-// @flow
 import template from '../templates/elementsQuantityWarning.hbs';
 
 export default Marionette.View.extend({

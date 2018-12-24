@@ -6,7 +6,6 @@ import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import ButtonView from './impl/datalist/views/BubbleCollectionView';
 import PanelView from './impl/datalist/views/PanelView';
-import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/datalist/models/DefaultReferenceModel';
@@ -35,7 +34,7 @@ const defaultOptions = {
     showAdditionalList: false,
     subtextProperty: '',
     iconProperty: '',
-    listItemView: ReferenceListItemView,
+    listItemView: undefined,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
