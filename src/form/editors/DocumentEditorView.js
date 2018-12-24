@@ -193,7 +193,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     addItems(items) {
         this.onValueAdd(items);
-        this.__triggerChange();
         this.__onCollectionLengthChange();
     },
 
