@@ -40,13 +40,13 @@ export default Marionette.Object.extend({
         const comparator = factory.getDefaultComparator(options.columns);
         const collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
 
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
+        this.debouncedUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);
         if (this.options.showToolbar) {
             if (this.options.showCheckbox) {
-                this.listenTo(collection, 'check:all check:some check:none', debounceUpdateAction);
+                this.listenTo(collection, 'check:all check:some check:none', this.debouncedUpdateAction);
             } else {
-                this.listenTo(collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+                this.listenTo(collection, 'select:all select:some select:none deselect:one select:one', this.debouncedUpdateAction);
             }
         }
 
@@ -219,6 +219,7 @@ export default Marionette.Object.extend({
 
     __triggerAction(model, selected, ...rest) {
         this.trigger('execute', model, selected, ...rest);
+        this.debouncedUpdateAction();
     },
 
     __onItemClick(model) {
