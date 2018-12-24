@@ -1079,6 +1079,7 @@ svg.svg-grid-icons {
   border-radius: 6px;
   padding: 20px;
   height: 100%;
+  min-width: 120px; 
   min-height: 100px;
   display: flex;
 }
