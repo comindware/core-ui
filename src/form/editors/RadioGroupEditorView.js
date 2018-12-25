@@ -51,6 +51,11 @@ formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
             };
         },
 
+        isEmptyValue() {
+            const value = this.getValue();
+            return value == null || value === '';
+        },
+
         __onSelectChild(model) {
             this.__value(model.get('id'), true);
         },
