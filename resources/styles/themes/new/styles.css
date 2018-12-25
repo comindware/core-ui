@@ -15,7 +15,8 @@
   opacity: 0.7;
 }
 .editor_disabled .checkbox-text,
-.editor_disabled .radiobutton-text {
+.editor_disabled .radiobutton-text,
+.editor_readonly .radiobutton-text{
   color: var(--grey-400);
 }
 

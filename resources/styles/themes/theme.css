@@ -204,6 +204,11 @@ body {
   margin-bottom: var(--custom-control-spacer-y);
 }
 
+.editor_disabled .editor_radiobutton,
+.editor_readonly .editor_radiobutton{
+  padding: var(--form-label-padding);
+}
+
 .radiobutton {
   width: var(--radio-size);
   height: var(--radio-size);
