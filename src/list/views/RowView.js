@@ -48,40 +48,6 @@ export default Marionette.View.extend({
         collapsibleButton: '.js-collapsible-button'
     },
 
-    events: {
-        click: '__handleClick',
-        dblclick: '__handleDblClick',
-        'click @ui.collapsibleButton': '__toggleCollapse',
-        dragover: '__handleDragOver',
-        dragenter: '__handleDragEnter',
-        dragleave: '__handleDragLeave',
-        drop: '__handleDrop',
-        mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave',
-        contextmenu: '__handleContextMenu'
-    },
-
-    modelEvents: {
-        click: '__handleModelClick',
-        dblclick: '__handleModelDblClick',
-        selected: '__handleSelection',
-        deselected: '__handleDeselection',
-        'select:pointed': '__selectPointed',
-        'selected:enter': '__handleEnter',
-        highlighted: '__handleHighlight',
-        unhighlighted: '__handleUnhighlight',
-        change: '__handleChange',
-        dragover: '__handleModelDragOver',
-        dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave',
-        blink: '__blink',
-        'toggle:collapse': 'updateCollapsed',
-        checked: '__addCheckedClass',
-        unchecked: '__removeCheckedClass'
-    },
-
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
@@ -138,14 +104,11 @@ export default Marionette.View.extend({
         this.cellViewsByKey = {};
 
         const isTree = this.getOption('isTree');
-        this.options.columns.forEach((gridColumn, index) => {
+        this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
-                if (isTree && index === 0) {
-                    this.insertFirstCellHtml();
-                }
                 return;
             }
 
@@ -161,9 +124,6 @@ export default Marionette.View.extend({
 
             cellView.el.setAttribute('tabindex', -1);
 
-            if (isTree && index === 0) {
-                cellView.on('render', () => this.insertFirstCellHtml(true));
-            }
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
@@ -171,6 +131,15 @@ export default Marionette.View.extend({
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
+        if (isTree) {
+            const firstCell = this.options.columns[0];
+
+            if (typeof firstCell.cellView === 'string' || !firstCell.editable) {
+                this.insertFirstCellHtml();
+            } else {
+                this.insertFirstCellHtml(true);
+            }
+        }
     },
 
     __handleChange() {
