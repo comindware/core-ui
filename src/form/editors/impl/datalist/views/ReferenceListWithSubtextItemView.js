@@ -1,7 +1,42 @@
-import ReferenceListItemView from './ReferenceListItemView';
 import template from '../templates/referenceListWithSubtextItem.hbs';
+import list from 'list';
 
-export default ReferenceListItemView.extend({
+const classes = {
+    SELECTED: 'editor_checked'
+};
+
+export default Marionette.View.extend({
+    behaviors: [
+        {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior,
+            multiSelect: true,
+            selectOnCursor: false
+        }
+    ],
+
+    onRender() {
+        if (this.model.selected) {
+            this.__markSelected();
+        } else {
+            this.__markDeselected();
+        }
+    },
+
+    modelEvents: {
+        selected: '__markSelected',
+        deselected: '__markDeselected'
+    },
+
+    __markSelected() {
+        this.$el.addClass(classes.SELECTED);
+        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').addClass(classes.SELECTED);
+    },
+
+    __markDeselected() {
+        this.$el.removeClass(classes.SELECTED);
+        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').removeClass(classes.SELECTED);
+    },
+
     className: 'subtext-list',
 
     template: Handlebars.compile(template),

@@ -50,6 +50,7 @@
 
 .grid-content-wrp {
     overflow: hidden;
+    display: flex;
 }
 
 .grid-header-wrp {
