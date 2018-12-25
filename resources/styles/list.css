@@ -470,6 +470,7 @@
 .cell .editor{
     height: 100%;
     line-height: normal;
+    line-height: initial;
     border: none;
     background-color: transparent;
 }
