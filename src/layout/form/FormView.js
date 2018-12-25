@@ -83,10 +83,10 @@ export default Marionette.View.extend({
     },
 
     __addUniqueFormIdToModel() {
-        const modelUniqueFormId = this.model.get('uniqueFormId');
-        const setOfUniqueFormId = modelUniqueFormId instanceof Set ? modelUniqueFormId : new Set();
-        setOfUniqueFormId.add(this.uniqueFormId);
-        this.model.set('uniqueFormId', setOfUniqueFormId, { silent: true });
+        if (!(this.model.uniqueFormId instanceof Set)) {
+            this.model.uniqueFormId = new Set();
+        }
+        this.model.uniqueFormId.add(this.uniqueFormId);
     },
 
     update() {

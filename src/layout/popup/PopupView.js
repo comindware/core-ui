@@ -67,7 +67,7 @@ export default Marionette.View.extend({
 
     events: {
         'click @ui.button': '__onButtonClick',
-        'click @ui.close': '__close',
+        'click @ui.close': 'close',
         'click @ui.newTab': '__openInNewTab',
         'click @ui.fullscreenToggle': '__fullscreenToggle'
     },
@@ -126,7 +126,7 @@ export default Marionette.View.extend({
         } else {
             window.open(this.options.newTabUrl);
         }
-        this.__close();
+        this.close();
     },
 
     __fullscreenToggle() {
@@ -164,7 +164,8 @@ export default Marionette.View.extend({
 
                 return closeResult && WindowService.closePopup(this.popupId);
             }
-            return true;
+
+            return WindowService.closePopup(this.popupId);
         }
     },
 
