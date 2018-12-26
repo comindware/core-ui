@@ -387,6 +387,7 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    width: 100px;
 }
 .bubbles__i {
     max-width: 100%;

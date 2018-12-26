@@ -472,6 +472,7 @@
     line-height: initial;
     border: none;
     background-color: transparent;
+    flex: auto;
 }
 .cell .js-tree-first-cell {
     flex: none;
