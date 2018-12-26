@@ -113,6 +113,7 @@ export default Marionette.View.extend({
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
+            this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
         const childView = options.childView || RowView;
@@ -139,7 +140,7 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
-            this.listenTo(this.collection, 'keydown:escape', (e) => this.__triggerSelectedModel('selected:exit', e));
+            this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
         this.listView = new ListView({

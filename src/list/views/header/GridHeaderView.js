@@ -205,6 +205,10 @@ const GridHeaderView = Marionette.View.extend({
         return this.el.clientWidth;
     },
 
+    onAttach() {
+        this.trigger('set:emptyView:width', this.el.scrollWidth);
+    },
+
     updateColumnAndNeighbourWidths(index, delta) {
         const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
