@@ -259,7 +259,7 @@ export default {
                 {
                     id: 'DateTimeEditor',
                     displayName: 'DateTime Editor',
-                    description: 'Date editor',
+                    description: 'DateTime editor',
                     attributesConfig: [
                         {
                             attribute: 'autocommit',
@@ -271,7 +271,7 @@ export default {
                 {
                     id: 'TimeEditor',
                     displayName: 'Time Editor',
-                    description: 'Time editor without time',
+                    description: 'Time editor without date',
                     attributesConfig: [
                         {
                             attribute: 'autocommit',

@@ -100,6 +100,8 @@
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
+<http://comindware.com/text/core/form/editors/date#invalidDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата неверна"; l10n:originalData "Invalid date"].
+
 <http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].
 
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].

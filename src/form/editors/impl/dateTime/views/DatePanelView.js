@@ -27,13 +27,15 @@ export default Marionette.View.extend({
 
     updatePickerDate(val) {
         let value = val;
-        if (isNaN(val)) {
-            value = new Date();
+        if (isNaN(value)) {
             return;
+        }
+        if (!(value instanceof Date)) {
+            value = new Date(value);
         }
 
         const format = defaultOptions.pickerFormat;
-        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment({}).format(format);
+        const pickerFormattedDate = value ? moment(new Date(value)).format(format) : moment({}).format(format);
         this.ui.pickerInput.datetimepicker('setDate', value);
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
     },

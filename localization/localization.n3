@@ -193,6 +193,8 @@
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:01:48.7898815Z"; l10n:modificationDate "2015-07-31T13:06:07.0697161Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Date"].
 
+<http://comindware.com/text/core/form/editors/date#invalidDate> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-12-27T13:02:16.7868355Z"; l10n:modificationDate "2018-12-27T13:02:21.6385726Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Invalid date"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors/date#readonlyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:02:33.1375872Z"; l10n:modificationDate "2015-09-03T15:21:06.7666427Z"; l10n:param <http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder>; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "{0}"].
 
 <http://comindware.com/text/core/form/editors/document#add> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2017-09-08T08:12:19.0255774Z"; l10n:modificationDate "2017-09-08T08:12:20.3247034Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Add"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].

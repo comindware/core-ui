@@ -1,5 +1,6 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import 'jasmine-expect';
 import DateTimeService from '../../../src/form/editors/services/DateTimeService';
 import FocusTests from './FocusTests';
 
@@ -109,9 +110,11 @@ describe('Editors', () => {
         };
 
         const show = view => window.app
-                                        .getView()
-                                        .getRegion('contentRegion')
-                                        .show(view);
+            .getView()
+            .getRegion('contentRegion')
+            .show(view);
+
+        const someDateTimeISO = '2015-07-20T10:46:37.000Z';
 
         FocusTests.runFocusTests({
             initialize: () => {
@@ -542,7 +545,6 @@ describe('Editors', () => {
         it('should show custom minutes free from format', () => {
             const formatWithSeconds = 'LTS';
             const formatWithoutSeconds = 'HH:mm';
-            const someDateTimeISO = '2015-07-20T10:46:37.000Z';
 
             const model = new Backbone.Model({
                 data: someDateTimeISO
@@ -565,6 +567,46 @@ describe('Editors', () => {
                 timeDisplayFormat: formatWithoutSeconds
             });
             expect(findTimeInput(view).val().trim().endsWith('minutes')).toEqual(true);
+        });
+
+        it('should has correct readonly', done => {
+            const model = new Backbone.Model({
+                data: someDateTimeISO
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                readonly: true,
+                key: 'data'
+            });
+
+            view.on('attach', () => {
+                expect(view.readonly).toBeTrue('view.readonly is false after render with options readonly = true');
+                view.$el.find('input').each(
+                    (i, input) =>
+                        expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has no readonly after render`)
+                );
+
+                view.setReadonly(false);
+
+                expect(view.readonly).toBeFalse('view.readonly is true after setReadonly(false)');
+                view.$el.find('input').each(
+                    (i, input) =>
+                        expect(input.hasAttribute('readonly')).toBeFalse(`${i} input has readonly after setReadonly(true)`)
+                );
+
+                view.setReadonly(true);
+
+                expect(view.readonly).toBeTrue('view.readonly is false after setReadonly(true)');
+                view.$el.find('input').each(
+                    (i, input) =>
+                        expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has readonly after setReadonly(true)`)
+                );
+                done();
+            });
+
+            show(view);
         });
     });
 });
