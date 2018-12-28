@@ -411,6 +411,11 @@ input[type="checkbox"].checkbox {
     align-items: center;
     flex-wrap: wrap;
 }
+
+.grid-container .bubbles__list {
+    width: 100px;
+}
+
 .bubbles__i {
     max-width: 100%;
     display: flex;
