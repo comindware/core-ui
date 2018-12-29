@@ -937,6 +937,11 @@ svg.svg-grid-icons {
 /* Context Editor */
 .editor.context_select {
   @apply --input-theme;
+  padding: var(--input-padding);
+  height: var(--input-height);
+}
+
+.grid-container .editor.context_select {
   height: unset;
   margin: 4px 10px;
   padding: 4px 10px 2px 5px;
