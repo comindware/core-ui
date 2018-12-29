@@ -2,21 +2,19 @@ import { dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
-const defaultOptions = {
-    pickerFormat: 'YYYY-MM-DD'
-};
+const defaultOptions = () => ({
+    format: 'YYYY-MM-DD',
+    minView: 2,
+    todayBtn: true,
+    weekStart: dateHelpers.getWeekStartDay(),
+    language: LocalizationService.langCode
+});
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     initialize() {
-        this.pickerOptions = {
-            minView: 2,
-            format: this.options.pickerFormat,
-            todayBtn: true,
-            weekStart: dateHelpers.getWeekStartDay(),
-            language: LocalizationService.langCode
-        };
+        _.defaults(this.options, defaultOptions());
     },
 
     className: 'dropdown__wrp dropdown__wrp_datepicker',
@@ -25,16 +23,17 @@ export default Marionette.View.extend({
         pickerInput: '.js-datetimepicker'
     },
 
-    updatePickerDate(val) {
-        let value = val;
-        if (isNaN(val)) {
-            value = new Date();
-            return;
-        }
+    updatePickerDate(value) {
+        // if value is null or undefined, set now date to picker
+        // moment return current date if has no args
+        const mom = moment(
+            value === null ? 
+                undefined :
+                value
+            );
+        const pickerFormattedDate = mom.format(this.options.format);
 
-        const format = defaultOptions.pickerFormat;
-        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment({}).format(format);
-        this.ui.pickerInput.datetimepicker('setDate', value);
+        this.ui.pickerInput.datetimepicker('setDate', mom.toDate());
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
     },
 
@@ -44,6 +43,6 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', e => this.updateValue(e.date));
+        this.ui.pickerInput.datetimepicker(this.options).on('changeDate', e => this.updateValue(e.date));
     }
 });

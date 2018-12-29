@@ -7,12 +7,14 @@ export default function() {
         timeValue: '2015-07-20T10:46:37Z'
     });
 
+    const view = new Core.form.editors.TimeEditor({
+        model,
+        key: 'timeValue',
+        autocommit: true
+    });
+
     return new CanvasView({
-        view: new Core.form.editors.TimeEditor({
-            model,
-            key: 'timeValue',
-            autocommit: true
-        }),
+        view,
         presentation: "{{timeValue}}",
         isEditor: true
     });
