@@ -88,7 +88,7 @@ export default TextEditorView.extend({
                     if (!this.options.enabled) {
                         return;
                     }
-                    this.reqres.request('bubble:delete:last');
+                    this.reqres.request('input:backspace');
                 }
                 break;
             }
