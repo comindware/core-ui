@@ -261,6 +261,7 @@ input[type="checkbox"].checkbox {
 .editor_disabled .editor_radiobutton,
 .editor_readonly .editor_radiobutton{
   display: none;
+  cursor: auto;
 }
 .editor_disabled .editor_radiobutton.editor_checked,
 .editor_readonly .editor_radiobutton.editor_checked{
