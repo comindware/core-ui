@@ -38,6 +38,7 @@ describe('Editors', () => {
         }, options.delay || 10);
     };
 
+    const whatIsThat = value => Array.isArray(value) ? 'Array' : (value === null ? 'null' : typeof value);
     const stopped = delay => new Promise(resolve => setTimeout(resolve, delay));
 
     const show = view =>
@@ -1388,7 +1389,7 @@ describe('Editors', () => {
                     model,
                     collection: new Backbone.Collection(collectionData3),
                     key: 'value',
-                    allowEmptyValue: false,
+                    allowEmptyValue: true,
                     autocommit: true,
                     valueType: 'id',
                     maxQuantitySelected: 1
@@ -1396,7 +1397,18 @@ describe('Editors', () => {
 
                 view.on('attach', () => {
                     expect(view.value).toBeNumber();
-                    done();
+
+                    view.on('view:ready', () => {
+                        model.on('change', () => {
+                            expect(view.value).toBeNumber();
+                            expect(model.get('value')).toBeNumber();
+                            done();
+                        });
+                        getItemOfList(0).click();
+                    });
+
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
                 });
 
                 show(view);
@@ -1420,7 +1432,20 @@ describe('Editors', () => {
                 view.on('attach', () => {
                     expect(view.value).toBeArrayOfNumbers();
                     expect(view.value).toBeArrayOfSize(3);
-                    done();
+                                        
+                    view.on('view:ready', () => {
+                        model.on('change', () => {
+                            expect(view.value).toBeArrayOfNumbers();
+                            expect(view.value).toBeArrayOfSize(3);
+                            expect(model.get('value')).toBeArrayOfNumbers();
+                            expect(model.get('value')).toBeArrayOfSize(3);
+                            done();
+                        });
+                        getItemOfList(0).click();
+                    });
+
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
                 });
 
                 show(view);
@@ -1460,7 +1485,20 @@ describe('Editors', () => {
                 view.on('attach', () => {
                     expect(view.value).toBeArrayOfObjects();
                     expect(view.value).toBeArrayOfSize(3);
-                    done();
+                    
+                    view.on('view:ready', () => {
+                        model.on('change', () => {
+                            expect(view.value).toBeArrayOfObjects();
+                            expect(view.value).toBeArrayOfSize(3);
+                            expect(model.get('DatalistValue')).toBeArrayOfObjects();
+                            expect(model.get('DatalistValue')).toBeArrayOfSize(3);
+                            done();
+                        });
+                        getItemOfList(0).click();
+                    });
+
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
                 });
 
                 show(view);
@@ -1482,7 +1520,7 @@ describe('Editors', () => {
                     showEditButton: true,
                     showAddNewButton: true,
                     showCheckboxes: true,
-                    maxQuantitySelected: 3,
+                    maxQuantitySelected: 1,
                     controller: new DynamicController({
                         collection: new core.form.editors.reference.collections.BaseReferenceCollection()
                     })
@@ -1490,7 +1528,165 @@ describe('Editors', () => {
 
                 view.on('attach', () => {
                     expect(view.value).toBeObject();
+
+                    view.on('view:ready', () => {
+                        model.on('change', () => {
+                            expect(view.value).toBeObject();
+                            expect(model.get('DatalistValue')).toBeObject();
+                            done();
+                        });
+                        getItemOfList(0).click();
+                    });
+
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
+                });
+
+                show(view);
+            });
+        });
+
+        describe('should on remove last bubble set to model', () => {
+            it('null if maxQuantitySelected: 1, valueType: id', done => {
+                const model = new Backbone.Model({
+                    value: 1
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    key: 'value',
+                    allowEmptyValue: true,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 1
+                });
+
+                model.on('change:value', (model, value) => {
+                    expect(value).toBeNull(`onClear set "${whatIsThat(value)}" to model!`);
+                });
+
+                view.on('view:ready', () => {
+                    expect(getInput(view)).toBeFocused('Input not focused after remove element');
                     done();
+                });
+
+                view.on('attach', () => {
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
+                });
+
+                show(view);
+            });
+
+            it('empty array if maxQuantitySelected > 1, valueType: id', done => {
+                const model = new Backbone.Model({
+                    value: [1]
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    key: 'value',
+                    allowEmptyValue: true,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 3
+                });
+
+                model.on('change:value', (model, value) => {
+                    expect(value).toBeEmptyArray(`onClear set "${whatIsThat(value)}" to model!`);
+                });
+
+                view.on('view:ready', () => {
+                    expect(getInput(view)).toBeFocused('Input not focused after remove element');
+                    done();
+                });
+
+                view.on('attach', () => {
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
+                });
+
+                show(view);
+            });
+
+            it('empty array if maxQuantitySelected > 1, valueType: normal', done => {
+                const model = new Backbone.Model({
+                    DatalistValue: [
+                        {
+                            id: 'task.1',
+                            text: 'Test Reference 1'
+                        }
+                    ]
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model: model,
+                    key: 'DatalistValue',
+                    autocommit: true,
+                    showEditButton: true,
+                    showAddNewButton: true,
+                    showCheckboxes: true,
+                    allowEmptyValue: true,
+                    maxQuantitySelected: 3,
+                    controller: new DynamicController({
+                        collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                    })
+                });
+
+                model.on('change:DatalistValue', (model, value) => {
+                    expect(value).toBeEmptyArray(`onClear set "${whatIsThat(value)}" to model!`);
+                });
+
+                view.on('view:ready', () => {
+                    expect(getInput(view)).toBeFocused('Input not focused after remove element');
+                    done();
+                });
+
+                view.on('attach', () => {
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
+                });
+
+                show(view);
+            });
+
+            it('null if maxQuantitySelected = 1, valueType: normal', done => {
+                const model = new Backbone.Model({
+                    DatalistValue:
+                    {
+                        id: 'task.1',
+                        text: 'Test Reference 1'
+                    }
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model: model,
+                    key: 'DatalistValue',
+                    autocommit: true,
+                    showEditButton: true,
+                    showAddNewButton: true,
+                    showCheckboxes: true,
+                    allowEmptyValue: true,
+                    maxQuantitySelected: 1,
+                    controller: new DynamicController({
+                        collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                    })
+                });
+
+                model.on('change:DatalistValue', (model, value) => {
+                    expect(value).toBeNull(`onClear set "${whatIsThat(value)}" to model!`);
+                });
+
+                view.on('view:ready', () => {
+                    expect(getInput(view)).toBeFocused('Input not focused after remove element');
+                    done();
+                });
+
+                view.on('attach', () => {
+                    view.$('.bubbles__i:eq(0)').trigger('mouseenter');
+                    view.$('.js-bubble-delete').click();
                 });
 
                 show(view);

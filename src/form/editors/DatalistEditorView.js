@@ -128,7 +128,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
-            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
+            'input:backspace': this.__onBubbleDeleteLast.bind(this),
             'input:search': this.__onInputSearch.bind(this),
             'input:up': this.__onInputUp.bind(this),
             'input:down': this.__onInputDown.bind(this),
@@ -386,8 +386,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValue(value: any, isLoadIfNeeded = false) {
-        if (_.isUndefined(value) || value === null) {
-            return this.options.maxQuantitySelected === 1 ? undefined : [];
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return this.options.maxQuantitySelected === 1 ? null : [];
         }
         const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;
         return result;
@@ -593,22 +593,19 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
 
-        this.selectedButtonCollection.remove(model);
-
         const selected = [].concat(this.getValue() || []);
         const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
-        this.value = selected;
 
-        this.__triggerChange();
+        this.__value(selected, true);
 
-        this.__updateFakeInputModel();
-
-        if (!this.hasFocus) {
-            this.__focusButton();
+        if (!this.dropdownView.isOpen) {
             this.__onButtonClick();
+            this.__focusButton();
+        } else if (!this.isButtonFocus()) {
+            this.__focusButton();
         }
     },
 
