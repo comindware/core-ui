@@ -20,8 +20,6 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
-const savedDocumentPrefix = 'document';
-
 const defaultOptions = {
     readonly: false,
     allowDelete: true,
