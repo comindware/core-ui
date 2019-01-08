@@ -70,7 +70,8 @@
             useStickyClasses: o.useStickyClasses || false,
             useFixed: o.useFixed || false,
             useGetBoundingClientRect: o.useGetBoundingClientRect || false,
-            verticalPosition: o.verticalPosition || 'top'
+            verticalPosition: o.verticalPosition || 'top',
+            stateChangeCb: o.stateChangeCb || false
         };
         /*
       define positionVal
@@ -297,6 +298,7 @@
     */
         if (notSticky) {
             it.state = 'sticky';
+            this.props.stateChangeCb && this.props.stateChangeCb('sticky');
             rAF(() => {
                 tC(e, stuck, sticky);
                 stl.position = pv;
@@ -306,6 +308,7 @@
             });
         } else if (isSticky) {
             it.state = 'default';
+            this.props.stateChangeCb && this.props.stateChangeCb('default');
             rAF(() => {
                 tC(e, sticky);
                 tC(e, stuck);
@@ -313,6 +316,7 @@
             });
         } else if (isStuck) {
             it.state = 'stuck';
+            this.props.stateChangeCb && this.props.stateChangeCb('stuck');
             rAF(() => {
                 tC(e, sticky, stuck);
                 if (pv !== 'fixed' || ns) return;

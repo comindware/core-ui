@@ -348,7 +348,22 @@ export default Marionette.View.extend({
 
         stickybits(this.el.querySelector('.grid-header-wrp'), {
             stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset,
-            scrollEl: this.options.scrollEl
+            scrollEl: this.options.scrollEl,
+            customStickyChangeNumber: this.options.customStickyChangeNumber,
+            stateChangeCb: currentState => {
+                //hack for IE11
+                switch (currentState) {
+                    case 'sticky': {
+                        // fixed header fall of layout
+                        this.ui.content[0].style.marginTop = '35px'; // header height + default margin
+                        break;
+                    }
+                    default:
+                        // static header
+                        this.ui.content[0].style.marginTop = ''; // default margin
+                        break;
+                }
+            }
         });
         if (toolbarShowed) {
             stickybits(this.el.querySelector('.js-grid-tools'), { scrollEl: this.options.scrollEl });
