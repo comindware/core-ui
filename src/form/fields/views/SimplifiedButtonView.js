@@ -60,7 +60,7 @@ export default Marionette.View.extend({
         switch (schema.type) {
             case 'Datalist': {
                 return Array.isArray(values)
-                    ? values.map(v => ({
+                    ? _.compact(values).map(v => ({
                           value: `
                 <div class="user-edit-wrp">
                     <div class="simple-field_container">
@@ -73,7 +73,7 @@ export default Marionette.View.extend({
             }
             case 'Document': {
                 return Array.isArray(values)
-                    ? values.map(v => ({
+                    ? _.compact(values).map(v => ({
                           value: `
                 <div class="user-edit-wrp">
                     <div class="simple-field_container">
