@@ -120,7 +120,9 @@ export default Marionette.View.extend({
         const values = this.options.editor.getValue();
 
         if (Array.isArray(values)) {
-            return values.map(v => v.name || v.id).join(', ');
+            return _.compact(values)
+                .map(v => v.name || v.id)
+                .join(', ');
         }
         return values && (values.name || values.id);
     }
