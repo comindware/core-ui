@@ -106,7 +106,6 @@ export default Marionette.View.extend({
                 region,
                 regionEl
             });
-            view.once('dom:refresh', () => this.__updateTabRegion(tabModel));
         });
         this.__updateState();
         if (this.getOption('showStepper')) {
