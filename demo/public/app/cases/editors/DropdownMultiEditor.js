@@ -18,7 +18,7 @@ export default function() {
         collection: possibleItems,
         valueType: 'id',
         maxQuantitySelected: 4,
-        allowEmptyValue: false
+        allowEmptyValue: true
     });
 
     return new CanvasView({

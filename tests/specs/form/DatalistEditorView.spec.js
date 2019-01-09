@@ -20,7 +20,7 @@ describe('Editors', () => {
         input.click();
         input.focus();
         input.val(string);
-        input.keydown();
+        input.trigger('input');
     };
 
     const actionForOpen = view =>
@@ -650,7 +650,7 @@ describe('Editors', () => {
                 show(view);
             });
     
-            it('should has no input for search in single value mode if options.showSearch = false', done => {
+            it('should has input for search with readonly if options.showSearch = false in single value mode', done => {
                 const model = new Backbone.Model({
                     value: 54
                 });
@@ -667,7 +667,7 @@ describe('Editors', () => {
     
                 view.on('attach', () => {
                     const input = getInput(view);
-                    expect(input.length).toEqual(0);
+                    expect(input[0].hasAttribute('readonly')).toBeTrue('input has no readonly attribute');
                     done();
                 });
     
@@ -714,7 +714,7 @@ describe('Editors', () => {
                 show(view);
             });
     
-            it('should has no input for search in multi value mode if options.showSearch = false', done => {
+            it('should has input with readonly attr in multi value mode if options.showSearch = false', done => {
                 const model = new Backbone.Model({
                     DatalistValue: [
                         {
@@ -748,7 +748,7 @@ describe('Editors', () => {
     
                 view.on('attach', () => {
                     const input = getInput(view);
-                    expect(input.length).toEqual(0);
+                    expect(input[0].hasAttribute('readonly')).toBeTrue('input has no readonly attribute');
                     done();
                 });
     

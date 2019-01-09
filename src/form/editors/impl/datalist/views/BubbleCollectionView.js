@@ -57,7 +57,14 @@ export default Marionette.CollectionView.extend({
         return this.collection.models.find(model => model instanceof FakeInputModel && model);
     },
 
-    childViewOptions() {
+    childViewOptions(model) {
+        if (model instanceof FakeInputModel) {
+            return {
+                reqres: this.reqres,
+                parent: this.$el,
+                readonly: !this.options.showSearch
+            };
+        }
         return {
             reqres: this.reqres,
             parent: this.$el,

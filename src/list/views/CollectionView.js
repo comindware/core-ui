@@ -288,6 +288,9 @@ export default Marionette.CollectionView.extend({
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
     moveCursorBy(cursorIndexDelta, { shiftPressed, isLoop = false }) {
+        if (!this.collection.length) {
+            return;
+        }
         const indexCurrentModel = this.__getIndexSelectedModel();
         const nextIndex = indexCurrentModel + cursorIndexDelta;
         this.__moveCursorTo(nextIndex, {
