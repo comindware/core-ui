@@ -1221,6 +1221,50 @@ describe('Editors', () => {
             show(view);
         });
 
+        it('should show placeholder on date button if value === null', done => {
+            const model = new Backbone.Model({
+                date: null
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                readonly: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+                const value = dateInput.val();
+                expect(value).toBeEmptyString(`show '${value}' instead placeholder(empty string)`);
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should show placeholder on date button if value === undefined', done => {
+            const model = new Backbone.Model({
+                date: undefined
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                readonly: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+                const value = dateInput.val();
+                expect(value).toBeEmptyString(`show '${value}' instead placeholder(empty string)`);
+                done();
+            });
+
+            show(view);
+        });
+
         it('should clear value, dont change attribute and dont trigger change event on remove button click', () => {
             const onChangeCallback = jasmine.createSpy('onModelChange');
             const model = new Backbone.Model({
