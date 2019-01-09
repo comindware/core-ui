@@ -97,7 +97,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     getValue(): string {
-        return this.value === null ? this.value : moment(this.value).toISOString();
+        return this.__adjustValue(this.value);
     },
 
     onRender(): void {
@@ -260,7 +260,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __adjustValue(value: string): string {
-        return value === null ? value : moment(value).toISOString();
+        return value == null ? null : moment(value).toISOString();
     },
 
     __updateTitle(): void {
@@ -272,7 +272,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
     __createDateDropdownEditor() {
         this.dateButtonModel = new Backbone.Model({
-            [this.key]: moment(this.value).format(this.options.dateDisplayFormat)
+            [this.key]: this.value == null ? '' : moment(this.value).format(this.options.dateDisplayFormat)
         });
         this.listenTo(this.dateButtonModel, `change:${this.key}`, this.__onDateModelChange);
 
