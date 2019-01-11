@@ -346,7 +346,7 @@ export default Marionette.View.extend({
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
-        stickybits(this.el.querySelector('.grid-header-wrp'), {
+        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-wrp'), {
             stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset,
             scrollEl: this.options.scrollEl,
             customStickyChangeNumber: this.options.customStickyChangeNumber,
@@ -366,7 +366,16 @@ export default Marionette.View.extend({
             }
         });
         if (toolbarShowed) {
-            stickybits(this.el.querySelector('.js-grid-tools'), { scrollEl: this.options.scrollEl });
+            this.stickyToolbarInstance = stickybits(this.el.querySelector('.js-grid-tools'), { scrollEl: this.options.scrollEl });
+        }
+        //hack for IE11
+        if (Core.services.MobileService.isIE) {
+            this.on('update:height', () => {
+                this.stickyHeaderInstance.update();
+                if (toolbarShowed) {
+                    this.stickyToolbarInstance.update();
+                }
+            });
         }
     },
 
