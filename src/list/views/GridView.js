@@ -17,6 +17,7 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from '../views/EmptyGridView';
+import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 
 /*
     Public interface:
@@ -296,6 +297,9 @@ export default Marionette.View.extend({
         LoadingBehavior: {
             behaviorClass: LoadingBehavior,
             region: 'loadingRegion'
+        },
+        LayoutBehavior: {
+            behaviorClass: LayoutBehavior
         }
     },
 
@@ -332,6 +336,7 @@ export default Marionette.View.extend({
             this.ui.title.parent().hide();
         }
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
+        this.__updateState();
     },
 
     onAttach() {
@@ -381,6 +386,10 @@ export default Marionette.View.extend({
 
     getChildren() {
         return this.listView.children;
+    },
+
+    update() {
+        this.__updateState();
     },
 
     __executeAction(...args) {
