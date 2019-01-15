@@ -50,7 +50,7 @@ export default Marionette.View.extend({
         this.listenTo(editor, 'dropdown:close', () => this.trigger('dropdown:close'));
         this.listenTo(editor, 'dropdown:open', () => this.__adjustPanelContainerVisibility(this.options.editor.getValue(), editor));
 
-        this.options.model.on('change', () => {
+        this.options.model.on(`change:${this.options.editor.key}`, () => {
             const values = this.options.editor.getValue();
 
             this.__adjustPanelContainerVisibility(values, editor);
@@ -77,7 +77,7 @@ export default Marionette.View.extend({
 
     __adjustPanelContainerVisibility(values, editor) {
         if (this.isRendered()) {
-            if (values.length === 0) {
+            if (values?.length === 0) {
                 this.el.setAttribute('noSelected', true);
                 this.ui.panelSelectedContainer.css({ visibility: 'hidden' });
                 editor.adjustPosition(true);
