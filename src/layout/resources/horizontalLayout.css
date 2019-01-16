@@ -4,6 +4,7 @@
     align-content: stretch;
     justify-content: stretch;
     align-items: stretch;
+    flex: 1 0 auto;
 }
 
 .layout__horizontal-layout > * {
