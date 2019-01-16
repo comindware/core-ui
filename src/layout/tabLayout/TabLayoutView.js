@@ -179,6 +179,10 @@ export default Marionette.View.extend({
     setVisible(tabId: string, visible: boolean) {
         const tab = this.__findTab(tabId);
         tab.set({ visible });
+        const selectedtab = this.__findSelectedTab();
+        if (tabId === selectedtab.id) {
+            return;
+        }
         let newTabIndex = this.__tabsCollection.indexOf(tab) + 1;
         if (newTabIndex === this.__tabsCollection.length) {
             newTabIndex -= 2;
