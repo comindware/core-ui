@@ -438,7 +438,8 @@ module.exports.apply = {
     'popup-form-content-theme': {
         padding: '15px',
         'background-color': variables.white,
-        'border-radius': variables['border-radius-big']
+        'border-radius': variables['border-radius-big'],
+        'overflow-y': 'auto'
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],
