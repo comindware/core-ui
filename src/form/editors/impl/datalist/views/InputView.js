@@ -37,7 +37,8 @@ export default TextEditorView.extend({
     },
 
     modelEvents: {
-        'change:empty': '__updateInputPlaceholder'
+        'change:empty': '__updateInputPlaceholder',
+        'change:searchText': '__onModelChangeSearch'
     },
 
     onRender() {
@@ -74,6 +75,10 @@ export default TextEditorView.extend({
 
     __getRawValue() {
         return this.ui.input.val();
+    },
+
+    __onModelChangeSearch(model, searchText) {
+        this.updateInput(searchText);
     },
 
     updateInput(value = '') {

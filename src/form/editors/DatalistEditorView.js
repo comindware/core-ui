@@ -260,13 +260,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     focus(): void {
-        this.hasFocus = true;
         this.__focusButton();
         this.onFocus();
     },
 
     blur(): void {
-        this.hasFocus = false;
         this.updateButtonInput('');
         this.__blurButton();
         this.onBlur({
@@ -330,8 +328,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        this.selectedButtonCollection.reset(models);
-        this.__addFakeInputModel(this.selectedButtonCollection);
+        // this.selectedButtonCollection.reset(models == null ? undefined : models);
+        this.selectedButtonCollection.remove(
+            this.selectedButtonCollection.filter(model => !(model instanceof FakeInputModel))
+        );
+        if (models) {
+            this.selectedButtonCollection.add(models);
+        }
+        this.__updateFakeInputModel();
     },
 
     __resetPanelVirtualCollection(rawDataVirtual) {
@@ -631,9 +635,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     updateButtonInput(string): void {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.collectionView.updateInput(string);
-        }
+        this.fakeInputModel?.set('searchText', string);
     },
 
     __onBubbleDeleteLast(): void {
