@@ -428,7 +428,7 @@ module.exports.apply = {
         'font-weight': '600',
         display: 'flex',
         'align-items': 'center',
-        flex: '1 0 auto'
+        flex: 'none'
     },
     'popup-footer-theme': {
         padding: '15px'
