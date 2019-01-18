@@ -7,6 +7,7 @@ export default {
     END: 35,
     ENTER: 13,
     ESCAPE: 27,
+    F2: 113,
     HOME: 36,
     LEFT: 37,
     NUMPAD_ADD: 107,

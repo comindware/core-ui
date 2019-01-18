@@ -28,7 +28,8 @@
 
 .visible-collection {
     height: 100%;
-    width: 100%;
+    width: auto;
+    position: relative;
 }
 
 .visible-collection-wrp, .selection-panel-wrp {
@@ -302,10 +303,10 @@
 /* Editable Grid */
 .grid-container{
     position: relative;
-    height: 100%;
     display: flex;
     flex-direction: column;
     flex: 1;
+    max-width: 100%;
 }
 
 .grid-container > .form-label {
@@ -473,6 +474,7 @@
     line-height: initial;
     border: none;
     background-color: transparent;
+    flex: auto;
 }
 .cell .js-tree-first-cell {
     flex: none;

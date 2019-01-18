@@ -55,12 +55,12 @@ const defaultOptions = {
     Comparator selected collection should be change place for fakeInputModel.
 
     ToDo:
-    1.Prevent loading if readonly.
-    2.staticController has no addNewItem function.
-    3.If showsearch = false, keyup, keydown not move pointer on panel.
-    4.defaultOptions:displayAttribute should be text.
-    5.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    6.getDisolayText should return string always. (String(returnedValue))
+    1.staticController has no addNewItem function.
+    2.If showsearch = false, keyup, keydown not move pointer on panel.
+    3.defaultOptions:displayAttribute should be text.
+    4.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
+    5.getDisolayText should return string always. (String(returnedValue)).
+    6.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
@@ -128,7 +128,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
-            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
+            'input:backspace': this.__onBubbleDeleteLast.bind(this),
             'input:search': this.__onInputSearch.bind(this),
             'input:up': this.__onInputUp.bind(this),
             'input:down': this.__onInputDown.bind(this),
@@ -242,7 +242,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isRendered()) {
             return;
         }
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
         this.getInputView()?.setReadonly(readonly);
@@ -253,20 +253,18 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.isRendered()) {
             return;
         }
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.collectionView.updateEnabled(isEnabled);
         this.getInputView()?.setEnabled(enabled);
     },
 
     focus(): void {
-        this.hasFocus = true;
         this.__focusButton();
         this.onFocus();
     },
 
     blur(): void {
-        this.hasFocus = false;
         this.updateButtonInput('');
         this.__blurButton();
         this.onBlur({
@@ -330,8 +328,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        this.selectedButtonCollection.reset(models);
-        this.__addFakeInputModel(this.selectedButtonCollection);
+        // this.selectedButtonCollection.reset(models == null ? undefined : models);
+        this.selectedButtonCollection.remove(
+            this.selectedButtonCollection.filter(model => !(model instanceof FakeInputModel))
+        );
+        if (models) {
+            this.selectedButtonCollection.add(models);
+        }
+        this.__updateFakeInputModel();
     },
 
     __resetPanelVirtualCollection(rawDataVirtual) {
@@ -367,7 +371,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getIsOpenAllowed() {
-        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && this.isThisFocus();
+        return this.__getEditorEnabled() && !this.dropdownView.isOpen && this.isThisFocus();
+    },
+
+    __getEditorEnabled() {
+        return this.getEnabled() && !this.getReadonly();
     },
 
     open(openOnRender) {
@@ -382,8 +390,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValue(value: any, isLoadIfNeeded = false) {
-        if (_.isUndefined(value) || value === null) {
-            return this.options.maxQuantitySelected === 1 ? undefined : [];
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return this.options.maxQuantitySelected === 1 ? null : [];
         }
         const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;
         return result;
@@ -446,7 +454,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.value = this.__convertToValue(adjustedValue);
 
         if (this.options.storeArray && !Array.isArray(this.value)) {
-            this.value = this.value !== undefined ? [this.value] : [];
+            this.value = this.value == null ? this.value : [this.value];
         }
 
         this.__resetSelectedCollection(adjustedValue);
@@ -519,7 +527,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __canAddItem(): boolean {
         const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
-        const isAccess = this.getEnabled() && !this.getReadonly();
+        const isAccess = this.__getEditorEnabled();
         const maxQuantity = this.options.maxQuantitySelected;
 
         if (maxQuantity === 1) {
@@ -572,6 +580,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
+        if (!this.__getEditorEnabled()) {
+            return;
+        }
         this.fetchUpdateFilter(filterValue, forceCompareText, openOnRender);
     },
 
@@ -586,22 +597,19 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
 
-        this.selectedButtonCollection.remove(model);
-
         const selected = [].concat(this.getValue() || []);
         const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
-        this.value = selected;
 
-        this.__triggerChange();
+        this.__value(selected, true);
 
-        this.__updateFakeInputModel();
-
-        if (!this.hasFocus) {
-            this.__focusButton();
+        if (!this.dropdownView.isOpen) {
             this.__onButtonClick();
+            this.__focusButton();
+        } else if (!this.isButtonFocus()) {
+            this.__focusButton();
         }
     },
 
@@ -610,6 +618,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __addFakeInputModel(collection) {
+        if (!collection) {
+            return;
+        }
         if (!this.options.showSearch) {
             if (this.fakeInputModel) {
                 collection.remove(this.fakeInputModel);
@@ -617,23 +628,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             }
             return;
         }
-        collection.add(
-            this.isFakeInputModelWrong(collection) ?
-                this.fakeInputModel = new FakeInputModel() :
-                this.fakeInputModel
-        );
+        this.fakeInputModel = this.fakeInputModel || new FakeInputModel();
+        collection.add(this.fakeInputModel);
 
         this.__updateFakeInputModel();
     },
 
-    isFakeInputModelWrong(collection) {
-        return !this.fakeInputModel || !collection.has(this.fakeInputModel.id);
-    },
-
     updateButtonInput(string): void {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.collectionView.updateInput(string);
-        }
+        this.fakeInputModel?.set('searchText', string);
     },
 
     __onBubbleDeleteLast(): void {

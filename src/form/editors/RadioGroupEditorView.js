@@ -1,7 +1,8 @@
 // @flow
-import BaseCollectionEditorView from './base/BaseCollectionEditorView';
+import BaseCompositeEditorView from './base/BaseCompositeEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
+import template from './impl/radioGroup/templates/radioGroup.hbs';
 import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
 
@@ -20,18 +21,22 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
-formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
+formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
     /** @lends module:core.form.editors.RadioGroupEditorView.prototype */ {
         initialize() {
             this.collection = new RadioGroupCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
 
+        template: Handlebars.compile(template),
+
         className() {
             _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
 
             return `${this.options.class || ''}`;
         },
+
+        childViewContainer: '.js-container',
 
         childView: RadioButtonView,
 
@@ -42,8 +47,13 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
         childViewOptions() {
             return {
                 selected: this.getValue(),
-                enabled: this.getEnabled() && !this.getReadonly()
+                enabled: this.__getEditorEnabled()
             };
+        },
+
+        isEmptyValue() {
+            const value = this.getValue();
+            return value == null || value === '';
         },
 
         __onSelectChild(model) {
@@ -54,20 +64,23 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
             this.__value(value, false);
         },
 
+        __getEditorEnabled() {
+            return this.getEnabled() && !this.getReadonly();
+        },
+
+        __setEditorEnable(isEnable = this.__getEditorEnabled()) {
+            this.children.each(cv =>
+                cv.setEnabled(isEnable));
+        },
+
         __setEnabled(enabled) {
-            BaseCollectionEditorView.prototype.__setEnabled.call(this, enabled);
-            const isEnabled = this.getEnabled() && !this.getReadonly();
-            this.children.each(cv => {
-                cv.setEnabled(isEnabled);
-            });
+            BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
+            this.__setEditorEnable();
         },
 
         __setReadonly(readonly) {
-            BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
-            const isEnabled = this.getEnabled() && !this.getReadonly();
-            this.children.each(cv => {
-                cv.setEnabled(isEnabled);
-            });
+            BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
+            this.__setEditorEnable();
             if (this.getEnabled()) {
                 this.$el.prop('tabindex', readonly ? -1 : 0);
             }

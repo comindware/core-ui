@@ -14,7 +14,8 @@ import factory from '../factory';
 const defaultOptions = {
     isSliding: true,
     showHeader: true,
-    handleSearch: true
+    handleSearch: true,
+    updateToolbarEvents: ''
 };
 
 export default Marionette.Object.extend({
@@ -47,6 +48,9 @@ export default Marionette.Object.extend({
                 this.listenTo(collection, 'check:all check:some check:none', debounceUpdateAction);
             } else {
                 this.listenTo(collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+            }
+            if (this.options.updateToolbarEvents) {
+                this.listenTo(collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
             }
         }
 

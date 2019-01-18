@@ -553,14 +553,22 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-button-edit {
-    vertical-align: top;
     cursor: pointer;
-    white-space: nowrap;
     background-color: #ffffff;
     border: 1px solid #c1c1c1;
     border-radius: 4px;
     height: 100%;
     padding: 4px 20px 4px 10px;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.grid-container .dev-code-button-edit {
+    color: #838c93;
+    height: unset;
+    margin: 4px 10px;
+    padding: 4px 10px 2px 5px;
+    text-align: center;
 }
 
 .dev-code-button-edit:hover {

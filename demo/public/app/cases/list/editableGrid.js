@@ -91,6 +91,7 @@ export default () => {
             type: 'DateTime',
             dataType: 'DateTime',
             title: 'DateTime Cell',
+            width: 0.2,
             editable: true,
             autocommit: true
         },

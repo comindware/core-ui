@@ -13,7 +13,7 @@ const focusTests = {
         view.on('focus', () => {
             const focusElement = options.focusElement ? getElement(options.focusElement) : view.$el;
             expect(focusElement).toBeFocused();
-            expect(view.hasFocus).toEqual(true, 'Must has focus.');
+            expect(view.hasFocus).toBeTrue('Must has focus.');
             expect(view.$el).toHaveClass('editor_focused');
             done();
         });
@@ -26,7 +26,7 @@ const focusTests = {
         view.on('blur', () => {
             const focusElement = options.focusElement ? getElement(options.focusElement) : view.$el;
             expect(focusElement).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, 'Must has no focus.');
+            expect(view.hasFocus).toBeFalse('Must has no focus.');
             expect(view.$el).not.toHaveClass('editor_focused');
             done();
         });

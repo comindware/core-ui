@@ -6,12 +6,24 @@ export default {
         let formattedDisplayValue;
         if (value === null) {
             formattedDisplayValue = '';
-        } else if (format) {
-            formattedDisplayValue = moment(value).format(format);
         } else {
-            formattedDisplayValue = dateHelpers.getDisplayDate(moment(value));
+            formattedDisplayValue = moment(value).format(format || dateHelpers.getFormat('dateISO'));
         }
         return formattedDisplayValue;
+    },
+
+    tryGetValidMoment(value?: string, format: string): string {
+        const sortedMom = this.getPrioritySortedFormats(format).map(f => moment(value, f));
+        return sortedMom.find(mom => mom.isValid());
+    },
+
+    getPrioritySortedFormats(format) {
+        const formatPriority = [
+            moment.ISO_8601,
+            dateHelpers.getFormat('dateISO')
+        ];
+        format && formatPriority.push(format);
+        return formatPriority;
     },
 
     getTimeDisplayValue(value?: string, format: string): string {

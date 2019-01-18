@@ -37,7 +37,8 @@ export default TextEditorView.extend({
     },
 
     modelEvents: {
-        'change:empty': '__updateInputPlaceholder'
+        'change:empty': '__updateInputPlaceholder',
+        'change:searchText': '__onModelChangeSearch'
     },
 
     onRender() {
@@ -76,6 +77,10 @@ export default TextEditorView.extend({
         return this.ui.input.val();
     },
 
+    __onModelChangeSearch(model, searchText) {
+        this.updateInput(searchText);
+    },
+
     updateInput(value = '') {
         this.ui.input.val(value);
     },
@@ -88,7 +93,7 @@ export default TextEditorView.extend({
                     if (!this.options.enabled) {
                         return;
                     }
-                    this.reqres.request('bubble:delete:last');
+                    this.reqres.request('input:backspace');
                 }
                 break;
             }

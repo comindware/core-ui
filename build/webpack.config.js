@@ -253,6 +253,7 @@ module.exports = options => {
             alias: {
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
                 'jquery-ui': pathResolver.source('external/jquery-ui.js'),
+                stickybits: pathResolver.source('external/stickybits.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             },

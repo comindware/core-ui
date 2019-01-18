@@ -4,14 +4,18 @@ const someDate = moment('1986-09-04T17:30:00.000Z');
 const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
 
 export default function() {
+    const model = new Backbone.Model({
+        dateTimeValue: '2015-07-20T10:46:37Z'
+    });
+
+    const view = new Core.form.editors.DateTimeEditor({
+        model,
+        autocommit: true,
+        key: 'dateTimeValue'
+    });
+
     return new CanvasView({
-        view: new Core.form.editors.DateTimeEditor({
-            model: new Backbone.Model({
-                dateTimeValue: '2015-07-20T10:46:37Z'
-            }),
-            key: 'dateTimeValue',
-            autocommit: true
-        }),
+        view,
         presentation: "{{dateTimeValue}}",
         isEditor: true,
         showFormat: true,

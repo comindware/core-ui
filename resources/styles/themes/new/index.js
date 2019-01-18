@@ -14,7 +14,7 @@ const variables = {
     // colors
     white: '#ffffff',
     black: '#313131',
-    red: '#e1462c',
+    red: '#e1462c!important',
     'red-dark': '#d63a1f',
 
     'grey-50': '#f9f9f9',
@@ -93,7 +93,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--grey-300)',
+    'radio-checked-disabled-color': 'var(--grey-400)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',
@@ -427,7 +427,8 @@ module.exports.apply = {
         'font-size': '18px',
         'font-weight': '600',
         display: 'flex',
-        'align-items': 'center'
+        'align-items': 'center',
+        flex: 'none'
     },
     'popup-footer-theme': {
         padding: '15px'
@@ -438,7 +439,8 @@ module.exports.apply = {
     'popup-form-content-theme': {
         padding: '15px',
         'background-color': variables.white,
-        'border-radius': variables['border-radius-big']
+        'border-radius': variables['border-radius-big'],
+        'overflow-y': 'auto'
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],

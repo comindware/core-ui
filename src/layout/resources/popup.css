@@ -45,6 +45,7 @@
 
 .layout__popup-view-content {
     flex: 1 1 auto;
+    display: flex;
     overflow-y: auto;
 }
 

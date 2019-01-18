@@ -20,8 +20,6 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
-const savedDocumentPrefix = 'document';
-
 const defaultOptions = {
     readonly: false,
     allowDelete: true,
@@ -101,10 +99,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     templateContext() {
         return Object.assign(this.options, {
-            displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+            displayText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+            placeHolderText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
-            fileFormat: this.__adjustFileFormat(this.options.fileFormat),
-            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE')
+            fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
     },
 
@@ -187,17 +185,28 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderUploadButton(isReadonly) {
+        this.el.querySelector('.documents__text').hidden = isReadonly;
         this.ui.fileUploadButton.toggle(!isReadonly);
     },
 
     addItems(items) {
         this.onValueAdd(items);
+        this.__onCollectionLengthChange();
     },
 
     removeItem(view) {
         this.collection.remove(view.model);
         this.options.removeDocument?.(view.model.id);
         this.__triggerChange();
+        this.__onCollectionLengthChange();
+    },
+
+    __onCollectionLengthChange() {
+        if (this.collection?.length) {
+            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
+        } else if (this.collection?.length === 0) {
+            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
+        }
     },
 
     __setEnabled(enabled) {
@@ -504,6 +513,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         } else {
             this.ui.showMore.hide();
         }
+        this.__onCollectionLengthChange();
     },
 
     expandShowMore() {

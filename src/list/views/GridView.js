@@ -17,6 +17,7 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from '../views/EmptyGridView';
+import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 
 /*
     Public interface:
@@ -113,6 +114,7 @@ export default Marionette.View.extend({
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
+            this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
         const childView = options.childView || RowView;
@@ -139,7 +141,7 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
-            this.listenTo(this.collection, 'keydown:escape', (e) => this.__triggerSelectedModel('selected:exit', e));
+            this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
         this.listView = new ListView({
@@ -295,6 +297,9 @@ export default Marionette.View.extend({
         LoadingBehavior: {
             behaviorClass: LoadingBehavior,
             region: 'loadingRegion'
+        },
+        LayoutBehavior: {
+            behaviorClass: LayoutBehavior
         }
     },
 
@@ -331,6 +336,7 @@ export default Marionette.View.extend({
             this.ui.title.parent().hide();
         }
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
+        this.__updateState();
     },
 
     onAttach() {
@@ -345,14 +351,45 @@ export default Marionette.View.extend({
         this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
-        stickybits(this.el.querySelector('.grid-header-wrp'), { stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset });
+        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-wrp'), {
+            stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset,
+            scrollEl: this.options.scrollEl,
+            customStickyChangeNumber: this.options.customStickyChangeNumber,
+            stateChangeCb: currentState => {
+                //hack for IE11
+                switch (currentState) {
+                    case 'sticky': {
+                        // fixed header fall of layout
+                        this.ui.content[0].style.marginTop = '35px'; // header height + default margin
+                        break;
+                    }
+                    default:
+                        // static header
+                        this.ui.content[0].style.marginTop = ''; // default margin
+                        break;
+                }
+            }
+        });
         if (toolbarShowed) {
-            stickybits(this.el.querySelector('.js-grid-tools'));
+            this.stickyToolbarInstance = stickybits(this.el.querySelector('.js-grid-tools'), { scrollEl: this.options.scrollEl });
+        }
+        //hack for IE11
+        if (Core.services.MobileService.isIE) {
+            this.on('update:height', () => {
+                this.stickyHeaderInstance.update();
+                if (toolbarShowed) {
+                    this.stickyToolbarInstance.update();
+                }
+            });
         }
     },
 
     getChildren() {
         return this.listView.children;
+    },
+
+    update() {
+        this.__updateState();
     },
 
     __executeAction(...args) {
@@ -499,14 +536,12 @@ export default Marionette.View.extend({
         const columnClass = this.columnClasses[index];
         const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
         let basis;
-        let widthCell = '';
+
         if (width > 0) {
             if (width < 1) {
                 basis = `${width * 100}%`;
-                widthCell = `max-width: ${width * 100}%`;
             } else {
                 basis = `${width}px`;
-                widthCell = `max-width: ${width}px`;
             }
         } else {
             const column = this.options.columns[index];
@@ -517,7 +552,6 @@ export default Marionette.View.extend({
                 const defaultWidth = columnWidthByType[column.dataType];
 
                 if (defaultWidth) {
-                    widthCell = `max-width: ${defaultWidth}px`;
                     basis = `${defaultWidth}px`;
                 } else {
                     basis = '0%';
@@ -544,7 +578,11 @@ export default Marionette.View.extend({
         if (this.listView.isEmpty()) {
             this.emptyViewClass = this.emptyViewClass || (() => `.${new this.options.emptyView().className}`)();
             const empty$el = this.listView.$el.find(this.emptyViewClass);
-            empty$el && empty$el.width(allColumnsWidth);
+
+            if (allColumnsWidth && empty$el) {
+                empty$el && empty$el.width(allColumnsWidth);
+            }
+
             this.ui.content.css({
                 'min-height': `${this.listView.childHeight}px`,
                 height: '100%'

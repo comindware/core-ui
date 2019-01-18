@@ -20,7 +20,7 @@ export default class ToastNotificationService {
         Object.assign(this, Backbone.Events);
     }
 
-    static add(message, type = this.notificationTypes.SUCCESS, time) {
+    static add(message, type = this.notificationTypes.SUCCESS, options = {}) {
         if (!message) {
             return;
         }
@@ -35,7 +35,7 @@ export default class ToastNotificationService {
                 type,
                 title,
                 text,
-                time: time === 0 ? time : time || defaultTimeOfShow
+                time: options.time === 0 ? options.time : options.time || defaultTimeOfShow
             }),
             { at: this.notificationCollection.length }
         );
@@ -43,7 +43,8 @@ export default class ToastNotificationService {
         this.trigger('publish:notification', {
             message: title || text,
             affectedText: title ? text : '',
-            severity: type || 'Info'
+            severity: type || 'Info',
+            options
         });
     }
 }
