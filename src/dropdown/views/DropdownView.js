@@ -128,7 +128,7 @@ export default Marionette.View.extend({
         this.$el.append(el);
 
         this.isShown = true;
-        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl, true));
 
         el.on('click', this.__handleClick.bind(this));
 
