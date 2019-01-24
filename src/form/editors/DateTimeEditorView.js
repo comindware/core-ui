@@ -384,7 +384,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
     __createTimeDropdownView() {
         const model = new Backbone.Model({
-            [this.key]: dateHelpers.dateISOToDuration(this.value, { days: false }).toISOString()
+            [this.key]: this.value == null ? '' : dateHelpers.dateISOToDuration(this.value, { days: false }).toISOString()
         });
         this.listenTo(model, 'change', this.__onTimeModelChange);
 
