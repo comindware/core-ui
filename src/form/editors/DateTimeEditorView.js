@@ -122,7 +122,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     setFormat(newFormat) {
-        if (typeof newFormat !== 'object') {
+        if (typeof newFormat !== 'object' || newFormat === null) {
             return;
         }
         this.options.dateDisplayFormat = newFormat.dateDisplayFormat;
