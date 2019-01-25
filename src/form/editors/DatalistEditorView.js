@@ -107,7 +107,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         this.__createSelectedButtonCollection();
 
-        this.__value(this.value, false, true);
         this.debouncedFetchUpdateFilter = _.debounce(this.fetchUpdateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
@@ -216,7 +215,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     setValue(value): void {
-        this.__value(value, false);
+        this.__value(value, false, true);
     },
 
     onRender(): void {
@@ -349,6 +348,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.selectedButtonCollection.add(models, { merge: true });
         }
         this.__updateFakeInputModel();
+        this.dropdownView?.button?.trigger('change:content');
     },
 
     __resetPanelVirtualCollection(rawDataVirtual) {
@@ -531,7 +531,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __onValueUnset(model: Backbone.Model): void {
+    __onValueUnset(model: Backbone.Model, options = {}): void {
+        if (options.isSilent) {
+            return;
+        }
         this.__focusButton();
         this.__onBubbleDelete(model);
     },
@@ -609,7 +612,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
+        this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect({
+            isSilent: true
+        });
 
         const selected = [].concat(this.getValue() || []);
         const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
