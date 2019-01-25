@@ -1,5 +1,5 @@
 // @flow
-import { helpers } from 'utils';
+import { helpers, keyCode } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
@@ -14,12 +14,17 @@ const classes = {
     CURSOR_AUTO: 'cur_aI'
 };
 
+const cutOffTo = (string, toStr) => 
+    (string.includes(toStr) ?
+    string.slice(0, string.indexOf(toStr)) :
+    string);
+
+const getValueOf = str => Number(cutOffTo(str, 'px'));
+
 const iconsNames = meta.iconsNames;
 
 const TRANSITION = 100; //ms
 const sizeVisibleChunk = 50; //px;
-
-const expandId = _.uniqueId('expand');
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -31,6 +36,8 @@ export default Marionette.View.extend({
         this.content = options.content;
         this.onClose = options.onClose;
         this.__expanded = false;
+
+        _.bindAll(this, '__drag', '__startDrag', '__stopDrag');
     },
 
     template: Handlebars.compile(template),
@@ -69,7 +76,8 @@ export default Marionette.View.extend({
         'click @ui.button': '__onButtonClick',
         'click @ui.close': '__close',
         'click @ui.newTab': '__openInNewTab',
-        'click @ui.fullscreenToggle': '__fullscreenToggle'
+        'click @ui.fullscreenToggle': '__fullscreenToggle',
+        'mousedown @ui.header': '__startDrag'
     },
 
     regions: {
@@ -82,24 +90,20 @@ export default Marionette.View.extend({
         if (this.options.size) {
             this.ui.window.css(this.options.size);
         }
-        this.ui.window.css({ top: -50 });
         this.showChildView('contentRegion', this.options.content);
         this.showChildView('buttonsRegion', this.__createButtonsView());
         this.__updateState();
-        this.ui.window.css({ top: 'inherit' });
 
         if (!this.options.newTabUrl) {
-            this.ui.newTab.hide();
+            this.ui.newTab[0].setAttribute('hidden', '');
         }
         if (this.options.fullscreenToggleDisabled) {
-            this.ui.fullscreenToggle.hide();
+            this.ui.fullscreenToggle[0].setAttribute('hidden', '');
         }
 
-        this.__initializeWindowDrag();
-    },
-
-    onAttach() {
-        this.__setDraggableContainment();
+        this.ui.window[0].ondragstart = () => false;
+        this.__debounceOnResize = _.debounce(this.__onResize, 300);
+        this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
     },
 
     update() {
@@ -117,7 +121,7 @@ export default Marionette.View.extend({
     },
 
     __keyAction(event) {
-        if (event.keyCode === 27 && !this.__isNeedToPrevent()) {
+        if (event.keyCode === keyCode.ESCAPE && !this.__isNeedToPrevent()) {
             this.__close();
         }
     },
@@ -135,7 +139,6 @@ export default Marionette.View.extend({
         this.__expanded = !this.__expanded;
         this.__callWithTransition(
             () => {
-                //this.ui.window.draggable('option', 'disabled', this.__expanded);
                 this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
                 this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
             },
@@ -149,8 +152,7 @@ export default Marionette.View.extend({
     __callWithTransition(callback, callbackAfterTransition) {
         this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
         typeof callback === 'function' && callback();
-        helpers.setUniqueTimeout(
-            expandId,
+        setTimeout(
             () => {
                 this.ui.window.css('transition', 'unset');
                 typeof callbackAfterTransition === 'function' && callbackAfterTransition();
@@ -177,37 +179,123 @@ export default Marionette.View.extend({
         });
     },
 
-    __initializeWindowDrag() {
-        /*
-        this.ui.window.draggable({
-            scroll: false,
-            handle: '.js-header'
-        });
-        */
-        this.__debounceOnResize = _.debounce(this.__onResize, 300);
-        this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
+    __startDrag(startEvent) {
+        if (this.__expanded) {
+            return;
+        }
+        this.__setCurrentDragContext(startEvent);
+        document.addEventListener('mousemove', this.__drag);
+        document.addEventListener('mouseup', this.__stopDrag);
+    },
+
+    __setCurrentDragContext(startEvent) {
+        this.dragContext = {
+            startEvent,
+            startStyleLeft: getValueOf(this.ui.window[0].style.left),
+            startStyleTop: getValueOf(this.ui.window[0].style.top),
+            startOffsetTop: this.ui.window[0].offsetTop,
+            startOffsetLeft: this.ui.window[0].offsetLeft,
+            windowWidth: this.ui.window[0].offsetWidth,
+            documentWidth: document.body.offsetWidth,
+            documentHeight: document.body.offsetHeight
+        };
+    },
+
+    __stopDrag() {
+        document.removeEventListener('mousemove', this.__drag);
+        document.removeEventListener('mouseup', this.__stopDrag);
+        this.__checkPosition();
+        delete this.dragContext;
+    },
+
+    __drag(e) {
+        if (this.__eventOutOfClient(e)) {
+            return;
+        }
+        const diffX = e.clientX - this.dragContext.startEvent.clientX;
+        const diffY = e.clientY - this.dragContext.startEvent.clientY;
+
+        this.ui.window[0].style.left = `${this.dragContext.startStyleLeft + diffX}px`;
+        this.ui.window[0].style.top = `${this.dragContext.startStyleTop + diffY}px`;
+    },
+
+    __eventOutOfClient(e) {
+        return e.clientX > this.dragContext.documentWidth
+            || e.clientY > this.dragContext.documentHeight
+            || e.clientX < 0
+            || e.clientY < 0;
+    },
+
+    __getCorrectPopupDiffs(assumedDiffX, assumedDiffY) {
+        return {
+            diffX: this.__checkLeftContainment(
+                this.__checkRightContainment(assumedDiffX)
+            ),
+            diffY: this.__checkTopContainment(
+                this.__checkBottomContainment(assumedDiffY)
+            )
+        };
+    },
+
+    __checkPosition() {
+        this.__setCurrentDragContext();
+        const { diffX, diffY } = this.__getCorrectPopupDiffs(0, 0);
+
+        if (diffX !== 0) {
+            this.ui.window[0].style.left = `${this.dragContext.startStyleLeft + diffX}px`;
+        }
+        if (diffY !== 0) {
+            this.ui.window[0].style.top = `${this.dragContext.startStyleTop + diffY}px`;
+        }
+        delete this.dragContext;
+    },
+
+    __checkTopContainment(diffY) {
+        const offsetTop = this.dragContext.startOffsetTop + diffY;
+    
+        if (offsetTop < 0) {
+            return -this.dragContext.startOffsetTop;
+        }
+        return diffY;
+    },
+
+    __checkBottomContainment(diffY) {
+        const offsetTop = diffY + this.dragContext.startOffsetTop;
+        const heightExcess = offsetTop + sizeVisibleChunk - this.dragContext.documentHeight;
+
+        if (heightExcess > 0) {
+            return diffY - heightExcess;
+        }
+        return diffY;
+    },
+
+    __checkLeftContainment(diffX) {
+        const offsetLeft = diffX + this.dragContext.startOffsetLeft;
+        const offsetWidth = this.dragContext.windowWidth;
+        const visibleChunk = offsetLeft + offsetWidth;
+        const lack = sizeVisibleChunk - visibleChunk;
+
+        if (lack > 0) {
+            return diffX + lack;
+        }
+        return diffX;
+    },
+
+    __checkRightContainment(diffX) {
+        const offsetLeft = diffX + this.dragContext.startOffsetLeft;
+        const widthExcess = offsetLeft + sizeVisibleChunk - document.body.offsetWidth;
+
+        if (widthExcess > 0) {
+            return diffX - widthExcess;
+        }
+        return diffX;
     },
 
     __onResize() {
         if (this.isDestroyed()) {
             return;
         }
-        this.__callWithTransition(() => {
-            this.ui.window.css('top', 0);
-            this.ui.window.css('left', 0);
-        });
-        this.__setDraggableContainment();
-    },
-
-    __setDraggableContainment() {
-        /*
-        this.ui.window.draggable('option', 'containment', [
-            sizeVisibleChunk - this.ui.window.outerWidth(),
-            0,
-            window.innerWidth - sizeVisibleChunk,
-            window.innerHeight - sizeVisibleChunk
-        ]);
-        */
+        this.__checkPosition();
     },
 
     __isNeedToPrevent() {
