@@ -82,6 +82,9 @@
 
 /* dropdown-list */
 
+.subtext-list.selected .datalist-container-text,
+.subtext-list.selected .datalist-container-subtext,
+.subtext-list.selected .datalist-icon,
 .dd-list__i.selected,
 .selected .dd-list__i,
 .dd-list__i:hover,
@@ -90,6 +93,8 @@
   color: var(--blue-300);
 }
 
+.subtext-list.selected .datalist-container-text,
+.subtext-list.selected .datalist-container-subtext,
 .dd-list__i.selected,
 .selected .dd-list__i {
   font-weight: 600;

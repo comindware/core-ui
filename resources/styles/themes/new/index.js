@@ -43,6 +43,8 @@ const variables = {
     'border-radius-big': '7px',
     border: '1px solid #c1c1c1',
 
+    focus: '1px solid var(--blue-300)',
+
     // font
     'base-font-size': '14px',
     'line-height': '1.4',

@@ -29,11 +29,9 @@ export default TextEditorView.extend({
     focusElement: '.js-input',
 
     events: {
-        'keydown @ui.input': '__search',
-        'keyup @ui.input': '__commit',
-        'input @ui.input': '__search',
-        'focus @ui.input': '__focus',
-        'blur @ui.input': '__blur'
+        'keydown @ui.input': '__keydown',
+        'input @ui.input': '__input',
+        'keyup @ui.input': '__commit'
     },
 
     modelEvents: {
@@ -46,23 +44,12 @@ export default TextEditorView.extend({
         this.__updateInputPlaceholder();
     },
 
-    focus(options) {
+    focus() {
         this.ui.input.focus();
-        this.__focus(options);
-    },
-
-    __focus(options = {}) {
-        if (options.isShowLastSearch) {
-            this.updateInput(this.filterValue);
-        }
     },
 
     blur() {
         this.ui.input.blur();
-        this.__blur();
-    },
-
-    __blur() {
     },
 
     __getFilterValue() {
@@ -85,34 +72,17 @@ export default TextEditorView.extend({
         this.ui.input.val(value);
     },
 
-    __search(e) {
+    __keydown(e) {
+        this.reqres.request('input:keydown', e);
+    },
+
+    __input() {
         const value = this.__getFilterValue();
-        switch (e.keyCode) {
-            case keyCode.BACKSPACE: {
-                if (this.__getRawValue().length === 0) {
-                    if (!this.options.enabled) {
-                        return;
-                    }
-                    this.reqres.request('input:backspace');
-                }
-                break;
-            }
-            case keyCode.UP: {
-                this.reqres.request('input:up');
-                break;
-            }
-            case keyCode.DOWN: {
-                this.reqres.request('input:down');
-                break;
-            }
-            default: {
-                if (this.filterValue === value) {
-                    return;
-                }
-                this.filterValue = value;
-                this.reqres.request('input:search', value);
-            }
+        if (this.filterValue === value) {
+            return;
         }
+        this.filterValue = value;
+        this.reqres.request('input:search', value);
     },
 
     __commit(e) {

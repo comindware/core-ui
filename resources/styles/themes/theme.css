@@ -132,6 +132,11 @@ body {
 .editor_icons .caret {
     color: var(--text-color);
 }
+
+.editor .bubbles .bubbles__i.bubble_focused{
+    border: var(--focus);
+    border-radius: 4px;
+}
 /*------------------ End Form Editor ------------------*/
 
 /* input */
@@ -464,10 +469,10 @@ svg.svg-grid-icons {
 }
 
 .cell-focused {
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus) !important;
 }
 .cell.selected:not(.cell_selection){
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus) !important;
 }
 .cell-focused.error{
   outline-color: #e61212 !important;
@@ -771,7 +776,7 @@ svg.svg-grid-icons {
   @apply --button-strong-hover-theme;
 }
 .toolbar-btn:focus{
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus);
 }
 .toolbar-btn:active {
   @apply --button-strong-active-theme;

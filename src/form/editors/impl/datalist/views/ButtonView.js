@@ -1,6 +1,6 @@
 // @flow
 import template from '../templates/button.hbs';
-import BubbleCollection from './BubbleCollectionView';
+import BubbleCollectionView from './BubbleCollectionView';
 import LoadingView from './LoadingView';
 
 const classes = {
@@ -36,7 +36,7 @@ export default Marionette.View.extend({
     },
 
     onRender(): void {
-        this.collectionView = new BubbleCollection(this.options);
+        this.collectionView = new BubbleCollectionView(this.options);
         this.showChildView('collectionRegion', this.collectionView);
         this.collectionView.on('add:child remove:child', () => this.trigger('change:content'));
     },
