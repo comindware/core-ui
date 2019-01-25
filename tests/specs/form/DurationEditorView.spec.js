@@ -1,9 +1,16 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import 'jasmine-expect';
 import FocusTests from './FocusTests';
 
 /*eslint-ignore*/
 describe('Editors', () => {
+    const show = view =>
+    window.app
+        .getView()
+        .getRegion('contentRegion')
+        .show(view);
+
     describe('DurationEditor', () => {
         FocusTests.runFocusTests({
             initialize: () => {
@@ -27,10 +34,7 @@ describe('Editors', () => {
                 model,
                 key: 'value'
             });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             // act
             const value = view.getValue();
@@ -52,10 +56,7 @@ describe('Editors', () => {
                 hideClearButton: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             view.trigger('mouseenter');
             expect(view.$('.js-clear-button').length).toEqual(0);
@@ -75,10 +76,7 @@ describe('Editors', () => {
                 max
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             const input = view.$('input');
 
@@ -109,10 +107,7 @@ describe('Editors', () => {
                 min
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             const input = view.$('input');
 
@@ -127,7 +122,34 @@ describe('Editors', () => {
             expect(modelValue).toEqual(minISO);
         });
 
-        it('should set null to model if editor value = "0 d 0 h 0 m 0 s"', () => {
+        it('should set null to model after clear', done => {
+            const model = new Backbone.Model({
+                data: 'P3DT3H4M'
+            });
+            const view = new core.form.editors.DurationEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true
+            });
+
+            model.on('change:data', (model, data) => {
+                expect(data).toBeNull(`onClear set '${data}'`);
+                done();
+            });
+
+            view.on('attach', () => {
+                view.$el.trigger('mouseenter');
+                const clearButton = view.$('.js-clear-button');
+                expect(clearButton.length === 1).toBeTrue('editor has no clear button!');
+                clearButton.click();
+                view.blur();
+            });
+
+            show(view);
+        });
+
+        it('should set zero duration to model if editor value = "0 d 0 h 0 m 0 s"', () => {
             const nullInput = '0 d 0 h 0 m 0 s';
             const model = new Backbone.Model({
                 data: 'P3DT3H4M'
@@ -139,10 +161,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            show(view);
 
             const input = view.$('input');
 
@@ -152,8 +171,8 @@ describe('Editors', () => {
 
             let editorValue = view.getValue();
             let modelValue = model.get('data');
-            expect(editorValue).toEqual(null);
-            expect(modelValue).toEqual(null);
+            expect(editorValue).toEqual('P0D');
+            expect(modelValue).toEqual('P0D');
         });
     });
 });

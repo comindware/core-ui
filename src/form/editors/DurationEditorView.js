@@ -69,7 +69,7 @@ const createFocusableParts = function(options) {
     return result;
 };
 
-const defaultOptions = {
+const defaultOptions = () => ({
     hoursPerDay: 24,
     allowDays: true,
     allowHours: true,
@@ -80,15 +80,17 @@ const defaultOptions = {
     hideClearButton: false,
     fillZero: false,
     normalTime: false,
+    class: '',
+    emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DURATION.NOTSET'),
     max: undefined,
     days: undefined,
     hours: undefined,
     minutes: undefined,
     seconds: undefined,
-    min: 0
+    min: undefined
     // allFocusableParts: undefined,
     // seconds: undefined // days, minutes, hours
-};
+});
 
 const classes = {
     FOCUSED: 'pr-focused'
@@ -121,8 +123,6 @@ const stateModes = {
 
 export default (formRepository.editors.Duration = BaseEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-
         this.focusableParts = createFocusableParts(this.options);
 
         this.state = {
@@ -135,7 +135,10 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
 
     focusElement: '.js-input',
 
-    className: 'js-duration editor editor_duration',
+    className() {
+        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions())), defaultOptions());
+        return `${this.options.class || ''} js-duration editor editor_duration`;
+    },
 
     ui: {
         input: '.js-input',
@@ -158,11 +161,19 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        if (enabled && !readonly && !this.options.hideClearButton) {
-            this.ui.clear.show();
+        this.ui.clear.toggle(enabled && !readonly && !this.options.hideClearButton);
+        this.__setPlaceholder();
+    },
+
+    __setPlaceholder() {
+        let placeholder;
+        if (!this.getEnabled() || this.getReadonly()) {
+            placeholder = '';
         } else {
-            this.ui.clear.hide();
+            placeholder = this.options.emptyPlaceholder;
         }
+
+        this.ui.input.prop('placeholder', placeholder);
     },
 
     __setEnabled(enabled) {
@@ -221,25 +232,26 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
             newValueObject[seg.id] = Number(values[i]);
         });
 
-        newValueObject = this.checkMaxMinObject(newValueObject, this.options.max, this.options.min);
+        newValueObject = this.__checkMaxMinObject(newValueObject, this.options.max, this.options.min);
 
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: newValueObject
         });
 
-        let newValue = moment.duration(this.state.displayValue);
-        newValue = newValue.asMilliseconds() === 0 ? null : newValue.toISOString();
-
-        if (!this.options.showEmptyParts || this.triggeredByClean) {
+        if (this.triggeredByClean) {
             this.triggeredByClean = false;
             if (Object.values(newValueObject).every(value => value === 0)) {
-                newValue = null;
                 this.ui.input.val(null);
+                this.__value(null, true);
+                return;
             }
         }
 
-        this.__value(newValue, true);
+        this.__value(
+            moment.duration(this.state.displayValue).toISOString(),
+            true
+        );
     },
 
     getCaretPos() {
@@ -649,22 +661,16 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         }
     },
 
-    checkMaxMinObject(valueObject, max, min) {
-        const value = moment.duration(valueObject).asMilliseconds();
-        const maxValue = moment.duration(max).asMilliseconds();
-        const minValue = moment.duration(min).asMilliseconds();
-        const result = this.__checkMaxMinValue(value, maxValue, minValue);
-        return dateHelpers.durationToObject(result);
-    },
-
-    __checkMaxMinValue(milliseconds, max, min) {
-        let value = milliseconds;
-        if (max) {
+    __checkMaxMinObject(valueObject, maxValue, minValue) {
+        let value = moment.duration(valueObject).asMilliseconds();
+        if (maxValue != null) {
+            const max = moment.duration(maxValue).asMilliseconds();
             value = value > max ? max : value;
         }
-        if (min) {
+        if (minValue != null) {
+            const min = moment.duration(minValue).asMilliseconds();
             value = value < min ? min : value;
         }
-        return value;
+        return dateHelpers.durationToObject(value);
     }
 }));
