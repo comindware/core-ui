@@ -194,9 +194,11 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view._uploadFiles([new File([], 'testFile')]);
+            const file = new File([], 'testFile');
+            view._uploadFiles([file]);
             setTimeout(() => {
-                expect(view.getValue()).toEqual([
+                const value = view.getValue();
+                expect(value).toEqual([
                     {
                         id: 'document.1',
                         name: 'Document 1',
@@ -204,9 +206,9 @@ describe('Editors', () => {
                     },
                     {
                         name: 'testFile',
-                        type: 'testFile',
+                        extension: 'testFile',
                         streamId: 'testFile1',
-                        isLoading: false
+                        url: value[1].url
                     }
                 ]);
                 done();
@@ -231,42 +233,47 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view._uploadFiles([new File([], 'firstFile'), new File([], 'secondFile')]);
+            const file1 = new File([], 'firstFile');
+            const file2 = new File([], 'secondFile');
+            view._uploadFiles([file1, file2]);
             setTimeout(() => {
-                expect(view.getValue()).toEqual([
+                const value = view.getValue();
+                expect(value).toEqual([
                     {
                         name: 'firstFile',
-                        type: 'firstFile',
+                        extension: 'firstFile',
                         streamId: 'firstFile1',
-                        isLoading: false
+                        url: value[0].url
                     },
                     {
                         name: 'secondFile',
-                        type: 'secondFile',
+                        extension: 'secondFile',
                         streamId: 'secondFile2',
-                        isLoading: false
+                        url: value[1].url
                     }
                 ]);
-                view._uploadFiles([new File([], 'thirdFile')]);
+                const file3 = new File([], 'thirdFile');
+                view._uploadFiles([file3]);
                 setTimeout(() => {
+                    const newValue = view.getValue();
                     expect(view.getValue()).toEqual([
                         {
                             name: 'firstFile',
-                            type: 'firstFile',
+                            extension: 'firstFile',
                             streamId: 'firstFile1',
-                            isLoading: false
+                            url: newValue[0].url
                         },
                         {
                             name: 'secondFile',
-                            type: 'secondFile',
+                            extension: 'secondFile',
                             streamId: 'secondFile2',
-                            isLoading: false
+                            url: newValue[1].url
                         },
                         {
                             name: 'thirdFile',
-                            type: 'thirdFile',
+                            extension: 'thirdFile',
                             streamId: 'thirdFile1',
-                            isLoading: false
+                            url: newValue[2].url
                         }
                     ]);
                     done();
@@ -293,24 +300,28 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view._uploadFiles([new File([], 'firstFile'), new File([], 'secondFile')]);
+            const file1 = new File([], 'firstFile');
+            view._uploadFiles([file1, new File([], 'secondFile')]);
             setTimeout(() => {
-                expect(view.getValue()).toEqual([
+                const value = view.getValue();
+                expect(value).toEqual([
                     {
                         name: 'firstFile',
-                        type: 'firstFile',
+                        extension: 'firstFile',
                         streamId: 'firstFile1',
-                        isLoading: false
+                        url: value[0].url
                     }
                 ]);
-                view._uploadFiles([new File([], 'thirdFile')]);
+                const file3 = new File([], 'thirdFile');
+                view._uploadFiles([file3]);
                 setTimeout(() => {
+                    const newValue = view.getValue();
                     expect(view.getValue()).toEqual([
                         {
                             name: 'thirdFile',
-                            type: 'thirdFile',
+                            extension: 'thirdFile',
                             streamId: 'thirdFile1',
-                            isLoading: false
+                            url: newValue[0].url
                         }
                     ]);
                     done();
