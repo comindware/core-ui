@@ -98,8 +98,8 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
-            if (collection?.diff?.length) {
             this.__specifyChildHeight();
+            if (collection?.diff?.length) {
                 return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
             return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { scroll: collection.scroll })); //magic from prod collection
@@ -137,7 +137,19 @@ export default Marionette.CollectionView.extend({
         if (this.__isChildHeightSpecified || this.collection.length === 0) {
             return;
         }
-        const childHeight = this.el.children[0]?.offsetHeight;
+        const firstChild = this.el.children[0];
+        if (!firstChild) {
+            return;
+        }
+
+        let childHeight = firstChild.offsetHeight;
+        if (!childHeight) {
+            const element = document.createElement('div');
+            element.innerHTML = firstChild.outerHTML;
+            document.body.appendChild(element);
+            childHeight = element.offsetHeight;
+            document.body.removeChild(element);
+        }
         if (childHeight > 0) {
             this.childHeight = childHeight;
             this.__isChildHeightSpecified = true;
