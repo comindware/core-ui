@@ -1,10 +1,10 @@
-//@flow
 import ContentLoadingView from './routing/ContentLoadingView';
 import WindowService from './WindowService';
+import Backbone from 'backbone';
 
 // storing active url to get back to it while canceling module leave
-let previousUrl;
-let activeUrl;
+let previousUrl: string;
+let activeUrl: string;
 let shouldCheckUrl = true;
 
 const originalCheckUrl = Backbone.history.checkUrl;
@@ -70,7 +70,7 @@ export default {
     },
 
     // options: replace (history), trigger (routing), split (show in split)
-    navigateToUrl(url, options = {}) {
+    navigateToUrl(url: string, options = {}) {
         let newUrl = url;
 
         if (options.trigger === undefined) {
@@ -119,7 +119,7 @@ export default {
         }));
     },
 
-    async __onModuleLoaded(callbackName, routingArgs, config, Module) {
+    async __onModuleLoaded(callbackName: string, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
             config,
@@ -232,7 +232,7 @@ export default {
             .show(new ContentLoadingView());
     },
 
-    async __tryLeaveActiveModule(subModulePresented) {
+    async __tryLeaveActiveModule() {
         const canLeave = await this.activeModule.leave();
 
         if (!canLeave && this.getPreviousUrl()) {
@@ -268,7 +268,7 @@ export default {
         return null;
     },
 
-    __callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule) {
+    __callRoutingActionForActiveSubModule(callbackName: string, routingArgs, activeSubModule) {
         if (activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
             const configuration = activeSubModule.routingActions[callbackName];
 
@@ -285,7 +285,7 @@ export default {
         }
     },
 
-    __callRoutingActionForActiveModule(callbackName, routingArgs) {
+    __callRoutingActionForActiveModule(callbackName: string, routingArgs) {
         if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
             const configuration = this.activeModule.routingActions[callbackName];
 
@@ -327,7 +327,7 @@ export default {
         });
     },
 
-    __getSplitModuleUrl(nextModuleUrl) {
+    __getSplitModuleUrl(nextModuleUrl: string) {
         if (this.__isCurrentModuleSplit()) {
             return this.__getUpdatedUrl(nextModuleUrl);
         }

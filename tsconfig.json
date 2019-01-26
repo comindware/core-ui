@@ -7,7 +7,9 @@
         "target": "es2018",
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "noEmit": true,
+        "pretty": true
     },
     "include": [
         "./src/**/*"

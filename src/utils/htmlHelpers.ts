@@ -9,7 +9,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightText(rawText, fragment, escape) {
+    highlightText(rawText: string, fragment: string, escape: boolean) {
         let text = rawText;
         if (!text) {
             return '';
@@ -42,7 +42,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightMentions(rawText, escape) {
+    highlightMentions(rawText: string, escape: boolean): string {
         let text = rawText;
         if (!text) {
             return '';
@@ -75,7 +75,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightUrls(rawText, escape) {
+    highlightUrls(rawText: string, escape: boolean): string {
         let text = rawText;
         if (!text) {
             return '';
@@ -85,6 +85,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
         }
 
         const regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
-        return text.replace(regex, url => `<a href="${url}">${url}</a>`);
+
+        return text.replace(regex, (url: string) => `<a href="${url}">${url}</a>`);
     }
 };

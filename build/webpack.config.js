@@ -45,6 +45,11 @@ module.exports = options => {
                     }
                 },
                 {
+                    test: /\.tsx?$/,
+                    loader: 'ts-loader',
+                    exclude: /node_modules/
+                },
+                {
                     test: /\.(ts)|(js)$/,
                     loader: 'babel-loader',
                     exclude: [pathResolver.node_modules()],
@@ -260,8 +265,18 @@ module.exports = options => {
             extensions: ['.ts', '.js', '.json']
         },
         devServer: {
-            noInfo: true,
-            stats: 'minimal'
+            stats: {
+                colors: true,
+                chunks: false,
+                source: false,
+                hash: false,
+                modules: false,
+                errorDetails: true,
+                version: false,
+                assets: false,
+                chunkModules: false,
+                children: false
+            }
         }
     };
 
