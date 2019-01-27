@@ -1,15 +1,18 @@
 // @flow
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
-import { helpers, comparators } from 'utils';
+import { helpers, keyCode } from 'utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
-import ButtonView from './impl/datalist/views/BubbleCollectionView';
+import FakeInputModel from './impl/datalist/models/FakeInputModel';
+import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
+import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/datalist/models/DefaultReferenceModel';
 import StaticController from './impl/datalist/controllers/StaticController';
+import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
 
 type DataValue = {
     id: string,
@@ -23,8 +26,6 @@ const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-const text2AscComparatorSort = helpers.comparatorFor(comparators.stringComparator2Asc, 'text');
-
 const defaultOptions = {
     displayAttribute: 'name',
     controller: null,
@@ -34,12 +35,13 @@ const defaultOptions = {
     showAdditionalList: false,
     subtextProperty: '',
     iconProperty: '',
-    listItemView: undefined,
+    listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
     collection: null,
     maxQuantitySelected: 1,
+    storeArray: false,
     allowEmptyValue: true,
     canDeleteItem: true,
     valueType: 'normal',
@@ -50,21 +52,15 @@ const defaultOptions = {
     minAvailableHeight: undefined
 };
 /* Some DOCS
-    Datalist value (this.value) is array type. (DatalistValue)
     Datalist fetch [searched] data from controller on click
-    __resetPanelVirtualCollection don't work as panelCollection.reset.
-    for this you can just reset passed collection.
+    Comparator selected collection should be change place for fakeInputModel.
 
     ToDo:
-    1.Datalist should show value in model on render regardless panelCollection.has. (__adjustValue) (not show in valueType = 'id' mode)
-    2.Develop readonly for input (like TextEditorView).
-    3.If used fetchUpdateFilter as api, then value added, not reseted.
-    5.staticController has no addNewItem function.
-    6.If showsearch = false, keyup, keydown not move pointer on panel.
-    9.defaultOptions:displayAttribute should be text.
-    10.comparator selected collection should be compare for getDisplayText
-    11.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
-    13.getDisolayText should return string always. (String(returnedValue))
+    1.staticController has no addNewItem function.
+    2.defaultOptions:displayAttribute should be text.
+    3.getDisplayText should has defaults displayAttribute = this.options.displayAttribute.
+    4.getDisolayText should return string always. (String(returnedValue)).
+    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
@@ -75,6 +71,7 @@ const defaultOptions = {
  * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
+ * @param {Boolean} [options.storeArray=false] DEPRECATED. Store array in model whatever maxQuantitySelected one or many.
  * @param {Marionette.View} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.View} [options.listView=ReferenceListView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text or function return display text.
@@ -108,14 +105,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 displayAttribute: options.displayAttribute
             });
 
-        this.value = this.__adjustValue(this.value);
+        this.__createSelectedButtonCollection();
+
+        this.__value(this.value, false, true);
         this.debouncedFetchUpdateFilter = _.debounce(this.fetchUpdateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
-
-        this.selectedButtonCollection = new Backbone.Collection(this.value, {
-            comparator: (a, b) => text2AscComparatorSort(a, b)
-        });
 
         const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
 
@@ -123,10 +118,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         reqres.reply({
             'bubble:delete': this.__onBubbleDelete.bind(this),
-            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
+            'input:keydown': this.__onInputKeydown.bind(this),
             'input:search': this.__onInputSearch.bind(this),
-            'input:up': this.__onInputUp.bind(this),
-            'input:down': this.__onInputDown.bind(this),
             'button:click': this.__onButtonClick.bind(this),
             'value:select': this.__onValueSelect.bind(this),
             'value:edit': this.__onValueEdit.bind(this),
@@ -141,11 +134,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                showSearch: this.options.showSearch,
                 customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
-                showSearch: this.options.showSearch,
                 readonly: this.getReadonly()
             },
             panelView: PanelView,
@@ -157,7 +150,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
-                canSelect: () => this.options.maxQuantitySelected === 1 || this.__canAddItem(),
+                canSelect: () => this.__canAddItem(),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
                     iconProperty: this.options.iconProperty
@@ -168,6 +161,30 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             externalBlurHandler: this.options.externalBlurHandler,
             minAvailableHeight: this.options.minAvailableHeight
         });
+    },
+
+    __createSelectedButtonCollection() {
+        this.selectedButtonCollection = new (Backbone.Collection.extend({
+            comparator: (a, b) => {
+                if (a instanceof FakeInputModel) {
+                    return 1;
+                }
+                if (b instanceof FakeInputModel) {
+                    return -1;
+                }
+                return 0;
+            },
+
+            model: Backbone.Model.extend({
+                initialize() {
+                    _.extend(this, new SelectableBehavior.Selectable(this));
+                }
+            })
+        }))();
+
+        _.extend(this.selectedButtonCollection, new SelectableBehavior.SingleSelect(this.selectedButtonCollection));
+
+        this.__addFakeInputModel(this.selectedButtonCollection);
     },
 
     regions: {
@@ -199,7 +216,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     setValue(value): void {
-        this.value = [];
         this.__value(value, false);
     },
 
@@ -212,46 +228,52 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     isEmptyValue(): boolean {
         const value = this.getValue();
-        if (this.getOption('valueType') === 'id') {
-            return value == null;
-        }
-        return value == null || !value.length;
+        return Array.isArray(value) ?
+            value == null || !value.length :
+            value == null;
     },
 
-    getValue() {
+    __convertToValue(estimatedObjects) {
         if (this.getOption('valueType') === 'id') {
-            if (this.getOption('maxQuantitySelected') === 1) {
-                return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
-            }
-            return Array.isArray(this.value) && this.value.map(value => (value && value.id !== undefined ? value.id : value));
+            return Array.isArray(estimatedObjects) ?
+                estimatedObjects.map(value => value && value.id) :
+                estimatedObjects && estimatedObjects.id;
         }
-        return this.value;
+        return estimatedObjects;
+    },
+
+    __convertToObject(value) {
+        this.__adjustValue(value);
     },
 
     setReadonly(readonly: Boolean): void {
         BaseEditorView.prototype.setReadonly.call(this, readonly);
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        if (!this.isRendered()) {
+            return;
+        }
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
-        this.dropdownView?.button?.setReadonly(readonly);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setReadonly(readonly);
     },
 
     setEnabled(enabled: Boolean): void {
         BaseEditorView.prototype.setEnabled.call(this, enabled);
-        const isEnabled = this.getEnabled() && !this.getReadonly();
+        if (!this.isRendered()) {
+            return;
+        }
+        const isEnabled = this.__getEditorEnabled();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
-        this.dropdownView?.button?.setEnabled(enabled);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
+        this.getInputView()?.setEnabled(enabled);
     },
 
     focus(): void {
-        this.hasFocus = true;
         this.__focusButton();
         this.onFocus();
     },
 
     blur(): void {
-        this.hasFocus = false;
         this.updateButtonInput('');
         this.__blurButton();
         this.onBlur({
@@ -259,8 +281,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         });
     },
 
+    isButtonFocus() {
+        const inputView = this.getInputView();
+        return inputView && inputView.ui.input[0] === document.activeElement;
+    },
+
     isThisFocus() {
         return this.el.contains(document.activeElement);
+    },
+
+    getInputView() {
+        return this.dropdownView?.button?.collectionView?.getInputView();
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {
@@ -306,12 +337,24 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        this.selectedButtonCollection.reset(models);
+        // this.selectedButtonCollection.reset(models == null ? undefined : models);
+        // select selected after reset
+
+        this.selectedButtonCollection.remove(
+            this.selectedButtonCollection.filter(model => 
+                !(model instanceof FakeInputModel)
+                && !(Array.isArray(models) && models.some(newModel => newModel.id === model.id)))
+        );
+        if (models) {
+            this.selectedButtonCollection.add(models, { merge: true });
+        }
+        this.__updateFakeInputModel();
     },
 
     __resetPanelVirtualCollection(rawDataVirtual) {
         this.panelCollection.totalCount = rawDataVirtual.totalCount;
         this.panelCollection.reset(rawDataVirtual.collection);
+        this.panelCollection.selected = {};
 
         if (this.options.maxQuantitySelected === 1) {
             return;
@@ -341,7 +384,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getIsOpenAllowed() {
-        return this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen && this.isThisFocus();
+        return this.__getEditorEnabled() && !this.dropdownView.isOpen && this.isThisFocus();
+    },
+
+    __getEditorEnabled() {
+        return this.getEnabled() && !this.getReadonly();
     },
 
     open(openOnRender) {
@@ -353,23 +400,24 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     close() {
         this.dropdownView.close();
+        this.__focusButton();
     },
 
-    __adjustValue(value: any): DataValue {
-        if (value === undefined || value === null) {
-            return [];
+    __adjustValue(value: any, isLoadIfNeeded = false) {
+        if (value == null || (Array.isArray(value) && value.length === 0)) {
+            return this.options.maxQuantitySelected === 1 ? null : [];
         }
-        const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value) : value;
-        return Array.isArray(result) ? result : [result];
+        const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;
+        return result;
     },
 
-    __adjustValueForIdMode(value) {
-        if (!this.isLastFetchSuccess) {
-            this.fetchUpdateFilter('', true);
+    __adjustValueForIdMode(value, isLoadIfNeeded) {
+        if (isLoadIfNeeded && !this.isLastFetchSuccess && this.panelCollection.length === 0) {
             this.listenToOnce(this, 'view:ready', () => {
-                this.setValue(this.__adjustValueFromLoaded(value).map(item => item.toJSON()));
+                const adjustedValue = this.__adjustValueFromLoaded(value);
+                this.setValue(Array.isArray(adjustedValue) ? adjustedValue.map(item => item.toJSON()) : adjustedValue);
             });
-            return [];
+            this.fetchUpdateFilter('', true);
         }
         return this.__adjustValueFromLoaded(value);
     },
@@ -378,26 +426,24 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (Array.isArray(value)) {
             return value.map(v => this.__getValueFromPanelCollection(v));
         }
-        return [this.__getValueFromPanelCollection(value)];
+        return this.__getValueFromPanelCollection(value);
     },
 
     __getValueFromPanelCollection(value) {
-        return (
-            this.panelCollection.get(value) ||
-            (value instanceof Object && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
-            this.__tryToCreateAdjustedValue(value)
-        );
+        return this.panelCollection.get(value)?.toJSON()  ||
+            (_.isObject(value) && this.panelCollection.findWhere(value)?.toJSON()) || //backbone get no item with id == null
+            this.__tryToCreateAdjustedValue(value);
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model
-            ? value
-            : value instanceof Object
-            ? new Backbone.Model(value)
-            : new Backbone.Model({
-                  id: value,
-                  text: this.__isValueEqualNotSet(value) ? Localizer.get('CORE.COMMON.NOTSET') : undefined
-              });
+        return _.isObject(value) ?
+                value :
+                ({
+                    id: value,
+                    text: this.__isValueEqualNotSet(value) ?
+                        Localizer.get('CORE.COMMON.NOTSET') :
+                        undefined
+                });
     },
 
     __isValueEqualNotSet(value) {
@@ -405,24 +451,25 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isValueIncluded(value) {
-        return JSON.stringify(this.value) === JSON.stringify(value) || (value instanceof Object && this.value.find(v => v.id === value.id));
+        if (this.options.valueType === 'id') {
+            if (_.isObject(value)) {
+                return this.value.some(v => v === value.id);
+            }
+            return this.value.includes(value);
+        }
+        return this.value.some(v => v.id === (_.isObject(value) ? value.id : value));
     },
 
-    __value(value: DataValue, triggerChange: boolean): void {
-        if (this.isValueIncluded(value)) {
-            return false;
-        }
-        const adjustedValue = this.__adjustValue(value);
+    __value(value, triggerChange, isLoadIfNeeded = false) {
+        const adjustedValue = this.__adjustValue(value, isLoadIfNeeded);
 
-        if (this.options.maxQuantitySelected === 1) {
-            const firstModel = this.selectedButtonCollection.first();
-            this.selectedButtonCollection.remove(firstModel);
-            this.value = adjustedValue;
-        } else {
-            this.value = this.getValue().concat(adjustedValue);
+        this.value = this.__convertToValue(adjustedValue);
+
+        if (this.options.storeArray && !Array.isArray(this.value)) {
+            this.value = this.value == null ? this.value : [this.value];
         }
-        //todo add comparison for values
-        this.__resetSelectedCollection(this.value);
+
+        this.__resetSelectedCollection(adjustedValue);
 
         if (triggerChange) {
             this.__triggerChange();
@@ -432,24 +479,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     resetCollection(collection) {
-        const value = this.model ? this.model.get(this.key) : this.value;
-        this.panelCollection.reset(collection.models);
-        if (value) {
-            const selectedItems =
-                this.getOption('valueType') === 'id'
-                    ? this.panelCollection.parentCollection.filter(collectionItem => {
-                          const itemId = collectionItem.get('id').toString();
-                          if (Array.isArray(value)) {
-                              return value.find(v => (v && v.id ? v.id : v === itemId));
-                          }
-                          return value === itemId;
-                      })
-                    : value.map(item => this.__getValueFromPanelCollection(item));
-            if (selectedItems) {
-                this.setValue(selectedItems.map(item => item.toJSON()));
-                selectedItems.forEach(item => item.select && item.select({ isSilent: true }));
-            }
-        }
+        this.__resetPanelVirtualCollection({
+            collection: collection.models,
+            totalCount: collection.length
+        });
+        this.__value(this.value);
     },
 
     __onValueSelect(): void {
@@ -458,25 +492,29 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __onValueSet(model?: Backbone.Model, options = {}): void {
-        const canAddItemOldValue = this.__canAddItem();
-        const value = model ? model.toJSON() : null;
-
-        this.__value(value, true);
-
-        if (this.options.maxQuantitySelected === 1 && !options.isSilent) {
-            this.__checkSelectedState(model);
-            this.dropdownView.close();
-            this.updateButtonInput('');
-            this.__focusButton();
+    __onValueSet(model: Backbone.Model, options = {}): void {
+        if (options.isSilent) {
             return;
         }
+        if (this.__canAddItem()) {
+            const valueObject = model ? model.toJSON() : null;
+            const value = this.__convertToValue(valueObject);
 
-        const stopAddItems = canAddItemOldValue !== this.__canAddItem();
-        if (stopAddItems) {
-            this.dropdownView.close();
+            if (this.options.maxQuantitySelected === 1) {
+                this.__value(value, true);
+                this.__checkSelectedState(model);
+                this.close();
+                this.updateButtonInput('');
+                return;
+            }
+
+            this.__value(this.value.concat(value), true);
+        }
+
+        if (!this.__canAddItem()) {
+            this.close();
             this.updateButtonInput('');
-        } else if (!options.isSilent) {
+        } else {
             this.__focusButton();
             this.__clearSearch();
         }
@@ -485,7 +523,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __checkSelectedState(model) {
         const selected = Object.values(model.collection.selected);
         if (selected.length > 1) {
-            selected.forEach(selectedModel => (selectedModel.selected = false));
+            selected.forEach(selectedModel => selectedModel.selected = false);
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -499,9 +537,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = this.selectedButtonCollection.models;
-        const isAccess = this.getEnabled() && !this.getReadonly();
+        const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
+        const isAccess = this.__getEditorEnabled();
         const maxQuantity = this.options.maxQuantitySelected;
+
+        if (maxQuantity === 1) {
+            return true;
+        }
 
         return isAccess && maxQuantity > selectedItems.length;
     },
@@ -516,7 +558,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onAddNewItem(): void {
-        this.dropdownView.close();
+        this.close();
         if (typeof this.controller.addNewItem === 'function') {
             this.controller.addNewItem(createdValue => {
                 if (createdValue) {
@@ -531,7 +573,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return '';
         }
         if (typeof displayAttribute === 'function') {
-            return displayAttribute(value);
+            return displayAttribute(value, this.model);
         }
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
@@ -549,7 +591,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
+        if (!this.__getEditorEnabled()) {
+            return;
+        }
         this.fetchUpdateFilter(filterValue, forceCompareText, openOnRender);
+        if (!this.showSearch) {
+            this.__focusButton();
+        }
     },
 
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {
@@ -557,34 +605,44 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
-            //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
             return;
         }
 
         this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
-
-        this.selectedButtonCollection.remove(model);
 
         const selected = [].concat(this.getValue() || []);
         const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
-        this.value = selected;
 
-        this.__triggerChange();
+        this.__value(selected, true);
 
-        if (!this.hasFocus) {
-            this.__focusButton();
+        if (!this.dropdownView.isOpen) {
             this.__onButtonClick();
+            this.__focusButton();
+        } else if (!this.isButtonFocus()) {
+            this.__focusButton();
         }
     },
 
-    updateButtonInput(string): void {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.updateInput(string);
+    __updateFakeInputModel(): void {
+        this.fakeInputModel && this.fakeInputModel.updateEmpty();
+    },
+
+    __addFakeInputModel(collection) {
+        if (!collection) {
+            return;
         }
+        this.fakeInputModel = this.fakeInputModel || new FakeInputModel();
+        collection.add(this.fakeInputModel);
+
+        this.__updateFakeInputModel();
+    },
+
+    updateButtonInput(string): void {
+        this.fakeInputModel?.set('searchText', string);
     },
 
     __onBubbleDeleteLast(): void {
@@ -593,12 +651,103 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__onBubbleDelete(model);
     },
 
+    __onInputKeydown(e) {
+        const input = e.target;
+        let selectedBubble;
+        let selectedBubbleIndex;
+        switch (e.keyCode) {
+            case keyCode.UP:
+                e.preventDefault();
+                selectedBubble = this.__getSelectedBubble();
+                selectedBubble && selectedBubble.deselect();
+                this.__onInputUp();
+                break;
+            case keyCode.DOWN:
+                e.preventDefault();
+                selectedBubble = this.__getSelectedBubble();
+                selectedBubble && selectedBubble.deselect();
+                this.__onInputDown();
+                break;
+            case keyCode.RIGHT:
+                selectedBubble = this.__getSelectedBubble();
+                selectedBubbleIndex = this.selectedButtonCollection.indexOf(selectedBubble);
+                if (selectedBubbleIndex === this.selectedButtonCollection.length - 2) {
+                    selectedBubble.deselect();
+                    this.open();
+                    break;
+                }
+                this.__selectBubbleBy(1, selectedBubble);
+                break;
+            case keyCode.LEFT:
+                selectedBubble = this.__getSelectedBubble();
+                if (selectedBubble) {
+                    this.__selectBubbleBy(-1, selectedBubble);
+                } else if (input.selectionEnd === 0) {
+                    this.close();
+                    this.__selectBubbleLast();
+                    this.updateButtonInput('');
+                }
+                break;
+            case keyCode.DELETE:
+                selectedBubble = this.__getSelectedBubble();
+                if (selectedBubble) {
+                    this.__selectBubbleBy(1, selectedBubble);
+                    this.__onBubbleDelete(selectedBubble);
+                }
+                break;
+            case keyCode.BACKSPACE:
+                selectedBubble = this.__getSelectedBubble();
+                if (selectedBubble) {
+                    this.__selectBubbleBy(-1, selectedBubble);
+                    this.__onBubbleDelete(selectedBubble);
+                } else if (!input.value.trim()) {
+                    this.close();
+                    this.__selectBubbleLast();
+                    this.updateButtonInput('');
+                }
+                break;
+            default:
+                break;
+        }
+    },
+
+    __getSelectedBubble() {
+        return Object.values(this.selectedButtonCollection.selected)[0];
+    },
+    
+    __selectBubbleBy(delta, selectedBubble = this.__getSelectedBubble()) {
+        if (!selectedBubble) {
+            return;
+        }
+        const selectedIndex = this.selectedButtonCollection.indexOf(selectedBubble);
+        const newSelectedIndex = this.__checkMinMaxBubble(selectedIndex + delta);
+        if (newSelectedIndex === selectedIndex) {
+            return;
+        }
+        this.selectedButtonCollection.at(newSelectedIndex).select();
+    },
+
+    __checkMinMaxBubble(bubbleIndex) {
+        const minIndex = 0;
+        const maxIndex = this.selectedButtonCollection.length - 2; //fakeInputModel is last.
+
+        return Math.max(Math.min(bubbleIndex, maxIndex), minIndex);
+    },
+
+    __selectBubbleLast() {
+        if (this.selectedButtonCollection.length < 2) { //only fake, has no bubbles.
+            return;
+        }
+        this.selectedButtonCollection.select(
+            this.selectedButtonCollection.at(this.selectedButtonCollection.length - 2)
+        );
+    },
+
     __onInputUp(): void {
         const collection = this.panelCollection;
 
         if (collection.indexOf(this.panelCollection.lastPointedModel) === 0) {
-            this.dropdownView.close();
-            this.__focusButton();
+            this.close();
         } else {
             this.__sendPanelCommand('up');
         }

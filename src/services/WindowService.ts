@@ -1,5 +1,6 @@
 import PopupStackView from '../views/PopupStackView';
 import Backbone from 'backbone';
+import GlobalEventService from './GlobalEventService';
 
 export default {
     initialize(options = {}) {
@@ -21,6 +22,7 @@ export default {
         rootView.showChildView('popupStackRegion', this.__popupStackView);
 
         this.__popupStackView.on('popup:close', (popupId: string) => this.trigger('popup:close', popupId));
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
     },
 
     /**
@@ -72,5 +74,15 @@ export default {
 
     fadeBackground(fade: boolean) {
         this.__popupStackView.fadeBackground(fade);
+    },
+
+    isPopupOnTop(popupId) {
+        return this.__popupStackView.isPopupOnTop(popupId);
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.__popupStackView.closeTopPopup();
+        }
     }
 };

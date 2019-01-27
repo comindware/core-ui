@@ -60,6 +60,8 @@ export default Marionette.View.extend({
         index: '.js-index'
     },
 
+        //'dragstart @ui.dots': '__handleDragStart', !! todo
+        //'dragend @ui.dots': '__handleDragEnd',
     onRender() {
         this.__updateState();
 

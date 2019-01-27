@@ -1,7 +1,7 @@
 import { objectPropertyTypes } from '../Meta';
 import { moment } from '../lib';
 
-export const stringComparator2Asc = function(a, b) {
+export const stringComparator2Asc = function(a?: string, b?: string) {
     if (a) {
         if (b) {
             return a.localeCompare(b);
@@ -13,7 +13,7 @@ export const stringComparator2Asc = function(a, b) {
     return 0;
 };
 
-export const stringComparator2Desc = function(a, b) {
+export const stringComparator2Desc = function(a?: string, b?: string) {
     if (a) {
         if (b) {
             return -a.localeCompare(b);
@@ -25,11 +25,11 @@ export const stringComparator2Desc = function(a, b) {
     return 0;
 };
 
-export const numberComparator2Asc = function(a, b) {
+export const numberComparator2Asc = function(a: number, b: number) {
     return a - b;
 };
 
-export const numberComparator2Desc = function(a, b) {
+export const numberComparator2Desc = function(a: number, b: number) {
     return b - a;
 };
 
@@ -53,7 +53,7 @@ export const durationComparator2Desc = function(a, b) {
     return b ? (a ? b - a : 1) : a ? -1 : 0;
 };
 
-export const booleanComparator2Asc = function(a, b) {
+export const booleanComparator2Asc = function(a: boolean, b: boolean) {
     // true goes first
     return a ? (b ? 0 : -1) : b ? 1 : 0;
 };

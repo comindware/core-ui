@@ -25,7 +25,7 @@ export default Marionette.Object.extend({
             const moduleLeaveConfig = this.onLeave();
 
             if (typeof moduleLeaveConfig === 'boolean') {
-                return moduleLeaveConfig;
+                return this.__checkPromisesAndLeave(moduleLeaveConfig);
             }
 
             if (isCalledByUnloadEvent) {
@@ -35,7 +35,7 @@ export default Marionette.Object.extend({
             return Core.services.MessageService.showSystemMessage(moduleLeaveConfig);
         }
 
-        return true;
+        return this.__checkPromisesAndLeave(true);
     },
 
     setLoading(isLoading: boolean) {
@@ -101,6 +101,16 @@ export default Marionette.Object.extend({
                 this.moduleRegion.show(presentingView);
             }
         }
+    },
+
+    __checkPromisesAndLeave(canLeave) {
+        if (Core.services.PromiseService.checkBeforeLeave()) {
+            return Core.services.MessageService.showSystemMessage({
+                type: Core.services.MessageService.systemMessagesTypes.unsavedChanges
+            });
+        }
+
+        return canLeave;
     },
 
     __handleEvent(data) {

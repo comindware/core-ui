@@ -1,4 +1,9 @@
+import Backbone from 'backbone';
+
 export default class WebSocketService {
+    socket: WebSocket;
+    isConnectionOpened: boolean;
+
     static initialize(options = {}) {
         Object.assign(this, Backbone.Events);
         this.isConnectionOpened = true;
@@ -14,7 +19,7 @@ export default class WebSocketService {
         this.socket.close();
     }
 
-    static send(eventId, data) {
+    static send(eventId: string, data) {
         try {
             this.socket.send(JSON.stringify({ id: eventId, data }));
         } catch (e) {

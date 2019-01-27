@@ -32,7 +32,6 @@ export default Marionette.View.extend({
         helpers.ensureOption(options, 'buttons');
         helpers.ensureOption(options, 'content');
 
-        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.content = options.content;
         this.onClose = options.onClose;
         this.__expanded = false;
@@ -69,12 +68,13 @@ export default Marionette.View.extend({
         window: '.js-window',
         close: '.js-close',
         newTab: '.js-new-tab',
-        fullscreenToggle: '.js-fullscreen-toggle'
+        fullscreenToggle: '.js-fullscreen-toggle',
+        headerText: '.js-header-text'
     },
 
     events: {
         'click @ui.button': '__onButtonClick',
-        'click @ui.close': '__close',
+        'click @ui.close': 'close',
         'click @ui.newTab': '__openInNewTab',
         'click @ui.fullscreenToggle': '__fullscreenToggle',
         'mousedown @ui.header': '__startDrag'
@@ -125,6 +125,10 @@ export default Marionette.View.extend({
             this.__close();
         }
     },
+    
+    setHeader(eventTitle) {
+        this.ui.headerText.text(eventTitle);
+    },
 
     __openInNewTab() {
         if (Array.isArray(this.options.newTabUrl)) {
@@ -132,7 +136,7 @@ export default Marionette.View.extend({
         } else {
             window.open(this.options.newTabUrl);
         }
-        this.__close();
+        this.close();
     },
 
     __fullscreenToggle() {
@@ -161,13 +165,15 @@ export default Marionette.View.extend({
         );
     },
 
-    async __close() {
-        if (this.onClose) {
-            const closeResult = await this.onClose();
+    async close() {
+        if (WindowService.isPopupOnTop(this.popupId)) {
+            if (this.onClose) {
+                const closeResult = await this.onClose();
 
-            closeResult && WindowService.closePopup();
-        } else {
-            WindowService.closePopup();
+                return closeResult && WindowService.closePopup(this.popupId);
+            }
+
+            return WindowService.closePopup(this.popupId);
         }
     },
 
@@ -298,7 +304,7 @@ export default Marionette.View.extend({
         this.__checkPosition();
     },
 
-    __isNeedToPrevent() {
+    isNeedToPrevent() {
         return this.el.querySelector('.dev-codemirror-maximized') !== null || this.el.querySelector('.CodeMirror-hints') !== null;
     },
 

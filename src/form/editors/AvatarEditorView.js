@@ -48,25 +48,24 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, options.schema, defaultOptions);
 
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');
-
         this.__removed = false;
         this.__previewURL = null;
         this.__initFileInput();
     },
 
     onRender() {
-        this.ui.initials.append(this.__getInitials(this.getOption('fullName') || ''));
+        this.ui.initials.append(this.__getInitialsOrDefaultImage(this.getOption('fullName') || ''));
 
         if (this.getValue()) {
             this.__preview(this.controller.getImage(this.getValue()));
-        } else if (this.getOption('fullName')) {
-            this.ui.initials.show();
-        } else {
+        } else if (this.controller.getImage()) {
             this.__preview(this.controller.getImage());
+        } else {
+            this.ui.initials.show();
         }
 
         this.ui.tooltip.hide();
@@ -132,20 +131,26 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
         };
     },
 
-    __getInitials(fullName) {
+    __getInitialsOrDefaultImage(fullName) {
         const words = fullName.split(' ');
+        let userInitials;
 
         switch (words.length) {
             case 0:
-                return null;
+                userInitials = null;
+                break;
             case 1:
                 if (words[0] === '') {
-                    return null;
+                    userInitials = null;
                 }
-                return fullName.substr(0, 2).toUpperCase();
+                userInitials = fullName.substr(0, 2).toUpperCase();
+                break;
             default:
-                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+                userInitials = (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+                break;
         }
+        this.el.querySelector('.user-avatar-default-icon').style.visibility = userInitials ? 'hidden' : 'visible';
+        return userInitials;
     },
 
     __attach() {

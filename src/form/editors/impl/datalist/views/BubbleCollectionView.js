@@ -1,134 +1,87 @@
 // @flow
-import template from '../templates/button.hbs';
+import BubbleItemView from './BubbleItemView';
 import InputView from './InputView';
-import LoadingView from './LoadingView';
-import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
-import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+import FakeInputModel from '../models/FakeInputModel';
 
-const classes = {
-    DISABLED: ' disabled'
-};
-
-export default Marionette.View.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.collection = options.collection;
-
-        this.listenTo(this.collection, 'add:child remove:child', () => this.trigger('change:content'));
-        this.listenTo(this.collection, 'add:child remove:child reset', this.render);
     },
 
-    className() {
-        return `bubbles__list ${this.options.enabled ? '' : classes.DISABLED}`;
-    },
+    className: 'bubbles__list',
 
-    regions: {
-        loadingRegion: '.js-datalist-loading-region',
-        searchRegion: '.js-datalist-search-region'
-    },
-
-    templateContext() {
-        return {
-            items: this.collection.toJSON(),
-            hidden: !this.options.showSearch
-        };
-    },
-
-    ui: {
-        clearButton: '.js-bubble-delete',
-        editButton: '.js-edit-button',
-        bubble: '.bubbles__i'
-    },
-
-    events: {
-        'click @ui.clearButton': '__delete',
-        'click @ui.editButton': '__edit',
-        click: '__click',
-        drag: '__handleDrag',
-        'mouseenter @ui.bubble': '__onMouseenter',
-        'mouseleave @ui.bubble': '__onMouseleave'
-    },
-
-    onRender() {
-        if (this.options.showSearch) {
-            this.searchInputView = new InputView({ text: this.options.searchText, reqres: this.reqres });
-            this.showChildView('searchRegion', this.searchInputView);
+    childView(model) {
+        if (model instanceof FakeInputModel) {
+            return InputView;
         }
+        return BubbleItemView;
     },
-
-    __click(e) {
-        if (e.target.tagName === 'A') {
-            e.stopPropagation();
-            return;
-        }
-        this.reqres.request('button:click');
-    },
-
-    template: Handlebars.compile(template),
 
     focus(options) {
-        this.searchInputView?.focus(options);
+        const fakeInputModel = this.__findFakeInputModel();
+        if (!fakeInputModel) {
+            return;
+        }
+        const input = this.children.findByModel(fakeInputModel);
+        if (input && input.focus) {
+            input.focus(options);
+        }
     },
 
     blur() {
-        this.searchInputView?.blur();
+        const fakeInputModel = this.__findFakeInputModel();
+        if (!fakeInputModel) {
+            return;
+        }
+        const input = this.children.findByModel(fakeInputModel);
+
+        if (input && input.blur) {
+            input.blur();
+        }
+    },
+
+    getInputView() {
+        const fakeInputModel = this.__findFakeInputModel();
+        if (fakeInputModel) {
+            return this.children.findByModel(fakeInputModel);
+        }
     },
 
     updateInput(string) {
-        this.searchInputView?.updateInput(string);
+        const input = this.getInputView();
+        input && input.updateInput(string);
+    },
+
+    __findFakeInputModel() {
+        return this.collection.models.find(model => model instanceof FakeInputModel && model);
+    },
+
+    childViewOptions(model) {
+        if (model instanceof FakeInputModel) {
+            return {
+                reqres: this.reqres,
+                parent: this.$el,
+                readonly: !this.options.showSearch
+            };
+        }
+        return {
+            reqres: this.reqres,
+            parent: this.$el,
+            enabled: this.options.enabled,
+            createValueUrl: this.options.createValueUrl,
+            showEditButton: this.options.showEditButton,
+            showRemoveButton: this.options.canDeleteItem,
+            getDisplayText: this.options.getDisplayText,
+            customTemplate: this.options.customTemplate
+        };
     },
 
     updateEnabled(enabled) {
-        this.options.enabled = enabled;
-    },
-
-    setLoading(state) {
-        if (this.isDestroyed()) {
-            return;
-        }
-
-        if (state) {
-            this.showChildView('loadingRegion', new LoadingView());
-        } else {
-            this.getRegion('loadingRegion').reset();
-        }
-    },
-
-    setReadonly(...args) {
-        this.searchInputView.setReadonly(...args);
-    },
-
-    setEnabled(...args) {
-        this.searchInputView.setEnabled(...args);
-    },
-
-    __onMouseenter(event) {
-        if (this.options.showEditButton) {
-            event.currentTarget.insertAdjacentHTML('beforeend', iconWrapPencil);
-        }
-        if (this.options.enabled && this.options.canDeleteItem) {
-            event.currentTarget.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
-        }
-    },
-
-    __onMouseleave(event) {
-        if (this.options.showEditButton) {
-            event.currentTarget.removeChild(event.currentTarget.lastElementChild);
-        }
-        if (this.options.enabled && this.options.canDeleteItem) {
-            event.currentTarget.removeChild(event.currentTarget.lastElementChild);
-        }
-    },
-
-    __delete(event) {
-        this.reqres.request('bubble:delete', this.collection.at(Array.prototype.indexOf.call(event.delegateTarget.children, event.currentTarget.parentElement)));
-        return false;
-    },
-
-    __edit(event) {
-        if (this.reqres.request('value:edit', this.collection.at(Array.prototype.indexOf.call(event.delegateTarget.children, event.currentTarget.parentElement)).attributes)) {
-            return false;
-        }
-        return null;
+        this.children.each(cv => {
+            if (cv.updateEnabled) {
+                cv.updateEnabled(enabled);
+            }
+        });
     }
 });

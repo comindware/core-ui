@@ -28,7 +28,8 @@
 
 .visible-collection {
     height: 100%;
-    width: 100%;
+    width: auto;
+    position: relative;
 }
 
 .visible-collection-wrp, .selection-panel-wrp {
@@ -291,7 +292,11 @@
 
 /* Editable Grid */
 .grid-container{
-    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 100%;
 }
 
 .grid-container > .form-label {
@@ -458,6 +463,7 @@
     line-height: initial;
     border: none;
     background-color: transparent;
+    flex: auto;
 }
 .cell .js-tree-first-cell {
     flex: none;
@@ -528,7 +534,6 @@
 
 .cell .checkbox {
     margin: 0 auto;
-    z-index: 2;
 }
 
 .cell_selection-index .checkbox {
@@ -552,13 +557,11 @@
 }
 
 .compact.grid-container .grid-header,
-.compact.grid-container .grid-selection-cell-all,
-.compact.grid-container .cell{
+.compact.grid-container .cell_selection-index,
+.compact.grid-container .cell_selection,
+.compact.grid-container .cell,
+.compact.grid-container .grid-header-column{
     height: 26px;
-    line-height: 26px;
-    font-size: 12px;
-}
-.compact.grid-container .grid-header-column-content{
     line-height: 26px;
     font-size: 12px;
 }

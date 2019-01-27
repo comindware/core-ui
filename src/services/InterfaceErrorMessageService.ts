@@ -5,7 +5,7 @@ export default class InterfaceErrorMessageService {
         Object.assign(this, Backbone.Events);
     }
 
-    static logError(exception: string, viewId?: string) {
+    static logError(exception: Error | string, viewId?: string) {
         this.trigger('InterfaceError', { exception, viewId });
         console.log(exception); //TODO check on listeners, hide if exist
     }

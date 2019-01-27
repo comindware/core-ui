@@ -1,5 +1,3 @@
-//@flow
-
 type diffObject = {
     elem: {},
     t: -1 | 0 | 1
@@ -39,11 +37,11 @@ export default function(a_: Array<any>, b_: Array<any>) {
     const P = function(
         x: number,
         y: number,
-        k: ?number
+        k?: number
     ): {
         x: number,
         y: number,
-        k: ?number
+        k?: number
     } {
         return {
             x,

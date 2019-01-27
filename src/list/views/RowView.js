@@ -48,6 +48,7 @@ export default Marionette.View.extend({
         collapsibleButton: '.js-collapsible-button'
     },
 
+        //'selected:exit': '__handleExit', !!todo
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
@@ -298,8 +299,11 @@ export default Marionette.View.extend({
                 const cellIndex = this.__getFocusedCellIndex(e);
                 if (cellIndex > -1 && this.getOption('columns')[cellIndex].editable) {
                     this.gridEventAggregator.pointedCell = cellIndex;
+
+                    // todo: find more clear way to handle this case
+                    const isFocusChangeNeeded = !e.target.classList.contains('js-field-error-button');
                     setTimeout(
-                        () => this.__selectPointed(cellIndex, true),
+                        () => this.__selectPointed(cellIndex, true, isFocusChangeNeeded),
                         11 //need more than debounce delay in selectableBehavior calculateLength
                     );
                 }
@@ -386,7 +390,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor) {
+    __selectPointed(pointed, isFocusEditor, isFocusChangeNeeded = true) {
         const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
         if (pointedEl == null) return;
 
@@ -394,10 +398,8 @@ export default Marionette.View.extend({
             this.__deselectPointed();
         }
 
-        let editors = pointedEl.querySelectorAll('input');
-        if (editors.length === 0) {
-            editors = pointedEl.querySelectorAll('[class~=editor]');
-        }
+        const editors = pointedEl.querySelectorAll('input,[class~=editor]');
+        const input = pointedEl.querySelector('input');
 
         const doesContains = pointedEl.contains(editors[0]);
         const editorNeedFocus = doesContains && isFocusEditor;
@@ -408,12 +410,20 @@ export default Marionette.View.extend({
                 view.model.trigger('select:hidden');
                 return false;
             }
-            if (editorNeedFocus && !this.__someFocused(editors)) {
-                editors[0].focus();
+            if (editorNeedFocus && !this.__someFocused(editors) && isFocusChangeNeeded) {
+                if (input) {
+                    if (input.classList.contains('input_duration')) {
+                        setTimeout(() => input.focus(), 0);
+                    } else {
+                        input.focus();
+                    }
+                } else {
+                    editors[0].focus();
+                }
             }
         }
 
-        if (!editorNeedFocus) {
+        if (!editorNeedFocus && isFocusChangeNeeded) {
             pointedEl.focus();
         }
 
@@ -422,37 +432,20 @@ export default Marionette.View.extend({
     },
 
     __someFocused(nodeList) {
-        let state = false;
-        const someFunction = node => !state && (state = document.activeElement === node);
-        Array.prototype.forEach.call(nodeList, someFunction);
-        return state;
+        const someFunction = node => document.activeElement === node || node.contains(document.activeElement);
+        return Array.prototype.some.call(nodeList, someFunction);
     },
 
-    __handleEnter() {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
+    __handleEnter(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true, e);
+    },
+
+    __handleExit(e) {
+        this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
     },
 
     __getFocusedCellIndex(e) {
-        const cells = this.el.querySelectorAll(`.${classes.cell}`);
-        return this.__findContainsIndex(cells, e.target);
-    },
-
-    __findContainsIndex(parentNodeList, child) {
-        let result = false;
-        const someFunction = (node, index) => {
-            if (node.contains(child)) {
-                if (result !== false) {
-                    console.warn('Some grid cells are parent for this child');
-                }
-                result = index;
-            }
-        };
-        Array.prototype.forEach.call(parentNodeList, someFunction);
-        if (result === false) {
-            console.warn('There are no parents cells for this child');
-            result = -1;
-        }
-        return result;
+        return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
     },
 
     __handleMouseEnter() {

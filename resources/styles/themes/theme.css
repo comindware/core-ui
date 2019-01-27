@@ -132,6 +132,11 @@ body {
 .editor_icons .caret {
     color: var(--text-color);
 }
+
+.editor .bubbles .bubbles__i.bubble_focused{
+    border: var(--focus);
+    border-radius: 4px;
+}
 /*------------------ End Form Editor ------------------*/
 
 /* input */
@@ -163,10 +168,6 @@ body {
 /* /textarea/ */
 
 /* checkbox */
-.editor_checkbox {
- 
-}
-
 .checkbox {
   @apply --checkbox-theme;
   font-size: var(--base-font-size);
@@ -208,6 +209,11 @@ body {
   margin-bottom: var(--custom-control-spacer-y);
 }
 
+.editor_disabled .editor_radiobutton,
+.editor_readonly .editor_radiobutton{
+  padding: var(--form-label-padding);
+}
+
 .radiobutton {
   width: var(--radio-size);
   height: var(--radio-size);
@@ -217,13 +223,9 @@ body {
 .radiobutton-text {
   line-height: var(--line-height);
 }
-.editor_disabled .radiobutton,
-.editor_readonly .radiobutton {
-  @apply --custom-cotrol-disabled-theme;
-}
 
-.editor_disabled .editor_checked .radiobutton,
-.editor_readonly .editor_checked .radiobutton {
+.editor_disabled .radiobutton,
+.editor_readonly .radiobutton{
   @apply --radio-disabled-theme;
 }
 
@@ -232,7 +234,6 @@ body {
   height: var(--radio-inner-size);
   background-color: var(--radio-checked-color);
 }
-
 
 .editor_disabled .editor_checked .radiobutton:after,
 .editor_readonly .editor_checked .radiobutton:after {
@@ -332,12 +333,14 @@ svg.svg-grid-icons {
 .cell .layout__vertical-layout {
   width: auto;
   flex-direction: row;
+  flex: auto;
 }
 
 .cell .layout__vertical-layout > div,
 .cell .layout__vertical-layout-item {
   margin-bottom: 0;
   height: 100%;
+  flex: 1 0 100px;
 }
 
 .grid__headless .row:first-child .cell{
@@ -466,10 +469,10 @@ svg.svg-grid-icons {
 }
 
 .cell-focused {
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus) !important;
 }
 .cell.selected:not(.cell_selection){
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus) !important;
 }
 .cell-focused.error{
   outline-color: #e61212 !important;
@@ -773,7 +776,7 @@ svg.svg-grid-icons {
   @apply --button-strong-hover-theme;
 }
 .toolbar-btn:focus{
-  outline: 1px solid #0575bd !important;
+  outline: var(--focus);
 }
 .toolbar-btn:active {
   @apply --button-strong-active-theme;
@@ -943,6 +946,14 @@ svg.svg-grid-icons {
   height: var(--input-height);
 }
 
+.grid-container .editor.context_select {
+  height: unset;
+  margin: 4px 10px;
+  padding: 4px 10px 2px 5px;
+  text-align: center;
+  width: auto;
+}
+
 /* color picker */
 .sp-container, .sp-container * {
   box-sizing: border-box;
@@ -1083,6 +1094,9 @@ svg.svg-grid-icons {
   border-radius: 6px;
   padding: 20px;
   height: 100%;
+  min-width: 120px; 
+  min-height: 100px;
+  display: flex;
 }
 
 .documents__upload {

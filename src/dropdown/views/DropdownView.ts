@@ -1,4 +1,3 @@
-// @flow
 import { helpers } from '../../utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -131,7 +130,7 @@ export default Marionette.View.extend({
         this.$el.append(el);
 
         this.isShown = true;
-        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl, true));
 
         el.on('click', this.__handleClick.bind(this));
 
@@ -426,18 +425,20 @@ export default Marionette.View.extend({
         }
     },
 
-    __checkElements() {
-        setTimeout(() => {
-            if (this.isDestroyed()) {
-                return;
-            }
-            this.__observedEntities.forEach(x => {
-                const { left, top } = x.el.getBoundingClientRect();
-                if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
-                    x.callback.call(this);
+    __checkElements(target) {
+        if (!this.__isNestedInButton(target) && !this.__isNestedInPanel(target)) {
+            setTimeout(() => {
+                if (this.isDestroyed()) {
+                    return;
                 }
-            });
-        }, 50);
+                this.__observedEntities.forEach(x => {
+                    const { left, top } = x.el.getBoundingClientRect();
+                    if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
+                        x.callback.call(this);
+                    }
+                });
+            }, 50);
+        }
     },
 
     __updateAnchorPosition(el) {

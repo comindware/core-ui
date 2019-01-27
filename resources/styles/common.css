@@ -426,7 +426,6 @@ a:hover {
 
 /* --------------- Search ----------------*/
 .tr-search {
-    height: 100%;
     margin: 0;
     display: none;
     position: relative;
@@ -492,10 +491,6 @@ a:hover {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
-}
-
-.search-view {
-    position: relative;
 }
 /*-----//------*/
 
@@ -1220,18 +1215,21 @@ a:hover {
     overflow-y: auto;
     height: 100%;
     width: 100%;
+    display: flex;
 }
 
-.split-panel_wrapper {
-    display: flex;
+.split-panel_container.split-panel_vertical {
     flex-wrap: wrap;
-    height: 100%;
+}
+
+.split-panel_container.split-panel_horizontal {
+    flex-direction: column;
 }
 
 .split-panel_tile {
     flex: 1;
     min-width: 500px;
-    min-height: 500px;
+    min-height: 300px;
 }
 
 .split-panel_container .content-view {
@@ -1258,21 +1256,39 @@ a:hover {
 }
 
 .split-panel-resizer_container {
-    width: 5px;
     background-color: #4d4d4d;
     position: absolute !important;
-    height: 100%;
     z-index: 60;
-    cursor: e-resize;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.split-panel_resizer {
-    z-index: 5;
+.split-panel-resizer_container.split-panel-resizer_vertical {
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.split-panel-resizer_vertical > .split-panel_resizer {
     height: 40px;
     width: 3px;
+}
+
+.split-panel-resizer_container.split-panel-resizer_horizontal {
+    height: 5px;
+    width: 100%;
+    cursor: row-resize;
+}
+
+.split-panel-resizer_horizontal > .split-panel_resizer {
+    height: 3px;
+    width: 40px;
+}
+
+.split-panel_resizer {
+    z-index: 5;
+
     background-color: rgb(230, 230, 230);
     border-radius: 25%;
 }

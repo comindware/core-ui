@@ -50,7 +50,7 @@ export default /** @lends module:core.utils.helpers */ {
      * (2 word forms for en and de, 3 word forms for ru).
      * @return {String} Resulting string.
      * */
-    getPluralForm(n, texts) {
+    getPluralForm(n: number, texts: string) {
         if (!getPluralFormIndex) {
             const formula = LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
             getPluralFormIndex = new Function('n', `var r = ${formula};return typeof r !== 'boolean' ? r : r === true ? 1 : 0;`); // jshint ignore:line

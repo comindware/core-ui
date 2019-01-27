@@ -1,15 +1,16 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
+import { moment } from '../lib';
 
 const dateTimeFormats = {
     en: {
-        shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */},
-        sateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
-        condensedDate: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */},
-        longDate: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */},
-        monthDay: { general: 'MMMM D' /* June 15 */},
-        yearMonth: { general: 'MMMM, YYYY' /* June, 2009 */},
+        shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */ },
+        dateISO: { general: 'MM/DD/YYYY' /* 12/31/2018 */ },
+        condensedDate: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */ },
+        longDate: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */ },
+        monthDay: { general: 'MMMM D' /* June 15 */ },
+        yearMonth: { general: 'MMMM, YYYY' /* June, 2009 */ },
         fullDateShortTime: {
             general: 'dddd, MMMM D, YYYY h:mm A', // Monday, June 15, 2009 1:45 PM
             date: 'dddd, MMMM D, YYYY', // Monday, June 15
@@ -48,12 +49,12 @@ const dateTimeFormats = {
         }
     },
     de: {
-        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2014 */},
-        dateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
-        condensedDate: { general: 'DD. MMM YYYY' /* 03. Dez. 2014 */},
-        longDate: { general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */},
-        monthDay: { general: 'DD. MMMM' /* 03. Dezember */},
-        yearMonth: { general: 'MMMM YYYY' /* Dezember 2014 */},
+        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2014 */ },
+        dateISO: { general: 'YYYY-MM-DD' /* 2018-12-31 */ },
+        condensedDate: { general: 'DD. MMM YYYY' /* 03. Dez. 2014 */ },
+        longDate: { general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */ },
+        monthDay: { general: 'DD. MMMM' /* 03. Dezember */ },
+        yearMonth: { general: 'MMMM YYYY' /* Dezember 2014 */ },
         fullDateShortTime: {
             general: 'dddd, DD. MMMM YYYY HH:mm', // Mittwoch, 03. Dezember 2014 19:00
             date: 'dddd, DD. MMMM YYYY', // Mittwoch, 03. Dezember 2014
@@ -94,14 +95,14 @@ const dateTimeFormats = {
         }
     },
     ru: {
-        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2009 */},
-        dateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
-        condensedDate: { general: 'D MMM YYYY' /* 3 Дек 2014 */},
-        longDate: { general: 'D MMMM YYYY' /* 3 декабря 2014 */},
-        monthDay: { general: 'D MMMM' /* 3 декабря */},
-        yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */},
+        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2009 */ },
+        dateISO: { general: 'DD.MM.YYYY' /* 31.12.2018 */ },
+        condensedDate: { general: 'D MMM YYYY' /* 3 Дек 2014 */ },
+        longDate: { general: 'D MMMM YYYY' /* 3 декабря 2014 */ },
+        monthDay: { general: 'D MMMM' /* 3 декабря */ },
+        yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */ },
         fullDateShortTime: {
-            general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
+            general: 'D MMMM, YYYY HH:mm' /* 3 декабря 2014 19:00 */,
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
@@ -130,7 +131,7 @@ const dateTimeFormats = {
             date: 'YYYY-MM-DD', // 2014-12-29
             time: 'HH:mm:ssZ' // 11:45:00+04:00
         },
-        longTime: { general: 'h:mm:ss A' /* 1:45:30 PM */},
+        longTime: { general: 'h:mm:ss A' /* 1:45:30 PM */ },
         dateTimeISO: {
             general: 'YYYY-MM-DD HH:mm:ss', // 2005-08-09 18:31:42 its not ISO date (!) (wrong name from main tracker)
             date: 'YYYY-MM-DD', // 2005-08-09
@@ -160,7 +161,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     dateISOToDuration(dateIsoString, options) {
-        const opt = _.defaults(options, {seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
+        const opt = _.defaults(options, { seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
         const mom = moment(dateIsoString);
 
         return moment.duration({
@@ -168,7 +169,6 @@ export default /** @lends module:core.utils.dateHelpers */ {
             minutes: opt.minutes && mom.minutes(),
             hours: opt.hours && mom.hours(),
             days: opt.days && mom.days(),
-            // weeks:  mom.weeks(),
             months: opt.months && mom.month(),
             years: opt.years && mom.years()
         });
@@ -198,10 +198,14 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getDisplayDate(val) {
-        const lang = LocalizationService.langCode;
-        const format = dateTimeFormats[lang].condensedDate.general;
+        const format = this.getFormat('dateISO');
 
         return val ? moment(val).format(format) : '';
+    },
+
+    getFormat(formatName) {
+        const lang = LocalizationService.langCode;
+        return dateTimeFormats[lang][formatName].general;
     },
 
     getDisplayTime(time) {
@@ -212,9 +216,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getTimeEditFormat(hasSeconds) {
-        return hasSeconds
-            ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time
-            : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     dateToDateTimeString(date, formatName) {

@@ -1,6 +1,7 @@
 import ContentLoadingView from '../views/ContentLoadingView';
 import WindowService from './WindowService';
 import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
 
 // storing active url to get back to it while canceling module leave
 let previousUrl: string;
@@ -104,7 +105,7 @@ export default {
         this.navigateToUrl(activeUrl);
     },
 
-    setDefaultUrl(newDefaultUrl) {
+    setDefaultUrl(newDefaultUrl: string) {
         this.defaultUrl = newDefaultUrl;
     },
 
@@ -119,6 +120,10 @@ export default {
         }));
     },
 
+    isCurrentModuleSplit() {
+        return activeUrl?.startsWith('#custom');
+    },
+
     async __onModuleLoaded(callbackName: string, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
@@ -131,7 +136,7 @@ export default {
 
         if (!this.activeModule) {
             this.__showViewPlaceholder();
-        } else {
+        } else if (!customModuleRegion) {
             const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
             if (!isLeaved) {
                 return;
@@ -182,6 +187,7 @@ export default {
                     config,
                     region: customModuleRegion
                 });
+                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
             } else {
                 this.activeModule = new Module({
                     config,
@@ -208,7 +214,7 @@ export default {
             }
         }
 
-        if (!this.__isCurrentModuleSplit() || activeSubModule) {
+        if (!this.isCurrentModuleSplit() || activeSubModule) {
             try {
                 if (activeSubModule) {
                     this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
@@ -218,6 +224,8 @@ export default {
             } catch (e) {
                 Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
+        } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
+            this.__callRoutingActionForActiveModule(callbackName, routingArgs);
         } else {
             this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
         }
@@ -310,18 +318,16 @@ export default {
         }
     },
 
-    __isCurrentModuleSplit() {
-        return activeUrl?.startsWith('#custom');
-    },
-
     __invalidateSubModules(regionModulesMap) {
         regionModulesMap.forEach(module => {
             const cleanUrl = module.pair.route.replace('#', '');
             const prefix = cleanUrl.split('/')[0];
             const urlParts = activeUrl.split('&nxt');
             const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
+            const newRoute = window.location.hash.replace('#', '').split('&nxt')[replaceIndex];
 
-            if (replaceIndex !== -1 && urlParts[replaceIndex] !== window.location.hash.replace('#', '').split('&nxt')[replaceIndex]) {
+            if (replaceIndex !== -1 && urlParts[replaceIndex] !== newRoute) {
+                module.pair.route = newRoute;
                 setTimeout(() => module.pair.callback(module.pair.route));
             }
         });
