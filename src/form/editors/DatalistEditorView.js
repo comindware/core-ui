@@ -7,7 +7,6 @@ import BaseEditorView from './base/BaseEditorView';
 import FakeInputModel from './impl/datalist/models/FakeInputModel';
 import ButtonView from './impl/datalist/views/ButtonView';
 import PanelView from './impl/datalist/views/PanelView';
-import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/datalist/models/DefaultReferenceModel';
@@ -35,7 +34,6 @@ const defaultOptions = {
     showAdditionalList: false,
     subtextProperty: '',
     iconProperty: '',
-    listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
@@ -228,16 +226,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     isEmptyValue(): boolean {
         const value = this.getValue();
-        return Array.isArray(value) ?
-            value == null || !value.length :
-            value == null;
+        return Array.isArray(value) ? value == null || !value.length : value == null;
     },
 
     __convertToValue(estimatedObjects) {
         if (this.getOption('valueType') === 'id') {
-            return Array.isArray(estimatedObjects) ?
-                estimatedObjects.map(value => value && value.id) :
-                estimatedObjects && estimatedObjects.id;
+            return Array.isArray(estimatedObjects) ? estimatedObjects.map(value => value && value.id) : estimatedObjects && estimatedObjects.id;
         }
         return estimatedObjects;
     },
@@ -341,9 +335,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         // select selected after reset
 
         this.selectedButtonCollection.remove(
-            this.selectedButtonCollection.filter(model => 
-                !(model instanceof FakeInputModel)
-                && !(Array.isArray(models) && models.some(newModel => newModel.id === model.id)))
+            this.selectedButtonCollection.filter(model => !(model instanceof FakeInputModel) && !(Array.isArray(models) && models.some(newModel => newModel.id === model.id)))
         );
         if (models) {
             this.selectedButtonCollection.add(models, { merge: true });
@@ -430,20 +422,20 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __getValueFromPanelCollection(value) {
-        return this.panelCollection.get(value)?.toJSON()  ||
+        return (
+            this.panelCollection.get(value)?.toJSON() ||
             (_.isObject(value) && this.panelCollection.findWhere(value)?.toJSON()) || //backbone get no item with id == null
-            this.__tryToCreateAdjustedValue(value);
+            this.__tryToCreateAdjustedValue(value)
+        );
     },
 
     __tryToCreateAdjustedValue(value) {
-        return _.isObject(value) ?
-                value :
-                ({
-                    id: value,
-                    text: this.__isValueEqualNotSet(value) ?
-                        Localizer.get('CORE.COMMON.NOTSET') :
-                        undefined
-                });
+        return _.isObject(value)
+            ? value
+            : {
+                  id: value,
+                  text: this.__isValueEqualNotSet(value) ? Localizer.get('CORE.COMMON.NOTSET') : undefined
+              };
     },
 
     __isValueEqualNotSet(value) {
@@ -523,7 +515,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __checkSelectedState(model) {
         const selected = Object.values(model.collection.selected);
         if (selected.length > 1) {
-            selected.forEach(selectedModel => selectedModel.selected = false);
+            selected.forEach(selectedModel => (selectedModel.selected = false));
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -605,7 +597,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
+            //length = 1 + fakeInputModel
             return;
         }
 
@@ -714,7 +707,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __getSelectedBubble() {
         return Object.values(this.selectedButtonCollection.selected)[0];
     },
-    
+
     __selectBubbleBy(delta, selectedBubble = this.__getSelectedBubble()) {
         if (!selectedBubble) {
             return;
@@ -735,12 +728,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __selectBubbleLast() {
-        if (this.selectedButtonCollection.length < 2) { //only fake, has no bubbles.
+        if (this.selectedButtonCollection.length < 2) {
+            //only fake, has no bubbles.
             return;
         }
-        this.selectedButtonCollection.select(
-            this.selectedButtonCollection.at(this.selectedButtonCollection.length - 2)
-        );
+        this.selectedButtonCollection.select(this.selectedButtonCollection.at(this.selectedButtonCollection.length - 2));
     },
 
     __onInputUp(): void {

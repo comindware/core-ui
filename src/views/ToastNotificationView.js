@@ -1,4 +1,4 @@
-import template from '../templates/toastNotification.html';
+import template from './templates/toastNotification.html';
 
 const notificationTypes = {
     INFO: 'Info',
