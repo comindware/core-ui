@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import LocalizationService from '../services/LocalizationService';
+import InterfaceErrorMessageService from '../services/InterfaceErrorMessageService';
 
 let getPluralFormIndex = null;
 
@@ -86,7 +87,7 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     ensureOption(options: Object, optionName: string) {
         if (!options) {
-            Core.InterfaceError.logError('The options object is required.', 'MissingOptionError');
+            InterfaceErrorMessageService.logError('The options object is required.', 'MissingOptionError');
         }
         let recursiveOptions = options;
 
@@ -96,12 +97,12 @@ export default /** @lends module:core.utils.helpers */ {
                 let name = selector[i];
                 if (recursiveOptions[name] === undefined) {
                     name = _.take(selector, i + 1).join('.');
-                    Core.InterfaceError.logError(`The option \`${name}\` is required.`, 'MissingOptionError');
+                    InterfaceErrorMessageService.logError(`The option \`${name}\` is required.`, 'MissingOptionError');
                 }
                 recursiveOptions = recursiveOptions[name];
             }
         } else if (options[optionName] === undefined) {
-            Core.InterfaceError.logError({
+            InterfaceErrorMessageService.logError({
                 error: `The option \`${optionName}\` is required.`,
                 object: options
             });
@@ -162,7 +163,7 @@ export default /** @lends module:core.utils.helpers */ {
         const error = new Error(message);
         error.name = name || 'Error';
 
-        Core.InterfaceError.logError(error);
+        InterfaceErrorMessageService.logError(error);
     },
 
     throwInvalidOperationError(message?: string) {

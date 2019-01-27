@@ -1,3 +1,5 @@
+import Backbone from 'backbone';
+
 export default class CTEventsService {
     static initialize() {
         window.addEventListener('storage', event => {

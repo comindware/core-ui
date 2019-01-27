@@ -4,6 +4,7 @@ import RoutingService from '../services/RoutingService';
 import ToastNotificationService from '../services/ToastNotificationService';
 import PresenterService from '../services/PresenterService';
 import Marionette from 'backbone.marionette';
+import Backbone from 'backbone';
 
 export default Marionette.Object.extend({
     constructor(options = {}) {
@@ -19,7 +20,7 @@ export default Marionette.Object.extend({
 
     moduleRegion: window.contentRegion,
 
-    leave(isCalledByUnloadEvent) {
+    leave(isCalledByUnloadEvent: boolean) {
         if (typeof this.onLeave === 'function') {
             const moduleLeaveConfig = this.onLeave();
 

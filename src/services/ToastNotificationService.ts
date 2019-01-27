@@ -1,4 +1,4 @@
-import NotificationCollectionView from './toastNotification/views/NotificationCollectionView';
+import NotificationCollectionView from '../views/NotificationCollectionView';
 
 const defaultTimeOfShow = 12000;
 

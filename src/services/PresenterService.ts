@@ -1,4 +1,3 @@
-//@flow
 import { presentingComponentsTypes } from '../Meta';
 
 type typeIdPare = {

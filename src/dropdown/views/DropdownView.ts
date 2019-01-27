@@ -1,5 +1,5 @@
 // @flow
-import { helpers } from 'utils';
+import { helpers } from '../../utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
 import Marionette from 'backbone.marionette';

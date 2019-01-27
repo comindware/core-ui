@@ -1,5 +1,3 @@
-import helpers from 'utils/helpers';
-
 type DataProvider = {
     listUsers: Function,
     listGroups: Function

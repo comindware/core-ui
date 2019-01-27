@@ -1,4 +1,4 @@
-import ContentLoadingView from './routing/ContentLoadingView';
+import ContentLoadingView from '../views/ContentLoadingView';
 import WindowService from './WindowService';
 import Backbone from 'backbone';
 

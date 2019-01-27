@@ -1,4 +1,6 @@
-//@flow
+import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
+
 const classes = {
     POPUP_REGION: 'js-popup-region-',
     POPUP_FADE: 'popup-fade'
@@ -157,7 +159,7 @@ export default Marionette.View.extend({
         this.trigger('popup:close', popupDef.popupId);
     },
 
-    __toggleFadedBackground(fade) {
+    __toggleFadedBackground(fade: boolean) {
         this.$el.toggleClass('fadingPanel_open', fade);
     }
 });
