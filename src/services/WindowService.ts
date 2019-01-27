@@ -31,7 +31,7 @@ export default {
      * @param {Marionette.View} view A Marionette.View instance to show.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showPopup(view) {
+    showPopup(view: Marionette.View<any>) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: true,
             transient: false,
@@ -54,10 +54,9 @@ export default {
      * @param {Object} options Options object.
      * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
      * */
-    showTransientPopup(view, options = { fadeBackground: false, hostEl: null }) {
+    showTransientPopup(view: Marionette.View<any>, options = { fadeBackground: false, hostEl: null }) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: options.fadeBackground,
-            anchorEl: options.anchorEl,
             transient: true,
             hostEl: options.hostEl
         });
@@ -76,11 +75,11 @@ export default {
         this.__popupStackView.fadeBackground(fade);
     },
 
-    isPopupOnTop(popupId) {
+    isPopupOnTop(popupId: string) {
         return this.__popupStackView.isPopupOnTop(popupId);
     },
 
-    __keyAction(event) {
+    __keyAction(event: KeyboardEvent) {
         if (event.keyCode === 27) {
             this.__popupStackView.closeTopPopup();
         }

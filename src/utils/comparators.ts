@@ -130,7 +130,7 @@ export const getComparatorByDataType = function(dataType, sorting) {
     return comparator;
 };
 
-export const stringComparator1 = function(a) {
+export const stringComparator1 = function(a: string) {
     return a;
 };
 

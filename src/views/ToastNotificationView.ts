@@ -1,4 +1,5 @@
 import template from './templates/toastNotification.html';
+import Marionette from 'backbone.marionette';
 
 const notificationTypes = {
     INFO: 'Info',

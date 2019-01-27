@@ -2,6 +2,7 @@ import ContentLoadingView from '../views/ContentLoadingView';
 import WindowService from './WindowService';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
+import _ from 'underscore';
 
 // storing active url to get back to it while canceling module leave
 let previousUrl: string;

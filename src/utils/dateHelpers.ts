@@ -197,7 +197,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return startDay;
     },
 
-    getDisplayDate(val) {
+    getDisplayDate(val: Date) {
         const format = this.getFormat('dateISO');
 
         return val ? moment(val).format(format) : '';
@@ -215,11 +215,11 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return time.format(format);
     },
 
-    getTimeEditFormat(hasSeconds) {
+    getTimeEditFormat(hasSeconds: boolean) {
         return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
-    dateToDateTimeString(date, formatName) {
+    dateToDateTimeString(date+: Date, formatName) {
         const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
     }

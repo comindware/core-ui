@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import LocalizationService from '../services/LocalizationService';
 import InterfaceErrorMessageService from '../services/InterfaceErrorMessageService';
+import _ from 'underscore';
 
 let getPluralFormIndex = null;
 
@@ -20,9 +21,9 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     comparatorFor(comparatorFn: Function, propertyName: string) {
         if (comparatorFn.length === 1) {
-            return a => comparatorFn(a.get(propertyName));
+            return (a: Backbone.Model) => comparatorFn(a.get(propertyName));
         } else if (comparatorFn.length === 2) {
-            return (a, b) => comparatorFn(a.get(propertyName), b.get(propertyName));
+            return (a: Backbone.Model, b: Backbone.Model) => comparatorFn(a.get(propertyName), b.get(propertyName));
         }
         throw new Error('Invalid arguments count in comparator function.');
     },

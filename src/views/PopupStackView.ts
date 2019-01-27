@@ -1,5 +1,20 @@
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
+import _ from 'underscore';
+
+interface StackViewOptions {
+    fadeBackground: boolean;
+    transient: boolean;
+    hostEl: HTMLElement;
+}
+
+interface StackViewConfiguration {
+    view: Marionette.View<any>;
+    options: StackViewOptions;
+    regionEl: HTMLElement;
+    popupId: string;
+    parentPopupId?: string;
+}
 
 const classes = {
     POPUP_REGION: 'js-popup-region-',
@@ -18,7 +33,7 @@ export default Marionette.View.extend({
 
     template: false,
 
-    showPopup(view, options) {
+    showPopup(view: Marionette.View<any>, options: StackViewOptions) {
         const { fadeBackground, transient, hostEl } = options;
 
         if (!transient) {
@@ -31,7 +46,7 @@ export default Marionette.View.extend({
         regionEl.classList.add('js-core-ui__global-popup-region');
 
         let parentPopup;
-        let parentPopupId = null;
+        let parentPopupId: string | null = null;
 
         if (hostEl) {
             parentPopup = hostEl.closest && hostEl.closest('.js-core-ui__global-popup-region');
@@ -49,7 +64,7 @@ export default Marionette.View.extend({
             // If there is a child popup, it must be closed:
             // 1. There might be nested dropdowns
             // 2. There can't be dropdowns opened on the same level
-            const childPopupDef = this.__stack.find(x => x.parentPopupId === parentPopupId);
+            const childPopupDef = this.__stack.find((x: StackViewConfiguration) => x.parentPopupId === parentPopupId);
             if (childPopupDef) {
                 this.closePopup(childPopupDef.popupId);
             }
@@ -63,7 +78,7 @@ export default Marionette.View.extend({
 
         if (fadeBackground) {
             let lastIndex = -1;
-            this.__stack.forEach((x, i) => (lastIndex = x.options.fadeBackground ? i : lastIndex));
+            this.__stack.forEach((x: StackViewConfiguration, i: number) => (lastIndex = x.options.fadeBackground ? i : lastIndex));
 
             if (lastIndex !== -1) {
                 this.__stack[lastIndex].regionEl.classList.remove(classes.POPUP_FADE);
@@ -75,6 +90,7 @@ export default Marionette.View.extend({
         }
 
         this.__stack.push(config);
+        // @ts-ignore
         view.popupId = popupId;
 
         return popupId;
@@ -86,7 +102,7 @@ export default Marionette.View.extend({
         }
 
         let targets = [];
-        const popupDef = this.__stack.find(x => x.popupId === popupId);
+        const popupDef = this.__stack.find((x: StackViewConfiguration) => x.popupId === popupId);
         if (popupDef) {
             if (!popupDef.options.transient) {
                 this.__removeTransientPopups();
@@ -96,10 +112,10 @@ export default Marionette.View.extend({
             // e.g.: focus-blur events (usually focus comes first) - one popup is opened on focus and the previous one is closed on blur.
             if (this.__stack.includes(popupDef)) {
                 targets = [popupDef];
-                const handleChildren = pId => {
-                    const children = this.__stack.filter(x => x.parentPopupId === pId);
+                const handleChildren = (pId: string | null) => {
+                    const children = this.__stack.filter((x: StackViewConfiguration) => x.parentPopupId === pId);
                     targets.push(...children);
-                    children.forEach(c => handleChildren(c.popupId));
+                    children.forEach((c: StackViewConfiguration) => handleChildren(c.popupId));
                 };
                 handleChildren(popupId);
             } else {
@@ -120,7 +136,7 @@ export default Marionette.View.extend({
             this.__removePopup(pd);
         });
 
-        const filteredStackList = this.__stack.filter(x => x.options.fadeBackground);
+        const filteredStackList = this.__stack.filter((x: StackViewConfiguration) => x.options.fadeBackground);
         const lastElement = filteredStackList && filteredStackList[filteredStackList.length - 1];
 
         if (lastElement) {
@@ -154,11 +170,11 @@ export default Marionette.View.extend({
     },
 
     get(popupId: string) {
-        const index = this.__stack.findIndex(x => x.popupId === popupId);
+        const index = this.__stack.findIndex((x: StackViewConfiguration) => x.popupId === popupId);
         if (index === -1) {
             return [];
         }
-        return this.__stack.slice(index).map(x => x.view);
+        return this.__stack.slice(index).map((x: StackViewConfiguration) => x.view);
     },
 
     getStack() {
@@ -167,19 +183,17 @@ export default Marionette.View.extend({
 
     fadeBackground(fade: boolean) {
         this.__forceFadeBackground = fade;
-        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
+        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find((x: StackViewConfiguration) => x.options.fadeBackground));
     },
 
     __removeTransientPopups() {
         this.__stack
-            .filter(x => x.options.transient)
+            .filter((x: StackViewConfiguration) => x.options.transient)
             .reverse()
-            .forEach(popupDef => {
-                this.__removePopup(popupDef);
-            });
+            .forEach((popupDef: StackViewOptions) => this.__removePopup(popupDef));
     },
 
-    __removePopup(popupDef) {
+    __removePopup(popupDef: StackViewConfiguration) {
         this.removeRegion(popupDef.popupId);
         document.body.removeChild(popupDef.regionEl);
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
