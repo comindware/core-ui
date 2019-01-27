@@ -20,9 +20,14 @@ export default Marionette.View.extend({
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId, typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type);
+        this.__createEditor(this.options, this.fieldId);
+
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.listenTo(this.model, 'change', this.__updateExternalChange);
+        }
+
+        if (this.schema.updateEditorEvents) {
+            this.listenTo(this.model, this.schema.updateEditorEvents, this.__updateEditor);
         }
     },
 
@@ -178,8 +183,18 @@ export default Marionette.View.extend({
         }
     },
 
-    __createEditor(options, fieldId, ConstructorFn) {
-        this.editor = new ConstructorFn({
+    __createEditor(options, fieldId) {
+        let schemaExtension = {};
+
+        if (_.isFunction(this.schema.schemaExtension)) {
+            schemaExtension = this.schema.schemaExtension(this.model);
+        }
+
+        this.schema = Object.assign({}, this.schema, schemaExtension);
+
+        const EditorConsturctor = typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type;
+
+        this.editor = new EditorConsturctor({
             schema: this.schema,
             form: options.form,
             field: this,
@@ -196,6 +211,11 @@ export default Marionette.View.extend({
         this.editor.on('enabled', enabled => {
             this.__updateEditorState(this.editor.getReadonly(), enabled);
         });
+    },
+
+    __updateEditor() {
+        this.__createEditor(this.options, this.fieldId);
+        this.showChildView('editorRegion', this.editor);
     },
 
     __createEditorId(key) {

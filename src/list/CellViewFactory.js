@@ -23,251 +23,6 @@ export default (factory = {
         return factory.getCellHtml(column, model);
     },
 
-    getCellViewByDataType(type: string) {
-        //Used by Product server Grid
-        let result;
-
-        switch (type) {
-            case objectPropertyTypes.STRING:
-                result = factory.getTextCellView();
-                break;
-            case objectPropertyTypes.INSTANCE:
-                result = factory.getReferenceCellView();
-                break;
-            case objectPropertyTypes.ACCOUNT:
-                result = factory.getUserCellView();
-                break;
-            case objectPropertyTypes.ENUM:
-                result = factory.getEnumCellView();
-                break;
-            case objectPropertyTypes.INTEGER:
-            case objectPropertyTypes.DOUBLE:
-            case objectPropertyTypes.DECIMAL:
-                result = factory.getNumberCellView();
-                break;
-            case objectPropertyTypes.DURATION:
-                result = factory.getDurationCellView();
-                break;
-            case objectPropertyTypes.BOOLEAN:
-                result = factory.getBooleanCellView();
-                break;
-            case objectPropertyTypes.DATETIME:
-                result = factory.getDateTimeCellView();
-                break;
-            case objectPropertyTypes.DOCUMENT:
-                result = factory.getDocumentCellView();
-                break;
-            default:
-                result = factory.getHtmlCellView();
-                break;
-        }
-
-        return result;
-    },
-
-    getTextCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
-    },
-
-    getReferenceCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
-    },
-
-    getUserCellView() {
-        return factory.__getAccountView();
-    },
-
-    getEnumCellView() {
-        return factory.__getEnumView();
-    },
-
-    getNumberCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{value}}', extention);
-    },
-
-    getDurationCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{renderShortDuration value}}', extention);
-    },
-
-    getBooleanCellView() {
-        const extention = {
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                return {
-                    value,
-                    showIcon: typeof value === 'boolean'
-                };
-            }
-        };
-
-        return factory.__getSimpleView(
-            '{{#if showIcon}}' +
-                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-                '{{/if}}',
-            extention
-        );
-    },
-
-    getDateTimeCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return factory.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
-    },
-
-    getDocumentCellView() {
-        return factory.__getDocumentView();
-    },
-
-    __getSimpleView(simpleTemplate: string, extention: CellExtention) {
-        return Marionette.View.extend({
-            template: Handlebars.compile(simpleTemplate),
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange',
-                highlighted: '__handleHighlightedFragmentChange',
-                unhighlighted: '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell',
-            templateContext: extention.templateContext
-        });
-    },
-
-    __getAccountView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{text}}'),
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                let text = '';
-                if (value && value.length > 0) {
-                    text = _.chain(value)
-                        .map(item => ({
-                            id: item.id,
-                            text: item.text || item.name || (item.columns && item.columns[0])
-                        }))
-                        .sortBy(member => member.text)
-                        .reduce((memo, member) => {
-                            if (memo) {
-                                return `${memo}, ${member.text}`;
-                            }
-                            return member.text;
-                        }, null)
-                        .value();
-                } else if (value && value.name) {
-                    text = value.name;
-                }
-
-                return {
-                    text
-                };
-            },
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    __getDocumentView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{#each documents}}<a href="{{url}}" target="_blank">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
-
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                let documents = [];
-                if (value && value.length > 0) {
-                    documents = value
-                        .map(item => ({
-                            id: item.id,
-                            text: item.text || item.name || (item.columns && item.columns[0]),
-                            url: item.url || (item.columns && item.columns[1])
-                        }))
-                        .sort((a, b) => a.text > b.text);
-                }
-
-                return {
-                    documents
-                };
-            },
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    __getEnumView() {
-        return Marionette.View.extend({
-            template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            templateContext() {
-                const value = this.model.get(this.options.key);
-                return {
-                    value,
-                    valueExplained: value.valueExplained
-                };
-            },
-            className: 'grid-cell'
-        });
-    },
-
-    getHtmlCellView() {
-        const extention = {
-            templateContext() {
-                return {
-                    value: this.model.get(this.options.key)
-                };
-            }
-        };
-        return this.__getSimpleView('{{{value}}}', extention);
-    },
-
     getCellHtml(column: Column, model: Backbone.Model) {
         const value = model.get(column.key);
 
@@ -348,19 +103,23 @@ export default (factory = {
                         if (!value) {
                             return '';
                         }
+                        let totalMilliseconds = moment.duration(value).asMilliseconds();
 
-                        const duration = dateHelpers.durationISOToObject(value);
                         if (options.allowDays) {
-                            result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                            result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                            totalMilliseconds %= 1000 * 60 * 60 * 24;
                         }
                         if (options.allowHours) {
-                            result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                            result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                            totalMilliseconds %= 1000 * 60 * 60;
                         }
                         if (options.allowMinutes) {
-                            result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                            result += `${Math.floor(totalMilliseconds / (1000 * 60)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                            totalMilliseconds %= 1000 * 60;
                         }
                         if (options.allowSeconds) {
-                            result += `${duration.seconds + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
+                            result += `${Math.floor(totalMilliseconds / 1000) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
+                            totalMilliseconds %= 1000;
                         }
                         return result;
                     })

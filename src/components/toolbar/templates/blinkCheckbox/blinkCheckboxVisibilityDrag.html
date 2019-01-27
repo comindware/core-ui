@@ -1,9 +1,9 @@
-<div class="eyes-list__i">
-    <span class="eyes-list-eye {{visibilityClass}} js-eye"></span>
-    <span class="eyes-list-txt">
+<div class="filter-icon-list__i">
+    <i class="filter-icon filter-icon-item {{iconPrefixer iconClass}} {{iconColor}}" aria-hidden="true"></i>
+    <span class="filter-icon-list-txt">
     {{localizedText name}}
     </span>
     {{#if draggable}}
-    <span class="eyes-list-draggable js-dragger" title="{{localize 'CORE.COMMON.DRAGME'}}"></span>
+    <span class="filter-icon-list-draggable js-dragger" title="{{localize 'CORE.COMMON.DRAGME'}}"></span>
     {{/if}}
 </div>

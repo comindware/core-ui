@@ -39,5 +39,39 @@ describe('Editors', () => {
 
             expect(true).toBe(true);
         });
+
+        it('should have `isEmptyValue() === false` if has value including `false`', () => {
+            const model = new Backbone.Model({
+                radioValue: true
+            });
+
+            const view = new core.form.editors.RadioGroupEditor({
+                model,
+                key: 'radioValue',
+                changeMode: 'keydown',
+                autocommit: true,
+                radioOptions: [
+                    {
+                        id: true,
+                        displayText: 'trueText'
+                    },
+                    {
+                        id: false,
+                        displayText: 'falseText'
+                    }
+                ]
+            });
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            const isEmpty = view.isEmptyValue();
+            view.setValue(false);
+            const isEmptyIfFalse = view.isEmptyValue();
+
+            expect(isEmpty).toBeFalse('Wrong! View is not Empty!');
+            expect(isEmptyIfFalse).toBeFalse('Wrong! View is not Empty!');
+        });
     });
 });

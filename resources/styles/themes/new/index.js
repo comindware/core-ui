@@ -14,9 +14,10 @@ const variables = {
     // colors
     white: '#ffffff',
     black: '#313131',
-    red: '#e1462c',
+    red: '#e1462c!important',
     'red-dark': '#d63a1f',
 
+    'grey-50': '#f9f9f9',
     'grey-100': '#f5f5f5',
     'grey-200': '#efefef',
     'grey-300': '#e2e2e2',
@@ -41,6 +42,8 @@ const variables = {
     'border-radius': '4px',
     'border-radius-big': '7px',
     border: '1px solid #c1c1c1',
+
+    focus: '1px solid var(--blue-300)',
 
     // font
     'base-font-size': '14px',
@@ -72,9 +75,9 @@ const variables = {
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
-    'textarea-padding': '8px var(--form-input-padding)',
+    'textarea-padding': '4px 20px 4px 10px',
     'textarea-line-height': 'inherit',
-    'textarea-min-height': '45px',
+    'textarea-min-height': '29px',
 
     // custom control
     'custom-control-spacer-y': '10px',
@@ -92,7 +95,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--grey-300)',
+    'radio-checked-disabled-color': 'var(--grey-400)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',
@@ -418,7 +421,7 @@ module.exports.apply = {
     'group-content-theme': {
         padding: '20px',
         'border-radius': '7px',
-        'background-color': variables['grey-100']
+        'background-color': variables['grey-50']
     },
 
     'popup-header-theme': {
@@ -426,7 +429,8 @@ module.exports.apply = {
         'font-size': '18px',
         'font-weight': '600',
         display: 'flex',
-        'align-items': 'center'
+        'align-items': 'center',
+        flex: 'none'
     },
     'popup-footer-theme': {
         padding: '15px'
@@ -437,11 +441,11 @@ module.exports.apply = {
     'popup-form-content-theme': {
         padding: '15px',
         'background-color': variables.white,
-        'border-radius': variables['border-radius-big']
+        'border-radius': variables['border-radius-big'],
+        'overflow-y': 'auto'
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],
-        height: '100px',
         padding: '6px'
     },
     'drop-zone-active-theme': {

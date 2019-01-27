@@ -26,6 +26,8 @@
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Datum"; l10n:isBeingTranslated true; l10n:originalData "Date"].
 
+<http://comindware.com/text/core/form/editors/date#timeEmptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Zeit"; l10n:originalData "Time"].
+
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ein Dokument hinzufügen"; l10n:originalData "addDocument"].
 
 <http://comindware.com/text/core/form/editors/dropdown#notset> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:isBeingTranslated true; l10n:originalData "notset"].

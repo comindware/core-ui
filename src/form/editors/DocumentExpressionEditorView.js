@@ -3,6 +3,7 @@ import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
 import DatalistEditorView from './DatalistEditorView';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     showTemplate: true
@@ -16,7 +17,7 @@ const valueTypes = {
     template: 'template'
 };
 
-export default NewExpressionEditorView.extend({
+export default (formRepository.editors.DocumentExpression = NewExpressionEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
         NewExpressionEditorView.prototype.initialize.call(this, options);
@@ -106,4 +107,4 @@ export default NewExpressionEditorView.extend({
         this.value = { type, value };
         this.__triggerChange();
     }
-});
+}));

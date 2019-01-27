@@ -8,19 +8,21 @@ export default function() {
     }));
 
     const model = new Backbone.Model({
-        dropdownValue: '120'
+        dropdownValue: ['120', '10', '3']
+    });
+
+    const view = new Core.form.editors.DatalistEditor({
+        model,
+        key: 'dropdownValue',
+        autocommit: true,
+        collection: possibleItems,
+        valueType: 'id',
+        maxQuantitySelected: 4,
+        allowEmptyValue: true
     });
 
     return new CanvasView({
-        view: new Core.form.editors.DatalistEditor({
-            model,
-            key: 'dropdownValue',
-            autocommit: true,
-            collection: possibleItems,
-            valueType: 'id',
-            maxQuantitySelected: 4,
-            allowEmptyValue: false
-        }),
+        view,
         presentation: '{{dropdownValue}}',
         isEditor: true
     });

@@ -118,6 +118,19 @@ export default function() {
                             id: 'ref',
                             name: 'Datalist editor',
                             view: Core.layout.createFieldAnchor('ref')
+                        },
+                        {
+                            id: 'poup',
+                            name: 'Datalist editor',
+                            view: new (Marionette.View.extend({
+                                template: Handlebars.compile('<input class="js-show-popup" type="button" value="Show Popup" />'),
+
+                                events: {
+                                    'click .js-show-popup'() {
+                                        Core.services.WindowService.showPopup(createPopup());
+                                    }
+                                }
+                            }))()
                         }
                     ]
                 })

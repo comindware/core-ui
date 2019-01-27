@@ -6,7 +6,7 @@ import AddNewButtonView from './AddNewButtonView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
-    CHILD_HEIGHT: 25
+    CHILD_HEIGHT: 35
 };
 
 const classes = {
@@ -97,10 +97,10 @@ export default Marionette.View.extend({
     handleCommand(command) {
         switch (command) {
             case 'up':
-                this.listView.moveCursorBy(-1, false);
+                this.listView.moveCursorBy(-1, { shiftPressed: false });
                 break;
             case 'down':
-                this.listView.moveCursorBy(1, false);
+                this.listView.moveCursorBy(1, { shiftPressed: false });
                 break;
             default:
                 break;

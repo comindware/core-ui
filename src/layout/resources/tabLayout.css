@@ -1,8 +1,8 @@
 .layout__tab-layout {
     position: relative;
-    height: 100%;
     display: flex;
     flex-flow: column nowrap;
+    flex: 1 0 auto;
 }
 
 /* header */
@@ -43,8 +43,6 @@
 
 .layout__tab-layout__panel-region {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .layout__tab-layout__panel-region > div {

@@ -8,6 +8,7 @@ import ErrosPanelView from './views/ErrosPanelView';
 import formRepository from '../formRepository';
 import SimplifiedButtonView from './views/SimplifiedButtonView';
 import SimplifiedPanelView from './views/SimplifiedPanelView';
+import FieldView from './FieldView';
 
 const classes = {
     REQUIRED: 'required',
@@ -16,22 +17,7 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.View.extend({
-    initialize(options = {}) {
-        this.schema = options.schema;
-
-        this.fieldId = _.uniqueId('field-');
-
-        this.__createEditor(options, this.fieldId, typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type);
-    },
-
-    templateContext() {
-        return {
-            title: this.schema.title,
-            fieldId: this.fieldId
-        };
-    },
-
+export default FieldView.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -44,25 +30,6 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const menuView = Core.dropdown.factory.createDropdown({
-            buttonView: SimplifiedButtonView,
-            panelView: SimplifiedPanelView,
-            panelViewOptions: {
-                editorConstructor: this.editorConstructor,
-                editorConfig: this.editorConfig,
-                maxWidth: 320,
-                model: this.model,
-                editor: this.editor
-            },
-            buttonViewOptions: {
-                editor: this.editor,
-                model: this.model
-            },
-            class: 'editor',
-            autoopen: true,
-            minAvailableHeight: 220
-        });
-
         if (this.schema.helpText) {
             const viewModel = new Backbone.Model({
                 helpText: this.schema.helpText,
@@ -81,115 +48,45 @@ export default Marionette.View.extend({
             });
             this.showChildView('helpTextRegion', infoPopout);
         }
-        this.__rendered = true;
+        this.__showMenuView();
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
+    },
+
+    __showMenuView() {
+        const menuView = Core.dropdown.factory.createDropdown({
+            buttonView: SimplifiedButtonView,
+            panelView: SimplifiedPanelView,
+            panelViewOptions: {
+                editorConstructor: this.editorConstructor,
+                editorConfig: this.editorConfig,
+                maxWidth: 320,
+                model: this.model,
+                editor: this.editor
+            },
+            buttonViewOptions: {
+                editor: this.editor,
+                model: this.model
+            },
+            class: 'editor',
+            autoopen: true,
+            minAvailableHeight: 220
+        });
         this.showChildView('editorRegion', menuView);
         this.listenTo(menuView, 'panel:dropdown:close', () => menuView.close());
     },
 
-    /**
-     * Check the validity of the field
-     *
-     * @return {String}
-     */
-    validate() {
-        const error = this.editor.validate();
-        if (error) {
-            this.setError([error]);
-        } else {
-            this.clearError();
-        }
-        return error;
-    },
+    __createEditor(options, fieldId) {
+        let schemaExtension = {};
 
-    setError(errors: Array<any>): void {
-        if (!this.__checkUiReady()) {
-            return;
+        if (_.isFunction(this.schema.schemaExtension)) {
+            schemaExtension = this.schema.schemaExtension(this.model);
         }
 
-        this.$el.addClass(classes.ERROR);
-        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
-        if (!this.isErrorShown) {
-            const errorPopout = dropdown.factory.createPopout({
-                buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
-                panelViewOptions: {
-                    collection: this.errorCollection
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            this.showChildView('errorTextRegion', errorPopout);
-            this.isErrorShown = true;
-        }
-    },
+        this.schema = Object.assign({}, this.schema, schemaExtension);
 
-    clearError(): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.removeClass(classes.ERROR);
-        this.errorCollection && this.errorCollection.reset();
-    },
+        const EditorConsturctor = typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type;
 
-    /**
-     * Update the model with the new value from the editor
-     *
-     * @return {Mixed}
-     */
-    commit() {
-        return this.editor.commit();
-    },
-
-    /**
-     * Get the value from the editor
-     *
-     * @return {Mixed}
-     */
-    getValue() {
-        return this.editor.getValue();
-    },
-
-    /**
-     * Set/change the value of the editor
-     *
-     * @param {Mixed} value
-     */
-    setValue(value) {
-        this.editor.setValue(value);
-    },
-
-    /**
-     * Give the editor focus
-     */
-    focus() {
-        this.editor.focus();
-    },
-
-    /**
-     * Remove focus from the editor
-     */
-    blur() {
-        this.editor.blur();
-    },
-
-    setRequired(required) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-    },
-
-    __updateEditorState(readonly, enabled) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
-    },
-
-    __createEditor(options, fieldId, ConstructorFn) {
         this.editorConfig = {
             schema: this.schema,
             form: options.form,
@@ -200,9 +97,9 @@ export default Marionette.View.extend({
             value: this.options.value,
             fieldId
         };
-        this.editor = new ConstructorFn(this.editorConfig);
+        this.editor = new EditorConsturctor(this.editorConfig);
 
-        this.editorConstructor = ConstructorFn;
+        this.editorConstructor = EditorConsturctor;
         this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());
@@ -212,14 +109,8 @@ export default Marionette.View.extend({
         });
     },
 
-    __createEditorId(key) {
-        if (this.model) {
-            return `${this.model.cid}_${key}`;
-        }
-        return key;
-    },
-
-    __checkUiReady() {
-        return this.__rendered && !this.isDestroyed();
+    __updateEditor() {
+        this.__createEditor(this.options, this.fieldId);
+        this.__showMenuView();
     }
 });

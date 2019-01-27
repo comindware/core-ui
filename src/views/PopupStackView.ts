@@ -126,7 +126,7 @@ export default Marionette.View.extend({
         }
     },
 
-    get(popupId) {
+    get(popupId: string) {
         const index = this.__stack.findIndex(x => x.popupId === popupId);
         if (index === -1) {
             return [];
@@ -138,7 +138,7 @@ export default Marionette.View.extend({
         return this.__stack;
     },
 
-    fadeBackground(fade) {
+    fadeBackground(fade: boolean) {
         this.__forceFadeBackground = fade;
         this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
     },

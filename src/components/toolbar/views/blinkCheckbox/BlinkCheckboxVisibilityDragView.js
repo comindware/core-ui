@@ -1,18 +1,20 @@
 import template from '../../templates/blinkCheckbox/blinkCheckboxVisibilityDrag.html';
 
 const constants = {
-    eyesListOpen: 'eyes-list-eye_open',
-    eyesListClose: 'eyes-list-eye_close'
+    iconClassConst: 'filter',
+    colorIconEnabled: 'filter-enabled',
+    colorIconDisabled: 'filter-disabled'
 };
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    templateContext: {
-        visibilityClass() {
-            return this.isHidden ? constants.eyesListClose : constants.eyesListOpen;
-        }
+    templateContext() {
+        return {
+            iconClass: constants.iconClassConst,
+            iconColor: this.isHidden ? constants.colorIconDisabled : constants.colorIconEnabled
+        };
     },
 
-    className: 'eyes-lists__dragging js-filters-list-dragging'
+    className: 'filter-icon-lists__dragging js-filters-list-dragging'
 });

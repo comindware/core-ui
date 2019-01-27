@@ -11,7 +11,8 @@ export default Marionette.View.extend({
 
     ui: {
         panelSelectedContainer: '.panel-selected_container',
-        closeButton: '.js-close_users'
+        closeButton: '.js-close_users',
+        title: '.js-title'
     },
 
     events: {
@@ -21,9 +22,12 @@ export default Marionette.View.extend({
     className: 'simplified-panel_container simplified-panel_panel dropdown_root',
 
     onRender() {
+        const readonly = this.options.editor.getReadonly();
+        const enabled = this.options.editor.getEnabled();
+        const editable = enabled && !readonly;
         const customEditor = Object.assign({}, this.options.editorConfig, {
             showSearch: false,
-            openOnRender: true,
+            openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
             customTemplate:
                 '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
@@ -34,13 +38,19 @@ export default Marionette.View.extend({
         const searchView = new SearchBarView();
 
         this.showChildView('editorRegion', editor);
-        this.showChildView('searchBarRegion', searchView);
+        if (editable) {
+            this.showChildView('searchBarRegion', searchView);
+        } else {
+            editor.setReadonly(readonly);
+            editor.setEnabled(enabled);
+            this.ui.title.hide();
+        }
 
         this.listenTo(searchView, 'search', text => this.__onSearch(text, editor));
         this.listenTo(editor, 'dropdown:close', () => this.trigger('dropdown:close'));
         this.listenTo(editor, 'dropdown:open', () => this.__adjustPanelContainerVisibility(this.options.editor.getValue(), editor));
 
-        this.options.model.on('change', () => {
+        this.options.model.on(`change:${this.options.editor.key}`, () => {
             const values = this.options.editor.getValue();
 
             this.__adjustPanelContainerVisibility(values, editor);
@@ -54,7 +64,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.getRegion('searchBarRegion').currentView.focus();
+        this.getRegion('searchBarRegion').currentView?.focus();
     },
 
     __onSearch(text, editor) {
@@ -67,7 +77,7 @@ export default Marionette.View.extend({
 
     __adjustPanelContainerVisibility(values, editor) {
         if (this.isRendered()) {
-            if (values.length === 0) {
+            if (values?.length === 0) {
                 this.el.setAttribute('noSelected', true);
                 this.ui.panelSelectedContainer.css({ visibility: 'hidden' });
                 editor.adjustPosition(true);

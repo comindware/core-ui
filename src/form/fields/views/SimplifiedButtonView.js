@@ -60,7 +60,7 @@ export default Marionette.View.extend({
         switch (schema.type) {
             case 'Datalist': {
                 return Array.isArray(values)
-                    ? values.map(v => ({
+                    ? _.compact(values).map(v => ({
                           value: `
                 <div class="user-edit-wrp">
                     <div class="simple-field_container">
@@ -69,11 +69,11 @@ export default Marionette.View.extend({
                  ${v.name}
             </div>`
                       }))
-                    : [{ value: values.name }];
+                    : [{ value: values?.name }];
             }
             case 'Document': {
                 return Array.isArray(values)
-                    ? values.map(v => ({
+                    ? _.compact(values).map(v => ({
                           value: `
                 <div class="user-edit-wrp">
                     <div class="simple-field_container">
@@ -81,7 +81,7 @@ export default Marionette.View.extend({
                 </div>
             </div>`
                       }))
-                    : [{ value: values.name }];
+                    : [{ value: values?.name }];
             }
             default:
                 return Array.isArray(values) ? values : [values];
@@ -120,8 +120,10 @@ export default Marionette.View.extend({
         const values = this.options.editor.getValue();
 
         if (Array.isArray(values)) {
-            return values.map(v => v.name || v.id).join(', ');
+            return _.compact(values)
+                .map(v => v.name || v.id)
+                .join(', ');
         }
-        return values.name || values.id;
+        return values && (values.name || values.id);
     }
 });

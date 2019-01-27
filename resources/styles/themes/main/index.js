@@ -30,6 +30,8 @@ const variables = {
     border: '1px solid #dfe4e8',
     'border-radius': '2px',
 
+    focus: '1px solid var(--blue-200)',
+
     // font
     'base-font-size': '12px',
     'line-height': '1.4',
@@ -369,7 +371,6 @@ module.exports.apply = {
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],
-        height: '80px',
         padding: '6px'
     },
     'drop-zone-active-theme': {

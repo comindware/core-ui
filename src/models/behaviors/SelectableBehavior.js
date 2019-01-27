@@ -13,6 +13,7 @@ const SelectableBehavior = {};
 // model to be selected within a collection. Selection of another
 // model within the collection causes the previous model to be
 // deselected.
+// ToDo: should update this.selected on collection reset or remove selected.
 
 SelectableBehavior.SingleSelect = function(collection) {
     this.selected = {};

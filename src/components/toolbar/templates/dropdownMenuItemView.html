@@ -1,0 +1,8 @@
+{{#if url}}
+<a href="{{url}}" class="popout-menu__txt" title="{{getTitle}}">{{name}}</a>
+{{else}}
+<span class="popout-menu__txt" title="{{getTitle}}">{{name}}</span>
+{{/if}}
+{{#if subtext}}
+<span class="popout-menu__subtext">{{subtext}}</span>
+{{/if}}

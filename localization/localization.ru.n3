@@ -28,6 +28,8 @@
 
 <http://comindware.com/text/core/form#newForm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Новая форма"; l10n:originalData "newForm"].
 
+<http://comindware.com/text/core/form/editors/avatar#change> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Изменить"; l10n:originalData "Change"].
+
 <http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "Search"].
 
 <http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
@@ -97,6 +99,10 @@
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перед добавлением значений в таблицу необходимо создать запись"; l10n:originalData "You need to create record before adding values to the table"].
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
+
+<http://comindware.com/text/core/form/editors/date#invalidDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата неверна"; l10n:originalData "Invalid date"].
+
+<http://comindware.com/text/core/form/editors/date#timeEmptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Время"; l10n:originalData "Time"].
 
 <http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].
 
