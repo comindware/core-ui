@@ -74,11 +74,16 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
         return this.options;
     },
 
-    events: {
-        'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change',
-        'click @ui.clearButton': '__clear',
-        mouseenter: '__onMouseenter'
+    events() {
+        const events = {
+            'keyup @ui.input': '__keyup',
+            'change @ui.input': '__change',
+            'click @ui.clearButton': '__clear'
+        };
+        if (!this.options.hideClearButton) {
+            events.mouseenter = '__onMouseenter';
+        }
+        return events;
     },
 
     onAttach() {
