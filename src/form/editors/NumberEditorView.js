@@ -98,11 +98,16 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
         clearButton: '.js-clear-button',
     },
 
-    events: {
-        'click @ui.clearButton': '__clear',
-        'keyup @ui.input': '__keyup',
-        'change @ui.input': '__onChange',
-        mouseenter: '__onMouseenter'
+    events() {
+        const events = {
+            'click @ui.clearButton': '__clear',
+            'keyup @ui.input': '__keyup',
+            'change @ui.input': '__onChange'
+        };
+        if (!this.options.hideClearButton) {
+            events.mouseenter = '__onMouseenter';
+        }
+        return events;
     },
 
     onRender() {
