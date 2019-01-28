@@ -149,6 +149,13 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                 this.__triggerChange();
                 this.__toggleCalendarPicker();
                 return;
+            case keyCode.TAB:
+                // if tab go to time input(default browser behavior),
+                // not trigger tab on parent grid.
+                if (!event.shiftKey) {
+                    event.stopPropagation();
+                }
+                return;
             default:
                 break;
         }
@@ -193,6 +200,20 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         );
 
         this.__updatePickerDate(amountMilliseconds);
+    },
+
+    __timeButtonInputKeydown(event) {
+        switch (event.keyCode) {
+            case keyCode.TAB:
+                // if tab go to date input(default browser behavior),
+                // not trigger tab on parent grid.
+                if (event.shiftKey) {
+                    event.stopPropagation();
+                }
+                break;
+            default:
+                break;
+        }
     },
 
     __updatePickerDate(date) {
@@ -452,6 +473,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
+        this.listenTo(this.timeDropdownView.buttonView, 'keydown', this.__timeButtonInputKeydown);
     },
 
     __updateTime(ISOstr) {
