@@ -426,9 +426,9 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
                 this.__updateState({
                     mode: stateModes.VIEW
                 });
-                return false;
+                break;
             case keyCode.ENTER:
-                return true;
+                break;
             case keyCode.TAB: {
                 const delta = event.shiftKey ? -1 : 1;
                 if (this.focusableParts[index + delta]) {
@@ -460,6 +460,8 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
                 }
             }
         }
+
+        this.trigger('keydown', event);
     },
 
     __keyup(event) {
