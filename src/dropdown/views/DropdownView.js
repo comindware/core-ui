@@ -151,6 +151,9 @@ export default Marionette.View.extend({
     },
 
     __adjustPosition(panelEl, isNeedToRefreshAnchorPosition) {
+        if (!this.isOpen) {
+            return;
+        }
         panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;

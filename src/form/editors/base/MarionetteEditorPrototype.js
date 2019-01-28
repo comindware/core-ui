@@ -170,7 +170,10 @@ export default {
              * Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
              * Shouldn't be called normally. The method is called internally on model's <code>change</code> event.
              * */
-            updateValue() {
+            updateValue(model, value, options) {
+                if (options.isEditorSetValue) {
+                    return;
+                }
                 this.setValue(this.getModelValue());
             },
 
@@ -321,7 +324,8 @@ export default {
 
                 this.model.set(this.key, this.getValue(), {
                     silent: false,
-                    validate: options.validate === true
+                    validate: options.validate === true,
+                    isEditorSetValue: true
                 });
 
                 if (error && !this.schema.forceCommit) {

@@ -38,7 +38,6 @@ export default Marionette.View.extend({
     onRender(): void {
         this.collectionView = new BubbleCollectionView(this.options);
         this.showChildView('collectionRegion', this.collectionView);
-        this.collectionView.on('add:child remove:child', () => this.trigger('change:content'));
     },
 
     focus(options) {
