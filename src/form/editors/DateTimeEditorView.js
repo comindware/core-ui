@@ -319,9 +319,21 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                 recipientMoment.minutes(fromMoment.minutes());
                 recipientMoment.hours(fromMoment.hours());
             }
-            this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat));
+            this.dateButtonModel.set(
+                this.key,
+                recipientMoment.format(this.options.dateDisplayFormat),
+                {
+                    inner: true
+                }
+            );
         } else {
-            this.dateButtonModel.set(this.key, Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'));
+            this.dateButtonModel.set(
+                this.key,
+                Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'),
+                {
+                    inner: true
+                }
+            );
         }
         return recipientMoment.toISOString();
     },
