@@ -1,4 +1,5 @@
 import ToastNotificationView from './ToastNotificationView';
+import { IToastNotificationView } from './ToastNotificationView';
 import Marionette from 'backbone.marionette';
 
 const maxNotification = 5;
@@ -8,16 +9,15 @@ export default Marionette.CollectionView.extend({
 
     childView: ToastNotificationView,
 
-    onBeforeAddChild(_: any, child) {
+    onBeforeAddChild(_: any, child: IToastNotificationView) {
         if (this.collection.length > maxNotification) {
             this.collection.remove(this.children.findByIndex(0).model);
         } else if (this.collection.length > maxNotification - 1) {
             this.children.findByIndex(0).hideView();
         }
-        const sameNotification = this.children.find(childView => childView.model.get('text') === child.model.get('text'));
+        const sameNotification = this.children.find((childView: IToastNotificationView) => childView.model.get('text') === child.model.get('text'));
         if (sameNotification) {
             this.collection.remove(sameNotification.model);
         }
-        child.hideTimeout = setTimeout(() => child.hideView(), child.model.get('time'));
     }
 });

@@ -2,6 +2,7 @@
 
 import LocalizationService from '../services/LocalizationService';
 import { moment } from '../lib';
+import _ from 'underscore';
 
 const dateTimeFormats = {
     en: {
@@ -160,7 +161,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         };
     },
 
-    dateISOToDuration(dateIsoString, options) {
+    dateISOToDuration(dateIsoString: Date, options) {
         const opt = _.defaults(options, { seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
         const mom = moment(dateIsoString);
 
@@ -219,7 +220,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
-    dateToDateTimeString(date+: Date, formatName) {
+    dateToDateTimeString(date: Date, formatName) {
         const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
     }

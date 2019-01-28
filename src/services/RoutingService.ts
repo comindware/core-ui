@@ -112,7 +112,7 @@ export default {
 
     getRoutHandlers(url = '') {
         const urlParts = url.split('&nxt').splice(1);
-        const matchingUrls = [];
+        const matchingUrls: Array<string>;
 
         return (Backbone.history.handlers.filter(handler => urlParts.some(part => handler.route.test(part) && matchingUrls.push(part))) || []).map((h, i) => ({
             callback: h.callback,
@@ -125,7 +125,7 @@ export default {
         return activeUrl?.startsWith('#custom');
     },
 
-    async __onModuleLoaded(callbackName: string, routingArgs, config, Module) {
+    async __onModuleLoaded(callbackName: string, routingArgs: Array<string>, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
             config,

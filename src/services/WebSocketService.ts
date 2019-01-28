@@ -1,6 +1,9 @@
 import Backbone from 'backbone';
 
 export default class WebSocketService {
+    static socket: WebSocket;
+    static isConnectionOpened: boolean;
+
     static initialize(options = {}) {
         Object.assign(this, Backbone.Events);
         this.isConnectionOpened = true;

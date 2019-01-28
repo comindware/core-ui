@@ -7,6 +7,10 @@ const notificationTypes = {
     SUCCESS: 'Success'
 };
 
+export interface IToastNotificationView extends Marionette.View<any> {
+    (): void;
+}
+
 export default Marionette.View.extend({
     className() {
         const sizeClass = this.model.get('title') ? 'dev-fr-alert-extended' : 'alert-compact';
