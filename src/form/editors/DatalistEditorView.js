@@ -106,6 +106,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             });
 
         this.__createSelectedButtonCollection();
+        this.__createFakeInputModel();
 
         this.debouncedFetchUpdateFilter = _.debounce(this.fetchUpdateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
@@ -129,16 +130,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
+                model: this.fakeInputModel,
                 collection: this.selectedButtonCollection,
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
-                showSearch: this.options.showSearch,
                 customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
-                enabled: this.getEnabled(),
-                readonly: this.getReadonly()
+                datalistEnabled: this.getEnabled(),
+                datalistReadonly: this.getReadonly(),
+                readonly: !this.options.showSearch
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -164,16 +166,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __createSelectedButtonCollection() {
         this.selectedButtonCollection = new (Backbone.Collection.extend({
-            comparator: (a, b) => {
-                if (a instanceof FakeInputModel) {
-                    return 1;
-                }
-                if (b instanceof FakeInputModel) {
-                    return -1;
-                }
-                return 0;
-            },
-
             model: Backbone.Model.extend({
                 initialize() {
                     _.extend(this, new SelectableBehavior.Selectable(this));
@@ -182,8 +174,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }))();
 
         _.extend(this.selectedButtonCollection, new SelectableBehavior.SingleSelect(this.selectedButtonCollection));
-
-        this.__addFakeInputModel(this.selectedButtonCollection);
     },
 
     regions: {
@@ -290,7 +280,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getInputView() {
-        return this.dropdownView?.button?.collectionView?.getInputView();
+        return this.dropdownView?.button;
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {
@@ -540,7 +530,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = this.selectedButtonCollection.models.filter(model => model !== this.fakeInputModel);
         const isAccess = this.__getEditorEnabled();
         const maxQuantity = this.options.maxQuantitySelected;
 
@@ -548,7 +537,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return true;
         }
 
-        return isAccess && maxQuantity > selectedItems.length;
+        return isAccess && maxQuantity > this.selectedButtonCollection.length;
     },
 
     __onValueEdit(value) {
@@ -608,7 +597,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 1 && !this.options.allowEmptyValue) {
             return;
         }
 
@@ -632,18 +621,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __updateFakeInputModel(): void {
-        this.fakeInputModel && this.fakeInputModel.updateEmpty();
+    __createFakeInputModel() {
+        this.fakeInputModel = this.fakeInputModel || new FakeInputModel();
+        this.__updateFakeInputModel();
     },
 
-    __addFakeInputModel(collection) {
-        if (!collection) {
-            return;
-        }
-        this.fakeInputModel = this.fakeInputModel || new FakeInputModel();
-        collection.add(this.fakeInputModel);
-
-        this.__updateFakeInputModel();
+    __updateFakeInputModel(): void {
+        this.fakeInputModel && this.fakeInputModel.updateEmpty();
     },
 
     updateButtonInput(string): void {
@@ -651,7 +635,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onBubbleDeleteLast(): void {
-        const model = this.selectedButtonCollection.models[this.selectedButtonCollection.models.length - 2];
+        const model = this.selectedButtonCollection.models[this.selectedButtonCollection.models.length - 1];
 
         this.__onBubbleDelete(model);
     },
@@ -676,7 +660,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             case keyCode.RIGHT:
                 selectedBubble = this.__getSelectedBubble();
                 selectedBubbleIndex = this.selectedButtonCollection.indexOf(selectedBubble);
-                if (selectedBubbleIndex === this.selectedButtonCollection.length - 2) {
+                if (selectedBubbleIndex === this.selectedButtonCollection.length - 1) {
                     selectedBubble.deselect();
                     this.open();
                     break;
@@ -721,7 +705,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
     
     __selectBubbleBy(delta, selectedBubble = this.__getSelectedBubble()) {
-        if (!selectedBubble) {
+        if (!selectedBubble || !this.selectedButtonCollection.length) {
             return;
         }
         const selectedIndex = this.selectedButtonCollection.indexOf(selectedBubble);
@@ -734,17 +718,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __checkMinMaxBubble(bubbleIndex) {
         const minIndex = 0;
-        const maxIndex = this.selectedButtonCollection.length - 2; //fakeInputModel is last.
+        const maxIndex = this.selectedButtonCollection.length - 1;
 
         return Math.max(Math.min(bubbleIndex, maxIndex), minIndex);
     },
 
     __selectBubbleLast() {
-        if (this.selectedButtonCollection.length < 2) { //only fake, has no bubbles.
+        if (!this.selectedButtonCollection.length) {
             return;
         }
         this.selectedButtonCollection.select(
-            this.selectedButtonCollection.at(this.selectedButtonCollection.length - 2)
+            this.selectedButtonCollection.at(this.selectedButtonCollection.length - 1)
         );
     },
 

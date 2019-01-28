@@ -1,7 +1,5 @@
 // @flow
 import BubbleItemView from './BubbleItemView';
-import InputView from './InputView';
-import FakeInputModel from '../models/FakeInputModel';
 
 export default Marionette.CollectionView.extend({
     initialize(options) {
@@ -11,64 +9,13 @@ export default Marionette.CollectionView.extend({
 
     className: 'bubbles__list',
 
-    childView(model) {
-        if (model instanceof FakeInputModel) {
-            return InputView;
-        }
-        return BubbleItemView;
-    },
+    childView: BubbleItemView,
 
-    focus(options) {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (!fakeInputModel) {
-            return;
-        }
-        const input = this.children.findByModel(fakeInputModel);
-        if (input && input.focus) {
-            input.focus(options);
-        }
-    },
-
-    blur() {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (!fakeInputModel) {
-            return;
-        }
-        const input = this.children.findByModel(fakeInputModel);
-
-        if (input && input.blur) {
-            input.blur();
-        }
-    },
-
-    getInputView() {
-        const fakeInputModel = this.__findFakeInputModel();
-        if (fakeInputModel) {
-            return this.children.findByModel(fakeInputModel);
-        }
-    },
-
-    updateInput(string) {
-        const input = this.getInputView();
-        input && input.updateInput(string);
-    },
-
-    __findFakeInputModel() {
-        return this.collection.models.find(model => model instanceof FakeInputModel && model);
-    },
-
-    childViewOptions(model) {
-        if (model instanceof FakeInputModel) {
-            return {
-                reqres: this.reqres,
-                parent: this.$el,
-                readonly: !this.options.showSearch
-            };
-        }
+    childViewOptions() {
         return {
             reqres: this.reqres,
             parent: this.$el,
-            enabled: this.options.enabled,
+            enabled: this.options.datalistEnabled,
             createValueUrl: this.options.createValueUrl,
             showEditButton: this.options.showEditButton,
             showRemoveButton: this.options.canDeleteItem,

@@ -575,7 +575,7 @@ describe('Editors', () => {
                     if (view.panelCollection.length) {
                         clearTimeout(first);
                         setTimeout(() => {
-                            expect(view.dropdownView.button.collectionView.collection.length).toEqual(2); //selected + input
+                            expect(view.dropdownView.button.collectionView.collection.length).toEqual(1);
                             done();
                         }, 100);
                     }
