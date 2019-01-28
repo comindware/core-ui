@@ -128,7 +128,7 @@ export default Marionette.View.extend({
         this.$el.append(el);
 
         this.isShown = true;
-        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl, true));
+        this.button.on('change:content', () => this.__adjustPosition(true));
 
         el.on('click', this.__handleClick.bind(this));
 
@@ -145,16 +145,14 @@ export default Marionette.View.extend({
     },
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
-        if (this.panelEl) {
-            this.__adjustPosition(this.panelEl, isNeedToRefreshAnchorPosition);
-        }
+        this.__adjustPosition(isNeedToRefreshAnchorPosition);
     },
 
-    __adjustPosition(panelEl, isNeedToRefreshAnchorPosition) {
-        if (!this.isOpen) {
+    __adjustPosition(isNeedToRefreshAnchorPosition) {
+        if (!this.isOpen || !this.panelEl) {
             return;
         }
-        panelEl.style.height = ''; //resetting custom height
+        this.panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;
         const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
@@ -170,15 +168,15 @@ export default Marionette.View.extend({
         const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelEl.style.width = `${panelWidth}px`;
+            this.panelEl.style.width = `${panelWidth}px`;
         }
 
-        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            panelEl.style.minWidth = `${panelWidth}px`;
+        if (this.panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            this.panelEl.style.minWidth = `${panelWidth}px`;
         }
 
         let leftOffset = buttonRect.left;
-        let offsetHeight = panelEl.offsetHeight;
+        let offsetHeight = this.panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
 
@@ -195,19 +193,19 @@ export default Marionette.View.extend({
         // class adjustments
         if (position === panelPosition.DOWN) {
             this.el.classList.add(classes.DROPDOWN_DOWN);
-            panelEl.classList.add(classes.DROPDOWN_DOWN);
+            this.panelEl.classList.add(classes.DROPDOWN_DOWN);
 
             this.el.classList.remove(classes.DROPDOWN_UP);
-            panelEl.classList.remove(classes.DROPDOWN_UP);
+            this.panelEl.classList.remove(classes.DROPDOWN_UP);
         } else if (position === panelPosition.UP) {
             this.el.classList.add(classes.DROPDOWN_UP);
-            panelEl.classList.add(classes.DROPDOWN_UP);
+            this.panelEl.classList.add(classes.DROPDOWN_UP);
 
             this.el.classList.remove(classes.DROPDOWN_DOWN);
-            panelEl.classList.remove(classes.DROPDOWN_DOWN);
+            this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
 
-        offsetHeight = panelEl.offsetHeight;
+        offsetHeight = this.panelEl.offsetHeight;
 
         // panel positioning
         let top: number = 0;
@@ -228,7 +226,7 @@ export default Marionette.View.extend({
             if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
                 const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
                 top += diff;
-                panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
+                this.panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
             }
         }
         if (top <= WINDOW_BORDER_OFFSET) {
@@ -236,16 +234,16 @@ export default Marionette.View.extend({
 
             if (offsetHeight > buttonRect.top) {
                 const diff = offsetHeight - buttonRect.top;
-                panelEl.style.height = `${offsetHeight - diff}px`;
+                this.panelEl.style.height = `${offsetHeight - diff}px`;
             }
         }
 
-        panelEl.style.top = `${top}px`;
+        this.panelEl.style.top = `${top}px`;
 
         if (panelWidth > buttonRect.width) {
             leftOffset -= panelWidth - buttonRect.width;
         }
-        panelEl.style.left = `${leftOffset}px`;
+        this.panelEl.style.left = `${leftOffset}px`;
 
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.el);
@@ -276,12 +274,13 @@ export default Marionette.View.extend({
         });
         this.panelEl = this.panelView.el;
 
-        this.__adjustPosition(this.panelEl);
+        this.isOpen = true;
+        this.__adjustPosition();
         //const buttonWidth = this.button.el.getBoundingClientRect().width;
 
         //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
 
-        this.listenTo(this.panelView, 'change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+        this.listenTo(this.panelView, 'change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
@@ -294,7 +293,6 @@ export default Marionette.View.extend({
             this.__focus(activeElement);
         }
         this.__suppressHandlingBlur = false;
-        this.isOpen = true;
         this.trigger('open', this);
     },
 
