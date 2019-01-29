@@ -6,12 +6,13 @@ import { keyCode } from 'utils';
 
 const classes = {
     CLASS_NAME: 'bubbles',
-    DISABLED: ' disabled',
-    EMPTY: ' empty'
+    DISABLED: ' disabled'
 };
 
 export default TextEditorView.extend({
     initialize(options) {
+        TextEditorView.prototype.initialize.call(this, options);
+        this.collectionView = new BubbleCollectionView(this.options);
         this.reqres = options.reqres;
         this.filterValue = '';
     },
@@ -41,7 +42,6 @@ export default TextEditorView.extend({
     },
 
     modelEvents: {
-        'change:empty': '__updateInputPlaceholder',
         'change:searchText': '__onModelChangeSearch'
     },
 
@@ -50,11 +50,15 @@ export default TextEditorView.extend({
     },
 
     onRender(): void {
-        this.collectionView = new BubbleCollectionView(this.options);
         this.showChildView('collectionRegion', this.collectionView);
 
         this.updateInput(this.model.get('searchText'));
-        this.__updateInputPlaceholder();
+    },
+
+    setPermissions(enabled, readonly) {
+        TextEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        this.options.enabled = enabled;
+        this.options.readonly = readonly;
     },
 
     setLoading(state) {
@@ -115,9 +119,11 @@ export default TextEditorView.extend({
         }
     },
 
-    __updateInputPlaceholder() {
-        const empty = this.model.get('empty');
-        const placeholder = empty ? Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
-        this.ui.input.attr({ placeholder }).toggleClass(classes.EMPTY, empty);
+    togglePlaceholder(isShow) {
+        this.__setPlaceholder(
+            isShow ?
+            this.__placeholderShouldBe() :
+            ''
+        );
     }
 });
