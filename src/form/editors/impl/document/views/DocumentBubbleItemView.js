@@ -89,20 +89,14 @@ export default Marionette.View.extend({
     },
 
     __showPreview() {
-        const result = this.attachmentsController.showGallery(this.model);
-        if (this.__isNew() && window.navigator.msSaveOrOpenBlob && result) {
-            window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
-            return false;
-        }
-
-        return result;
+        return this.attachmentsController.showGallery(this.model);
     },
 
     __onMouseenter() {
         if (this.options.allowDelete) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
-        if (!this.__isNew() && this.options.showRevision) {
+        if (this.model.id?.indexOf(savedDocumentPrefix) > -1 && this.options.showRevision) {
             if (!this.isRevisonButtonShown) {
                 this.documentRevisionPopout = new dropdown.factory.createDropdown({
                     buttonView: DocumentRevisionButtonView,
@@ -119,10 +113,6 @@ export default Marionette.View.extend({
                 this.ui.revise.show();
             }
         }
-    },
-
-    __isNew() {
-        return !this.model.id?.startsWith(savedDocumentPrefix);
     },
 
     __onMouseleave() {

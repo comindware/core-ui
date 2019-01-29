@@ -60,7 +60,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         }
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
-        this.createdUrls = [];
     },
 
     checkEmpty() {
@@ -135,11 +134,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.renderUploadButton(this.options.readonly);
     },
 
-    onDestroy() {
-        window.removeEventListener('resize', this._windowResize, true);
-        this.createdUrls.forEach(url => window.URL.revokeObjectURL(url));
-    },
-
     __onDragenter(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -187,15 +181,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     syncValue() {
-        this.value = this.collection
-            ? this.collection
-                  .toJSON()
-                  .filter(model => !model.isLoading)
-                  .map(m => {
-                      const { file, isLoading, ...rest } = m;
-                      return rest;
-                  })
-            : [];
+        this.value = this.collection ? this.collection.toJSON().filter(model => !model.isLoading) : [];
     },
 
     renderUploadButton(isReadonly) {
@@ -340,13 +326,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         for (let i = 0; i < length; i++) {
             form.append(`file${i + 1}`, files[i]);
             const currFileName = files[i].name;
-            const tempUrl = window.URL.createObjectURL(files[i]);
-            this.createdUrls.push(tempUrl);
             const obj = {
                 name: currFileName,
-                extension: currFileName ? currFileName.replace(/.*\./g, '') : '',
-                url: tempUrl,
-                file: files[i],
+                type: currFileName ? currFileName.replace(/.*\./g, '') : '',
                 isLoading: true,
                 uniqueId: _.uniqueId('document-')
             };
@@ -540,6 +522,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             .show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
+    },
+
+    onDestroy() {
+        window.removeEventListener('resize', this._windowResize, true);
     },
 
     __handleKeydown(e) {
