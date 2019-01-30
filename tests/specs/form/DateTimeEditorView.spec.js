@@ -1132,6 +1132,44 @@ describe('Editors', () => {
             show(view);
         });
 
+        it('should set current date with zero time if choose date from panel after clear', done => {
+            const model = new Backbone.Model({
+                date: someDateTimeISO
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+
+                view.$el.trigger('mouseenter');
+                view.$('.js-clear-button').click();
+
+                dateInput.focus();
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
+
+                Backbone.$('td.day.active').click();
+            });
+
+            model.on('change:date', (model, date) => {
+                expect(moment(date).valueOf()).toEqual(
+                    moment()
+                        .milliseconds(0)
+                        .seconds(0)
+                        .minutes(0)
+                        .hours(0)
+                        .valueOf()
+                );
+                done();
+            });
+
+            show(view);
+        });
+
         it('should add month to now moment on keydown RIGHT (shift) if panel is open after clear', done => {
             const model = new Backbone.Model({
                 date: someDateTimeISO
