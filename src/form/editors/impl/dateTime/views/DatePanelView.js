@@ -27,7 +27,7 @@ export default Marionette.View.extend({
         // if value is null or undefined, set now date to picker
         // moment return current date if has no args
         const mom = moment(
-            value === null ? 
+            value === null ?
                 undefined :
                 value
             );
