@@ -1,8 +1,16 @@
 export default function() {
+    const possibleItems = _.times(200, n => ({
+        id: n,
+        text: `Text ${n}`,
+        subtext: `subtext ${n}`,
+        contextIcon: n % 2 ? 'decimal' : 'text'
+    }));
+
     return new Core.layout.Form({
         model: new Backbone.Model({
             1: 'text',
             2: '12_Мир ;Труд%,.Май64',
+            dropdown: 3,
             3: 123,
             4: '2015-07-20T10:46:37Z',
             5: true,
@@ -33,6 +41,12 @@ export default function() {
                     {
                         type: 'TextArea-editor',
                         key: 2
+                    },
+                    {
+                        type: 'Datalist-editor',
+                        key: 'dropdown',
+                        valueType: 'id',
+                        collection: possibleItems
                     },
                     {
                         type: 'Number-editor',

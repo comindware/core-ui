@@ -38,6 +38,7 @@ const globalEventService = /** @lends module:core.services.GlobalEventService */
                 name: x.name,
                 capture: x.capture,
                 handler: e => {
+                    // what for pass 2 argument, if first is nested in the second ?
                     this.trigger(eventName, e.target, e);
                 }
             };

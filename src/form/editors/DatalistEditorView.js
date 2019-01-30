@@ -265,7 +265,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     blur(): void {
         this.updateButtonInput('');
         this.__blurButton();
-        this.onBlur({
+        this.onBlur(undefined, {
             triggerChange: false
         });
     },
@@ -365,6 +365,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (this.options.openOnRender) {
             this.__onButtonClick('', false, true);
         }
+
+        this.listenTo(this.dropdownView.button, 'focus', this.__onButtonFocus);
     },
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
@@ -570,16 +572,25 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return value[displayAttribute] || value.text || `#${value.id}`;
     },
 
-    __focusButton(options): void {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.focus(options);
+    __onButtonFocus() {
+        if (this.isNextFocusInner) {
+            this.isNextFocusInner = false;
+            return;
         }
+        this.isNextFocusInner = false;
+        this.__onButtonClick();
+    },
+
+    __focusButton(): void {
+        if (this.isButtonFocus()) {
+            return;
+        }
+        this.isNextFocusInner = true;
+        this.dropdownView.button?.focus();
     },
 
     __blurButton(): void {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.blur();
-        }
+        this.dropdownView.button?.blur();
     },
 
     __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
@@ -597,28 +608,25 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 1 && !this.options.allowEmptyValue) {
-            return;
+        if (!(this.selectedButtonCollection.length === 1 && !this.options.allowEmptyValue)) {
+            this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect({
+                isSilent: true
+            });
+    
+            const selected = [].concat(this.getValue() || []);
+            const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
+            if (removingModelIndex !== -1) {
+                selected.splice(removingModelIndex, 1);
+            }
+    
+            this.__value(selected, true);
         }
-
-        this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect({
-            isSilent: true
-        });
-
-        const selected = [].concat(this.getValue() || []);
-        const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
-        if (removingModelIndex !== -1) {
-            selected.splice(removingModelIndex, 1);
-        }
-
-        this.__value(selected, true);
 
         if (!this.dropdownView.isOpen) {
             this.__onButtonClick();
-            this.__focusButton();
-        } else if (!this.isButtonFocus()) {
-            this.__focusButton();
         }
+
+        this.__focusButton();
     },
 
     __createFakeInputModel() {

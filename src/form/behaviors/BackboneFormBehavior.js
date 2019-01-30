@@ -172,7 +172,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = Object.values(this.fields).find(f => f.editor.hasFocus);
+                    const focusedField = Object.values(this.fields).find(f => f.editor?.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
