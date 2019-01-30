@@ -17,7 +17,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             customTemplate: this.options.customTemplate ? Handlebars.compile(this.options.customTemplate)(this.model.toJSON()) : null,
-            url: this.options.createValueUrl(this.model.attributes),
+            url: this.options.createValueUrl && this.options.createValueUrl(this.model.attributes),
             text: this.options.getDisplayText(this.options.model.attributes)
         };
     },

@@ -34,6 +34,7 @@ import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAv
 import DemoReferenceEditorController from './editors/impl/datalist/controllers/DemoReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/datalist/controllers/BaseReferenceEditorController';
 import BaseReferenceCollection from './editors/impl/datalist/collections/BaseReferenceCollection';
+import DemoReferenceCollection from './editors/impl/datalist/collections/DemoReferenceCollection';
 import DefaultReferenceModel from './editors/impl/datalist/models/DefaultReferenceModel';
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
@@ -117,7 +118,8 @@ const api = /** @lends module:core.form */ {
                 BaseReferenceEditorController
             },
             collections: {
-                BaseReferenceCollection
+                BaseReferenceCollection,
+                DemoReferenceCollection
             },
             models: {
                 DefaultReferenceModel

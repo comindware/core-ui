@@ -23,7 +23,7 @@ const defaultOptions = () => ({
     allowEmptyValue: true,
     class: undefined,
     format: '',
-    readonlyPlaceholder: ''
+    readonlyPlaceholder: '-'
 });
 
 /**

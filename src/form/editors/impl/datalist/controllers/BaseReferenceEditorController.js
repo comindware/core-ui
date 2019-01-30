@@ -30,9 +30,8 @@ export default Marionette.Object.extend(
          * @param {Object} options.text Text filter filter to apply or <code>null</code>.
          * @return {Promise} Promise object that resolves when the data is ready.
          * */
-        fetch(options = {}) {
-            const filterText = options.text ? options.text.trim().toUpperCase() : '';
-            return this.collection.fetch({ data: { filter: filterText } }).then(() => {
+        fetch({ text = '' }) {
+            return this.collection.fetch({ data: { filter: text } }).then(() => {
                 this.collection.rebuild();
                 this.totalCount = this.collection.parentCollection ? this.collection.parentCollection.totalCount : this.collection.totalCount;
 
