@@ -1163,12 +1163,12 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-                const shouldBeMilliseconds = Math.floor(moment().add(1, 'months').valueOf() / 1000);
+                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / 1000);
 
-                expect(Math.floor(moment(view.value).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                expect(Math.round(moment(view.value).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
 
                 model.on('change:date', (model, date) => {
-                    expect(Math.floor(moment(date).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                    expect(Math.round(moment(date).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
                     done();
                 });
 
