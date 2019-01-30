@@ -22,7 +22,8 @@ const defaultOptions = () => ({
     showTitle: true,
     allowEmptyValue: true,
     class: undefined,
-    format: ''
+    format: '',
+    readonlyPlaceholder: ''
 });
 
 /**
@@ -54,7 +55,6 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
             this.mask = this.options.mask;
         }
         _.defaults(this.options, _.pick(editorOptions, Object.keys(defOps)), defOps);
-        this.placeholder = this.options.emptyPlaceholder;
     },
 
     focusElement: '.js-input',
@@ -130,18 +130,20 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.setPlaceholder();
+        this.__setPlaceholder(this.__placeholderShouldBe());
     },
 
-    setPlaceholder() {
-        let placeholder;
-        if (!this.getEnabled() || this.getReadonly()) {
-            placeholder = '';
-        } else {
-            placeholder = this.placeholder;
-        }
+    __setPlaceholder(placeholder) {
+        this.ui.input.prop(
+            'placeholder',
+            placeholder
+        );
+    },
 
-        this.ui.input.prop('placeholder', placeholder);
+    __placeholderShouldBe() {
+        return this.getEditable() ?
+            this.options.emptyPlaceholder :
+            this.options.readonlyPlaceholder;
     },
 
     __setEnabled(enabled) {

@@ -239,6 +239,52 @@ describe('Editors', () => {
             });
         });
 
+        it('should has placeholder if model value == null, showSearch = true', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                showSearch: true
+            });
+
+            show(view);
+
+            view.on('view:ready', () => {
+                expect(getInput(view)[0].getAttribute('placeholder') === 'Search').toBeTrue('Editor has no placeholder "Search"');
+                done();
+            });
+
+            actionForOpen(view);
+        });
+
+        it('should has placeholder if model value == null, showSearch = false', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                showSearch: false
+            });
+
+            show(view);
+
+            view.on('view:ready', () => {
+                expect(getInput(view)[0].getAttribute('placeholder') === '--').toBeTrue('Editor has no placeholder "--"');
+                done();
+            });
+
+            actionForOpen(view);
+        });
+
         it('should has collection matched it dynamic initial collection', done => {
             const model = new Backbone.Model({
                 value: null
@@ -280,28 +326,28 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 expect(view.readonly).toBeFalse();
-                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.dropdownView.button.readonly).toBeFalse();
                 expect(
                     view
-                        .getInputView()
+                        .dropdownView.button
                         .$el.find('input')
                         .attr('readonly')
                 ).toBeUndefined();
                 view.setReadonly(true);
                 expect(view.readonly).toBeTrue();
-                expect(view.getInputView().readonly).toBeTrue();
+                expect(view.dropdownView.button.readonly).toBeTrue();
                 expect(
                     view
-                        .getInputView()
+                        .dropdownView.button
                         .$el.find('input')
                         .attr('readonly')
                 ).toEqual('readonly');
                 view.setReadonly(false);
                 expect(view.readonly).toBeFalse();
-                expect(view.getInputView().readonly).toBeFalse();
+                expect(view.dropdownView.button.readonly).toBeFalse();
                 expect(
                     view
-                        .getInputView()
+                        .dropdownView.button
                         .$el.find('input')
                         .attr('readonly')
                 ).toBeUndefined();

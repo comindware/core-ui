@@ -162,8 +162,8 @@ export default {
                 }
             },
 
-            __updateEmpty() {
-                this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+            __updateEmpty(isEmpty = this.isEmptyValue()) {
+                this.$el.toggleClass(classes.EMPTY, isEmpty);
             },
 
             /**
@@ -287,6 +287,10 @@ export default {
              */
             getReadonly() {
                 return this.readonly;
+            },
+
+            getEditable() {
+                return this.getEnabled() && !this.getReadonly();
             },
 
             /**
