@@ -18,15 +18,13 @@ describe('Editors', () => {
 
     const startSearch = (input, string) => {
         input.click();
-        input.focus();
         input.val(string);
         input.trigger('input');
     };
 
     const actionForOpen = view =>
         getInput(view)
-            .click()
-            .focus();
+            .click();
 
     const wait = (options = {}) => {
         const first = setInterval(() => {
@@ -374,7 +372,7 @@ describe('Editors', () => {
 
             view.on('change', () => {
                 view.on('dropdown:open', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     done();
                 });
             });
@@ -901,7 +899,7 @@ describe('Editors', () => {
                     counter++;
                     expect(view.controller.fetchCounter).toEqual(counter);
                     expect(view.isReady).toEqual(true);
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     if (counter < 3) {
                         _.delay(() => actionForOpen(anotherView), 20);
                     } else {
@@ -989,7 +987,7 @@ describe('Editors', () => {
                 expect(true).toEqual(true);
             });
 
-            it('should open panel when click (and focus) input', done => {
+            it('should open panel on click input', done => {
                 const model = new Backbone.Model({
                     value: [{ id: 1, name: 1 }]
                 });
@@ -1000,15 +998,48 @@ describe('Editors', () => {
                     key: 'value',
                     maxQuantitySelected: Infinity
                 });
+
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    input.click();
+                });
     
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
+                    expect(view.dropdownView.isOpen).toBeTrue('Must open dropdown on click.');
                     done();
                 });
     
                 show(view);
+            });
+
+            it('should open panel on input get focus', done => {
+                const model = new Backbone.Model({
+                    view: [1]
+                });
     
-                actionForOpen(view);
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    key: 'view',
+                    autocommit: true,
+                    showEditButton: true,
+                    showAddNewButton: true,
+                    showCheckboxes: true,
+                    maxQuantitySelected: 5,
+                    valueType: 'id',
+                    collection: possibleItems15
+                });
+    
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    input.focus();
+                });
+    
+                view.on('view:ready', () => {
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is not open!');
+                    done();
+                });
+    
+                show(view);
             });
 
             it('should close panel and clean on panel item click if maxQuantitySelected === 1', done => {
@@ -1158,7 +1189,7 @@ describe('Editors', () => {
                 });
     
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     done();
                 });
     
@@ -1294,7 +1325,7 @@ describe('Editors', () => {
     
                 view.on('view:ready', () => {
                     expect(view.isReady).toEqual(true);
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     done();
                 });
     
@@ -1820,7 +1851,7 @@ describe('Editors', () => {
                 });
 
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
 
@@ -1852,7 +1883,7 @@ describe('Editors', () => {
                 });
 
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
 
@@ -1888,7 +1919,7 @@ describe('Editors', () => {
                 });
 
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
 
@@ -1924,7 +1955,7 @@ describe('Editors', () => {
                 });
 
                 view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toEqual(true);
+                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
 
