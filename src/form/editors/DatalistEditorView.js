@@ -53,7 +53,6 @@ const defaultOptions = {
 };
 /* Some DOCS
     Datalist fetch [searched] data from controller on click
-    Comparator selected collection should be change place for fakeInputModel.
 
     ToDo:
     1.staticController has no addNewItem function.
@@ -140,7 +139,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 datalistEnabled: this.getEnabled(),
                 datalistReadonly: this.getReadonly(),
-                readonly: !this.options.showSearch
+                emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
+                readonlyPlaceholder: '--',
+                readonly: this.__isInputShouldBeReadonly()
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -162,6 +163,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             externalBlurHandler: this.options.externalBlurHandler,
             minAvailableHeight: this.options.minAvailableHeight
         });
+    },
+
+    __isInputShouldBeReadonly() {
+        return !this.options.showSearch || this.getReadonly();
     },
 
     __createSelectedButtonCollection() {
@@ -215,11 +220,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.showChildView('dropdownRegion', this.dropdownView);
     },
 
-    isEmptyValue(): boolean {
-        const value = this.getValue();
-        return Array.isArray(value) ?
-            value == null || !value.length :
-            value == null;
+    isEmptyValue(value = this.getValue()): boolean {
+        return value == null || (Array.isArray(value) && value.length === 0);
+    },
+
+    __updateEmpty() {
+        const isEmpty = this.isEmptyValue();
+        BaseEditorView.prototype.__updateEmpty.call(this, isEmpty);
+        this.dropdownView?.button.togglePlaceholder(isEmpty);
     },
 
     __convertToValue(estimatedObjects) {
@@ -235,26 +243,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__adjustValue(value);
     },
 
-    setReadonly(readonly: Boolean): void {
-        BaseEditorView.prototype.setReadonly.call(this, readonly);
-        if (!this.isRendered()) {
-            return;
-        }
-        const isEnabled = this.__getEditorEnabled();
-        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
-        this.getInputView()?.setReadonly(readonly);
-    },
-
-    setEnabled(enabled: Boolean): void {
-        BaseEditorView.prototype.setEnabled.call(this, enabled);
-        if (!this.isRendered()) {
-            return;
-        }
-        const isEnabled = this.__getEditorEnabled();
-        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
-        this.getInputView()?.setEnabled(enabled);
+    setPermissions(enabled, readonly) {
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        this.dropdownView.button?.setPermissions(enabled, this.__isInputShouldBeReadonly());
+        this.dropdownView.button?.collectionView?.updateEnabled(this.getEditable());
     },
 
     focus(): void {
@@ -271,16 +263,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isButtonFocus() {
-        const inputView = this.getInputView();
+        const inputView = this.dropdownView?.button;
         return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
     isThisFocus() {
         return this.el.contains(document.activeElement);
-    },
-
-    getInputView() {
-        return this.dropdownView?.button;
     },
 
     async fetchUpdateFilter(value, forceCompareText, openOnRender) {
@@ -329,15 +317,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         // this.selectedButtonCollection.reset(models == null ? undefined : models);
         // select selected after reset
 
-        this.selectedButtonCollection.remove(
-            this.selectedButtonCollection.filter(model => 
-                !(model instanceof FakeInputModel)
-                && !(Array.isArray(models) && models.some(newModel => newModel.id === model.id)))
+        this.selectedButtonCollection.set(
+            models == null ? [] : models,
+            {
+                add: true,
+                remove: true, // remove others (like reset)
+                merge: true // current models can has no display text for valueType = 'id
+            }
         );
-        if (models) {
-            this.selectedButtonCollection.add(models, { merge: true });
-        }
-        this.__updateFakeInputModel();
+
         this.dropdownView?.button?.trigger('change:content');
     },
 
@@ -374,11 +362,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getIsOpenAllowed() {
-        return this.__getEditorEnabled() && !this.dropdownView.isOpen && this.isThisFocus();
-    },
-
-    __getEditorEnabled() {
-        return this.getEnabled() && !this.getReadonly();
+        return this.getEditable() && !this.dropdownView.isOpen && this.isThisFocus();
     },
 
     open(openOnRender) {
@@ -394,7 +378,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValue(value: any, isLoadIfNeeded = false) {
-        if (value == null || (Array.isArray(value) && value.length === 0)) {
+        if (this.isEmptyValue(value)) {
             return this.options.maxQuantitySelected === 1 ? null : [];
         }
         const result = this.getOption('valueType') === 'id' ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;
@@ -530,7 +514,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const isAccess = this.__getEditorEnabled();
+        const isAccess = this.getEditable();
         const maxQuantity = this.options.maxQuantitySelected;
 
         if (maxQuantity === 1) {
@@ -583,7 +567,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonClick(filterValue = '', forceCompareText = true, openOnRender = false): void {
-        if (!this.__getEditorEnabled()) {
+        if (!this.getEditable()) {
             return;
         }
         this.fetchUpdateFilter(filterValue, forceCompareText, openOnRender);

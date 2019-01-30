@@ -47,7 +47,7 @@ formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
         childViewOptions() {
             return {
                 selected: this.getValue(),
-                enabled: this.__getEditorEnabled()
+                enabled: this.getEditable()
             };
         },
 
@@ -64,11 +64,7 @@ formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
             this.__value(value, false);
         },
 
-        __getEditorEnabled() {
-            return this.getEnabled() && !this.getReadonly();
-        },
-
-        __setEditorEnable(isEnable = this.__getEditorEnabled()) {
+        __setEditorEnable(isEnable = this.getEditable()) {
             this.children.each(cv =>
                 cv.setEnabled(isEnable));
         },

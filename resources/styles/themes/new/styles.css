@@ -102,10 +102,6 @@
 .bubbles .spinner {
   right: 25px;
 }
-.bubbles__list:empty:before {
-  content: '--';
-  padding: 3px 0 1px 0;
-}
 .bubbles__form {
   padding: 2px 0;
 }
