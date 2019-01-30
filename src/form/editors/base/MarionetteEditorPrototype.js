@@ -431,17 +431,18 @@ export default {
                 }
             },
 
-            onFocus() {
+            onFocus(event, options) {
                 this.$el.addClass(classes.FOCUSED);
-                this.trigger('focus', this);
+                //ToDo what for pass 'this' as first argument ?
+                this.trigger('focus', this, event, options);
             },
 
-            onBlur(options = {}) {
+            onBlur(event, options = {}) {
                 if (options.triggerChange === undefined || options.triggerChange === true) {
                     this.checkChange();
                 }
                 this.$el.removeClass(classes.FOCUSED);
-                this.trigger('blur', this);
+                this.trigger('blur', this, event, options);
             },
 
             renderIcons(...iconTemplates) {

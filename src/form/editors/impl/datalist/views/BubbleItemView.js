@@ -8,16 +8,12 @@ const classes = {
 };
 
 export default Marionette.View.extend({
-    initialize(options) {
-        this.reqres = options.reqres;
-    },
-
     template: Handlebars.compile(template),
 
     templateContext() {
         return {
             customTemplate: this.options.customTemplate ? Handlebars.compile(this.options.customTemplate)(this.model.toJSON()) : null,
-            url: this.options.createValueUrl(this.model.attributes),
+            url: this.options.createValueUrl && this.options.createValueUrl(this.model.attributes),
             text: this.options.getDisplayText(this.options.model.attributes)
         };
     },
@@ -37,13 +33,19 @@ export default Marionette.View.extend({
         editButton: '.js-edit-button'
     },
 
-    events: {
-        'click @ui.clearButton': '__delete',
-        'click @ui.editButton': '__edit',
-        click: '__click',
-        drag: '__handleDrag',
-        mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+    events() {
+        const events = {
+            'click @ui.clearButton': '__delete',
+            drag: '__handleDrag',
+            mouseenter: '__onMouseenter',
+            mouseleave: '__onMouseleave'
+        };
+
+        if (this.options.edit) {
+            events['click @ui.editButton'] = '__edit';
+        }
+
+        return events;
     },
 
     modelEvents: {
@@ -52,20 +54,12 @@ export default Marionette.View.extend({
     },
 
     __delete() {
-        this.reqres.request('bubble:delete', this.model);
+        this.options.bubbleDelete(this.model);
         return false;
     },
 
-    __click(e) {
-        if (e.target.tagName === 'A') {
-            e.stopPropagation();
-            return;
-        }
-        this.reqres.request('button:click');
-    },
-
     __edit() {
-        if (this.reqres.request('value:edit', this.model.attributes)) {
+        if (this.options.edit && this.options.edit(this.model.attributes)) {
             return false;
         }
         return null;
@@ -77,7 +71,7 @@ export default Marionette.View.extend({
 
     onRender() {
         this.updateEnabled(this.options.enabled);
-        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+        if (this.options.edit && Boolean(this.model.attributes)) {
             this.el.classList.add('bubbles__i-edit-btn');
         }
         this.__changeSelected(this.model);
@@ -95,19 +89,19 @@ export default Marionette.View.extend({
     },
 
     __onMouseenter() {
-        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+        if (this.options.edit && Boolean(this.model.attributes)) {
             this.el.insertAdjacentHTML('beforeend', iconWrapPencil);
         }
-        if (this.options.enabled && this.options.showRemoveButton) {
+        if (this.options.enabled && this.options.canDeleteItem) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
     },
 
     __onMouseleave() {
-        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+        if (this.options.edit && Boolean(this.model.attributes)) {
             this.el.removeChild(this.el.lastElementChild);
         }
-        if (this.options.enabled && this.options.showRemoveButton) {
+        if (this.options.enabled && this.options.canDeleteItem) {
             this.el.removeChild(this.el.lastElementChild);
         }
     }
