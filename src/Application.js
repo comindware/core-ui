@@ -79,6 +79,8 @@ export default {
 
         ThemeService.initialize(options.themeService);
 
+        window.contentRegion = window.app.getView().getRegion('contentRegion');
+
         return marionetteApp;
     },
 
