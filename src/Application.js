@@ -19,6 +19,7 @@ import 'backbone.trackit';
 export default {
     async start(options) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+        window.contentRegion = window.app.getView().getRegion('contentRegion');
 
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
@@ -78,8 +79,6 @@ export default {
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
 
         ThemeService.initialize(options.themeService);
-
-        window.contentRegion = window.app.getView().getRegion('contentRegion');
 
         return marionetteApp;
     },

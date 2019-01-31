@@ -123,6 +123,10 @@ export default {
         return activeUrl?.startsWith('#custom');
     },
 
+    setModuleLoading(show) {
+        show ? this.__showViewPlaceholder() : this.__hideViewPlaceholder();
+    },
+
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
@@ -133,9 +137,7 @@ export default {
 
         const customModuleRegion = this.__tryGetSubmoduleRegion(config);
 
-        if (!this.activeModule) {
-            this.__showViewPlaceholder();
-        } else if (!customModuleRegion) {
+        if (this.activeModule && !customModuleRegion) {
             const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
             if (!isLeaved) {
                 return;
@@ -148,14 +150,9 @@ export default {
         }
 
         this.loadingContext.loaded = true;
-        // reset loading region
-        window.app
-            .getView()
-            .getRegion('contentLoadingRegion')
-            .reset();
 
         if (this.activeModule) {
-            this.activeModule.view.setModuleLoading(false);
+            this.setModuleLoading(false);
         }
 
         const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
@@ -239,6 +236,13 @@ export default {
             .show(new ContentLoadingView());
     },
 
+    __hideViewPlaceholder() {
+        window.app
+            .getView()
+            .getRegion('contentLoadingRegion')
+            .reset();
+    },
+
     async __tryLeaveActiveModule() {
         const canLeave = await this.activeModule.leave();
 
@@ -255,7 +259,7 @@ export default {
         //clear all promises of the previous module
         Core.services.PromiseService.cancelAll();
         if (!this.loadingContext.loaded) {
-            this.activeModule.view.setModuleLoading(true);
+            this.setModuleLoading(false);
         }
         return true;
     },

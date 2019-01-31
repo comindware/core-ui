@@ -2,10 +2,12 @@
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';
+import RoutingService from '../services/RoutingService';
 import PresenterService from '../services/PresenterService';
 
 export default Marionette.Object.extend({
     constructor(options = {}) {
+        this.moduleRegion = window.contentRegion;
         Marionette.Object.prototype.constructor.apply(this, arguments);
         /*
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
@@ -15,8 +17,6 @@ export default Marionette.Object.extend({
         */
         this.moduleId = options.config.id;
     },
-
-    moduleRegion: window.contentRegion,
 
     leave(isCalledByUnloadEvent) {
         if (typeof this.onLeave === 'function') {
@@ -37,7 +37,7 @@ export default Marionette.Object.extend({
     },
 
     setLoading(isLoading) {
-        this.view.setModuleLoading(isLoading);
+        RoutingService.setModuleLoading(isLoading);
         if (isLoading === false) {
             this.__onModuleReady();
         }
@@ -129,7 +129,7 @@ export default Marionette.Object.extend({
         const params = configuration.url.split('/');
         const showMask = configuration.showLoadingMask !== false;
 
-        showMask && this.view.setModuleLoading(true);
+        showMask && RoutingService.setModuleLoading(true);
         try {
             const requestFn = Ajax[params[0]][params[1]];
             if (requestFn) {
@@ -151,7 +151,7 @@ export default Marionette.Object.extend({
             onFailure && onFailure.call(this, error);
             return { data: null, requestType: null, error };
         } finally {
-            showMask && this.view.setModuleLoading(false);
+            showMask && RoutingService.setModuleLoading(false);
         }
     },
 
