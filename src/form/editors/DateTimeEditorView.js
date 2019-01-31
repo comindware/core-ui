@@ -336,9 +336,15 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             recipientMoment.month(fromMoment.month());
             recipientMoment.year(fromMoment.year());
             if (includeTime) {
+                recipientMoment.milliseconds(fromMoment.milliseconds());
                 recipientMoment.seconds(fromMoment.seconds());
                 recipientMoment.minutes(fromMoment.minutes());
                 recipientMoment.hours(fromMoment.hours());
+            } else if (recipientISO == null) {
+                recipientMoment.milliseconds(0);
+                recipientMoment.seconds(0);
+                recipientMoment.minutes(0);
+                recipientMoment.hours(0);
             }
             this.dateButtonModel.set(
                 this.key,
