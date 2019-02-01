@@ -1,4 +1,14 @@
 /* dropdown */
+
+.js-core-ui__global-popup-region > .dropdown__wrp_down{
+    margin: 0;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0,0,0,.2);
+    position: fixed;
+    z-index: 600;
+    border-radius: 2px;
+}
+
 .dropdown {
     position: relative;
     height: inherit;
@@ -14,6 +24,7 @@
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
+    border-radius: 2px;
 }
 .dropdown__wrp .dropdown__wrp_list {
     max-height: 400px;
