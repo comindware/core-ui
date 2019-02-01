@@ -132,6 +132,10 @@ export default Marionette.View.extend({
 
         el.on('click', this.__handleClick.bind(this));
 
+        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+            this.$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+        }
+
         this.$el.attr('tabindex', -1);
     },
 

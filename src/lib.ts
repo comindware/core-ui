@@ -35,8 +35,6 @@ import autosize from 'autosize';
 import CodeMirror from 'codemirror';
 import 'innersvg-polyfill';
 // @ts-ignore
-import * as jsencrypt from 'jsencrypt';
-// @ts-ignore
 import * as jqui from 'jquery-ui';
 
 import domapi from './utils/DOMApi';
@@ -53,7 +51,6 @@ const api = {
     Backbone: backbone,
     Marionette: Marionette_,
     codemirror: CodeMirror,
-    JSEncrypt: jsencrypt.JSEncrypt,
     autosize,
     maskInput,
     createNumberMask,
