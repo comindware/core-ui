@@ -19,7 +19,8 @@ export default function() {
             collection: possibleItems,
             valueType: 'id',
             allowEmptyValue: false,
-            displayAttribute: attr => `id: ${attr.id}, text: ${attr.text}`
+            displayAttribute: attr => `id: ${attr.id}, text: ${attr.text}`,
+            subtextProperty: attr => `id: ${attr.id}, subtext: ${attr.subtext}`
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true
