@@ -254,7 +254,9 @@ export default {
 
         //do not trigger events and cancel requests for submodules
         this.trigger('module:leave', {
-            page: this.activeModule ? this.activeModule.moduleId : null
+            page: this.activeModule ? this.activeModule.moduleId : null,
+            activeUrl,
+            previousUrl
         });
         //clear all promises of the previous module
         Core.services.PromiseService.cancelAll();
