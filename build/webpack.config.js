@@ -67,7 +67,8 @@ module.exports = options => {
                         plugins: [
                             require('@babel/plugin-proposal-optional-chaining'),
                             require('@babel/plugin-proposal-object-rest-spread'),
-                            require('@babel/plugin-transform-parameters')
+                            require('@babel/plugin-transform-parameters'),
+                            require('@babel/plugin-proposal-class-properties')
                         ],
                         cacheDirectory: true
                     }

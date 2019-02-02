@@ -4,8 +4,8 @@ import 'jasmine-jquery';
 describe('Application', () => {
     describe('Controller', () => {
         it('should initialize', () => {
-            const view = core.Controller.extend({
-                routingActions: {
+            const view = class extends core.Controller {
+                routingActions = {
                     list: {
                         url: 'SolutionConfigurationApi/List',
                         viewModel: Backbone.Collection,
@@ -17,26 +17,26 @@ describe('Application', () => {
                         viewModel: Backbone.Collection,
                         view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'dblclick:row'(roleId) { },
-                            navigateToNewRole() { }
+                            'dblclick:row'(roleId) {},
+                            navigateToNewRole() {}
                         }
                     }
-                },
+                };
 
-                requests: {
+                requests = {
                     'create:app': {
                         url: 'SolutionConfigurationApi/Post',
-                        onSuccess() { }
+                        onSuccess() {}
                     },
                     'get:app': {
                         url: 'SolutionConfigurationApi/Get'
                     },
                     'edit:app': {
                         url: 'SolutionConfigurationApi/Put',
-                        onSuccess() { }
+                        onSuccess() {}
                     }
-                }
-            });
+                };
+            };
 
             const controller = new view({
                 config: { id: 'my:module' },
@@ -51,10 +51,10 @@ describe('Application', () => {
         it('should call onRoute method and a correct navigation method', done => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
 
-            const view = core.Controller.extend({
+            const view = class extends core.Controller {
                 onRoute() {
                     onChangeCallback();
-                },
+                }
 
                 navigationRoute(id) {
                     onChangeCallback();
@@ -62,7 +62,7 @@ describe('Application', () => {
                     expect(onChangeCallback).toHaveBeenCalledTimes(2);
                     done();
                 }
-            });
+            };
 
             const config = {
                 id: 'my:module',
