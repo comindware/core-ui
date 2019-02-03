@@ -170,7 +170,6 @@ export default {
             }
         }
 
-        // destroy active module
         if (this.activeModule && movingOut && !customModuleRegion) {
             this.activeModule.destroy();
         }

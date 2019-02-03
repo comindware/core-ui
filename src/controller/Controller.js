@@ -100,6 +100,10 @@ export default class Controller {
         }
     }
 
+    destroy() {
+        this.moduleRegion.reset();
+    }
+
     __checkPromisesAndLeave(canLeave) {
         if (Core.services.PromiseService.checkBeforeLeave()) {
             return Core.services.MessageService.showSystemMessage({
