@@ -13,13 +13,17 @@ import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
+import ContentLoadingView from './views/ContentLoadingView';
 
 import 'backbone.trackit';
 
 export default {
     async start(options) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+        window.contentLoadingRegion = window.app.getView().getRegion('contentLoadingRegion');
         window.contentRegion = window.app.getView().getRegion('contentRegion');
+
+        this.__initializeLoadingMaskAndHideIt();
 
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
@@ -96,5 +100,10 @@ export default {
             }
         };
         initializeDatePicker($, dates);
+    },
+
+    __initializeLoadingMaskAndHideIt() {
+        window.contentLoadingRegion.show(new ContentLoadingView());
+        window.contentLoadingRegion.$el.hide();
     }
 };

@@ -1,5 +1,4 @@
 //@flow
-import ContentLoadingView from './routing/ContentLoadingView';
 import WindowService from './WindowService';
 
 // storing active url to get back to it while canceling module leave
@@ -229,17 +228,11 @@ export default {
     },
 
     __showViewPlaceholder() {
-        window.app
-            .getView()
-            .getRegion('contentLoadingRegion')
-            .show(new ContentLoadingView());
+        window.contentLoadingRegion.$el.show();
     },
 
     __hideViewPlaceholder() {
-        window.app
-            .getView()
-            .getRegion('contentLoadingRegion')
-            .reset();
+        window.contentLoadingRegion.$el.hide();
     },
 
     async __tryLeaveActiveModule() {
