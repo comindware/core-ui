@@ -39,10 +39,32 @@ export default {
     },
 
     /**
+     * Shows a DOM el in a popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {DOMNode} el A DOM node.
+     * @returns {String} The popup id that you can use to close it.
+     * */
+    showElInPopup(view) {
+        return this.__popupStackView.showElInPopup(view, {
+            fadeBackground: true,
+            transient: false,
+            hostEl: null
+        });
+    },
+
+    /**
      * Closes the top-level popup or does nothing if there is none.
      * @param {string} [popupId=null]
      * */
     closePopup(popupId = null) {
+        this.__popupStackView && this.__popupStackView.closePopup(popupId);
+    },
+
+    /**
+     * Closes the top-level popup or does nothing if there is none.
+     * @param {string} [popupId=null]
+     * */
+    closeElPopup(popupId = null) {
         this.__popupStackView && this.__popupStackView.closePopup(popupId);
     },
 
