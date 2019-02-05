@@ -20,10 +20,16 @@ import 'backbone.trackit';
 export default {
     async start(options) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
-        window.contentLoadingRegion = window.app.getView().getRegion('contentLoadingRegion');
-        window.contentRegion = window.app.getView().getRegion('contentRegion');
+        const appView = window.app.getView();
 
-        this.__initializeLoadingMaskAndHideIt();
+        if (appView) {
+            window.contentLoadingRegion = appView.getRegion('contentLoadingRegion');
+            window.contentRegion = appView.getRegion('contentRegion');
+
+            if (window.contentLoadingRegion) {
+                this.__initializeLoadingMaskAndHideIt();
+            }
+        }
 
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
