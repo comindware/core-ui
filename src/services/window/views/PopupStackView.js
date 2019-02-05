@@ -107,8 +107,8 @@ export default Marionette.View.extend({
             el: regionEl
         });
         this.prevSublingOfContentEl = view.prev();
-        view.wrap('<div class="modal-window-wrapper"></div>');
-        view.appendTo(this.getRegion(popupId).$el);
+        this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
+        view.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
 
         if (fadeBackground) {
             let lastIndex = -1;
