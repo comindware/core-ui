@@ -107,6 +107,7 @@ export default Marionette.View.extend({
             el: regionEl
         });
         this.prevSublingOfContentEl = view.prev();
+        view.wrap('<div class="modal-window-wrapper"></div>');
         view.appendTo(this.getRegion(popupId).$el);
 
         if (fadeBackground) {

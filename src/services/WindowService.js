@@ -65,7 +65,7 @@ export default {
      * @param {string} [popupId=null]
      * */
     closeElPopup(popupId = null) {
-        this.__popupStackView && this.__popupStackView.closePopup(popupId);
+        this.__popupStackView && this.__popupStackView.closeElPopup(popupId);
     },
 
     /**

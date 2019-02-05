@@ -118,3 +118,9 @@
     width: 100%;
     margin: 22px 0;
 }
+
+.modal-window-wrapper {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
