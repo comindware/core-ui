@@ -90,7 +90,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 collection = options.collection;
             } else {
                 collection = options.collection.toJSON();
-                this.listenTo(options.collection, 'reset', collect => this.resetCollection(collect));
+                this.listenTo(options.collection, 'reset update', collect => this.resetCollection(collect));
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), {
@@ -398,7 +398,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValueForIdMode(value, isLoadIfNeeded) {
-        if (isLoadIfNeeded && !this.isLastFetchSuccess && this.panelCollection.length === 0) {
+        if (this.options.controller && isLoadIfNeeded && !this.isLastFetchSuccess && this.panelCollection.length === 0) {
             this.listenToOnce(this, 'view:ready', () => {
                 const adjustedValue = this.__adjustValueFromLoaded(value);
                 this.setValue(Array.isArray(adjustedValue) ? adjustedValue.map(item => item.toJSON()) : adjustedValue);
