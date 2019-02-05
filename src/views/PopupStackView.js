@@ -1,5 +1,4 @@
-//@flow
-import template from '../templates/PopupStack.hbs';
+import template from './templates/PopupStack.hbs';
 
 const classes = {
     POPUP_REGION: 'js-popup-region-',

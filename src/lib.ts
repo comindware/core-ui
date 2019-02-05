@@ -25,9 +25,7 @@ import 'backbone-computedfields';
 import 'backbone.radio';
 import 'backbone-associations';
 /* --- */
-import 'jstorage';
 import * as Handlebars_ from 'handlebars';
-
 import jquery from 'jquery';
 // @ts-ignore
 import autosize from 'autosize';

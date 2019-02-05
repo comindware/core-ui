@@ -1,4 +1,4 @@
-import PopupStackView from './window/views/PopupStackView';
+import PopupStackView from '../views/PopupStackView';
 import GlobalEventService from './GlobalEventService';
 
 export default {
