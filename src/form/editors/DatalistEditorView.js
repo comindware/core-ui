@@ -285,13 +285,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return this.dropdownView?.button?.collectionView?.getInputView();
     },
 
-    async fetchUpdateFilter(value, forceCompareText, openOnRender) {
-        this.searchText = (value || '').trim();
-        if (this.fakeInputModel?.get('searchText') === this.searchText && !forceCompareText) {
+    fetchUpdateFilter(value, forceCompareText, openOnRender) {
+        const searchText = (value || '').trim();
+        
+        if (this.searchText === searchText && !forceCompareText) {
             this.open();
             return;
         }
         this.triggerNotReady();
+        this.searchText = searchText;
         this.fakeInputModel?.set('searchText', this.searchText);
         return this.__fetchUpdateFilter(this.searchText, openOnRender);
     },
