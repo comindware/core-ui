@@ -14,6 +14,7 @@
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
+    /* z-index should be as simplified-panel_panel z-index */
 }
 .dropdown__wrp .dropdown__wrp_list {
     max-height: 400px;

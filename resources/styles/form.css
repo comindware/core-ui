@@ -1127,7 +1127,8 @@ input[type="color"], .colorpicker{
 
 .simplified-panel_panel {
     position: fixed;
-    z-index: 101;
+    z-index: 600;
+    /* z-index should be as dropdown__wrp z-index */
 }
 
 .simplified-panel_panel[noSelected].dropdown__wrp_up {
