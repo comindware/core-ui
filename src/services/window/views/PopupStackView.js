@@ -107,7 +107,12 @@ export default Marionette.View.extend({
             el: regionEl
         });
         this.prevSublingOfContentEl = view.prev();
+        if (this.prevSublingOfContentEl.legnth === 0) {
+            delete this.prevSublingOfContentEl;
+            this.parentOfContentEl = view.parent();
+        }
         this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
+
         view.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
 
         if (fadeBackground) {
@@ -217,9 +222,13 @@ export default Marionette.View.extend({
                 targets = [topMostNonTransient];
             }
         }
-        popupDef.view.insertAfter(this.prevSublingOfContentEl);
-
-        delete this.prevSublingOfContentEl;
+        if (this.prevSublingOfContentEl) {
+            popupDef.view.insertAfter(this.prevSublingOfContentEl);
+            delete this.prevSublingOfContentEl;
+        } else {
+            popupDef.view.prepend(this.parentOfContentEl);
+            delete this.parentOfContentEl;
+        }
 
         targets.reverse().forEach(pd => {
             this.__removePopup(pd);
