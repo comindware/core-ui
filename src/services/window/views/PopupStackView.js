@@ -107,7 +107,7 @@ export default Marionette.View.extend({
             el: regionEl
         });
         this.prevSublingOfContentEl = view.prev();
-        if (this.prevSublingOfContentEl.legnth === 0) {
+        if (this.prevSublingOfContentEl.length === 0) {
             delete this.prevSublingOfContentEl;
             this.parentOfContentEl = view.parent();
         }
@@ -226,7 +226,7 @@ export default Marionette.View.extend({
             popupDef.view.insertAfter(this.prevSublingOfContentEl);
             delete this.prevSublingOfContentEl;
         } else {
-            popupDef.view.prepend(this.parentOfContentEl);
+            popupDef.view.prependTo(this.parentOfContentEl);
             delete this.parentOfContentEl;
         }
 
