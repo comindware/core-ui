@@ -7,16 +7,18 @@ const config = {
 };
 
 const classes = {
+    checked: 'editor_checked',
+    checked_some: 'editor_checked_some',
     selected: 'selected',
-    expanded: 'collapsible-btn_expanded',
-    collapsible: 'js-collapsible-button',
-    collapsibleIcon: 'js-tree-first-cell',
     dragover: 'dragover',
     hover: 'hover',
     hover__transition: 'hover__transition',
+    rowChecked: 'row-checked',
+    expanded: 'collapsible-btn_expanded',
+    collapsible: 'js-collapsible-button',
+    collapsibleIcon: 'js-tree-first-cell',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
-    checked: 'row-checked',
     cell: 'cell'
 };
 
@@ -41,14 +43,18 @@ const defaultOptions = {
  * @param {Number} [options.paddingRight=10] Правый отступ
  * */
 export default Marionette.View.extend({
-    className: 'row',
+    tagName: 'tr',
 
     ui: {
         cells: '.js-grid-cell',
-        collapsibleButton: '.js-collapsible-button'
+        collapsibleButton: '.js-collapsible-button',
+        checkbox: '.js-checkbox',
+        dots: '.js-dots',
+        index: '.js-index'
     },
 
     events: {
+        'click @ui.checkbox': '__handleCheckboxClick',
         click: '__handleClick',
         dblclick: '__handleDblClick',
         'click @ui.collapsibleButton': '__toggleCollapse',
@@ -56,8 +62,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave',
         contextmenu: '__handleContextMenu'
     },
 
@@ -75,8 +79,6 @@ export default Marionette.View.extend({
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave',
         blink: '__blink',
         'toggle:collapse': 'updateCollapsed',
         checked: '__addCheckedClass',
@@ -86,7 +88,6 @@ export default Marionette.View.extend({
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
-        this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
     },
 
@@ -96,6 +97,7 @@ export default Marionette.View.extend({
 
     onRender() {
         const model = this.model;
+        this.listenTo(this.model, 'checked unchecked checked:some', this.__updateState);
         if (model.selected) {
             this.__handleSelection();
             if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
@@ -105,6 +107,7 @@ export default Marionette.View.extend({
         if (model.highlighted) {
             this.__handleHighlight(model.highlightedFragment);
         }
+        this.__updateState();
     },
 
     onDestroy() {
@@ -138,6 +141,10 @@ export default Marionette.View.extend({
         this.cellViews = [];
         this.cellViewsByKey = {};
 
+        if (this.getOption('showCheckbox')) {
+            this.__insertCellChechbox();
+        }
+
         const isTree = this.getOption('isTree');
         this.options.columns.forEach((gridColumn, index) => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
@@ -150,14 +157,12 @@ export default Marionette.View.extend({
                 return;
             }
 
-            let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
-            if (gridColumn.editable) cellClasses += classes.cellEditable;
-
             const cellView = new cell({
-                className: `${classes.cell} ${gridColumn.columnClass} ${cellClasses}`,
+                className: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
                 schema: gridColumn,
                 model: this.model,
-                key: gridColumn.key
+                key: gridColumn.key,
+                tagName: 'td'
             });
 
             cellView.el.setAttribute('tabindex', -1);
@@ -179,7 +184,7 @@ export default Marionette.View.extend({
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
-                    const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+                    const element = this.el.querySelector(`.${this.columnClasses[index]}`); //todo WTF
                     if (element) {
                         element.insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
                         this.el.removeChild(element);
@@ -315,6 +320,46 @@ export default Marionette.View.extend({
                 this.lastHasChildren = hasChildren;
                 this.lastMargin = margin;
             }
+        }
+    },
+
+    __insertCellChechbox() {
+        this.el.insertAdjacentHTML(
+            'afterBegin',
+            `
+            <td class="cell_selection">
+        ${
+            this.options.draggable
+                ? `
+<svg class="cell__dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+    x="0px" y="0px" viewBox="0 0 2 35" xml:space="preserve">
+    <circle cx="1" cy="12" r="1.2"></circle>
+    <circle cx="1" cy="17" r="1.2"></circle>
+    <circle cx="1" cy="22" r="1.2"></circle>
+</svg>`
+                : ''
+        }${
+                this.options.index
+                    ? `
+<span class="js-index cell__index">
+    {{index}}
+</span>`
+                    : ''
+            }
+<div class="checkbox js-checkbox">
+    <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked">
+        <use xlink:href="#icon-checked" />
+    </svg>
+</div>
+</td>
+        `
+        );
+    },
+
+    __handleCheckboxClick() {
+        this.model.toggleChecked();
+        if (this.getOption('bindSelection')) {
+            this.model.collection.updateTreeNodesCheck(this.model);
         }
     },
 
@@ -479,22 +524,6 @@ export default Marionette.View.extend({
         return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
     },
 
-    __handleMouseEnter() {
-        this.model.trigger('mouseenter');
-    },
-
-    __handleModelMouseEnter() {
-        this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        this.model.trigger('mouseleave');
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
-    },
-
     __blink() {
         this.el.classList.add(classes.hover__transition);
         this.el.classList.add(classes.hover);
@@ -503,10 +532,37 @@ export default Marionette.View.extend({
     },
 
     __addCheckedClass() {
-        this.el.classList.add(classes.checked);
+        this.el.classList.add(classes.rowChecked);
     },
 
     __removeCheckedClass() {
-        this.el.classList.remove(classes.checked);
+        this.el.classList.remove(classes.rowChecked);
+    },
+
+    __updateState(model, checkedState) {
+        let state = checkedState;
+
+        if (!state) {
+            if (this.model.checked) {
+                state = 'checked';
+            } else if (this.model.checked === null) {
+                state = 'checkedSome';
+            }
+        }
+        switch (state) {
+            case 'checked':
+                this.ui.checkbox.addClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+            case 'checkedSome':
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.addClass(classes.checked_some);
+                break;
+            case 'unchecked':
+            default:
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+        }
     }
 });

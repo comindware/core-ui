@@ -124,11 +124,13 @@ export default Marionette.CollectionView.extend({
         return `visible-collection ${this.options.class || ''}`;
     },
 
+    tagName: 'tbody',
+
     onAttach() {
         this.__specifyChildHeight();
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.parent$el = this.$el.parent();
+        this.parent$el = this.$el.parent().parent();
         this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
         this.parent$el.on('scroll', this.__onScroll.bind(this));
     },
@@ -389,12 +391,14 @@ export default Marionette.CollectionView.extend({
         return normalizeIndex;
     },
 
-    __onScroll(e) {
-        if (this.state.viewportHeight === undefined ||
+    __onScroll() {
+        if (
+            this.state.viewportHeight === undefined ||
             this.isScrollHorizontal() ||
             this.collection.length <= this.state.viewportHeight ||
             this.internalScroll ||
-            this.isDestroyed()) {
+            this.isDestroyed()
+        ) {
             return;
         }
 
@@ -471,7 +475,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.css({ height: allItemsHeight || '' });
+            this.$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {

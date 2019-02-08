@@ -27,14 +27,14 @@ export default (factory = {
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {
-            return `<div class="cell ${column.columnClass}"></div>`;
+            return '<td class="cell "></td>';
         }
         let adjustedValue = value;
 
         switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
@@ -43,7 +43,7 @@ export default (factory = {
                 } else if (value && value.name) {
                     adjustedValue = value.name;
                 }
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</td>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value.length > 0) {
                     adjustedValue = value
@@ -58,13 +58,13 @@ export default (factory = {
                             }
                             return member.text;
                         }, null);
-                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                    return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
                 } else if (value.name) {
-                    return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, value.name)}">${value.name}</div>`;
+                    return `<td class="cell " title="${this.__getTitle(column, model, value.name)}">${value.name}</td>`;
                 }
             case objectPropertyTypes.ENUM:
                 adjustedValue = value ? value.valueExplained : '';
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -84,7 +84,7 @@ export default (factory = {
                         return value;
                     })
                     .join(', ');
-                return `<div class="cell cell-right ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td class="cell cell-right " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.DURATION: {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -126,7 +126,7 @@ export default (factory = {
                     .join(', ')
                     .trim();
 
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             }
             case objectPropertyTypes.BOOLEAN:
                 adjustedValue = Array.isArray(value) ? value : [value || ''];
@@ -141,7 +141,7 @@ export default (factory = {
                         return result;
                     })
                     .join(', ');
-                return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
+                return `<td class="cell ">${adjustedValue}</td>`;
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
@@ -154,21 +154,21 @@ export default (factory = {
                         return dateHelpers.dateToDateTimeString(v, 'generalDateShortTime');
                     })
                     .join(', ');
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</td>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
-                    return `<div class="cell ${column.columnClass}">${value
+                    return `<td class="cell ">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
                             return `<a href="${url}" target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
-                        .join(', ')}</div>`;
+                        .join(', ')}</td>`;
                 }
             default:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</div>`;
+                return `<td class="cell " title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue || ''}</td>`;
         }
     },
 
@@ -177,13 +177,13 @@ export default (factory = {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">
+            <td class="js-extend_cell_content extend_cell_content " title="${this.__getTitle(column, model, adjustedValue)}">
             <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
-            <div class="extend_cell_text">
+            <td class="extend_cell_text">
                 <span class="extend_cell_header">${adjustedValue}</span>
                 <span class="extend_info">${model.get('alias') || ''}</span>
-            </div>
-            </div>`;
+            </td>
+            </td>`;
     },
 
     __adjustValue(value: Array<string | number> | string) {

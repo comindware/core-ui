@@ -7,8 +7,6 @@ import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
-import SelectionPanelView from './selections/SelectionPanelView';
-import SelectionCellView from './selections/SelectionCellView';
 import GridHeaderView from './header/GridHeaderView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
@@ -51,7 +49,6 @@ const defaultOptions = options => ({
  * @param {Array} options.columns массив колонок
  * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк) или не инициализированы колонки.
  * @param {Number} options.childHeight высота строки списка (childView)
- * @param {Number} options.maxHeight максимальная высота всего списка
  * @param {Backbone.View} [options.childView] view строки списка
  * @param {Backbone.View} [options.childViewOptions] опции для childView
  * @param {Function} options.childViewSelector ?
@@ -85,14 +82,6 @@ export default Marionette.View.extend({
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
-        this.columnClasses = [];
-        options.columns.forEach((c, i) => {
-            const cClass = `${this.uniqueId}-column${i}`;
-
-            this.columnClasses.push(cClass);
-            c.columnClass = cClass;
-        });
-
         if (this.options.showHeader !== false) {
             this.options.showHeader = true;
         }
@@ -113,7 +102,7 @@ export default Marionette.View.extend({
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
+            this.listenTo(this.headerView, 'update:width', this.__updateEmptyView);
             this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
@@ -125,8 +114,8 @@ export default Marionette.View.extend({
             columns: options.columns,
             transliteratedFields: options.transliteratedFields,
             gridEventAggregator: this,
-            columnClasses: this.columnClasses,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            showCheckbox: this.options.showCheckbox
         });
 
         this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
@@ -161,7 +150,7 @@ export default Marionette.View.extend({
             showRowIndex,
             minimumVisibleRows: options.minimumVisibleRows
         });
-
+        /*
         if (this.options.showCheckbox) {
             const draggable = this.getOption('draggable');
             this.selectionPanelView = new SelectionPanelView({
@@ -191,7 +180,7 @@ export default Marionette.View.extend({
                 this.__initializeConfigurationPanel();
             }
         }
-
+        */
         this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
             if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName].concat(eventArguments));
@@ -255,14 +244,9 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        headerRegion: {
-            el: '.js-grid-header-view',
-            replaceElement: true
-        },
-        contentRegion: '.js-grid-content-view',
-        selectionPanelRegion: '.js-grid-selection-panel-view',
-        selectionHeaderRegion: {
-            el: '.js-grid-selection-header-view',
+        headerRegion: '.js-grid-header-view',
+        contentRegion: {
+            el: '.js-grid-content-view',
             replaceElement: true
         },
         toolbarRegion: {
@@ -279,7 +263,7 @@ export default Marionette.View.extend({
     ui: {
         title: '.js-grid-title',
         tools: '.js-grid-tools',
-        header: '.js-grid-header',
+        header: '.js-grid-header-view',
         content: '.js-grid-content'
     },
 
@@ -312,13 +296,6 @@ export default Marionette.View.extend({
             this.el.classList.add('grid__headless');
         }
 
-        if (this.options.showCheckbox) {
-            if (this.options.showHeader) {
-                this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
-            }
-            this.showChildView('selectionPanelRegion', this.selectionPanelView);
-        }
-
         if (this.options.showToolbar) {
             this.showChildView('toolbarRegion', this.toolbarView);
         }
@@ -340,19 +317,15 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.options.columns.forEach((column, i) => {
-            this.__setColumnWidth(i, column.width);
-        });
-        document.body && document.body.appendChild(this.styleSheet);
-        this.__bindListRegionScroll();
+        this.__updateEmptyView();
+
         if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
-        this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
-        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-wrp'), {
-            stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset,
+        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-view'), {
+            stickyBitStickyOffset: toolbarShowed ? 0 : this.options.stickyToolbarOffset,
             scrollEl: this.options.scrollEl,
             customStickyChangeNumber: this.options.customStickyChangeNumber,
             stateChangeCb: currentState => {
@@ -401,20 +374,6 @@ export default Marionette.View.extend({
         if (this.options.isTree) {
             this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
-    },
-
-    __bindListRegionScroll() {
-        const headerRegionEl = this.options.showHeader && this.headerView.el;
-        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
-
-        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
-            if (headerRegionEl) {
-                headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
-            }
-            if (selectionPanelRegionEl) {
-                selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
-            }
-        });
     },
 
     onDestroy() {
@@ -529,46 +488,6 @@ export default Marionette.View.extend({
             }
             this.collection.dragoverModel = null;
         }
-    },
-
-    __setColumnWidth(index, width = 0, allColumnsWidth) {
-        const style = this.styleSheet;
-        const columnClass = this.columnClasses[index];
-        const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
-
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-            }
-        } else {
-            const column = this.options.columns[index];
-
-            if (column.format === 'HTML') {
-                basis = '0%';
-            } else {
-                const defaultWidth = columnWidthByType[column.dataType];
-
-                if (defaultWidth) {
-                    basis = `${defaultWidth}px`;
-                } else {
-                    basis = '0%';
-                }
-            }
-        }
-
-        const grow = width > 0 ? 0 : 1;
-        const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
-
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
-        }
-
-        this.__updateEmptyView(allColumnsWidth);
     },
 
     __updateEmptyView(allColumnsWidth) {

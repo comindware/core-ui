@@ -275,7 +275,7 @@ export default {
 
     __callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule) {
         if (activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
-            const configuration = activeSubModule.routingActions[callbackName];
+            const configuration = activeSubModule.routingActions[callbackName].bind(activeSubModule);
 
             configuration.routingAction = callbackName;
 
@@ -292,7 +292,7 @@ export default {
 
     __callRoutingActionForActiveModule(callbackName, routingArgs) {
         if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-            const configuration = this.activeModule.routingActions[callbackName];
+            const configuration = this.activeModule.routingActions[callbackName].bind(this.activeModule);
 
             configuration.routingAction = callbackName;
 

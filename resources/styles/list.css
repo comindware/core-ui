@@ -59,9 +59,6 @@
 
 .grid-content-wrp {
     position: relative;
-    display: flex;
-    flex: 1 1 auto;
-    overflow: hidden;
 }
 
 .grid-header-wrp {
@@ -73,9 +70,12 @@
     z-index: 1;
 }
 
-.grid-header-wrp > .cell_selection, .grid-header-wrp > .cell_selection-index {
+.grid-header > .cell_selection {
     box-shadow: inset -1px 0 0 0 #90c3eb, inset 1px 1px 0 0 #0575bd;
     background-color: #0575bd;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .grid-content-view {
@@ -171,11 +171,8 @@
 
 .grid-header-view {
     position: relative;
-    width: 100%;
     border-collapse: collapse;
-    overflow: hidden;
-    flex: none;
-    display: flex;
+    display: table-header-group;
 }
 
 .grid-header-column-title {
@@ -188,14 +185,7 @@
     display: none;
 }
 
-.grid-header {
-    display: inline-flex;
-    width: 100%;
-    overflow: hidden;
-}
-
 .grid-header-column {
-    position: relative;
     min-width: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -203,8 +193,9 @@
     text-align: left;
     cursor: default;
     height: 35px;
-    display: flex;
-    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .grid-header-dragger {
@@ -424,14 +415,6 @@
 /* /Editable Grid */
 
 /* New grid */
-.row {
-    display: flex;
-}
-
-.row.selected{
-    background: transparent;
-}
-
 .cell {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -679,4 +662,8 @@
 
 .collection-grid-header__help {
     float: right;
+}
+
+.grid-table-wrapper {
+    overflow: auto;
 }

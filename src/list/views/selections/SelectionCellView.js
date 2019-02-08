@@ -70,7 +70,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        mouseenter: '__handleMouseEnter',
         mouseleave: '__handleMouseLeave',
         contextmenu: '__handleContextMenu'
     },
@@ -82,8 +81,6 @@ export default Marionette.View.extend({
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
-        mouseenter: '__handleModelMouseEnter',
-        mouseleave: '__handleModelMouseLeave',
         blink: '__blink',
         checked: '__addCheckedClass',
         unchecked: '__removeCheckedClass'
@@ -253,24 +250,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleMouseEnter() {
-        if (this.model) {
-            this.model.trigger('mouseenter');
-        }
-    },
-
     __handleModelMouseEnter() {
         this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        if (this.model) {
-            this.model.trigger('mouseleave');
-        }
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
     },
 
     __blink() {

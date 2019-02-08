@@ -44,11 +44,17 @@ const GridHeaderView = Marionette.View.extend({
 
     className: 'grid-header',
 
+    tagName: 'tr',
+
     ui: {
-        gridHeaderColumn: '.grid-header-column'
+        gridHeaderColumn: '.grid-header-column',
+        checkbox: '.js-checkbox',
+        dots: '.js-dots',
+        index: '.js-index'
     },
 
     events: {
+        'click @ui.checkbox': '__handleCheckboxClick',
         'mousedown .grid-header-dragger': '__handleDraggerMousedown',
         'click .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
@@ -112,6 +118,10 @@ const GridHeaderView = Marionette.View.extend({
         this.render();
     },
 
+    __handleCheckboxClick() {
+        this.collection.toggleCheckAll();
+    },
+
     __handleColumnSort(event) {
         if (this.options.columnSort === false) {
             return;
@@ -157,7 +167,8 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext = {
             pageOffsetX: e.pageX,
             dragger,
-            draggedColumn
+            draggedColumn,
+            resizingElement: column.getElementsByClassName('grid-header-column-title')[0]
         };
 
         dragger.classList.add('active');
@@ -216,12 +227,13 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
+        //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
+        //this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        this.dragContext.resizingElement.style.width = `${newColumnWidth}px`;
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
-        this.options.columns[index].width = newColumnWidth;
+        //this.options.columns[index].width = newColumnWidth;
     },
 
     __toggleCollapseAll() {
