@@ -9,7 +9,6 @@ export default FieldView.extend({
 
     onRender() {
         this.showChildView('editorRegion', this.editor);
-        this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.__updateExternalChange();
