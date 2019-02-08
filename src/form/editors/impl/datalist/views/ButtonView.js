@@ -42,6 +42,8 @@ export default TextEditorView.extend({
         }
     },
 
+    events: false,
+
     onRender(): void {
         this.showChildView('collectionRegion', this.collectionView);
         this.togglePlaceholder(this.options.getIsShowPlaceholder());

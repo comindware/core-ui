@@ -104,7 +104,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 createValueUrl: this.options.createValueUrl,
                 datalistEnabled: this.getEnabled(),
                 datalistReadonly: this.getReadonly(),
-                hideClearButton: true,
                 emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
                 readonly: this.__isInputShouldBeReadonly(),
                 getIsShowPlaceholder: this.__getIsShowPlaceholder.bind(this)
