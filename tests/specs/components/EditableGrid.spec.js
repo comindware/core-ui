@@ -80,7 +80,8 @@ describe('Components', () => {
             key: 'referenceCell',
             type: 'Datalist',
             title: 'Reference Cell',
-            controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
+            collection: new core.form.editors.reference.collections.DemoReferenceCollection(),
+            fetchFiltered: true,
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
             editable: true

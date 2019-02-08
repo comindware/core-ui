@@ -2,26 +2,16 @@
 import template from '../templates/button.hbs';
 import TextEditorView from '../../../TextEditorView';
 import BubbleCollectionView from './BubbleCollectionView';
-import { keyCode } from 'utils';
-
-const classes = {
-    CLASS_NAME: 'bubbles',
-    DISABLED: ' disabled'
-};
 
 export default TextEditorView.extend({
     initialize(options) {
         TextEditorView.prototype.initialize.call(this, options);
         this.collectionView = new BubbleCollectionView(this.options);
-        this.reqres = options.reqres;
-        this.filterValue = '';
     },
 
     template: Handlebars.compile(template),
 
-    className() {
-        return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
-    },
+    className: 'bubbles',
 
     regions: {
         collectionRegion: '.js-collection-region'
@@ -34,25 +24,27 @@ export default TextEditorView.extend({
         loading: '.js-datalist-loading'
     },
 
-    events: {
-        click: '__click',
-        'keydown @ui.input': '__keydown',
-        'input @ui.input': '__input',
-        'keyup @ui.input': '__commit'
-    },
-
-    modelEvents: {
-        'change:searchText': '__onModelChangeSearch'
-    },
-
-    __click() {
-        this.reqres.request('button:click');
+    triggers: {
+        click: {
+            event: 'button:click',
+            preventDefault: false,
+            stopPropagation: false
+        },
+        'keydown @ui.input': {
+            event: 'input:keydown',
+            preventDefault: false,
+            stopPropagation: false
+        },
+        'input @ui.input': {
+            event: 'input:search',
+            preventDefault: false,
+            stopPropagation: false
+        }
     },
 
     onRender(): void {
         this.showChildView('collectionRegion', this.collectionView);
-
-        this.updateInput(this.model.get('searchText'));
+        this.togglePlaceholder(this.options.getIsShowPlaceholder());
     },
 
     setPermissions(enabled, readonly) {
@@ -72,51 +64,12 @@ export default TextEditorView.extend({
         }
     },
 
-    __getFilterValue() {
-        return (
-            this.__getRawValue()
-                .toLowerCase()
-                .trim() || ''
-        );
+    getInputValue() {
+        return this.ui.input.val && this.ui.input.val();
     },
 
-    __getRawValue() {
-        return this.ui.input.val();
-    },
-
-    __onModelChangeSearch(model, searchText) {
-        this.updateInput(searchText);
-    },
-
-    updateInput(value = '') {
-        this.ui.input.val(value);
-    },
-
-    __keydown(e) {
-        this.reqres.request('input:keydown', e);
-    },
-
-    __input() {
-        const value = this.__getFilterValue();
-        if (this.filterValue === value) {
-            return;
-        }
-        this.filterValue = value;
-        this.reqres.request('input:search', value);
-    },
-
-    __commit(e) {
-        switch (e.keyCode) {
-            case keyCode.ENTER: {
-                e.preventDefault && e.preventDefault();
-                e.stopImmediatePropagation && e.stopImmediatePropagation();
-                this.reqres.request('try:value:select');
-                return false;
-            }
-            default: {
-                break;
-            }
-        }
+    setInputValue(value) {
+        return this.ui.input.val && this.ui.input.val(value);
     },
 
     togglePlaceholder(isShow) {
