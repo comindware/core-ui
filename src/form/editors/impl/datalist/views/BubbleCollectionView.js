@@ -3,7 +3,6 @@ import BubbleItemView from './BubbleItemView';
 
 export default Marionette.CollectionView.extend({
     initialize(options) {
-        this.reqres = options.reqres;
         this.collection = options.collection;
     },
 
@@ -12,16 +11,15 @@ export default Marionette.CollectionView.extend({
     childView: BubbleItemView,
 
     childViewOptions() {
-        return {
-            reqres: this.reqres,
-            parent: this.$el,
-            enabled: this.options.datalistEnabled,
-            createValueUrl: this.options.createValueUrl,
-            showEditButton: this.options.showEditButton,
-            showRemoveButton: this.options.canDeleteItem,
-            getDisplayText: this.options.getDisplayText,
-            customTemplate: this.options.customTemplate
-        };
+        return Object.assign(
+            {
+                parent: this.$el
+            },
+            this.options,
+            {
+                enabled: this.options.datalistEnabled
+            }
+        );
     },
 
     updateEnabled(enabled) {

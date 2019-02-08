@@ -2,6 +2,15 @@
     <div class="js-list-region dd-list__wrp {{#if showAddNewButton}}dd-list__wrp_button{{/if}}"></div>
 </div>
 {{#if showAddNewButton}}
-<div class="dd-list__btn js-add-new-button-region"></div>
+<div class="dd-list__btn js-add-new">
+    <div class="reference-btn">
+        <svg class="svg-icons svg-icons_plus">
+        <use xlink:href="#icon-plus" />
+        </svg>
+        &nbsp;{{localize 'CORE.FORM.EDITORS.REFERENCE.CREATENEW'}}
+    </div>
+</div>
 {{/if}}
-<div class="js-elements-quantity-warning-region"></div>
+<div class="js-warning bubble_editor__elements_quantity_warning">
+    <span>{{localize 'CORE.FORM.EDITORS.REFERENCE.QUANTITYWARNING'}}</span>
+</div>
