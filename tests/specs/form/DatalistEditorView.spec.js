@@ -1853,7 +1853,7 @@ describe('Editors', () => {
                     actionForOpen(view);
                 });
 
-                view.on('view:ready', () => {
+                view.once('view:ready', () => {
                     expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
