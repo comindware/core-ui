@@ -1170,6 +1170,35 @@ describe('Editors', () => {
             show(view);
         });
 
+        it('should set 31 January on panel click, if initial some February', done => {
+            const model = new Backbone.Model({
+                date: '2019-02-06T12:35:49.538Z'
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+
+                dateInput.focus();
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
+
+                Backbone.$('.day.old:contains(31)').click();
+            });
+
+            model.on('change:date', (model, date) => {
+                expect(moment(date).month()).toEqual(0);
+                expect(moment(date).date()).toEqual(31);
+                done();
+            });
+
+            show(view);
+        });
+
         it('should add month to now moment on keydown RIGHT (shift) if panel is open after clear', done => {
             const model = new Backbone.Model({
                 date: someDateTimeISO

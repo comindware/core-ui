@@ -332,9 +332,9 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         const recipientMoment = moment(recipientISO || {});
         const fromMoment = DateTimeService.tryGetValidMoment(fromFormatted, this.options.dateDisplayFormat);
         if (fromMoment) {
-            recipientMoment.date(fromMoment.date());
-            recipientMoment.month(fromMoment.month());
             recipientMoment.year(fromMoment.year());
+            recipientMoment.month(fromMoment.month());
+            recipientMoment.date(fromMoment.date());
             if (includeTime) {
                 recipientMoment.milliseconds(fromMoment.milliseconds());
                 recipientMoment.seconds(fromMoment.seconds());

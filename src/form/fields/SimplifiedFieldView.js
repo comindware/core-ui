@@ -49,7 +49,6 @@ export default FieldView.extend({
             this.showChildView('helpTextRegion', infoPopout);
         }
         this.__showMenuView();
-        this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
     },
 
