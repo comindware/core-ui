@@ -99,7 +99,8 @@ export default Marionette.View.extend({
                 autocommit: true,
                 mode: 'script',
                 readonly: true,
-                lineSeparator: '\n'
+                lineSeparator: '\n',
+                showDebug: false
             },
             key: 'code'
         });

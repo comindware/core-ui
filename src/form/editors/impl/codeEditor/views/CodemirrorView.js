@@ -74,7 +74,10 @@ export default Marionette.View.extend({
             replaceElement: true,
             el: '.js-code-header-container'
         },
-        toolbarContainer: '.js-code-toolbar-container',
+        toolbarContainer: {
+            replaceElement: true,
+            el: '.js-code-toolbar-container'
+        },
         tooltipContainer: '.js-code-tooltip-container',
         editorContainer: '.js-code-editor-container',
         editorOutputContainer: '.js-code-output-container',
@@ -106,7 +109,7 @@ export default Marionette.View.extend({
         this.toolbar.on('minimize', this.__onMinimize);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
-        if (this.options.mode === 'script') {
+        if (this.options.mode === 'script' && this.options.showDebug !== false) {
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));

@@ -61,6 +61,12 @@ body {
     height: 40px;
 }
 
+.demo-nav__i {
+    color: #fff;
+    padding: 0 15px;
+    font-size: 15px;
+}
+
 .demo-nav__i:hover {
     background-color: #1b6595;
 }

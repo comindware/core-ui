@@ -1,7 +1,7 @@
 import DemoService from './app/DemoService';
 import NavBarView from './app/views/NavBarView';
 import IndexPageView from './app/views/IndexPageView';
-import DemoPageView from './app/views/DemoPageView';
+import ContentView from './app/views/ContentView';
 
 export default Marionette.Object.extend({
     index() {
@@ -32,10 +32,8 @@ export default Marionette.Object.extend({
                 activeSectionId: sectionId
             });
 
-            this.demoPageView = new DemoPageView({
-                activeSectionId: sectionId,
-                activeGroupId: groupId,
-                activeCaseId: caseId
+            this.demoPageView = new ContentView({
+                model: new Backbone.Model(DemoService.getCase(sectionId, groupId, caseId))
             });
 
             this.drawer = new Core.components.NavigationDrawer({
@@ -49,11 +47,11 @@ export default Marionette.Object.extend({
             window.app.getView().showChildView('contentRegion', this.demoPageView);
             window.app.getView().showChildView('navigationDrawerRegion', this.drawer);
         } else {
-            this.demoPageView.reloadView({
-                activeSectionId: sectionId,
-                activeGroupId: groupId,
-                activeCaseId: caseId
+            this.demoPageView = new ContentView({
+                model: new Backbone.Model(DemoService.getCase(sectionId, groupId, caseId))
             });
+
+            window.app.getView().showChildView('contentRegion', this.demoPageView);
 
             this.drawer.collection.reset(groups);
             this.navBarView.collection.reset(sections.models);

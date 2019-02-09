@@ -1,7 +1,7 @@
 // @flow
 import PromiseService from '../../services/PromiseService';
 import template from './templates/documentEditor.html';
-import BaseCompositeEditorView from './base/BaseCompositeEditorView';
+import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
@@ -16,7 +16,9 @@ const classes = {
 
 const MultiselectAddButtonView = Marionette.View.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
+
     tagName: 'button',
+
     template: Handlebars.compile('{{text}}')
 });
 
@@ -32,27 +34,25 @@ const defaultOptions = {
     displayText: ''
 };
 
-export default (formRepository.editors.Document = BaseCompositeEditorView.extend({
+export default (formRepository.editors.Document = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-
-        this.collection = new Backbone.Collection(this.value);
 
         this.on('change', this.checkEmpty.bind(this));
         this.on('uploaded', documents => {
             if (this.options.multiple === false) {
-                this.collection.reset();
+                this.value = [];
             }
             this.addItems(documents);
         });
-
+        /*
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
         this.reqres.reply('value:set', this.onValueAdd, this);
         this.reqres.reply('value:navigate', this.onValueNavigate, this);
         this.reqres.reply('search:more', this.onSearchMore, this);
         this.reqres.reply('filter:text', this.onFilterText, this);
-
+        */
         this.attachmentsController = new AttachmentsController();
 
         if (this.canAdd) {
@@ -63,7 +63,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     checkEmpty() {
-        this.$el.toggleClass('pr-empty', this.collection && this.collection.length === 0);
+        this.$el.toggleClass('pr-empty', this.value.length === 0);
     },
 
     canAdd: false,
@@ -71,18 +71,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     className: 'editor editor_document',
 
     template: Handlebars.compile(template),
-
-    childView: DocumentBubbleItemView,
-
-    childViewContainer: '.js-collection-container',
-
-    childViewOptions() {
-        return {
-            attachmentsController: this.attachmentsController,
-            allowDelete: this.options.allowDelete,
-            showRevision: this.options.showRevision
-        };
-    },
 
     collapsed: true,
 
@@ -102,7 +90,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             displayText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
             placeHolderText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
-            fileFormat: this.__adjustFileFormat(this.options.fileFormat)
+            fileFormat: this.__adjustFileFormat(this.options.fileFormat),
+            documents: this.value
         });
     },
 
@@ -121,12 +110,18 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         remove: 'removeItem'
     },
 
-    setValue(value) {
-        this.__value(value);
+    setValue(value, triggerChange) {
+                if (this.value === value) {
+            return;
+        }
+        this.value = value;
+        this.value.push(value); // check uniq
+        if (triggerChange) {
+            this.__triggerChange();
+        }
     },
 
     getValue() {
-        this.syncValue();
         return this.value;
     },
 
@@ -180,10 +175,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         }
     },
 
-    syncValue() {
-        this.value = this.collection ? this.collection.toJSON().filter(model => !model.isLoading) : [];
-    },
-
     renderUploadButton(isReadonly) {
         this.el.querySelector('.documents__text').hidden = isReadonly;
         this.ui.fileUploadButton.toggle(!isReadonly);
@@ -195,40 +186,29 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     removeItem(view) {
-        this.collection.remove(view.model);
+        this.value.splise(view.model.id); //todo wtf
         this.options.removeDocument?.(view.model.id);
         this.__triggerChange();
         this.__onCollectionLengthChange();
     },
 
     __onCollectionLengthChange() {
-        if (this.collection?.length) {
+        if (this.value.length) {
             this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
-        } else if (this.collection?.length === 0) {
+        } else {
             this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
         }
     },
 
     __setEnabled(enabled) {
-        BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.renderUploadButton(!enabled);
     },
 
     __setReadonly(readonly) {
-        BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.renderUploadButton(readonly);
-        }
-    },
-
-    __value(value, triggerChange) {
-        if (this.value === value) {
-            return;
-        }
-        this.value = value;
-        this.collection.set(value);
-        if (triggerChange) {
-            this.__triggerChange();
         }
     },
 
@@ -353,7 +333,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 const tempResult = JSON.parse(data);
 
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
-                    const model = this.collection.findWhere({ uniqueId: resultObjects[i]?.uniqueId });
+                    const model = this.value.find(v => v.uniqueId === resultObjects[i]?.uniqueId);
                     if (model) {
                         model.set({
                             streamId: tempResult.fileIds[i],
@@ -424,16 +404,14 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: MultiselectAddButtonView,
             buttonViewOptions: {
-                model: this.dropdownModel.button,
-                reqres: this.reqres
+                model: this.dropdownModel.button
             },
             panelView: PanelView,
             panelViewOptions: {
-                model: this.dropdownModel.panel,
-                reqres: this.reqres
+                model: this.dropdownModel.panel
             }
         });
-        this.$selectButtonEl.html(this.dropdownView.render().$el);
+        this.$selectButtonEl.html(this.dropdownView.render().$el); //todo wtf
     },
 
     showDropDown() {
@@ -445,7 +423,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     onValueAdd(model) {
-        this.collection.add(model);
+        this.value.push(model);
         this.trigger('valueAdded', model);
         this.dropdownView && this.dropdownView.close();
         this.renderShowMore();
@@ -472,15 +450,15 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     renderShowMore() {
         if (this.collapsed && !this.options.showAll) {
-            this.collapseShowMore();
+            //this.collapseShowMore(); todo wft
         } else {
-            this.expandShowMore();
+            //this.expandShowMore();
         }
     },
 
     update() {
         if (this.collapsed && !this.options.showAll) {
-            this.collapseShowMore();
+            //this.collapseShowMore(); todo wft
         }
     },
 
@@ -488,7 +466,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         if (this.isDestroyed()) {
             return;
         }
-        if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
+        if (!this.value.length) {
             this.ui.showMore.hide();
             return;
         }
@@ -496,7 +474,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         const childViews = this.getChildViewContainer(this).children();
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
-        const length = this.collection.length;
+        const length = this.value.length;
         // visible children
         while (visibleCounter < length && visibleWidth + childViews[visibleCounter].clientWidth < affordabletWidth) {
             visibleWidth += childViews[visibleCounter].clientWidth;
