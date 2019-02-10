@@ -22,6 +22,13 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
+const fileIconClasses = {
+    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
+    word: 'docx doc rtf',
+    excel: 'xls xlsx xlsm xlsb',
+    pdf: 'pdf'
+};
+
 const defaultOptions = {
     readonly: false,
     allowDelete: true,
@@ -91,7 +98,7 @@ export default (formRepository.editors.Document = BaseEditorView.extend({
             placeHolderText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat),
-            documents: this.value
+            documents: this.value.map(v => Object.assign({}, v, {icon: this.__getExtIcon(v)}))
         });
     },
 
@@ -515,5 +522,23 @@ export default (formRepository.editors.Document = BaseEditorView.extend({
             default:
                 break;
         }
-    }
+    },
+
+        __getExtIcon(document) {
+        if (document.isLoading) {
+            return 'spinner pulse';
+        }
+        const ext = document.extension;
+        let icon;
+
+        if (ext) {
+            Object.keys(fileIconClasses).forEach(key => {
+                if (fileIconClasses[key].indexOf(ext.toLowerCase()) !== -1) {
+                    icon = key;
+                }
+            });
+        }
+
+        return icon || 'file';
+    },
 }));
