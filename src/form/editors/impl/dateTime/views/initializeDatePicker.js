@@ -306,7 +306,7 @@ export default function($, dates) {
             this.updateNavArrows();
             this.fillMonths();
             const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
-            const day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), moment(prevMonth).month());
+            const day = moment(prevMonth).daysInMonth();
             prevMonth.setDate(day);
             prevMonth.setDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
             let nextMonth = new Date(prevMonth);
