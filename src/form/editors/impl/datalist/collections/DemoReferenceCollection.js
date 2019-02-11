@@ -35,7 +35,7 @@ export default Backbone.Collection.extend({
                 this.trigger('sync');
                 resolve();
                 this.fetchPromise = null;
-            }, 700);
+            }, 150);
         });
         this.fetchPromise = promise;
         return promise;

@@ -18,7 +18,8 @@ export default function() {
         showAddNewButton: true,
         showCheckboxes: true,
         maxQuantitySelected: 1,
-        controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController()
+        collection: new Core.form.editors.reference.collections.DemoReferenceCollection(),
+        fetchFiltered: true
     });
 
     return new CanvasView({
