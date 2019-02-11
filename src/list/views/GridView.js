@@ -115,7 +115,8 @@ export default Marionette.View.extend({
             transliteratedFields: options.transliteratedFields,
             gridEventAggregator: this,
             isTree: this.options.isTree,
-            showCheckbox: this.options.showCheckbox
+            showCheckbox: this.options.showCheckbox,
+            draggable: options.draggable
         });
 
         this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
