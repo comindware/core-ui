@@ -271,7 +271,7 @@ module.exports.apply = {
         'line-height': '1.5'
     },
     'custom-cotrol-disabled-theme': {
-        cursor: 'not-allowed'
+        cursor: 'default'
     },
     'checkbox-theme': {
         display: 'flex',

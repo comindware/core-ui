@@ -202,7 +202,12 @@ svg.svg-grid-icons.svg-icons_flag-none {
   color: var(--error-color);
 }
 .required .form-label__txt::after,
-.form-label_required .form-label__txt::after,
+.form-label_required .form-label__txt::after{
+  content: '*';
+  color: var(--error-color);
+  position: absolute;
+  right: 1px;
+}
 .cell.required::before {
   content: '*';
   color: var(--error-color);
