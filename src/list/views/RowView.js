@@ -151,25 +151,19 @@ export default Marionette.View.extend({
 
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
-                if (isTree && index === 0) {
-                    this.insertFirstCellHtml();
-                }
                 return;
             }
 
             const cellView = new cell({
-                className: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
+                class: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key,
                 tagName: 'td'
             });
 
-            cellView.el.setAttribute('tabindex', -1);
+            cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
 
-            if (isTree && index === 0) {
-                cellView.on('render', () => this.insertFirstCellHtml(true));
-            }
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
@@ -177,6 +171,16 @@ export default Marionette.View.extend({
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
+
+                if (isTree) {
+            const firstCell = this.options.columns[0];
+
+            if (typeof firstCell.cellView === 'string' || !firstCell.editable) {
+                this.insertFirstCellHtml();
+            } else {
+                this.insertFirstCellHtml(true);
+            }
+        }
     },
 
     __handleChange() {
@@ -184,7 +188,7 @@ export default Marionette.View.extend({
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
-                    const element = this.el.querySelector(`.${this.columnClasses[index]}`); //todo WTF
+                    const element = this.el.getElementsByTagName('td')[index];
                     if (element) {
                         element.insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
                         this.el.removeChild(element);
@@ -280,7 +284,7 @@ export default Marionette.View.extend({
 
     insertFirstCellHtml(force) {
         if (this.isRendered()) {
-            const elements = this.el.getElementsByClassName(this.columnClasses[0]);
+            const elements = this.el.getElementsByTagName('td');
             if (elements.length) {
                 const el = elements[0];
                 const level = this.model.level || 0;
@@ -467,7 +471,7 @@ export default Marionette.View.extend({
     },
 
     __selectPointed(pointed, isFocusEditor, isFocusChangeNeeded = true) {
-        const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
+        const pointedEl = this.el.getElementsByTagName('td')[pointed];
         if (pointedEl == null) return;
 
         if (this.lastPointedEl && this.lastPointedEl !== pointedEl) {

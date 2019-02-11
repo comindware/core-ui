@@ -41,7 +41,9 @@ export default (formRepository.editors.Boolean = BaseEditorView.extend(
             keydown: '__onKeyDown'
         },
 
-        className: 'editor editor_checkbox',
+        className() {
+            return `${this.options.class || ''} editor editor_checkbox`;
+        },
 
         attributes() {
             return {

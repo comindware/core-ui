@@ -68,7 +68,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     canAdd: false,
 
-    className: 'editor editor_document',
+    className() {
+        return `${this.options.class || ''} editor editor_document`;
+    },
 
     template: Handlebars.compile(template),
 

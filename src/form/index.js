@@ -1,7 +1,6 @@
 //@flow
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
 import FieldView from './fields/FieldView';
-import SimpleFieldView from './fields/SimplifiedFieldView';
 import BaseEditorView from './editors/base/BaseEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
@@ -60,8 +59,6 @@ const api = /** @lends module:core.form */ {
      * @namespace
      * */
     Field: FieldView,
-
-    SimpleField: SimpleFieldView,
     /**
      * A lot of editors
      * @namespace

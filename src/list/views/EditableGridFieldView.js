@@ -2,11 +2,7 @@
 import FieldView from '../../form/fields/FieldView';
 import template from '../templates/editableCellField.hbs';
 
-export default FieldView.extend({
-    template: Handlebars.compile(template),
-
-    className: 'editable-grid-field',
-
+export default class extends FieldView {
     onRender() {
         this.showChildView('editorRegion', this.editor);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
@@ -14,4 +10,4 @@ export default FieldView.extend({
             this.__updateExternalChange();
         }
     }
-});
+}

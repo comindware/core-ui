@@ -19,7 +19,8 @@ const defaultOptions = {
     height: 300,
     showMode: showModes.normal,
     ontologyService: null,
-    lineSeparator: undefined
+    lineSeparator: undefined,
+    showDebug: true
 };
 
 /**
@@ -34,10 +35,13 @@ const defaultOptions = {
  * */
 
 export default (formRepository.editors.Code = BaseEditorView.extend({
-    className: 'dev-code-editor-field editor',
+    className: 'code-editor editor',
 
     regions: {
-        editorContainer: '.js-code-codemirror-container'
+        editorContainer: {
+            el: '.js-code-codemirror-container',
+            replaceElement: true
+        } 
     },
 
     focusElement: 'textarea',

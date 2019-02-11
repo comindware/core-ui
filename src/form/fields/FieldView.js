@@ -1,4 +1,3 @@
-// @flow
 import template from './templates/field.hbs';
 import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';
@@ -14,40 +13,24 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.View.extend({
-    initialize(options = {}) {
+export default class {
+    constructor(options = {}) {
         this.schema = options.schema;
 
         this.fieldId = _.uniqueId('field-');
-
-        this.__createEditor(this.options, this.fieldId);
+        this.model = options.model;
+        this.__createEditor(options, this.fieldId);
 
         if (this.schema.getReadonly || this.schema.getHidden) {
-            this.listenTo(this.model, 'change', this.__updateExternalChange);
+            this.model.on('change', this.__updateExternalChange);
         }
 
         if (this.schema.updateEditorEvents) {
-            this.listenTo(this.model, this.schema.updateEditorEvents, this.__updateEditor);
+            this.model.on(this.schema.updateEditorEvents, this.__updateEditor);
         }
-    },
 
-    templateContext() {
-        return {
-            title: this.schema.title,
-            fieldId: this.fieldId
-        };
-    },
-
-    template: Handlebars.compile(template),
-
-    regions: {
-        editorRegion: {
-            el: '.js-editor-region',
-            replaceElement: true
-        },
-        errorTextRegion: '.js-error-text-region',
-        helpTextRegion: '.js-help-text-region'
-    },
+        return this.editor;
+    }
 
     onRender() {
         this.showChildView('editorRegion', this.editor);
@@ -70,13 +53,8 @@ export default Marionette.View.extend({
             this.showChildView('helpTextRegion', infoPopout);
         }
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-    },
+    }
 
-    /**
-     * Check the validity of the field
-     *
-     * @return {String}
-     */
     validate() {
         const error = this.editor.validate();
         if (error) {
@@ -85,7 +63,7 @@ export default Marionette.View.extend({
             this.clearError();
         }
         return error;
-    },
+    }
 
     setError(errors: Array<any>): void {
         if (!this.__checkUiReady()) {
@@ -107,71 +85,30 @@ export default Marionette.View.extend({
             this.showChildView('errorTextRegion', errorPopout);
             this.isErrorShown = true;
         }
-    },
+    }
 
     clearError(): void {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.removeClass(classes.ERROR);
+        this.editor.$el.removeClass(classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
-    },
-
-    /**
-     * Update the model with the new value from the editor
-     *
-     * @return {Mixed}
-     */
-    commit() {
-        return this.editor.commit();
-    },
-
-    /**
-     * Get the value from the editor
-     *
-     * @return {Mixed}
-     */
-    getValue() {
-        return this.editor.getValue();
-    },
-
-    /**
-     * Set/change the value of the editor
-     *
-     * @param {Mixed} value
-     */
-    setValue(value) {
-        this.editor.setValue(value);
-    },
-
-    /**
-     * Give the editor focus
-     */
-    focus() {
-        this.editor.focus();
-    },
-
-    /**
-     * Remove focus from the editor
-     */
-    blur() {
-        this.editor.blur();
-    },
+    }
 
     setRequired(required) {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-    },
+        this.editor.$el.toggleClass(classes.REQUIRED, Boolean(required));
+    }
 
     __updateEditorState(readonly, enabled) {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
-    },
+        this.editor.$el.toggleClass(classes.READONLY, Boolean(readonly));
+        this.editor.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
+    }
 
     __updateExternalChange() {
         if (typeof this.schema.getReadonly === 'function') {
@@ -180,7 +117,7 @@ export default Marionette.View.extend({
         if (typeof this.schema.getHidden === 'function') {
             this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
         }
-    },
+    }
 
     __createEditor(options, fieldId) {
         let schemaExtension = {};
@@ -197,12 +134,14 @@ export default Marionette.View.extend({
             schema: this.schema,
             form: options.form,
             field: this,
+            class: options.class,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
-            value: this.options.value,
+            value: options.value,
             fieldId,
-            setRequired: this.setRequired.bind(this)
+            setRequired: this.setRequired.bind(this),
+            tagName: options.tagName
         });
         this.key = options.key;
         this.editor.on('readonly', readonly => {
@@ -211,21 +150,21 @@ export default Marionette.View.extend({
         this.editor.on('enabled', enabled => {
             this.__updateEditorState(this.editor.getReadonly(), enabled);
         });
-    },
+    }
 
     __updateEditor() {
         this.__createEditor(this.options, this.fieldId);
         this.showChildView('editorRegion', this.editor);
-    },
+    }
 
     __createEditorId(key) {
         if (this.model) {
             return `${this.model.cid}_${key}`;
         }
         return key;
-    },
+    }
 
     __checkUiReady() {
-        return this.isRendered() && !this.isDestroyed();
+        return this.editor.isRendered() && !this.editor.isDestroyed();
     }
-});
+}
