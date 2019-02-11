@@ -97,7 +97,7 @@
         "innersvg-polyfill": "^0.0.2",
         "istanbul-instrumenter-loader": "^3.0.1",
         "jasmine-core": "^3.3.0",
-        "jasmine-expect": "^3.8.4",
+        "jasmine-expect": "^4.0.1",
         "jasmine-jquery": "^2.1.1",
         "karma": "^4.0.0",
         "karma-chrome-launcher": "^2.2.0",

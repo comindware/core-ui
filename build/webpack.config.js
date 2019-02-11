@@ -56,8 +56,7 @@ module.exports = options => {
                                 '@babel/preset-env',
                                 {
                                     targets: {
-                                        ie: 11,
-                                        chrome: 58
+                                        ie: 11
                                     },
                                     useBuiltIns: 'usage',
                                     modules: false

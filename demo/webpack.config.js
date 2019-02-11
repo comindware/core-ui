@@ -97,7 +97,17 @@ module.exports = () => {
                     include: [pathResolver.source()],
                     exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
-                        presets: ['env']
+                        cacheDirectory: true,
+                        presets: [[
+                                '@babel/preset-env',
+                                {
+                                    targets: {
+                                        ie: 11
+                                    },
+                                    useBuiltIns: 'usage',
+                                    modules: false
+                                }
+                            ]]
                     }
                 },
                 {
