@@ -70,12 +70,7 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     onRender() {
-        this.editor = new CodemirrorView({
-            mode: this.options.mode,
-            height: this.options.height,
-            lineSeparator: this.options.lineSeparator,
-            ontologyService: this.options.ontologyService
-        });
+        this.editor = new CodemirrorView(this.options);
 
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', () => this.ui.fadingPanel.show());

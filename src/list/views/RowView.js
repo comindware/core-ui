@@ -77,7 +77,8 @@ export default Marionette.View.extend({
         blink: '__blink',
         'toggle:collapse': 'updateCollapsed',
         checked: '__addCheckedClass',
-        unchecked: '__removeCheckedClass'
+        unchecked: '__removeCheckedClass',
+        'checked:some': '__updateState'
     },
 
     initialize() {
@@ -92,7 +93,7 @@ export default Marionette.View.extend({
 
     onRender() {
         const model = this.model;
-        this.listenTo(this.model, 'checked unchecked checked:some', this.__updateState);
+
         if (model.selected) {
             this.__handleSelection();
             if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
@@ -513,10 +514,12 @@ export default Marionette.View.extend({
 
     __addCheckedClass() {
         this.el.classList.add(classes.rowChecked);
+        this.updateState();
     },
 
     __removeCheckedClass() {
         this.el.classList.remove(classes.rowChecked);
+        this.updateState();
     },
 
     __updateState(model, checkedState) {
