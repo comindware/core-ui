@@ -71,7 +71,7 @@ export default (factory = {
                 adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
                     .map(v => {
-                        if (!v) {
+                        if (v == null) {
                             return '';
                         }
                         if (column.formatOptions) {
