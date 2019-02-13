@@ -311,13 +311,19 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         const recipientMoment = moment(recipientISO || {});
         const fromMoment = DateTimeService.tryGetValidMoment(fromFormatted, this.options.dateDisplayFormat);
         if (fromMoment) {
-            recipientMoment.date(fromMoment.date());
-            recipientMoment.month(fromMoment.month());
             recipientMoment.year(fromMoment.year());
+            recipientMoment.month(fromMoment.month());
+            recipientMoment.date(fromMoment.date());
             if (includeTime) {
+                recipientMoment.milliseconds(fromMoment.milliseconds());
                 recipientMoment.seconds(fromMoment.seconds());
                 recipientMoment.minutes(fromMoment.minutes());
                 recipientMoment.hours(fromMoment.hours());
+            } else if (recipientISO == null) {
+                recipientMoment.milliseconds(0);
+                recipientMoment.seconds(0);
+                recipientMoment.minutes(0);
+                recipientMoment.hours(0);
             }
             this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat));
         } else {

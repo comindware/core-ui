@@ -266,12 +266,12 @@ const VirtualCollection = Backbone.Collection.extend({
         if (this.state.windowSize === undefined) {
             throw 'updatePosition() has been called before setting window size';
         }
-        this.internalUpdate = true;
 
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
             return newPosition;
         }
+        this.internalUpdate = true;
 
         const actualWindowSize = this.visibleModels.length;
         const delta = newPosition - this.state.position;

@@ -69,7 +69,6 @@ export default Marionette.View.extend({
             });
             this.showChildView('helpTextRegion', infoPopout);
         }
-        this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
     },
 
@@ -202,7 +201,8 @@ export default Marionette.View.extend({
             model: this.model,
             id: this.__createEditorId(options.key),
             value: this.options.value,
-            fieldId
+            fieldId,
+            setRequired: this.setRequired.bind(this)
         });
         this.key = options.key;
         this.editor.on('readonly', readonly => {

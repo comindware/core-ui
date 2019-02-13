@@ -82,6 +82,58 @@ export default Marionette.View.extend({
         return popupId;
     },
 
+    showElInPopup(view, options) {
+        const { fadeBackground, transient } = options;
+
+        if (!transient) {
+            this.__removeTransientPopups();
+        }
+
+        const popupId = _.uniqueId(POPUP_ID_PREFIX);
+        const regionEl = document.createElement('div');
+        regionEl.setAttribute('data-popup-id', popupId);
+        regionEl.classList.add('js-core-ui__global-popup-region');
+
+        const config = {
+            view,
+            options,
+            regionEl,
+            popupId,
+            parentPopupId: null
+        };
+
+        this.$el.append(regionEl);
+        this.addRegion(popupId, {
+            el: regionEl
+        });
+        this.prevSublingOfContentEl = view.prev();
+        if (this.prevSublingOfContentEl.length === 0) {
+            delete this.prevSublingOfContentEl;
+            this.parentOfContentEl = view.parent();
+        }
+        this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
+
+        view.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
+
+        if (fadeBackground) {
+            let lastIndex = -1;
+            this.__stack.forEach((x, i) => (lastIndex = x.options.fadeBackground ? i : lastIndex));
+
+            if (lastIndex !== -1) {
+                this.__stack[lastIndex].regionEl.classList.remove(classes.POPUP_FADE);
+            } else {
+                this.__toggleFadedBackground(true);
+            }
+            regionEl.classList.add(classes.POPUP_FADE);
+            this.topPopupId = popupId;
+        }
+
+        this.__stack.push(config);
+        view.popupId = popupId;
+
+        return popupId;
+    },
+
     closePopup(popupId = null) {
         if (this.__stack.length === 0) {
             return;
@@ -118,6 +170,66 @@ export default Marionette.View.extend({
                 targets = [topMostNonTransient];
             }
         }
+        targets.reverse().forEach(pd => {
+            this.__removePopup(pd);
+        });
+
+        const filteredStackList = this.__stack.filter(x => x.options.fadeBackground);
+        const lastElement = filteredStackList && filteredStackList[filteredStackList.length - 1];
+
+        if (lastElement) {
+            lastElement.regionEl.classList.add(classes.POPUP_FADE);
+            this.topPopupId = lastElement.popupId;
+        } else {
+            this.topPopupId = undefined;
+            this.__toggleFadedBackground(this.__forceFadeBackground);
+        }
+    },
+
+    closeElPopup(popupId = null) {
+        if (this.__stack.length === 0) {
+            return;
+        }
+
+        let targets = [];
+        const popupDef = this.__stack.find(x => x.popupId === popupId);
+        if (popupDef) {
+            if (!popupDef.options.transient) {
+                this.__removeTransientPopups();
+            }
+            // All the children of the popup will also be closed
+            // Important: we collect only logical children because another popup might have been opened at the same level already.
+            // e.g.: focus-blur events (usually focus comes first) - one popup is opened on focus and the previous one is closed on blur.
+            if (this.__stack.includes(popupDef)) {
+                targets = [popupDef];
+                const handleChildren = pId => {
+                    const children = this.__stack.filter(x => x.parentPopupId === pId);
+                    targets.push(...children);
+                    children.forEach(c => handleChildren(c.popupId));
+                };
+                handleChildren(popupId);
+            } else {
+                targets = [];
+            }
+        } else if (popupId) {
+            // If we don't find the popup, it must have been closed so the job is done
+            targets = [];
+        } else {
+            // Close all transient popups and the top-most non-transient
+            this.__removeTransientPopups();
+            const topMostNonTransient = this.__stack[this.__stack.length - 1];
+            if (topMostNonTransient) {
+                targets = [topMostNonTransient];
+            }
+        }
+        if (this.prevSublingOfContentEl) {
+            popupDef.view.insertAfter(this.prevSublingOfContentEl);
+            delete this.prevSublingOfContentEl;
+        } else {
+            popupDef.view.prependTo(this.parentOfContentEl);
+            delete this.parentOfContentEl;
+        }
+
         targets.reverse().forEach(pd => {
             this.__removePopup(pd);
         });

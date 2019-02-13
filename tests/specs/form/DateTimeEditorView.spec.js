@@ -1132,6 +1132,73 @@ describe('Editors', () => {
             show(view);
         });
 
+        it('should set current date with zero time if choose date from panel after clear', done => {
+            const model = new Backbone.Model({
+                date: someDateTimeISO
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+
+                view.$el.trigger('mouseenter');
+                view.$('.js-clear-button').click();
+
+                dateInput.focus();
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
+
+                Backbone.$('td.day.active').click();
+            });
+
+            model.on('change:date', (model, date) => {
+                expect(moment(date).valueOf()).toEqual(
+                    moment()
+                        .milliseconds(0)
+                        .seconds(0)
+                        .minutes(0)
+                        .hours(0)
+                        .valueOf()
+                );
+                done();
+            });
+
+            show(view);
+        });
+
+        it('should set 31 January on panel click, if initial some February', done => {
+            const model = new Backbone.Model({
+                date: '2019-02-06T12:35:49.538Z'
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'date'
+            });
+
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
+
+                dateInput.focus();
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
+
+                Backbone.$('.day.old:contains(31)').click();
+            });
+
+            model.on('change:date', (model, date) => {
+                expect(moment(date).month()).toEqual(0);
+                expect(moment(date).date()).toEqual(31);
+                done();
+            });
+
+            show(view);
+        });
+
         it('should add month to now moment on keydown RIGHT (shift) if panel is open after clear', done => {
             const model = new Backbone.Model({
                 date: someDateTimeISO
@@ -1163,12 +1230,12 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-                const shouldBeMilliseconds = Math.floor(moment().add(1, 'months').valueOf() / 1000);
+                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / 1000);
 
-                expect(Math.floor(moment(view.value).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                expect(Math.round(moment(view.value).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
 
                 model.on('change:date', (model, date) => {
-                    expect(Math.floor(moment(date).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                    expect(Math.round(moment(date).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
                     done();
                 });
 
