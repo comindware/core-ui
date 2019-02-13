@@ -1,9 +1,11 @@
 // @flow
 import list from 'list';
-import template from '../templates/bubblePanel.hbs';
+import template from '../templates/panel.hbs';
+import BubbleItemView from './BubbleItemView';
 
 const config = {
-    CHILD_HEIGHT: 35
+    CHILD_HEIGHT: 35,
+    SELECTED_CHILD_HEIGHT: 24
 };
 
 const classes = {
@@ -20,11 +22,18 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            showAddNewButton: Boolean(this.options.addNewItem)
+            showAddNewButton: Boolean(this.options.addNewItem),
+            showSelectedCollection: Boolean(this.options.selectedCollection),
+            selectedTitle: this.options.selectedTitle,
+            listTitle: this.options.listTitle
         };
     },
 
     regions: {
+        selectedRegion: {
+            el: '.js-selected',
+            replaceElement: false //defaultList (collectionView) change parent height
+        },
         listRegion: {
             el: '.js-list-region',
             replaceElement: true
@@ -41,17 +50,36 @@ export default Marionette.View.extend({
 
     ui: {
         addNewButton: '.js-add-new',
-        warning: '.js-warning'
+        warning: '.js-warning',
+        selected: '.js-selected'
     },
 
     onAttach() {
         this.collection = this.getOption('collection');
+        const selectedCollection = this.options.selectedCollection;
+        if (selectedCollection) {
+            this.selected = list.factory.createDefaultList({
+                collection: selectedCollection,
+                listViewOptions: {
+                    childView: BubbleItemView,
+                    childViewOptions: this.options.bubbleItemViewOptions,
+                    tagName: 'div',
+                    disableKeydownHandler: true,
+                    customHeight: true,
+                    childHeight: config.SELECTED_CHILD_HEIGHT,
+                    emptyView: null
+                }
+            });
+
+            this.showChildView('selectedRegion', this.selected);
+        }
 
         this.listView = list.factory.createDefaultList({
             collection: this.collection,
             listViewOptions: {
                 class: 'datalist-panel_list',
                 childView: this.options.listItemView,
+                disableKeydownHandler: true,
                 childViewOptions: {
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,
@@ -76,10 +104,7 @@ export default Marionette.View.extend({
         });
         this.listenTo(this.collection, 'add reset update', _.debounce(this.__toggleExcessWarning, 0));
 
-        if (typeof this.options.canSelect === 'function') {
-            this.__changeSelected();
-            this.listenTo(this.collection, 'selected deselected', this.__changeSelected);
-        }
+        this.toggleSelectable();
     },
 
     handleCommand(command) {
@@ -95,9 +120,9 @@ export default Marionette.View.extend({
         }
     },
 
-    __changeSelected() {
+    toggleSelectable(canAddItem = this.options.canAddItem()) {
         if (this.isAttached()) {
-            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !this.options.canSelect());
+            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !canAddItem);
         }
     },
 

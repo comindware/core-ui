@@ -29,7 +29,7 @@ export default Marionette.View.extend({
             showSearch: false,
             openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
-            customTemplate:
+            buttonBubbleTemplate:
                 '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });

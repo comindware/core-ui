@@ -86,6 +86,17 @@ export default Marionette.View.extend({
         this.__observedEntities = [];
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
+
+        this.__initializeButton();
+    },
+
+    __initializeButton() {
+        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.buttonView = this.button;
+        this.listenTo(this.button, 'all', (...args) => {
+            args[0] = `button:${args[0]}`;
+            this.triggerMethod(...args);
+        });
     },
 
     template: false,
@@ -118,12 +129,6 @@ export default Marionette.View.extend({
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
-        this.buttonView = this.button;
-        this.listenTo(this.button, 'all', (...args) => {
-            args[0] = `button:${args[0]}`;
-            this.triggerMethod(...args);
-        });
         const el = this.button.render().$el;
         this.$el.append(el);
 

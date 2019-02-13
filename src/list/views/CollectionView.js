@@ -30,6 +30,8 @@ const defaultOptions = {
     maxRows: 100,
     defaultElHeight: 300,
     useSlidingWindow: true,
+    disableKeydownHandler: false,
+    customHeight: false,
     childHeight: 35
 };
 
@@ -116,8 +118,12 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    events: {
-        keydown: '__handleKeydown'
+    events() {
+        return this.options.disableKeydownHandler ?
+            undefined :
+            {
+                keydown: '__handleKeydown'
+            };
     },
 
     className() {
@@ -296,7 +302,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __getIndexSelectedModel() {
-        const model = this.collection.get(this.collection.cursorCid);
+        const model = this.collection.get(this.collection.lastSelectedModel);
         return this.collection.indexOf(model);
     },
 
@@ -306,7 +312,11 @@ export default Marionette.CollectionView.extend({
             return;
         }
         const indexCurrentModel = this.__getIndexSelectedModel();
-        const nextIndex = indexCurrentModel + cursorIndexDelta;
+        
+        //if not cursor, set cursor on first (0).
+        const nextIndex = indexCurrentModel >= 0 ?
+            indexCurrentModel + cursorIndexDelta :
+            0;
         this.__moveCursorTo(nextIndex, {
             shiftPressed,
             isPositiveDelta: cursorIndexDelta > 0,
@@ -474,7 +484,7 @@ export default Marionette.CollectionView.extend({
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
-        if (allItemsHeight !== oldAllItemsHeight) {
+        if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
             this.$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);

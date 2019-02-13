@@ -10,8 +10,9 @@ export default function () {
 
             this.selected = true;
 
-            if (this.collection) {
-                this.collection.select(this, undefined, undefined, undefined, options);
+            const collection = this.selectableCollection || this.collection;
+            if (collection && collection.select) {
+                collection.select(this, undefined, undefined, undefined, options);
             }
 
             this.trigger('selected', this, options);
@@ -26,8 +27,9 @@ export default function () {
 
             this.selected = false;
 
-            if (this.collection && this.collection.deselect) {
-                this.collection.deselect(this, undefined, undefined, undefined, options);
+            const collection = this.selectableCollection || this.collection;
+            if (collection && collection.deselect) {
+                collection.deselect(this, undefined, undefined, undefined, options);
             }
 
             this.trigger('deselected', this, options);
