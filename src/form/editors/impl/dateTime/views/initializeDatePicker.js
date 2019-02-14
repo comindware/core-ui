@@ -571,8 +571,8 @@ export default function($, dates) {
                     case 'td':
                         if (target.is('.day') && !target.is('.disabled')) {
                             const day = parseInt(target.text(), 10) || 1;
-                            let year = moment(this.viewDate).year();
-                            let month = moment(this.viewDate).month();
+                            let year = this.viewDate.getYear();
+                            let month = this.viewDate.getMonth();
 
                             if (target.is('.old')) {
                                 if (month === 0) {
