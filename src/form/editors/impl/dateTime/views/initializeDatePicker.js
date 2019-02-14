@@ -291,7 +291,7 @@ export default function($, dates) {
             let year = this.viewDate.getFullYear();
             let html = [];
             let classes;
-            const month = moment(this.viewDate).month();
+            const month = this.viewDate.getMonth();
             const startYear = this.startDate.getFullYear();
             const startMonth = moment(this.startDate).month();
             const endYear = this.endDate.getFullYear();
@@ -305,7 +305,7 @@ export default function($, dates) {
 
             this.updateNavArrows();
             this.fillMonths();
-            const prevMonth = UTCDate(year, this.viewDate.getMonth() - 1, 28, 0, 0, 0, 0);
+            const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
             const day = moment(prevMonth).daysInMonth();
             prevMonth.setDate(day);
             prevMonth.setDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
