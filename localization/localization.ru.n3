@@ -184,6 +184,8 @@
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].
 
+<http://comindware.com/text/core/form/editors/memberSelect#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбранные пользователи"; l10n:originalData "Selected users"].
+
 <http://comindware.com/text/core/form/editors/memberSplit#all> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все"; l10n:originalData "All"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#apply> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Применить"; l10n:originalData "apply"].

@@ -14,14 +14,18 @@ export default TextEditorView.extend({
     className: 'bubbles',
 
     regions: {
-        collectionRegion: '.js-collection-region'
+        collectionRegion: {
+            el: '.js-collection-region',
+            replaceElement: true
+        }
     },
 
     focusElement: '.js-input',
 
     ui: {
         input: '.js-input',
-        loading: '.js-datalist-loading'
+        loading: '.js-datalist-loading',
+        counterHidden: '.js-counter-hidden'
     },
 
     triggers: {
@@ -72,6 +76,14 @@ export default TextEditorView.extend({
 
     setInputValue(value) {
         return this.ui.input.val && this.ui.input.val(value);
+    },
+
+    setCounter(count) {
+        this.ui.counterHidden.text && this.ui.counterHidden.text(
+            count ?
+                `+${count}` :
+                ''
+        );
     },
 
     togglePlaceholder(isShow) {

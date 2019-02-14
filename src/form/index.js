@@ -40,6 +40,7 @@ import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
 import formRepository from './formRepository';
+import UserEditorView from './editors/UserEditorView';
 
 const api = /** @lends module:core.form */ {
     /**
@@ -147,6 +148,7 @@ const api = /** @lends module:core.form */ {
         IconEditor: IconEditorView,
         ColorPickerEditor,
         RangeEditor,
+        UserEditor: UserEditorView,
         AudioEditor
     }
 };

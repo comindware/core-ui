@@ -377,6 +377,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'UserEditor',
+                    displayName: 'User Editor',
+                    description: 'User Editor (preset for Datalist)',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'AvatarEditor',
                     displayName: 'Avatar Editor',
                     description: 'Avatar editor',

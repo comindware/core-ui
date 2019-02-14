@@ -133,7 +133,12 @@ body {
     color: var(--text-color);
 }
 
-.editor .bubbles .bubbles__i.bubble_focused{
+.bubbles__i{
+  border: var(--focus);
+  border-color: transparent;
+}
+
+.bubbles__i.bubble__focused{
     border: var(--focus);
     border-radius: 4px;
 }
