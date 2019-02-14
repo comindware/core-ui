@@ -228,7 +228,8 @@ export default Marionette.View.extend({
         tools: '.js-grid-tools',
         header: '.js-grid-header-view',
         content: '.js-grid-content',
-        tableWrapper: '.grid-content-wrp'
+        tableWrapper: '.grid-table-wrapper',
+        table: '.grid-content-wrp'
     },
 
     events: {
@@ -307,7 +308,9 @@ export default Marionette.View.extend({
             isTree: this.options.isTree,
             isEditable: this.isEditable,
             showRowIndex,
-            parent: this.ui.tableWrapper,
+            parentEl: this.ui.tableWrapper[0],
+            parent$el: this.ui.tableWrapper,
+            table$el: this.ui.table,
             minimumVisibleRows: this.options.minimumVisibleRows
         });
         this.listenTo(this.listView, 'all', (eventName, eventArguments) => {

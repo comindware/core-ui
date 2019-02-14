@@ -118,11 +118,11 @@ export default Marionette.CollectionView.extend({
     },
 
     events() {
-        return this.options.disableKeydownHandler ?
-            undefined :
-            {
-                keydown: '__handleKeydown'
-            };
+        return this.options.disableKeydownHandler
+            ? undefined
+            : {
+                  keydown: '__handleKeydown'
+              };
     },
 
     className() {
@@ -132,11 +132,24 @@ export default Marionette.CollectionView.extend({
     tagName: 'tbody',
 
     onRender() {
+        if (!this.options.parent$el) {
+            this.options.parent$el = this.$el.parent();
+        }
+        if (!this.options.table$el) {
+            this.options.table$el = this.$el.parent();
+        }
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.parent$el = this.options.parent.parent();
-        this.__oldParentScrollLeft = this.options.parent[0].scrollLeft;
+
+        this.parent$el = this.options.parent$el;
         this.parent$el.on('scroll', this.__onScroll.bind(this));
+    },
+
+    onAttach() {
+        if (!this.options.parentEl) {
+            this.options.parentEl = this.$el.parent()[0];
+        }
+        this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
     },
 
     __specifyChildHeight() {
@@ -310,11 +323,9 @@ export default Marionette.CollectionView.extend({
             return;
         }
         const indexCurrentModel = this.__getIndexSelectedModel();
-        
+
         //if not cursor, set cursor on first (0).
-        const nextIndex = indexCurrentModel >= 0 ?
-            indexCurrentModel + cursorIndexDelta :
-            0;
+        const nextIndex = indexCurrentModel >= 0 ? indexCurrentModel + cursorIndexDelta : 0;
         this.__moveCursorTo(nextIndex, {
             shiftPressed,
             isPositiveDelta: cursorIndexDelta > 0,
@@ -469,7 +480,7 @@ export default Marionette.CollectionView.extend({
         const oldAllItemsHeight = this.state.allItemsHeight;
 
         const availableHeight =
-            this.options.parent[0]?.clientHeight && this.options.parent[0].clientHeight !== this.childHeight ? this.options.parent[0].clientHeight : window.innerHeight;
+            this.options.parentEl?.clientHeight && this.options.parentEl.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
 
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
@@ -477,7 +488,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
-            this.options.parent.css({ height: allItemsHeight || '' }); //todo optimizae it
+            this.options.table$el.css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {

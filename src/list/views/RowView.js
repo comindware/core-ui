@@ -514,12 +514,12 @@ export default Marionette.View.extend({
 
     __addCheckedClass() {
         this.el.classList.add(classes.rowChecked);
-        this.updateState();
+        this.__updateState();
     },
 
     __removeCheckedClass() {
         this.el.classList.remove(classes.rowChecked);
-        this.updateState();
+        this.__updateState();
     },
 
     __updateState(model, checkedState) {
