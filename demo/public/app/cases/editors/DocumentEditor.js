@@ -2,7 +2,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        value: [
+        docs: [
             {
                 id: 'document.1',
                 name: 'Document 1',
@@ -32,13 +32,13 @@ export default function() {
     return new CanvasView({
         view: new Core.form.editors.DocumentEditor({
             model,
-            key: 'value',
+            key: 'docs',
             autocommit: true,
             displayText: 'Document Editor',
             title: 'My images',
             uploadUrl: null
         }),
-        presentation: "'{{value}}'",
+        presentation: "[ {{#each docs}}<div>{ id: '{{this.id}}', name: '{{this.name}}' }{{#unless @last}}, {{/unless}}</div>{{/each}} <div>]</div>",
         isEditor: true
     });
 }

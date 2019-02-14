@@ -23,9 +23,10 @@ export default function() {
 
     const collection = new Core.form.editors.reference.collections.DemoReferenceCollection(createDemoData());
 
-    const view = new Core.form.editors.UserEditor({
+    const view = new Core.form.editors.DatalistEditor({
         model,
         key: 'users',
+        format: 'user',
         autocommit: true,
         showCheckboxes: true,
         maxQuantitySelected: 5,

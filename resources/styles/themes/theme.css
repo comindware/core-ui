@@ -142,6 +142,10 @@ body {
     border: var(--focus);
     border-radius: 4px;
 }
+.reference-btn.bubble__focused{
+  border: var(--focus);
+  border-radius: 4px;
+}
 /*------------------ End Form Editor ------------------*/
 
 /* input */
@@ -617,7 +621,18 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 
 .bubbles .bubbles__caret,
 .bubbles .spinner {
-  @apply --absolute-center-theme;
+  @apply --absolute-center-y-theme;
+}
+.bubbles .bubble-doc_icon{
+  /* @apply --relative-center-y-theme; this stuff not working! */
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+}
+.bubbles .bubble-doc_text{
+  height: 100%;
+  line-height: 100%;
 }
 .bubbles .spinner {
   line-height: 1;

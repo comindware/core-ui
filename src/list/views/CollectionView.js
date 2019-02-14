@@ -313,7 +313,8 @@ export default Marionette.CollectionView.extend({
     },
 
     __getIndexSelectedModel() {
-        const model = this.collection.get(this.collection.lastSelectedModel);
+        const collection = this.collection;
+        const model = collection.get(collection.lastSelectedModel || collection.lastPointedModel);
         return this.collection.indexOf(model);
     },
 

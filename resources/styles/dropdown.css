@@ -274,6 +274,7 @@
 
 .datalist_selected-panel > .visible-collection{
     height: 72px;
+    padding: 3px;
 }
 
 .reference-btn-more{

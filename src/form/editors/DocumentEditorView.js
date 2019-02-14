@@ -252,6 +252,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     uploadUrl: '/api/UploadAttachment',
 
+    openFileUploadWindow() {
+        this.ui.fileUpload.click();
+    },
+
     __onItemClick() {
         this.ui.fileUpload.click();
     },
@@ -270,6 +274,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     _uploadFiles(files, items) {
         this.trigger('beforeUpload');
+        this.trigger('set:loading', true);
         //todo loading
         if (items) {
             //todo wtf
@@ -373,8 +378,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.internalChange = false;
                 this.ui.form.trigger('reset');
                 this.__triggerChange();
+                this.trigger('set:loading', false);
             },
             error: () => {
+                this.trigger('set:loading', false);
                 this.trigger('failed');
             }
         };

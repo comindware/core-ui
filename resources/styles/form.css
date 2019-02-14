@@ -842,9 +842,14 @@ input[type="color"], .colorpicker{
 }
 
 .editor:hover.editor_empty:not(.editor_readonly):not(.editor_disabled) .svg-icons-wrp__empty,
-.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .editor__icons.icon-remove,
+.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .editor__icons.icon-remove{
+    display: inline-block;
+}
+
 .datalist_selected-panel .editor__icons.icon-remove{
     display: inline-block;
+    position: relative;
+    top: auto;
 }
 
 .dd-list__filter_reference:hover .editor__icons.icon-remove {

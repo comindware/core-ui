@@ -2,6 +2,7 @@
 import list from 'list';
 import template from '../templates/panel.hbs';
 import BubbleItemView from './BubbleItemView';
+import meta from '../meta';
 
 const config = {
     CHILD_HEIGHT: 35,
@@ -21,9 +22,14 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const showSelectedCollection = Boolean(this.options.selectedCollection);
         return {
             showAddNewButton: Boolean(this.options.addNewItem),
-            showSelectedCollection: Boolean(this.options.selectedCollection),
+            showSelectedCollection,
+            addNewItemText: this.options.addNewItemText,
+            showCollection: this.options.showCollection,
+            showListTitle: this.options.showCollection && this.options.listTitle,
+            showSelectedTitle: showSelectedCollection && this.options.selectedTitle,
             selectedTitle: this.options.selectedTitle,
             listTitle: this.options.listTitle
         };
@@ -74,37 +80,39 @@ export default Marionette.View.extend({
             this.showChildView('selectedRegion', this.selected);
         }
 
-        this.listView = list.factory.createDefaultList({
-            collection: this.collection,
-            listViewOptions: {
-                class: 'datalist-panel_list',
-                childView: this.options.listItemView,
-                disableKeydownHandler: true,
-                childViewOptions: {
-                    getDisplayText: this.options.getDisplayText,
-                    subTextOptions: this.options.subTextOptions,
-                    showCheckboxes: this.options.showCheckboxes,
-                    canSelect: this.options.canSelect
-                },
-                emptyViewOptions: {
-                    text: Localizer.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
-                    className: classes.EMPTY_VIEW
-                },
-                selectOnCursor: false,
-                childHeight: config.CHILD_HEIGHT
-            }
-        });
-
-        this.showChildView('listRegion', this.listView);
-
-        this.__toggleExcessWarning();
-
-        this.listenTo(this.listView, 'update:height', () => {
-            this.trigger('change:content');
-        });
-        this.listenTo(this.collection, 'add reset update', _.debounce(this.__toggleExcessWarning, 0));
-
-        this.toggleSelectable();
+        if (this.options.showCollection) {
+            this.listView = list.factory.createDefaultList({
+                collection: this.collection,
+                listViewOptions: {
+                    class: 'datalist-panel_list',
+                    childView: this.options.listItemView,
+                    disableKeydownHandler: true,
+                    childViewOptions: {
+                        getDisplayText: this.options.getDisplayText,
+                        subTextOptions: this.options.subTextOptions,
+                        showCheckboxes: this.options.showCheckboxes,
+                        canSelect: this.options.canSelect
+                    },
+                    emptyViewOptions: {
+                        text: Localizer.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+                        className: classes.EMPTY_VIEW
+                    },
+                    selectOnCursor: false,
+                    childHeight: config.CHILD_HEIGHT
+                }
+            });
+    
+            this.showChildView('listRegion', this.listView);
+    
+            this.__toggleExcessWarning();
+    
+            this.listenTo(this.listView, 'update:height', () => {
+                this.trigger('change:content');
+            });
+            this.listenTo(this.collection, 'add reset update', _.debounce(this.__toggleExcessWarning, 0));
+    
+            this.toggleSelectable();
+        }
     },
 
     handleCommand(command) {
@@ -121,8 +129,14 @@ export default Marionette.View.extend({
     },
 
     toggleSelectable(canAddItem = this.options.canAddItem()) {
-        if (this.isAttached()) {
+        if (this.isAttached() && this.options.showCollection) {
             this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !canAddItem);
+        }
+    },
+
+    toggleSelectAddNewButton(state) {
+        if (this.isAttached()) {
+            this.ui.addNewButton.toggleClass(meta.classes.BUBBLE_SELECT, !!state);
         }
     },
 
