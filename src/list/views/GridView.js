@@ -106,18 +106,6 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
-        const childView = options.childView || RowView;
-
-        const showRowIndex = this.getOption('showRowIndex');
-
-        const childViewOptions = Object.assign(options.childViewOptions || {}, {
-            columns: options.columns,
-            transliteratedFields: options.transliteratedFields,
-            gridEventAggregator: this,
-            isTree: this.options.isTree,
-            showCheckbox: this.options.showCheckbox
-        });
-
         this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
         if (this.isEditable) {
             this.editableCellsIndexes = [];
@@ -133,23 +121,6 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
-        this.listView = new ListView({
-            collection: this.collection,
-            gridEventAggregator: this,
-            childView,
-            childViewSelector: options.childViewSelector,
-            emptyView: options.emptyView,
-            emptyViewOptions: options.emptyViewOptions,
-            childHeight: options.childHeight,
-            childViewOptions,
-            loadingChildView: options.loadingChildView || LoadingChildView,
-            maxRows: options.maxRows,
-            height: options.height,
-            isTree: this.options.isTree,
-            isEditable: this.isEditable,
-            showRowIndex,
-            minimumVisibleRows: options.minimumVisibleRows
-        });
         /*
         if (this.options.showCheckbox) {
             const draggable = this.getOption('draggable');
@@ -181,14 +152,6 @@ export default Marionette.View.extend({
             }
         }
         */
-        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
-            if (eventName.startsWith('childview')) {
-                this.trigger.apply(this, [eventName].concat(eventArguments));
-            }
-            if (eventName === 'empty:view:destroyed') {
-                this.__resetViewStyle();
-            }
-        });
 
         this.collection = options.collection;
 
@@ -264,7 +227,8 @@ export default Marionette.View.extend({
         title: '.js-grid-title',
         tools: '.js-grid-tools',
         header: '.js-grid-header-view',
-        content: '.js-grid-content'
+        content: '.js-grid-content',
+        tableWrapper: '.grid-content-wrp'
     },
 
     events: {
@@ -288,8 +252,6 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.showChildView('contentRegion', this.listView);
-
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
         } else {
@@ -312,11 +274,54 @@ export default Marionette.View.extend({
         } else {
             this.ui.title.parent().hide();
         }
-        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
         this.__updateState();
     },
 
     onAttach() {
+        const childView = this.options.childView || RowView;
+
+        const showRowIndex = this.getOption('showRowIndex');
+
+        const childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+            columns: this.options.columns,
+            transliteratedFields: this.options.transliteratedFields,
+            gridEventAggregator: this,
+            isTree: this.options.isTree,
+            showCheckbox: this.options.showCheckbox,
+            draggable: this.options.draggable,
+            showRowIndex
+        });
+
+        this.listView = new ListView({
+            collection: this.collection,
+            gridEventAggregator: this,
+            childView,
+            childViewSelector: this.options.childViewSelector,
+            emptyView: this.options.emptyView,
+            emptyViewOptions: this.options.emptyViewOptions,
+            childHeight: this.options.childHeight,
+            childViewOptions,
+            loadingChildView: this.options.loadingChildView || LoadingChildView,
+            maxRows: this.options.maxRows,
+            height: this.options.height,
+            isTree: this.options.isTree,
+            isEditable: this.isEditable,
+            showRowIndex,
+            parent: this.ui.tableWrapper,
+            minimumVisibleRows: this.options.minimumVisibleRows
+        });
+        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
+            if (eventName.startsWith('childview')) {
+                this.trigger.apply(this, [eventName].concat(eventArguments));
+            }
+            if (eventName === 'empty:view:destroyed') {
+                this.__resetViewStyle();
+            }
+        });
+        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
+
+        this.showChildView('contentRegion', this.listView);
+
         this.__updateEmptyView();
 
         if (this.options.showSearch && this.options.focusSearchOnAttach) {

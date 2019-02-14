@@ -100,7 +100,6 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
-            this.__specifyChildHeight();
             if (collection?.diff?.length) {
                 return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
@@ -132,12 +131,11 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'tbody',
 
-    onAttach() {
-        this.__specifyChildHeight();
+    onRender() {
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.parent$el = this.$el.parent().parent();
-        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
+        this.parent$el = this.options.parent.parent();
+        this.__oldParentScrollLeft = this.options.parent[0].scrollLeft;
         this.parent$el.on('scroll', this.__onScroll.bind(this));
     },
 
@@ -471,13 +469,7 @@ export default Marionette.CollectionView.extend({
         const oldAllItemsHeight = this.state.allItemsHeight;
 
         const availableHeight =
-            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
-                ? this.el.parentElement.clientHeight
-                : window.innerHeight;
-
-        if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
-            helpers.throwInvalidOperationError("ListView configuration error: you have passed option height: AUTO into ListView control but didn't specify maxRows option.");
-        }
+            this.options.parent[0]?.clientHeight && this.options.parent[0].clientHeight !== this.childHeight ? this.options.parent[0].clientHeight : window.innerHeight;
 
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
@@ -485,7 +477,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
-            this.$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
+            this.options.parent.css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {

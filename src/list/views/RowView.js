@@ -66,8 +66,6 @@ export default Marionette.View.extend({
     },
 
     modelEvents: {
-        click: '__handleModelClick',
-        dblclick: '__handleModelDblClick',
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
@@ -76,13 +74,11 @@ export default Marionette.View.extend({
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
         change: '__handleChange',
-        dragover: '__handleModelDragOver',
-        dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop',
         blink: '__blink',
         'toggle:collapse': 'updateCollapsed',
         checked: '__addCheckedClass',
-        unchecked: '__removeCheckedClass'
+        unchecked: '__removeCheckedClass',
+        'checked:some': '__updateState'
     },
 
     initialize() {
@@ -97,7 +93,7 @@ export default Marionette.View.extend({
 
     onRender() {
         const model = this.model;
-        this.listenTo(this.model, 'checked unchecked checked:some', this.__updateState);
+
         if (model.selected) {
             this.__handleSelection();
             if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
@@ -146,7 +142,7 @@ export default Marionette.View.extend({
         }
 
         const isTree = this.getOption('isTree');
-        this.options.columns.forEach((gridColumn, index) => {
+        this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
@@ -172,7 +168,7 @@ export default Marionette.View.extend({
             this.cellViews.push(cellView);
         });
 
-                if (isTree) {
+        if (isTree) {
             const firstCell = this.options.columns[0];
 
             if (typeof firstCell.cellView === 'string' || !firstCell.editable) {
@@ -199,18 +195,6 @@ export default Marionette.View.extend({
                 }
             });
         }
-    },
-
-    __handleClick(event) {
-        this.model.trigger('click', event);
-    },
-
-    __handleDblClick(event) {
-        this.model.trigger('dblclick', event);
-    },
-
-    __handleDragOver(event) {
-        event.preventDefault();
     },
 
     __handleDragEnter(event) {
@@ -241,29 +225,22 @@ export default Marionette.View.extend({
         return false;
     },
 
-    __handleModelDragOver() {
+    __handleDragOver(event) {
         this.el.classList.add(classes.dragover);
+        event.preventDefault();
     },
 
     __handleDragLeave(event) {
         if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) || event.relatedTarget.classList.contains('js-grid-content-view')) {
-            this.model.trigger('dragleave', event);
+            this.el.classList.remove(classes.dragover);
             delete this.model.dragover;
         }
     },
 
-    __handleModelDragLeave() {
-        this.el.classList.remove(classes.dragover);
-    },
-
-    __handleDrop(event) {
+    __handleDrop() {
         if (this.__allowDrop()) {
-            this.model.trigger('drop', event);
+            this.el.classList.remove(classes.dragover);
         }
-    },
-
-    __handleModelDrop() {
-        this.el.classList.remove(classes.dragover);
     },
 
     __handleContextMenu(event) {
@@ -343,10 +320,10 @@ export default Marionette.View.extend({
 </svg>`
                 : ''
         }${
-                this.options.index
+                this.options.showRowIndex
                     ? `
 <span class="js-index cell__index">
-    {{index}}
+    ${this.model.collection.indexOf(this.model) + 1}
 </span>`
                     : ''
             }
@@ -367,7 +344,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleModelClick(e) {
+    __handleClick(e) {
         const model = this.model;
 
         const selectFn = model.collection.selectSmart || model.collection.select;
@@ -392,7 +369,7 @@ export default Marionette.View.extend({
         this.trigger('click', this.model);
     },
 
-    __handleModelDblClick() {
+    __handleDblClick() {
         this.trigger('dblclick', this.model);
     },
 
@@ -537,10 +514,12 @@ export default Marionette.View.extend({
 
     __addCheckedClass() {
         this.el.classList.add(classes.rowChecked);
+        this.updateState();
     },
 
     __removeCheckedClass() {
         this.el.classList.remove(classes.rowChecked);
+        this.updateState();
     },
 
     __updateState(model, checkedState) {

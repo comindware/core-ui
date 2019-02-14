@@ -119,7 +119,7 @@ export default Marionette.View.extend({
             });
             this.showChildView('editorOutputContainer', this.output);
         }
-        this.ui.editor.css('height', this.options.height);
+
         this.hintIsShown = false;
 
         const extraKeys = {

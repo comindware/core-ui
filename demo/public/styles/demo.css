@@ -237,8 +237,7 @@ body {
     flex: 1 1;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    overflow: auto;
 }
 
 /*-------------------------*/
@@ -246,9 +245,10 @@ body {
     position: relative;
     padding: 10px;
     margin-top: 15px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow: auto;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
+    background-color: white;
 }
 
 .demo-content_container {
@@ -263,9 +263,10 @@ body {
     max-width: 100%;
     position: relative;
     padding: 10px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow: auto;
     flex: 1 1;
+    background-color: white;
 }
 .demo-content__description {
     font-size: 32px;
@@ -283,6 +284,10 @@ body {
     height: 100%;
 }
 
+.demo-content__code .code-editor,.demo-content__code .dev-codemirror  {
+    height: 100%;
+}
+
 .demo-cases {
     position: absolute;
     right:0;
@@ -295,7 +300,6 @@ body {
 }
 
 .h3-demo{
-    margin: 15px 5px 10px;
     line-height: 14px;
     font-size: 13px;
     font-family: monospace;

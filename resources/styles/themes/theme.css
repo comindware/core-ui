@@ -312,6 +312,7 @@ svg.svg-grid-icons {
   color: var(--grid-header-color);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
+  vertical-align: top;
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
@@ -355,6 +356,7 @@ svg.svg-grid-icons {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
   box-shadow: var(--grid-cell-border-first);
+  padding-left: 15px;
 }
 
 .cell_selection[draggable], .cell_selection-index[draggable] {

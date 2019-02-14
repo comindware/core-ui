@@ -86,6 +86,12 @@ rgba(5,117,189,.5) // user avatar btn
     margin-bottom: 0;
 }
 
+.required .form-label__txt,
+.required .form-group .form-label__txt{
+    padding-right: 10px;
+    position: relative;
+}
+
 .form-label__info {
     position: relative;
     line-height: inherit;
