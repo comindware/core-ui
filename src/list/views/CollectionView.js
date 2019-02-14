@@ -131,7 +131,7 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'tbody',
 
-    onRender() {
+    onBeforeAttach() {
         if (!this.options.parent$el) {
             this.options.parent$el = this.$el.parent();
         }
