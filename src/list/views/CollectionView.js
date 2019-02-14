@@ -142,7 +142,6 @@ export default Marionette.CollectionView.extend({
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
 
         this.parent$el = this.options.parent$el;
-        this.parent$el.on('scroll', this.__onScroll.bind(this));
     },
 
     onAttach() {
@@ -410,27 +409,6 @@ export default Marionette.CollectionView.extend({
         return normalizeIndex;
     },
 
-    __onScroll() {
-        if (
-            this.state.viewportHeight === undefined ||
-            this.isScrollHorizontal() ||
-            this.collection.length <= this.state.viewportHeight ||
-            this.internalScroll ||
-            this.isDestroyed()
-        ) {
-            return;
-        }
-
-        const newPosition = Math.max(0, Math.ceil(this.parent$el.scrollTop() / this.childHeight));
-        this.__updatePositionInternal(newPosition, false);
-    },
-
-    isScrollHorizontal() {
-        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
-        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
-        return isHorisontal;
-    },
-
     updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
@@ -532,6 +510,7 @@ export default Marionette.CollectionView.extend({
                 }
             }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                //todo wtf
                 child.insertFirstCellHtml();
             }
         });

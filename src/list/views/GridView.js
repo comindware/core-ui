@@ -167,6 +167,22 @@ export default Marionette.View.extend({
         }
     },
 
+    __onScroll() {
+        //todo remove chech on horizontal scroll
+        if (this.listView.state.viewportHeight === undefined || this.isScrollHorizontal() || this.collection.length <= this.listView.state.viewportHeight || this.internalScroll) {
+            return;
+        }
+
+        const newPosition = Math.max(0, Math.ceil(this.ui.tableWrapper.scrollTop() / this.listView.childHeight));
+        this.listView.updatePosition(newPosition, false);
+    },
+
+    isScrollHorizontal() {
+        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
+        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
+        return isHorisontal;
+    },
+
     __onCursorMove(delta, options = {}) {
         const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
@@ -233,7 +249,8 @@ export default Marionette.View.extend({
     },
 
     events: {
-        dragleave: '__handleDragLeave'
+        dragleave: '__handleDragLeave',
+        'scroll @ui.tableWrapper': '__onScroll'
     },
 
     className() {
