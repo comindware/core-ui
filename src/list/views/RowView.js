@@ -142,7 +142,7 @@ export default Marionette.View.extend({
         }
 
         const isTree = this.getOption('isTree');
-        this.options.columns.forEach((gridColumn, index) => {
+        this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
@@ -320,10 +320,10 @@ export default Marionette.View.extend({
 </svg>`
                 : ''
         }${
-                this.options.index
+                this.options.showRowIndex
                     ? `
 <span class="js-index cell__index">
-    {{index}}
+    ${this.model.collection.indexOf(this.model) + 1}
 </span>`
                     : ''
             }
