@@ -30,6 +30,8 @@ const defaultOptions = {
     maxRows: 100,
     defaultElHeight: 300,
     useSlidingWindow: true,
+    disableKeydownHandler: false,
+    customHeight: false,
     childHeight: 35
 };
 
@@ -98,7 +100,6 @@ export default Marionette.CollectionView.extend({
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
-            this.__specifyChildHeight();
             if (collection?.diff?.length) {
                 return this.debouncedHandleResizeShort(true, collection.diff[0], collection.diff[0].collection, Object.assign({}, opt, { add: true })); //magic from prod collection
             }
@@ -116,8 +117,12 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    events: {
-        keydown: '__handleKeydown'
+    events() {
+        return this.options.disableKeydownHandler
+            ? undefined
+            : {
+                  keydown: '__handleKeydown'
+              };
     },
 
     className() {
@@ -126,13 +131,24 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'tbody',
 
-    onAttach() {
-        this.__specifyChildHeight();
+    onBeforeAttach() {
+        if (!this.options.parent$el) {
+            this.options.parent$el = this.$el.parent();
+        }
+        if (!this.options.table$el) {
+            this.options.table$el = this.$el.parent();
+        }
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        this.parent$el = this.$el.parent().parent();
-        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
-        this.parent$el.on('scroll', this.__onScroll.bind(this));
+
+        this.parent$el = this.options.parent$el;
+    },
+
+    onAttach() {
+        if (!this.options.parentEl) {
+            this.options.parentEl = this.$el.parent()[0];
+        }
+        this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
     },
 
     __specifyChildHeight() {
@@ -296,7 +312,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __getIndexSelectedModel() {
-        const model = this.collection.get(this.collection.cursorCid);
+        const model = this.collection.get(this.collection.lastSelectedModel);
         return this.collection.indexOf(model);
     },
 
@@ -306,7 +322,9 @@ export default Marionette.CollectionView.extend({
             return;
         }
         const indexCurrentModel = this.__getIndexSelectedModel();
-        const nextIndex = indexCurrentModel + cursorIndexDelta;
+
+        //if not cursor, set cursor on first (0).
+        const nextIndex = indexCurrentModel >= 0 ? indexCurrentModel + cursorIndexDelta : 0;
         this.__moveCursorTo(nextIndex, {
             shiftPressed,
             isPositiveDelta: cursorIndexDelta > 0,
@@ -391,27 +409,6 @@ export default Marionette.CollectionView.extend({
         return normalizeIndex;
     },
 
-    __onScroll() {
-        if (
-            this.state.viewportHeight === undefined ||
-            this.isScrollHorizontal() ||
-            this.collection.length <= this.state.viewportHeight ||
-            this.internalScroll ||
-            this.isDestroyed()
-        ) {
-            return;
-        }
-
-        const newPosition = Math.max(0, Math.ceil(this.parent$el.scrollTop() / this.childHeight));
-        this.__updatePositionInternal(newPosition, false);
-    },
-
-    isScrollHorizontal() {
-        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
-        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
-        return isHorisontal;
-    },
-
     updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
@@ -461,21 +458,15 @@ export default Marionette.CollectionView.extend({
         const oldAllItemsHeight = this.state.allItemsHeight;
 
         const availableHeight =
-            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
-                ? this.el.parentElement.clientHeight
-                : window.innerHeight;
-
-        if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
-            helpers.throwInvalidOperationError("ListView configuration error: you have passed option height: AUTO into ListView control but didn't specify maxRows option.");
-        }
+            this.options.parentEl?.clientHeight && this.options.parentEl.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
 
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
-        if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
+        if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
+            this.options.table$el.css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {
@@ -519,6 +510,7 @@ export default Marionette.CollectionView.extend({
                 }
             }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                //todo wtf
                 child.insertFirstCellHtml();
             }
         });

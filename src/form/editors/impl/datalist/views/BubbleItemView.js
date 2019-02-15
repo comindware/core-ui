@@ -4,17 +4,24 @@ import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import template from '../templates/bubbleItem.hbs';
 
 const classes = {
-    SELECT: 'bubble_focused'
+    SELECT: 'bubble__focused'
 };
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const attributes = this.model.toJSON();
         return {
-            customTemplate: this.options.customTemplate ? Handlebars.compile(this.options.customTemplate)(this.model.toJSON()) : null,
-            url: this.options.createValueUrl && this.options.createValueUrl(this.model.attributes),
-            text: this.options.getDisplayText(this.options.model.attributes)
+            customTemplate: !this.options.customTemplate ?
+                null :
+                Handlebars.compile(
+                    typeof this.options.customTemplate === 'function' ?
+                        this.options.customTemplate(attributes) :
+                        this.options.customTemplate
+                )(attributes),
+            url: this.options.createValueUrl && this.options.createValueUrl(attributes),
+            text: this.options.getDisplayText(attributes)
         };
     },
 

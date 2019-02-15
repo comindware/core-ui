@@ -54,7 +54,7 @@
         "@babel/preset-typescript": "^7.1.0",
         "@types/autosize": "^3.0.6",
         "@types/backbone": "^1.3.45",
-        "@types/backbone.marionette": "^3.3.7",
+        "@types/backbone.marionette": "^3.3.8",
         "@types/codemirror": "^0.0.71",
         "@types/handlebars": "^4.0.40",
         "@types/moment-timezone": "^0.5.10",
@@ -71,7 +71,7 @@
         "coveralls": "^3.0.2",
         "cross-env": "^5.2.0",
         "css-loader": "^2.1.0",
-        "cssnano": "^4.1.8",
+        "cssnano": "^4.1.9",
         "eslint": "^5.12.1",
         "eslint-config-prettier": "^4.0.0",
         "eslint-loader": "^2.1.2",
@@ -122,7 +122,7 @@
         "webpack": "^4.29.3"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.7.0",
+        "@fortawesome/fontawesome-free": "^5.7.2",
         "autosize": "^4.0.2",
         "backbone": "^1.3.3",
         "backbone-associations": "^0.6.2",

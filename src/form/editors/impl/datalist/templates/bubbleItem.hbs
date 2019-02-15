@@ -1,6 +1,9 @@
-{{#if customTemplate}}{{{customTemplate}}}{{/if}}
-{{#if url}}
-    <a href="{{url}}" target="_blank" tabindex="-1">{{text}}</a>
+{{#if customTemplate}}
+    {{{customTemplate}}}
 {{else}}
-    <span>{{text}}</span>
+    {{#if url}}
+        <a href="{{url}}" target="_blank" tabindex="-1">{{text}}</a>
+    {{else}}
+        <span>{{text}}</span>
+    {{/if}}
 {{/if}}

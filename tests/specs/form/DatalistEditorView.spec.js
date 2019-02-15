@@ -747,7 +747,7 @@ describe('Editors', () => {
             });
 
                 //ToDo add the same test for fetchFiltered = true
-            it('should set value of first founded of search on Enter keyup for fetchFiltered = false', done => {
+            it('should set value of first founded of search on Enter for fetchFiltered = false', done => {
                 const model = new Backbone.Model({
                     value: 3
                 });

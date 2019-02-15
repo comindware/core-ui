@@ -57,6 +57,16 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
             delete this.selected[this.lastSelectedModel];
             this.lastSelectedModel = undefined;
         }
+    },
+
+    getSelected() {
+        // selectable not update selected on remove selected item
+        const selectedModels = Object.values(this.selected).filter(selecteModel => this.has(selecteModel.id));
+        const length = selectedModels.length;
+        if (length > 1) {
+            console.warn(`single select has ${length} selected models`);
+        }
+        return selectedModels[0];
     }
 });
 
@@ -197,6 +207,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
         } else {
             this.selectAll(options);
         }
+    },
+
+    getSelected() {
+        // selectable not update selected on remove selected item
+        return Object.values(this.selected).filter(selecteModel => this.has(selecteModel.id));
     }
 });
 
@@ -220,8 +235,9 @@ _.extend(SelectableBehavior.Selectable.prototype, {
         this.selected = true;
         this.trigger('selected', this, options);
 
-        if (this.collection) {
-            this.collection.select(this, undefined, undefined, undefined, options);
+        const collection = this.selectableCollection || this.collection;
+        if (collection && collection.select) {
+            collection.select(this, undefined, undefined, undefined, options);
         }
     },
 
@@ -235,8 +251,9 @@ _.extend(SelectableBehavior.Selectable.prototype, {
         this.selected = false;
         this.trigger('deselected', this, options);
 
-        if (this.collection) {
-            this.collection.deselect(this, undefined, undefined, undefined, options);
+        const collection = this.selectableCollection || this.collection;
+        if (collection && collection.deselect) {
+            collection.deselect(this, undefined, undefined, undefined, options);
         }
     },
 

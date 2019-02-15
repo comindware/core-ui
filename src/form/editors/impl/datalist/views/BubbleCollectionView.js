@@ -15,10 +15,7 @@ export default Marionette.CollectionView.extend({
             {
                 parent: this.$el
             },
-            this.options,
-            {
-                enabled: this.options.datalistEnabled
-            }
+            this.options.bubbleItemViewOptions
         );
     },
 

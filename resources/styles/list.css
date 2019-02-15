@@ -676,4 +676,5 @@
 
 .grid-table-wrapper {
     overflow: auto;
+    flex: 1;
 }
