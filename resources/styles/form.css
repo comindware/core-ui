@@ -418,6 +418,9 @@ input[type="checkbox"].checkbox {
     align-items: center;
     flex-wrap: wrap;
 }
+.cell.editor_bubble .bubbles__list {
+    flex-wrap: nowrap;
+}
 
 .bubbles__i {
     max-width: 100%;
@@ -475,6 +478,11 @@ input[type="checkbox"].checkbox {
 
 .bubbles__input.empty{
     color: inherit;
+}
+
+.cell.editor_bubble .bubbles__i a,
+.cell.editor_bubble .bubbles__i span {
+    line-height: 22px;
 }
 
 /* /Bubbles/ */
@@ -980,6 +988,11 @@ input[type="color"], .colorpicker{
     margin-left: 2em;
 }
 
+.cell.editor_document .documents {
+    margin: 0 0 0 2em;
+    line-height: initial;
+}
+
 .dev-btn-document-revise{
     width: 20px;
     font-size: 16px;
@@ -988,6 +1001,10 @@ input[type="color"], .colorpicker{
     cursor: pointer;
     text-align: center;
     line-height: 1;
+}
+
+.cell.editor_document .documents > .dev-btn-document-revise{
+    display: none;
 }
 
 .dev-revision-container{

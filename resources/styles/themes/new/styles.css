@@ -280,10 +280,20 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 4px 20px 4px 10px;
 }
 
-.cell > .editor.editor_document {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.cell.editor .textarea{
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+.cell.editor_document {
+  display: table-cell;
+  padding: 0;
+}
+.cell.editor_document > form{
+  max-height: 35px;
+  overflow: hidden;
+  display: none;
 }
 
 .cell > .editor.editor_document > .documents {
