@@ -249,8 +249,7 @@ export default Marionette.View.extend({
     },
 
     events: {
-        dragleave: '__handleDragLeave',
-        'scroll @ui.tableWrapper': '__onScroll'
+        dragleave: '__handleDragLeave'
     },
 
     className() {
@@ -293,6 +292,7 @@ export default Marionette.View.extend({
             this.ui.title.parent().hide();
         }
         this.__updateState();
+        this.ui.tableWrapper.on('scroll', () => this.__onScroll());
     },
 
     onAttach() {
