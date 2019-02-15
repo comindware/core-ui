@@ -533,6 +533,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 13px;
+    margin: 0 3px 0 -3px;
 }
 
 .cell .checkbox {
