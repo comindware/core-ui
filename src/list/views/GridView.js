@@ -463,10 +463,11 @@ export default Marionette.View.extend({
         }
     },
 
-    handleResize() {
-        if (this.options.showHeader) {
-            this.headerView.handleResize();
+    updateListViewResize(options) {
+        if (options.newMaxHeight) {
+            this.ui.content.css('maxHeight', options.newMaxHeight);
         }
+        this.listView.handleResize(options.shouldUpdateScroll);
     },
 
     setLoading(state) {
