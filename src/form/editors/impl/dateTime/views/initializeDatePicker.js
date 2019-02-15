@@ -287,11 +287,11 @@ export default function($, dates) {
         },
 
         fill() {
-            let d = new Date(this.viewDate);
-            let year = d.getFullYear();
+            const d = new Date(this.viewDate);
+            let year = this.viewDate.getFullYear();
             let html = [];
             let classes;
-            const month = moment(d).month();
+            const month = this.viewDate.getMonth();
             const startYear = this.startDate.getFullYear();
             const startMonth = moment(this.startDate).month();
             const endYear = this.endDate.getFullYear();
@@ -306,7 +306,7 @@ export default function($, dates) {
             this.updateNavArrows();
             this.fillMonths();
             const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
-            const day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), moment(prevMonth).month());
+            const day = moment(prevMonth).daysInMonth();
             prevMonth.setDate(day);
             prevMonth.setDate(day - ((prevMonth.getDay() - this.weekStart + 7) % 7));
             let nextMonth = new Date(prevMonth);
@@ -329,7 +329,7 @@ export default function($, dates) {
                     classes.push('new');
                 }
                 // Compare internal UTC date with local today, not UTC today
-                if (UTCFullYear === today.getFullYear() && UTCMonth ===  moment().month() && prevMonth.getDate() === today.getDate()) {
+                if (UTCFullYear === today.getFullYear() && UTCMonth === moment().month() && prevMonth.getDate() === today.getDate()) {
                     classes.push('today');
                 }
                 if (prevMonth.valueOf() === currentDate) {
@@ -380,7 +380,7 @@ export default function($, dates) {
                 .end()
                 .find('td');
             year -= 1;
-            d = new Date(this.viewDate);
+
             for (let i = -1; i < 11; i++) {
                 d.setFullYear(year);
                 classes = this.onRenderYear(d);
@@ -571,8 +571,8 @@ export default function($, dates) {
                     case 'td':
                         if (target.is('.day') && !target.is('.disabled')) {
                             const day = parseInt(target.text(), 10) || 1;
-                            let year = moment(this.viewDate).year();
-                            let month = moment(this.viewDate).month();
+                            let year = this.viewDate.getFullYear();
+                            let month = this.viewDate.getMonth();
 
                             if (target.is('.old')) {
                                 if (month === 0) {
@@ -1236,7 +1236,7 @@ export default function($, dates) {
     $.fn.datetimepicker.DPGlobal = DPGlobal;
 
     /* DATETIMEPICKER NO CONFLICT
-   * =================== */
+     * =================== */
 
     $.fn.datetimepicker.noConflict = function() {
         $.fn.datetimepicker = old;
@@ -1244,7 +1244,7 @@ export default function($, dates) {
     };
 
     /* DATETIMEPICKER DATA-API
-   * ================== */
+     * ================== */
 
     if (typeof $ === 'function') {
         $(document).on('focus.datetimepicker.data-api click.datetimepicker.data-api', '[data-provide="datetimepicker"]', function(e) {
