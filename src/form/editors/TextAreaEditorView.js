@@ -62,7 +62,10 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
     },
 
     focusElement: '.js-textarea',
-    className: 'editor editor_textarea',
+
+    className() {
+        return `${this.options.class || ''} editor editor_textarea`;
+    },
 
     ui: {
         textarea: '.js-textarea'
@@ -97,6 +100,7 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
                 helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
+
     onAttach() {
         if (this.options.size === size.auto) {
             if (this.options.maxHeight) {
@@ -106,6 +110,7 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
             autosize(this.ui.textarea);
         }
     },
+
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();

@@ -168,24 +168,16 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         const oldValue = this.value === null ? undefined : this.value;
         switch (event.keyCode) {
             case keyCode.UP:
-                newValue = event.shiftKey ?
-                    moment(oldValue).add(1, 'years') :
-                    moment(oldValue).subtract(1, 'weeks');
+                newValue = event.shiftKey ? moment(oldValue).add(1, 'years') : moment(oldValue).subtract(1, 'weeks');
                 break;
             case keyCode.DOWN:
-                newValue = event.shiftKey ?
-                    moment(oldValue).subtract(1, 'years') :
-                    moment(oldValue).add(1, 'weeks');
+                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'years') : moment(oldValue).add(1, 'weeks');
                 break;
             case keyCode.LEFT:
-                newValue = event.shiftKey ?
-                    moment(oldValue).subtract(1, 'months') :
-                    moment(oldValue).subtract(1, 'days');
+                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'months') : moment(oldValue).subtract(1, 'days');
                 break;
             case keyCode.RIGHT:
-                newValue = event.shiftKey ?
-                    moment(oldValue).add(1, 'months') :
-                    moment(oldValue).add(1, 'days');
+                newValue = event.shiftKey ? moment(oldValue).add(1, 'months') : moment(oldValue).add(1, 'days');
                 break;
             default:
                 return;
@@ -193,11 +185,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
         const amountMilliseconds = newValue.valueOf();
 
-        this.__value(
-            amountMilliseconds,
-            true,
-            false
-        );
+        this.__value(amountMilliseconds, true, false);
 
         this.__updatePickerDate(amountMilliseconds);
     },
@@ -346,21 +334,13 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                 recipientMoment.minutes(0);
                 recipientMoment.hours(0);
             }
-            this.dateButtonModel.set(
-                this.key,
-                recipientMoment.format(this.options.dateDisplayFormat),
-                {
-                    inner: true
-                }
-            );
+            this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat), {
+                inner: true
+            });
         } else {
-            this.dateButtonModel.set(
-                this.key,
-                Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'),
-                {
-                    inner: true
-                }
-            );
+            this.dateButtonModel.set(this.key, Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'), {
+                inner: true
+            });
         }
         return recipientMoment.toISOString();
     },
@@ -369,29 +349,17 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         if (options.inner) {
             return;
         }
-        this.__value(
-            this.__updateDateAndValidateToButton(this.value, formattedDate, { includeTime: false }),
-            false,
-            true
-        );
+        this.__value(this.__updateDateAndValidateToButton(this.value, formattedDate, { includeTime: false }), false, true);
     },
 
     __setValueToDate(value) {
-        this.dateButtonModel.set(
-            this.key,
-            value == null ? value : moment(value).format(this.options.dateDisplayFormat),
-            {
-                inner: true
-            }
-        );
+        this.dateButtonModel.set(this.key, value == null ? value : moment(value).format(this.options.dateDisplayFormat), {
+            inner: true
+        });
     },
 
     __onPanelDateChange(jsDate) {
-        this.__value(
-            this.__updateDateAndValidateToButton(this.value, jsDate, { includeTime: false }),
-            true,
-            true
-        );
+        this.__value(this.__updateDateAndValidateToButton(this.value, jsDate, { includeTime: false }), true, true);
         this.stopListening(GlobalEventService);
         this.calendarDropdownView?.close();
     },
@@ -575,7 +543,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __getClassName() {
-        return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
+        return `${defaultClasses} ${this.options.class || ''} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
             this.options.timeDisplayFormat
         ] || ''}`;
     }
