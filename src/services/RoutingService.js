@@ -55,8 +55,8 @@ export default {
 
             if (canLeave !== true) {
                 // We need just to return smth to show default drowser leaving alert
-                (e || window.event).returnValue = '42';
-                return '42';
+                (e || window.event).returnValue = this.activeModule.leavingMessage || 'Do you wanna?';
+                return 'Do you wanna?';
             }
         });
     },
