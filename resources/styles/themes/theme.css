@@ -170,6 +170,11 @@ body {
   padding: var(--textarea-padding);
 }
 
+.cell.editor .textarea {
+  background: transparent;
+  border: none;
+}
+
 /* /textarea/ */
 
 /* checkbox */
@@ -251,6 +256,11 @@ body {
   @apply --input-theme;
   padding: var(--input-padding);
   overflow: hidden;
+}
+
+.cell.editor_date-time {
+  background: transparent;
+  border-radius: 0;
 }
 
 .editor_disabled.editor_date-time,
