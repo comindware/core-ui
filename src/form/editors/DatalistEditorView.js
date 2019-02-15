@@ -65,7 +65,7 @@ const defaultOptions = () => ({
 const presetsDefaults = {
     document: options => ({
         listTitle: options.title,
-        panelClass: 'simplified-panel_container',
+        panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: documentSimpleBubble,
         panelBubbleTemplate: documentSimpleBubble,
         valueType: 'normal',
@@ -78,7 +78,7 @@ const presetsDefaults = {
     user: options => ({
         listTitle: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         title: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
-        panelClass: 'simplified-panel_container',
+        panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: userBubble,
         panelBubbleTemplate: userBubble
     })
@@ -94,17 +94,12 @@ const stop = event => {
 
     Datalist filter state store in view.searchText(trim and upperCase) and input value (raw).
 
-    Datalist can be used with simplified panel.
-
     ToDo:
     1.Fix bug: valueTypeId, many: if model already has displayText, collection has no this el, on delete some, another will be #.
-    3.Fix simplified bugs:
-        - keyboard control (simplified has another input)
-        - button should hidden (simplidied has another input)
-    3.Fix focus logic (make as dateTime).
-    4.defaultOptions:displayAttribute should be text.
-    5.getDisplayText should return string always. (String(returnedValue)).
-    6.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
+    2.Fix focus logic (make as dateTime).
+    3.defaultOptions:displayAttribute should be text.
+    4.getDisplayText should return string always. (String(returnedValue)).
+    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
