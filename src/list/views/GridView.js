@@ -463,9 +463,9 @@ export default Marionette.View.extend({
         }
     },
 
-    handleResize() {
+    handleResize(shouldUpdateScroll, model, collection, options) {
         if (this.options.showHeader) {
-            this.headerView.handleResize();
+            this.listView.handleResize(shouldUpdateScroll, model, collection, options);
         }
     },
 
