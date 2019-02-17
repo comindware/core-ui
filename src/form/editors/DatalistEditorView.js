@@ -37,6 +37,7 @@ const defaultOptions = () => ({
     canDeleteItem: true,
 
     valueType: 'normal',
+    idProperty: 'id',
     showSearch: true,
 
     class: undefined,
@@ -70,6 +71,7 @@ const presetsDefaults = {
         panelBubbleTemplate: documentSimpleBubble,
         valueType: 'normal',
         showCollection: false,
+        idProperty: 'uniqueId',
         showSearch: false,
         addNewItem: datalistView => datalistView.boundEditor.openFileUploadWindow(),
         boundEditor: DocumentEditorView,
@@ -223,17 +225,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.boundEditor = new this.options.boundEditor({
             value: this.value
         });
+        this.setValue(this.boundEditor.getValue());
         this.__bindEditorsState();
     },
 
     __bindEditorsState() {
-        this.listenTo(this.documentEditor, 'set:loading', this.setLoading);
-        this.listenTo(this.documentEditor, 'change', () => {
-            this.setValue(this.documentEditor.getValue());
-        });
-        this.listenTo(this, 'change', () => {
-            this.documentEditor.setValue(this.getValue());
-        });
+        this.listenTo(this.boundEditor, 'set:loading', this.setLoading);
+        this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue()));
+        this.listenTo(this, 'change', () => this.boundEditor.setValue(this.getValue()));
     },
     
 
@@ -378,10 +377,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __convertToValue(estimatedObjects) {
-        if (this.getOption('valueType') === 'id') {
+        if (this.valueTypeId) {
             return Array.isArray(estimatedObjects) ?
-                estimatedObjects.map(value => value && value.id) :
-                estimatedObjects && estimatedObjects.id;
+                estimatedObjects.map(value => value && value[this.options.idProperty]) :
+                estimatedObjects && estimatedObjects[this.options.idProperty];
         }
         return estimatedObjects;
     },
@@ -521,7 +520,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         // this.selectedCollection.reset(models == null ? undefined : models);
         // select selected after reset
 
-        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.id);
+        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.get(this.options.idProperty));
 
         const arrayOfAttributes = models == null ?
             [] :
@@ -573,11 +572,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         if (this.panelCollection.length > 0 && this.value) {
             this.value.forEach(editorValue => {
-                const id = editorValue && editorValue.id !== undefined ? editorValue.id : editorValue;
+                const id = editorValue && editorValue[this.options.idProperty] !== undefined ? editorValue[this.options.idProperty] : editorValue;
 
-                if (this.panelCollection.has(id)) {
-                    this.panelCollection.get(id).select({ isSilent: true });
-                }
+                this.panelCollection.get(id)?.select({ isSilent: true });
             });
         }
     },
@@ -652,14 +649,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __getValueFromCollection(primitive) {
         // not use get, because 1. get(null) => undefined; 2. this.options.collection may be array or collection.
-        // eslint-disable-next-line eqeqeq
-        return this.options.collection.find(model => model.id == primitive) ||
+        return this.options.collection.find(model => 
+                (model instanceof Backbone.Model ?
+                    model.get(this.options.idProperty) :
+                    // eslint-disable-next-line eqeqeq
+                    model[this.options.idProperty]) == primitive) ||
             this.__tryToCreateAdjustedValue(primitive);
     },
 
     __tryToCreateAdjustedValue(primitive) {
         return ({
-                    id: primitive,
+                    [this.options.idProperty]: primitive,
                     text: this.__isValueEqualNotSet(primitive) ?
                         Localizer.get('CORE.COMMON.NOTSET') :
                         undefined
@@ -673,11 +673,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     isValueIncluded(value) {
         if (this.valueTypeId) {
             if (_.isObject(value)) {
-                return this.value.some(v => v === value.id);
+                return this.value.some(v => v === value[this.options.idProperty]);
             }
             return this.value.includes(value);
         }
-        return this.value.some(v => v.id === (_.isObject(value) ? value.id : value));
+        return this.value.some(v => v[this.options.idProperty] === (_.isObject(value) ? value[this.options.idProperty] : value));
     },
 
     __value(value, { triggerChange = false, isLoadIfNeeded = false } = {}) {
@@ -764,7 +764,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (typeof displayAttribute === 'function') {
             return displayAttribute(attributes, this.model);
         }
-        return attributes[displayAttribute] || attributes.text || `#${attributes.id}`;
+        return attributes[displayAttribute] || attributes.text || `#${attributes[this.options.idProperty]}`;
     },
 
     __onButtonFocus(view, event) {
@@ -804,11 +804,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         if (!(this.selectedCollection.length === 1 && !this.options.allowEmptyValue)) {
+            const deletedValue = model.get(this.options.idProperty);
             model.deselect({ isSilent: true });
-            this.panelCollection.get(model.id)?.deselect({ isSilent: true });
+            this.panelCollection.get(deletedValue)?.deselect({ isSilent: true });
     
             const selected = [].concat(this.getValue() || []);
-            const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
+
+            const removingModelIndex = selected.findIndex(s => 
+                (s && s[this.options.idProperty] !== undefined ? s[this.options.idProperty] : s) === deletedValue);
+
             if (removingModelIndex !== -1) {
                 selected.splice(removingModelIndex, 1);
             }
