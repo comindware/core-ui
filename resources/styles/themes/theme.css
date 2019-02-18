@@ -497,7 +497,9 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 .cell-focused.error{
   outline-color: #e61212 !important;
 }
-
+.cell_selection.cell-focused{
+  outline: none !important;
+}
 
 .collapsible-btn {
   position: relative;
