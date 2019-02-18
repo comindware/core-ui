@@ -289,6 +289,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .cell.editor_document {
   display: table-cell;
   padding: 0;
+  vertical-align: bottom;
 }
 .cell.editor_document > form{
   max-height: 35px;

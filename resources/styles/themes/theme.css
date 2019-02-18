@@ -344,14 +344,27 @@ svg.svg-grid-icons {
 }
 
 .cell {
-  /*height: var(--grid-cell-height);
-  line-height: var(--grid-cell-height);*/
-  min-height: 34px;
-  max-height: 34px;
+  height: var(--grid-cell-height);
+  line-height: var(--grid-cell-height);
   font-size: var(--grid-header-font-size);
   color: var(--text-color);
   box-shadow: var(--grid-cell-border);
   padding: var(--grid-cell-padding);
+}
+
+.cell.editor {
+  height: auto;
+  line-height: initial;
+  min-height: 34px;
+  max-height: 34px;
+}
+
+.compact.grid-container .cell.editor{
+  height: auto;
+  line-height: initial;
+  font-size: 12px;
+  min-height: 26px;
+  max-height: 26px;
 }
 
 .cell .layout__vertical-layout {
