@@ -78,7 +78,8 @@ const GridHeaderView = Marionette.View.extend({
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc'
                 })
-            )
+            ),
+            showCheckbox: this.options.showCheckbox
         };
     },
 

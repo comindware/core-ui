@@ -95,7 +95,8 @@ export default Marionette.View.extend({
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
                         isTree: this.options.isTree,
-                        expandOnShow: options.expandOnShow
+                        expandOnShow: options.expandOnShow,
+                        showCheckbox: this.options.showCheckbox
                     },
                     this.options
                 )

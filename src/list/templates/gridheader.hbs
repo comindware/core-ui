@@ -1,3 +1,4 @@
+{{#if showCheckbox}}
 <td class="cell_selection">
     <div class="checkbox js-checkbox">
         <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked">
@@ -5,15 +6,16 @@
         </svg>
     </div>
 </td>
+{{/if}}
 {{#each columns}}
 <td class="grid-header-column" title="{{title}}">
     <div class="header-column-wrp">
-    {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
-    {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
-    {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
-    <span class="js-help-text-region collection-grid-header__help"></span>
-    {{#if alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/if}}
-    <div class="grid-header-dragger"></div>
+        {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
+        {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
+        {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
+        <span class="js-help-text-region collection-grid-header__help"></span>
+        {{#if alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/if}}
+        <div class="grid-header-dragger"></div>
     </div>
 </td>
 {{/each}}
