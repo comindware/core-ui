@@ -292,7 +292,7 @@ export default {
 
     __callRoutingActionForActiveModule(callbackName, routingArgs) {
         if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-            const configuration = this.activeModule.routingActions[callbackName].bind(this.activeModule);
+            const configuration = this.activeModule.routingActions[callbackName];
 
             configuration.routingAction = callbackName;
 
