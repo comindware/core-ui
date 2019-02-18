@@ -214,7 +214,7 @@ export default class Controller {
         return callParams;
     }
 
-    __onModuleReady() {
+    static __onModuleReady() {
         if (this.componentQuery) {
             PresenterService.presentComponentSequence(this.componentQuery);
         }
