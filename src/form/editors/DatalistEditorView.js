@@ -10,28 +10,41 @@ import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
+import userBubble from './impl/datalist/templates/userBubble.hbs';
+import documentSimpleBubble from './impl/document/templates/documentSimpleBubble';
+import DocumentEditorView from './DocumentEditorView';
 
-const defaultOptions = {
+const defaultOptions = () => ({
     displayAttribute: 'name',
-    fetchFiltered: false,
     buttonView: ButtonView,
+
     showAdditionalList: false,
     subtextProperty: '',
     iconProperty: '',
+
     listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
+
+    fetchFiltered: false,
     collection: null,
+    showCollection: true,
+
     maxQuantitySelected: 1,
     maxButtonItems: Infinity,
     allowEmptyValue: true,
     canDeleteItem: true,
+
     valueType: 'normal',
+    idProperty: 'id',
     showSearch: true,
+
     class: undefined,
     buttonBubbleTemplate: undefined,
     panelBubbleTemplate: undefined,
+
+    boundEditor: undefined,
 
     //dropdown options
     externalBlurHandler: undefined,
@@ -41,10 +54,36 @@ const defaultOptions = {
     createValueUrl: undefined,
     edit: undefined,
     addNewItem: undefined,
+    addNewItemText: Localizer.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
 
     //deprecated options
     controller: null,
-    storeArray: false
+    storeArray: false,
+
+    format: undefined //name of preset for editor
+});
+
+const presetsDefaults = {
+    document: options => ({
+        listTitle: options.title,
+        panelClass: 'datalist-panel__formatted',
+        buttonBubbleTemplate: documentSimpleBubble,
+        panelBubbleTemplate: documentSimpleBubble,
+        valueType: 'normal',
+        showCollection: false,
+        idProperty: 'uniqueId',
+        showSearch: false,
+        addNewItem: datalistView => datalistView.boundEditor.openFileUploadWindow(),
+        boundEditor: DocumentEditorView,
+        addNewItemText: Localizer.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT')
+    }),
+    user: options => ({
+        listTitle: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
+        title: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
+        panelClass: 'datalist-panel__formatted',
+        buttonBubbleTemplate: userBubble,
+        panelBubbleTemplate: userBubble
+    })
 };
 
 const stop = event => {
@@ -57,18 +96,12 @@ const stop = event => {
 
     Datalist filter state store in view.searchText(trim and upperCase) and input value (raw).
 
-    Datalist can be used with simplified panel.
-
     ToDo:
-    1.Check the need close panel on add new Item, and then pass controller's methods as button's options.
-    2.Fix bug: valueTypeId, many: if model already has displayText, collection has no this el, on delete some, another will be #.
-    3.Fix simplified bugs:
-        - keyboard control (simplified has another input)
-        - button should hidden (simplidied has another input)
-    3.Fix focus logic (make as dateTime).
-    4.defaultOptions:displayAttribute should be text.
-    5.getDisplayText should return string always. (String(returnedValue)).
-    6.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
+    1.Fix bug: valueTypeId, many: if model already has displayText, collection has no this el, on delete some, another will be #.
+    2.Fix focus logic (make as dateTime).
+    3.defaultOptions:displayAttribute should be text.
+    4.getDisplayText should return string always. (String(returnedValue)).
+    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
 */
 /**
  * @name DatalistView
@@ -91,6 +124,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     initialize(options = {}) {
         this.valueTypeId = this.options.valueType === 'id';
         this.isButtonLimitMode = this.options.maxButtonItems !== Infinity;
+
+        this.__createBoundEditor();
 
         this.__createPanelVirtualCollection();
         this.__createSelectedCollections();
@@ -134,11 +169,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             panelViewOptions: {
                 class: this.options.panelClass,
                 collection: this.panelCollection,
+                showCollection: this.options.showCollection,
                 selectedCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
-                addNewItem: this.options.addNewItem && (() => {
-                    this.close();
-                    this.options.addNewItem();
-                }),
+                addNewItem: this.options.addNewItem && this.__panelAddNewItem.bind(this),
+                addNewItemText: this.options.addNewItemText,
                 bubbleItemViewOptions: Object.assign(
                     {
                         customTemplate: this.options.panelBubbleTemplate
@@ -183,6 +217,24 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __isInputShouldBeReadonly() {
         return !this.options.showSearch || this.getReadonly();
     },
+
+    __createBoundEditor() {
+        if (!this.options.boundEditor) {
+            return;
+        }
+        this.boundEditor = new this.options.boundEditor({
+            value: this.value
+        });
+        this.setValue(this.boundEditor.getValue());
+        this.__bindEditorsState();
+    },
+
+    __bindEditorsState() {
+        this.listenTo(this.boundEditor, 'set:loading', this.setLoading);
+        this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue()));
+        this.listenTo(this, 'change', () => this.boundEditor.setValue(this.getValue()));
+    },
+    
 
     __createPanelVirtualCollection() {
         let collection = this.options.collection;
@@ -239,6 +291,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
+    __toggleSelectAddNewButton(state) {
+        if (this.__isAddNewButtonSelect === state) {
+            return;
+        }
+        this.__isAddNewButtonSelect = state;
+        this.dropdownView.panelView?.toggleSelectAddNewButton(state);
+    },
+
     regions: {
         dropdownRegion: {
             el: '.js-dropdown-region',
@@ -247,7 +307,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     className() {
-        _.defaults(this.options, this.options.schema || this.options, defaultOptions);
+        let defaults = defaultOptions();
+        if (typeof this.options.format === 'string') {
+            const presetFn = presetsDefaults[this.options.format];
+            const preset = presetFn && presetFn(this.options);
+            defaults = _.defaults(preset, defaults);
+        }
+        _.defaults(this.options, this.options.schema || this.options, defaults);
         if (this.options.controller) {
             const controller = this.options.controller;
 
@@ -259,7 +325,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.options.edit = controller.edit?.bind(controller);
             this.options.addNewItem = controller.addNewItem?.bind(controller);
         }
-        helpers.ensureOption(this.options, 'collection');
+        if (this.options.showCollection) {
+            helpers.ensureOption(this.options, 'collection');
+        }
 
         const classList = [];
         const maxQuantity = this.options.maxQuantitySelected;
@@ -284,6 +352,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     onRender(): void {
+        this.boundEditor?.render();
+
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 
@@ -307,10 +377,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __convertToValue(estimatedObjects) {
-        if (this.getOption('valueType') === 'id') {
+        if (this.valueTypeId) {
             return Array.isArray(estimatedObjects) ?
-                estimatedObjects.map(value => value && value.id) :
-                estimatedObjects && estimatedObjects.id;
+                estimatedObjects.map(value => value && value[this.options.idProperty]) :
+                estimatedObjects && estimatedObjects[this.options.idProperty];
         }
         return estimatedObjects;
     },
@@ -334,6 +404,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     blur(): void {
         this.__setInputValue('');
         this.__blurButton();
+        this.panelCollection.pointOff();
+        this.__getSelectedBubble()?.deselect();
+        this.__toggleSelectAddNewButton(false);
         this.onBlur(undefined, {
             triggerChange: false
         });
@@ -447,7 +520,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         // this.selectedCollection.reset(models == null ? undefined : models);
         // select selected after reset
 
-        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.id);
+        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.get(this.options.idProperty));
 
         const arrayOfAttributes = models == null ?
             [] :
@@ -499,11 +572,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         if (this.panelCollection.length > 0 && this.value) {
             this.value.forEach(editorValue => {
-                const id = editorValue && editorValue.id !== undefined ? editorValue.id : editorValue;
+                const id = editorValue && editorValue[this.options.idProperty] !== undefined ? editorValue[this.options.idProperty] : editorValue;
 
-                if (this.panelCollection.has(id)) {
-                    this.panelCollection.get(id).select({ isSilent: true });
-                }
+                this.panelCollection.get(id)?.select({ isSilent: true });
             });
         }
     },
@@ -578,14 +649,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __getValueFromCollection(primitive) {
         // not use get, because 1. get(null) => undefined; 2. this.options.collection may be array or collection.
-        // eslint-disable-next-line eqeqeq
-        return this.options.collection.find(model => model.id == primitive) ||
+        return this.options.collection.find(model => 
+                (model instanceof Backbone.Model ?
+                    model.get(this.options.idProperty) :
+                    // eslint-disable-next-line eqeqeq
+                    model[this.options.idProperty]) == primitive) ||
             this.__tryToCreateAdjustedValue(primitive);
     },
 
     __tryToCreateAdjustedValue(primitive) {
         return ({
-                    id: primitive,
+                    [this.options.idProperty]: primitive,
                     text: this.__isValueEqualNotSet(primitive) ?
                         Localizer.get('CORE.COMMON.NOTSET') :
                         undefined
@@ -599,11 +673,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     isValueIncluded(value) {
         if (this.valueTypeId) {
             if (_.isObject(value)) {
-                return this.value.some(v => v === value.id);
+                return this.value.some(v => v === value[this.options.idProperty]);
             }
             return this.value.includes(value);
         }
-        return this.value.some(v => v.id === (_.isObject(value) ? value.id : value));
+        return this.value.some(v => v[this.options.idProperty] === (_.isObject(value) ? value[this.options.idProperty] : value));
     },
 
     __value(value, { triggerChange = false, isLoadIfNeeded = false } = {}) {
@@ -690,7 +764,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (typeof displayAttribute === 'function') {
             return displayAttribute(attributes, this.model);
         }
-        return attributes[displayAttribute] || attributes.text || `#${attributes.id}`;
+        return attributes[displayAttribute] || attributes.text || `#${attributes[this.options.idProperty]}`;
     },
 
     __onButtonFocus(view, event) {
@@ -730,11 +804,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         if (!(this.selectedCollection.length === 1 && !this.options.allowEmptyValue)) {
+            const deletedValue = model.get(this.options.idProperty);
             model.deselect({ isSilent: true });
-            this.panelCollection.get(model.id)?.deselect({ isSilent: true });
+            this.panelCollection.get(deletedValue)?.deselect({ isSilent: true });
     
             const selected = [].concat(this.getValue() || []);
-            const removingModelIndex = selected.findIndex(s => (s && s.id !== undefined ? s.id : s) === model.get('id'));
+
+            const removingModelIndex = selected.findIndex(s => 
+                (s && s[this.options.idProperty] !== undefined ? s[this.options.idProperty] : s) === deletedValue);
+
             if (removingModelIndex !== -1) {
                 selected.splice(removingModelIndex, 1);
             }
@@ -758,9 +836,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onInputKeydown(button, e) {
-        // Datalist has 3 control modes: input, bubbles, panel.
+        // Datalist has 4 control modes: input, bubbles, panel, addNewItem.
         // In all of these some quan (bubble of item) is selected
-        // Quantity control modes === bubble or item control modes.
+        // Quantity control modes === bubble or item or addNewItem control modes.
         if (!this.getEditable()) {
             stop(e);
             return;
@@ -780,26 +858,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
         const selectedBubble = this.__getSelectedBubble();
         if (selectedBubble) {
-            if (this.__checkExitToInputControl(e, selectedBubble)) {
-                selectedBubble.deselect();
-                this.panelCollection.pointOff();
-                return;
-            }
-            if (this.__checkExitFromBubblesControl(e, selectedBubble)) {
-                stop(e);
-                selectedBubble.deselect();
-                this.__tryPointFirstRow();
-                return;
-            }
             this.__bubblesKeydown(e, selectedBubble);
-        } else {
-            if (this.__checkExitFromPanelControl(e)) {
-                stop(e);
-                this.panelCollection.pointOff();
-                this.__selectBubbleLast();
-                return;
-            }
+        } else if (this.panelCollection.lastPointedModel) {
             this.__panelKeydown(e);
+        } else if (this.options.addNewItem) {
+            this.__addNewItemKeydown(e);
+        } else {
+            this.__tryPointFirstRow();
+            this.__isQuantityControl = false;
         }
     },
 
@@ -812,6 +878,19 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __bubblesKeydown(e, selectedBubble) {
+        if (this.__checkExitFromBubblesControl(e, selectedBubble)) {
+            stop(e);
+            selectedBubble.deselect();
+            if (this.panelCollection.length) {
+                this.__tryPointFirstRow();
+                return;
+            }
+            if (this.options.addNewItem) {
+                this.__addNewItemKeydown(e);
+            } else {
+                this.__tryPointFirstRow();
+            }
+        }
         switch (e.keyCode) {
             case keyCode.DOWN:
             case keyCode.RIGHT:
@@ -840,6 +919,17 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __panelKeydown(e) {
+        if (this.__checkExitFromPanelControlToBubble(e)) {
+            stop(e);
+            this.panelCollection.pointOff();
+            this.__selectBubbleLast();
+            return;
+        } else if (this.__checkExitFromPanelControlToAddNewItem(e)) {
+            stop(e);
+            this.panelCollection.pointOff();
+            this.__toggleSelectAddNewButton(true);
+            return;
+        }
         switch (e.keyCode) {
             case keyCode.DOWN:
             case keyCode.RIGHT:
@@ -860,6 +950,38 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__isQuantityControl = false;
                 break;
         }
+    },
+
+    __addNewItemKeydown(e) {
+        switch (e.keyCode) {
+            case keyCode.DOWN:
+            case keyCode.RIGHT:
+                stop(e);
+                this.__toggleSelectAddNewButton(true);
+                break;
+            case keyCode.UP:
+            case keyCode.LEFT:
+                stop(e);
+                this.__toggleSelectAddNewButton(false);
+                this.__tryPointLastRow();
+                break;
+            case keyCode.ENTER:
+            case keyCode.SPACE:
+                stop(e);
+                this.__panelAddNewItem();
+                break;
+            default:
+                this.__isQuantityControl = false;
+                break;
+        }
+    },
+
+    __panelAddNewItem() {
+        if (!this.options.addNewItem) {
+            return;
+        }
+        this.close();
+        this.options.addNewItem(this);
     },
 
     __checkExitToInputControl(e, selectedBubble = this.__getSelectedBubble()) {
@@ -890,10 +1012,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return input.selectionEnd === 0 && ![keyCode.UP, keyCode.DOWN].includes(e.keyCode);
     },
 
-    __checkExitFromPanelControl(e) {
+    __checkExitFromPanelControlToBubble(e) {
         const __isFirstPanelRowSelected = () =>
             this.panelCollection.indexOf(this.panelCollection.lastPointedModel) === 0;
         return this.selectedCollection.length && (!this.panelCollection.length || (__isFirstPanelRowSelected() && [keyCode.LEFT, keyCode.UP].includes(e.keyCode)));
+    },
+
+    __checkExitFromPanelControlToAddNewItem(e) {
+        const __isLastPanelRowSelected = () =>
+            this.panelCollection.indexOf(this.panelCollection.lastPointedModel) === this.panelCollection.length - 1;
+        return this.options.addNewItem && __isLastPanelRowSelected() && [keyCode.DOWN, keyCode.RIGHT].includes(e.keyCode);
     },
 
     __getSelectedBubble() {
@@ -937,7 +1065,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     //start fetch
     triggerNotReady() {
         this.isReady = false;
-        this.dropdownView?.button?.setLoading(true);
+        this.setLoading(true);
         this.trigger('view:notReady');
         return false;
     },
@@ -945,9 +1073,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     //fetch complete
     triggerReady() {
         this.isReady = true;
-        this.dropdownView?.button?.setLoading(false);
+        this.setLoading(false);
         this.trigger('view:ready');
         return true;
+    },
+
+    setLoading(state) {
+        this.dropdownView?.button?.setLoading(state);
     },
 
     __tryPointFirstRow() {
@@ -956,6 +1088,16 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.panelCollection.selectSmart(this.panelCollection.at(0), false, false, false);
         } else {
             this.panelCollection.pointOff();
+        }
+    },
+
+    __tryPointLastRow() {
+        if (this.panelCollection.length) {
+            this.__getSelectedBubble()?.deselect();
+            this.panelCollection.selectSmart(this.panelCollection.at(this.panelCollection.length - 1), false, false, false);
+        } else {
+            this.panelCollection.pointOff();
+            this.__selectBubbleLast();
         }
     },
 

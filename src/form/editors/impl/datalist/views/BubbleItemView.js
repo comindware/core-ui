@@ -2,10 +2,7 @@
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import template from '../templates/bubbleItem.hbs';
-
-const classes = {
-    SELECT: 'bubble__focused'
-};
+import meta from '../meta';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
@@ -92,7 +89,7 @@ export default Marionette.View.extend({
     },
 
     __changeSelected(model, options) {
-        this.$el.toggleClass(classes.SELECT, !!model.selected);
+        this.$el.toggleClass(meta.classes.BUBBLE_SELECT, !!model.selected);
     },
 
     __onMouseenter() {

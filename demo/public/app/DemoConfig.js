@@ -389,6 +389,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'DocumentSimpleEditor',
+                    displayName: 'Document Simple Editor',
+                    description: 'Document Editor (preset for Datalist)',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'AvatarEditor',
                     displayName: 'Avatar Editor',
                     description: 'Avatar editor',

@@ -173,7 +173,7 @@ const variables = {
 module.exports.variables = variables;
 
 module.exports.apply = {
-    'absolute-center-theme': {
+    'absolute-center-y-theme': {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)'

@@ -164,10 +164,15 @@ module.exports.variables = variables;
 // postcss apply добавляет правила по очереди в начало (prepend), что бы не переопределить свойства которые присутствуют изначально, в связи с этим приходится писать свойства в обратном порядке если нам нужно сначала сбросить свойство, а потом добавить его частично(https://github.com/pascalduez/postcss-apply/issues/43)
 
 module.exports.apply = {
-    'absolute-center-theme': {
+    'absolute-center-y-theme': {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)'
+    },
+    'relative-center-y-theme': {
+        position: 'relative',
+        'margin-top': 'auto',
+        'margin-bottom': 'auto'
     },
     'button-theme': {
         'font-size': '12px',

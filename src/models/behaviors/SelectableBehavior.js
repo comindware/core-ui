@@ -61,7 +61,9 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
 
     getSelected() {
         // selectable not update selected on remove selected item
-        const selectedModels = Object.values(this.selected).filter(selecteModel => this.has(selecteModel.id));
+        const selectedModels = Object.values(this.selected).filter(function(selecteModel) {
+            return this.has(selecteModel);
+        }, this);
         const length = selectedModels.length;
         if (length > 1) {
             console.warn(`single select has ${length} selected models`);
@@ -211,7 +213,9 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 
     getSelected() {
         // selectable not update selected on remove selected item
-        return Object.values(this.selected).filter(selecteModel => this.has(selecteModel.id));
+        return Object.values(this.selected).filter(function(selecteModel) {
+            return this.has(selecteModel);
+        }, this);
     }
 });
 

@@ -5,15 +5,7 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
-
-const savedDocumentPrefix = 'document';
-
-const fileIconClasses = {
-    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
-    word: 'docx doc rtf',
-    excel: 'xls xlsx xlsm xlsb',
-    pdf: 'pdf'
-};
+import meta from '../meta';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -35,7 +27,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name'),
-            icon: this.__getExtIcon()
+            icon: meta.getExtIcon(this.model.toJSON())
         };
     },
 
@@ -62,24 +54,6 @@ export default Marionette.View.extend({
         'change:isLoading': 'render'
     },
 
-    __getExtIcon() {
-        if (this.model.get('isLoading')) {
-            return 'spinner pulse';
-        }
-        const ext = this.model.get('extension');
-        let icon;
-
-        if (ext) {
-            Object.keys(fileIconClasses).forEach(key => {
-                if (fileIconClasses[key].indexOf(ext.toLowerCase()) !== -1) {
-                    icon = key;
-                }
-            });
-        }
-
-        return icon || 'file';
-    },
-
     __getDocumentRevision() {
         this.reqres.request('document:revise', this.model.id).then(revisionList => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
@@ -96,7 +70,7 @@ export default Marionette.View.extend({
         if (this.options.allowDelete) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
-        if (this.model.id?.indexOf(savedDocumentPrefix) > -1 && this.options.showRevision) {
+        if (this.model.id?.indexOf(meta.savedDocumentPrefix) > -1 && this.options.showRevision) {
             if (!this.isRevisonButtonShown) {
                 this.documentRevisionPopout = new dropdown.factory.createDropdown({
                     buttonView: DocumentRevisionButtonView,

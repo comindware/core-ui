@@ -8,6 +8,7 @@ import dropdown from 'dropdown';
 import PanelView from './impl/datalist/views/PanelView';
 import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView.js';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
+import DocumentsCollection from './impl/document/collections/DocumentsCollection';
 
 const classes = {
     dropZone: 'documents__drop-zone',
@@ -36,7 +37,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.collection = new Backbone.Collection(this.value);
+        this.collection = new DocumentsCollection(this.value);
 
         this.on('change', this.checkEmpty.bind(this));
         this.on('uploaded', documents => {
@@ -63,6 +64,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     checkEmpty() {
+        //ToDo pass condition as isEmptyValue method, remove pr-empty class, add his logic on .editor_document.editor_empty selector
         this.$el.toggleClass('pr-empty', this.collection && this.collection.length === 0);
     },
 
@@ -193,6 +195,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     addItems(items) {
         this.onValueAdd(items);
+        // for change collection need use __value(items, true). onCollectionLengthChange need move to __updateEmpty.
         this.__onCollectionLengthChange();
     },
 
@@ -252,6 +255,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     uploadUrl: '/api/UploadAttachment',
 
+    openFileUploadWindow() {
+        this.ui.fileUpload.click();
+    },
+
     __onItemClick() {
         this.ui.fileUpload.click();
     },
@@ -270,6 +277,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     _uploadFiles(files, items) {
         this.trigger('beforeUpload');
+        this.trigger('set:loading', true);
         //todo loading
         if (items) {
             //todo wtf
@@ -357,15 +365,16 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
                     const model = this.collection.findWhere({ uniqueId: resultObjects[i]?.uniqueId });
                     if (model) {
+                        const streamId = tempResult.fileIds[i];
                         model.set({
-                            streamId: tempResult.fileIds[i],
-                            isLoading: false
+                            streamId,
+                            isLoading: false,
                         });
-                        model.unset('uniqueId');
                         const id = this.options.createDocument?.(model.toJSON());
                         if (id) {
                             model.set({ id });
                         }
+                        model.set({ uniqueId: id || streamId });
                     }
                 }
                 this.internalChange = true;
@@ -373,8 +382,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.internalChange = false;
                 this.ui.form.trigger('reset');
                 this.__triggerChange();
+                this.trigger('set:loading', false);
             },
             error: () => {
+                this.trigger('set:loading', false);
                 this.trigger('failed');
             }
         };
