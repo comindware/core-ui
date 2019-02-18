@@ -76,6 +76,10 @@
     position: sticky;
     top: 0;
     z-index: 2;
+    padding-left: 17px;
+}
+.grid-header:hover > .cell_selection {
+    background-color: #0575bd;
 }
 
 .grid-content-view {
@@ -446,7 +450,18 @@
     top: 0;
     left: 0;
     z-index: 1;
+    background-color: #fff;
 }
+tr.row-checked .cell_selection{
+    background-color: #c2d7e5;
+}
+tr.selected .cell_selection{
+    background-color: #eaf3f8;
+}
+tr:hover .cell_selection {
+    background-color: #efefef
+}
+
 
 .cell-focused {
     outline-offset: -1px;

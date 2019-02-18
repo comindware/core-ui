@@ -379,7 +379,7 @@ svg.svg-grid-icons {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
   box-shadow: var(--grid-cell-border-first);
-  padding-left: 15px;
+  padding-left: 10px;
 }
 
 .cell_selection[draggable], .cell_selection-index[draggable] {
