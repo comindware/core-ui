@@ -49,16 +49,10 @@
     outline: none;
 }
 
-.grid {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
 
 .grid-content-wrp {
-    position: relative;
+    display: table;
+    width: 100%;
 }
 
 .grid-header-wrp {
@@ -699,6 +693,10 @@ tr:hover .cell_selection {
 }
 
 .grid-table-wrapper {
+    min-height: 100%;
+}
+
+.grid-table-wrapper-war {
     overflow: auto;
     flex: 1;
 }
