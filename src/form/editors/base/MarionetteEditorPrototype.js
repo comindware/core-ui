@@ -143,7 +143,6 @@ export default {
 
                 // ToDo fix: if schema autocommit false take undefined value from options.autocommit
                 schema.autocommit = schema.autocommit || options.autocommit;
-                schema.required = schema.required !== undefined ? schema.required : options.required;
 
                 this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
                 this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
@@ -166,8 +165,8 @@ export default {
 
             __updateEmpty() {
                 const isEmpty = this.isEmptyValue();
-                if (this.schema.required && this.options.setRequired) {
-                    this.options.setRequired(isEmpty);
+                if (this.options.fieldUpdateEmpty) {
+                    this.options.fieldUpdateEmpty(isEmpty);
                 }
                 this.$el.toggleClass(classes.EMPTY, isEmpty);
             },

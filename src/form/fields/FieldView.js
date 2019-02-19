@@ -158,7 +158,20 @@ export default Marionette.View.extend({
         this.editor.blur();
     },
 
-    setRequired(required) {
+    setRequired(required = this.schema.required) {
+        this.schema.required = required;
+        this.__updateEmpty();
+    },
+
+    __updateEmpty(isEmpty = this.editor?.isEmptyValue()) {
+        if (this.schema.required) {
+            this.__toggleRequiredClass(isEmpty);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -202,7 +215,7 @@ export default Marionette.View.extend({
             id: this.__createEditorId(options.key),
             value: this.options.value,
             fieldId,
-            setRequired: this.setRequired.bind(this)
+            fieldUpdateEmpty: this.__updateEmpty.bind(this)
         });
         this.key = options.key;
         this.editor.on('readonly', readonly => {
