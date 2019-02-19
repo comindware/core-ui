@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 
 import form from 'form';
-import { columnWidthByType } from '../meta';
 import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';

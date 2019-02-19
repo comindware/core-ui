@@ -9,7 +9,7 @@
 {{/if}}
 {{#each columns}}
 <td class="grid-header-column" title="{{title}}">
-    <div class="header-column-wrp">
+    <div class="header-column-wrp" {{#if width}}style="width:{{width}};" {{/if}}>
         {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
         {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
         {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
