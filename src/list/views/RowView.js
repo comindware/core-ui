@@ -366,11 +366,11 @@ export default Marionette.View.extend({
                 }
             }
         }
-        this.trigger('click', this.model);
+        this.gridEventAggregator.trigger('click', this.model);
     },
 
     __handleDblClick() {
-        this.trigger('dblclick', this.model);
+        this.gridEventAggregator.trigger('dblclick', this.model);
     },
 
     __handleSelection() {
