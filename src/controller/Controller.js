@@ -100,8 +100,9 @@ export default class Controller {
         }
     }
 
-    destroy() {
+    destroy(...rest) {
         this.moduleRegion.reset();
+        this.onDestroy?.(...rest);
     }
 
     __checkPromisesAndLeave(canLeave) {

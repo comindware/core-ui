@@ -76,7 +76,8 @@ const GridHeaderView = Marionette.View.extend({
             columns: this.options.columns.map(column =>
                 Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
-                    sortingDesc: column.sorting === 'desc'
+                    sortingDesc: column.sorting === 'desc',
+                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : ''
                 })
             ),
             showCheckbox: this.options.showCheckbox
