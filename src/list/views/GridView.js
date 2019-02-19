@@ -173,7 +173,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        const newPosition = Math.max(0, Math.ceil(this.ui.tableWrapper.scrollTop() / this.listView.childHeight));
+        const newPosition = Math.max(0, Math.ceil(this.ui.tableTopMostWrapper.scrollTop() / this.listView.childHeight));
         this.listView.updatePosition(newPosition, false);
     },
 
@@ -245,7 +245,8 @@ export default Marionette.View.extend({
         header: '.js-grid-header-view',
         content: '.js-grid-content',
         tableWrapper: '.grid-table-wrapper',
-        table: '.grid-content-wrp'
+        table: '.grid-content-wrp',
+        tableTopMostWrapper: '.grid-table-wrapper-war'
     },
 
     events: {
@@ -292,7 +293,7 @@ export default Marionette.View.extend({
             this.ui.title.parent().hide();
         }
         this.__updateState();
-        this.ui.tableWrapper.on('scroll', () => this.__onScroll());
+        this.ui.tableTopMostWrapper.on('scroll', () => this.__onScroll());
     },
 
     onAttach() {

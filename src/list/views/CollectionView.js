@@ -467,7 +467,7 @@ export default Marionette.CollectionView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
-            this.options.table$el.css({ height: allItemsHeight || '' }); //todo optimizae it
+            this.options.table$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             } else {

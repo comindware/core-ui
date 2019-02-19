@@ -59,6 +59,7 @@
 
 .grid-content-wrp {
     position: relative;
+    display: table;
 }
 
 .grid-header-wrp {
@@ -699,7 +700,9 @@ tr:hover .cell_selection {
 }
 
 .grid-table-wrapper {
+ 
+}
+
+.grid-table-wrapper-war {
     overflow: auto;
-    flex: 1;
-    display: flex;
 }
