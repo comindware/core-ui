@@ -20,6 +20,7 @@ Backbone.history.checkUrl = () => {
 export default {
     initialize(options) {
         Object.assign(this, Backbone.Events);
+        this.loadersCount = 0;
         this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
             const controller = {};
@@ -150,10 +151,6 @@ export default {
 
         this.loadingContext.loaded = true;
 
-        if (this.activeModule) {
-            this.setModuleLoading(false);
-        }
-
         const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
 
         let componentQuery;
@@ -171,6 +168,7 @@ export default {
 
         if (this.activeModule && movingOut && !customModuleRegion) {
             this.activeModule.destroy();
+            this.setModuleLoading(true);
         }
 
         let activeSubModule = null;
@@ -225,14 +223,22 @@ export default {
         }
 
         this.__setupComponentQuery(componentQuery);
+        this.setModuleLoading(false);
     },
 
     __showViewPlaceholder() {
-        window.contentLoadingRegion.$el.show();
+        this.loadersCount++;
+        window.contentLoadingRegion.$el.addClass('visible-loader');
     },
 
     __hideViewPlaceholder() {
-        window.contentLoadingRegion.$el.hide();
+        this.loadersCount--;
+        if (this.loadersCount <= 0) {
+            window.contentLoadingRegion.$el.removeClass('visible-loader');
+        }
+        if (this.loadersCount < 0) {
+            this.loadersCount = 0;
+        }
     },
 
     async __tryLeaveActiveModule() {
