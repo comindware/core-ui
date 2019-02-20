@@ -194,7 +194,7 @@ const VirtualCollection = Backbone.Collection.extend({
             Object.assign({}, options, {
                 changes: {
                     removed,
-                    added: [],
+                    added: options.added || [],
                     merged: []
                 }
             })
@@ -263,10 +263,6 @@ const VirtualCollection = Backbone.Collection.extend({
      * @param {Number} newPosition Новая позиция скользящего окна
      * */
     updatePosition(newPosition) {
-        if (this.state.windowSize === undefined) {
-            throw 'updatePosition() has been called before setting window size';
-        }
-
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
             return newPosition;
@@ -336,9 +332,8 @@ const VirtualCollection = Backbone.Collection.extend({
                 }
             });
 
-        // it's important remove items before add
+        options.added = added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b));
         this.__removeModels(removed, options);
-        added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
     },
 
     __normalizePosition(position) {

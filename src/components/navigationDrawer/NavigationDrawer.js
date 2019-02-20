@@ -3,7 +3,7 @@ import GroupItemView from './views/DrawerItemView';
 import GroupsCollection from './collections/GroupsCollection';
 import template from './templates/navigationDrawer.html';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         this.collection = new GroupsCollection(options.collection);
         this.collapsed = options.collapsed;

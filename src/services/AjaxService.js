@@ -9,7 +9,7 @@ const methodName = {
 
 let beforeSent = null;
 
-export default (window.Ajax = new (Marionette.Object.extend({
+export default (window.Ajax = new (Marionette.MnObject.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {

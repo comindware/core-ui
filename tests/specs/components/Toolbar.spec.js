@@ -26,8 +26,8 @@ describe('Editors', () => {
                             collection: new Backbone.Collection(),
                             diagramId: '1',
                             solutionId: '2',
-                            buttonView: Marionette.View.extend({ template: false }),
-                            panelView: Marionette.View.extend({ template: false })
+                            buttonView: Marionette.View.extend({ template: _.noop, }),
+                            panelView: Marionette.View.extend({ template: _.noop, })
                         }
                     },
                     {

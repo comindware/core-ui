@@ -9,13 +9,13 @@ describe('Application', () => {
                     list: {
                         url: 'SolutionConfigurationApi/List',
                         viewModel: Backbone.Collection,
-                        view: Marionette.View.extend({ template: false }),
+                        view: Marionette.View.extend({ template: _.noop, }),
                         viewEvents: {}
                     },
                     rolesList: {
                         url: 'RolesCollectionApi/List',
                         viewModel: Backbone.Collection,
-                        view: Marionette.View.extend({ template: false }),
+                        view: Marionette.View.extend({ template: _.noop, }),
                         viewEvents: {
                             'dblclick:row'(roleId) {},
                             navigateToNewRole() {}

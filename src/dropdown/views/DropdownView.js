@@ -95,11 +95,11 @@ export default Marionette.View.extend({
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
-            this.triggerMethod(...args);
+            this.trigger(...args);
         });
     },
 
-    template: false,
+    template: _.noop,
 
     className() {
         return `dropdown ${this.options.class || ''}`;
@@ -275,7 +275,7 @@ export default Marionette.View.extend({
         this.panelView = new this.options.panelView(panelViewOptions);
         this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
-            this.triggerMethod(...args);
+            this.trigger(...args);
         });
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {

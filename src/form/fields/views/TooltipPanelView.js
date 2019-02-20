@@ -6,7 +6,7 @@ export default Marionette.View.extend({
 
     className: 'form-label__tooltip-panel',
 
-    template: false,
+    template: _.noop,
 
     onRender() {
         this.$el.text(this.model.get(this.options.textAttribute));

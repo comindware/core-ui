@@ -14,7 +14,7 @@ const constants = {
     colorIconDisabled: 'filter-disabled'
 };
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize() {
         const columns = this.options.model.get('columns');
         this.collection = columns instanceof Backbone.Collection ? columns : new Backbone.Collection(columns);

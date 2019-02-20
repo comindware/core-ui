@@ -55,7 +55,7 @@ const GridHeaderView = Marionette.View.extend({
 
     events: {
         'click @ui.checkbox': '__handleCheckboxClick',
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
+        'pointerdown .grid-header-dragger': '__handleDraggerMousedown',
         'click .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
@@ -175,8 +175,8 @@ const GridHeaderView = Marionette.View.extend({
 
         dragger.classList.add('active');
 
-        document.addEventListener('mousemove', this.__draggerMouseMove);
-        document.addEventListener('mouseup', this.__draggerMouseUp);
+        document.addEventListener('pointermove', this.__draggerMouseMove);
+        document.addEventListener('pointerup', this.__draggerMouseUp);
     },
 
     __stopDrag() {
@@ -187,8 +187,8 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
 
-        document.removeEventListener('mousemove', this.__draggerMouseMove);
-        document.removeEventListener('mouseup', this.__draggerMouseUp);
+        document.removeEventListener('pointermove', this.__draggerMouseMove);
+        document.removeEventListener('pointerup', this.__draggerMouseUp);
     },
 
     __draggerMouseMove(e) {

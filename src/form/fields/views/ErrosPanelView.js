@@ -6,7 +6,7 @@ export default Marionette.CollectionView.extend({
 
     className: 'form-label__error-panel',
 
-    template: false,
+    template: _.noop,
 
     childView: ErrorItemView
 });

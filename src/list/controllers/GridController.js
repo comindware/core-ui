@@ -18,7 +18,7 @@ const defaultOptions = {
     updateToolbarEvents: ''
 };
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize(options = {}) {
         this.options = Object.assign({}, defaultOptions, options);
         this.__createView(this.options);

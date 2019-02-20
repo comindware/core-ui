@@ -162,7 +162,7 @@ export default Marionette.View.extend({
 
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
-            cellView.triggerMethod('attach');
+            cellView.trigger('attach');
 
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);

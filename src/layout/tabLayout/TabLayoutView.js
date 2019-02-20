@@ -251,7 +251,7 @@ export default Marionette.View.extend({
 
         view.on('all', (...args) => {
             args[0] = `tab:${args[0]}`;
-            this.triggerMethod(...args);
+            this.trigger(...args);
         });
         if (isLoadingNeeded) {
             this.setLoading(true);

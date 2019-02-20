@@ -8,7 +8,7 @@ const classes = {
 
 const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg2000', 'exif', 'tiff', 'ppm', 'pgm', 'pbm', 'pnm', 'webp', 'bpg', 'bat'];
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize() {
         this.imagesBuffer = {};
         this.bindReqres();

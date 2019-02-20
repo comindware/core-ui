@@ -255,7 +255,7 @@ body {
     height: 100%;
     width: 100%;
     display: flex;
-    padding: 0 15px 15px 15px;
+    padding: 1rem;
     justify-content: space-between;
 }
 .demo-content__function {
@@ -269,10 +269,9 @@ body {
     background-color: white;
 }
 .demo-content__description {
-    font-size: 32px;
-    line-height: 32px;
-    padding: 0 0.5rem;
-    flex: 1 1;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    flex: 1;
 }
 .demo-content__code {
     overflow: auto;
@@ -575,7 +574,8 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px;
+    padding: 1rem 1rem 0 1rem;
+    height: 3rem;
 }
 
 .demo-content__toolbar {

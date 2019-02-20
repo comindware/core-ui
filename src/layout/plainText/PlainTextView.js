@@ -20,7 +20,7 @@ export default Marionette.View.extend({
         return this.options.class ? this.options.class : '';
     },
 
-    template: false,
+    template: _.noop,
 
     behaviors: {
         LayoutBehavior: {

@@ -20,6 +20,8 @@ import * as mixin from './utils/underscore';
 /* Core.Model utils */
 import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
+// @ts-ignore
+import AppRouter from 'marionette.approuter';
 import 'backbone.modelbinder';
 import 'backbone-computedfields';
 import 'backbone.radio';
@@ -40,6 +42,9 @@ import domapi from './utils/DOMApi';
 (<any>window)._ = _underscore.mixin(mixin.default);
 // @ts-ignore
 Marionette_.setDomApi(domapi);
+// @ts-ignore
+Marionette_.AppRouter = AppRouter;
+(<any>window).Marionette = Marionette_;
 
 const api = {
     'jquery-ui': jqui,
@@ -47,7 +52,6 @@ const api = {
     Handlebars: Handlebars_,
     $: jquery,
     Backbone: backbone,
-    Marionette: Marionette_,
     codemirror: CodeMirror,
     autosize,
     maskInput,
@@ -56,12 +60,9 @@ const api = {
 };
 
 const moment = api.moment;
-const Handlebars = api.Handlebars;
 const $ = api.$;
-const Backbone = backbone;
-const Marionette = Marionette_;
 const codemirror = api.codemirror;
 const _ = (<any>window)._;
 
 export default api;
-export { _, moment, Handlebars, $, Backbone, Marionette, codemirror, autosize, createNumberMask, maskInput, emailMask };
+export { _, moment, $, codemirror, autosize, createNumberMask, maskInput, emailMask };

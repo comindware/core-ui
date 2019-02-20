@@ -3,7 +3,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize(options) {
         this.options = options;
         this.members = {};

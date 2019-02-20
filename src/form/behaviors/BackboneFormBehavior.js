@@ -10,7 +10,7 @@ const componentTypes = {
 // every of options.transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
 // allowEmptyValue: true; // in schema turn off required-like behavior for name
 
-const Form = Marionette.Object.extend({
+const Form = Marionette.MnObject.extend({
     /**
      * Constructor
      *
@@ -62,7 +62,7 @@ const Form = Marionette.Object.extend({
             const currentView = region.currentView;
             if (currentView) {
                 currentView._isAttached = true;
-                currentView.triggerMethod('attach');
+                currentView.trigger('attach');
             }
         });
     },
@@ -322,15 +322,8 @@ const Form = Marionette.Object.extend({
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         view.renderForm = this.__renderForm.bind(this);
-    },
-
-    defaults: {
-        model() {
-            return this.model;
-        },
-        schema() {
-            return this.schema;
-        }
+        this.model = options.model;
+        this.schema = options.schema;
     },
 
     onRender() {
@@ -379,6 +372,6 @@ export default Marionette.Behavior.extend({
         if (this.view.initForm) {
             this.view.initForm();
         }
-        this.view.triggerMethod('form:render', form);
+        this.view.trigger('form:render', form);
     }
 });

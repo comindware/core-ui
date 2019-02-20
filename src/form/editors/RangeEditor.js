@@ -17,7 +17,7 @@ import formRepository from '../formRepository';
 export default (formRepository.editors.RangeEditor = BaseEditorView.extend({
         tagName: 'input',
 
-        template: false,
+        template: _.noop,
 
         templateContext() {
             return _.extend(this.options, {

@@ -22,7 +22,7 @@ const defaultOptions = {
     showContext: true,
     showExpression: true,
     showScript: true,
-    showTemplate: false,
+    showtemplate: _.noop,
     enabled: true,
     valueEditor: formRepository.editors.Text,
     valueEditorOptions: {},

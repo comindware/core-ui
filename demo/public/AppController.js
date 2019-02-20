@@ -3,7 +3,7 @@ import NavBarView from './app/views/NavBarView';
 import IndexPageView from './app/views/IndexPageView';
 import ContentView from './app/views/ContentView';
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     index() {
         window.app
             .getView()

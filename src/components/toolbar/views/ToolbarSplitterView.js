@@ -2,5 +2,5 @@
 export default Marionette.View.extend({
     className: 'btn-separator',
 
-    template: false
+    template: _.noop,
 });

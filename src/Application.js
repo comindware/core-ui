@@ -80,9 +80,6 @@ export default {
             WebSocketService.initialize({ url: options.webSocketConfiguration.url });
         }
 
-        // Backbone default behaviors path (obsolete because of inconsistency: we store behaviors in many different paths)
-        Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
-
         this.initializeThirdParties();
         marionetteApp.start();
 

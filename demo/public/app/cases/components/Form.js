@@ -1,6 +1,6 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function () {
+export default function() {
     // 1. Create form template
     const template =
         '<div class="field-width" data-fields="name"></div>' +
@@ -25,10 +25,6 @@ export default function () {
 
     // 3. Create view with BackboneFormBehavior and construct form scheme
     const View = Marionette.View.extend({
-        initialize() {
-            this.model = model;
-        },
-
         onRender() {
             this.listenTo(this.model, 'change', () => console.log(this.model.changed));
         },
@@ -37,8 +33,9 @@ export default function () {
 
         behaviors: {
             BackboneFormBehavior: {
+                model,
                 behaviorClass: Core.form.behaviors.BackboneFormBehavior,
-                transliteratedFields: { 
+                transliteratedFields: {
                     name: 'alias'
                 }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
                 schema() {
@@ -109,6 +106,6 @@ export default function () {
 
     // 4. Show created view
     return new CanvasView({
-        view: new View()
+        view: new View({ model })
     });
 }

@@ -3,7 +3,6 @@ import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
 import FieldView from './fields/FieldView';
 import BaseEditorView from './editors/base/BaseEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
-import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
 import BooleanEditorView from './editors/BooleanEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
@@ -84,8 +83,7 @@ const api = /** @lends module:core.form */ {
          * */
         base: {
             BaseEditorView,
-            BaseCollectionEditorView,
-            BaseCompositeEditorView
+            BaseCollectionEditorView
         },
         /**
          * Avatar editor data providers and internal implementation.

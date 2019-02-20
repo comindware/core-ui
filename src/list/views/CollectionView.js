@@ -191,16 +191,11 @@ export default Marionette.CollectionView.extend({
         typeof this.$el.toggleClass === 'function' && this.$el.toggleClass(classes.empty, isEmpty);
     },
 
-    _showCollection() {
-        const models = this.collection.visibleModels;
-
-        models.forEach((child, index) => {
-            this._addChild(child, index);
-        });
-        this.children._updateLength();
+    _addChildModels(models) {
+        return this.collection.visibleModels.map(this._addChildModel.bind(this));
     },
 
-    // override default method to correct add twhen index === 0 in visible collection
+    // override default method to correct add then index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 
@@ -312,8 +307,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __getIndexSelectedModel() {
-        const collection = this.collection;
-        const model = collection.get(collection.lastSelectedModel || collection.lastPointedModel);
+        const model = this.collection.get(this.collection.lastSelectedModel);
         return this.collection.indexOf(model);
     },
 
@@ -369,7 +363,7 @@ export default Marionette.CollectionView.extend({
 
     scrollToByLast(bottomIndex) {
         //strange that size is equal index
-        const topIndex = this.__checkMaxMinIndex(bottomIndex - this.state.visibleCollectionSize);
+        const topIndex = this.__checkMaxMinIndex(bottomIndex - this.state.viewportHeight);
         this.scrollTo(topIndex, true);
     },
 
@@ -437,7 +431,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __checkFillingViewport(position) {
-        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.visibleCollectionSize);
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.viewportHeight);
         return Math.max(0, Math.min(maxPosFirstRow, position));
     },
 
@@ -458,20 +452,18 @@ export default Marionette.CollectionView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight =
-            this.options.parentEl?.clientHeight && this.options.parentEl.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
+        const availableHeight = this.options.parentEl?.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
 
-        // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
-        const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
-        const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
-        if (!this.options.customHeight && allItemsHeight !== oldAllItemsHeight) {
-            this.options.table$el.parent().css({ height: allItemsHeight || '' }); //todo optimizae it
+        this.state.allItemsHeight = this.childHeight * this.collection.length;
+
+        if (!this.options.customHeight && this.state.allItemsHeight !== oldAllItemsHeight) {
+            this.options.table$el.parent().css({ height: this.state.allItemsHeight || '' }); //todo optimizae it
             if (this.gridEventAggregator) {
-                this.gridEventAggregator.trigger('update:height', allItemsHeight);
+                this.gridEventAggregator.trigger('update:height', this.state.allItemsHeight);
             } else {
-                this.trigger('update:height', allItemsHeight);
+                this.trigger('update:height', this.state.allItemsHeight);
             }
         }
 
@@ -490,8 +482,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
-        this.handleResize(shouldUpdateScroll, model, collection, options);
+        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE));
     },
 
     onAddChild(view, child) {

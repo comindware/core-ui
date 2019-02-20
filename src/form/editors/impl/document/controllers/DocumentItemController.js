@@ -1,7 +1,7 @@
 //@flow
 import { dateHelpers } from 'utils';
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize(options = {}) {
         this.view = options.view;
         this.reqres = Backbone.Radio.channel(_.uniqueId('documentController'));

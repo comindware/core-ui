@@ -52,7 +52,7 @@ const Application = Marionette.Application.extend({
                 theme: 'new',
                 themesPath: '../dist/themes/'
             },
-            contentView: Marionette.View.extend({ template: false }),
+            contentView: Marionette.View.extend({ template: _.noop, }),
             localizationService: {
                 langCode: 'en',
                 localizationMap,

@@ -41,51 +41,31 @@ module.exports = () => {
         },
         module: {
             rules: [
-                PRODUCTION
-                    ? {
-                          test: /\.css$/,
-                          use: [
-                              MiniCssExtractPlugin.loader,
-                              'css-loader',
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: () => {
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          });
-                                          cssnano();
-                                      }
-                                  }
-                              }
-                          ]
-                      }
-                    : {
-                          test: /\.css$/,
-                          use: [
-                              {
-                                  loader: 'style-loader'
-                              },
-                              {
-                                  loader: 'css-loader',
-                                  options: {
-                                      sourceMap: true
-                                  }
-                              },
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: [
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          })
-                                      ]
-                                  }
-                              }
-                          ]
-                      },
+                {
+                    test: /\.css$/,
+                    use: [
+                        {
+                            loader: 'style-loader'
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                plugins: [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })
+                                ]
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -98,7 +78,8 @@ module.exports = () => {
                     exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
                         cacheDirectory: true,
-                        presets: [[
+                        presets: [
+                            [
                                 '@babel/preset-env',
                                 {
                                     targets: {
@@ -107,7 +88,8 @@ module.exports = () => {
                                     useBuiltIns: 'usage',
                                     modules: false
                                 }
-                            ]]
+                            ]
+                        ]
                     }
                 },
                 {
@@ -174,16 +156,6 @@ module.exports = () => {
                 verbose: false,
                 exclude: ['localization']
             }),*/
-            new HtmlWebpackPlugin({
-                filename: 'index.html',
-                template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
-                hash: PRODUCTION,
-                inject: 'body',
-                chunks: ['app'],
-                minify: {
-                    collapseWhitespace: false
-                }
-            }),
             new WebpackPwaManifest({
                 name: 'Comindware business application platform',
                 short_name: 'Comindware',
@@ -234,9 +206,6 @@ module.exports = () => {
                     }
                 ]
             }),
-            new MiniCssExtractPlugin({
-                filename: '[name].css'
-            }),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new GenerateSW({
                 swDest: pathResolver.client('sw.js'),
@@ -253,6 +222,10 @@ module.exports = () => {
                 {
                     from: `${__dirname}/../demo/public/ajaxStub`,
                     to: pathResolver.client('images')
+                },
+                {
+                    from: `${__dirname}/../demo/public/index.html`,
+                    to: pathResolver.client('')
                 }
             ])
         ],

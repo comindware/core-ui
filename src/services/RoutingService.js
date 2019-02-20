@@ -181,7 +181,7 @@ export default {
                     config,
                     region: customModuleRegion
                 });
-                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
+                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.trigger(...rest));
             } else {
                 this.activeModule = new Module({
                     config,

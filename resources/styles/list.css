@@ -204,10 +204,11 @@
 
 .grid-header-dragger {
     position: absolute;
-    right: -3px;
+    touch-action: none;
+    right: -8px;
     top: 0;
     bottom: 0;
-    width: 7px;
+    width: 16px;
     cursor: e-resize;
     z-index: 3;
     opacity: .8;

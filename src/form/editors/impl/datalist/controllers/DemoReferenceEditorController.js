@@ -1,7 +1,7 @@
 import list from 'list';
 import DemoReferenceCollections from '../collections/DemoReferenceCollection';
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize() {
         const collection = new DemoReferenceCollections([]);
         this.collection = list.factory.createWrappedCollection({ collection });

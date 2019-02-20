@@ -31,12 +31,12 @@ export default Marionette.View.extend({
         if (collection) {
             this.menuView = Core.dropdown.factory.createDropdown({
                 buttonView: Marionette.View.extend({
-                    template: false
+                    template: _.noop,
                 }),
 
                 panelView: Marionette.CollectionView.extend({
                     childView: Marionette.View.extend({
-                        template: false
+                        template: _.noop,
                     }),
 
                     className: 'dropdown-list'

@@ -2,7 +2,7 @@ import template from '../../templates/filterPanel/configPanelFilter.html';
 import FilterItemView from './FilterItemView';
 import EmptyFilterItemView from './EmptyFilterItemView';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize() {
         if (this.model.get('columnModel') && !this.model.get('columnModel').has('filters')) {
             this.listenTo(this.model, 'change', this.__updateCollection);

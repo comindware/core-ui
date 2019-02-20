@@ -6,7 +6,7 @@ export default Marionette.CollectionView.extend({
         return `toolbar-panel_container ${this.options.class || ''}`;
     },
 
-    template: false,
+    template: _.noop,
 
     childView(model) {
         return meta.getViewByModel(model).extend({
