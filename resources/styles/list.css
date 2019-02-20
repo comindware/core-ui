@@ -70,7 +70,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    padding-left: 17px;
+    padding: 9px 0 0 17px;
 }
 .grid-header:hover > .cell_selection {
     background-color: #0575bd;
@@ -433,9 +433,7 @@
     align-items: center;
 }
 .cell_selection, .cell_selection-index {
-    display: flex;
     align-items: center;
-    flex: none;
     height: 35px;
     line-height: 35px;
 }

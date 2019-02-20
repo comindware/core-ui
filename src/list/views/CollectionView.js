@@ -138,7 +138,9 @@ export default Marionette.CollectionView.extend({
         if (!this.options.table$el) {
             this.options.table$el = this.$el.parent();
         }
-        this.handleResize(false);
+        if (this.options.parentEl) {
+            this.handleResize(false);
+        }
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
 
         this.parent$el = this.options.parent$el;
@@ -147,6 +149,7 @@ export default Marionette.CollectionView.extend({
     onAttach() {
         if (!this.options.parentEl) {
             this.options.parentEl = this.$el.parent()[0];
+            this.handleResize(false);
         }
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
     },

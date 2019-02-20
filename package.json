@@ -131,6 +131,7 @@
         "backbone.modelbinder": "^1.1.0",
         "backbone.radio": "^2.0.0",
         "codemirror": "^5.43.0",
+        "eslint-plugin-backbone": "^2.1.1",
         "jquery": "^3.3.1",
         "marionette.approuter": "^1.0.1",
         "moment": "^2.24.0",
