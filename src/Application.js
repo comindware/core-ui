@@ -107,6 +107,5 @@ export default {
 
     __initializeLoadingMaskAndHideIt() {
         window.contentLoadingRegion.show(new ContentLoadingView());
-        window.contentLoadingRegion.$el.hide();
     }
 };
