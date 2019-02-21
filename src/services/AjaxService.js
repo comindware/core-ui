@@ -1,4 +1,3 @@
-import { helpers } from 'utils';
 import PromiseService from './PromiseService';
 import MobileService from './MobileService';
 
@@ -11,7 +10,6 @@ let beforeSent = null;
 
 export default (window.Ajax = new (Marionette.MnObject.extend({
     load(options) {
-        helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
             /* eslint-disable */
             const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
@@ -43,15 +41,11 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
         }
     },
 
-    async getResponse(type, url, data, options) {
-        helpers.assertArgumentNotFalsy(type, 'type');
-        helpers.assertArgumentNotFalsy(url, 'url');
-
+    async getResponse(method, url, body, options) {
         const config = Object.assign(
             {
-                type,
-                url,
-                data: data ? JSON.stringify(data) : null,
+                method,
+                body: body ? JSON.stringify(body) : null,
                 traditional: true,
                 dataType: 'json',
                 contentType: 'application/json'
@@ -63,36 +57,25 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
             const canProceed = await beforeSent();
 
             if (canProceed) {
-                return PromiseService.registerPromise($.ajax(config));
+                return PromiseService.registerPromise(fetch(url, config));
             }
         } else {
-            return PromiseService.registerPromise($.ajax(config));
+            return PromiseService.registerPromise(fetch(url, config));
         }
     },
 
     sendFormData(url, formData) {
-        helpers.assertArgumentNotFalsy(url, 'url');
-        helpers.assertArgumentNotFalsy(formData, 'formData');
         return Promise.resolve(
-            $.ajax({
-                url,
-                type: 'POST',
-                data: formData,
+            fetch(url, {
+                method: 'POST',
+                body: formData,
                 processData: false,
                 contentType: false
             })
         );
     },
 
-    getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
-        if (callback && typeof callback !== 'function') {
-            helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
-        }
-        const parametersLength = parameters[parameters.length - 1] === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
-        if (parametersLength < parameterNames.length) {
-            helpers.throwFormatError(helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
-        }
-        const successCallback = callback || null;
+    getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol) {
         let data;
         if (protocol === methodName.WebApi) {
             for (let i = 0; i < parameterNames.length; i++) {
@@ -111,41 +94,35 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
             }
         }
 
-        return this.getResponse(httpMethod, url, data, {
-            success: result => {
-                if (result && result.success === false) {
-                    this.trigger('jsApi:error', result);
-                } else if (successCallback) {
-                    successCallback(result.data);
+        return this.getResponse(httpMethod, url, data)
+            .then(response => response.json())
+            .then(response => {
+                if (response && protocol === methodName.WebApi && !response.errorMessage) {
+                    return response;
                 }
-            }
-        }).then(result => {
-            if (result && protocol === methodName.WebApi && !result.errorMessage) {
-                return result;
-            }
-            if (result && result.success === false) {
-                this.trigger('jsApi:error', result);
-                const error = new Error(result.errorMessage);
-                error.name = 'JsApiError';
-                error.errorType = result.errorType;
-                error.errorData = result.errorData;
-                error.source = result;
+                if (response && response.success === false) {
+                    this.trigger('jsApi:error', response);
+                    const error = new Error(response.errorMessage);
+                    error.name = 'JsApiError';
+                    error.errorType = response.errorType;
+                    error.errorData = response.errorData;
+                    error.source = response;
 
-                if (window.onunhandledrejection === undefined) {
-                    if (MobileService.isIE) {
-                        const unhandledRejectionEvent = document.createEvent('Event');
-                        unhandledRejectionEvent.initEvent('unhandledrejection', false, true);
-                        Object.assign(unhandledRejectionEvent, error);
-                        window.dispatchEvent(unhandledRejectionEvent);
-                    } else {
-                        const unhandledRejectionEvent = new Event('unhandledrejection');
-                        Object.assign(unhandledRejectionEvent, error, { reason: error });
-                        window.dispatchEvent(unhandledRejectionEvent);
+                    if (window.onunhandledrejection === undefined) {
+                        if (MobileService.isIE) {
+                            const unhandledRejectionEvent = document.createEvent('Event');
+                            unhandledRejectionEvent.initEvent('unhandledrejection', false, true);
+                            Object.assign(unhandledRejectionEvent, error);
+                            window.dispatchEvent(unhandledRejectionEvent);
+                        } else {
+                            const unhandledRejectionEvent = new Event('unhandledrejection');
+                            Object.assign(unhandledRejectionEvent, error, { reason: error });
+                            window.dispatchEvent(unhandledRejectionEvent);
+                        }
                     }
+                    throw error;
                 }
-                throw error;
-            }
-            return result ? result.data : result;
-        });
+                return response ? response.data : response;
+            });
     }
 }))());
