@@ -11,7 +11,6 @@ let beforeSent = null;
 
 export default (window.Ajax = new (Marionette.MnObject.extend({
     load(options) {
-        helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
             /* eslint-disable */
             const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
@@ -44,9 +43,6 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
     },
 
     async getResponse(type, url, data, options) {
-        helpers.assertArgumentNotFalsy(type, 'type');
-        helpers.assertArgumentNotFalsy(url, 'url');
-
         const config = Object.assign(
             {
                 type,
@@ -71,8 +67,6 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
     },
 
     sendFormData(url, formData) {
-        helpers.assertArgumentNotFalsy(url, 'url');
-        helpers.assertArgumentNotFalsy(formData, 'formData');
         return Promise.resolve(
             $.ajax({
                 url,
@@ -85,13 +79,6 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
     },
 
     getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
-        if (callback && typeof callback !== 'function') {
-            helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
-        }
-        const parametersLength = parameters[parameters.length - 1] === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
-        if (parametersLength < parameterNames.length) {
-            helpers.throwFormatError(helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
-        }
         const successCallback = callback || null;
         let data;
         if (protocol === methodName.WebApi) {
