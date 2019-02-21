@@ -114,9 +114,10 @@
   border-top-right-radius: 0;
 }
 .dropdown__wrp {
-  padding: 1px 0;
-  border: var(--border);
   border-radius: var(--border-radius);
+  transform: translateY(-50px);
+  opacity: 0;
+  transition: transform 0.1s linear, opacity 0.1s linear;
 }
 
 .dropdown__wrp.dropdown__wrp_down {
@@ -124,16 +125,6 @@
 }
 .dropdown__wrp.dropdown__wrp_up {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
-}
-
-.dropdown__wrp_reference,
-.dropdown__wrp_time,
-.dropdown__wrp_datepicker {
-  margin-top: -1px;
-}
-
-.dropdown__wrp_reference.dropdown__wrp_up {
-  margin-top: 1px;
 }
 
 /* icons */
