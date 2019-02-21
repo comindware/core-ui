@@ -62,7 +62,7 @@ export default class Controller {
                 if (errorView) {
                     const presentingView = new errorView();
                     if (viewEvents) {
-                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key]));
+                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                     }
                     this.moduleRegion.show(presentingView);
                 }
@@ -77,7 +77,7 @@ export default class Controller {
 
                     const presentingView = new view(viewParams);
                     if (viewEvents) {
-                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key]));
+                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                     }
                     presentingView.request = this.__handleViewResourceRequest.bind(this);
                     this.moduleRegion.show(presentingView);
