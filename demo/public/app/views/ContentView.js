@@ -181,14 +181,14 @@ export default Marionette.View.extend({
             }
         ];
 
-        const gridController = new Core.list.controllers.GridController({
-            columns: columns,
+        const gridController = new Core.list.GridView({
+            columns,
             isTree: this.configCollection.some(x => !!x.get('children')),
             childrenAttribute: 'children',
             collection: this.configCollection
         });
 
-        return gridController.view;
+        return gridController;
     },
 
     __getSchemaExtension(model) {

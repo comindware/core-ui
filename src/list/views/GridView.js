@@ -1,6 +1,5 @@
 //@flow
 /* eslint-disable no-param-reassign */
-
 import form from 'form';
 import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
@@ -15,6 +14,9 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from '../views/EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
+import meta from '../meta';
+import VirtualCollection from '../../collections/VirtualCollection';
+import factory from '../factory';
 
 /*
     Public interface:
@@ -33,7 +35,11 @@ const defaultOptions = options => ({
     emptyViewOptions: {
         text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
     },
-    stickyToolbarOffset: 0
+    stickyToolbarOffset: 0,
+    isSliding: true,
+    showHeader: true,
+    handleSearch: true,
+    updateToolbarEvents: ''
 });
 
 /**
@@ -56,12 +62,18 @@ const defaultOptions = options => ({
  * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию.
+ * @param {Array} options.excludeActions Array of strings. Example: <code>[ 'archive', 'delete' ]</code>.
+ * @param {Array} options.additionalActions Array of objects <code>[ id,  name,* type=button'|'checkbox', isChecked, iconClass, severity]</code>.
+ * @param {Boolean} options.showCheckbox show or hide checkbox
  * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
  * */
 
 export default Marionette.View.extend({
     initialize(options) {
         _.defaults(options, defaultOptions(options));
+        const comparator = factory.getDefaultComparator(options.columns);
+
+        this.collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
@@ -75,6 +87,9 @@ export default Marionette.View.extend({
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+
+        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
 
         this.uniqueId = _.uniqueId('native-grid');
         this.styleSheet = document.createElement('style');
@@ -121,6 +136,17 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
+        this.__updateActions(allToolbarActions, this.collection);
+        if (this.options.showToolbar) {
+            if (this.options.showCheckbox) {
+                this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
+            } else {
+                this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+            }
+            if (this.options.updateToolbarEvents) {
+                this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
+            }
+        }
         /*
         if (this.options.showCheckbox) {
             const draggable = this.getOption('draggable');
@@ -152,9 +178,6 @@ export default Marionette.View.extend({
             }
         }
         */
-
-        this.collection = options.collection;
-
         if (options.showToolbar) {
             this.toolbarView = new ToolbarView({
                 allItemsCollection: options.actions || new Backbone.Collection()
@@ -381,6 +404,10 @@ export default Marionette.View.extend({
                 }
             });
         }
+
+        this.listenTo(this.listView, 'search', text => this.__onSearch(text, this.options.columns, this.collection));
+        this.listenTo(this.listView, 'execute:action', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
+        this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
     },
 
     getChildren() {
@@ -389,17 +416,6 @@ export default Marionette.View.extend({
 
     update() {
         this.__updateState();
-    },
-
-    __executeAction(...args) {
-        this.trigger('execute:action', ...args);
-    },
-
-    __onSearch(text) {
-        this.trigger('search', text);
-        if (this.options.isTree) {
-            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
-        }
     },
 
     onDestroy() {
@@ -544,5 +560,168 @@ export default Marionette.View.extend({
             'min-height': '',
             height: ''
         });
+    },
+
+    __onSearch(text, columns, collection) {
+        if (this.options.isTree) {
+            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
+        }
+        if (!this.getOption('handleSearch')) {
+            this.trigger('search', text);
+            return;
+        }
+        if (text) {
+            this.__applyFilter(new RegExp(text, 'i'), columns, collection);
+            this.__highlightCollection(text, collection);
+        } else {
+            this.__clearFilter(collection);
+            this.__unhighlightCollection(collection);
+        }
+    },
+
+    __applyFilter(regexp, columns, collection) {
+        collection.filter(model => {
+            let result = false;
+            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
+            searchableColumns.forEach(column => {
+                const values = model.get(column);
+                const testValueFunction = value => {
+                    if (value) {
+                        const testValue = value.name || value.text || value.toString();
+                        return regexp.test(testValue);
+                    }
+                };
+                if (Array.isArray(values) && values.length) {
+                    values.forEach(value => {
+                        result = result || testValueFunction(value);
+                    });
+                } else {
+                    result = result || testValueFunction(values);
+                }
+            });
+
+            return result;
+        });
+    },
+
+    __clearFilter(collection) {
+        collection.filter();
+    },
+
+    __highlightCollection(text, collection) {
+        collection.each(model => {
+            model.highlight(text);
+        });
+    },
+
+    __unhighlightCollection(collection) {
+        collection.each(model => {
+            model.unhighlight();
+        });
+    },
+
+    __getToolbarActions() {
+        let toolbarActions = [];
+        const defaultActions = meta.getDefaultActions();
+        if (!this.options.excludeActions) {
+            toolbarActions = defaultActions;
+        } else if (this.options.excludeActions !== 'all') {
+            toolbarActions = defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
+        }
+        if (this.options.additionalActions) {
+            toolbarActions = toolbarActions.concat(this.options.additionalActions);
+        }
+        return toolbarActions;
+    },
+
+    __updateActions(allToolbarActions, collection) {
+        const selected = this.__getSelectedItems(collection);
+        const selectedLength = selected.length;
+
+        allToolbarActions.filter(action => {
+            let isActionApplicable;
+            switch (action.get('contextType')) {
+                case 'one':
+                    isActionApplicable = selectedLength === 1;
+                    break;
+                case 'any':
+                    isActionApplicable = selectedLength;
+                    break;
+                case 'void':
+                default:
+                    isActionApplicable = true;
+            }
+            const condition = action.get('condition');
+            if (isActionApplicable && condition && typeof condition === 'function') {
+                isActionApplicable = condition(selected);
+            }
+            return isActionApplicable;
+        });
+    },
+
+    __getSelectedItems(collection) {
+        const selected = (this.options.showCheckbox ? collection.checked : collection.selected) || {};
+        if (selected instanceof Backbone.Model) {
+            return [selected];
+        }
+        return Object.values(selected);
+    },
+
+    __executeAction(model, collection, ...rest) {
+        const selected = this.__getSelectedItems(collection);
+        switch (model.get('id')) {
+            case 'delete':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'archive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'unarchive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'add':
+            default:
+                this.__triggerAction(model, selected, ...rest);
+                break;
+        }
+    },
+
+    __confirmUserAction(text, title, yesButtonText, noButtonText) {
+        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    },
+
+    __triggerAction(model, selected, ...rest) {
+        this.trigger('execute', model, selected, ...rest);
+    },
+
+    __onItemMoved(...args) {
+        this.trigger('move', ...args);
     }
 });

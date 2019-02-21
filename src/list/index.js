@@ -8,13 +8,10 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 import ListItemViewBehavior from './behaviors/ListItemViewBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
-import GridController from './controllers/GridController';
 import meta from './meta';
 
 export default {
-    controllers: {
-        GridController
-    },
+    GridView,
 
     /**
      * Фабрика списков

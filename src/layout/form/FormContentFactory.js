@@ -7,7 +7,7 @@ import Group from '../group/GroupView';
 import Button from '../button/ButtonView';
 import Popup from '../popup/PopupView';
 import PlainText from '../plainText/PlainTextView';
-import GridController from '../../list/controllers/GridController';
+import GridView from '../../list/views/GridView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 
 export default {
@@ -54,21 +54,21 @@ export default {
                 case 'button':
                     return new Button(_.omit(child, 'type'));
                 case 'grid': {
-                    const controller = new GridController(child);
+                    const gridView = new GridView(child);
                     if (typeof child.executeAction === 'function') {
-                        controller.listenTo(controller, 'execute', child.executeAction);
+                        gridView.listenTo(gridView, 'execute', child.executeAction);
                     }
 
                     if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => controller.on(key, child.viewEvents[key]));
+                        Object.keys(child.viewEvents).forEach(key => gridView.on(key, child.viewEvents[key]));
                     }
 
-                    return controller.view;
+                    return gridView;
                 }
                 case 'toolbar': {
                     const toolbar = new ToolbarView(child);
 
-                    toolbar.on('command:execute', function (...args) {
+                    toolbar.on('command:execute', function(...args) {
                         child.handler.apply(this, args);
                     });
 
@@ -82,24 +82,16 @@ export default {
                         if (child.type.includes('field')) {
                             return elementsFactory.createFieldAnchor(
                                 child.key,
-                                Object.assign(
-                                    { uniqueFormId: this.__uniqueFormId },
-                                    child,
-                                    {
-                                        type: child.type.replace('-field', '')
-                                    }
-                                )
+                                Object.assign({ uniqueFormId: this.__uniqueFormId }, child, {
+                                    type: child.type.replace('-field', '')
+                                })
                             );
                         } else if (child.type.includes('editor')) {
                             return elementsFactory.createEditorAnchor(
                                 child.key,
-                                Object.assign(
-                                    { uniqueFormId: this.__uniqueFormId },
-                                    child,
-                                    {
-                                        type: child.type.replace('-editor', '')
-                                    }
-                                )
+                                Object.assign({ uniqueFormId: this.__uniqueFormId }, child, {
+                                    type: child.type.replace('-editor', '')
+                                })
                             );
                         }
                     }

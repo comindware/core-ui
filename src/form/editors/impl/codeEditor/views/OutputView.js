@@ -21,26 +21,26 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        const errorsGridController = new Core.list.controllers.GridController({
+        const errorsGridController = new Core.list.GridView({
             columns: this.__getErrorsColumns(),
             excludeActions: 'all',
             collection: this.model.get('errors')
         });
-        const errorsGrid = errorsGridController.view;
+        const errorsGrid = errorsGridController;
 
-        const warningsGridController = new Core.list.controllers.GridController({
+        const warningsGridController = new Core.list.GridView({
             columns: this.__getWarningsColumns(),
             excludeActions: 'all',
             collection: this.model.get('warnings')
         });
-        const warningsGrid = warningsGridController.view;
+        const warningsGrid = warningsGridController;
 
-        const infoGridController = new Core.list.controllers.GridController({
+        const infoGridController = new Core.list.GridView({
             columns: this.__getInfoColumns(),
             excludeActions: 'all',
             collection: this.model.get('info')
         });
-        const infoGrid = infoGridController.view;
+        const infoGrid = infoGridController;
 
         this.listenTo(errorsGridController, 'dblclick', model => {
             const cursorPos = {
@@ -173,10 +173,9 @@ export default Marionette.View.extend({
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
                 width: 0.5
-            },
+            }
         ];
     },
-
 
     __getTabs(errorsGrid, warningsGrid, infoGrid) {
         return [

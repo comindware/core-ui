@@ -56,8 +56,8 @@ describe('Components', () => {
     ];
 
     describe('Simple grid', () => {
-        it('should initialize', function () {
-            const gridController = new core.list.controllers.GridController({
+        it('should initialize', function() {
+            const gridController = new Core.list.GridView({
                 columns,
                 selectableBehavior: 'multi',
                 showSearch: true,
@@ -65,7 +65,10 @@ describe('Components', () => {
                 collection: new Backbone.Collection(data)
             });
 
-            window.app.getView().getRegion('contentRegion').show(gridController.view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController);
 
             expect(true).toBe(true);
         });

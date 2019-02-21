@@ -140,7 +140,7 @@ export default () => {
     const collection = new Backbone.Collection(dataArray);
 
     // 3. Create grid
-    const gridController = new Core.list.controllers.GridController({
+    const gridController = new Core.list.GridView({
         columns,
         transliteratedFields: {
             textCell: 'aliasCell'
@@ -173,7 +173,7 @@ export default () => {
 
     // 4. Show created views
     return new CanvasView({
-        view: gridController.view,
+        view: gridController,
         canvas: {
             height: '250px',
             width: '400px'

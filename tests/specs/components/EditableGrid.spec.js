@@ -127,7 +127,7 @@ describe('Components', () => {
         it('should initialize', () => {
             const collection = new Backbone.Collection(data);
 
-            const gridController = new core.list.controllers.GridController({
+            const gridController = new Core.list.GridView({
                 columns,
                 selectableBehavior: 'multi',
                 showToolbar: true,
@@ -140,7 +140,7 @@ describe('Components', () => {
             window.app
                 .getView()
                 .getRegion('contentRegion')
-                .show(gridController.view);
+                .show(gridController);
 
             expect(true).toBe(true);
         });
@@ -148,7 +148,7 @@ describe('Components', () => {
         it('should search when typing in search box', done => {
             const collection = new Backbone.Collection(data);
 
-            const gridController = new core.list.controllers.GridController({
+            const gridController = new Core.list.GridView({
                 columns,
                 selectableBehavior: 'multi',
                 showToolbar: true,
@@ -157,14 +157,14 @@ describe('Components', () => {
                 collection,
                 title: 'Editable grid'
             });
-            const view = gridController.view;
+            const view = gridController;
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
 
-            gridController.view.listView.collection.on('change', () => {
-                expect(gridController.view.listView.collection.length).toEqual(1111);
+            gridController.listView.collection.on('change', () => {
+                expect(gridController.listView.collection.length).toEqual(1111);
                 done();
             });
 
@@ -178,7 +178,7 @@ describe('Components', () => {
                it('should correctly apply access modificators', done => {
                    const collection = new Backbone.Collection(data);
 
-                   const gridController = new core.list.controllers.GridController({
+                   const gridController = new Core.list.GridView({
                        columns: dependantColumns,
                        selectableBehavior: 'multi',
                        collection,
@@ -214,7 +214,7 @@ describe('Components', () => {
                it('should update toolbar on row checkbox select', done => {
                    const collection = new Backbone.Collection(data);
 
-                   const gridController = new core.list.controllers.GridController({
+                   const gridController = new Core.list.GridView({
                        columns,
                        selectableBehavior: 'multi',
                        showToolbar: true,

@@ -57,7 +57,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const availableList = (this.availableList = new Core.list.controllers.GridController({
+        const availableList = (this.availableList = new Core.list.GridView({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
             showSearch: true,
@@ -93,7 +93,7 @@ export default Marionette.View.extend({
         this.showChildView('availableItemsListRegion', availableList);
         availableList.setLoading(this.model.initialized);
 
-        const selectedList = new Core.list.controllers.GridController({
+        const selectedList = new Core.list.GridView({
             collection: this.model.get('selected'),
             selectableBehavior: 'multi',
             columns: [

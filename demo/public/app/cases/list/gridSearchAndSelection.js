@@ -57,7 +57,7 @@ export default function() {
     ];
 
     // 3. Create grid
-    const gridController = new Core.list.controllers.GridController({
+    const gridController = new Core.list.GridView({
         columns,
         selectableBehavior: 'multi',
         // disableMultiSelection: true, //another case of API
@@ -164,7 +164,7 @@ export default function() {
 
     // 4. Show created views
     const canvasView = new CanvasView({
-        view: gridController.view,
+        view: gridController,
         canvas: {
             height: '250px',
             width: '400px'
