@@ -13,20 +13,67 @@ const classes = {
     ERROR: 'error'
 };
 
+const editorFieldExtention = {
+    validate() {
+        const error = this.editor.validate();
+        if (error) {
+            this.setError([error]);
+        } else {
+            this.clearError();
+        }
+        return error;
+    },
+
+    setError(errors: Array<any>): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+
+        this.$el.addClass(classes.ERROR);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('errorTextRegion', errorPopout);
+            this.isErrorShown = true;
+        }
+    },
+
+    clearError(): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.editor.$el.removeClass(classes.ERROR);
+        this.errorCollection && this.errorCollection.reset();
+    },
+
+    setRequired(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.editor.$el.toggleClass(classes.REQUIRED, Boolean(required));
+    }
+};
+
 export default class {
     constructor(options = {}) {
-        this.schema = options.schema;
-
         this.fieldId = _.uniqueId('field-');
         this.model = options.model;
         this.__createEditor(options, this.fieldId);
 
-        if (this.schema.getReadonly || this.schema.getHidden) {
+        if (options.schema.getReadonly || options.schema.getHidden) {
             this.model.on('change', this.__updateExternalChange);
         }
 
-        if (this.schema.updateEditorEvents) {
-            this.model.on(this.schema.updateEditorEvents, this.__updateEditor);
+        if (options.schema.updateEditorEvents) {
+            this.model.on(options.schema.updateEditorEvents, this.__updateEditor);
         }
 
         return this.editor;
@@ -55,53 +102,6 @@ export default class {
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
     }
 
-    validate() {
-        const error = this.editor.validate();
-        if (error) {
-            this.setError([error]);
-        } else {
-            this.clearError();
-        }
-        return error;
-    }
-
-    setError(errors: Array<any>): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-
-        this.$el.addClass(classes.ERROR);
-        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
-        if (!this.isErrorShown) {
-            const errorPopout = dropdown.factory.createPopout({
-                buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
-                panelViewOptions: {
-                    collection: this.errorCollection
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            this.showChildView('errorTextRegion', errorPopout);
-            this.isErrorShown = true;
-        }
-    }
-
-    clearError(): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.editor.$el.removeClass(classes.ERROR);
-        this.errorCollection && this.errorCollection.reset();
-    }
-
-    setRequired(required) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.editor.$el.toggleClass(classes.REQUIRED, Boolean(required));
-    }
-
     __updateEditorState(readonly, enabled) {
         if (!this.__checkUiReady()) {
             return;
@@ -122,27 +122,35 @@ export default class {
     __createEditor(options, fieldId) {
         let schemaExtension = {};
 
-        if (_.isFunction(this.schema.schemaExtension)) {
-            schemaExtension = this.schema.schemaExtension(this.model);
+        if (_.isFunction(options.schema.schemaExtension)) {
+            schemaExtension = options.schema.schemaExtension(this.model);
         }
 
-        this.schema = Object.assign({}, this.schema, schemaExtension);
+        const schema = Object.assign({}, options.schema, schemaExtension);
 
-        const EditorConsturctor = typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type;
+        const EditorConstructor = formRepository.editors[schema.type];
+        const FieldConstructor = EditorConstructor.extend(editorFieldExtention);
 
-        this.editor = new EditorConsturctor({
-            schema: this.schema,
+        this.editor = new FieldConstructor({
+            schema,
             form: options.form,
-            field: this,
             class: options.class,
             key: options.key,
             model: this.model,
+            template(data) {
+                const fullData = Object.assign({}, data, schema);
+                const html = EditorConstructor.prototype.template(fullData);
+
+                const betterTemplate = template.replace('<!--js-editor-region -->', html);
+
+                return Handlebars.compile(betterTemplate)(fullData);
+            },
             id: this.__createEditorId(options.key),
             value: options.value,
             fieldId,
-            setRequired: this.setRequired.bind(this),
             tagName: options.tagName
         });
+
         this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());
