@@ -70,23 +70,23 @@ const defaultOptions = options => ({
 
 export default Marionette.View.extend({
     initialize(options) {
-        _.defaults(options, defaultOptions(options));
-        const comparator = factory.getDefaultComparator(options.columns);
+        _.defaults(this.options, defaultOptions(options));
+        const comparator = factory.getDefaultComparator(this.options.columns);
 
-        this.collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
+        this.collection = factory.createWrappedCollection(Object.assign({}, this.options, { comparator }));
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
 
-        if (options.columns === undefined) {
+        if (this.options.columns === undefined) {
             throw new Error('You must provide columns definition ("columns" option)');
         }
 
-        if (typeof options.transliteratedFields === 'object') {
-            transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
+        if (typeof this.options.transliteratedFields === 'object') {
+            transliterator.setOptionsToFieldsOfNewSchema(this.options.columns, this.options.transliteratedFields);
         }
 
-        options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+        this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
@@ -104,7 +104,7 @@ export default Marionette.View.extend({
             this.headerView = new HeaderView(
                 _.defaultsPure(
                     {
-                        columns: options.columns,
+                        columns: this.options.columns,
                         gridEventAggregator: this,
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
@@ -121,7 +121,7 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
-        this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
+        this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
         if (this.isEditable) {
             this.editableCellsIndexes = [];
             this.options.columns.forEach((column, index) => {
@@ -178,13 +178,13 @@ export default Marionette.View.extend({
             }
         }
         */
-        if (options.showToolbar) {
+        if (this.options.showToolbar) {
             this.toolbarView = new ToolbarView({
-                allItemsCollection: options.actions || new Backbone.Collection()
+                allItemsCollection: allToolbarActions || new Backbone.Collection()
             });
             this.listenTo(this.toolbarView, 'command:execute', this.__executeAction);
         }
-        if (options.showSearch) {
+        if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
