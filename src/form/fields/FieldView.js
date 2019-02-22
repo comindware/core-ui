@@ -50,7 +50,7 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.editor.$el.removeClass(classes.ERROR);
+        this.$el.removeClass(classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -58,7 +58,11 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.editor.$el.toggleClass(classes.REQUIRED, Boolean(required));
+        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
+    },
+
+    __checkUiReady() {
+        return this.isRendered() && !this.isDestroyed();
     }
 };
 
@@ -106,16 +110,16 @@ export default class {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.editor.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.editor.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
+        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
+        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     }
 
     __updateExternalChange() {
         if (typeof this.schema.getReadonly === 'function') {
-            this.editor.setReadonly(this.schema.getReadonly(this.model));
+            this.setReadonly(this.schema.getReadonly(this.model));
         }
         if (typeof this.schema.getHidden === 'function') {
-            this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
+            this.setHidden(Boolean(this.schema.getHidden(this.model)));
         }
     }
 
@@ -148,7 +152,7 @@ export default class {
             id: this.__createEditorId(options.key),
             value: options.value,
             fieldId,
-            tagName: options.tagName
+            tagName: options.tagName || 'div'
         });
 
         this.key = options.key;
@@ -170,9 +174,5 @@ export default class {
             return `${this.model.cid}_${key}`;
         }
         return key;
-    }
-
-    __checkUiReady() {
-        return this.editor.isRendered() && !this.editor.isDestroyed();
     }
 }
