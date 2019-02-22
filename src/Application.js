@@ -60,7 +60,6 @@ export default {
         marionetteApp.options = options;
 
         CTEventsService.initialize();
-        MobileService.initialize();
 
         if (options.navigationConfiguration) {
             marionetteApp.navigationController = new options.navigationConfiguration.controller({
