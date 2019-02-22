@@ -14,8 +14,7 @@ const classes = {
 };
 
 const editorFieldExtention = {
-    validate() {
-        const error = this.editor.validate();
+    validate(error) {
         if (error) {
             this.setError([error]);
         } else {
@@ -141,6 +140,11 @@ export default class {
             form: options.form,
             class: options.class,
             key: options.key,
+            validate() {
+                const errors = EditorConstructor.prototype.validate();
+
+                FieldConstructor.prototype.validate(errors);
+            },
             model: this.model,
             template(data) {
                 const fullData = Object.assign({}, data, schema);
