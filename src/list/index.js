@@ -4,7 +4,6 @@ import GridHeaderView from './views/header/GridHeaderView';
 import GridView from './views/GridView';
 import ListView from './views/CollectionView';
 import RowView from './views/RowView';
-import EditableGridFieldView from './views/EditableGridFieldView';
 import ListItemViewBehavior from './behaviors/ListItemViewBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
@@ -34,7 +33,6 @@ export default {
         GridView,
         ListView,
         RowView,
-        EditableGridFieldView,
 
         behaviors: {
             ListItemViewBehavior

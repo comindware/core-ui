@@ -63,6 +63,14 @@ const editorFieldExtention = {
 
     __checkUiReady() {
         return this.isRendered() && !this.isDestroyed();
+    },
+
+    __updateEditorState(readonly, enabled) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
+        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     }
 };
 
@@ -70,6 +78,7 @@ export default class {
     constructor(options = {}) {
         this.fieldId = _.uniqueId('field-');
         this.model = options.model;
+        options.template = options.template || template;
         this.__createEditor(options, this.fieldId);
 
         if (options.schema.getReadonly || options.schema.getHidden) {
@@ -106,14 +115,6 @@ export default class {
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
     }
 
-    __updateEditorState(readonly, enabled) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
-    }
-
     __updateExternalChange() {
         if (typeof this.schema.getReadonly === 'function') {
             this.setReadonly(this.schema.getReadonly(this.model));
@@ -145,7 +146,7 @@ export default class {
                 const fullData = Object.assign({}, data, schema);
                 const html = EditorConstructor.prototype.template(fullData);
 
-                const betterTemplate = template.replace('<!--js-editor-region -->', html);
+                const betterTemplate = options.template.replace('<!--js-editor-region -->', html);
 
                 return Handlebars.compile(betterTemplate)(fullData);
             },
@@ -157,10 +158,10 @@ export default class {
 
         this.key = options.key;
         this.editor.on('readonly', readonly => {
-            this.__updateEditorState(readonly, this.editor.getEnabled());
+            this.editor.__updateEditorState(readonly, this.editor.getEnabled());
         });
         this.editor.on('enabled', enabled => {
-            this.__updateEditorState(this.editor.getReadonly(), enabled);
+            this.editor.__updateEditorState(this.editor.getReadonly(), enabled);
         });
     }
 

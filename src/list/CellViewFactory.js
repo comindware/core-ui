@@ -1,22 +1,18 @@
 //@flow
 import { objectPropertyTypes, contextIconType } from '../Meta';
 import { dateHelpers } from 'utils';
-import EditableGridFieldView from '../form/fields/FieldView';
+import FieldView from '../form/fields/FieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 
 let factory;
-
-type CellExtention = {
-    templateContext(): Object
-};
 
 type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            return EditableGridFieldView;
+            return FieldView;
         }
 
         return factory.getCellHtml(column, model);

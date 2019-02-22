@@ -1,6 +1,7 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
+import editableCellField from '../templates/editableCellField.hbs';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -155,7 +156,8 @@ export default Marionette.View.extend({
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key,
-                tagName: 'td'
+                tagName: 'td',
+                template: editableCellField
             });
 
             cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
