@@ -251,6 +251,10 @@ export default Marionette.View.extend({
         return this.topPopupId === popupId;
     },
 
+    toggleFadeBackground(isToggleForced) {
+        return this.fadeBackground(isToggleForced);
+    },
+
     async closeTopPopup() {
         if (this.__stack.length === 0) {
             return;

@@ -101,6 +101,10 @@ export default {
         return this.__popupStackView.isPopupOnTop(popupId);
     },
 
+    toggleFadeBackground() {
+        return this.__popupStackView.toggleFadeBackground();
+    },
+
     __keyAction(event) {
         if (event.keyCode === 27) {
             this.__popupStackView.closeTopPopup();
