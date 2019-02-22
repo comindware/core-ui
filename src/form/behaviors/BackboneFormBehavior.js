@@ -44,7 +44,7 @@ const Form = Marionette.MnObject.extend({
                     schema: fieldScema,
                     model: this.model
                 });
-                this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+                this.listenTo(field, 'all', this.__handleEditorEvent);
             } catch (e) {
                 field = new ErrorPlaceholderView();
                 Core.InterfaceError.logError(e, field.getId());
@@ -114,7 +114,7 @@ const Form = Marionette.MnObject.extend({
         if (!field) {
             throw new Error(`Field not found: ${key}`);
         }
-        return field.editor;
+        return field;
     },
 
     /**
@@ -259,7 +259,7 @@ const Form = Marionette.MnObject.extend({
         if (!field) {
             return;
         }
-        field.editor.focus();
+        field.focus();
     },
 
     /**
@@ -270,9 +270,9 @@ const Form = Marionette.MnObject.extend({
             return;
         }
 
-        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.hasFocus);
         if (focusedField) {
-            focusedField.editor.blur();
+            focusedField.blur();
         }
     },
 
