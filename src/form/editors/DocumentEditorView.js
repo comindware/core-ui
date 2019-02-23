@@ -368,7 +368,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
                         const streamId = tempResult.fileIds[i];
                         model.set({
                             streamId,
-                            isLoading: false,
+                            isLoading: false
                         });
                         const id = this.options.createDocument?.(model.toJSON());
                         if (id) {
@@ -501,12 +501,13 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         if (this.isDestroyed()) {
             return;
         }
-        if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
+        const documentElements = this.$container.children();
+        if (documentElements.length === 0) {
             this.ui.showMore.hide();
             return;
         }
         const affordabletWidth = this.$el.width();
-        const childViews = this.getChildViewContainer(this).children();
+        const childViews = documentElements;
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
         const length = this.collection.length;
@@ -530,9 +531,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
     },
 
     expandShowMore() {
-        this.getChildViewContainer(this)
-            .children()
-            .show();
+        this.$container.children().show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },
