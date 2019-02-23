@@ -536,7 +536,7 @@ export default Marionette.View.extend({
         if (!this.options.emptyView) {
             return;
         }
-        if (this.listView.isEmpty()) {
+        if (this.collection.visibleModels.length === 0) {
             this.emptyViewClass = this.emptyViewClass || (() => `.${new this.options.emptyView().className}`)();
             const empty$el = this.listView.$el.find(this.emptyViewClass);
 

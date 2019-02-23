@@ -63,6 +63,7 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
+        tap: '__handleTap',
         contextmenu: '__handleContextMenu'
     },
 
@@ -372,7 +373,16 @@ export default Marionette.View.extend({
     },
 
     __handleDblClick() {
-        this.gridEventAggregator.trigger('dblclick', this.model);
+        if (!Core.services.MobileService.isMobile) {
+            this.gridEventAggregator.trigger('row:tap', this.model);
+            this.gridEventAggregator.trigger('dblclick', this.model);
+        }
+    },
+
+    __handleTap() {
+        if (Core.services.MobileService.isMobile) {
+            this.gridEventAggregator.trigger('row:tap', this.model);
+        }
     },
 
     __handleSelection() {

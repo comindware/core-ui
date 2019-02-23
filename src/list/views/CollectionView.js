@@ -193,9 +193,33 @@ export default Marionette.CollectionView.extend({
     __updateEmpty(isEmpty) {
         typeof this.$el.toggleClass === 'function' && this.$el.toggleClass(classes.empty, isEmpty);
     },
+    //overwrite native render method to pass correct collection.
+    render() {
+        if (this._isDestroyed) {
+            return this;
+        }
+        this.triggerMethod('before:render', this);
 
-    _addChildModels(models) {
-        return this.collection.visibleModels.map(this._addChildModel.bind(this));
+        this._destroyChildren();
+
+        if (this.collection) {
+            this._addChildModels(this.collection.visibleModels);
+            this._initialEvents();
+        }
+
+        const template = this.getTemplate();
+
+        if (template) {
+            this._renderTemplate(template);
+            this.bindUIElements();
+        }
+        this._getChildViewContainer();
+        this.sort();
+
+        this._isRendered = true;
+
+        this.triggerMethod('render', this);
+        return this;
     },
 
     // override default method to correct add then index === 0 in visible collection

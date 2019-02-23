@@ -146,14 +146,6 @@ export default class {
                 FieldConstructor.prototype.validate(errors);
             },
             model: this.model,
-            template(data) {
-                const fullData = Object.assign({}, data, schema);
-                const html = EditorConstructor.prototype.template(fullData);
-
-                const betterTemplate = options.template.replace('<!--js-editor-region -->', html);
-
-                return Handlebars.compile(betterTemplate)(fullData);
-            },
             id: this.__createEditorId(options.key),
             value: options.value,
             fieldId,
@@ -166,6 +158,13 @@ export default class {
         });
         this.editor.on('enabled', enabled => {
             this.editor.__updateEditorState(this.editor.getReadonly(), enabled);
+        });
+
+        this.editor.on('before:attach', () => {
+            const fieldTempParts = Handlebars.compile(options.template)(schema).split('<!--js-editor-region -->');
+
+            this.editor.$el.before(fieldTempParts[0]);
+            this.editor.$el.after(fieldTempParts[1]);
         });
     }
 
