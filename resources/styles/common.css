@@ -392,12 +392,12 @@ a:hover {
 .l-loader {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.1s linear;
+    transition: visibility 0.1s, opacity 0.1s linear;
 }
 .l-loader.visible-loader {
     visibility: visible;
     opacity: 1;
-    transition: visibility 0s, opacity 0.1s linear;
+    transition: visibility 0.1s, opacity 0.1s linear;
 }
 .l-loader:not(:empty) {
     position: absolute;
