@@ -22,12 +22,14 @@
     top: 0;
     bottom: 0;
     z-index: 100;
-    display: none;
+    visibility: hidden;
+    transition: visibility 0, opacity 0.1s;
 }
 
 .fadingPanel_open {
     opacity: .5;
-    display: block;
+    visibility: visible;
+    transition: visibility 0, opacity 0.1s;
 }
 
 .popup-fade {
