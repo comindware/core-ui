@@ -213,6 +213,7 @@ export default Marionette.View.extend({
             this.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
+        this.el.classList.add('.dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 

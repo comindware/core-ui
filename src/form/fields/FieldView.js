@@ -91,29 +91,6 @@ export default class {
         return this.editor;
     }
 
-    onRender() {
-        this.showChildView('editorRegion', this.editor);
-        if (this.schema.helpText) {
-            const viewModel = new Backbone.Model({
-                helpText: this.schema.helpText,
-                errorText: null
-            });
-
-            const infoPopout = dropdown.factory.createPopout({
-                buttonView: InfoButtonView,
-                panelView: TooltipPanelView,
-                panelViewOptions: {
-                    model: viewModel,
-                    textAttribute: 'helpText'
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            this.showChildView('helpTextRegion', infoPopout);
-        }
-        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-    }
-
     __updateExternalChange() {
         if (typeof this.schema.getReadonly === 'function') {
             this.setReadonly(this.schema.getReadonly(this.model));
@@ -165,6 +142,35 @@ export default class {
 
             this.editor.$el.before(fieldTempParts[0]);
             this.editor.$el.after(fieldTempParts[1]);
+
+            if (schema.helpText) {
+                const viewModel = new Backbone.Model({
+                    helpText: schema.helpText,
+                    errorText: null
+                });
+
+                const infoPopout = dropdown.factory.createPopout({
+                    buttonView: InfoButtonView,
+                    panelView: TooltipPanelView,
+                    panelViewOptions: {
+                        model: viewModel,
+                        textAttribute: 'helpText'
+                    },
+                    popoutFlow: 'right',
+                    customAnchor: true
+                });
+
+                this.editor.addRegion('helpTextRegion', {
+                    el: this.editor.$el.parent().find('.js-help-text-region')
+                });
+
+                this.editor.showChildView('helpTextRegion', infoPopout);
+            }
+
+            this.editor.addRegion('errorTextRegion', {
+                el: this.editor.$el.parent().find('.js-error-text-region')
+            });
+            this.editor.__updateEditorState(schema.readonly, schema.enabled);
         });
     }
 
