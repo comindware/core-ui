@@ -267,6 +267,7 @@ body {
     overflow: auto;
     flex: 1 1;
     background-color: white;
+    min-height: 30%;
 }
 .demo-content__description {
     font-size: 32px;

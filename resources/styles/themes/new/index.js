@@ -252,7 +252,8 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'input-disabled-theme': {
-        'background-color': variables['grey-100']
+        'background-color': 'transparent',
+        'border-color': 'transparent'
     },
     'cell-input-disabled-theme': {
         'background-color': 'transparent'

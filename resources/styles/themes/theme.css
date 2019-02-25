@@ -100,6 +100,13 @@ body {
   @apply --input-disabled-theme;
 }
 
+.editor_disabled .input,
+.editor_disabled .textarea,
+.editor_disabled .bubbles,
+.editor.context_select.editor_disabled {
+  user-select: none;
+}
+
 .cell .editor_disabled .input,
 .cell .editor_disabled .input:hover,
 .cell .editor_readonly .input,
@@ -615,7 +622,7 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
   @apply --dropdown-caret-theme;
 }
 .editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {
-  color: inherit;
+  display: none;
 }
 .bubbles .editor__icons {
   cursor: pointer;

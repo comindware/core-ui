@@ -227,8 +227,8 @@ module.exports.apply = {
         'line-height': variables['line-height']
     },
     'input-disabled-theme': {
-        'border-bottom-color': 'transparent',
-        background: 'none'
+        'background-color': 'transparent',
+        'border-color': 'transparent'
     },
     'input-search-clear-theme': {
         width: '26px',
