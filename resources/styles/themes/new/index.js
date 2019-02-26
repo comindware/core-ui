@@ -177,7 +177,6 @@ module.exports.apply = {
         transform: 'translateY(-50%)'
     },
     'button-theme': {
-        display: 'inline-block',
         'vertical-align': 'middle',
         cursor: 'pointer',
         'font-size': '15px',
