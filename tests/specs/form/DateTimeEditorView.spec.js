@@ -8,6 +8,8 @@ import FocusTests from './FocusTests';
 const someDate = moment('1986-09-04T17:30:00.000Z');
 const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
 
+const roundingAccuracyMs = 10000;
+
 const formats = [
     {
         id: 'ShortDate',
@@ -1230,12 +1232,12 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / 1000);
+                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / roundingAccuracyMs);
 
-                expect(Math.round(moment(view.value).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                expect(Math.round(moment(view.value).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
 
                 model.on('change:date', (model, date) => {
-                    expect(Math.round(moment(date).valueOf() / 1000)).toEqual(shouldBeMilliseconds);
+                    expect(Math.round(moment(date).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
                     done();
                 });
 
