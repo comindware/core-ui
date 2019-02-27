@@ -168,7 +168,7 @@ export default {
                 if (this.schema.required && this.options.setRequired) {
                     this.options.setRequired(isEmpty);
                 }
-                this.$el.toggleClass(classes.EMPTY, isEmpty);
+                this.$el.toggleClass(classes.EMPTY, Boolean(isEmpty));
             },
 
             /**
