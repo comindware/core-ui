@@ -7,15 +7,15 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "autoprefixer": "^8.6.5",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.10",
-    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
@@ -34,7 +34,7 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.0",
+    "webpack-dev-server": "^3.2.1",
     "webpack-pwa-manifest": "^4.0.0",
     "workbox-webpack-plugin": "^3.6.3"
   },

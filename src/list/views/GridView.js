@@ -366,8 +366,6 @@ export default Marionette.View.extend({
 
         this.showChildView('contentRegion', this.listView);
 
-        this.__updateEmptyView();
-
         if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
