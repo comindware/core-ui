@@ -130,6 +130,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         return this.value;
     },
 
+    isEmptyValue() {
+        return !this.getValue().length;
+    },
+
     onRender() {
         this.renderUploadButton(this.options.readonly);
     },

@@ -50,6 +50,7 @@ export default FieldView.extend({
         }
         this.__showMenuView();
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
+        this.editor?.__updateEmpty();
     },
 
     __showMenuView() {
@@ -94,6 +95,7 @@ export default FieldView.extend({
             model: this.model,
             id: this.__createEditorId(options.key),
             value: this.options.value,
+            fieldUpdateEmpty: this.__updateEmpty.bind(this),
             fieldId
         };
         this.editor = new EditorConsturctor(this.editorConfig);
