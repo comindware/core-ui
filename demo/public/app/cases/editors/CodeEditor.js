@@ -18,7 +18,7 @@ export default function() {
         key: 'code'
     });
 
-    editorView.editor.validate();
+    editorView.validate();
 
     return new CanvasView({
         view: editorView,

@@ -269,41 +269,12 @@ const VirtualCollection = Backbone.Collection.extend({
         }
         this.internalUpdate = true;
 
-        const actualWindowSize = this.visibleModels.length;
-        const delta = newPosition - this.state.position;
-        let oldValues = [];
-        let newValues = [];
-        if (Math.abs(delta) < actualWindowSize) {
-            // update collection via add/remove
-            if (delta > 0) {
-                oldValues = this.visibleModels.splice(0, delta);
-                this.visibleLength -= oldValues.length;
-                newValues = this.models.slice(this.state.position + actualWindowSize, this.state.position + actualWindowSize + delta);
-                this.visibleLength += newValues.length;
-                this.visibleModels.push(...newValues);
-            } else {
-                if (this.visibleLength >= this.state.windowSize) {
-                    // oldValues = this.innerCollection.last(-delta);
-                    oldValues = this.visibleModels.splice(this.visibleModels.length + delta, this.visibleModels.length);
-                    this.visibleLength -= oldValues.length;
-                }
+        this.state.position = newPosition;
+        const oldModels = this.visibleModels.concat();
+        this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
+        this.visibleLength = this.visibleModels.length;
+        this.__processDiffs(oldModels);
 
-                newValues = this.models.slice(newPosition, newPosition - delta);
-                this.visibleLength += newValues.length;
-                this.visibleModels.unshift(...newValues);
-            }
-            this.__removeModels(oldValues);
-            // newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
-            newValues.forEach(value => this.__addModel(value));
-            this.state.position = newPosition;
-            this.visibleLength = this.visibleModels.length;
-        } else {
-            this.state.position = newPosition;
-            const oldModels = this.visibleModels.concat();
-            this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
-            this.visibleLength = this.visibleModels.length;
-            this.__processDiffs(oldModels);
-        }
         this.internalUpdate = false;
 
         return newPosition;
