@@ -129,7 +129,11 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     isEmptyValue() {
-        return !this.collection.length;
+        return !this.getValue().length;
+    },
+
+    onRender() {
+        this.renderUploadButton(this.options.readonly);
     },
 
     __onDragenter(e) {
@@ -335,7 +339,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                         const streamId = tempResult.fileIds[i];
                         model.set({
                             streamId,
-                            isLoading: false,
+                            isLoading: false
                         });
                         const id = this.options.createDocument?.(model.toJSON());
                         if (id) {

@@ -13,7 +13,8 @@ const defaultOptions = {
     propertyTypes: undefined,
     usePropertyTypes: true,
     allowBlank: false,
-    instanceRecordTypeId: undefined
+    instanceRecordTypeId: undefined,
+    isInstanceExpandable: true
 };
 
 export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
@@ -180,7 +181,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         Object.values(deepContext).forEach(entry =>
             entry.forEach(innerEntry => {
-                if (innerEntry.get('type') === 'Instance') {
+                if (innerEntry.get('type') === 'Instance' && this.options.isInstanceExpandable) {
                     const model = deepContext[innerEntry.get('instanceTypeId')];
                     if (model) {
                         innerEntry.children = new Backbone.Collection(model.toJSON());

@@ -95,7 +95,20 @@ export default class {
         this.errorCollection && this.errorCollection.reset();
     }
 
-    setRequired(required) {
+    setRequired(required = this.schema.required) {
+        this.schema.required = required;
+        this.__updateEmpty();
+    },
+
+    __updateEmpty(isEmpty = this.editor?.isEmptyValue()) {
+        if (this.schema.required) {
+            this.__toggleRequiredClass(isEmpty);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -141,7 +154,8 @@ export default class {
             value: options.value,
             fieldId,
             setRequired: this.setRequired.bind(this),
-            tagName: options.tagName
+            tagName: options.tagName,
+            fieldUpdateEmpty: this.__updateEmpty.bind(this)
         });
         this.key = options.key;
         this.editor.on('readonly', readonly => {
