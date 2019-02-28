@@ -48,6 +48,7 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
                 method,
                 body: body ? JSON.stringify(body) : null,
                 headers: {
+                    Accept: 'application/json',
                     'Content-type': 'application/json'
                 }
             },
