@@ -117,8 +117,6 @@ export default Marionette.View.extend({
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', this.__updateEmptyView);
-            this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -527,25 +525,6 @@ export default Marionette.View.extend({
                 this.collection.trigger('dragleave:head');
             }
             this.collection.dragoverModel = null;
-        }
-    },
-
-    __updateEmptyView(allColumnsWidth) {
-        if (!this.options.emptyView) {
-            return;
-        }
-        if (this.collection.visibleModels.length === 0) {
-            this.emptyViewClass = this.emptyViewClass || (() => `.${new this.options.emptyView().className}`)();
-            const empty$el = this.listView.$el.find(this.emptyViewClass);
-
-            if (allColumnsWidth && empty$el) {
-                empty$el && empty$el.width(allColumnsWidth);
-            }
-
-            this.ui.content.css({
-                'min-height': `${this.listView.childHeight}px`,
-                height: '100%'
-            });
         }
     },
 
