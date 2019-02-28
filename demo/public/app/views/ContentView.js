@@ -81,9 +81,7 @@ export default Marionette.View.extend({
             );
             this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView());
         }
-    },
 
-    onAttach() {
         const toolbar = new Core.components.Toolbar({
             allItemsCollection: new Backbone.Collection([
                 {
@@ -114,16 +112,19 @@ export default Marionette.View.extend({
             ])
         });
 
+        
+        this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
+
+        this.showChildView('toolbarRegion', toolbar);
+    },
+
+    onAttach() {
         let path;
         if (this.model.id) {
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}/${this.model.id}`;
         } else {
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}`;
         }
-
-        this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
-
-        this.showChildView('toolbarRegion', toolbar);
 
         const text = requireText(`./${path}`);
 
@@ -298,7 +299,7 @@ export default Marionette.View.extend({
             case 'component':
                 this.$('.js-case-representation-region').toggle();
                 break;
-            case 'attribute':
+            case 'attributes':
                 this.$('.js-attributes-configuration-region').toggle();
                 break;
             case 'code':

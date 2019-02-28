@@ -241,6 +241,12 @@ body {
   padding: var(--form-label-padding);
 }
 
+.editor_document.editor_empty.editor_disabled .emptyDocumentPlaceholder,
+.editor_document.editor_empty.editor_readonly .emptyDocumentPlaceholder{
+  padding: var(--form-label-padding);
+  margin-left: 0;
+}
+
 .radiobutton {
   width: var(--radio-size);
   height: var(--radio-size);
