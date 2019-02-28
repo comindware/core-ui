@@ -538,7 +538,7 @@ export default Marionette.View.extend({
         });
     },
 
-    __onSearch(text, columns, collection) {
+    __onSearch(text) {
         if (this.options.isTree) {
             this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
@@ -547,11 +547,11 @@ export default Marionette.View.extend({
             return;
         }
         if (text) {
-            this.__applyFilter(new RegExp(text, 'i'), columns, collection);
-            this.__highlightCollection(text, collection);
+            this.__applyFilter(new RegExp(text, 'i'), this.options.columns, this.collection);
+            this.__highlightCollection(text, this.collection);
         } else {
-            this.__clearFilter(collection);
-            this.__unhighlightCollection(collection);
+            this.__clearFilter(this.collection);
+            this.__unhighlightCollection(this.collection);
         }
     },
 

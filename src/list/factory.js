@@ -1,7 +1,7 @@
 import { comparators, helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/CollectionView';
-import EmptyListView from './views/EmptyListView';
+import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
 
 export const getDefaultComparator = (columns = []) => {
@@ -83,7 +83,7 @@ const factory = {
         const listViewOptions = _.extend(
             {
                 collection,
-                emptyView: EmptyListView
+                emptyView: EmptyGridView
             },
             options.listViewOptions
         );

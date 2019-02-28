@@ -114,8 +114,9 @@ export default () => {
         },
         {
             key: 'documentCell',
-            type: 'Document',
-            dataType: 'Document',
+            type: 'Datalist',
+            dataType: 'Datalist',
+            format: 'document',
             title: 'Document',
             editable: true,
             autocommit: true

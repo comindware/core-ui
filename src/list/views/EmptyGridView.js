@@ -20,6 +20,8 @@ export default Marionette.View.extend({
         };
     },
 
+    tagName: 'tr',
+
     template: Handlebars.compile(template),
 
     className: 'empty-view'

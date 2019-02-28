@@ -1,4 +1,3 @@
-import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import GridHeaderView from './views/header/GridHeaderView';
 import GridView from './views/GridView';
@@ -27,7 +26,6 @@ export default {
      * @namespace
      * */
     views: {
-        EmptyListView,
         EmptyGridView,
         GridHeaderView,
         GridView,

@@ -222,6 +222,26 @@ export default Marionette.CollectionView.extend({
         return this;
     },
 
+    _onCollectionUpdate(collection, options) {
+        const changes = options.changes;
+
+        // Remove first since it'll be a shorter array lookup.
+        const removedViews = changes.removed.length && this._removeChildModels(changes.removed);
+
+        this._addedViews = changes.added.length && this._addChildModels(changes.added);
+
+        requestAnimationFrame(() => {
+            this._detachChildren(removedViews);
+            this.sort();
+
+            // Destroy removed child views after all of the render is complete
+            this._removeChildViews(removedViews);
+        });
+    },
+
+    // Sorts views by viewComparator and sets the children to the new order
+    _sortChildren() {},
+
     // override default method to correct add then index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
