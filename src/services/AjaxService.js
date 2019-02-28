@@ -48,8 +48,9 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
                 method,
                 body: body ? JSON.stringify(body) : null,
                 traditional: true,
-                dataType: 'json',
-                contentType: 'application/json'
+                headers: {
+                    'Content-type': 'application/json'
+                }
             },
             options || {}
         );
@@ -70,6 +71,9 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
             fetch(url, {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    'Content-type': 'application/json'
+                },
                 processData: false,
                 contentType: false
             })
