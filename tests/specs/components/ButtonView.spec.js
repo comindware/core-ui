@@ -14,7 +14,7 @@ describe('Components', () => {
                 .getRegion('contentRegion')
                 .show(button);
 
-            expect(button.$('.btn__text').html()).toEqual('Button text');
+            expect(button.$('.toolbar-btn__text').html()).toEqual('Button text');
         });
 
         it('should trigger callback on button press', done => {

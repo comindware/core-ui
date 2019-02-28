@@ -53,7 +53,20 @@ const editorFieldExtention = {
         this.errorCollection && this.errorCollection.reset();
     },
 
-    setRequired(required) {
+    setRequired(required = this.schema.required) {
+        this.schema.required = required;
+        this.__updateEmpty();
+    },
+
+    __updateEmpty(isEmpty = this.editor?.isEmptyValue()) {
+        if (this.schema.required) {
+            this.__toggleRequiredClass(isEmpty);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -126,7 +139,10 @@ export default class {
             id: this.__createEditorId(options.key),
             value: options.value,
             fieldId,
-            tagName: options.tagName || 'div'
+            tagName: options.tagName || 'div',
+            fieldUpdateEmpty: (...args) => {
+                this.editor.__updateEmpty(...args);
+            }
         });
 
         this.key = options.key;

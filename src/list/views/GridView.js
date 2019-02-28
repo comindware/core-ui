@@ -401,7 +401,6 @@ export default Marionette.View.extend({
             });
         }
 
-        this.listenTo(this.listView, 'search', text => this.__onSearch(text, this.options.columns, this.collection));
         this.listenTo(this.listView, 'execute:action', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
     },

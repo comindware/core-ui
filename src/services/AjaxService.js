@@ -1,5 +1,6 @@
 import PromiseService from './PromiseService';
 import MobileService from './MobileService';
+import helpers from '../utils/helpers';
 
 const methodName = {
     mvc: 'Mvc',

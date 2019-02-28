@@ -54,9 +54,11 @@ export default {
             const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
             if (canLeave !== true) {
-                // We need just to return smth to show default drowser leaving alert
-                (e || window.event).returnValue = '42';
-                return '42';
+                const tabCloseLeavingMessage = this.activeModule.tabCloseLeavingMessage || 'Do you wanna leave?';
+
+                (e || window.event).returnValue = tabCloseLeavingMessage;
+
+                return tabCloseLeavingMessage;
             }
         });
     },

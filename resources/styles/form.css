@@ -175,6 +175,23 @@ rgba(5,117,189,.5) // user avatar btn
     justify-content: flex-start;
 }
 
+.editor_document .emptyDocumentPlaceholder{
+    display: none;
+}
+.editor_document.editor_empty .emptyDocumentPlaceholder{
+    display: block;
+}
+
+.editor_document.editor_readonly .documents__drop-zone,
+.editor_document.editor_disabled .documents__drop-zone{
+    display: none;
+}
+
+.editor_document.editor_readonly .documents,
+.editor_document.editor_disabled .documents{
+    margin-top: 0;
+}
+
 .editor_readonly,
 .editor_disabled{
     cursor: default;

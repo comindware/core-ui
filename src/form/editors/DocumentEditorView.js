@@ -39,7 +39,6 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
 
         this.collection = new DocumentsCollection(this.value);
 
-        this.on('change', this.checkEmpty.bind(this));
         this.on('uploaded', documents => {
             if (this.options.multiple === false) {
                 this.collection.reset();
@@ -61,11 +60,6 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         }
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
-    },
-
-    checkEmpty() {
-        //ToDo pass condition as isEmptyValue method, remove pr-empty class, add his logic on .editor_document.editor_empty selector
-        this.$el.toggleClass('pr-empty', this.collection && this.collection.length === 0);
     },
 
     canAdd: false,
@@ -103,8 +97,8 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
 
     templateContext() {
         return Object.assign(this.options, {
-            displayText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            placeHolderText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -134,8 +128,8 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         return this.value;
     },
 
-    onRender() {
-        this.renderUploadButton(this.options.readonly);
+    isEmptyValue() {
+        return !this.getValue().length;
     },
 
     __onDragenter(e) {
@@ -188,15 +182,9 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         this.value = this.collection ? this.collection.toJSON().filter(model => !model.isLoading) : [];
     },
 
-    renderUploadButton(isReadonly) {
-        this.el.querySelector('.documents__text').hidden = isReadonly;
-        this.ui.fileUploadButton.toggle(!isReadonly);
-    },
-
     addItems(items) {
         this.onValueAdd(items);
-        // for change collection need use __value(items, true). onCollectionLengthChange need move to __updateEmpty.
-        this.__onCollectionLengthChange();
+        this.__updateEmpty();
     },
 
     removeItem(view) {
@@ -211,18 +199,6 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
             this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
         } else if (this.collection?.length === 0) {
             this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
-        }
-    },
-
-    __setEnabled(enabled) {
-        BaseCollectionEditorView.prototype.__setEnabled.call(this, enabled);
-        this.renderUploadButton(!enabled);
-    },
-
-    __setReadonly(readonly) {
-        BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.renderUploadButton(readonly);
         }
     },
 
@@ -527,7 +503,6 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         } else {
             this.ui.showMore.hide();
         }
-        this.__onCollectionLengthChange();
     },
 
     expandShowMore() {
