@@ -48,9 +48,6 @@ export default {
         Backbone.history.checkUrl();
 
         window.addEventListener('beforeunload', e => {
-            this.trigger('module:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
             const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
             if (canLeave !== true) {
@@ -60,6 +57,13 @@ export default {
 
                 return tabCloseLeavingMessage;
             }
+        });
+
+        window.addEventListener('unload', e => {
+            this.trigger('module:leave', {
+                page: this.activeModule ? this.activeModule.moduleId : null,
+                isUnload: true
+            });
         });
     },
 
