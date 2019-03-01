@@ -13,15 +13,20 @@ export default Marionette.CollectionView.extend({
 
     childViewOptions() {
         return {
-            reqres: this.getOption('reqres')
+            reqres: this.getOption('reqres'),
+            mode: this.options.mode,
+            showName: this.options.showName
         };
     },
 
     childViewEvents: {
-        'action:click': '__handleClick'
+        'action:click': '__handleCommand',
+        search(searchString, { model }) {
+            return this.__handleCommand(model, { searchString });
+        }
     },
 
-    __handleClick(model, options) {
-        this.trigger('actionSelected', model, options);
+    __handleCommand(model, options) {
+        this.trigger('command:execute', model, options);
     }
 });

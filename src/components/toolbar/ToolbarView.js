@@ -8,9 +8,16 @@ import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
 
 const actionsMenuLabel = '⋮';
 
+const getDefaultOptions = options => ({
+    mode: 'Normal', // 'Mobile'
+    showName: options.mode !== 'Mobile',
+    class: ''
+});
+
 export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
+        _.defaults(this.options, getDefaultOptions(this.options));
 
         this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new ToolbarItemsCollection();
@@ -28,7 +35,9 @@ export default Marionette.View.extend({
         this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
     },
 
-    className: 'js-toolbar-actions toolbar-container',
+    className() {
+        return `${this.options.class || ''} js-toolbar-actions toolbar-container`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -52,9 +61,11 @@ export default Marionette.View.extend({
     __createActionsGroupsView(collection) {
         const view = new CustomActionGroupView({
             collection,
-            reqres: this.options.reqres
+            reqres: this.options.reqres,
+            mode: this.options.mode,
+            showName: this.options.showName
         });
-        this.listenTo(view, 'actionSelected', (model, options = {}) => this.trigger('command:execute', model, options));
+        this.listenTo(view, 'command:execute', (model, options = {}) => this.trigger('command:execute', model, options));
         return view;
     },
 
