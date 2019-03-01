@@ -65,14 +65,6 @@ export default TextEditorView.extend({
     __blur() {
     },
 
-    __getFilterValue() {
-        return (
-            this.__getRawValue()
-                .toLowerCase()
-                .trim() || ''
-        );
-    },
-
     __getRawValue() {
         return this.ui.input.val();
     },
@@ -86,7 +78,7 @@ export default TextEditorView.extend({
     },
 
     __search(e) {
-        const value = this.__getFilterValue();
+        const value = this.__getRawValue();
         switch (e.keyCode) {
             case keyCode.BACKSPACE: {
                 if (this.__getRawValue().length === 0) {

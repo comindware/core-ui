@@ -290,11 +290,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         
         if (this.searchText === searchText && !forceCompareText) {
             this.open();
+            this.dropdownView?.buttonView?.setLoading(false);
             return;
         }
         this.triggerNotReady();
         this.searchText = searchText;
-        this.fakeInputModel?.set('searchText', this.searchText);
+        this.fakeInputModel?.set('searchText', value || '');
         return this.__fetchUpdateFilter(this.searchText, openOnRender);
     },
 
@@ -544,7 +545,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onInputSearch(value): void {
-        this.triggerNotReady();
+        this.dropdownView?.buttonView?.setLoading(true);
         this.debouncedFetchUpdateFilter(value);
     },
 
