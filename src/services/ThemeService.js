@@ -1,5 +1,3 @@
-import { $ } from 'lib';
-
 const defaultOptions = {
     themesPath: './themes/',
     theme: 'main'

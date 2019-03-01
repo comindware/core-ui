@@ -59,7 +59,6 @@ const defaultOptions = {
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
  * @constructor
- * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -74,12 +73,9 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.View.extend({
-    initialize(options) {
-        helpers.ensureOption(options, 'buttonView');
-        helpers.ensureOption(options, 'panelView');
-
-        _.defaults(this.options, Object.assign({}, defaultOptions), options);
+export default class DropdownView {
+    constructor(options) {
+        this.options = _.defaults({}, Object.assign({}, defaultOptions), options);
 
         _.bindAll(this, 'open', 'close', '__onBlur');
 
@@ -87,43 +83,23 @@ export default Marionette.View.extend({
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
 
-        this.__initializeButton();
-    },
-
-    __initializeButton() {
         this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
-        this.buttonView = this.button;
-        this.listenTo(this.button, 'all', (...args) => {
-            args[0] = `button:${args[0]}`;
-            this.trigger(...args);
-        });
-    },
 
-    template: _.noop,
+        return this.button;
+    }
 
     className() {
         return `dropdown ${this.options.class || ''}`;
-    },
+    }
 
     ui: {
         button: '.js-button-region'
-    },
+    };
 
     events: {
         blur: '__onBlur',
         click: '__triggerClick'
-    },
-
-    /**
-     * Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.
-     * */
-    buttonView: null,
-
-    /**
-     * Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
-     * The view is created every time (!) the panel is triggered to open.
-     * */
-    panelView: null,
+    };
 
     onRender() {
         if (this.button) {
@@ -142,7 +118,7 @@ export default Marionette.View.extend({
         }
 
         this.$el.attr('tabindex', -1);
-    },
+    }
 
     onDestroy() {
         if (this.button) {
@@ -151,11 +127,11 @@ export default Marionette.View.extend({
         if (this.isOpen) {
             WindowService.closePopup(this.popupId);
         }
-    },
+    }
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
         this.__adjustPosition(isNeedToRefreshAnchorPosition);
-    },
+    }
 
     __adjustPosition(isNeedToRefreshAnchorPosition) {
         if (!this.isOpen || !this.panelEl) {
@@ -258,11 +234,8 @@ export default Marionette.View.extend({
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.el);
         }
-    },
+    }
 
-    /**
-     * Opens the dropdown panel.
-     * */
     open() {
         if (this.isOpen) {
             return;
@@ -304,7 +277,7 @@ export default Marionette.View.extend({
         }
         this.__suppressHandlingBlur = false;
         this.trigger('open', this);
-    },
+    }
 
     /**
      * Closes the dropdown panel.
@@ -332,30 +305,30 @@ export default Marionette.View.extend({
         if (this.options.renderAfterClose && !this.isDestroyed) {
             this.button.render();
         }
-    },
+    }
 
     __keyAction(event) {
         if (event.keyCode === 27) {
             this.close();
         }
-    },
+    }
 
     __handleClick() {
         this.trigger('click');
         if (this.options.autoOpen) {
             this.open();
         }
-    },
+    }
 
     __isNestedInButton(testedEl) {
         return this.el === testedEl || this.el.contains(testedEl);
-    },
+    }
 
     __isNestedInPanel(testedEl) {
         const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
 
         return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || (palet && palet.contains(testedEl));
-    },
+    }
 
     __handleBlur() {
         if (
@@ -366,7 +339,7 @@ export default Marionette.View.extend({
         ) {
             this.close();
         }
-    },
+    }
 
     __handleGlobalMousedown(target) {
         if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target)) {
@@ -374,13 +347,13 @@ export default Marionette.View.extend({
         } else if (!this.__isNestedInButton(target)) {
             this.close();
         }
-    },
+    }
 
     __onWindowServicePopupClose(popupId) {
         if (this.isOpen && this.popupId === popupId) {
             this.close();
         }
-    },
+    }
 
     __focus(focusedEl) {
         if (!focusedEl) {
@@ -389,7 +362,7 @@ export default Marionette.View.extend({
             document.activeElement.addEventListener('blur', this.__onBlur);
         }
         this.isFocused = true;
-    },
+    }
 
     __onBlur() {
         _.defer(() => {
@@ -399,7 +372,7 @@ export default Marionette.View.extend({
         if (document.activeElement) {
             document.activeElement.removeEventListener('blur', this.__onBlur);
         }
-    },
+    }
 
     __listenToElementMoveOnce(el, callback) {
         if (this.__observedEntities.length === 0) {
@@ -419,7 +392,7 @@ export default Marionette.View.extend({
             el,
             callback
         });
-    },
+    }
 
     __stopListeningToElementMove(el = null) {
         if (!el) {
@@ -427,7 +400,7 @@ export default Marionette.View.extend({
         } else {
             this.__observedEntities.splice(this.__observedEntities.findIndex(x => x.el === el), 1);
         }
-    },
+    }
 
     __checkElements(target) {
         if (!this.__isNestedInButton(target) && !this.__isNestedInPanel(target)) {
@@ -443,7 +416,7 @@ export default Marionette.View.extend({
                 });
             }, 50);
         }
-    },
+    }
 
     __updateAnchorPosition(el) {
         const observable = this.__observedEntities.find(entrie => entrie.el === el);
@@ -456,9 +429,9 @@ export default Marionette.View.extend({
                 top: Math.floor(top)
             };
         }
-    },
+    }
 
     __triggerClick() {
         this.trigger('container:click');
     }
-});
+}

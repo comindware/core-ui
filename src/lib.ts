@@ -6,6 +6,8 @@ import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
+// @ts-ignore
+import jQuery from './external/jquery-3.3.1.slim.js';
 
 /* Text Mask */
 // @ts-ignore
@@ -28,7 +30,6 @@ import 'backbone.radio';
 import 'backbone-associations';
 /* --- */
 import * as Handlebars_ from 'handlebars';
-import jquery from 'jquery';
 // @ts-ignore
 import autosize from 'autosize';
 
@@ -50,7 +51,7 @@ const api = {
     'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
-    $: jquery,
+    $: jQuery,
     Backbone: backbone,
     codemirror: CodeMirror,
     autosize,
