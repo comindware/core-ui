@@ -1,3 +1,4 @@
+import { helpers } from 'utils';
 import PromiseService from './PromiseService';
 import MobileService from './MobileService';
 import helpers from '../utils/helpers';
@@ -42,11 +43,12 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
         }
     },
 
-    async getResponse(method, url, body, options) {
+    async getResponse(type, url, data, options) {
         const config = Object.assign(
             {
-                method,
-                body: body ? JSON.stringify(body) : null,
+                type,
+                url,
+                data: data ? JSON.stringify(data) : null,
                 traditional: true,
                 dataType: 'json',
                 contentType: 'application/json'
@@ -58,25 +60,27 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
             const canProceed = await beforeSent();
 
             if (canProceed) {
-                return PromiseService.registerPromise(fetch(url, config));
+                return PromiseService.registerPromise($.ajax(config));
             }
         } else {
-            return PromiseService.registerPromise(fetch(url, config));
+            return PromiseService.registerPromise($.ajax(config));
         }
     },
 
     sendFormData(url, formData) {
         return Promise.resolve(
-            fetch(url, {
-                method: 'POST',
-                body: formData,
+            $.ajax({
+                url,
+                type: 'POST',
+                data: formData,
                 processData: false,
                 contentType: false
             })
         );
     },
 
-    getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol) {
+    getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
+        const successCallback = callback || null;
         let data;
         if (protocol === methodName.WebApi) {
             for (let i = 0; i < parameterNames.length; i++) {
@@ -95,35 +99,41 @@ export default (window.Ajax = new (Marionette.MnObject.extend({
             }
         }
 
-        return this.getResponse(httpMethod, url, data)
-            .then(response => response.json())
-            .then(response => {
-                if (response && protocol === methodName.WebApi && !response.errorMessage) {
-                    return response;
+        return this.getResponse(httpMethod, url, data, {
+            success: result => {
+                if (result && result.success === false) {
+                    this.trigger('jsApi:error', result);
+                } else if (successCallback) {
+                    successCallback(result.data);
                 }
-                if (response && response.success === false) {
-                    this.trigger('jsApi:error', response);
-                    const error = new Error(response.errorMessage);
-                    error.name = 'JsApiError';
-                    error.errorType = response.errorType;
-                    error.errorData = response.errorData;
-                    error.source = response;
+            }
+        }).then(result => {
+            if (result && protocol === methodName.WebApi && !result.errorMessage) {
+                return result;
+            }
+            if (result && result.success === false) {
+                this.trigger('jsApi:error', result);
+                const error = new Error(result.errorMessage);
+                error.name = 'JsApiError';
+                error.errorType = result.errorType;
+                error.errorData = result.errorData;
+                error.source = result;
 
-                    if (window.onunhandledrejection === undefined) {
-                        if (MobileService.isIE) {
-                            const unhandledRejectionEvent = document.createEvent('Event');
-                            unhandledRejectionEvent.initEvent('unhandledrejection', false, true);
-                            Object.assign(unhandledRejectionEvent, error);
-                            window.dispatchEvent(unhandledRejectionEvent);
-                        } else {
-                            const unhandledRejectionEvent = new Event('unhandledrejection');
-                            Object.assign(unhandledRejectionEvent, error, { reason: error });
-                            window.dispatchEvent(unhandledRejectionEvent);
-                        }
+                if (window.onunhandledrejection === undefined) {
+                    if (MobileService.isIE) {
+                        const unhandledRejectionEvent = document.createEvent('Event');
+                        unhandledRejectionEvent.initEvent('unhandledrejection', false, true);
+                        Object.assign(unhandledRejectionEvent, error);
+                        window.dispatchEvent(unhandledRejectionEvent);
+                    } else {
+                        const unhandledRejectionEvent = new Event('unhandledrejection');
+                        Object.assign(unhandledRejectionEvent, error, { reason: error });
+                        window.dispatchEvent(unhandledRejectionEvent);
                     }
-                    throw error;
                 }
-                return response ? response.data : response;
-            });
+                throw error;
+            }
+            return result ? result.data : result;
+        });
     }
 }))());
