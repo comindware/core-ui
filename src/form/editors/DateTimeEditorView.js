@@ -310,7 +310,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             class: 'editor_date-time_date'
         });
 
-        this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
+        this.listenTo(this.calendarDropdownView, 'focus', this.__onDateButtonFocus, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange, this);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
         this.listenTo(this.calendarDropdownView.buttonView, 'keydown', this.__dateButtonInputKeydown);
@@ -443,7 +443,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             class: 'editor_date-time_time'
         });
 
-        this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
+        this.listenTo(this.timeDropdownView, 'focus', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);

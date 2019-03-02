@@ -32,7 +32,7 @@ export default Marionette.View.extend({
             });
         }
 
-        view.listenTo(view, 'button:keyup', this.__keyup);
+        view.listenTo(view, 'keyup', this.__keyup);
 
         return view;
     },

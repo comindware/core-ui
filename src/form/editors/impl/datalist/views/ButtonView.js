@@ -30,7 +30,7 @@ export default TextEditorView.extend({
 
     triggers: {
         click: {
-            event: 'button:click',
+            event: 'click',
             preventDefault: false,
             stopPropagation: false
         },
@@ -79,18 +79,10 @@ export default TextEditorView.extend({
     },
 
     setCounter(count) {
-        this.ui.counterHidden.text && this.ui.counterHidden.text(
-            count ?
-                `+${count}` :
-                ''
-        );
+        this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
     },
 
     togglePlaceholder(isShow) {
-        this.__setPlaceholder(
-            isShow ?
-            this.__placeholderShouldBe() :
-            ''
-        );
+        this.__setPlaceholder(isShow ? this.__placeholderShouldBe() : '');
     }
 });

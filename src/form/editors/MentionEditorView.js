@@ -78,11 +78,11 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
         });
 
         this.showChildView('dropdownRegion', this.dropdownView);
-        this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
-        this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
-        this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
-        this.listenTo(this.dropdownView, 'button:input', this.__onInput);
-        this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
+        this.listenTo(this.dropdownView, 'change', this.__onTextChange);
+        this.listenTo(this.dropdownView, 'focus', this.__onFocus);
+        this.listenTo(this.dropdownView, 'blur', this.__onBlur);
+        this.listenTo(this.dropdownView, 'input', this.__onInput);
+        this.listenTo(this.dropdownView, 'caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);

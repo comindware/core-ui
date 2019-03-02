@@ -18,7 +18,7 @@ export default Marionette.View.extend({
         });
 
         menu.listenTo(menu, 'panel:click:item', this.__handleSeveritySelect);
-        menu.listenTo(menu, 'button:keyup', this.__keyup);
+        menu.listenTo(menu, 'keyup', this.__keyup);
         return menu;
     },
 
