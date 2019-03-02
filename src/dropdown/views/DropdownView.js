@@ -77,13 +77,24 @@ export default class DropdownView {
     constructor(options) {
         this.options = _.defaults({}, Object.assign({}, defaultOptions), options);
 
-        _.bindAll(this, 'open', 'close', '__onBlur');
-
         this.__observedEntities = [];
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
 
         this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.button.close = this.close.bind(this);
+        this.button.once('render', () => {
+            this.isShown = true;
+            this.button.on('change:content', () => this.__adjustPosition(true));
+
+            this.button.on('click', this.__handleClick.bind(this));
+            this.button.on('blur', this.__onBlur.bind(this));
+
+            if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+                //todo add cutom anchor
+                //this.$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+            }
+        });
 
         return this.button;
     }
@@ -100,25 +111,6 @@ export default class DropdownView {
         blur: '__onBlur',
         click: '__triggerClick'
     };
-
-    onRender() {
-        if (this.button) {
-            this.stopListening(this.button);
-        }
-        const el = this.button.render().$el;
-        this.$el.append(el);
-
-        this.isShown = true;
-        this.button.on('change:content', () => this.__adjustPosition(true));
-
-        el.on('click', this.__handleClick.bind(this));
-
-        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
-            this.$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
-        }
-
-        this.$el.attr('tabindex', -1);
-    }
 
     onDestroy() {
         if (this.button) {
@@ -177,19 +169,19 @@ export default class DropdownView {
 
         // class adjustments
         if (position === panelPosition.DOWN) {
-            this.el.classList.add(classes.DROPDOWN_DOWN);
+            this.button.el.classList.add(classes.DROPDOWN_DOWN);
             this.panelEl.classList.add(classes.DROPDOWN_DOWN);
 
-            this.el.classList.remove(classes.DROPDOWN_UP);
+            this.button.el.classList.remove(classes.DROPDOWN_UP);
             this.panelEl.classList.remove(classes.DROPDOWN_UP);
         } else if (position === panelPosition.UP) {
-            this.el.classList.add(classes.DROPDOWN_UP);
+            this.button.el.classList.add(classes.DROPDOWN_UP);
             this.panelEl.classList.add(classes.DROPDOWN_UP);
 
-            this.el.classList.remove(classes.DROPDOWN_DOWN);
+            this.button.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
-        this.panelEl.add('.dropdown__wrp');
+        this.panelEl.classList.add('.dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 
@@ -232,7 +224,7 @@ export default class DropdownView {
         this.panelEl.style.left = `${leftOffset}px`;
 
         if (isNeedToRefreshAnchorPosition) {
-            this.__updateAnchorPosition(this.el);
+            this.__updateAnchorPosition(this.button.el);
         }
     }
 
@@ -240,20 +232,20 @@ export default class DropdownView {
         if (this.isOpen) {
             return;
         }
-        this.trigger('before:open', this);
+        this.button.trigger('before:open', this);
 
         const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
             parent: this
         });
-        this.el.classList.add(classes.OPEN);
+        this.button.el.classList.add(classes.OPEN);
         this.panelView = new this.options.panelView(panelViewOptions);
         this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
-            this.trigger(...args);
+            this.button.trigger(...args);
         });
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
-            hostEl: this.el
+            hostEl: this.button.el
         });
         this.panelEl = this.panelView.el;
 
@@ -263,11 +255,12 @@ export default class DropdownView {
 
         //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
 
-        this.listenTo(this.panelView, 'change:content', () => this.__adjustPosition());
-        this.__listenToElementMoveOnce(this.el, this.close);
-        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
-        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
-        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
+        this.panelView.on('change:content', () => this.__adjustPosition());
+        this.__listenToElementMoveOnce(this.button.el, this.close);
+
+        GlobalEventService.on('window:keydown:captured', (document, event) => this.__keyAction(event));
+        GlobalEventService.on('window:mousedown:captured', this.__handleGlobalMousedown.bind(this));
+        WindowService.on('popup:close', this.__onWindowServicePopupClose);
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
@@ -276,7 +269,7 @@ export default class DropdownView {
             this.__focus(activeElement);
         }
         this.__suppressHandlingBlur = false;
-        this.trigger('open', this);
+        this.button.trigger('open', this);
     }
 
     /**
@@ -284,27 +277,30 @@ export default class DropdownView {
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !document.body.contains(this.el)) {
+        if (!this.isOpen || !document.body.contains(this.button.el)) {
             return;
         }
-        this.trigger('before:close', this);
+        this.button.trigger('before:close', this);
 
-        this.el.classList.remove(classes.OPEN);
+        this.button.el.classList.remove(classes.OPEN);
 
-        this.stopListening(WindowService);
+        GlobalEventService.off('window:keydown:captured', (document, event) => this.__keyAction(event));
+        GlobalEventService.off('window:mousedown:captured', this.__handleGlobalMousedown);
+        GlobalEventService.off('window:wheel:captured', this.__checkElements);
+        GlobalEventService.off('window:mouseup:captured', this.__checkElements);
+        GlobalEventService.off('window:keydown:captured', this.__checkElements);
+
+        WindowService.off('popup:close', this.__onWindowServicePopupClose);
+        this.panelView.off();
+
         WindowService.closePopup(this.popupId);
 
         this.__stopListeningToElementMove();
-        this.stopListening(GlobalEventService);
 
-        this.stopListening(this.panelView);
         this.button.$el.focus();
         this.isOpen = false;
 
-        this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose && !this.isDestroyed) {
-            this.button.render();
-        }
+        this.button.trigger('close', this, ...args);
     }
 
     __keyAction(event) {
@@ -314,20 +310,19 @@ export default class DropdownView {
     }
 
     __handleClick() {
-        this.trigger('click');
         if (this.options.autoOpen) {
             this.open();
         }
     }
 
     __isNestedInButton(testedEl) {
-        return this.el === testedEl || this.el.contains(testedEl);
+        return this.button.el === testedEl || this.button.el.contains(testedEl);
     }
 
     __isNestedInPanel(testedEl) {
         const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
 
-        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || (palet && palet.contains(testedEl));
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.button.el.contains(testedEl)) || (palet && palet.contains(testedEl));
     }
 
     __handleBlur() {
@@ -376,9 +371,9 @@ export default class DropdownView {
 
     __listenToElementMoveOnce(el, callback) {
         if (this.__observedEntities.length === 0) {
-            this.listenTo(GlobalEventService, 'window:wheel:captured', this.__checkElements);
-            this.listenTo(GlobalEventService, 'window:mouseup:captured', this.__checkElements);
-            this.listenTo(GlobalEventService, 'window:keydown:captured', this.__checkElements);
+            GlobalEventService.on('window:wheel:captured', this.__checkElements);
+            GlobalEventService.on('window:mouseup:captured', this.__checkElements);
+            GlobalEventService.on('window:keydown:captured', this.__checkElements);
         }
 
         // saving el position relative to the viewport for further check
@@ -405,7 +400,7 @@ export default class DropdownView {
     __checkElements(target) {
         if (!this.__isNestedInButton(target) && !this.__isNestedInPanel(target)) {
             setTimeout(() => {
-                if (this.isDestroyed()) {
+                if (this.button.isDestroyed()) {
                     return;
                 }
                 this.__observedEntities.forEach(x => {
@@ -432,6 +427,6 @@ export default class DropdownView {
     }
 
     __triggerClick() {
-        this.trigger('container:click');
+        this.button.trigger('container:click');
     }
 }

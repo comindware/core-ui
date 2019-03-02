@@ -58,7 +58,7 @@
         "@types/codemirror": "^0.0.72",
         "@types/handlebars": "^4.0.40",
         "@types/moment-timezone": "^0.5.10",
-        "@types/underscore": "^1.8.9",
+        "@types/underscore": "^1.8.12",
         "autoprefixer": "^8.6.5",
         "awesome-typescript-loader": "^5.2.1",
         "babel-eslint": "^10.0.1",
@@ -71,9 +71,10 @@
         "cross-env": "^5.2.0",
         "css-loader": "^2.1.0",
         "cssnano": "^4.1.10",
-        "eslint": "^5.14.1",
+        "eslint": "^5.15.0",
         "eslint-config-prettier": "^4.1.0",
         "eslint-loader": "^2.1.2",
+        "eslint-plugin-backbone": "^2.1.1",
         "eslint-plugin-prettier": "^3.0.1",
         "exports-loader": "^0.7.0",
         "expose-loader": "^0.7.5",
@@ -117,8 +118,7 @@
         "style-loader": "^0.23.1",
         "typescript": "^3.3.3333",
         "url-loader": "^1.1.2",
-        "webpack": "^4.29.5",
-        "eslint-plugin-backbone": "^2.1.1"
+        "webpack": "^4.29.5"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.7.2",

@@ -216,7 +216,7 @@ export default {
                     this.__callRoutingActionForActiveModule(callbackName, routingArgs);
                 }
             } catch (e) {
-                Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
+                Core.utils.helpers.throwError(e);
             }
         } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
             this.__callRoutingActionForActiveModule(callbackName, routingArgs);
