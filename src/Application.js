@@ -9,7 +9,6 @@ import WebSocketService from './services/WebSocketService';
 import RoutingService from './services/RoutingService';
 import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
-import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
