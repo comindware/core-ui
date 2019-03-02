@@ -189,7 +189,7 @@ export default class DropdownView {
             this.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
-        this.el.classList.add('.dropdown__wrp');
+        this.panelEl.add('.dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 
