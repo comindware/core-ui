@@ -109,10 +109,10 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     focus(): void {
         if (this.options.showDate) {
             this.__openCalendarPicker();
-            this.calendarDropdownView?.button?.focus();
+            this.calendarDropdownView?.focus();
         } else if (this.options.showTime) {
             this.timeDropdownView?.open();
-            this.timeDropdownView?.button?.focus();
+            this.timeDropdownView?.focus();
         }
     },
 
@@ -250,16 +250,16 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.enabled = this.getEnabled();
         //__setEnabled() from descendants
-        this.calendarDropdownView?.button?.setEnabled(enabled);
-        this.timeDropdownView?.button?.setEnabled(enabled);
+        this.calendarDropdownView?.setEnabled(enabled);
+        this.timeDropdownView?.setEnabled(enabled);
     },
 
     __setReadonly(readonly: boolean): void {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.readonly = this.getReadonly();
         //__setReadonly() from descendants
-        this.calendarDropdownView?.button?.setReadonly(readonly);
-        this.timeDropdownView?.button?.setReadonly(readonly);
+        this.calendarDropdownView?.setReadonly(readonly);
+        this.timeDropdownView?.setReadonly(readonly);
     },
 
     __onClear(): boolean {
@@ -379,13 +379,13 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
     __dateBlur() {
         this.calendarDropdownView?.close();
-        this.calendarDropdownView?.button?.blur();
+        this.calendarDropdownView?.blur();
         this.onBlur();
     },
 
     __timeBlur() {
         this.timeDropdownView?.close();
-        this.timeDropdownView?.button?.blur();
+        this.timeDropdownView?.blur();
         this.onBlur();
     },
 
