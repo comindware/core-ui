@@ -362,7 +362,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __updateEmpty() {
         const isEmpty = this.isEmptyValue();
         BaseEditorView.prototype.__updateEmpty.call(this, isEmpty);
-        if (this.dropdownView?.isRendered()) {
+        if (this.dropdownView.isRendered()) {
             this.dropdownView.togglePlaceholder(this.__getIsShowPlaceholder({ isEmptyValue: isEmpty }));
         }
     },
@@ -386,9 +386,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.dropdownView?.setPermissions(enabled, this.__isInputShouldBeReadonly());
-        this.dropdownView?.togglePlaceholder(!readonly && this.isEmptyValue());
-        this.dropdownView?.collectionView.updateEnabled(this.getEditable());
+        this.dropdownView.setPermissions(enabled, this.__isInputShouldBeReadonly());
+        this.dropdownView.togglePlaceholder(!readonly && this.isEmptyValue());
+        this.dropdownView.collectionView.updateEnabled(this.getEditable());
     },
 
     focus(): void {
@@ -408,7 +408,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isButtonFocus() {
-        const inputView = this.dropdownView?.button;
+        const inputView = this.dropdownView;
         return inputView && inputView.ui.input[0] === document.activeElement;
     },
 
@@ -430,7 +430,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __setInputValue(string) {
-        this.dropdownView?.setInputValue(string);
+        this.dropdownView.setInputValue(string);
     },
 
     __onInputSearch(button, e): void {
@@ -526,10 +526,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
             this.selectedButtonCollection.set(selectedButtonModels, { add: true, remove: true });
             this.selectedPanelCollection.set(selectedPanelModels, { add: true, remove: true });
-            this.dropdownView?.setCounter(this.selectedPanelCollection.length);
+            this.dropdownView.setCounter(this.selectedPanelCollection.length);
         }
 
-        this.dropdownView?.button?.trigger('change:content');
+        this.dropdownView.trigger('change:content');
     },
 
     __toJSON(models) {
@@ -754,11 +754,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
         this.isNextFocusInner = true;
-        this.dropdownView?.focus();
+        this.dropdownView.focus();
     },
 
     __blurButton(): void {
-        this.dropdownView?.blur();
+        this.dropdownView.blur();
     },
 
     __onButtonClick(filterValue = '', { forceCompareText = this.options.fetchFiltered, openOnRender = false } = {}): void {
@@ -1049,7 +1049,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     setLoading(state) {
-        this.dropdownView?.button?.setLoading(state);
+        this.dropdownView.setLoading(state);
     },
 
     __tryPointFirstRow() {

@@ -157,11 +157,11 @@ describe('Components', () => {
                 collection,
                 title: 'Editable grid'
             });
-            const view = gridController;
+
             window.app
                 .getView()
                 .getRegion('contentRegion')
-                .show(view);
+                .show(gridController);
 
             gridController.listView.collection.on('change', () => {
                 expect(gridController.listView.collection.length).toEqual(1111);
