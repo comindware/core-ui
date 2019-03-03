@@ -83,10 +83,10 @@ export default Marionette.View.extend({
             }
         }));
 
-        availableList.on('childview:dblclick', this.__moveRight);
-        availableList.on('childview:dblclick', this.__moveRight);
+        availableList.on('dblclick', this.__moveRight);
+        availableList.on('dblclick', this.__moveRight);
         availableList.on('search', text => this.channel.trigger('items:search', text, 'available'));
-        this.listenTo(availableList, 'childview:dblclick', this.__moveRight);
+        this.listenTo(availableList, 'dblclick', this.__moveRight);
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.toggleElementsQuantityWarning();
 
@@ -118,7 +118,7 @@ export default Marionette.View.extend({
             showCheckbox: true
         });
 
-        selectedList.on('childview:dblclick', this.__moveLeft);
+        selectedList.on('dblclick', this.__moveLeft);
         selectedList.on('search', text => this.channel.trigger('items:search', text, 'selected'));
 
         this.listenTo(this.model.get('available'), 'move:right enter', this.__moveRight);
