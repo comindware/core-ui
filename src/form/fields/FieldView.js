@@ -42,7 +42,8 @@ const editorFieldExtention = {
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.showChildView('errorTextRegion', errorPopout);
+            this.errorsRegion.show(errorPopout);
+
             this.isErrorShown = true;
         }
     },
@@ -173,16 +174,17 @@ export default class {
                     customAnchor: true
                 });
 
-                this.editor.addRegion('helpTextRegion', {
+                this.editor.helpTextRegion = new Marionette.Region({
                     el: this.editor.$el.parent().find('.js-help-text-region')
                 });
+                this.editor.helpTextRegion.show(infoPopout);
 
-                this.editor.showChildView('helpTextRegion', infoPopout);
+                this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
             }
-
-            this.editor.addRegion('errorTextRegion', {
+            this.editor.errorsRegion = new Marionette.Region({
                 el: this.editor.$el.parent().find('.js-error-text-region')
             });
+            this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
             this.editor.__updateEditorState(schema.readonly, schema.enabled);
         });
     }

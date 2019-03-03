@@ -20,7 +20,8 @@ export default function() {
             8: '2015-07-20T10:46:37Z',
             9: 'dddddddddddddd',
             10: 789,
-            11: new Backbone.Collection([{}, {}])
+            11: new Backbone.Collection([{}, {}]),
+            radio: 'value1'
         }),
         transliteratedFields: {
             2: '6'
@@ -89,6 +90,17 @@ export default function() {
                                     {
                                         type: 'DateTime-editor',
                                         key: 8
+                                    },
+                                    {
+                                        type: 'RadioGroup-field',
+                                        key: 'radio',
+                                        changeMode: 'keydown',
+                                        autocommit: true,
+                                        radioOptions: [
+                                            { id: 'value1', displayText: 'Some Text 1' },
+                                            { id: 'value2', displayText: 'Some Text 2' },
+                                            { id: 'value3', displayText: 'Some Text 3' }
+                                        ]
                                     }
                                 ]
                             },
