@@ -89,7 +89,7 @@ export default class DropdownView {
         this.button.once('render', () => {
             this.isShown = true;
             this.button.on('change:content', () => this.__adjustPosition(true));
-            if (options.autoOpen) {
+            if (options.autoOpen !== false) {
                 this.button.el.addEventListener('click', this.__handleClick.bind(this));
             }
             this.button.el.addEventListener('blur', this.__onBlur.bind(this));
