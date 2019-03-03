@@ -172,7 +172,7 @@ describe('Components', () => {
 
             searchInput.value = 'Text Cell 1';
 
-            gridController.view.$(searchInput).trigger('keyup');
+            gridController.$(searchInput).trigger('keyup');
         });
         /*
                it('should correctly apply access modificators', done => {

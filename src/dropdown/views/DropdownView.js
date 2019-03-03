@@ -118,7 +118,7 @@ export default class DropdownView {
         if (this.button) {
             this.button.destroy();
         }
-        if (this.isOpen) {
+        if (this.button.isOpen) {
             WindowService.closePopup(this.popupId);
         }
     }
@@ -128,7 +128,7 @@ export default class DropdownView {
     }
 
     __adjustPosition(isNeedToRefreshAnchorPosition) {
-        if (!this.isOpen || !this.panelEl) {
+        if (!this.button.isOpen || !this.panelEl) {
             return;
         }
         this.panelEl.style.height = ''; //resetting custom height
@@ -231,7 +231,7 @@ export default class DropdownView {
     }
 
     open() {
-        if (this.isOpen) {
+        if (this.button.isOpen) {
             return;
         }
         this.button.trigger('before:open', this);
@@ -252,7 +252,7 @@ export default class DropdownView {
         });
         this.panelEl = this.panelView.el;
 
-        this.isOpen = true;
+        this.button.isOpen = true;
         this.__adjustPosition();
         //const buttonWidth = this.button.el.getBoundingClientRect().width;
 
@@ -263,7 +263,7 @@ export default class DropdownView {
 
         GlobalEventService.on('window:keydown:captured', (document, event) => this.__keyAction(event));
         GlobalEventService.on('window:mousedown:captured', this.__handleGlobalMousedown.bind(this));
-        WindowService.on('popup:close', this.__onWindowServicePopupClose);
+        WindowService.on('popup:close', this.__onWindowServicePopupClose.bind(this));
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
@@ -280,7 +280,7 @@ export default class DropdownView {
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !document.body.contains(this.button.el)) {
+        if (!this.button.isOpen || !document.body.contains(this.button.el)) {
             return;
         }
         this.button.trigger('before:close', this);
@@ -293,7 +293,7 @@ export default class DropdownView {
         GlobalEventService.off('window:mouseup:captured', this.__checkElements);
         GlobalEventService.off('window:keydown:captured', this.__checkElements);
 
-        WindowService.off('popup:close', this.__onWindowServicePopupClose);
+        WindowService.off('popup:close', this.__onWindowServicePopupClose.bind(this));
         this.panelView.off();
 
         WindowService.closePopup(this.popupId);
@@ -301,7 +301,7 @@ export default class DropdownView {
         this.__stopListeningToElementMove();
 
         this.button.$el.focus();
-        this.isOpen = false;
+        this.button.isOpen = false;
 
         this.button.trigger('close', this, ...args);
     }
@@ -348,7 +348,7 @@ export default class DropdownView {
     }
 
     __onWindowServicePopupClose(popupId) {
-        if (this.isOpen && this.popupId === popupId) {
+        if (this.button.isOpen && this.popupId === popupId) {
             this.close();
         }
     }

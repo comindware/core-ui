@@ -29,6 +29,7 @@ describe('Components', () => {
 
                 behaviors: {
                     BackboneFormBehavior: {
+                        model,
                         behaviorClass: core.form.behaviors.BackboneFormBehavior,
                         schema() {
                             return {
@@ -90,6 +91,7 @@ describe('Components', () => {
 
                 behaviors: {
                     BackboneFormBehavior: {
+                        model,
                         behaviorClass: core.form.behaviors.BackboneFormBehavior,
                         schema() {
                             return {

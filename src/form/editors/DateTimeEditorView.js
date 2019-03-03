@@ -313,7 +313,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         this.listenTo(this.calendarDropdownView, 'focus', this.__onDateButtonFocus, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange, this);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
-        this.listenTo(this.calendarDropdownView.buttonView, 'keydown', this.__dateButtonInputKeydown);
+        this.listenTo(this.calendarDropdownView, 'keydown', this.__dateButtonInputKeydown);
     },
 
     __updateDateAndValidateToButton(recipientISO, fromFormatted, { includeTime = false }) {
