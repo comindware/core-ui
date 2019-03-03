@@ -362,7 +362,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __updateEmpty() {
         const isEmpty = this.isEmptyValue();
         BaseEditorView.prototype.__updateEmpty.call(this, isEmpty);
-        if (this.dropdownView.isRendered()) {
+        //because called before initialize - wtf
+        if (this.dropdownView?.isRendered()) {
             this.dropdownView.togglePlaceholder(this.__getIsShowPlaceholder({ isEmptyValue: isEmpty }));
         }
     },

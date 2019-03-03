@@ -856,6 +856,8 @@ a:hover {
     height: 100%;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
 }
 
 .columns-select__header {
@@ -902,8 +904,7 @@ a:hover {
 .columns-select-list {
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    overflow-y: auto;
+    display: flex;
 }
 
 .btn.btn_arrow-right{

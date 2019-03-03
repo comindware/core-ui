@@ -38,7 +38,10 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     regions: {
-        splitPanelRegion: '.js-split-panel-region'
+        splitPanelRegion: {
+            el: '.js-split-panel-region',
+            replaceElement: true
+        }
     },
 
     ui: {

@@ -177,22 +177,6 @@ export default Marionette.CollectionView.extend({
         }
     },
 
-    _showEmptyView() {
-        this.__updateEmpty(true);
-        Marionette.CollectionView.prototype._showEmptyView.apply(this, arguments);
-    },
-
-    _destroyEmptyView() {
-        if (this._showingEmptyView) {
-            this.__updateEmpty(false);
-            this.trigger('empty:view:destroyed');
-            Marionette.CollectionView.prototype._destroyEmptyView.apply(this, arguments);
-        }
-    },
-
-    __updateEmpty(isEmpty) {
-        typeof this.$el.toggleClass === 'function' && this.$el.toggleClass(classes.empty, isEmpty);
-    },
     //overwrite native render method to pass correct collection.
     render() {
         if (this._isDestroyed) {
