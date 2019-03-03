@@ -81,7 +81,7 @@ export default Marionette.View.extend({
                 maxRows: 10,
                 childViewSelector: this.options.childViewSelector
             }
-        }).view);
+        }));
 
         availableList.on('childview:dblclick', this.__moveRight);
         availableList.on('childview:dblclick', this.__moveRight);
@@ -116,7 +116,7 @@ export default Marionette.View.extend({
                 maxRows: 10
             },
             showCheckbox: true
-        }).view;
+        });
 
         selectedList.on('childview:dblclick', this.__moveLeft);
         selectedList.on('search', text => this.channel.trigger('items:search', text, 'selected'));
