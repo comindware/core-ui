@@ -11,7 +11,10 @@ export default Marionette.View.extend({
     className: 'editor_container',
 
     ui: {
-        editorRegion: '.js-editor-region',
+        editorRegion: {
+            el: '.js-editor-region',
+            replaceElement: true
+        },
         collapseButton: '.js-content-collapse'
     },
 

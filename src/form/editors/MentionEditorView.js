@@ -127,7 +127,7 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
     },
 
     __onTextChange(): void {
-        this.value = this.dropdownView.button.getValue();
+        this.value = this.dropdownView.getValue();
         this.__triggerChange();
     },
 
@@ -185,7 +185,7 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
             return;
         }
 
-        const editor = this.dropdownView.button;
+        const editor = this.dropdownView;
         const text = this.mentionState.text;
 
         let mention = selectedMember.get('userName') || '';
@@ -226,8 +226,8 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
 
     setValue(value) {
         if (this.dropdownView) {
-            this.dropdownView.button.setValue(value);
-            this.value = this.dropdownView.button.getValue();
+            this.dropdownView.setValue(value);
+            this.value = this.dropdownView.getValue();
         } else {
             this.value = value;
         }
@@ -242,14 +242,14 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
     __setEnabled(enabled: boolean): void {
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
-            this.dropdownView.button.setEnabled(enabled);
+            this.dropdownView.setEnabled(enabled);
         }
     },
 
     __setReadonly(readonly: boolean): void {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
-            this.dropdownView.button.setReadonly(readonly);
+            this.dropdownView.setReadonly(readonly);
         }
     }
 }));

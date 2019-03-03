@@ -447,12 +447,12 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
-        this.listenTo(this.timeDropdownView.buttonView, 'keydown', this.__timeButtonInputKeydown);
+        this.listenTo(this.timeDropdownView, 'keydown', this.__timeButtonInputKeydown);
     },
 
     __updateTime(ISOstr) {
         //replace time of ISO string to time from timebutton
-        const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
+        const valTimeModel = this.timeDropdownView && this.timeDropdownView.model.get(this.key);
         if (!valTimeModel) {
             return;
         }
@@ -473,7 +473,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
     __setValueToTimeButton(dateISOstring) {
         const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
-        this.timeDropdownView && this.timeDropdownView.button.setValue(newDuration, true);
+        this.timeDropdownView && this.timeDropdownView.setValue(newDuration, true);
     },
 
     __onTimePanelSelect(time) {

@@ -3,14 +3,14 @@ import CanvasView from 'demoPage/views/CanvasView';
 export default function() {
     // 1. Create form template
     const template =
-        '<div class="field-width" data-fields="name"></div>' +
-        '<div class="field-width" data-fields="alias"></div>' +
-        '<div class="field-width" data-fields="number"></div>' +
-        '<div class="field-width" data-fields="dateTime"></div>' +
-        '<div class="field-width" data-fields="duration"></div>' +
-        '<div class="field-width" data-fields="dropdown"></div>' +
-        '<div class="field-width" data-fields="wrongInstance"></div>' +
-        '<div class="field-width" data-fields="dateTime2"></div>';
+        '<div data-fields="name"></div>' +
+        '<div data-fields="alias"></div>' +
+        '<div data-fields="number"></div>' +
+        '<div data-fields="dateTime"></div>' +
+        '<div data-fields="duration"></div>' +
+        '<div data-fields="dropdown"></div>' +
+        '<div data-fields="wrongInstance"></div>' +
+        '<div data-fields="dateTime2"></div>';
 
     // 2. Create form model
     const model = new Backbone.Model({
@@ -28,6 +28,8 @@ export default function() {
         onRender() {
             this.listenTo(this.model, 'change', () => console.log(this.model.changed));
         },
+
+        className: 'layout__vertical-layout',
 
         template: Handlebars.compile(template),
 

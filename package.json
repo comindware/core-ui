@@ -98,7 +98,7 @@
         "jasmine-core": "^3.3.0",
         "jasmine-expect": "^4.0.1",
         "jasmine-jquery": "^2.1.1",
-        "karma": "^4.0.0",
+        "karma": "^4.0.1",
         "karma-chrome-launcher": "^2.2.0",
         "karma-coverage": "^1.1.2",
         "karma-firefox-launcher": "^1.1.0",
@@ -118,7 +118,7 @@
         "style-loader": "^0.23.1",
         "typescript": "^3.3.3333",
         "url-loader": "^1.1.2",
-        "webpack": "^4.29.5"
+        "webpack": "^4.29.6"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.7.2",

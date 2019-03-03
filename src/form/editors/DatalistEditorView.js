@@ -199,7 +199,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __addButtonListeners() {
-        const btn = this.dropdownView.button;
+        const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
@@ -362,8 +362,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __updateEmpty() {
         const isEmpty = this.isEmptyValue();
         BaseEditorView.prototype.__updateEmpty.call(this, isEmpty);
-        if (this.dropdownView?.button?.isRendered()) {
-            this.dropdownView.button.togglePlaceholder(this.__getIsShowPlaceholder({ isEmptyValue: isEmpty }));
+        if (this.dropdownView?.isRendered()) {
+            this.dropdownView.togglePlaceholder(this.__getIsShowPlaceholder({ isEmptyValue: isEmpty }));
         }
     },
 
@@ -386,9 +386,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.dropdownView.button?.setPermissions(enabled, this.__isInputShouldBeReadonly());
-        this.dropdownView.button?.togglePlaceholder(!readonly && this.isEmptyValue());
-        this.dropdownView.button?.collectionView.updateEnabled(this.getEditable());
+        this.dropdownView?.setPermissions(enabled, this.__isInputShouldBeReadonly());
+        this.dropdownView?.togglePlaceholder(!readonly && this.isEmptyValue());
+        this.dropdownView?.collectionView.updateEnabled(this.getEditable());
     },
 
     focus(): void {
@@ -426,11 +426,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __getInputValue() {
-        return this.dropdownView.button ? this.dropdownView.button.getInputValue() : '';
+        return this.dropdownView ? this.dropdownView.getInputValue() : '';
     },
 
     __setInputValue(string) {
-        this.dropdownView.button?.setInputValue(string);
+        this.dropdownView?.setInputValue(string);
     },
 
     __onInputSearch(button, e): void {
@@ -526,7 +526,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
             this.selectedButtonCollection.set(selectedButtonModels, { add: true, remove: true });
             this.selectedPanelCollection.set(selectedPanelModels, { add: true, remove: true });
-            this.dropdownView.button?.setCounter(this.selectedPanelCollection.length);
+            this.dropdownView?.setCounter(this.selectedPanelCollection.length);
         }
 
         this.dropdownView?.button?.trigger('change:content');
@@ -754,11 +754,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
         this.isNextFocusInner = true;
-        this.dropdownView.button?.focus();
+        this.dropdownView?.focus();
     },
 
     __blurButton(): void {
-        this.dropdownView.button?.blur();
+        this.dropdownView?.blur();
     },
 
     __onButtonClick(filterValue = '', { forceCompareText = this.options.fetchFiltered, openOnRender = false } = {}): void {

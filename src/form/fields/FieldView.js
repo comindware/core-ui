@@ -14,7 +14,9 @@ const classes = {
 };
 
 const editorFieldExtention = {
-    validate(error) {
+    validate(...args) {
+        const error = Object.getPrototypeOf(Object.getPrototypeOf(this)).validate.call(this, ...args);
+
         if (error) {
             this.setError([error]);
         } else {
@@ -28,7 +30,7 @@ const editorFieldExtention = {
             return;
         }
 
-        this.$el.addClass(classes.ERROR);
+        this.$el.parent().addClass(classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -49,7 +51,7 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.removeClass(classes.ERROR);
+        this.$el.parent().removeClass(classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -58,7 +60,7 @@ const editorFieldExtention = {
         this.__updateEmpty();
     },
 
-    __updateEmpty(isEmpty = this.editor?.isEmptyValue()) {
+    __updateEmpty(isEmpty = this.isEmptyValue()) {
         if (this.schema.required) {
             this.__toggleRequiredClass(isEmpty);
         } else {
@@ -130,11 +132,6 @@ export default class {
             form: options.form,
             class: options.class,
             key: options.key,
-            validate() {
-                const errors = EditorConstructor.prototype.validate();
-
-                FieldConstructor.prototype.validate(errors);
-            },
             model: this.model,
             id: this.__createEditorId(options.key),
             value: options.value,

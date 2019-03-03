@@ -6,8 +6,9 @@ export default function() {
         contextIcon: n % 2 ? 'decimal' : 'text'
     }));
 
-    return new Core.layout.Form({
+    const form = new Core.layout.Form({
         model: new Backbone.Model({
+            0: 'edit me',
             1: 'text',
             2: '12_Мир ;Труд%,.Май64',
             dropdown: 3,
@@ -21,7 +22,7 @@ export default function() {
             10: 789,
             11: new Backbone.Collection([{}, {}])
         }),
-        transliteratedFields: { 
+        transliteratedFields: {
             2: '6'
         }, // transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
         schema: [
@@ -29,14 +30,24 @@ export default function() {
                 type: 'v-container',
                 items: [
                     {
-                        type: 'plainText',
+                        type: 'Text-field',
                         class: 'my-awsome__class',
-                        text: '<div style="background-color:red;"></div>'
+                        text: '<div style="background-color:red;"></div>',
+                        title: 'Required simple text',
+                        validators: ['required'],
+                        required: true,
+                        key: 0,
+                        autocommit: true
                     },
                     {
                         type: 'Text-editor',
                         class: 'my-awsome__class',
-                        key: 1
+                        text: '<div style="background-color:red;"></div>',
+                        title: 'Required simple text',
+                        validators: ['required'],
+                        required: true,
+                        key: 1,
+                        autocommit: true
                     },
                     {
                         type: 'TextArea-editor',
@@ -103,9 +114,19 @@ export default function() {
                         ],
                         collection: new Backbone.Collection([{}, {}, {}, {}, {}, {}]),
                         key: 11
+                    },
+                    {
+                        type: 'button',
+                        text: 'Validate form',
+                        iconClass: 'plus',
+                        handler() {
+                            form.validate();
+                        }
                     }
                 ]
             }
         ]
     });
+
+    return form;
 }

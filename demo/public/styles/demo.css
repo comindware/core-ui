@@ -556,12 +556,10 @@ body {
 }
 
 .editor-region-wrp{
-    overflow: hidden;
     max-height: 100%;
     width: 100%;
     flex: 0 1 auto;
     display: flex;
-    padding-bottom: 1px;
 }
 
 .body-container {

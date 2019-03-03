@@ -83,12 +83,14 @@ export default class DropdownView {
 
         this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
         this.button.close = this.close.bind(this);
+        this.button.open = this.open.bind(this);
+        this.button.adjustPosition = this.adjustPosition.bind(this);
+
         this.button.once('render', () => {
             this.isShown = true;
             this.button.on('change:content', () => this.__adjustPosition(true));
-
-            this.button.on('click', this.__handleClick.bind(this));
-            this.button.on('blur', this.__onBlur.bind(this));
+            this.button.el.addEventListener('click', this.__handleClick.bind(this));
+            this.button.el.addEventListener('blur', this.__onBlur.bind(this));
 
             if (!this.options.customAnchor && this.options.showDropdownAnchor) {
                 //todo add cutom anchor
@@ -181,7 +183,7 @@ export default class DropdownView {
             this.button.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
-        this.panelEl.classList.add('.dropdown__wrp');
+        this.panelEl.classList.add('dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 
@@ -239,6 +241,7 @@ export default class DropdownView {
         });
         this.button.el.classList.add(classes.OPEN);
         this.panelView = new this.options.panelView(panelViewOptions);
+        this.button.panelView = this.panelView;
         this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
             this.button.trigger(...args);
@@ -354,7 +357,7 @@ export default class DropdownView {
         if (!focusedEl) {
             this.__getFocusableEl().focus();
         } else if (document.activeElement) {
-            document.activeElement.addEventListener('blur', this.__onBlur);
+            document.activeElement.addEventListener('blur', this.__onBlur.bind(this));
         }
         this.isFocused = true;
     }
@@ -365,7 +368,7 @@ export default class DropdownView {
             this.__handleBlur();
         });
         if (document.activeElement) {
-            document.activeElement.removeEventListener('blur', this.__onBlur);
+            document.activeElement.removeEventListener('blur', this.__onBlur.bind(this));
         }
     }
 
