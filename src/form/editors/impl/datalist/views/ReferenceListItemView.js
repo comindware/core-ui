@@ -10,11 +10,15 @@ export default Marionette.View.extend({
         return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: [{
-        behaviorClass: list.views.behaviors.ListItemViewBehavior,
-        multiSelect: true,
-        selectOnCursor: false
-    }],
+    tagName: 'tr',
+
+    behaviors: [
+        {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior,
+            multiSelect: true,
+            selectOnCursor: false
+        }
+    ],
 
     template: Handlebars.compile(template),
 

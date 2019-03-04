@@ -47,11 +47,11 @@ export default Marionette.View.extend({
     },
 
     events() {
-        return this.options.addNewItem ?
-            {
-                'click @ui.addNewButton': this.options.addNewItem
-            } :
-            undefined;
+        return this.options.addNewItem
+            ? {
+                  'click @ui.addNewButton': this.options.addNewItem
+              }
+            : undefined;
     },
 
     ui: {
@@ -64,53 +64,50 @@ export default Marionette.View.extend({
         this.collection = this.getOption('collection');
         const selectedCollection = this.options.selectedCollection;
         if (selectedCollection) {
-            this.selected = list.factory.createDefaultList({
+            this.selected = new list.GridView({
                 collection: selectedCollection,
-                listViewOptions: {
-                    childView: BubbleItemView,
-                    childViewOptions: this.options.bubbleItemViewOptions,
-                    tagName: 'div',
-                    disableKeydownHandler: true,
-                    customHeight: true,
-                    childHeight: config.SELECTED_CHILD_HEIGHT,
-                    emptyView: null
-                }
+                childView: BubbleItemView,
+                childViewOptions: this.options.bubbleItemViewOptions,
+                columns: [],
+                disableKeydownHandler: true,
+                customHeight: true,
+                childHeight: config.SELECTED_CHILD_HEIGHT,
+                emptyView: null
             });
 
             this.showChildView('selectedRegion', this.selected);
         }
 
         if (this.options.showCollection) {
-            this.listView = list.factory.createDefaultList({
+            this.listView = new list.GridView({
                 collection: this.collection,
-                listViewOptions: {
-                    class: 'datalist-panel_list',
-                    childView: this.options.listItemView,
-                    disableKeydownHandler: true,
-                    childViewOptions: {
-                        getDisplayText: this.options.getDisplayText,
-                        subTextOptions: this.options.subTextOptions,
-                        showCheckboxes: this.options.showCheckboxes,
-                        canSelect: this.options.canSelect
-                    },
-                    emptyViewOptions: {
-                        text: Localizer.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
-                        className: classes.EMPTY_VIEW
-                    },
-                    selectOnCursor: false,
-                    childHeight: config.CHILD_HEIGHT
-                }
+                class: 'datalist-panel_list',
+                childView: this.options.listItemView,
+                disableKeydownHandler: true,
+                columns: [],
+                childViewOptions: {
+                    getDisplayText: this.options.getDisplayText,
+                    subTextOptions: this.options.subTextOptions,
+                    showCheckboxes: this.options.showCheckboxes,
+                    canSelect: this.options.canSelect
+                },
+                emptyViewOptions: {
+                    text: Localizer.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+                    className: classes.EMPTY_VIEW
+                },
+                selectOnCursor: false,
+                childHeight: config.CHILD_HEIGHT
             });
-    
+
             this.showChildView('listRegion', this.listView);
-    
+
             this.__toggleExcessWarning();
-    
+
             this.listenTo(this.listView, 'update:height', () => {
                 this.trigger('change:content');
             });
             this.listenTo(this.collection, 'add reset update', _.debounce(this.__toggleExcessWarning, 0));
-    
+
             this.toggleSelectable();
         }
     },

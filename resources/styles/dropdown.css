@@ -459,6 +459,7 @@
 
 .dropdown__wrp_list{
     overflow-y: auto;
+    display: flex;
 }
 
 /* icons panel */
