@@ -7,8 +7,11 @@ export default TriggerButtonView.extend({
     },
 
     templateContext() {
-        return {
-            isGroup: true
-        };
+        return Object.assign(
+            TriggerButtonView.prototype.templateContext.apply(this, arguments),
+            {
+                isGroup: true
+            }
+        );
     }
 });

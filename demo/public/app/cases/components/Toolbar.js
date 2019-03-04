@@ -19,6 +19,7 @@ export default function () {
 
     blinkColumns.on('change:isHidden', (model, value) => alert(`isHidden = ${value}`));
     const toolbarView = new Core.components.Toolbar({
+        mode: 'Mobile',
         allItemsCollection: new Backbone.Collection([
             {
                 iconClass: 'plus',
@@ -32,7 +33,7 @@ export default function () {
                 iconClass: 'dog',
                 id: '2',
                 name: 'Some',
-                type: 'Action',
+                type: 'Search',
                 severity: 'Low',
                 description: 'createComponent'
             },

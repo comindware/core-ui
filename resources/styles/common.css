@@ -462,6 +462,7 @@ a:hover {
     border: 0;
     outline: 0;
     display: block;
+    transition: background, border-color .2s ease-in-out;
 }
 
 .tr-search__placeholder {
@@ -989,6 +990,10 @@ a:hover {
 .toolbar-container {
     width: 100%;
     display: inline-flex;
+}
+
+.toolbar-container .tr-search__input{
+    height: 100%;
 }
 
 .toolbar-buttons_container {

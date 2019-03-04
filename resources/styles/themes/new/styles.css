@@ -2,6 +2,10 @@
 .editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea {
   border-color: var(--input-active-border-color);
 }
+.focused input,
+.focused textarea{
+  border-color: var(--input-active-border-color);
+}
 .editor_disabled {
   @apply --custom-cotrol-disabled-theme;
 }

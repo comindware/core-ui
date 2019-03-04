@@ -10,10 +10,14 @@ export default Marionette.View.extend({
             panelView: ActionMenuPanelView,
             panelViewOptions: {
                 collection: options.model.get('items'),
-                class: options.model.get('dropdownClass')
+                class: options.model.get('dropdownClass'),
+                mode: options.mode,
+                showName: options.showName
             },
             buttonViewOptions: {
-                model: options.model
+                model: options.model,
+                mode: options.mode,
+                showName: options.showName
             }
         });
 

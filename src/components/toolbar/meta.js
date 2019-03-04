@@ -7,6 +7,7 @@ import ToolbarSplitterView from './views/ToolbarSplitterView';
 import ToolbarPopupView from './views/ToolbarPopupView';
 import ToolbarSelectItemView from './views/ToolbarSelectItemView';
 import ButtonView from './views/ButtonView';
+import SearchBarView from '../../views/SearchBarView';
 
 export const severity = {
     None: {
@@ -168,7 +169,8 @@ const toolbarItemType = {
     SELECTITEM: 'SelectItem',
     BLINKCHECKBOX: 'BlinkCheckbox',
     SELECTSTATE: 'SelectState',
-    HEADLINE: 'Headline'
+    HEADLINE: 'Headline',
+    SEARCH: 'Search'
 };
 
 const getViewByModel = model => {
@@ -190,6 +192,8 @@ const getViewByModel = model => {
             return BlinkCheckboxView;
         case toolbarItemType.HEADLINE:
             return ButtonView;
+        case toolbarItemType.SEARCH:
+            return SearchBarView;
         default:
             return ActionView;
     }
