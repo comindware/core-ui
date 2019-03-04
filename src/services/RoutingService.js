@@ -170,8 +170,8 @@ export default {
 
         if (this.activeModule && movingOut && !customModuleRegion) {
             this.activeModule.destroy();
-            this.setModuleLoading(true);
         }
+        this.setModuleLoading(true);
 
         let activeSubModule = null;
 
