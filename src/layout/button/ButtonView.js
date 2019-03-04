@@ -1,5 +1,5 @@
 // @flow
-import { helpers } from 'utils';
+import { helpers, keyCode } from 'utils';
 import template from './button.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
@@ -39,7 +39,10 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.btn': '__onClick'
+        'click @ui.btn': '__onClick',
+        keyup: function (event) {
+            [keyCode.ENTER, keyCode.SPACE].includes(event.keyCode) && this.__onClick();
+        }
     },
 
     onRender() {
