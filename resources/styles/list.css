@@ -290,6 +290,9 @@
     color: #70787F;
     min-height: 25px;
 }
+.empty-view_text {
+    text-align: center;
+}
 /* /Empty View */
 
 /* Editable Grid */

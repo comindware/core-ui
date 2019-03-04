@@ -55,7 +55,7 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    childViewContainer: '@ui.visibilitySettings',
+    childViewContainer: '.js-visibility-settings',
 
     childView: BlinkCheckboxVisibilityView,
 

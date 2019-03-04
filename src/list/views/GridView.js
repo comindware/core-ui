@@ -33,7 +33,8 @@ const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
     emptyView: EmptyGridView,
     emptyViewOptions: {
-        text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
+        text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
+        colspan: options.columns.length
     },
     stickyToolbarOffset: 0,
     isSliding: true,
