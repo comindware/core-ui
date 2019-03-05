@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import form from 'form';
+import dropdown from 'dropdown';
 import { columnWidthByType } from '../meta';
 import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
@@ -18,6 +19,15 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from '../views/EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
+import ErrorButtonView from '../../views/ErrorButtonView';
+import InfoButtonView from '../../views/InfoButtonView';
+import TooltipPanelView from '../../views/TooltipPanelView';
+import ErrosPanelView from '../../views/ErrosPanelView';
+
+const classes = {
+    REQUIRED: 'required',
+    ERROR: 'error'
+};
 
 /*
     Public interface:
@@ -273,7 +283,9 @@ export default Marionette.View.extend({
             el: '.js-grid-tools-search-region',
             replaceElement: true
         },
-        loadingRegion: '.js-grid-loading-region'
+        loadingRegion: '.js-grid-loading-region',
+        errorTextRegion: '.js-error-text-region',
+        helpTextRegion: '.js-help-text-region'
     },
 
     ui: {
@@ -335,6 +347,25 @@ export default Marionette.View.extend({
         } else {
             this.ui.title.parent().hide();
         }
+        if (this.options.helpText) {
+            const viewModel = new Backbone.Model({
+                helpText: this.options.helpText,
+                errorText: null
+            });
+
+            const infoPopout = dropdown.factory.createPopout({
+                buttonView: InfoButtonView,
+                panelView: TooltipPanelView,
+                panelViewOptions: {
+                    model: viewModel,
+                    textAttribute: 'helpText'
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('helpTextRegion', infoPopout);
+        }
+        this.setRequired(this.options.required);
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
         this.__updateState();
     },
@@ -483,48 +514,66 @@ export default Marionette.View.extend({
     },
 
     validate() {
-        if (!this.isEditable) {
-            return;
+        let error;
+        if (this.required && this.collection.length === 0) {
+            error = {
+                type: 'required',
+                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID')
+            };
+        } else if (this.isEditable) {
+            const hasErrorInFields = this.options.columns.some(column => {
+                if (!column.editable || !column.validators) {
+                    return false;
+                }
+                const validators = [];
+                return column.validators.some(validator => {
+                    let result;
+                    if (typeof validator === 'function') {
+                        validators.push(validator);
+                    } else {
+                        const predefined = form.repository.validators[validator];
+                        if (typeof predefined === 'function') {
+                            validators.push(predefined());
+                        }
+                    }
+
+                    this.collection.forEach(model => {
+                        if (model._events['validate:force']) {
+                            const e = {};
+                            model.trigger('validate:force', e);
+                            if (e.validationResult) {
+                                result = e.validationResult;
+                            }
+                        } else if (!model.isValid()) {
+                            result = model.validationResult;
+                        } else {
+                            validators.some(v => {
+                                const filedError = v(model.get(column.key), model.attributes);
+                                if (filedError) {
+                                    result = model.validationResult = filedError;
+                                }
+                                return result;
+                            });
+                        }
+                    });
+                    return result;
+                });
+            });
+            if (hasErrorInFields) {
+                error = {
+                    type: 'gridError',
+                    message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR')
+                };
+            }
         }
 
-        return this.options.columns.some(column => {
-            if (!column.editable || !column.validators) {
-                return false;
-            }
-            const validators = [];
-            return column.validators.some(validator => {
-                let result;
-                if (typeof validator === 'function') {
-                    validators.push(validator);
-                } else {
-                    const predefined = form.repository.validators[validator];
-                    if (typeof predefined === 'function') {
-                        validators.push(predefined());
-                    }
-                }
+        if (error) {
+            this.setError([error]);
+        } else {
+            this.clearError();
+        }
 
-                this.collection.forEach(model => {
-                    if (model._events['validate:force']) {
-                        const e = {};
-                        model.trigger('validate:force', e);
-                        if (e.validationResult) {
-                            result = e.validationResult;
-                        }
-                    } else if (!model.isValid()) {
-                        result = model.validationResult;
-                    } else {
-                        validators.some(v => {
-                            const error = v(model.get(column.key), model.attributes);
-                            if (error) {
-                                result = model.validationResult = error;
-                            }
-                            return result;
-                        });
-                    }
-                });
-                return result;
-            });
-        });
+        return error;
     },
 
     __handleDragLeave(e) {
@@ -606,5 +655,60 @@ export default Marionette.View.extend({
             'min-height': '',
             height: ''
         });
+    },
+
+    setError(errors: Array<any>): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+
+        this.$el.addClass(classes.ERROR);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('errorTextRegion', errorPopout);
+            this.isErrorShown = true;
+        }
+    },
+
+    clearError(): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.$el.removeClass(classes.ERROR);
+        this.errorCollection && this.errorCollection.reset();
+    },
+
+    setRequired(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.required = required;
+        if (required) {
+            this.__toggleRequiredClass();
+            this.listenTo(this.collection, 'add remove reset update', this.__toggleRequiredClass);
+        } else {
+            this.stopListening(this.collection, 'add remove reset update', this.__toggleRequiredClass);
+        }
+    },
+
+    __toggleRequiredClass() {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        const required = this.collection.length === 0;
+        this.$el.toggleClass(classes.REQUIRED, required);
+    },
+
+    __checkUiReady() {
+        return this.isRendered() && !this.isDestroyed();
     }
 });
