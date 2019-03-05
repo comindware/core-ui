@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -152,10 +151,6 @@ module.exports = () => {
             ]
         },
         plugins: [
-            /*new CleanWebpackPlugin([pathResolver.client()], {
-                verbose: false,
-                exclude: ['localization']
-            }),*/
             new WebpackPwaManifest({
                 name: 'Comindware business application platform',
                 short_name: 'Comindware',

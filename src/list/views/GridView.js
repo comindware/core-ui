@@ -181,7 +181,7 @@ export default Marionette.View.extend({
             this.toolbarView = new ToolbarView({
                 allItemsCollection: allToolbarActions || new Backbone.Collection()
             });
-            this.listenTo(this.toolbarView, 'command:execute', this.__executeAction);
+            this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         }
         if (this.options.showSearch) {
             this.searchView = new SearchBarView();
@@ -402,7 +402,6 @@ export default Marionette.View.extend({
             });
         }
 
-        this.listenTo(this.listView, 'execute:action', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
     },
 
