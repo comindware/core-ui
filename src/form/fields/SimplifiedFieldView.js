@@ -1,10 +1,10 @@
 // @flow
 import template from './templates/simplifiedField.hbs';
 import dropdown from 'dropdown';
-import ErrorButtonView from './views/ErrorButtonView';
-import InfoButtonView from './views/InfoButtonView';
-import TooltipPanelView from './views/TooltipPanelView';
-import ErrosPanelView from './views/ErrosPanelView';
+import ErrorButtonView from '../../views/ErrorButtonView';
+import InfoButtonView from '../../views/InfoButtonView';
+import TooltipPanelView from '../../views/TooltipPanelView';
+import ErrosPanelView from '../../views/ErrosPanelView';
 import formRepository from '../formRepository';
 import SimplifiedButtonView from './views/SimplifiedButtonView';
 import SimplifiedPanelView from './views/SimplifiedPanelView';
