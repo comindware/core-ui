@@ -1084,6 +1084,11 @@ svg.svg-grid-icons {
   @apply --drop-zone-active-theme;
 }
 
+.editor_document.editor_readonly .documents__drop-zone,
+.editor_document.editor_disabled .documents__drop-zone{
+  display: none;
+}
+
 .documents__wrapper {
   border: 1px dashed var(--border-color);
   border-radius: 6px;
