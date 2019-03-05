@@ -562,7 +562,8 @@ export default Marionette.View.extend({
             if (hasErrorInFields) {
                 error = {
                     type: 'gridError',
-                    message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR')
+                    message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR'),
+                    severity: 'Error'
                 };
             }
         }
@@ -692,20 +693,27 @@ export default Marionette.View.extend({
             return;
         }
         this.required = required;
+        this.__updateEmpty();
         if (required) {
-            this.__toggleRequiredClass();
-            this.listenTo(this.collection, 'add remove reset update', this.__toggleRequiredClass);
+            this.listenTo(this.collection, 'add remove reset update', this.__updateEmpty);
         } else {
-            this.stopListening(this.collection, 'add remove reset update', this.__toggleRequiredClass);
+            this.stopListening(this.collection, 'add remove reset update', this.__updateEmpty);
         }
     },
 
-    __toggleRequiredClass() {
+    __updateEmpty() {
+        if (this.required) {
+            this.__toggleRequiredClass(this.collection.length === 0);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
         if (!this.__checkUiReady()) {
             return;
         }
-        const required = this.collection.length === 0;
-        this.$el.toggleClass(classes.REQUIRED, required);
+        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
     },
 
     __checkUiReady() {
