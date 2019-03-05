@@ -245,6 +245,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'BooleanGroupEditor',
+                    displayName: 'Boolean Group Editor',
+                    description: 'Group boolean editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'DateEditor',
                     displayName: 'Date Editor',
                     description: 'Date editor without time',

@@ -1,6 +1,6 @@
 {{#if draggable}}
-<svg class="cell__dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
-    y="0px" viewBox="0 0 2 35" xml:space="preserve">
+<svg class="cell__dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+    x="0px" y="0px" viewBox="0 0 2 35" xml:space="preserve">
     <circle cx="1" cy="12" r="1.2"></circle>
     <circle cx="1" cy="17" r="1.2"></circle>
     <circle cx="1" cy="22" r="1.2"></circle>
@@ -10,7 +10,9 @@
     {{index}}
 </span>
 {{/if}}
+{{#if showCheckbox}}
 <div class="checkbox js-checkbox">
     <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked">
         <use xlink:href="#icon-checked" /> </svg>
 </div>
+{{/if}}

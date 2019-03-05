@@ -172,14 +172,16 @@ export default Marionette.View.extend({
             minimumVisibleRows: options.minimumVisibleRows
         });
 
-        if (this.options.showCheckbox) {
-            const draggable = this.getOption('draggable');
+        const draggable = this.getOption('draggable');
+
+        if (this.options.showCheckbox || draggable) {
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
                 gridEventAggregator: this,
                 showRowIndex: this.options.showRowIndex,
                 childViewOptions: {
                     draggable,
+                    showCheckbox: options.showCheckbox,
                     showRowIndex,
                     bindSelection: this.getOption('bindSelection')
                 }
@@ -189,7 +191,8 @@ export default Marionette.View.extend({
                 collection: this.collection,
                 selectionType: 'all',
                 gridEventAggregator: this,
-                showRowIndex
+                showRowIndex,
+                draggable
             });
 
             if (draggable) {
@@ -324,7 +327,7 @@ export default Marionette.View.extend({
             this.el.classList.add('grid__headless');
         }
 
-        if (this.options.showCheckbox) {
+        if (this.options.showCheckbox || this.getOption('draggable')) {
             if (this.options.showHeader) {
                 this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
             }
@@ -436,7 +439,7 @@ export default Marionette.View.extend({
 
     __bindListRegionScroll() {
         const headerRegionEl = this.options.showHeader && this.headerView.el;
-        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
+        const selectionPanelRegionEl = (this.options.showCheckbox || this.getOption('draggable')) && this.getRegion('selectionPanelRegion').el;
 
         this.getRegion('contentRegion').el.addEventListener('scroll', event => {
             if (headerRegionEl) {

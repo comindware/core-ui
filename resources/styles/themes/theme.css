@@ -353,6 +353,13 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
+.cell_draggable {
+  color: var(--grid-selection-color);
+  width: 25px;
+  background-color: var(--grid-selection-bg);
+  box-shadow: var(--grid-cell-border-first);
+}
+
 .cell_selection[draggable], .cell_selection-index[draggable] {
   cursor: move;
 }
@@ -421,10 +428,6 @@ svg.svg-grid-icons {
 
 .grid-selection-cell-all {
   min-width: var(--grid-selection-width);
-}
-
-.grid-selection-panel {
-  width: var(--grid-selection-width);
 }
 
 .grid-selection-cell-all {
