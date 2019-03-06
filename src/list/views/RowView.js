@@ -311,7 +311,7 @@ export default Marionette.View.extend({
         this.el.insertAdjacentHTML(
             'afterBegin',
             `
-            <td class="cell_selection">
+            <td class="${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}">
         ${
             this.options.draggable
                 ? `

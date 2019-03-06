@@ -11,7 +11,7 @@
     "@babel/preset-env": "^7.3.4",
     "autoprefixer": "^8.6.5",
     "babel-loader": "^8.0.5",
-    "copy-webpack-plugin": "^4.6.0",
+    "copy-webpack-plugin": "^5.0.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.10",
     "eslint-config-prettier": "^4.1.0",

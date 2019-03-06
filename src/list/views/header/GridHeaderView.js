@@ -80,14 +80,15 @@ const GridHeaderView = Marionette.View.extend({
                     width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : ''
                 })
             ),
-            showCheckbox: this.options.showCheckbox
+            showCheckbox: this.options.showCheckbox,
+            cellClass: this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'
         };
     },
 
     onRender() {
         if (this.options.isTree) {
             this.$el
-                .children()[0]
+                .find('.header-column-wrp')[0]
                 .insertAdjacentHTML(
                     'afterbegin',
                     `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>&nbsp;`
