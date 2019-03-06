@@ -22,7 +22,6 @@ import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
 // @ts-ignore
 import AppRouter from 'marionette.approuter';
-import 'backbone.modelbinder';
 import 'backbone-computedfields';
 import 'backbone.radio';
 import 'backbone-associations';
