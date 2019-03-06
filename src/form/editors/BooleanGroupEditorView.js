@@ -39,14 +39,14 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     },
 
     childViewOptions(model) {
-        return model.toJSON();
+        return Object.assign({}, model.toJSON(), { key: 'id', autocommit: true });
     },
 
     template: Handlebars.compile(template),
 
     setValue(value) {
-        Object.values(this.children._views).forEach(view => view.setValue(this.value.includes(view.model.id)));
         this.value = value;
+        Object.values(this.children._views).forEach(view => view.setValue(this.value ? this.value.includes(view.model.id) : false));
     },
 
     isEmptyValue() {
@@ -54,18 +54,19 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     },
 
     onRender() {
-        Object.values(this.children._views).forEach(view =>
-            this.listenTo(view, 'change', booleanEditor => {
-                const value = booleanEditor.getValue();
+        Object.values(this.children._views).forEach(view => this.listenTo(view, 'change', booleanEditor => this.__value(booleanEditor.getValue(), view.id)));
+    },
 
-                if (value) {
-                    this.value.push(view.id);
-                } else {
-                    this.value.splice(this.value.findIndex(v => v === view.id), 1);
-                }
-                this.__triggerChange();
-            })
-        );
+    __value(value, valueId) {
+        if (value) {
+            if (!this.value) {
+                this.value = [];
+            }
+            this.value.push(valueId);
+        } else {
+            this.value.splice(this.value.findIndex(v => v === valueId), 1);
+        }
+        this.__triggerChange();
     },
 
     __setReadonly(readonly) {
