@@ -45,14 +45,27 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     template: Handlebars.compile(template),
 
     setValue(value) {
-        if (this.value === value) {
-            return;
-        }
+        Object.values(this.children._views).forEach(view => view.setValue(this.value.includes(view.model.id)));
         this.value = value;
     },
 
     isEmptyValue() {
         return typeof this.getValue() !== 'boolean';
+    },
+
+    onRender() {
+        Object.values(this.children._views).forEach(view =>
+            this.listenTo(view, 'change', booleanEditor => {
+                const value = booleanEditor.getValue();
+
+                if (value) {
+                    this.value.push(view.id);
+                } else {
+                    this.value.splice(this.value.findIndex(v => v === view.id), 1);
+                }
+                this.__triggerChange();
+            })
+        );
     },
 
     __setReadonly(readonly) {
