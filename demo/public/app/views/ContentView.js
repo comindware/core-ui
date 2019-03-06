@@ -91,7 +91,8 @@ export default Marionette.View.extend({
                     type: 'Checkbox',
                     severity: 'Low',
                     resultType: 'CustomClientAction',
-                    context: 'Void'
+                    context: 'Void',
+                    isChecked: true
                 },
                 {
                     iconType: 'Undefined',
@@ -99,7 +100,8 @@ export default Marionette.View.extend({
                     name: 'Attributes',
                     severity: 'None',
                     defaultTheme: true,
-                    type: 'Checkbox'
+                    type: 'Checkbox',
+                    isChecked: true
                 },
                 {
                     iconType: 'Undefined',
@@ -107,7 +109,8 @@ export default Marionette.View.extend({
                     name: 'Code',
                     severity: 'None',
                     defaultTheme: true,
-                    type: 'Checkbox'
+                    type: 'Checkbox',
+                    isChecked: !Core.services.MobileService.isMobile
                 }
             ])
         });
@@ -146,6 +149,8 @@ export default Marionette.View.extend({
         this.showChildView('codeRegion', textView);
         textView.setReadonly(true);
         this.__reloadEditor();
+
+        this.$('.demo-content__code').toggle(!Core.services.MobileService.isMobile);
     },
 
     __createAttributesConfigurationView() {
@@ -297,13 +302,13 @@ export default Marionette.View.extend({
     __handleToolbarClick(model) {
         switch (model.id) {
             case 'component':
-                this.$('.js-case-representation-region').toggle();
+                this.$('.js-case-representation-region').toggle(model.get('isChecked'));
                 break;
             case 'attributes':
-                this.$('.js-attributes-configuration-region').toggle();
+                this.$('.js-attributes-configuration-region').toggle(model.get('isChecked'));
                 break;
             case 'code':
-                this.$('.demo-content__code').toggle();
+                this.$('.demo-content__code').toggle(model.get('isChecked'));
                 break;
             default:
                 break;

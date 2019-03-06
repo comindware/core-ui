@@ -131,21 +131,19 @@ export default Marionette.View.extend({
     },
 
     __createDropdownActionsView() {
-        const view = Core.dropdown.factory.createMenu({
-            text: actionsMenuLabel,
-            items: this.menuItemsCollection,
-            popoutFlow: 'right',
-            customAnchor: true,
-            panelView: MenuPanelViewWithSplitter
+        const GroupView = meta.viewsByType[meta.toolbarItemType.GROUP];
+        const view = new GroupView({
+            model: new Backbone.Model({
+                items: this.menuItemsCollection
+            }),
+            customAnchor: actionsMenuLabel
         });
-        this.listenTo(view, 'execute', this.__executeDropdownCommand);
+
+        this.listenTo(view, 'action:click', this.__executeDropdownCommand);
         return view;
     },
 
-    __executeDropdownCommand(action, model, options = {}) {
-        if (model.get('type') === meta.toolbarItemType.CHECKBOX) {
-            model.toggleChecked && model.toggleChecked();
-        }
+    __executeDropdownCommand(model, options = {}) {
         this.trigger('command:execute', model, options);
     }
 });

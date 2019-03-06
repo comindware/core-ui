@@ -10,7 +10,8 @@ export default TriggerButtonView.extend({
         return Object.assign(
             TriggerButtonView.prototype.templateContext.apply(this, arguments),
             {
-                isGroup: true
+                isGroup: true,
+                customAnchor: this.options.customAnchor
             }
         );
     }

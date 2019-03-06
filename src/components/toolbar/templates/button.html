@@ -18,7 +18,11 @@
     <span class='js-action toolbar-btn__text' title="{{description}}">{{name}}</span>
 {{/if}}
 {{#if isGroup}}
+    {{#if customAnchor}}
+    {{{customAnchor}}}
+    {{else}}
     <span class="toolbar__icons toolbar__icons_arrow js-anchor">
         <i class="fa fa-chevron-down"></i>
     </span>
+    {{/if}}
 {{/if}}
