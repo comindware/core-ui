@@ -39,7 +39,7 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     },
 
     childViewOptions(model) {
-        return model.toJSON();
+        return Object.assign({}, model.toJSON(), { key: 'id' });
     },
 
     template: Handlebars.compile(template),
