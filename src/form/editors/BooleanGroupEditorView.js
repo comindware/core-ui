@@ -39,7 +39,7 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     },
 
     childViewOptions(model) {
-        return Object.assign({}, model.toJSON(), { key: 'id', autocommit: true });
+        return Object.assign({}, model.toJSON(), { key: 'checkboxValue', autocommit: true });
     },
 
     template: Handlebars.compile(template),
