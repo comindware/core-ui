@@ -1045,9 +1045,16 @@ a:hover {
     background: unset;
 }
 
-.toolbar-menu-actions .popout__action-btn {
-    padding: 0 10px;
-    line-height: 30px;
+.toolbar-menu-actions .toolbar-btn,
+.toolbar-menu-actions .toolbar-btn:hover{
+    margin: 0 5px;
+    background-color: transparent;
+    border-color: transparent;
+    color: unset;
+    font-weight: bold;
+}
+.toolbar-menu-actions .toolbar-btn:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 .toolbar-btn .dropdown__button {

@@ -173,31 +173,20 @@ const toolbarItemType = {
     SEARCH: 'Search'
 };
 
-const getViewByModel = model => {
-    switch (model.get('type')) {
-        case toolbarItemType.ACTION:
-            return ActionView;
-        case toolbarItemType.GROUP:
-        case toolbarItemType.SELECTSTATE:
-            return ActionMenuView;
-        case toolbarItemType.SPLITTER:
-            return ToolbarSplitterView;
-        case toolbarItemType.POPUP:
-            return ToolbarPopupView;
-        case toolbarItemType.CHECKBOX:
-            return ToolbarCheckboxItemView;
-        case toolbarItemType.SELECTITEM:
-            return ToolbarSelectItemView;
-        case toolbarItemType.BLINKCHECKBOX:
-            return BlinkCheckboxView;
-        case toolbarItemType.HEADLINE:
-            return ButtonView;
-        case toolbarItemType.SEARCH:
-            return SearchBarView;
-        default:
-            return ActionView;
-    }
+const viewsByType = {
+    [toolbarItemType.ACTION]: ActionView,
+    [toolbarItemType.GROUP]: ActionMenuView,
+    [toolbarItemType.SELECTSTATE]: ActionMenuView,
+    [toolbarItemType.SPLITTER]: ToolbarSplitterView,
+    [toolbarItemType.POPUP]: ToolbarPopupView,
+    [toolbarItemType.CHECKBOX]: ToolbarCheckboxItemView,
+    [toolbarItemType.SELECTITEM]: ToolbarSelectItemView,
+    [toolbarItemType.BLINKCHECKBOX]: BlinkCheckboxView,
+    [toolbarItemType.HEADLINE]: ButtonView,
+    [toolbarItemType.SEARCH]: SearchBarView
 };
+
+const getViewByModel = model => viewsByType[model.get('type')] || ActionView;
 
 const kinds = {
     CONST: 'Const'
@@ -206,6 +195,7 @@ const kinds = {
 export default {
     toolbarItemType,
     getViewByModel,
+    viewsByType,
     severity,
     kinds,
     icons
