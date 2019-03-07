@@ -308,6 +308,14 @@ export default class DropdownView {
         this.button.trigger('close', this, ...args);
     }
 
+    toggle(...args) {
+        if (this.button.isOpen) {
+            this.close(...args);
+        } else {
+            this.open(...args);
+        }
+    }
+
     __keyAction(event) {
         if (event.keyCode === 27) {
             this.close();
@@ -316,7 +324,7 @@ export default class DropdownView {
 
     __handleClick() {
         if (this.options.autoOpen) {
-            this.open();
+            this.toggle();
         }
     }
 
