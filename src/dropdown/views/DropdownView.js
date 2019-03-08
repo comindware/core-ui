@@ -152,10 +152,6 @@ export default class DropdownView {
             this.panelEl.style.width = `${panelWidth}px`;
         }
 
-        if (this.panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            this.panelEl.style.minWidth = `${panelWidth}px`;
-        }
-
         let leftOffset = buttonRect.left;
         let offsetHeight = this.panelEl.offsetHeight;
 
@@ -249,16 +245,14 @@ export default class DropdownView {
             this.button.trigger(...args);
         });
 
-        this.popupId = WindowService.showTransientPopup(this.panelView, {
-            hostEl: this.button.el
-        });
         this.panelEl = this.panelView.el;
 
         this.button.isOpen = true;
         this.__adjustPosition();
-        //const buttonWidth = this.button.el.getBoundingClientRect().width;
 
-        //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
+            hostEl: this.button.el
+        });
 
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);

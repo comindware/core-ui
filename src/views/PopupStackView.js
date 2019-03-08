@@ -61,7 +61,11 @@ export default Marionette.View.extend({
             el: regionEl
         });
 
-        view.once('attach', () => view.$el.addClass('presented-modal-window'));
+        view.once('attach', () =>
+            requestAnimationFrame(() => {
+                view.$el.addClass('presented-modal-window');
+            })
+        );
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {
