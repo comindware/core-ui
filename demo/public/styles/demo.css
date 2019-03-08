@@ -208,6 +208,7 @@ body {
 @media screen and (min-width: 1000px) {
     .demo-content_container {
         flex-direction: row;
+        padding: 1rem;
     }
     .demo-content__function {
         max-width: 50%;
@@ -220,6 +221,7 @@ body {
 @media screen and (max-width: 999px) {
     .demo-content_container {
         flex-direction: column;
+        padding: 1rem 0 0;
     }
     .demo-content__function {
         max-width: 100%;
@@ -256,7 +258,6 @@ body {
     height: 100%;
     width: 100%;
     display: flex;
-    padding: 1rem;
     justify-content: space-between;
 }
 .demo-content__function {
