@@ -125,8 +125,8 @@ export default {
         return activeUrl?.startsWith('#custom');
     },
 
-    setModuleLoading(show) {
-        show ? this.__showViewPlaceholder() : this.__hideViewPlaceholder();
+    setModuleLoading(show, useForce) {
+        show ? this.__showViewPlaceholder() : this.__hideViewPlaceholder(useForce);
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
@@ -216,6 +216,7 @@ export default {
                     this.__callRoutingActionForActiveModule(callbackName, routingArgs);
                 }
             } catch (e) {
+                this.setModuleLoading(false, true);
                 Core.utils.helpers.throwError(e);
             }
         } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
@@ -233,12 +234,12 @@ export default {
         window.contentLoadingRegion.$el.addClass('visible-loader');
     },
 
-    __hideViewPlaceholder() {
+    __hideViewPlaceholder(useForce) {
         this.loadersCount--;
-        if (this.loadersCount <= 0) {
+        if (this.loadersCount <= 0 || useForce) {
             window.contentLoadingRegion.$el.removeClass('visible-loader');
         }
-        if (this.loadersCount < 0) {
+        if (this.loadersCount < 0 || useForce) {
             this.loadersCount = 0;
         }
     },
