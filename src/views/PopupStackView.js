@@ -286,10 +286,17 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        this.removeRegion(popupDef.popupId);
-        this.el.removeChild(popupDef.regionEl);
+        popupDef.view.el.addEventListener(
+            'transitionend',
+            () => {
+                this.removeRegion(popupDef.popupId);
+                this.el.removeChild(popupDef.regionEl);
+                this.trigger('popup:close', popupDef.popupId);
+            },
+            { once: true }
+        );
+        popupDef.view.$el.removeClass('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-        this.trigger('popup:close', popupDef.popupId);
     },
 
     get(popupId) {
