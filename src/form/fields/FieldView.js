@@ -153,9 +153,8 @@ export default class {
 
         this.editor.on('before:attach', () => {
             const fieldTempParts = Handlebars.compile(options.template)(schema).split('<!--js-editor-region -->');
-
-            this.editor.$el.before(fieldTempParts[0]);
-            this.editor.$el.after(fieldTempParts[1]);
+            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts[0]);
+            this.editor.el.insertAdjacentHTML('afterend', fieldTempParts[1]);
 
             if (schema.helpText) {
                 const viewModel = new Backbone.Model({
