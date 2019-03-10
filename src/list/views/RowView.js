@@ -157,8 +157,7 @@ export default Marionette.View.extend({
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key,
-                tagName: 'td',
-                template: editableCellField
+                tagName: 'td'
             });
 
             cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
