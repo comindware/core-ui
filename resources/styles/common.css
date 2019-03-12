@@ -1047,11 +1047,13 @@ a:hover {
 
 .toolbar-menu-actions .toolbar-btn,
 .toolbar-menu-actions .toolbar-btn:hover{
-    margin: 0 5px;
+    margin-left: 5px;
+    margin-right: 0;
     background-color: transparent;
     border-color: transparent;
     color: unset;
     font-weight: bold;
+    user-select: none;
 }
 .toolbar-menu-actions .toolbar-btn:hover{
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
