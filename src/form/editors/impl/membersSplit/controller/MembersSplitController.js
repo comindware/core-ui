@@ -75,11 +75,11 @@ export default Marionette.Object.extend({
     },
 
     async __updateItems() {
+        this.members = {};
         if (this.options.memberService) {
             try {
                 this.__setLoading(true);
                 const data = await this.options.memberService.getMembers(this.__getSettings());
-                this.members = {};
                 data.available.forEach(item => (this.members[item.id] = item));
                 data.selected.forEach(item => (this.members[item.id] = item));
                 this.__processValues();
