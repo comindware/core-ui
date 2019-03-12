@@ -360,7 +360,8 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
     },
 
     __keydown(event) {
-        if (event.ctrlKey || this.readonly) {
+        // this.ui.input[0].hasAttribute('readonly') for time editor, because setReadonly set tabindex -1
+        if (event.ctrlKey || !this.getEditable() || this.ui.input[0].hasAttribute('readonly')) {
             return;
         }
         const position = this.getCaretPos();
