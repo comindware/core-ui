@@ -152,9 +152,10 @@ export default class {
         });
 
         this.editor.on('before:attach', () => {
-            const fieldTempParts = Handlebars.compile(options.template)(schema).split('<!--js-editor-region -->');
-            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts[0]);
-            this.editor.el.insertAdjacentHTML('afterend', fieldTempParts[1]);
+            const fieldTempParts = Handlebars.compile(options.template)(schema);
+            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
+
+            this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
 
             if (schema.helpText) {
                 const viewModel = new Backbone.Model({
@@ -174,14 +175,20 @@ export default class {
                 });
 
                 this.editor.helpTextRegion = new Marionette.Region({
-                    el: this.editor.$el.parent().find('.js-help-text-region')
+                    el: this.editor.$el
+                        .parent()
+                        .parent()
+                        .find('.js-help-text-region')
                 });
                 this.editor.helpTextRegion.show(infoPopout);
 
                 this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
             }
             this.editor.errorsRegion = new Marionette.Region({
-                el: this.editor.$el.parent().find('.js-error-text-region')
+                el: this.editor.$el
+                    .parent()
+                    .parent()
+                    .find('.js-error-text-region')
             });
             this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
             this.editor.__updateEditorState(schema.readonly, schema.enabled);
