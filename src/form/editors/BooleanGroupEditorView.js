@@ -5,7 +5,8 @@ import BooleanEditorView from './BooleanEditorView';
 
 const defaultOptions = {
     displayText: '',
-    thirdState: false
+    thirdState: false,
+    items: []
 };
 
 /**
