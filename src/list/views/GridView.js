@@ -190,9 +190,9 @@ export default Marionette.View.extend({
             this.selectionHeaderView = new SelectionCellView({
                 collection: this.collection,
                 selectionType: 'all',
+                showCheckbox: options.showCheckbox,
                 gridEventAggregator: this,
-                showRowIndex,
-                draggable
+                showRowIndex
             });
 
             if (draggable) {
