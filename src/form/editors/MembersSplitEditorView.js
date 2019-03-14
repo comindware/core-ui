@@ -138,14 +138,14 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         WindowService.showPopup(popup);
     },
 
-    async __updateText() {
+    async updateText() {
         this.ui.membersText.text(await this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {
         this.options.selected = value;
         if (this.getOption('showMode') === 'button') {
-            this.__updateText();
+            this.updateText();
         }
         this.value = value;
 
