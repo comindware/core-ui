@@ -4,6 +4,10 @@ import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
 
+const defaultOptions = () => ({
+    emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.COLOR.EMPTYPLACEHOLDER')
+});
+
 /**
  * @name ColorPickerView
  * @memberof module:core.form.editors
@@ -19,30 +23,34 @@ import colorPicker from './templates/colorPicker.hbs';
  * */
 
 export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
+    initialize(options) {
+        this.__applyOptions(options, defaultOptions);
+    },
+
     template: Handlebars.compile(colorPicker),
 
-    focusElement: '.hexcolor',
+    focusElement: '.js-input',
 
     ui: {
-        hexcolor: '.hexcolor',
-        colorpicker: '.colorpicker'
+        input: '.js-input',
+        colorpicker: '.js-colorpicker'
     },
 
     events: {
         change: '__change',
         'change @ui.colorpicker': '__changedColorPicker',
-        'change @ui.hexcolor': '__changedHex',
+        'change @ui.input': '__changedHex',
         'click .js-clear-button': '__clear'
     },
 
     className: 'editor editor_color',
 
     __changedHex() {
-        this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
+        this.ui.colorpicker.spectrum('set', this.ui.input.val());
     },
 
     __changedColorPicker() {
-        this.ui.hexcolor.val(this.ui.colorpicker.val());
+        this.ui.input.val(this.ui.colorpicker.val());
     },
 
     __change() {
@@ -51,7 +59,7 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
 
     __clear() {
         this.__value(null, false, true);
-        this.ui.hexcolor.val(null);
+        this.ui.input.val(null);
         this.ui.colorpicker.spectrum('set', null);
         this.focus();
         return false;
@@ -69,20 +77,21 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
             showInitial: true,
             preferredFormat: 'hex'
         });
-        this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
+        this.ui.input.val(this.ui.colorpicker.spectrum('get'));
+        this.__updateColorPickerEditable();
     },
 
-    __setReadonly(readonly) {
-        BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled() && this.getReadonly()) {
-            this.ui.colorpicker.spectrum('disable');
-        }
-        this.ui.hexcolor.prop('readonly', readonly);
+    setPermissions(enabled, readonly) {
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        this.__updateColorPickerEditable();
     },
 
-    __setEnabled(enabled) {
-        BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.colorpicker.spectrum('enable');
+    __updateColorPickerEditable() {
+        this.ui.colorpicker.spectrum(
+            this.getEditable() ?
+                'enable':
+                'disable'
+        );
     },
 
     __value(value: String, updateUi: Boolean, triggerChange: Boolean) {

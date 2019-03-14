@@ -61,13 +61,11 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     focusElement: '.js-input',
 
-    className() {
-        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
-
-        return `${this.options.class || ''} editor editor_number`;
-    },
+    className: 'editor editor_number',
 
     initialize(options) {
+        this.__applyOptions(options, defaultOptions);
+
         this.format = options.format || options.intlOptions || options.allowFloat;
         this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {

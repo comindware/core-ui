@@ -64,7 +64,7 @@ const variables = {
     // form editor
     'editor-font-size': 'inherit',
     'editor-text-color': 'var(--text-color)',
-    'editor-empty-text-color': 'var(--text-color)',
+    'editor-empty-text-color': 'rgba(0,0,0,.3)',
 
     // input
     'input-padding': '4px 20px 4px var(--form-input-padding)',

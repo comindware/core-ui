@@ -6,15 +6,17 @@ export default function () {
         selected: ['user.1']
     });
 
+    const view = new Core.form.editors.MembersSplitEditor({
+        model,
+        key: 'selected',
+        autocommit: true,
+        users: Core.services.UserService.listUsers(),
+        groups: Core.services.UserService.listGroups(),
+        showMode: 'button'
+    });
+
     return new CanvasView({
-        view: new Core.form.editors.MembersSplitEditor({
-            model,
-            key: 'selected',
-            autocommit: true,
-            users: Core.services.UserService.listUsers(),
-            groups: Core.services.UserService.listGroups(),
-            showMode: 'button'
-        }),
+        view,
         presentation: '\'{{selected}}\'',
         isEditor: true
     });

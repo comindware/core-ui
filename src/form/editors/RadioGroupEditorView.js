@@ -23,18 +23,13 @@ const defaultOptions = {
  * */
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
     /** @lends module:core.form.editors.RadioGroupEditorView.prototype */ {
-        initialize() {
+        initialize(options = {}) {
+            this.__applyOptions(options, defaultOptions);
             this.collection = new RadioGroupCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
 
         template: Handlebars.compile(template),
-
-        className() {
-            _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
-
-            return `${this.options.class || ''}`;
-        },
 
         childViewContainer: '.js-container',
 

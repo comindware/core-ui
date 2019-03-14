@@ -40,7 +40,7 @@ export default function() {
 
     return new CanvasView({
         view,
-        presentation: "[ {{#each users}}<div>{ id: '{{this.id}}', name: '{{this.name}}' }{{#unless @last}}, {{/unless}}</div>{{/each}} <div>]</div>",
+        presentation: "[ {{#each documents}}<div>{ id: '{{this.id}}', name: '{{this.name}}' }{{#unless @last}}, {{/unless}}</div>{{/each}} <div>]</div>",
         isEditor: true
     });
 }

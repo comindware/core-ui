@@ -1,5 +1,1 @@
-{{#if maxLength}}
-    <textarea class="textarea js-textarea" placeholder="{{placeholder}}" maxLength="{{maxLength}}"></textarea>
-{{else}}
-    <textarea class="textarea js-textarea" placeholder="{{placeholder}}"></textarea>
-{{/if}}
+<textarea class="textarea js-input" {{#if maxLength}}maxlength="{{maxLength}}"{{/if}}></textarea>

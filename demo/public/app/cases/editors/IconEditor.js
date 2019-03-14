@@ -11,6 +11,7 @@ export default function() {
             model
         }),
 
-        presentation: '"{{iconClass}}"'
+        presentation: '"{{iconClass}}"',
+        isEditor: true
     });
 }
