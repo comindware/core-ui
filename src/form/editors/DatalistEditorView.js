@@ -40,6 +40,8 @@ const defaultOptions = () => ({
     idProperty: 'id',
     showSearch: true,
 
+    emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
+
     class: undefined,
     buttonBubbleTemplate: undefined,
     panelBubbleTemplate: undefined,
@@ -122,6 +124,7 @@ const stop = event => {
  * */
 export default (formRepository.editors.Datalist = BaseEditorView.extend({
     initialize(options = {}) {
+        this.__mapDatalistOptions(options);
         this.valueTypeId = this.options.valueType === 'id';
         this.isButtonLimitMode = this.options.maxButtonItems !== Infinity;
 
@@ -148,7 +151,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         };
 
         this.dropdownView = dropdown.factory.createDropdown({
-            buttonView: this.options.buttonView,
+            buttonView: this.options.buttonView.extend({
+                getEditable: this.getEditable.bind(this) //for placeholders.
+            }),
             buttonViewOptions: {
                 value: '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
@@ -159,9 +164,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                     bubbleItemViewOptions
                 ),
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
-                emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
-                readonly: this.__isInputShouldBeReadonly(),
-                getIsShowPlaceholder: this.__getIsShowPlaceholder.bind(this)
+                emptyPlaceholder: this.__getEmptyPlaceholder(),
+                readonlyPlaceholder: this.__getReadonlyPlaceholder(),
+                readonly: this.__isInputShouldBeReadonly()
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -198,6 +203,42 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__addButtonListeners();
     },
 
+    __getEmptyPlaceholder(isEmpty = this.isEmptyValue()) {
+        return isEmpty ? 
+            (this.options.showSearch ? this.options.emptyPlaceholder : '-') :
+            '';
+    },
+
+    __getReadonlyPlaceholder(isEmpty = this.isEmptyValue()) {
+        return isEmpty ?
+            this.options.readonlyPlaceholder :
+            '';
+    },
+
+    __mapDatalistOptions(options) {
+        let defaults = defaultOptions();
+        if (typeof options.format === 'string') {
+            const presetFn = presetsDefaults[options.format];
+            const preset = presetFn && presetFn(options);
+            defaults = _.defaults(preset, defaults);
+        }
+        this.__applyOptions(options, defaults);
+        if (this.options.controller) {
+            const controller = this.options.controller;
+    
+            this.options.fetchFiltered = true;
+    
+            this.options.collection = controller.options.collection;
+    
+            this.options.createValueUrl = controller.createValueUrl?.bind(controller);
+            this.options.edit = controller.edit?.bind(controller);
+            this.options.addNewItem = controller.addNewItem?.bind(controller);
+        }
+        if (this.options.showCollection) {
+            helpers.ensureOption(this.options, 'collection');
+        }
+    },
+
     __addButtonListeners() {
         const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
@@ -213,7 +254,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __isInputShouldBeReadonly() {
-        return !this.options.showSearch || this.getReadonly();
+        return !this.options.showSearch || !this.getEditable();
     },
 
     __createBoundEditor() {
@@ -302,28 +343,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     className() {
-        let defaults = defaultOptions();
-        if (typeof this.options.format === 'string') {
-            const presetFn = presetsDefaults[this.options.format];
-            const preset = presetFn && presetFn(this.options);
-            defaults = _.defaults(preset, defaults);
-        }
-        _.defaults(this.options, this.options.schema || this.options, defaults);
-        if (this.options.controller) {
-            const controller = this.options.controller;
-
-            this.options.fetchFiltered = true;
-
-            this.options.collection = controller.options.collection;
-
-            this.options.createValueUrl = controller.createValueUrl?.bind(controller);
-            this.options.edit = controller.edit?.bind(controller);
-            this.options.addNewItem = controller.addNewItem?.bind(controller);
-        }
-        if (this.options.showCollection) {
-            helpers.ensureOption(this.options, 'collection');
-        }
-
         const classList = [];
         const maxQuantity = this.options.maxQuantitySelected;
 
@@ -337,7 +356,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             classList.push('editor_bubble--delete');
         }
 
-        return `${this.options.class || ''} editor editor_bubble ${classList.join(' ')}`;
+        return `editor editor_bubble ${classList.join(' ')}`;
     },
 
     template: Handlebars.compile(template),
@@ -364,12 +383,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         BaseEditorView.prototype.__updateEmpty.call(this, isEmpty);
         //because called before initialize - wtf
         if (this.dropdownView?.isRendered()) {
-            this.dropdownView.togglePlaceholder(this.__getIsShowPlaceholder({ isEmptyValue: isEmpty }));
+            this.__togglePlaceholder(isEmpty);
         }
     },
 
-    __getIsShowPlaceholder({ isDatalistReadonly = this.getReadonly(), isEmptyValue = this.isEmptyValue() } = {}) {
-        return !isDatalistReadonly && isEmptyValue;
+    __togglePlaceholder(isEmpty) {
+        this.dropdownView.options.readonlyPlaceholder = this.__getReadonlyPlaceholder(isEmpty);
+        this.dropdownView.options.emptyPlaceholder = this.__getEmptyPlaceholder(isEmpty);
+        this.dropdownView.updatePlaceholder();
     },
 
     __convertToValue(estimatedObjects) {
@@ -388,7 +409,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.dropdownView.setPermissions(enabled, this.__isInputShouldBeReadonly());
-        this.dropdownView.togglePlaceholder(!readonly && this.isEmptyValue());
         this.dropdownView.collectionView.updateEnabled(this.getEditable());
     },
 

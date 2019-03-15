@@ -52,7 +52,8 @@ const defaultClasses = 'editor editor_date-time dropdown_root';
  * */
 
 export default (formRepository.editors.DateTime = BaseEditorView.extend({
-    initialize() {
+    initialize(options = {}) {
+        this.__applyOptions(options, defaultOptions);
         this.value = this.__adjustValue(this.value);
         this.enabled = this.getEnabled();
         this.readonly = this.getReadonly();
@@ -79,8 +80,6 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     className() {
-        _.defaults(this.options, _.pick(this.options?.schema ? this.options?.schema : this.options, Object.keys(defaultOptions())), defaultOptions());
-
         this.displayClasses = getClasses();
 
         return this.__getClassName();
@@ -543,7 +542,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __getClassName() {
-        return `${defaultClasses} ${this.options.class || ''} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
+        return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
             this.options.timeDisplayFormat
         ] || ''}`;
     }

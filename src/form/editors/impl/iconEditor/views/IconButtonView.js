@@ -16,7 +16,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     triggers: {
-        click: 'click:item'
+        click: {
+            event: 'click:item',
+            preventDefault: false,
+            stopPropagation: false
+        }
     },
 
     className: 'editor_icons',

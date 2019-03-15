@@ -92,10 +92,6 @@ const defaultOptions = () => ({
     // seconds: undefined // days, minutes, hours
 });
 
-const classes = {
-    FOCUSED: 'pr-focused'
-};
-
 const stateModes = {
     EDIT: 'edit',
     VIEW: 'view'
@@ -123,6 +119,7 @@ const stateModes = {
 
 export default (formRepository.editors.Duration = BaseEditorView.extend({
     initialize(options = {}) {
+        this.__applyOptions(options, defaultOptions);
         this.focusableParts = createFocusableParts(this.options);
 
         this.state = {
@@ -135,10 +132,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
 
     focusElement: '.js-input',
 
-    className() {
-        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions())), defaultOptions());
-        return `${this.options.class || ''} js-duration editor editor_duration`;
-    },
+    className: 'js-duration editor editor_duration',
 
     ui: {
         input: '.js-input',
@@ -157,36 +151,6 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         'keydown @ui.input': '__keydown',
         'keyup @ui.input': '__keyup',
         mouseenter: '__onMouseenter'
-    },
-
-    setPermissions(enabled, readonly) {
-        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.ui.clear.toggle(enabled && !readonly && !this.options.hideClearButton);
-        this.__setPlaceholder();
-    },
-
-    __setPlaceholder() {
-        let placeholder;
-        if (!this.getEnabled() || this.getReadonly()) {
-            placeholder = '';
-        } else {
-            placeholder = this.options.emptyPlaceholder;
-        }
-
-        this.ui.input.prop('placeholder', placeholder);
-    },
-
-    __setEnabled(enabled) {
-        BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
-    },
-
-    __setReadonly(readonly) {
-        BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
-        }
     },
 
     __clear() {
@@ -652,7 +616,6 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         if (this.options.showTitle && !inEditMode) {
             this.$el.prop('title', val);
         }
-        this.$el.toggleClass(classes.FOCUSED, inEditMode);
     },
 
     __onMouseenter() {

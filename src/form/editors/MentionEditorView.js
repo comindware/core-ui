@@ -26,8 +26,7 @@ const defaultOptions = {
  * */
 export default (formRepository.editors.Mention = BaseEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-
+        this.__applyOptions(options, defaultOptions);
         this.__createViewModel();
     },
 

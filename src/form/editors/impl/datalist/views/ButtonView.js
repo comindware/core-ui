@@ -50,7 +50,6 @@ export default TextEditorView.extend({
 
     onRender(): void {
         this.showChildView('collectionRegion', this.collectionView);
-        this.togglePlaceholder(this.options.getIsShowPlaceholder());
     },
 
     setPermissions(enabled, readonly) {
@@ -80,9 +79,5 @@ export default TextEditorView.extend({
 
     setCounter(count) {
         this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
-    },
-
-    togglePlaceholder(isShow) {
-        this.__setPlaceholder(isShow ? this.__placeholderShouldBe() : '');
     }
 });

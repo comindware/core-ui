@@ -98,6 +98,8 @@
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перед добавлением значений в таблицу необходимо создать запись"; l10n:originalData "You need to create record before adding values to the table"].
 
+<http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите цвет"; l10n:originalData "Enter color here"].
+
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
 <http://comindware.com/text/core/form/editors/date#invalidDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата неверна"; l10n:originalData "Invalid date"].

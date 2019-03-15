@@ -6,19 +6,20 @@ export default function() {
         fullName: 'Foo Bar'
     });
 
-    return new CanvasView({
-        view: new Core.form.editors.AvatarEditor({
-            model,
-            key: 'avatar',
-            autocommit: true,
-            fullName: model.get('fullName'),
-            autoUpload: true, // or use method 'upload' instead
-            refreshPreviewAfterUpload: true,
-            controller: new Core.form.editors.avatar.controllers.DemoAvatarEditorController({
-                defaultURL: ''
-            })
-        }),
+    const view = new Core.form.editors.AvatarEditor({
+        model,
+        key: 'avatar',
+        autocommit: true,
+        fullName: model.get('fullName'),
+        autoUpload: true, // or use method 'upload' instead
+        refreshPreviewAfterUpload: true,
+        controller: new Core.form.editors.avatar.controllers.DemoAvatarEditorController({
+            defaultURL: ''
+        })
+    });
 
+    return new CanvasView({
+        view,
         presentation: '"{{avatar}}"',
         isEditor: true
     });

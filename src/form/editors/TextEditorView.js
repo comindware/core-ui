@@ -11,10 +11,8 @@ const changeMode = {
     keydown: 'keydown'
 };
 
-// used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
     changeMode: 'blur',
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
     maxLength: undefined,
     mask: undefined,
     placeholderChar: '_',
@@ -23,7 +21,7 @@ const defaultOptions = () => ({
     allowEmptyValue: true,
     class: undefined,
     format: '',
-    readonlyPlaceholder: '-'
+    hideClearButton: false
 });
 
 /**
@@ -46,15 +44,15 @@ const defaultOptions = () => ({
  * */
 
 export default (formRepository.editors.Text = BaseEditorView.extend({
-    initialize() {
+    initialize(options) {
         const defOps = defaultOptions();
-        const editorOptions = this.options.schema ? this.options.schema : this.options;
-        if (editorOptions.format) {
-            this.__setMaskByFormat(editorOptions.format, defOps);
+        if (options.format) {
+            this.__setMaskByFormat(options.format, defOps);
         } else {
             this.mask = this.options.mask;
         }
-        _.defaults(this.options, _.pick(editorOptions, Object.keys(defOps)), defOps);
+        
+        this.__applyOptions(options, defaultOptions);
     },
 
     focusElement: '.js-input',
@@ -64,9 +62,7 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
         clearButton: '.js-clear-button'
     },
 
-    className() {
-        return `${this.options.class || ''} editor`;
-    },
+    className: 'editor',
 
     template: Handlebars.compile(template),
 
@@ -126,37 +122,6 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
 
     setValue(value) {
         this.__value(value, true, false);
-    },
-
-    setPermissions(enabled, readonly) {
-        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.__setPlaceholder(this.__placeholderShouldBe());
-    },
-
-    __setPlaceholder(placeholder) {
-        this.ui.input.prop(
-            'placeholder',
-            placeholder
-        );
-    },
-
-    __placeholderShouldBe() {
-        return this.getEditable() ?
-            this.options.emptyPlaceholder :
-            this.options.readonlyPlaceholder;
-    },
-
-    __setEnabled(enabled) {
-        BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
-    },
-
-    __setReadonly(readonly) {
-        BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
-        }
     },
 
     onRender() {

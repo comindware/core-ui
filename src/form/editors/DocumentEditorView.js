@@ -35,7 +35,7 @@ const defaultOptions = {
 
 export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
 
         this.collection = new DocumentsCollection(this.value);
 
@@ -65,9 +65,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
 
     canAdd: false,
 
-    className() {
-        return `${this.options.class || ''} editor editor_document`;
-    },
+    className: 'editor editor_document',
 
     template: Handlebars.compile(template),
 
