@@ -1,2 +1,6 @@
 <div class="js-date-dropdown-region date-dropdown-wrp"></div>
 <div class="js-time-dropdown-region time-dropdown-wrp"></div>
+{{#if isMobile}}
+    <input type="{{mobileInputType}}" class="js-mobile-input" style="visibility: hidden; width: 85%; height: 100%; position: absolute;">
+{{/if}}
+
