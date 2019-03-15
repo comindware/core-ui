@@ -24,6 +24,8 @@
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
+<http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Farbe hier eingeben"; l10n:originalData "Enter color here"].
+
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Datum"; l10n:isBeingTranslated true; l10n:originalData "Date"].
 
 <http://comindware.com/text/core/form/editors/date#timeEmptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Zeit"; l10n:originalData "Time"].
@@ -86,7 +88,7 @@
 
 <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Das Feld ist deaktiviert"; l10n:isBeingTranslated true; l10n:originalData "Field is disabled"].
 
-<http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Text hier eingeben"; l10n:isBeingTranslated true; l10n:originalData "Enter text here"].
+<http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Text hier eingeben"; l10n:originalData "Enter text here"].
 
 <http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 

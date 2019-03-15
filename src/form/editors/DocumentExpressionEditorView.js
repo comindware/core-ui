@@ -19,7 +19,7 @@ const valueTypes = {
 
 export default (formRepository.editors.DocumentExpression = NewExpressionEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
         NewExpressionEditorView.prototype.initialize.call(this, options);
     },
 

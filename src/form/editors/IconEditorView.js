@@ -8,21 +8,19 @@ import BaseEditorView from './base/BaseEditorView';
 import keyCode from '../../../src/utils/keyCode';
 import formRepository from '../formRepository';
 
-const constants = {
-    iconPropertyDefaultName: 'iconClass'
+const defaultOptions = {
+    modelIconProperty: 'iconClass',
+    iconsMeta: icons,
+    iconsCategories: categories
 };
 
 export default (formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
-        _.defaults(this.options, options.schema || options);
-        const modelIconProperty = options.modelIconProperty;
+        this.__applyOptions(options, defaultOptions);
 
-        if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
-            this.model.set('iconClass', this.model.get(options.modelIconProperty));
+        if (this.options.modelIconProperty !== defaultOptions.modelIconProperty) {
+            this.model.set('iconClass', this.model.get(this.options.modelIconProperty));
         }
-
-        this.iconsMeta = options.iconsMeta || icons;
-        this.iconsCategories = options.iconsCategories || categories;
     },
 
     template: Handlebars.compile(template),
@@ -35,10 +33,6 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
 
     ui: {
         deleteIconButton: '.js-delete-icon'
-    },
-
-    attributes: {
-        tabindex: 0
     },
 
     events: {
@@ -65,9 +59,12 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
         });
 
         this.popupPanel.on('panel:click:item', id => {
+            // TODO transfer this logic to __value method
             this.ui.deleteIconButton[0].removeAttribute('hidden');
             this.model.set('iconClass', id);
             this.trigger('click:item', id);
+            this.__updateEmpty();
+            this.ui.deleteIconButton.show();
             this.close();
         });
 
@@ -108,10 +105,10 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
         const iconService = window.application.options.iconService;
         const useBrands = iconService && iconService.useBrands;
         return new Backbone.Collection(
-            Object.values(this.iconsCategories).map(category => ({
+            Object.values(this.options.iconsCategories).map(category => ({
                 name: category.label,
                 groupItems: category.icons.reduce((arr, icon) => {
-                    const metaIcon = this.iconsMeta[icon];
+                    const metaIcon = this.options.iconsMeta[icon];
                     const isBrand = metaIcon ? metaIcon.styles.includes('brands') : true;
                     if (!useBrands && isBrand) {
                         return arr;

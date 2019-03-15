@@ -61,7 +61,11 @@ export default Marionette.View.extend({
             el: regionEl
         });
 
-        view.once('attach', () => view.$el.addClass('presented-modal-window'));
+        view.once('attach', () =>
+            requestAnimationFrame(() => {
+                view.$el.addClass('presented-modal-window');
+            })
+        );
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {
@@ -282,10 +286,17 @@ export default Marionette.View.extend({
     },
 
     __removePopup(popupDef) {
-        this.removeRegion(popupDef.popupId);
-        this.el.removeChild(popupDef.regionEl);
+        popupDef.view.el.addEventListener(
+            'transitionend',
+            () => {
+                this.removeRegion(popupDef.popupId);
+                this.el.removeChild(popupDef.regionEl);
+                this.trigger('popup:close', popupDef.popupId);
+            },
+            { once: true }
+        );
+        popupDef.view.$el.removeClass('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-        this.trigger('popup:close', popupDef.popupId);
     },
 
     get(popupId) {

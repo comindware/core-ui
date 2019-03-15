@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const pathResolver = require('./pathResolver');
 
 const jsFileName = 'core.js';
@@ -273,15 +272,6 @@ module.exports = options => {
             library: 'core',
             libraryTarget: 'umd'
         };
-        if (options.clean !== false) {
-            webpackConfig.plugins.push(
-                new CleanWebpackPlugin([pathResolver.compiled()], {
-                    root: pathResolver.root(),
-                    verbose: false,
-                    exclude: ['localization']
-                })
-            );
-        }
     }
     if (TEST_COVERAGE) {
         webpackConfig.module.rules.push({

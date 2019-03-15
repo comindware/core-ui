@@ -34,7 +34,7 @@ const defaultOptions = options => ({
     emptyView: EmptyGridView,
     emptyViewOptions: {
         text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
-        colspan: options.columns.length
+        colspan: options.columns.length + !!options.showCheckbox
     },
     stickyToolbarOffset: 0,
     isSliding: true,

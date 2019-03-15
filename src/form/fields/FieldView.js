@@ -6,13 +6,6 @@ import TooltipPanelView from './views/TooltipPanelView';
 import ErrosPanelView from './views/ErrosPanelView';
 import formRepository from '../formRepository';
 
-const classes = {
-    REQUIRED: 'required',
-    READONLY: 'readonly',
-    DISABLED: 'disabled',
-    ERROR: 'error'
-};
-
 const editorFieldExtention = {
     validate(...args) {
         const error = Object.getPrototypeOf(Object.getPrototypeOf(this)).validate.call(this, ...args);
@@ -30,7 +23,7 @@ const editorFieldExtention = {
             return;
         }
 
-        this.$el.parent().addClass(classes.ERROR);
+        this.$el.parent().addClass(this.classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -52,40 +45,12 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.parent().removeClass(classes.ERROR);
+        this.$el.parent().removeClass(this.classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
-    },
-
-    setRequired(required = this.schema.required) {
-        this.schema.required = required;
-        this.__updateEmpty();
-    },
-
-    __updateEmpty(isEmpty = this.isEmptyValue()) {
-        if (this.schema.required) {
-            this.__toggleRequiredClass(isEmpty);
-        } else {
-            this.__toggleRequiredClass(false);
-        }
-    },
-
-    __toggleRequiredClass(required) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
     },
 
     __checkUiReady() {
         return this.isRendered() && !this.isDestroyed();
-    },
-
-    __updateEditorState(readonly, enabled) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     }
 };
 
@@ -108,11 +73,11 @@ export default class {
     }
 
     __updateExternalChange() {
-        if (typeof this.schema.getReadonly === 'function') {
-            this.setReadonly(this.schema.getReadonly(this.model));
+        if (typeof this.options.getReadonly === 'function') {
+            this.setReadonly(Boolean(this.options.getReadonly(this.model)));
         }
-        if (typeof this.schema.getHidden === 'function') {
-            this.setHidden(Boolean(this.schema.getHidden(this.model)));
+        if (typeof this.options.getHidden === 'function') {
+            this.setHidden(Boolean(this.options.getHidden(this.model)));
         }
     }
 
@@ -129,7 +94,7 @@ export default class {
         const FieldConstructor = EditorConstructor.extend(editorFieldExtention);
 
         this.editor = new FieldConstructor({
-            schema,
+            ...schema,
             form: options.form,
             class: options.class,
             key: options.key,
@@ -137,25 +102,16 @@ export default class {
             id: this.__createEditorId(options.key),
             value: options.value,
             fieldId,
-            tagName: options.tagName || 'div',
-            fieldUpdateEmpty: (...args) => {
-                this.editor.__updateEmpty(...args);
-            }
+            tagName: options.tagName || 'div'
         });
 
         this.key = options.key;
-        this.editor.on('readonly', readonly => {
-            this.editor.__updateEditorState(readonly, this.editor.getEnabled());
-        });
-        this.editor.on('enabled', enabled => {
-            this.editor.__updateEditorState(this.editor.getReadonly(), enabled);
-        });
 
         this.editor.on('before:attach', () => {
-            const fieldTempParts = Handlebars.compile(options.template)(schema).split('<!--js-editor-region -->');
+            const fieldTempParts = Handlebars.compile(options.template)(schema);
+            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
 
-            this.editor.$el.before(fieldTempParts[0]);
-            this.editor.$el.after(fieldTempParts[1]);
+            this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
 
             if (schema.helpText) {
                 const viewModel = new Backbone.Model({
@@ -175,17 +131,22 @@ export default class {
                 });
 
                 this.editor.helpTextRegion = new Marionette.Region({
-                    el: this.editor.$el.parent().find('.js-help-text-region')
+                    el: this.editor.$el
+                        .parent()
+                        .parent()
+                        .find('.js-help-text-region')
                 });
                 this.editor.helpTextRegion.show(infoPopout);
 
                 this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
             }
             this.editor.errorsRegion = new Marionette.Region({
-                el: this.editor.$el.parent().find('.js-error-text-region')
+                el: this.editor.$el
+                    .parent()
+                    .parent()
+                    .find('.js-error-text-region')
             });
             this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
-            this.editor.__updateEditorState(schema.readonly, schema.enabled);
         });
     }
 

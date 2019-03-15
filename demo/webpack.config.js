@@ -152,8 +152,8 @@ module.exports = () => {
         },
         plugins: [
             new WebpackPwaManifest({
-                name: 'Comindware business application platform',
-                short_name: 'Comindware',
+                name: 'Comindware Core-ui demo',
+                short_name: 'Core.Demo',
                 background_color: '#ffffff',
                 display: 'standalone',
                 theme_color: '#0575bd',

@@ -284,24 +284,10 @@ const VirtualCollection = Backbone.Collection.extend({
         const diff = new diffHelper(oldModels, this.visibleModels);
         diff.compose();
         const diffObject = diff.getses();
-        const added = [];
-        const removed = [];
+        const added = diffObject.add;
+        const removed = diffObject.remove;
 
-        Object.values(diffObject)
-            .sort((a, b) => a.t - b.t)
-            .forEach(object => {
-                switch (object.t) {
-                    case 0:
-                        this.trigger('update:child', object.elem);
-                        break;
-                    case -1:
-                        removed.push(object.elem);
-                        break;
-                    case 1:
-                        added.push(object.elem);
-                        break;
-                }
-            });
+        diffObject.common.forEach(e => this.trigger('update:child', e));
 
         options.added = added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b));
         this.__removeModels(removed, options);

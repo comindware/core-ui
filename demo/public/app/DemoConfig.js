@@ -23,7 +23,7 @@ const commonAttributes = {
         attribute: 'changeMode',
         values: 'keydown, blur',
         valueEditorType: 'Datalist',
-        selectedValue: 'keydown',
+        selectedValue: 'blur',
         description: 'Select on what event the model changes.'
     },
     emptyPlaceholder: {
@@ -138,7 +138,7 @@ export default {
                         {
                             attribute: 'mask',
                             valueEditorType: valueEditorTypes.ARRAY,
-                            selectedValue: "['(', /[1-9]/, /d/, /d/, ')', ' ', /d/, /d/, /d/, '-', /d/, /d/, /d/, /d/]",
+                            // selectedValue: "['(', /[1-9]/, /d/, /d/, ')', ' ', /d/, /d/, /d/, '-', /d/, /d/, /d/, /d/]",
                             description:
                                 "An array or a function that defines how the user input is going to be masked. Example: ['(', /[1-9]/, /d/, /d/, ')', ' ', /d/, /d/, /d/, '-', /d/, /d/, /d/, /d/]"
                         },
@@ -187,7 +187,7 @@ export default {
                             attribute: 'format',
                             values: 'phone, email, null',
                             valueEditorType: 'Datalist',
-                            default: 'phone',
+                            default: 'null',
                             description: 'to do || Format bla bla bla ( to do )'
                         },
                         {

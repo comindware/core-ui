@@ -4,15 +4,23 @@ import { dateHelpers } from 'utils';
 import FieldView from '../form/fields/FieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
+import editableCellField from './templates/editableCellField.hbs';
 
 let factory;
 
 type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
+const CellFieldView = class CellFieldViewClass extends FieldView {
+    constructor(options) {
+        options.template = editableCellField;
+        super(options);
+    }
+};
+
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            return FieldView;
+            return CellFieldView;
         }
 
         return factory.getCellHtml(column, model);
