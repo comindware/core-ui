@@ -130,6 +130,7 @@ const variables = {
     'grid-selection-bg': 'var(--grid-cell-bg)',
     'grid-selection-index-width': '58px',
     'grid-selection-index-padding-x': '10px',
+    'grid-selection-index-padding-checkbox': '21px',
 
     'grid-dots-width': 'var(--grid-selection-index-width)',
     'grid-dots-padding': '0 20px 0 4px',

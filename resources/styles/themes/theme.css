@@ -397,8 +397,8 @@ svg.svg-grid-icons {
   line-height: var(--grid-cell-height);
   font-size: var(--grid-header-font-size);
   color: var(--text-color);
-  box-shadow: var(--grid-cell-border);
   padding: var(--grid-cell-padding);
+  border: 1px solid #e2e2e2;
 }
 
 .cell.editor {
@@ -500,6 +500,10 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
   font-size: var(--grid-checkbox-icon-size);
   width: var(--grid-checkbox-size);
   height: var(--grid-checkbox-size);
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -8px;
 }
 
 .cell .input {
@@ -527,10 +531,12 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 
 .cell_selection-index {
   width: var(--grid-selection-index-width);
-  padding: 0 var(--grid-selection-index-padding-x);
+  padding: 0 var(--grid-selection-index-padding-checkbox) 0 var(--grid-selection-index-padding-x);
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
-  box-shadow: var(--grid-cell-border-first);
+  border: 1px solid #e2e2e2;
+  white-space: nowrap;
+  position: relative;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -541,9 +547,9 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 }
 
 .cell__dots{
-  left: -6px;
+  left: 3px;
   width: 2px;
-  position: relative;
+  position: absolute;
 }
 
 .cell__dots svg{

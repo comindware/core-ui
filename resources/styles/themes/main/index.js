@@ -103,7 +103,7 @@ const variables = {
     'grid-header-selection-bg': 'var(--grey-100)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-border': 'inset -1px -1px 0 0 var(--grid-header-border-color)',
+    'grid-cell-border': '1px solid var(--grid-header-border-color)',
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
     'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color)',
     'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
@@ -121,6 +121,7 @@ const variables = {
     'grid-selection-bg': 'var(--grid-cell-bg)',
     'grid-selection-index-width': '53px',
     'grid-selection-index-padding-x': '10px',
+    'grid-selection-index-padding-checkbox': '21px',
 
     'grid-sort-icon-size': '11px',
     'grid-sort-icon-offset-y': '2px',

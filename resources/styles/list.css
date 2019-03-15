@@ -53,6 +53,7 @@
 .grid-content-wrp {
     display: table;
     width: 100%;
+    border-collapse: collapse;
 }
 
 .grid-header-wrp {
