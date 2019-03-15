@@ -20,21 +20,24 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
-const defaultOptions = {
+const defaultOptions = options => ({
     readonly: false,
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
     showRevision: true,
-    showAll: false,
+    showAll: Boolean(options.isCell),
     createDocument: null,
     removeDocument: null,
-    displayText: ''
-};
+    displayText: '',
+    isCell: false
+});
 
 export default (formRepository.editors.Document = BaseCompositeEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        const opt = options.schema ? options.schema : options;
+        const defOps = defaultOptions(opt);
+        _.defaults(this.options, _.pick(opt, Object.keys(defOps)), defOps);
 
         this.collection = new Backbone.Collection(this.value);
 
@@ -99,15 +102,17 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         });
     },
 
-    events: {
-        'click @ui.showMore': 'toggleShowMore',
-        keydown: '__handleKeydown',
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick',
-        'dragenter @ui.form': '__onDragenter',
-        'dragover @ui.form': '__onDragover',
-        'dragleave @ui.form': '__onDragleave',
-        'drop @ui.form': '__onDrop'
+    events() {
+        return {
+            'click @ui.showMore': 'toggleShowMore',
+            keydown: '__handleKeydown',
+            'change @ui.fileUpload': 'onSelectFiles',
+            [`click @ui.${this.options.schema?.isCell ? 'form' : 'fileUploadButton'}`]: '__onItemClick',
+            'dragenter @ui.form': '__onDragenter',
+            'dragover @ui.form': '__onDragover',
+            'dragleave @ui.form': '__onDragleave',
+            'drop @ui.form': '__onDrop'
+        };
     },
 
     childViewEvents: {
@@ -124,7 +129,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     isEmptyValue() {
-        return !this.getValue().length;
+        return !this.collection.length;
     },
 
     onRender() {
@@ -188,6 +193,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     addItems(items) {
         this.onValueAdd(items);
+        this.__updateEmpty();
         this.__onCollectionLengthChange();
     },
 

@@ -301,7 +301,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
   margin-right: 2em;
 }
 
-.cell .documents__text {
+.cell .documents__text,
+.cell .field-documents__more{
   display: none;
 }
 
@@ -312,7 +313,15 @@ svg.svg-grid-icons.svg-icons_flag-none {
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: transparent; 
+  background-color: transparent;
+  cursor: pointer;
+  font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro';
+  font-weight: 900;
+}
+.cell .editor_empty .documents__drop-zone::before{
+  content: "\F0C6";
+  color: grey;
+  position: absolute;
 }
 
 .cell .documents__wrapper {
