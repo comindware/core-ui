@@ -1,5 +1,4 @@
 import { maskInput, emailMask } from 'lib';
-import LocalizationService from '../../services/LocalizationService';
 import BaseEditorView from './base/BaseEditorView';
 import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
@@ -20,7 +19,7 @@ const defaultOptions = () => ({
     showTitle: true,
     allowEmptyValue: true,
     class: undefined,
-    format: '',
+    format: 'text',
     hideClearButton: false
 });
 
@@ -35,7 +34,7 @@ const defaultOptions = () => ({
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
- * @param {String} [options.format=''] ('email'/'phone') set the predefined input mask and validator
+ * @param {String} [options.format=''] ('email'/'tel') set the predefined input mask, validator and type for input.
  * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
  * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
  * @param {String} [options.placeholderChar='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
@@ -134,7 +133,7 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
 
     __value(value, updateUi, triggerChange) {
         let realValue = value;
-        if (!updateUi && value && this.options.format === 'phone') {
+        if (!updateUi && value && this.options.format === 'tel') {
             realValue = realValue.replace(/[^\d]/g, '');
         }
         if (this.value === realValue) {
@@ -179,9 +178,9 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
             case 'email':
                 this.mask = emailMask;
                 additionalValidator = 'email';
-                defaults.emptyPlaceholder = LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
+                defaults.emptyPlaceholder = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
                 break;
-            case 'phone':
+            case 'tel':
                 this.mask = [/[1-9]/, ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
                 defaults.emptyPlaceholder = '5 (555) 555-55-55';
                 this.options.maskOptions = {
