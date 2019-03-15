@@ -387,11 +387,13 @@ export default Marionette.CollectionView.extend({
     },
 
     __onScroll(e) {
-        if (this.state.viewportHeight === undefined ||
-            this.isScrollHorizontal() ||
+        if (
+            this.state.viewportHeight === undefined ||
             this.collection.length <= this.state.viewportHeight ||
             this.internalScroll ||
-            this.isDestroyed()) {
+            this.isDestroyed() ||
+            this.isScrollHorizontal()
+        ) {
             return;
         }
 

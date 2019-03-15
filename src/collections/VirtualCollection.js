@@ -342,7 +342,7 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __normalizePosition(position) {
-        const maxPos = Math.max(0, this.length - 1);
+        const maxPos = Math.max(0, this.length - this.state.windowSize);
         return Math.max(0, Math.min(maxPos, position));
     },
 
