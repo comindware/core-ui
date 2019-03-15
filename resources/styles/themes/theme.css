@@ -158,11 +158,11 @@ body {
   @apply --cell-input-disabled-theme;
 }
 
-.error .editor .input,
-.error .editor .textarea,
-.error .editor .bubbles,
-.error .editor .popout-field-user,
-.error .editor_date-time {
+.editor_error.editor .input,
+.editor_error.editor .textarea,
+.editor_error.editor .bubbles,
+.editor_error.editor .popout-field-user,
+.editor_error.editor_date-time {
   border-color: var(--error-color);
 }
 

@@ -13,7 +13,8 @@ export default function() {
             type: 'Text',
             autocommit: true,
             required: true,
-            validators: ['required']
+            validators: ['required'],
+            helpText: 'some help text'
         },
         idealDays: {
             title: 'Ideal Days',

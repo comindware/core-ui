@@ -8,7 +8,7 @@ const classes = {
     hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty',
-    ERROR: 'js-editor_error error',
+    ERROR: 'editor_error error',
     REQUIRED: 'required'
 };
 
@@ -228,6 +228,7 @@ export default {
                     return;
                 }
                 this.setValue(this.getModelValue());
+                this.validate();
             },
 
             /**
