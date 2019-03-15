@@ -75,13 +75,20 @@ const defaultOptions = {
 
 export default class DropdownView {
     constructor(options) {
-        this.options = _.defaults({}, Object.assign({}, defaultOptions), options);
+        this.options = _.defaults({}, options, defaultOptions);
 
         this.__observedEntities = [];
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
 
-        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.button = new this.options.buttonView(
+            Object.assign(
+                {
+                    parent: this
+                },
+                this.options.buttonViewOptions
+            )
+        );
         this.button.close = this.close.bind(this);
         this.button.open = this.open.bind(this);
         this.button.adjustPosition = this.adjustPosition.bind(this);
@@ -102,19 +109,6 @@ export default class DropdownView {
 
         return this.button;
     }
-
-    className() {
-        return `dropdown ${this.options.class || ''}`;
-    }
-
-    ui: {
-        button: '.js-button-region'
-    };
-
-    events: {
-        blur: '__onBlur',
-        click: '__triggerClick'
-    };
 
     onDestroy() {
         if (this.button) {
@@ -431,9 +425,5 @@ export default class DropdownView {
                 top: Math.floor(top)
             };
         }
-    }
-
-    __triggerClick() {
-        this.button.trigger('container:click');
     }
 }

@@ -23,7 +23,7 @@ const editorFieldExtention = {
             return;
         }
 
-        this.$el.parent().addClass(this.classes.ERROR);
+        this.$el.parent().parent().addClass(this.classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -45,7 +45,7 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.parent().removeClass(this.classes.ERROR);
+        this.$el.parent().parent().removeClass(this.classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 

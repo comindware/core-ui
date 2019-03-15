@@ -374,6 +374,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.showChildView('dropdownRegion', this.dropdownView);
     },
 
+    focusElement: null,
+
     isEmptyValue(value = this.getValue()): boolean {
         return value == null || (Array.isArray(value) && value.length === 0);
     },
@@ -443,7 +445,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __startSearch(string, options) {
         this.__setInputValue(string);
-        this.debouncedFetchUpdateFilter(string, options);
+        this.__fetchUpdateFilter(string, options);
     },
 
     __getInputValue() {
@@ -786,10 +788,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.getEditable()) {
             return;
         }
-        this.debouncedFetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
-        if (!this.showSearch) {
-            this.__focusButton();
-        }
+        this.__focusButton();
+        this.__fetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
     },
 
     __onBubbleDelete(model: Backbone.Model): Backbone.Model {

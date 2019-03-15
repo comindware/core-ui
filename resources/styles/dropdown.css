@@ -8,11 +8,6 @@
     border-radius: 2px;
 }
 
-.dropdown {
-    position: relative;
-    height: inherit;
-}
-
 .dropdown__button {
     height: inherit;
 }
