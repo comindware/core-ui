@@ -223,7 +223,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             return;
         }
         this.value = value;
-        this.collection.set(value);
+        this.collection.set(value || []);
         if (triggerChange) {
             this.__triggerChange();
         }
