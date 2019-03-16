@@ -78,9 +78,18 @@ export default Marionette.View.extend({
             replaceElement: true,
             el: '.js-code-toolbar-container'
         },
-        tooltipContainer: '.js-code-tooltip-container',
-        editorContainer: '.js-code-editor-container',
-        editorOutputContainer: '.js-code-output-container',
+        tooltipContainer: {
+            replaceElement: true,
+            el: '.js-code-tooltip-container'
+        },
+        editorContainer: {
+            replaceElement: true,
+            el: '.js-code-editor-container'
+        },
+        editorOutputContainer: {
+            replaceElement: true,
+            el: '.js-code-output-container'
+        },
         outputTabs: '.output-tabs-region',
         output: '.dev-code-editor-output'
     },

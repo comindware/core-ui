@@ -467,12 +467,10 @@ export default Marionette.CollectionView.extend({
     },
 
     __updateTop() {
-        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-        this.$el.parent()[0].style.paddingTop = `${top}px`;
-
-        if (this.gridEventAggregator) {
-            this.gridEventAggregator.trigger('update:top', top);
-        }
+        requestAnimationFrame(() => {
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            this.$el.parent()[0].style.transform = `translateY(${top})`;
+        });
     },
 
     handleResize(shouldUpdateScroll, model, collection, options = {}) {
