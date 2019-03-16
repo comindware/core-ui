@@ -11,7 +11,7 @@ describe('Editors', () => {
                 const model = new Backbone.Model({
                     selected: []
                 });
-    
+
                 return new core.form.editors.MembersSplitEditor({
                     model,
                     key: 'selected',
@@ -22,8 +22,18 @@ describe('Editors', () => {
             }
         });
 
-        const isAvailableListEmpty = view => view.$('.js-available-items-list-region .visible-collection').hasClass('empty');
-        const isSelectedListEmpty = view => view.$('.js-selected-items-list-region .visible-collection').hasClass('empty');
+        const isAvailableListEmpty = view =>
+            view
+                .$('.js-available-items-list-region .visible-collection')
+                .children()
+                .first()
+                .hasClass('empty-view');
+        const isSelectedListEmpty = view =>
+            view
+                .$('.js-selected-items-list-region .visible-collection')
+                .children()
+                .first()
+                .hasClass('empty-view');
 
         it('should be initialized', () => {
             const model = new Backbone.Model({
@@ -85,7 +95,11 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .visible-collection').children().first().click().dblclick();
+                            view.$('.js-available-items-list-region .visible-collection')
+                                .children()
+                                .first()
+                                .click()
+                                .dblclick();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
@@ -97,7 +111,6 @@ describe('Editors', () => {
                     }, 10);
                 });
             });
-
 
             window.app
                 .getView()
@@ -122,12 +135,21 @@ describe('Editors', () => {
                 view.controller.view.on('attach', () => {
                     const gridCollection = view.$('.js-selected-items-list-region .visible-collection');
                     const first = setInterval(() => {
-                        if (gridCollection.children().length && !gridCollection.hasClass('empty')) {
+                        if (gridCollection.children().length) {
                             clearTimeout(first);
-                            gridCollection.children().first().click().dblclick();
+                            gridCollection
+                                .children()
+                                .first()
+                                .click()
+                                .dblclick();
 
                             const second = setInterval(() => {
-                                if (gridCollection.hasClass('empty')) {
+                                if (
+                                    gridCollection
+                                        .children()
+                                        .first()
+                                        .hasClass('empty-view')
+                                ) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
@@ -162,7 +184,11 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .grid-selection-panel').children().first().children().click();
+                            view.$('.js-available-items-list-region .grid-selection-panel')
+                                .children()
+                                .first()
+                                .children()
+                                .click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
@@ -204,7 +230,11 @@ describe('Editors', () => {
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
-                                    expect(view.getValue().sort()).toEqual(core.services.UserService.listUsers().map(user => user.id).sort());
+                                    expect(view.getValue().sort()).toEqual(
+                                        core.services.UserService.listUsers()
+                                            .map(user => user.id)
+                                            .sort()
+                                    );
                                     done();
                                 }
                             }, 100);
@@ -237,7 +267,11 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isSelectedListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-selected-items-list-region .grid-selection-panel').children().first().children().click();
+                            view.$('.js-selected-items-list-region .grid-selection-panel')
+                                .children()
+                                .first()
+                                .children()
+                                .click();
                             view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
                                 if (isSelectedListEmpty(view)) {

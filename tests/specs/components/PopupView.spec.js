@@ -5,7 +5,7 @@ const $ = core.lib.$;
 
 describe('Components', () => {
     afterEach(() => {
-        core.services.WindowService.closePopup();
+        core.services.WindowService.closePopup(null, true);
     });
 
     describe('PopupView', () => {
@@ -28,7 +28,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -40,7 +40,7 @@ describe('Components', () => {
             core.services.WindowService.showPopup(popupView);
             let popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
             expect(popupEl.length).toEqual(1);
-            core.services.WindowService.closePopup();
+            core.services.WindowService.closePopup(null, true);
             popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
             expect(popupEl.length).toEqual(0);
         });
@@ -48,8 +48,8 @@ describe('Components', () => {
         it('should match it configuration size', () => {
             const popupView = new core.layout.Popup({
                 size: {
-                    width: 701,
-                    height: 549
+                    width: 700,
+                    height: 550
                 },
                 header: 'My beautiful header',
                 buttons: [
@@ -64,7 +64,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -76,8 +76,8 @@ describe('Components', () => {
 
             const popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
 
-            expect(popupEl.height()).toEqual(549);
-            expect(popupEl.width()).toEqual(701);
+            expect(popupEl.height()).toEqual(550);
+            expect(popupEl.width()).toEqual(700);
         });
         /*
         it('should set max width and height if configuration size is bad', () => {
@@ -99,7 +99,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -134,7 +134,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -169,7 +169,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -203,7 +203,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -237,7 +237,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],

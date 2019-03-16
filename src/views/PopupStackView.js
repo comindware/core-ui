@@ -139,7 +139,7 @@ export default Marionette.View.extend({
         return popupId;
     },
 
-    closePopup(popupId = null) {
+    closePopup(popupId = null, immediate = false) {
         if (this.__stack.length === 0) {
             return;
         }
@@ -148,7 +148,7 @@ export default Marionette.View.extend({
         const popupDef = this.__stack.find(x => x.popupId === popupId);
         if (popupDef) {
             if (!popupDef.options.transient) {
-                this.__removeTransientPopups();
+                this.__removeTransientPopups(immediate);
             }
             // All the children of the popup will also be closed
             // Important: we collect only logical children because another popup might have been opened at the same level already.
@@ -169,14 +169,14 @@ export default Marionette.View.extend({
             targets = [];
         } else {
             // Close all transient popups and the top-most non-transient
-            this.__removeTransientPopups();
+            this.__removeTransientPopups(immediate);
             const topMostNonTransient = this.__stack[this.__stack.length - 1];
             if (topMostNonTransient) {
                 targets = [topMostNonTransient];
             }
         }
         targets.reverse().forEach(pd => {
-            this.__removePopup(pd);
+            this.__removePopup(pd, immediate);
         });
 
         const filteredStackList = this.__stack.filter(x => x.options.fadeBackground);
@@ -191,7 +191,7 @@ export default Marionette.View.extend({
         }
     },
 
-    closeElPopup(popupId = null) {
+    closeElPopup(popupId = null, immediate = false) {
         if (this.__stack.length === 0) {
             return;
         }
@@ -200,7 +200,7 @@ export default Marionette.View.extend({
         const popupDef = this.__stack.find(x => x.popupId === popupId);
         if (popupDef) {
             if (!popupDef.options.transient) {
-                this.__removeTransientPopups();
+                this.__removeTransientPopups(immediate);
             }
             // All the children of the popup will also be closed
             // Important: we collect only logical children because another popup might have been opened at the same level already.
@@ -221,7 +221,7 @@ export default Marionette.View.extend({
             targets = [];
         } else {
             // Close all transient popups and the top-most non-transient
-            this.__removeTransientPopups();
+            this.__removeTransientPopups(immediate);
             const topMostNonTransient = this.__stack[this.__stack.length - 1];
             if (topMostNonTransient) {
                 targets = [topMostNonTransient];
@@ -235,9 +235,7 @@ export default Marionette.View.extend({
             delete this.parentOfContentEl;
         }
 
-        targets.reverse().forEach(pd => {
-            this.__removePopup(pd);
-        });
+        targets.reverse().forEach(pd => this.__removePopup(pd, immediate));
 
         const filteredStackList = this.__stack.filter(x => x.options.fadeBackground);
         const lastElement = filteredStackList && filteredStackList[filteredStackList.length - 1];
@@ -276,25 +274,33 @@ export default Marionette.View.extend({
         }
     },
 
-    __removeTransientPopups() {
+    __removeTransientPopups(immediate) {
         this.__stack
             .filter(x => x.options.transient)
             .reverse()
             .forEach(popupDef => {
-                this.__removePopup(popupDef);
+                this.__removePopup(popupDef, immediate);
             });
     },
 
-    __removePopup(popupDef) {
-        popupDef.view.el.addEventListener(
-            'transitionend',
-            () => {
-                this.removeRegion(popupDef.popupId);
-                this.el.removeChild(popupDef.regionEl);
-                this.trigger('popup:close', popupDef.popupId);
-            },
-            { once: true }
-        );
+    __removePopup(popupDef, immediate) {
+        const popRemove = () => {
+            this.removeRegion(popupDef.popupId);
+            this.el.removeChild(popupDef.regionEl);
+            this.trigger('popup:close', popupDef.popupId);
+        };
+        if (immediate) {
+            popRemove();
+        } else {
+            popupDef.view.el.addEventListener(
+                'transitionend',
+                () => {
+                    popRemove();
+                },
+                { once: true }
+            );
+        }
+
         popupDef.view.$el.removeClass('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
     },

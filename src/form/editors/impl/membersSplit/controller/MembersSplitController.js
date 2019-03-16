@@ -183,7 +183,7 @@ export default Marionette.MnObject.extend({
             }
         }
 
-        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.checked);
+        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.getSelected());
         model && selected.push(model);
         if (!all && !selected.length) {
             return;
