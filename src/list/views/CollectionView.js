@@ -109,6 +109,8 @@ export default Marionette.CollectionView.extend({
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
+
+        this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
     },
 
     attributes() {
@@ -132,26 +134,11 @@ export default Marionette.CollectionView.extend({
     tagName: 'tbody',
 
     onBeforeAttach() {
-        if (!this.options.parent$el) {
-            this.options.parent$el = this.$el.parent();
-        }
-        if (!this.options.table$el) {
-            this.options.table$el = this.$el.parent();
-        }
-        if (this.options.parentEl) {
-            this.handleResize(false);
-        }
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
 
         this.parent$el = this.options.parent$el;
-    },
-
-    onAttach() {
-        if (!this.options.parentEl) {
-            this.options.parentEl = this.$el.parent()[0];
-            this.handleResize(false);
-        }
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
+        this.handleResize(false);
     },
 
     __specifyChildHeight() {
@@ -338,7 +325,11 @@ export default Marionette.CollectionView.extend({
     },
 
     __getIndexSelectedModel() {
-        const model = this.collection.get(this.collection.lastSelectedModel);
+        const model = this.collection.get(
+            this.options.selectOnCursor === false ?
+                this.collection.lastPointedModel :
+                this.collection.lastSelectedModel
+        );
         return this.collection.indexOf(model);
     },
 

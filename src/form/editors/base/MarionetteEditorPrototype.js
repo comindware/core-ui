@@ -89,7 +89,9 @@ const defaultOptions = {
     readonly: false,
     hidden: false,
     forceCommit: false,
-    validators: undefined
+    validators: undefined,
+    getFocusElementReadonly: readonly => readonly,
+    getFocusElementTabindex: readonly => (readonly ? -1 : 0)
 };
 
 export default {
@@ -259,8 +261,8 @@ export default {
                 }
                 if (this.getEnabled()) {
                     const focusElement = this.__getFocusElement();
-                    focusElement.prop('readonly', readonly);
-                    focusElement.prop('tabindex', readonly ? -1 : 0);
+                    focusElement.prop('readonly', this.options.getFocusElementReadonly(readonly));
+                    focusElement.prop('tabindex', this.options.getFocusElementTabindex(readonly));
                 }
             },
 

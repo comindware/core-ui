@@ -1,7 +1,6 @@
 import EmptyGridView from './views/EmptyGridView';
 import GridHeaderView from './views/header/GridHeaderView';
 import GridView from './views/GridView';
-import ListView from './views/CollectionView';
 import RowView from './views/RowView';
 import ListItemViewBehavior from './behaviors/ListItemViewBehavior';
 import factory from './factory';
@@ -29,7 +28,6 @@ export default {
         EmptyGridView,
         GridHeaderView,
         GridView,
-        ListView,
         RowView,
 
         behaviors: {
