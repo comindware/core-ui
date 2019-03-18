@@ -51,7 +51,7 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
             this.mask = this.options.mask;
         }
         
-        this.__applyOptions(options, defaultOptions);
+        this.__applyOptions(options, defOps);
     },
 
     focusElement: '.js-input',
@@ -66,7 +66,13 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return this.options;
+        return Object.assign(
+            {},
+            this.options,
+            {
+                type: this.options.format === 'tel' ? 'tel' : 'text' 
+            }
+        );
     },
 
     events() {
