@@ -1,7 +1,6 @@
-//@flow
 export default Marionette.View.extend({
     modelEvents: {
-        change: 'onChangeText'
+        change: 'onChange'
     },
 
     className: 'form-label__tooltip-panel',
@@ -12,7 +11,7 @@ export default Marionette.View.extend({
         this.$el.text(this.model.get(this.options.textAttribute));
     },
 
-    onChangeText() {
+    onChange() {
         this.$el.text(this.model.get(this.options.textAttribute));
     }
 });

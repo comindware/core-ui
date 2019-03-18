@@ -55,9 +55,9 @@ export default Marionette.View.extend({
     },
 
     __getDocumentRevision() {
+        this.isRevisionButtonClicked = true;
         this.reqres.request('document:revise', this.model.id).then(revisionList => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
-            this.isRevisionOpen = true;
             this.documentRevisionPopout.open();
         });
     },
@@ -86,7 +86,7 @@ export default Marionette.View.extend({
                     autoOpen: false,
                     panelMinWidth: 'none'
                 });
-                this.documentRevisionPopout.on('close', () => (this.isRevisionOpen = false));
+                this.documentRevisionPopout.on('close', () => (this.isRevisionButtonClicked = false));
                 this.showChildView('reviseRegion', this.documentRevisionPopout);
                 this.isRevisonButtonShown = true;
             } else {
@@ -103,7 +103,7 @@ export default Marionette.View.extend({
         if (this.options.allowDelete) {
             this.el.removeChild(this.el.lastElementChild);
         }
-        if (!this.isRevisionOpen) {
+        if (!this.isRevisionButtonClicked) {
             this.ui.revise.hide();
         }
     }

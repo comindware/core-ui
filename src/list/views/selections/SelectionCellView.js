@@ -35,7 +35,8 @@ export default Marionette.View.extend({
 
     attributes() {
         return {
-            draggable: this.getOption('draggable')
+            draggable: this.getOption('draggable'),
+            showCheckbox: this.getOption('showCheckbox')
         };
     },
 
@@ -46,12 +47,13 @@ export default Marionette.View.extend({
         }
         return {
             draggable: this.getOption('draggable'),
-            index
+            index,
+            showCheckbox: this.getOption('showCheckbox')
         };
     },
 
     className() {
-        return `${this.getOption('draggable') ? 'js-dots' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
+        return `${this.getOption('draggable') ? 'js-dots cell_draggable' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
     },
 
     ui: {

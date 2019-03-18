@@ -39,13 +39,6 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
 
         this.collection = new DocumentsCollection(this.value);
 
-        this.on('uploaded', documents => {
-            if (this.options.multiple === false) {
-                this.collection.reset();
-            }
-            this.addItems(documents);
-        });
-
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
         this.reqres.reply('value:set', this.onValueAdd, this);
@@ -219,7 +212,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
             return;
         }
         this.value = value;
-        this.collection.set(value);
+        this.collection.set(value || []);
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -338,6 +331,10 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
             resultObjects.push(obj);
         }
         this.trigger('uploaded', resultObjects);
+        if (this.options.multiple === false) {
+            this.collection.reset();
+        }
+        this.addItems(resultObjects);
 
         const config = {
             url: this.uploadUrl,

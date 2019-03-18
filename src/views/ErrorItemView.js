@@ -1,5 +1,5 @@
 //@flow
-import template from '../templates/errorItem.hbs';
+import template from './templates/errorItem.hbs';
 
 export default Marionette.View.extend({
     tagName: 'li',

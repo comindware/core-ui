@@ -511,6 +511,15 @@ tr:hover .cell_selection {
     background-color: transparent;
     font-size: 13px;
 }
+.cell .textarea{
+    border: none;
+    height: 100%;
+    line-height: 35px;
+    background-color: transparent;
+    font-size: 13px;
+    white-space: pre;
+    padding: 0;
+}
 
 .cell a{
     font-size: 13px;

@@ -4,6 +4,7 @@ import FieldView from './fields/FieldView';
 import BaseEditorView from './editors/base/BaseEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BooleanEditorView from './editors/BooleanEditorView';
+import BooleanGroupEditorView from './editors/BooleanGroupEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
 import TextEditorView from './editors/TextEditorView';
@@ -124,6 +125,7 @@ const api = /** @lends module:core.form */ {
             }
         },
         BooleanEditor: BooleanEditorView,
+        BooleanGroupEditor: BooleanGroupEditorView,
         NumberEditor: NumberEditorView,
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,

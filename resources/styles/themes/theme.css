@@ -444,6 +444,13 @@ svg.svg-grid-icons {
   padding-left: 10px;
 }
 
+.cell_draggable {
+  color: var(--grid-selection-color);
+  width: 25px;
+  background-color: var(--grid-selection-bg);
+  box-shadow: var(--grid-cell-border-first);
+}
+
 .cell_selection[draggable], .cell_selection-index[draggable] {
   cursor: move;
 }
@@ -512,10 +519,6 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 
 .grid-selection-cell-all {
   min-width: var(--grid-selection-width);
-}
-
-.grid-selection-panel {
-  width: var(--grid-selection-width);
 }
 
 .grid-selection-cell-all {
@@ -1193,6 +1196,11 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 }
 .documents__drop-zone.documents__drop-zone--active {
   @apply --drop-zone-active-theme;
+}
+
+.editor_document.editor_readonly .documents__drop-zone,
+.editor_document.editor_disabled .documents__drop-zone{
+  display: none;
 }
 
 .documents__wrapper {

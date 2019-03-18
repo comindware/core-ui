@@ -284,6 +284,18 @@ export default {
                     attributesConfig: [commonAttributes.autocommit, commonAttributes.changeMode]
                 },
                 {
+                    id: 'BooleanGroupEditor',
+                    displayName: 'Boolean Group Editor',
+                    description: 'Group boolean editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'DateEditor',
                     displayName: 'Date Editor',
                     description: 'Date editor without time',

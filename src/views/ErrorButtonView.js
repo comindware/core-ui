@@ -1,4 +1,4 @@
-import template from '../templates/errorButton.hbs';
+import template from './templates/errorButton.hbs';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),

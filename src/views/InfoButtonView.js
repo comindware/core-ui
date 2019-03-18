@@ -1,4 +1,4 @@
-import template from '../templates/infoButton.hbs';
+import template from './templates/infoButton.hbs';
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
