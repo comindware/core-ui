@@ -73,6 +73,17 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
+const getClass = (options) => {
+    const classList = [];
+    if (options.buttonViewOptions?.class) {
+        classList.push(options.buttonViewOptions.class);
+    }
+    if (options.class) {
+        classList.push(options.class);
+    }
+    return classList.join(' ');
+};
+
 export default class DropdownView {
     constructor(options) {
         this.options = _.defaults({}, options, defaultOptions);
@@ -86,7 +97,10 @@ export default class DropdownView {
                 {
                     parent: this
                 },
-                this.options.buttonViewOptions
+                this.options.buttonViewOptions,
+                {
+                    class: getClass(this.options)
+                }
             )
         );
         this.button.close = this.close.bind(this);

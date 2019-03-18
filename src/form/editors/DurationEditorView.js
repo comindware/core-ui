@@ -292,6 +292,9 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         if (val < 0) {
             return false;
         }
+        if (this.options.normalTime) {
+            val = this.__floorTime(val, this.focusableParts[index].id);
+        }
         val = val.toString();
         if (val.length > this.focusableParts[index].maxLength) {
             return false;
