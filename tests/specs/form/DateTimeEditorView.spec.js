@@ -464,7 +464,7 @@ describe('Editors', () => {
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
 
-        it('should set time on time select', done => {
+        it('should set time on time select', () => {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
             });
@@ -480,13 +480,11 @@ describe('Editors', () => {
 
             view.on('change', () => {
                 expect(view.getValue()).toEqual('2015-07-19T22:00:00.000Z');
-                done();
             });
 
             findTimeInput(view)[0].focus();
 
             document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
-
             expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
         });
 
