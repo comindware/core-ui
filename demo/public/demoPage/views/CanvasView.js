@@ -11,15 +11,15 @@ export default Marionette.View.extend({
     className: 'editor_container',
 
     ui: {
-        editorRegion: {
-            el: '.js-editor-region',
-            replaceElement: true
-        },
+        editorRegion: '.js-editor-region',
         collapseButton: '.js-content-collapse'
     },
 
     regions: {
-        editorRegion: '.js-editor-region',
+        editorRegion: {
+            el: '.js-editor-region',
+            replaceElement: true
+        },
         modelRegion: '.js-model-region',
         editorModeRegion: '.js-editor-mode-region',
         formatSelectionRegion: '.js-format-selection-region'
