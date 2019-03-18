@@ -23,7 +23,7 @@ export default Marionette.View.extend({
     events: {
         mouseenter: '__onMouseEnter',
         mouseleave: '__onMouseLeave',
-        'click @ui.subtitle': '__handleSubtextClick'
+        'pointerdown @ui.subtitle': '__handleSubtextClick'
     },
 
     onRender() {
@@ -31,12 +31,12 @@ export default Marionette.View.extend({
         if (collection) {
             this.menuView = Core.dropdown.factory.createDropdown({
                 buttonView: Marionette.View.extend({
-                    template: _.noop,
+                    template: _.noop
                 }),
 
                 panelView: Marionette.CollectionView.extend({
                     childView: Marionette.View.extend({
-                        template: _.noop,
+                        template: _.noop
                     }),
 
                     className: 'dropdown-list'

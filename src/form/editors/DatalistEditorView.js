@@ -204,15 +204,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __getEmptyPlaceholder(isEmpty = this.isEmptyValue()) {
-        return isEmpty ? 
-            (this.options.showSearch ? this.options.emptyPlaceholder : '-') :
-            '';
+        return isEmpty ? (this.options.showSearch ? this.options.emptyPlaceholder : '-') : '';
     },
 
     __getReadonlyPlaceholder(isEmpty = this.isEmptyValue()) {
-        return isEmpty ?
-            this.options.readonlyPlaceholder :
-            '';
+        return isEmpty ? this.options.readonlyPlaceholder : '';
     },
 
     __mapDatalistOptions(options) {
@@ -225,11 +221,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__applyOptions(options, defaults);
         if (this.options.controller) {
             const controller = this.options.controller;
-    
+
             this.options.fetchFiltered = true;
-    
+
             this.options.collection = controller.options.collection;
-    
+
             this.options.createValueUrl = controller.createValueUrl?.bind(controller);
             this.options.edit = controller.edit?.bind(controller);
             this.options.addNewItem = controller.addNewItem?.bind(controller);
@@ -244,7 +240,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(btn, 'focus', this.__onButtonFocus);
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
-        this.listenTo(btn, 'click', (button, e) => {
+        this.listenTo(btn, 'pointerdown', (button, e) => {
             if (e.target.tagName === 'A') {
                 e.stopPropagation();
                 return;

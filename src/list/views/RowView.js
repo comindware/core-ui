@@ -55,10 +55,10 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.checkbox': '__handleCheckboxClick',
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
         click: '__handleClick',
         dblclick: '__handleDblClick',
-        'click @ui.collapsibleButton': '__toggleCollapse',
+        'pointerdown @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',

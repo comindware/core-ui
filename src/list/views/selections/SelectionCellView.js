@@ -61,7 +61,7 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.checkbox': '__handleCheckboxClick',
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
         dragstart: '__handleDragStart',
         dragend: '__handleDragEnd',
         click: '__handleClick',

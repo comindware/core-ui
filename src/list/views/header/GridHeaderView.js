@@ -54,16 +54,16 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     events: {
-        'click @ui.checkbox': '__handleCheckboxClick',
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
         'pointerdown .grid-header-dragger': '__handleDraggerMousedown',
-        'click .js-collapsible-button': '__toggleCollapseAll',
+        'pointerdown .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseover .grid-header-column': '__handleColumnSelect',
-        'click .grid-header-column-title': '__handleColumnSort',
-        'click .js-help-text-region': '__handleHelpMenuClick',
+        'pointerdown .grid-header-column-title': '__handleColumnSort',
+        'pointerdown .js-help-text-region': '__handleHelpMenuClick',
         mouseleave: '__onMouseLeaveHeader'
     },
 

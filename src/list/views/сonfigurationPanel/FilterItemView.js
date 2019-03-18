@@ -18,7 +18,7 @@ export default Marionette.View.extend({
     },
 
     triggers: {
-        'click @ui.removeButton': 'click:removeButton'
+        'pointerdown @ui.removeButton': 'click:removeButton'
     },
 
     template: Handlebars.compile(template),

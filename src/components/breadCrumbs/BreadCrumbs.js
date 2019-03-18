@@ -17,7 +17,7 @@ export default Marionette.CollectionView.extend({
     },
 
     events: {
-        'click @ui.collapseButton': '__toggleCollapse'
+        'pointerdown @ui.collapseButton': '__toggleCollapse'
     },
 
     className: 'breadCrumbs',

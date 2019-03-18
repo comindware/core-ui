@@ -23,8 +23,8 @@ export default Marionette.CollectionView.extend({
     },
 
     events: {
-        'click @ui.saveButton': '__onSaveButtonClick',
-        'click @ui.showAllColumnsButton': '__onShowAllColumnClick'
+        'pointerdown @ui.saveButton': '__onSaveButtonClick',
+        'pointerdown @ui.showAllColumnsButton': '__onShowAllColumnClick'
     },
 
     childViewEvents: {

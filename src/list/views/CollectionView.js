@@ -439,40 +439,6 @@ export default Marionette.CollectionView.extend({
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updatePositionInternal(position, shouldScrollElement) {
-        const newPosition = this.__checkFillingViewport(position);
-        if (newPosition === this.state.position || !this.collection.isSliding) {
-            return;
-        }
-
-        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
-        this.__updateTop();
-
-        this.state.position = newPosition;
-        if (shouldScrollElement) {
-            this.internalScroll = true;
-            const scrollTop = newPosition * this.childHeight;
-            if (this.el.parentNode) {
-                this.parent$el.scrollTop(scrollTop);
-            }
-            _.delay(() => (this.internalScroll = false), 100);
-        }
-
-        return newPosition;
-    },
-
-    __checkFillingViewport(position) {
-        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.viewportHeight);
-        return Math.max(0, Math.min(maxPosFirstRow, position));
-    },
-
-    __updateTop() {
-        requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-            this.$el.parent()[0].style.transform = `translateY(${top})`;
-        });
-    },
-
     handleResize(shouldUpdateScroll, model, collection, options = {}) {
         if (!this.collection.isSliding) {
             return;
@@ -516,6 +482,40 @@ export default Marionette.CollectionView.extend({
 
     onAddChild(view, child) {
         this.__updateChildTop(child);
+    },
+
+    __updatePositionInternal(position, shouldScrollElement) {
+        const newPosition = this.__checkFillingViewport(position);
+        if (newPosition === this.state.position || !this.collection.isSliding) {
+            return;
+        }
+
+        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.__updateTop();
+
+        this.state.position = newPosition;
+        if (shouldScrollElement) {
+            this.internalScroll = true;
+            const scrollTop = newPosition * this.childHeight;
+            if (this.el.parentNode) {
+                this.parent$el.scrollTop(scrollTop);
+            }
+            _.delay(() => (this.internalScroll = false), 100);
+        }
+
+        return newPosition;
+    },
+
+    __checkFillingViewport(position) {
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.state.viewportHeight);
+        return Math.max(0, Math.min(maxPosFirstRow, position));
+    },
+
+    __updateTop() {
+        requestAnimationFrame(() => {
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            this.$el.parent()[0].style.transform = `translateY(${top})`;
+        });
     },
 
     __updateChildTop(child) {
