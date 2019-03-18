@@ -385,6 +385,11 @@ svg.svg-grid-icons {
   vertical-align: top;
 }
 
+
+.grid-header .cell_selection-index {
+  background-color: var(--grid-header-bg);
+}
+
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
   box-shadow: var(--grid-header-border-first);
 }
@@ -472,19 +477,22 @@ tr.row-checked,
   color: #666;
 }
 
-tr.selected {
+tr.selected,
+tr.selected .cell_selection,
+tr.selected .cell_selection-index{
   background-color: #eaf3f8;
 }
 
-tr:hover, .cell_selection.hover, .cell_selection-index.hover {
+.row-checked .cell_selection,
+.row-checked .cell_selection-index{
+  background-color: #c2d7e5;
+  color: #666;
+}
+
+tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background-color: #efefef;
 }
 
-.cell_selection.row-checked.selected,
-.cell_selection.row-checked.hover,
-.cell_selection-index.row-checked.hover{
-  color: #c1c1c1;;
-}
 
 .row.hover__transition .cell, .cell_selection.hover__transition, .cell_selection-index.hover__transition {
   /* delay used in js TRANSITION_DELAY*/
@@ -541,6 +549,7 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
   white-space: nowrap;
   position: sticky;
   left: 0;
+  z-index: 10;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -551,9 +560,10 @@ tr:hover, .cell_selection.hover, .cell_selection-index.hover {
 }
 
 .cell__dots{
+  position: absolute;
+  top: 0;
   left: 3px;
   width: 2px;
-  position: absolute;
 }
 
 .cell__dots svg{

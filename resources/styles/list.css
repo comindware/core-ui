@@ -434,8 +434,8 @@
 }
 .cell_selection, .cell_selection-index {
     align-items: center;
-    height: 35px;
-    line-height: 35px;
+    /*height: 35px;
+    line-height: 35px;*/
 }
 
 .cell_selection {
