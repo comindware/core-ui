@@ -1,5 +1,5 @@
 import template from './templates/booleanGroupEditor.html';
-import BaseCompositeEditorView from './base/BaseCompositeEditorView';
+import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import formRepository from '../formRepository';
 import BooleanEditorView from './BooleanEditorView';
 
@@ -20,7 +20,7 @@ const defaultOptions = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.extend({
+export default (formRepository.editors.BooleanGroup = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -71,7 +71,7 @@ export default (formRepository.editors.BooleanGroup = BaseCompositeEditorView.ex
     },
 
     __setReadonly(readonly) {
-        BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.$el.prop('tabindex', readonly ? -1 : 0);
         }

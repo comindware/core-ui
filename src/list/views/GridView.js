@@ -351,7 +351,6 @@ export default Marionette.View.extend({
             this.showChildView('helpTextRegion', infoPopout);
         }
         this.setRequired(this.options.required);
-        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
         this.__updateState();
         this.ui.tableTopMostWrapper.on('scroll', () => this.__onScroll());
     },
