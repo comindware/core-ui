@@ -146,7 +146,7 @@ export default Marionette.View.extend({
         }
 
         this.__updateActions(allToolbarActions, this.collection);
-        if (this.options.showToolbar || draggable) {
+        if (this.options.showToolbar || this.options.draggable) {
             if (this.options.showCheckbox) {
                 this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
             } else {
@@ -201,7 +201,13 @@ export default Marionette.View.extend({
 
     __onScroll() {
         //todo remove chech on horizontal scroll
-        if (this.listView.state.viewportHeight === undefined || this.isScrollHorizontal() || this.collection.length <= this.listView.state.viewportHeight || this.internalScroll) {
+        if (
+            this.listView.state.viewportHeight === undefined ||
+            this.isDestroyed() ||
+            this.isScrollHorizontal() ||
+            this.collection.length <= this.listView.state.viewportHeight ||
+            this.internalScroll
+        ) {
             return;
         }
 
@@ -751,8 +757,8 @@ export default Marionette.View.extend({
     __onItemMoved(...args) {
         this.trigger('move', ...args);
     },
-    
-        setError(errors: Array<any>): void {
+
+    setError(errors: Array<any>): void {
         if (!this.__checkUiReady()) {
             return;
         }
