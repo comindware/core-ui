@@ -112,19 +112,6 @@ export default Marionette.View.extend({
         }
     },
 
-    handleCommand(command) {
-        switch (command) {
-            case 'up':
-                this.listView.moveCursorBy(-1, { shiftPressed: false });
-                break;
-            case 'down':
-                this.listView.moveCursorBy(1, { shiftPressed: false });
-                break;
-            default:
-                break;
-        }
-    },
-
     toggleSelectable(canAddItem = this.options.canAddItem()) {
         if (this.isAttached() && this.options.showCollection) {
             this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !canAddItem);

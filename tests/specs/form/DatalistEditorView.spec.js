@@ -75,6 +75,10 @@ describe('Editors', () => {
 
     afterEach(() => {
         core.services.WindowService.closePopup();
+        window.app
+            .getView()
+            .getRegion('contentRegion')
+            .empty()
     });
 
     describe('DatalistEditorView', () => {
@@ -297,7 +301,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
         });
 
-        it('should change value on panel item click', done => {
+        it('should change value on panel item click', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -316,7 +320,6 @@ describe('Editors', () => {
 
             view.on('change', () => {
                 expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
-                done();
             });
 
             show(view);
@@ -399,7 +402,7 @@ describe('Editors', () => {
             expect(panel.clientHeight).toEqual(200);
         });
         */
-        it('should remove items on uncheck in panel', done => {
+        it('should remove items on uncheck in panel', () => {
             const model = new Backbone.Model({
                 value: [{ id: 0, name: 'Test Reference 0' }, { id: 1, name: 'Test Reference 1' }]
             });
@@ -414,7 +417,6 @@ describe('Editors', () => {
 
             view.on('change', () => {
                 expect(view.getValue()).toBeArrayOfSize(1);
-                done();
             });
 
             view.on('attach', () => {
@@ -429,7 +431,7 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should uncheck items on remove items click', done => {
+        it('should uncheck items on remove items click', () => {
             const model = new Backbone.Model({
                 value: [{ id: 0, text: 'Text 0' }, { id: 1, text: 'Text 1' }]
             });
@@ -453,13 +455,12 @@ describe('Editors', () => {
 
             view.on('change', () => {
                 expect(!!view.panelCollection.at(0).selected).toEqual(false);
-                done();
             });
 
             show(view);
         });
 
-        it('should show checkboxes and have correct style if showCheckboxes parameter set to true', done => {
+        it('should show checkboxes and have correct style if showCheckboxes parameter set to true', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -480,7 +481,6 @@ describe('Editors', () => {
 
                 expect(dropdownEl.getElementsByClassName('dd-list__i').length).toEqual(3);
                 expect(dropdownEl.getElementsByClassName('js-checkbox').length).toEqual(3);
-                done();
             });
 
             show(view);
@@ -933,7 +933,7 @@ describe('Editors', () => {
                 expect(true).toEqual(true);
             });
 
-            it('should open panel on input get focus', done => {
+            it('should open panel on input get focus', () => {
                 const model = new Backbone.Model({
                     view: [1]
                 });
@@ -957,13 +957,12 @@ describe('Editors', () => {
 
                 view.on('dropdown:open', () => {
                     expect(view.dropdownView.isOpen).toBeTrue('Panel is not open!');
-                    done();
                 });
 
                 show(view);
             });
 
-            it('should close panel and clean on panel item click if maxQuantitySelected === 1', done => {
+            it('should close panel and clean on panel item click if maxQuantitySelected === 1', () => {
                 const model = new Backbone.Model({
                     value: null
                 });
@@ -983,7 +982,6 @@ describe('Editors', () => {
                 view.on('dropdown:close', () => {
                     expect(view.getValue()).toEqual({ id: 2, name: 2 });
                     expect(view.dropdownView.isOpen).toBeFalse();
-                    done();
                 });
 
                 view.on('dropdown:open', () => {
@@ -1045,7 +1043,7 @@ describe('Editors', () => {
             //     startSearch(input, '2');
             // });
 
-            it('should close panel and clean on panel item click if maxQuantitySelected is exceeded', done => {
+            it('should close panel and clean on panel item click if maxQuantitySelected is exceeded', () => {
                 const model = new Backbone.Model({
                     value: null
                 });
@@ -1078,7 +1076,6 @@ describe('Editors', () => {
                     setTimeout(() => {
                         expect(isCloseTriggered).toBeTrue('view has no trigger close');
                         expect(view.getValue()).toEqual([{ id: 1, name: 1 }, { id: 2, name: 2 }]);
-                        done();
                     });
                 });
 
@@ -1438,7 +1435,7 @@ describe('Editors', () => {
         });
 
         describe('should has view.value as', () => {
-            it('primitive if maxQuantitySelected: 1, valueType: id', done => {
+            it('primitive if maxQuantitySelected: 1, valueType: id', () => {
                 const model = new Backbone.Model({
                     value: 1
                 });
@@ -1457,11 +1454,14 @@ describe('Editors', () => {
                     expect(view.value).toBeNumber();
 
                     view.on('dropdown:open', () => {
+                        expect(view.value).toBeNull();
+                        expect(model.get('value')).toBeNull();
+
                         model.on('change', () => {
                             expect(view.value).toBeNumber();
                             expect(model.get('value')).toBeNumber();
-                            done();
                         });
+
                         getItemOfList(0).click();
                     });
 
@@ -1492,12 +1492,18 @@ describe('Editors', () => {
                     expect(view.value).toBeArrayOfSize(3);
 
                     view.on('dropdown:open', () => {
+                        expect(view.value).toBeArrayOfNumbers();
+                        expect(view.value).toBeArrayOfSize(2);
+                        expect(model.get('value')).toBeArrayOfNumbers();
+                        expect(model.get('value')).toBeArrayOfSize(2);
+
                         model.on('change', () => {
                             expect(view.value).toBeArrayOfNumbers();
                             expect(view.value).toBeArrayOfSize(3);
                             expect(model.get('value')).toBeArrayOfNumbers();
                             expect(model.get('value')).toBeArrayOfSize(3);
                         });
+
                         getItemOfList(0).click();
                     });
 
@@ -1508,7 +1514,7 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('array of objects if maxQuantitySelected > 1, valueType: normal', done => {
+            it('array of objects if maxQuantitySelected > 1, valueType: normal', () => {
                 const model = new Backbone.Model({
                     DatalistValue: [
                         {
@@ -1548,7 +1554,6 @@ describe('Editors', () => {
                             expect(view.value).toBeArrayOfSize(3);
                             expect(model.get('DatalistValue')).toBeArrayOfObjects();
                             expect(model.get('DatalistValue')).toBeArrayOfSize(3);
-                            done();
                         });
                         getItemOfList(0).click();
                     });
@@ -1560,7 +1565,7 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('object if maxQuantitySelected = 1, valueType: normal', done => {
+            it('object if maxQuantitySelected = 1, valueType: normal', () => {
                 const model = new Backbone.Model({
                     DatalistValue: {
                         id: 'task.1',
@@ -1587,7 +1592,6 @@ describe('Editors', () => {
                         model.on('change', () => {
                             expect(view.value).toBeObject();
                             expect(model.get('DatalistValue')).toBeObject();
-                            done();
                         });
                         getItemOfList(0).click();
                     });
@@ -1745,7 +1749,7 @@ describe('Editors', () => {
         });
 
         describe('should set correct value to model on click item of dropdown', () => {
-            it('maxQuantitySelected: 1, valueType: id', done => {
+            it('maxQuantitySelected: 1, valueType: id', () => {
                 const model = new Backbone.Model({
                     value: undefined
                 });
@@ -1771,13 +1775,12 @@ describe('Editors', () => {
 
                 model.on('change:value', (model, value) => {
                     expect(value).toBeNumber();
-                    done();
                 });
 
                 show(view);
             });
 
-            it('maxQuantitySelected > 1, valueType: id', done => {
+            it('maxQuantitySelected > 1, valueType: id', () => {
                 const model = new Backbone.Model({
                     value: undefined
                 });
@@ -1796,7 +1799,7 @@ describe('Editors', () => {
                     actionForOpen(view);
                 });
 
-                view.on('dropdown:open', () => {
+                view.once('dropdown:open', () => {
                     expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
@@ -1804,13 +1807,12 @@ describe('Editors', () => {
                 model.on('change:value', (model, value) => {
                     expect(value).toBeArrayOfNumbers();
                     expect(value).toBeArrayOfSize(1);
-                    done();
                 });
 
                 show(view);
             });
 
-            it('maxQuantitySelected > 1, valueType: normal', done => {
+            it('maxQuantitySelected > 1, valueType: normal', () => {
                 const model = new Backbone.Model({
                     value: undefined
                 });
@@ -1832,20 +1834,18 @@ describe('Editors', () => {
                 });
 
                 view.once('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
                     getItemOfList(0).click();
                 });
 
                 model.on('change:value', (model, value) => {
                     expect(value).toBeArrayOfObjects();
                     expect(value).toBeArrayOfSize(1);
-                    done();
                 });
 
                 show(view);
             });
 
-            it('maxQuantitySelected = 1, valueType: normal', done => {
+            it('maxQuantitySelected = 1, valueType: normal', () => {
                 const model = new Backbone.Model({
                     value: undefined
                 });
@@ -1866,14 +1866,12 @@ describe('Editors', () => {
                     actionForOpen(view);
                 });
 
-                view.on('view:ready', () => {
-                    expect(view.dropdownView.isOpen).toBeTrue('Panel is closed!');
+                view.once('view:ready', () => {
                     getItemOfList(0).click();
                 });
 
                 model.on('change:value', (model, value) => {
                     expect(value).toBeObject();
-                    done();
                 });
 
                 show(view);

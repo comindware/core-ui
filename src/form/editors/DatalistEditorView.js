@@ -151,9 +151,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         };
 
         this.dropdownView = dropdown.factory.createDropdown({
-            buttonView: this.options.buttonView.extend({
-                getEditable: this.getEditable.bind(this) //for placeholders.
-            }),
+            buttonView: this.options.buttonView,
             buttonViewOptions: {
                 value: '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
@@ -166,7 +164,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 emptyPlaceholder: this.__getEmptyPlaceholder(),
                 readonlyPlaceholder: this.__getReadonlyPlaceholder(),
-                readonly: this.__isInputShouldBeReadonly()
+                enabled: this.getEnabled(),
+                readonly: this.getReadonly(),
+                getFocusElementReadonly: readonly => readonly || !this.options.showSearch
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -238,6 +238,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __addButtonListeners() {
         const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
+        this.listenTo(btn, 'click', () => this.__onButtonClick());
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
         this.listenTo(btn, 'pointerdown', (button, e) => {
@@ -247,10 +248,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             }
             this.__onButtonClick();
         });
-    },
-
-    __isInputShouldBeReadonly() {
-        return !this.options.showSearch || !this.getEditable();
     },
 
     __createBoundEditor() {
@@ -406,7 +403,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.dropdownView.setPermissions(enabled, this.__isInputShouldBeReadonly());
+        this.dropdownView.setPermissions(enabled, readonly);
         this.dropdownView.collectionView.updateEnabled(this.getEditable());
     },
 
@@ -577,7 +574,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     onAttach() {
         if (this.options.openOnRender) {
-            this.__onButtonClick('', {
+            this.__onButtonClick(undefined, {
                 forceCompareText: false,
                 openOnRender: true
             });
@@ -780,11 +777,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView.blur();
     },
 
-    __onButtonClick(filterValue = '', { forceCompareText = this.options.fetchFiltered, openOnRender = false } = {}): void {
+    __onButtonClick(event, { forceCompareText = this.options.fetchFiltered, openOnRender = false } = {}): void {
         if (!this.getEditable()) {
             return;
         }
         this.__focusButton();
+        const filterValue = this.dropdownView.value;
         this.__fetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
     },
 
@@ -923,12 +921,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             case keyCode.DOWN:
             case keyCode.RIGHT:
                 stop(e);
-                this.__sendPanelCommand('down');
+                this.moveCursorBy(1);
                 break;
             case keyCode.UP:
             case keyCode.LEFT:
                 stop(e);
-                this.__sendPanelCommand('up');
+                this.moveCursorBy(-1);
                 break;
             case keyCode.ENTER:
             case keyCode.SPACE:
@@ -1043,10 +1041,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.selectedCollection.select(this.selectedCollection.at(this.selectedCollection.length - 1));
     },
 
-    __sendPanelCommand(command: string, options: {}): void {
-        if (this.dropdownView.isOpen) {
-            this.dropdownView.panelView.handleCommand(command, options);
+    moveCursorBy(delta) {
+        if (!this.dropdownView.isOpen) {
+            return;
         }
+        
+        this.panelCollection.trigger('moveCursorBy', delta, { isLoop: false, shiftPressed: false  });
     },
 
     //start fetch

@@ -388,7 +388,8 @@ export default Marionette.View.extend({
             parentEl: this.ui.tableWrapper[0],
             parent$el: this.ui.tableWrapper,
             table$el: this.ui.table,
-            minimumVisibleRows: this.options.minimumVisibleRows
+            minimumVisibleRows: this.options.minimumVisibleRows,
+            selectOnCursor: this.options.selectOnCursor
         });
         this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
             if (eventName.startsWith('childview')) {
