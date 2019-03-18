@@ -514,7 +514,7 @@ export default Marionette.CollectionView.extend({
     __updateTop() {
         requestAnimationFrame(() => {
             const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-            this.$el.parent()[0].style.transform = `translateY(${top})`;
+            this.$el.parent()[0].style.transform = `translateY(${top}px)`;
         });
     },
 
