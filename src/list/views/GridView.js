@@ -434,8 +434,8 @@ export default Marionette.View.extend({
             if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName].concat(eventArguments));
             }
-            if (eventName === 'empty:view:destroyed') {
-                this.__resetViewStyle();
+            if (eventName === 'update:position:internal') {
+                this.__updatePositionInternal.apply(this, Object.values(eventArguments));
             }
         });
 
@@ -623,13 +623,6 @@ export default Marionette.View.extend({
 
     __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
-    },
-
-    __resetViewStyle() {
-        this.ui.content.css({
-            'min-height': '',
-            height: ''
-        });
     },
 
     __onSearch(text) {

@@ -368,7 +368,7 @@ export default Marionette.CollectionView.extend({
     },
 
     scrollTo(topIndex, shouldScrollElement = false) {
-        this.__updatePositionInternal(topIndex, shouldScrollElement);
+        this.trigger('update:position:internal', { topIndex, shouldScrollElement });
     },
 
     scrollToByFirst(topIndex) {
