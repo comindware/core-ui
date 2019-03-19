@@ -50,8 +50,15 @@ const defaultOptions = options => ({
     isSliding: true,
     showHeader: true,
     handleSearch: true,
-    updateToolbarEvents: ''
+    updateToolbarEvents: '',
+    childHeight: 35
 });
+
+const config = {
+    VISIBLE_COLLECTION_RESERVE: 20,
+    VISIBLE_COLLECTION_RESERVE_HALF: 10,
+    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+};
 
 /**
  * @name GridView
@@ -103,7 +110,7 @@ export default Marionette.View.extend({
         const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
 
         this.uniqueId = _.uniqueId('native-grid');
-        this.styleSheet = document.createElement('style');
+        this.childHeight = options.childHeight || 35; //todo fix it
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
@@ -199,26 +206,58 @@ export default Marionette.View.extend({
         }
     },
 
+    updatePosition(newPosition) {
+        this.__updatePositionInternal(newPosition, false);
+    },
+
+    __updatePositionInternal(position, shouldScrollElement) {
+        const newPosition = this.__checkFillingViewport(position);
+        if (newPosition === this.listView.state.position || !this.collection.isSliding) {
+            return;
+        }
+
+        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.__updateTop();
+
+        this.listView.state.position = newPosition;
+        if (shouldScrollElement) {
+            this.internalScroll = true;
+
+            this.this.ui.tableWrapper[0].scrollTop = `${newPosition * this.childHeight}px`;
+
+            _.delay(() => (this.internalScroll = false), 100);
+        }
+
+        return newPosition;
+    },
+
+    __updateTop() {
+        requestAnimationFrame(() => {
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            this.ui.tableWrapper[0].style.transform = `translateY(${top}px)`;
+        });
+    },
+
+    __checkFillingViewport(position) {
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.listView.state.viewportHeight);
+
+        return Math.max(0, Math.min(maxPosFirstRow, position));
+    },
+
     __onScroll() {
-        //todo remove chech on horizontal scroll
+        const nextScroll = this.ui.tableTopMostWrapper[0].scrollTop;
         if (
             this.listView.state.viewportHeight === undefined ||
+            this.__prevScroll === nextScroll ||
             this.isDestroyed() ||
-            this.isScrollHorizontal() ||
             this.collection.length <= this.listView.state.viewportHeight ||
             this.internalScroll
         ) {
             return;
         }
-
-        const newPosition = Math.max(0, Math.ceil(this.ui.tableTopMostWrapper.scrollTop() / this.listView.childHeight));
-        this.listView.updatePosition(newPosition, false);
-    },
-
-    isScrollHorizontal() {
-        const isHorisontal = this.__oldParentScrollLeft !== this.el.parentElement.scrollLeft;
-        this.__oldParentScrollLeft = this.el.parentElement.scrollLeft;
-        return isHorisontal;
+        this.__prevScroll = nextScroll;
+        const newPosition = Math.max(0, Math.ceil(nextScroll / this.listView.childHeight));
+        this.updatePosition(newPosition, false);
     },
 
     __onCursorMove(delta, options = {}) {
@@ -399,7 +438,6 @@ export default Marionette.View.extend({
                 this.__resetViewStyle();
             }
         });
-        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
 
         this.showChildView('contentRegion', this.listView);
 
@@ -452,7 +490,6 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
         this.__configurationPanel && this.__configurationPanel.destroy();
     },
 
