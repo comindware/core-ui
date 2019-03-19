@@ -1,10 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const fs = require('fs');
 const autoprefixer = require('autoprefixer');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');

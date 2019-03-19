@@ -33,8 +33,6 @@ import autosize from 'autosize';
 
 import CodeMirror from 'codemirror';
 import 'innersvg-polyfill';
-// @ts-ignore
-import * as jqui from 'jquery-ui';
 
 import domapi from './utils/DOMApi';
 
@@ -46,7 +44,6 @@ Marionette_.AppRouter = AppRouter;
 (<any>window).Marionette = Marionette_;
 
 const api = {
-    'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
     $: jquery,
