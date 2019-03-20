@@ -98,6 +98,15 @@ const formats = [
     }
 ];
 
+
+afterEach(() => {
+    core.services.WindowService.closePopup();
+    window.app
+        .getView()
+        .getRegion('contentRegion')
+        .empty()
+});
+
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
         const findDateInput = function (view) {
