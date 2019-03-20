@@ -25,6 +25,7 @@ import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
+import ExtensionIconService from './editors/impl/document/services/ExtensionIconService';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
@@ -152,7 +153,8 @@ const api = /** @lends module:core.form */ {
         IconEditor: IconEditorView,
         ColorPickerEditor,
         RangeEditor,
-        AudioEditor
+        AudioEditor,
+        ExtensionIconService
     }
 };
 

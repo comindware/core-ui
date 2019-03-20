@@ -5,15 +5,9 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+import ExtensionIconService from '../services/ExtensionIconService';
 
 const savedDocumentPrefix = 'document';
-
-const fileIconClasses = {
-    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
-    word: 'docx doc rtf',
-    excel: 'xls xlsx xlsm xlsb',
-    pdf: 'pdf'
-};
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -35,7 +29,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name'),
-            icon: this.__getExtIcon()
+            icon: ExtensionIconService.getIconForDocument(this.model.get('isLoading'), this.model.get('extension'))
         };
     },
 
@@ -60,24 +54,6 @@ export default Marionette.View.extend({
 
     modelEvents: {
         'change:isLoading': 'render'
-    },
-
-    __getExtIcon() {
-        if (this.model.get('isLoading')) {
-            return 'spinner pulse';
-        }
-        const ext = this.model.get('extension');
-        let icon;
-
-        if (ext) {
-            Object.keys(fileIconClasses).forEach(key => {
-                if (fileIconClasses[key].indexOf(ext.toLowerCase()) !== -1) {
-                    icon = key;
-                }
-            });
-        }
-
-        return icon || 'file';
     },
 
     __getDocumentRevision() {
