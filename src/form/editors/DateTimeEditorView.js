@@ -542,6 +542,8 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     allowHours: true,
                     allowMinutes: true,
                     allowSeconds: isFormatHasSeconds,
+                    allFocusableParts: this.options.allFocusableParts,
+                    seconds: this.options.seconds,
                     minutes: {
                         text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
                     },
@@ -552,8 +554,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     showTitle: false,
                     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
                     model
-                },
-                this.options
+                }
             ),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
