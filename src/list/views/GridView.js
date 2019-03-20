@@ -231,7 +231,7 @@ export default Marionette.View.extend({
     __updateTop() {
         requestAnimationFrame(() => {
             const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-            this.ui.tableWrapper[0].style.transform = `translateY(${top}px)`;
+            this.ui.tableWrapper[0].style.paddingTop = `${top}px`; //todo use transforme
         });
     },
 
