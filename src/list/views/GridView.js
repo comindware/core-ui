@@ -41,10 +41,11 @@ const classes = {
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
+    columns: [],
     emptyView: EmptyGridView,
     emptyViewOptions: {
-        text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
-        colspan: options.columns.length + !!options.showCheckbox
+        text: () => (options.columns?.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
+        colspan: options.columns ? options.columns.length + !!options.showCheckbox : 0
     },
     stickyToolbarOffset: 0,
     isSliding: true,
@@ -94,10 +95,6 @@ export default Marionette.View.extend({
         this.collection = factory.createWrappedCollection(Object.assign({}, this.options, { comparator }));
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
-        }
-
-        if (this.options.columns === undefined) {
-            throw new Error('You must provide columns definition ("columns" option)');
         }
 
         if (typeof this.options.transliteratedFields === 'object') {

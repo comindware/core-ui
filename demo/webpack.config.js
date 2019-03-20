@@ -81,10 +81,12 @@ module.exports = () => {
                                         ie: 11
                                     },
                                     useBuiltIns: 'usage',
+                                    corejs: 3,
                                     modules: false
                                 }
                             ]
-                        ]
+                        ],
+                        plugins: [require('@babel/plugin-syntax-dynamic-import')]
                     }
                 },
                 {

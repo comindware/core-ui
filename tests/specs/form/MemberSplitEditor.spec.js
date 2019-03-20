@@ -208,7 +208,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move all items fron available to selected container on move right all button click', done => {
+        it('should move all items fron available to selected container on move right all button click', () => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -235,7 +235,6 @@ describe('Editors', () => {
                                             .map(user => user.id)
                                             .sort()
                                     );
-                                    done();
                                 }
                             }, 100);
                         }
@@ -249,7 +248,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item from selected to available container on move left button click', done => {
+        it('should move item from selected to available container on move left button click', () => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
@@ -277,7 +276,6 @@ describe('Editors', () => {
                                 if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue().length).toEqual(0);
-                                    done();
                                 }
                             }, 100);
                         }

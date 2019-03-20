@@ -7,8 +7,8 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
     "autoprefixer": "^9.5.0",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.1",
@@ -26,7 +26,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.16.4",
-    "raw-loader": "^1.0.0",
+    "raw-loader": "^2.0.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "text-loader": "^0.0.1",
@@ -38,6 +38,7 @@
     "workbox-webpack-plugin": "^4.1.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.2"
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@fortawesome/fontawesome-free": "^5.8.0"
   }
 }

@@ -130,8 +130,6 @@ export default Marionette.CollectionView.extend({
     tagName: 'tbody',
 
     onBeforeAttach() {
-        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-
         this.parent$el = this.options.parent$el;
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.handleResize(false);
@@ -457,30 +455,6 @@ export default Marionette.CollectionView.extend({
         }
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE));
-    },
-
-    onAddChild(view, child) {
-        this.__updateChildTop(child);
-    },
-
-    __updateChildTop(child) {
-        //todo wtf this
-        if (!child || !this.collection.length) {
-            return;
-        }
-        requestAnimationFrame(() => {
-            const childModel = child.model;
-            if (this.getOption('showRowIndex')) {
-                const index = childModel.collection.indexOf(childModel) + 1;
-                if (index !== childModel.currentIndex) {
-                    childModel.trigger('update:model', index);
-                }
-            }
-            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
-                //todo wtf
-                child.insertFirstCellHtml();
-            }
-        });
     },
 
     __toggleCollapseAll(collapsed) {

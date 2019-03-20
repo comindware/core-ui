@@ -11,12 +11,12 @@ describe('Editors', () => {
                 const model = new Backbone.Model({
                     iconClass: 'user'
                 });
-    
+
                 return new core.form.editors.IconEditor({
                     modelIconProperty: 'iconClass',
                     model
                 });
-            },
+            }
             // focusElement: '.js-input'
         });
 

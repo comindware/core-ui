@@ -58,7 +58,14 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
             autoOpen: false
         });
 
-        this.popupPanel.on('panel:click:item', id => {
+        this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
+        if (!this.model.get('iconClass')) {
+            this.ui.deleteIconButton[0].addAttribute('hidden', '');
+        }
+    },
+
+    onBeforeAttach() {
+        this.listenTo(this.popupPanel, 'click:item', id => {
             // TODO transfer this logic to __value method
             this.ui.deleteIconButton[0].removeAttribute('hidden');
             this.model.set('iconClass', id);
@@ -69,11 +76,6 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
         });
 
         this.listenTo(this.popupPanel, 'click', this.open);
-
-        this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
-        if (!this.model.get('iconClass')) {
-            this.ui.deleteIconButton[0].addAttribute('hidden', '');
-        }
     },
 
     __keydown(event) {

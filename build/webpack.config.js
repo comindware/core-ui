@@ -58,6 +58,7 @@ module.exports = options => {
                                         ie: 11
                                     },
                                     useBuiltIns: 'usage',
+                                    corejs: 3,
                                     modules: false
                                 }
                             ]
@@ -265,7 +266,7 @@ module.exports = options => {
     };
 
     if (!TEST) {
-        webpackConfig.entry = ['@babel/polyfill', pathResolver.source('coreApi.js')];
+        webpackConfig.entry = [pathResolver.source('coreApi.js')];
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,

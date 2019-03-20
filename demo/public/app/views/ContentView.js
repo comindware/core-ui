@@ -115,7 +115,6 @@ export default Marionette.View.extend({
             ])
         });
 
-        
         this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
 
         this.showChildView('toolbarRegion', toolbar);
@@ -129,7 +128,7 @@ export default Marionette.View.extend({
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}`;
         }
 
-        const text = requireText(`./${path}`);
+        const text = requireText(`./${path}`).default;
 
         const textView = new Core.form.editors.CodeEditor({
             model: new Backbone.Model({

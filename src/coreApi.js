@@ -1,4 +1,5 @@
 //@flow
+import 'core-js/stable';
 import '../resources/styles/date-picker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
