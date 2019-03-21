@@ -1,5 +1,4 @@
 import template from '../templates/membersSplitPanel.html';
-import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
@@ -71,16 +70,10 @@ export default Marionette.View.extend({
                     key: 'name'
                 }
             ],
-            listViewOptions: {
-                height: 'auto',
-                childView: MembersListItemView,
-                childHeight: config.CHILD_HEIGHT,
-                emptyViewOptions: {
-                    text: this.model.get('emptyListText')
-                },
-                maxRows: 10,
-                childViewSelector: this.options.childViewSelector
-            }
+            emptyViewOptions: {
+                text: this.model.get('emptyListText')
+            },
+            maxRows: 10
         }));
 
         availableList.on('dblclick', this.__moveRight);
@@ -91,7 +84,6 @@ export default Marionette.View.extend({
         this.toggleElementsQuantityWarning();
 
         this.showChildView('availableItemsListRegion', availableList);
-        availableList.setLoading(this.model.initialized);
 
         const selectedList = new Core.list.GridView({
             collection: this.model.get('selected'),
@@ -106,15 +98,11 @@ export default Marionette.View.extend({
             showSearch: true,
             handleSearch: false,
             showHeader: false,
-            listViewOptions: {
-                height: 'auto',
-                childView: MembersListItemView,
-                childHeight: config.CHILD_HEIGHT,
-                emptyViewOptions: {
-                    text: this.model.get('emptyListText')
-                },
-                maxRows: 10
+            height: 'auto',
+            emptyViewOptions: {
+                text: this.model.get('emptyListText')
             },
+            maxRows: 10,
             showCheckbox: true
         });
 
@@ -125,7 +113,6 @@ export default Marionette.View.extend({
         this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
-        selectedList.setLoading(this.model.initialized);
     },
 
     __moveRight(model) {

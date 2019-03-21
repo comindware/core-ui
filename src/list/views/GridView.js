@@ -220,7 +220,7 @@ export default Marionette.View.extend({
         if (shouldScrollElement) {
             this.internalScroll = true;
 
-            this.this.ui.tableWrapper[0].scrollTop = `${newPosition * this.childHeight}px`;
+            this.ui.tableWrapper[0].scrollTop = `${newPosition * this.childHeight}px`;
 
             _.delay(() => (this.internalScroll = false), 100);
         }
