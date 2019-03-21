@@ -78,23 +78,23 @@ export default Marionette.View.extend({
 
     __hidePanels() {
         const regions = Object.values(this.regions);
-        $(regions[0].el).css('flex', '');
+        regions[0].el.style.flex = '';
 
         for (let i = 1; i < regions.length; i++) {
             this.resisersList[i - 1].$el.hide();
-            $(regions[i].el).hide();
+            regions[i].el.setAttribute('hidden', '');
         }
     },
 
     __showPanels() {
         const regions = Object.values(this.regions);
-        $(regions[0].el).css('flex', '');
+        regions[0].el.style.flex = '';
 
         for (let i = 1; i < regions.length; i++) {
             const resizer = this.resisersList[i - 1];
 
             resizer.$el.show();
-            $(regions[i].el).show();
+            regions[i].el.removeAttribute('hidden');
 
             resizer.doManualResize();
         }

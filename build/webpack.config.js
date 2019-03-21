@@ -31,6 +31,7 @@ module.exports = options => {
                         pathResolver.node_modules(),
                         pathResolver.source('external'),
                         pathResolver.source('collections'),
+                        pathResolver.source('services/AjaxService.js'),
                         pathResolver.source('Meta.js'),
                         pathResolver.source('form/editors/impl/dateTime/views/initializeDatePicker.js'),
                         pathResolver.tests(),
