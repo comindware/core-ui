@@ -59,7 +59,7 @@ export default {
             }
         });
 
-        window.addEventListener('unload', e => {
+        window.addEventListener('unload', () => {
             this.trigger('module:leave', {
                 page: this.activeModule ? this.activeModule.moduleId : null,
                 isUnload: true

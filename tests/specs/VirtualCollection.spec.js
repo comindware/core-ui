@@ -503,7 +503,7 @@ describe('VirtualCollection', () => {
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
 
-            virtualCollection.on('add', () => {
+            virtualCollection.on('update', () => {
                 expectToHaveSameMembers(virtualCollection.models, collection.models);
                 expect(resetCallback).not.toHaveBeenCalled();
                 done();
@@ -524,7 +524,7 @@ describe('VirtualCollection', () => {
             );
             const newTask = generateTask({ assignee: repository.users[2] });
 
-            virtualCollection.on('add', () => {
+            virtualCollection.on('update', () => {
                 expectCollectionsToBeEqual(virtualCollection, [
                     virtualCollection.at(0),
                     collection.at(0),

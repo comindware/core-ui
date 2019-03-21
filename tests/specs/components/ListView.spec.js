@@ -19,7 +19,7 @@ describe('Components', () => {
 
     describe('ListView', () => {
         it('should initialize', () => {
-            const listView = core.list.GridView({
+            const listView = new core.list.GridView({
                 collection: data,
                 childView: ListItemView,
                 childHeight: 25
