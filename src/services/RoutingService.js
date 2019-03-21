@@ -12,7 +12,7 @@ Backbone.history.checkUrl = () => {
     activeUrl = window.location.hash;
 
     if (shouldCheckUrl) {
-        originalCheckUrl.apply(this, arguments);
+        originalCheckUrl.apply(this);
     }
     shouldCheckUrl = true;
 };
