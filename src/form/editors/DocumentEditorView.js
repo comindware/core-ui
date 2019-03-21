@@ -379,6 +379,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
             }
         };
 
+        // eslint-disable-next-line no-undef
         PromiseService.registerPromise($.ajax(config), true);
     },
 

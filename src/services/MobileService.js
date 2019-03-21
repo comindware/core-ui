@@ -1,24 +1,22 @@
 export default class MobileService {
     static get isIE() {
-        if (
-            navigator.appName === 'Microsoft Internet Explorer' ||
-            !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
-            (typeof $.browser !== 'undefined' && $.browser.msie === 1)
-        ) {
+        const userAgent = navigator.userAgent;
+        if (navigator.appName === 'Microsoft Internet Explorer' || !!(userAgent.match(/Trident/) || userAgent.match(/rv:11/)) || userAgent.indexOf('MSIE') > 0) {
             return true;
         }
         return false;
     }
 
     static get isMobile() {
+        const userAgent = navigator.userAgent;
         if (
-            navigator.userAgent.match(/Android/i) ||
-            navigator.userAgent.match(/webOS/i) ||
-            navigator.userAgent.match(/iPhone/i) ||
-            navigator.userAgent.match(/iPad/i) ||
-            navigator.userAgent.match(/iPod/i) ||
-            navigator.userAgent.match(/BlackBerry/i) ||
-            navigator.userAgent.match(/Windows Phone/i)
+            userAgent.match(/Android/i) ||
+            userAgent.match(/webOS/i) ||
+            userAgent.match(/iPhone/i) ||
+            userAgent.match(/iPad/i) ||
+            userAgent.match(/iPod/i) ||
+            userAgent.match(/BlackBerry/i) ||
+            userAgent.match(/Windows Phone/i)
         ) {
             return true;
         }

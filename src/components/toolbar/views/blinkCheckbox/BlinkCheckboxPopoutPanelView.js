@@ -1,3 +1,4 @@
+/* eslint-disable */
 import template from '../../templates/blinkCheckbox/blinkCheckboxPopoutPanel.html';
 import BlinkCheckboxVisibilityView from './BlinkCheckboxVisibilityView';
 import BlinkCheckboxVisibilityDragView from './BlinkCheckboxVisibilityDragView';
@@ -91,8 +92,8 @@ export default Marionette.CollectionView.extend({
         });
         this.$el.append(ctx.dragItemView.el);
         ctx.view.setDragging(true);
-        $(document).bind('mousemove', this.__documentMouseMove);
-        $(document).bind('mouseup', this.__documentMouseUp);
+        document.addEventListener('mousemove', this.__documentMouseMove);
+        document.addEventListener('mouseup', this.__documentMouseUp);
     },
 
     __stopDrag() {
@@ -107,8 +108,8 @@ export default Marionette.CollectionView.extend({
         if (ctx.bottomItem) {
             ctx.bottomItem.removeClass(constants.filterIconListBottom);
         }
-        $(document).unbind('mousemove', this.__documentMouseMove);
-        $(document).unbind('mouseup', this.__documentMouseUp);
+        document.removeEventListener('mousemove', this.__documentMouseMove);
+        document.removeEventListener('mouseup', this.__documentMouseUp);
         ctx.view.setDragging(false);
         const dragItem = this.$el.find(constants.filtersListDragging);
         dragItem.remove();
@@ -140,9 +141,9 @@ export default Marionette.CollectionView.extend({
             left: event.pageX - constants.dragElOffsetX
         });
 
-        let itemEl = $(event.target);
-        while (itemEl[0] !== document && !itemEl.hasClass(constants.colunmItem)) {
-            itemEl = itemEl.parent();
+        let itemEl = event.target;
+        while (itemEl[0] !== document && !itemEl.classList.contains(constants.colunmItem)) {
+            itemEl = itemEl.parentNode;
         }
 
         if (ctx.topItem) {
@@ -177,9 +178,9 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        let itemEl = $(event.target);
-        while (itemEl[0] !== document && !itemEl.hasClass(constants.colunmItem)) {
-            itemEl = itemEl.parent();
+        let itemEl = event.target;
+        while (itemEl[0] !== document && !itemEl.classList.contains(constants.colunmItem)) {
+            itemEl = itemEl.parentNode;
         }
 
         const ctx = this.dragContext;

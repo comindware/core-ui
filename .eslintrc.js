@@ -2,9 +2,7 @@ module.exports = {
     parser: 'babel-eslint',
     env: {
         browser: true,
-        amd: true,
-        es6: true,
-        jquery: true
+        es6: true
     },
     plugins: ['prettier'],
     globals: {
@@ -20,8 +18,6 @@ module.exports = {
         beforeEach: true,
         afterEach: true,
         moment: true,
-        numeral: true,
-        arguments: true,
         CKEDITOR: true,
         Context: true,
         Core: true,

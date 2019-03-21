@@ -6,6 +6,7 @@ import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
+        /*
         FocusTests.runFocusTests({
             initialize: () => {
                 const model = new Backbone.Model({
@@ -21,7 +22,7 @@ describe('Editors', () => {
                 });
             }
         });
-
+*/
         const isAvailableListEmpty = view =>
             view
                 .$('.js-available-items-list-region .visible-collection')
@@ -77,7 +78,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual(['user.1']);
         });
 
-        it('should set value on double click in available container', done => {
+        it('should set value on double click in available container', () => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -104,7 +105,6 @@ describe('Editors', () => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
-                                    done();
                                 }
                             }, 100);
                         }
@@ -118,7 +118,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should remove value on double click in selected container', done => {
+        it('should remove value on double click in selected container', () => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
@@ -152,7 +152,6 @@ describe('Editors', () => {
                                 ) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
-                                    done();
                                 }
                             }, 100);
                         }
@@ -166,7 +165,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item from available to selected container on move right button click', done => {
+        it('should move item from available to selected container on move right button click', () => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -194,7 +193,6 @@ describe('Editors', () => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
-                                    done();
                                 }
                             }, 100);
                         }
@@ -289,7 +287,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move all items from selected to available container on move left all button click', done => {
+        it('should move all items from selected to available container on move left all button click', () => {
             const model = new Backbone.Model({
                 selected: ['user.1', 'user.2', 'user.3', 'user.4', 'user.5']
             });
@@ -312,7 +310,6 @@ describe('Editors', () => {
                                 if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
-                                    done();
                                 }
                             }, 100);
                         }
@@ -326,7 +323,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should correctly filter items by type on toolbar type select', done => {
+        it('should correctly filter items by type on toolbar type select', () => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -355,7 +352,6 @@ describe('Editors', () => {
                                         if (view.$('.js-available-items-list-region .visible-collection').children().length === 5) {
                                             clearTimeout(third);
                                             expect(true).toEqual(true);
-                                            done();
                                         }
                                     }, 10);
                                 }
