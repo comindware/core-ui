@@ -65,7 +65,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     onBeforeAttach() {
-        this.listenTo(this.popupPanel, 'click:item', id => {
+        this.listenTo(this.popupPanel, 'panel:click:item', id => {
             // TODO transfer this logic to __value method
             this.ui.deleteIconButton[0].removeAttribute('hidden');
             this.model.set('iconClass', id);
