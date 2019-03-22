@@ -6,8 +6,8 @@ import ToolbarCheckboxItemView from './views/ToolbarCheckboxItemView';
 import ToolbarSplitterView from './views/ToolbarSplitterView';
 import ToolbarPopupView from './views/ToolbarPopupView';
 import ToolbarSelectItemView from './views/ToolbarSelectItemView';
-import ButtonView from './views/ButtonView';
-import SearchBarView from '../../views/SearchBarView';
+import SearchButtonView from './views/SearchButtonView';
+import HeadLineView from './views/HeadLineView';
 
 export const severity = {
     None: {
@@ -182,8 +182,8 @@ const viewsByType = {
     [toolbarItemType.CHECKBOX]: ToolbarCheckboxItemView,
     [toolbarItemType.SELECTITEM]: ToolbarSelectItemView,
     [toolbarItemType.BLINKCHECKBOX]: BlinkCheckboxView,
-    [toolbarItemType.HEADLINE]: ButtonView,
-    [toolbarItemType.SEARCH]: SearchBarView
+    [toolbarItemType.HEADLINE]: HeadLineView,
+    [toolbarItemType.SEARCH]: SearchButtonView
 };
 
 const getViewByModel = model => viewsByType[model.get('type')] || ActionView;
