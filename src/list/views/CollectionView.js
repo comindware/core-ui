@@ -158,6 +158,15 @@ export default Marionette.PartialCollectionView.extend({
         }
     },
 
+    _showCollection() {
+        const models = this.collection.visibleModels;
+
+        models.forEach((child, index) => {
+            this._addChild(child, index);
+        });
+        this.children._updateLength();
+    },
+
     _addChildModels() {
         return this.collection.visibleModels.map(this._addChildModel.bind(this));
     },
