@@ -133,6 +133,7 @@
         "core-js": "^3.0.0",
         "jquery": "^3.3.1",
         "marionette.approuter": "^1.0.1",
+        "marionette.oldcollectionview": "^1.0.0",
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.23",
         "spectrum-colorpicker": "^1.8.0",

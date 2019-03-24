@@ -21,6 +21,8 @@ import * as mixin from './utils/underscore';
 import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
 // @ts-ignore
+import { OldCollectionView } from 'marionette.oldcollectionview';
+// @ts-ignore
 import AppRouter from 'marionette.approuter';
 import 'backbone-computedfields';
 import 'backbone.radio';
@@ -41,7 +43,11 @@ import domapi from './utils/DOMApi';
 Marionette_.setDomApi(domapi);
 // @ts-ignore
 Marionette_.AppRouter = AppRouter;
+// @ts-ignore
+Marionette_.PartialCollectionView = OldCollectionView; 
+
 (<any>window).Marionette = Marionette_;
+
 
 const api = {
     moment: moment_,

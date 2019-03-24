@@ -58,7 +58,7 @@ const defaultOptions = {
  * должны быть указаны cellView для каждой колонки.
  * */
 
-export default Marionette.CollectionView.extend({
+export default Marionette.PartialCollectionView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -158,54 +158,9 @@ export default Marionette.CollectionView.extend({
         }
     },
 
-    //overwrite native render method to pass correct collection.
-    render() {
-        if (this._isDestroyed) {
-            return this;
-        }
-        this.triggerMethod('before:render', this);
-
-        this._destroyChildren();
-
-        if (this.collection) {
-            this._addChildModels(this.collection.visibleModels);
-            this._initialEvents();
-        }
-
-        const template = this.getTemplate();
-
-        if (template) {
-            this._renderTemplate(template);
-            this.bindUIElements();
-        }
-        this._getChildViewContainer();
-        this.sort();
-
-        this._isRendered = true;
-
-        this.triggerMethod('render', this);
-        return this;
+    _addChildModels() {
+        return this.collection.visibleModels.map(this._addChildModel.bind(this));
     },
-
-    _onCollectionUpdate(collection, options) {
-        const changes = options.changes;
-
-        // Remove first since it'll be a shorter array lookup.
-        const removedViews = changes.removed.length && this._removeChildModels(changes.removed);
-
-        this._addedViews = changes.added.length && this._addChildModels(changes.added);
-
-        requestAnimationFrame(() => {
-            this._detachChildren(removedViews);
-            this.sort();
-
-            // Destroy removed child views after all of the render is complete
-            this._removeChildViews(removedViews);
-        });
-    },
-
-    // Sorts views by viewComparator and sets the children to the new order
-    _sortChildren() {},
 
     // override default method to correct add then index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {

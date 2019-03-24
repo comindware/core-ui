@@ -1,10 +1,6 @@
 export default {
     detachEl(el: HTMLElement) {
-        const parentNode = el.parentNode;
-
-        if (parentNode) {
-            parentNode.removeChild(el);
-        }
+        el.remove();
     },
 
     hasContents(el: HTMLElement) {

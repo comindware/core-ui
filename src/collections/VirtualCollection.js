@@ -289,8 +289,9 @@ const VirtualCollection = Backbone.Collection.extend({
 
         diffObject.common.forEach(e => this.trigger('update:child', e));
 
-        options.added = added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b));
+        // it's important remove items before add
         this.__removeModels(removed, options);
+        added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
     },
 
     __normalizePosition(position) {
