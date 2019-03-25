@@ -1026,6 +1026,13 @@ a:hover {
     margin: 3px;
 }
 
+.toolbar-btn.toolbar-btn_headline{
+    cursor: auto;
+}
+.toolbar-btn.toolbar-btn_headline:active{
+    box-shadow: none;
+}
+
 .toolbar-panel_container__select-state .toolbar-btn{
     width: 100%;
     margin: 0;
