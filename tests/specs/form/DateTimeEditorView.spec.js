@@ -98,7 +98,6 @@ const formats = [
     }
 ];
 
-
 afterEach(() => {
     core.services.WindowService.closePopup();
     window.app
@@ -473,7 +472,7 @@ describe('Editors', () => {
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
 
-        it('should set time on time select', () => {
+        it('should set time on time select', () => new Promise(function(resolve) {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
             });
@@ -488,14 +487,19 @@ describe('Editors', () => {
             show(view);
 
             view.on('change', () => {
-                expect(view.getValue()).toEqual('2015-07-19T22:00:00.000Z');
+                expect(view.getValue()).toBe('2015-07-19T22:00:00.000Z');
+                expect(model.get('data')).toBe('2015-07-19T22:00:00.000Z');
+
+                core.services.TestService.wait({
+                    callback: resolve,
+                    condition: () => findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '') === core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss')
+                })
             });
 
             findTimeInput(view)[0].focus();
 
             document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss'));
-        });
+        }));
 
                 
         it('should hide clear button if hideClearButton = true', () => {

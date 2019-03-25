@@ -553,6 +553,10 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     normalTime: true,
                     showTitle: false,
                     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
+                    key: this.options.key,
+                    autocommit: true,
+                    readonly: this.getReadonly(),
+                    editable: this.getEditable(),
                     model
                 }
             ),
