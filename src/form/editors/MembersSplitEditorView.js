@@ -64,7 +64,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     isEmptyValue() {
-        return !this.value.length;
+        return !this.value?.length;
     },
 
     onRender() {

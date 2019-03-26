@@ -65,7 +65,7 @@
         "babel-loader": "^8.0.5",
         "babel-runtime": "^6.26.0",
         "chance": "^1.0.18",
-        "copy-webpack-plugin": "^5.0.1",
+        "copy-webpack-plugin": "^5.0.2",
         "coveralls": "^3.0.3",
         "cross-env": "^5.2.0",
         "css-loader": "^2.1.1",

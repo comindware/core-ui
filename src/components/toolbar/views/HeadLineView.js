@@ -5,5 +5,5 @@ export default ButtonView.extend({
         return {
             title: this.model.get('description') || ''
         };
-    },
+    }
 });
