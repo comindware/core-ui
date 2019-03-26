@@ -1,10 +1,8 @@
-//@flow
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
 import meta from './meta';
-import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
 
 const actionsMenuLabel = '⋮';
 
