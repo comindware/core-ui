@@ -45,6 +45,7 @@ import UserService from './services/UserService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import ThemeService from './services/ThemeService';
 import TestService from './services/TestService';
+import UIService from './services/UIService';
 
 import VirtualCollection from './collections/VirtualCollection';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
@@ -92,7 +93,8 @@ const core = {
         UserService,
         MobileService,
         ThemeService,
-        TestService
+        TestService,
+        UIService
     },
     /**
      * Backbone collections of general use.

@@ -42,5 +42,11 @@ export default {
 
     defaultsPure(...args: Array<any>) {
         return Object.assign({}, ...args.reverse());
+    },
+
+    cutOffTo(string: string, toStr: string, defaultString = string): string {
+        return string.includes(toStr) ?
+            string.slice(0, string.indexOf(toStr)) :
+            string;
     }
 };

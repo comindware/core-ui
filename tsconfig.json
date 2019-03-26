@@ -4,6 +4,11 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",
+        "lib": [
+            "es6",
+            "dom",
+            "es2017"
+        ],
         "target": "es6",
         "resolveJsonModule": true,
         "esModuleInterop": true,
