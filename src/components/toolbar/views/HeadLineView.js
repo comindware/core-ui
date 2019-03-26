@@ -4,6 +4,6 @@ export default ButtonView.extend({
     attributes() {
         return {
             title: this.model.get('description') || ''
-        }
-    },
+        };
+    }
 });
