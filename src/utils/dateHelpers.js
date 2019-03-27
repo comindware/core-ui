@@ -204,6 +204,9 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     getFormat(formatName) {
         const lang = LocalizationService.langCode;
+        if (!dateTimeFormats[lang][formatName]) {
+            throw new Error(`Unexpected format ${formatName}`);
+        }
         return dateTimeFormats[lang][formatName].general;
     },
 
