@@ -259,10 +259,10 @@ export default Marionette.View.extend({
             if (config.view.close) {
                 const results = await config.view.close();
                 if (results) {
-                    config.showedInEl ? this.closeElPopup(config.popupId) : this.closePopup(config.popupId);
+                    config.options.showedInEl ? this.closeElPopup(config.popupId) : this.closePopup(config.popupId);
                 }
             } else {
-                config.showedInEl ? this.closeElPopup(config.popupId) : this.closePopup(config.popupId);
+                config.options.showedInEl ? this.closeElPopup(config.popupId) : this.closePopup(config.popupId);
             }
         }
     },
