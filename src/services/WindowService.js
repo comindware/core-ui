@@ -48,7 +48,8 @@ export default {
         return this.__popupStackView.showElInPopup(view, {
             fadeBackground: true,
             transient: false,
-            hostEl: null
+            hostEl: null,
+            showedInEl: true
         });
     },
 
