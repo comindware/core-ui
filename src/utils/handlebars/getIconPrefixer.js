@@ -1,9 +1,6 @@
 import icons from '../../form/editors/impl/iconEditor/icons';
 
-export default (options = {}) => {
-    const iconService = options.iconService;
-    const style = (iconService && iconService.style) || 'solid';
-
+export default ({ style = 'solid' } = {}) => {
     const iconStyle = {
         solid: 'fas',
         regular: 'far',
@@ -13,9 +10,7 @@ export default (options = {}) => {
 
     const getPrefix = iconInfo => (iconInfo.styles.includes('brands') ? iconStyle.brands : iconStyle[style]);
 
-    const prefixes = Object.entries(icons).reduce((prefixe, iconArray) => {
-        const iconName = iconArray[0];
-        const iconInfo = iconArray[1];
+    const prefixes = Object.entries(icons).reduce((prefixe, [ iconName, iconInfo ]) => {
         prefixe[iconName] = getPrefix(iconInfo);
 
         return prefixe;
