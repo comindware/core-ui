@@ -12,13 +12,15 @@ import InterfaceErrorMessageService from './services/InterfaceErrorMessageServic
 import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
+import getIconUnicode from './utils/handlebars/getIconUnicode';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
 
 import 'backbone.trackit';
 
 export default {
     async start(options) {
-        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options.iconService));
+        Handlebars.registerHelper('iconUnicode', getIconUnicode(options.iconService));
 
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
