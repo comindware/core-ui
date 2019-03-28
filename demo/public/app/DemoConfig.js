@@ -137,7 +137,7 @@ export default {
                         },
                         {
                             attribute: 'mask',
-                            valueEditorType: valueEditorTypes.ARRAY,
+                            valueEditorType: valueEditorTypes ? valueEditorTypes.ARRAY : [],
                             // selectedValue: "['(', /[1-9]/, /d/, /d/, ')', ' ', /d/, /d/, /d/, '-', /d/, /d/, /d/, /d/]",
                             description:
                                 "An array or a function that defines how the user input is going to be masked. Example: ['(', /[1-9]/, /d/, /d/, ')', ' ', /d/, /d/, /d/, '-', /d/, /d/, /d/, /d/]"

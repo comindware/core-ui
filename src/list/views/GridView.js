@@ -427,14 +427,7 @@ export default Marionette.View.extend({
             minimumVisibleRows: this.options.minimumVisibleRows,
             selectOnCursor: this.options.selectOnCursor
         });
-        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
-            if (eventName.startsWith('childview')) {
-                this.trigger.apply(this, [eventName].concat(eventArguments));
-            }
-            if (eventName === 'update:position:internal') {
-                this.__updatePositionInternal.apply(this, Object.values(eventArguments));
-            }
-        });
+        this.listenTo(this.listView, 'update:position:internal', this.__updatePositionInternal);
 
         this.showChildView('contentRegion', this.listView);
 
