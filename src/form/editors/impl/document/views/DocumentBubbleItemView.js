@@ -5,6 +5,8 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+ìimport ExtensionIconService from '../services/ExtensionIconService';
+
 import meta from '../meta';
 
 export default Marionette.View.extend({
@@ -27,7 +29,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name'),
-            icon: meta.getExtIcon(this.model.toJSON())
+            icon: ExtensionIconService.getIconForDocument(this.model.get('isLoading'), this.model.get('extension'))
         };
     },
 
@@ -52,8 +54,6 @@ export default Marionette.View.extend({
 
     modelEvents: {
         'change:isLoading': 'render'
-    },
-
     __getDocumentRevision() {
         this.isRevisionButtonClicked = true;
         this.reqres.request('document:revise', this.model.id).then(revisionList => {

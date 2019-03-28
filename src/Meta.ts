@@ -66,7 +66,7 @@ export const presentingComponentsTypes = {
 export const iconsNames = {
     expand: 'expand',
     minimize: 'compress',
-    newTab: 'share-square',
+    goTo: 'share-square',
     close: 'times'
 };
 

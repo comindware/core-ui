@@ -152,6 +152,7 @@ export default Marionette.View.extend({
                 return;
             }
 
+            gridColumn.isCell = true;
             const cellView = new cell({
                 class: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
                 schema: gridColumn,

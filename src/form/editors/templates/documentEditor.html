@@ -1,13 +1,13 @@
 <form class="js-file-form documents__drop-zone">
     <div class="documents__wrapper">
-        <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
-            style="display: none">
-
         <span class="documents__text">{{{placeHolderText}}}
             <span class="documents__upload js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
         </span>
     </div>
 </form>
+
+<input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
+style="display: none">
 
 <div class="documents emptyDocumentPlaceholder">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>
 

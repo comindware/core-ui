@@ -21,17 +21,18 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
-const defaultOptions = {
+const defaultOptions = options => ({
     readonly: false,
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
     showRevision: true,
-    showAll: false,
+    showAll: Boolean(options.isCell),
     createDocument: null,
     removeDocument: null,
-    displayText: ''
-};
+    displayText: '',
+    isCell: false
+});
 
 export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
@@ -96,15 +97,17 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
         });
     },
 
-    events: {
-        'click @ui.showMore': 'toggleShowMore',
-        keydown: '__handleKeydown',
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick',
-        'dragenter @ui.form': '__onDragenter',
-        'dragover @ui.form': '__onDragover',
-        'dragleave @ui.form': '__onDragleave',
-        'drop @ui.form': '__onDrop'
+    events() {
+        return {
+            'click @ui.showMore': 'toggleShowMore',
+            keydown: '__handleKeydown',
+            'change @ui.fileUpload': 'onSelectFiles',
+            [`click @ui.${this.options.schema?.isCell ? 'form' : 'fileUploadButton'}`]: '__onItemClick',
+            'dragenter @ui.form': '__onDragenter',
+            'dragover @ui.form': '__onDragover',
+            'dragleave @ui.form': '__onDragleave',
+            'drop @ui.form': '__onDrop'
+        };
     },
 
     childViewEvents: {
@@ -121,7 +124,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
     },
 
     isEmptyValue() {
-        return !this.getValue().length;
+        return !this.collection.length;
     },
 
     onDestroy() {
