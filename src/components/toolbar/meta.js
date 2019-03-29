@@ -7,42 +7,45 @@ import ToolbarSplitterView from './views/ToolbarSplitterView';
 import ToolbarPopupView from './views/ToolbarPopupView';
 import ToolbarSelectItemView from './views/ToolbarSelectItemView';
 import SearchButtonView from './views/SearchButtonView';
+import SplitButtonView from './views/SplitButtonView';
 import HeadLineView from './views/HeadLineView';
 
-export const severity = {
+const __getSeverity = (classPrefix = 'toolbar-btn') => ({
     None: {
-        class: 'toolbar-btn',
+        class: classPrefix,
         text: 'None',
         id: 'None'
     },
     Low: {
-        class: 'toolbar-btn toolbar-btn_low',
+        class: `${classPrefix} ${classPrefix}_low`,
         text: 'Low',
         id: 'Low'
     },
     Normal: {
-        class: 'toolbar-btn toolbar-btn_normal',
+        class: `${classPrefix} ${classPrefix}_normal`,
         text: 'Normal',
         id: 'Normal'
     },
     Major: {
-        class: 'toolbar-btn toolbar-btn_major',
+        class: `${classPrefix} ${classPrefix}_major`,
         text: 'Major',
         id: 'Major'
     },
     Critical: {
-        class: 'toolbar-btn toolbar-btn_critical',
+        class: `${classPrefix} ${classPrefix}_critical`,
         text: 'Critical',
         id: 'Critical'
     },
     Fatal: {
-        class: 'toolbar-btn toolbar-btn_fatal',
+        class: `${classPrefix} ${classPrefix}_fatal`,
         text: 'Fatal',
         id: 'Fatal'
     }
-};
+});
 
-const toolbarItemType = {
+export const severity = __getSeverity();
+
+export const toolbarItemType = {
     ACTION: 'Action',
     GROUP: 'Group',
     SPLITTER: 'Splitter',
@@ -52,7 +55,8 @@ const toolbarItemType = {
     BLINKCHECKBOX: 'BlinkCheckbox',
     SELECTSTATE: 'SelectState',
     HEADLINE: 'Headline',
-    SEARCH: 'Search'
+    SEARCH: 'Search',
+    SPLITBUTTON: 'SplitButton'
 };
 
 const viewsByType = {
@@ -65,10 +69,19 @@ const viewsByType = {
     [toolbarItemType.SELECTITEM]: ToolbarSelectItemView,
     [toolbarItemType.BLINKCHECKBOX]: BlinkCheckboxView,
     [toolbarItemType.HEADLINE]: HeadLineView,
-    [toolbarItemType.SEARCH]: SearchButtonView
+    [toolbarItemType.SEARCH]: SearchButtonView,
+    [toolbarItemType.SPLITBUTTON]: SplitButtonView
 };
 
 const getViewByModel = model => viewsByType[model.get('type')] || ActionView;
+
+export const getClassName = (prefix, model, isSplitButton = false) => {
+    const string = model.get('type');
+    const type = typeof string === 'string' ? string.charAt(0).toLowerCase() + string.slice(1) : 'withoutType';
+    const severityObject = __getSeverity(isSplitButton ? 'split-btn' : 'toolbar-btn');
+    const severityItem = severityObject[model.get('severity')] || severityObject.None;
+    return `${prefix} ${severityItem.class} ${model.get('class') || ''} toolbar-btn_${type}`;
+};
 
 const kinds = {
     CONST: 'Const'

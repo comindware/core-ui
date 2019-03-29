@@ -909,6 +909,9 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   color: #636262;
 } */
 
+.split-btn_low{
+  @apply --toolbar-btn-low-theme;
+}
 .toolbar-btn_low{
   @apply --toolbar-btn-low-theme;
 }
@@ -919,6 +922,9 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   @apply --toolbar-btn-low-active-theme;
 }
 
+.split-btn_normal{
+  @apply --toolbar-btn-normal-theme;
+}
 .toolbar-btn_normal{
   @apply --toolbar-btn-normal-theme;
 }
@@ -929,6 +935,9 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   @apply --toolbar-btn-normal-active-theme;
 }
 
+.split-btn_major{
+  @apply --toolbar-btn-major-theme;
+}
 .toolbar-btn_major{
   @apply --toolbar-btn-major-theme;
 }
@@ -939,6 +948,9 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   @apply --toolbar-btn-major-active-theme;
 }
 
+.split-btn_critical{
+  @apply --toolbar-btn-critical-theme;
+}
 .toolbar-btn_critical{
   @apply --toolbar-btn-critical-theme;
 }
@@ -949,6 +961,9 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   @apply --toolbar-btn-critical-active-theme;
 }
 
+.split-btn_fatal{
+  @apply --toolbar-btn-fatal-theme;
+}
 .toolbar-btn_fatal{
   @apply --toolbar-btn-fatal-theme;
 }

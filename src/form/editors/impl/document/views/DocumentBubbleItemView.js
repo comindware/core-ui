@@ -5,7 +5,7 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
-ìimport ExtensionIconService from '../services/ExtensionIconService';
+import ExtensionIconService from '../services/ExtensionIconService';
 
 import meta from '../meta';
 
@@ -54,6 +54,8 @@ export default Marionette.View.extend({
 
     modelEvents: {
         'change:isLoading': 'render'
+    },
+
     __getDocumentRevision() {
         this.isRevisionButtonClicked = true;
         this.reqres.request('document:revise', this.model.id).then(revisionList => {
