@@ -221,11 +221,11 @@ body {
   background: transparent;
   border: none;
   white-space: nowrap;
+  line-height: inherit;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0;
+  padding: 4px 0;
   max-height: 35px;
-  line-height: 34px;
 }
 
 /* /textarea/ */
@@ -320,6 +320,7 @@ body {
 .cell.editor_date-time {
   background: transparent;
   border-radius: 0;
+  border: none;
 }
 
 .editor_disabled.editor_date-time,
@@ -406,12 +407,10 @@ svg.svg-grid-icons {
 }
 
 .cell.editor {
-  height: 35px;
+  height: auto;
   line-height: initial;
-  min-height: 35px;
-  max-height: 35px;
-  display: table-cell;
-  vertical-align: middle;
+  min-height: 34px;
+  max-height: 34px;
 }
 
 .compact.grid-container .cell.editor{
