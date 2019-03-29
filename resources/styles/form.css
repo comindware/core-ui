@@ -350,7 +350,7 @@ input[type="checkbox"].checkbox {
 
 
 /* Date Time */
-.editor_date-time {
+.editor_date-time:not(.cell) {
     display: flex;
     align-items: center;
 }

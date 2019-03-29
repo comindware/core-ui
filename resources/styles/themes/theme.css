@@ -221,11 +221,11 @@ body {
   background: transparent;
   border: none;
   white-space: nowrap;
-  line-height: inherit;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 4px 0;
+  padding: 0;
   max-height: 35px;
+  line-height: 34px;
 }
 
 /* /textarea/ */
@@ -315,12 +315,6 @@ body {
   @apply --input-theme;
   padding: var(--input-padding);
   overflow: hidden;
-}
-
-.cell.editor_date-time {
-  background: transparent;
-  border-radius: 0;
-  border: none;
 }
 
 .editor_disabled.editor_date-time,

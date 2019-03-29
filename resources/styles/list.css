@@ -555,9 +555,6 @@ tr:hover .cell_selection {
 .cell .checkbox {
     margin: 0 auto;
 }
-.cell.editor_checkbox .checkbox {
-    margin-top: 7px;
-}
 
 .cell_selection-index .checkbox {
     margin: 0;
