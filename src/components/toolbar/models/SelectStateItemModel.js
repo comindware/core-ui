@@ -1,5 +1,5 @@
 import SelectableBehavior from '../../../models/behaviors/SelectableBehavior';
-import meta from '../meta';
+import { toolbarItemType } from '../meta';
 
 export default Backbone.Model.extend({
     initialize() {
@@ -7,6 +7,6 @@ export default Backbone.Model.extend({
     },
 
     defaults: {
-        type: meta.toolbarItemType.SELECTITEM
+        type: toolbarItemType
     }
 });

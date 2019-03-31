@@ -9,3 +9,26 @@
     display: inline-block;
     line-height: inherit;
 }
+
+.split-button-wrp {
+    display: flex;
+    border-radius: 4px;
+    padding: 0;
+    vertical-align: middle;
+    border: 1px solid #0575bd;
+    color: #d6e7f2;
+    background-color: #0575bd;
+    margin-right: 5px;  
+}
+
+.split-button-wrp .btn-separator {
+    width: 0px;
+    height: 70%;
+    border: solid 1px;
+    align-self: center;
+}
+
+.split-button-wrp .split-button-menu-anchor, .split-button-wrp .split-button-action-button {
+    padding: 3px 5px;
+    margin: 0 5px !important; 
+}
