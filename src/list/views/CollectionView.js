@@ -167,11 +167,7 @@ export default Marionette.PartialCollectionView.extend({
         this.children._updateLength();
     },
 
-    _addChildModels() {
-        return this.collection.visibleModels.map(this._addChildModel.bind(this));
-    },
-
-    // override default method to correct add then index === 0 in visible collection
+    // override default method to correct add twhen index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 

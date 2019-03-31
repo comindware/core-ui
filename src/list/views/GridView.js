@@ -203,11 +203,7 @@ export default Marionette.View.extend({
         }
     },
 
-    updatePosition(newPosition) {
-        this.__updatePositionInternal(newPosition, false);
-    },
-
-    __updatePositionInternal(position, shouldScrollElement) {
+    updatePosition(position, shouldScrollElement = false) {
         const newPosition = this.__checkFillingViewport(position);
         if (newPosition === this.listView.state.position || !this.collection.isSliding) {
             return;
@@ -431,7 +427,7 @@ export default Marionette.View.extend({
             minimumVisibleRows: this.options.minimumVisibleRows,
             selectOnCursor: this.options.selectOnCursor
         });
-        this.listenTo(this.listView, 'update:position:internal', this.__updatePositionInternal);
+        this.listenTo(this.listView, 'update:position:internal', state => this.updatePosition(state.topIndex, state.shouldScrollElement));
 
         this.showChildView('contentRegion', this.listView);
 
