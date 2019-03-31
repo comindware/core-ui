@@ -57,13 +57,6 @@ export default function(a_: Array<any>, b_: Array<any>) {
         };
     };
 
-    const seselem = function(elem, t) {
-        return {
-            elem,
-            t
-        };
-    };
-
     const snake = function(k: number, p, pp) {
         let r: number;
         let x: number;
@@ -170,6 +163,8 @@ export default function(a_: Array<any>, b_: Array<any>) {
                 }
             }
             recordseq(epc);
+
+            return ses;
         }
     };
 }

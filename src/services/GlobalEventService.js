@@ -16,10 +16,6 @@ const windowEventList = [
         capture: true
     },
     {
-        name: 'wheel',
-        capture: true
-    },
-    {
         name: 'resize',
         capture: false
     },
@@ -46,7 +42,7 @@ const globalEventService = /** @lends module:core.services.GlobalEventService */
         this.__windowEvents.forEach(x => {
             window.addEventListener(x.name, x.handler, x.capture);
         });
-        this.listenTo(this, 'window:load', () => this.pageLoaded = true);
+        this.listenTo(this, 'window:load', () => (this.pageLoaded = true));
     },
 
     onDestroy() {

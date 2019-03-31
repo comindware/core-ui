@@ -388,7 +388,11 @@ export default Marionette.View.extend({
         }
         this.setRequired(this.options.required);
         this.__updateState();
-        this.ui.tableTopMostWrapper.on('scroll', () => this.__onScroll());
+        if (Core.services.MobileService.isIE) {
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll());
+        } else {
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll(), { passive: true });
+        }
     },
 
     onAttach() {
@@ -479,8 +483,13 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
-    onDestroy() {
+    onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
+        if (Core.services.MobileService.isIE) {
+            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+        } else {
+            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+        }
     },
 
     sortBy(columnIndex, sorting) {

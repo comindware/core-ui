@@ -282,16 +282,13 @@ const VirtualCollection = Backbone.Collection.extend({
 
     __processDiffs(oldModels, options = {}) {
         const diff = new diffHelper(oldModels, this.visibleModels);
-        diff.compose();
-        const diffObject = diff.getses();
-        const added = diffObject.add;
-        const removed = diffObject.remove;
+        const diffObject = diff.compose();
 
-        diffObject.common.forEach(e => this.trigger('update:child', e));
+        //diffObject.common.forEach(e => this.trigger('update:child', e)); why we need to trigger useless updates??
 
         // it's important remove items before add
-        this.__removeModels(removed, options);
-        added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
+        this.__removeModels(diffObject.remove, options);
+        diffObject.add.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
     },
 
     __normalizePosition(position) {

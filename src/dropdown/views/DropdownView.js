@@ -73,7 +73,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-const getClass = (options) => {
+const getClass = options => {
     const classList = [];
     if (options.buttonViewOptions?.class) {
         classList.push(options.buttonViewOptions.class);
@@ -293,7 +293,7 @@ export default class DropdownView {
 
         GlobalEventService.off('window:keydown:captured', (document, event) => this.__keyAction(event));
         GlobalEventService.off('window:mousedown:captured', this.__handleGlobalMousedown);
-        GlobalEventService.off('window:wheel:captured', this.__checkElements);
+        document.removeEventListener('scroll', this.__checkElements);
         GlobalEventService.off('window:mouseup:captured', this.__checkElements);
         GlobalEventService.off('window:keydown:captured', this.__checkElements);
 
@@ -386,7 +386,7 @@ export default class DropdownView {
 
     __listenToElementMoveOnce(el, callback) {
         if (this.__observedEntities.length === 0) {
-            GlobalEventService.on('window:wheel:captured', this.__checkElements);
+            document.addEventListener('scroll', this.__checkElements, true);
             GlobalEventService.on('window:mouseup:captured', this.__checkElements);
             GlobalEventService.on('window:keydown:captured', this.__checkElements);
         }
@@ -412,8 +412,8 @@ export default class DropdownView {
         }
     }
 
-    __checkElements(target) {
-        if (!this.__isNestedInButton(target) && !this.__isNestedInPanel(target)) {
+    __checkElements(event) {
+        if (!this.__isNestedInButton(event.currentTarget) && !this.__isNestedInPanel(event.currentTarget)) {
             setTimeout(() => {
                 if (this.button.isDestroyed()) {
                     return;
