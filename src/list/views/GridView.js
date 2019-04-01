@@ -23,6 +23,7 @@ import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
+import GlobalEventService from '../../services/GlobalEventService';
 
 const classes = {
     REQUIRED: 'required',
@@ -416,6 +417,8 @@ export default Marionette.View.extend({
                 }
             });
         }
+
+        this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
     },
 
     getChildren() {
