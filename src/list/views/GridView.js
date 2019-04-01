@@ -287,8 +287,8 @@ export default Marionette.View.extend({
             replaceElement: true
         },
         loadingRegion: '.js-grid-loading-region',
-        errorTextRegion: '.js-error-text-region',
-        helpTextRegion: '.js-help-text-region'
+        errorTextRegion: '.js-grid-error-text-region',
+        helpTextRegion: '.js-grid-help-text-region'
     },
 
     ui: {

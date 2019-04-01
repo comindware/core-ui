@@ -25,7 +25,7 @@ export default Marionette.View.extend({
         const readonly = this.options.editor.getReadonly();
         const enabled = this.options.editor.getEnabled();
         const editable = enabled && !readonly;
-        const customEditor = Object.assign({}, this.options.editorConfig, {
+        const customEditorOptions = Object.assign({}, this.options.editorConfig, {
             showSearch: false,
             openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
@@ -33,8 +33,11 @@ export default Marionette.View.extend({
                 '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
+        if (this.options.editorConfig.schema) {
+            Object.assign(customEditorOptions.schema, { enabled, readonly });
+        }
 
-        const editor = new this.options.editorConstructor(customEditor);
+        const editor = new this.options.editorConstructor(customEditorOptions);
         const searchView = new SearchBarView();
 
         this.showChildView('editorRegion', editor);
