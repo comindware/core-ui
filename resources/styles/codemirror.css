@@ -7,6 +7,7 @@
     border: solid 1px #ced3d7;
     font-size: 12px;
     line-height: 1.4em;
+    min-height: 100px;
 }
 
 .CodeMirror-lines {
@@ -153,6 +154,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
     height: 100%;
     outline: none;
     position: relative;
+    min-height: 100px;
 }
 .CodeMirror-sizer {
     position: relative;

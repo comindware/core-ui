@@ -708,12 +708,25 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 .bubbles__i {
   @apply --bubbles-item-theme;
 }
+.bubbles__i:hover {
+  /*@apply --bubbles-item-theme-hover;*/
+}
+
+.bubbles__list .bubbles__i + .bubbles__i{
+  margin-left: 5px;
+}
 .bubbles__i a,
 .bubbles__i span {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
+}
+.bubbles__i:hover a,
+.bubbles__i:hover span {
+  width: calc(100% - 20px);
+  
 }
 
 .bubbles .bubbles__caret,

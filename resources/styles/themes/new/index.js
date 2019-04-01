@@ -244,6 +244,9 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
+        padding: '2px 0'
+    },
+    'bubbles-item-theme-hover': {
         padding: '2px 20px 2px 0'
     },
     'input-theme': {
@@ -323,7 +326,7 @@ module.exports.apply = {
     },
     'tab-item-disabled-theme': {
         color: variables['grey-400'],
-        cursor: 'not-allowed'
+        cursor: 'default'
     },
     'tab-item-hidden-theme': {
         display: 'none'
