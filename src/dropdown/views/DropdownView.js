@@ -330,12 +330,12 @@ export default Marionette.View.extend({
     },
 
     toggle(...args) {
-        if (this.button.isOpen) {
+        if (this.isOpen) {
             this.close(...args);
         } else {
             this.open(...args);
         }
-    }
+    },
 
     __handleClick() {
         this.trigger('click');
