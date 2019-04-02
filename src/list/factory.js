@@ -1,7 +1,5 @@
 import { comparators, helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
-import ListView from './views/CollectionView';
-import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
 
 export const getDefaultComparator = (columns = []) => {
@@ -51,49 +49,8 @@ export const createWrappedCollection = options => {
 
 const factory = {
     /**
-     * @memberof module:core.list.factory
-     * @method createDefaultList
-     * @description Метод для создания списка
-     * @param {Object} options Constructor options
-     * @param {Array} options.collection Массив элементов списка
-     * @param {Object} options.collectionOptions Опции коллекции
-     * @param {Object} options.listViewOptions Опции списка
-     * @param {Backbone.View} options.listViewOptions.childView View элемента списка
-     * @returns {Backbone.View} listView View-списка
-     * */
-    createDefaultList(options) {
-        helpers.ensureOption(options, 'collection');
-        helpers.ensureOption(options, 'listViewOptions');
-        if (!options.listViewOptions.childView && !options.listViewOptions.childViewSelector) {
-            helpers.throwError('The option `childView` or `childViewSelector` is required.', 'MissingOptionError');
-        }
-        helpers.ensureOption(options, 'listViewOptions.childHeight');
-
-        const collection = factory.createWrappedCollection(
-            Object.assign(
-                {},
-                {
-                    collection: options.collection,
-                    isSliding: true
-                },
-                options.collectionOptions
-            )
-        );
-
-        const listViewOptions = _.extend(
-            {
-                collection,
-                emptyView: EmptyGridView
-            },
-            options.listViewOptions
-        );
-
-        return new ListView(listViewOptions);
-    },
-
-    /**
      * @memberof module:core.nativeGrid.factory
-     * @method createDefaultList
+     * @method createDefaultGrid
      * @description Метод для создания списка
      * @param {Object} options Constructor options
      * @param {Backbone.View} [options.emptyView] View используемый по умолчанию для отображения пустого списка (нет строк)
