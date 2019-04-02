@@ -329,10 +329,18 @@ export default Marionette.View.extend({
         }
     },
 
+    toggle(...args) {
+        if (this.button.isOpen) {
+            this.close(...args);
+        } else {
+            this.open(...args);
+        }
+    }
+
     __handleClick() {
         this.trigger('click');
         if (this.options.autoOpen) {
-            this.open();
+            this.toggle();
         }
     },
 
