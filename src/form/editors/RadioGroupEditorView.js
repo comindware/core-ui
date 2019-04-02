@@ -1,5 +1,5 @@
 // @flow
-import BaseCompositeEditorView from './base/BaseCompositeEditorView';
+import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
 import template from './impl/radioGroup/templates/radioGroup.hbs';
@@ -21,20 +21,15 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
-formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
+formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
     /** @lends module:core.form.editors.RadioGroupEditorView.prototype */ {
-        initialize() {
+        initialize(options = {}) {
+            this.__applyOptions(options, defaultOptions);
             this.collection = new RadioGroupCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
 
         template: Handlebars.compile(template),
-
-        className() {
-            _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
-
-            return `${this.options.class || ''}`;
-        },
 
         childViewContainer: '.js-container',
 
@@ -47,7 +42,7 @@ formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
         childViewOptions() {
             return {
                 selected: this.getValue(),
-                enabled: this.__getEditorEnabled()
+                enabled: this.getEditable()
             };
         },
 
@@ -64,22 +59,17 @@ formRepository.editors.RadioGroup = BaseCompositeEditorView.extend(
             this.__value(value, false);
         },
 
-        __getEditorEnabled() {
-            return this.getEnabled() && !this.getReadonly();
-        },
-
-        __setEditorEnable(isEnable = this.__getEditorEnabled()) {
-            this.children.each(cv =>
-                cv.setEnabled(isEnable));
+        __setEditorEnable(isEnable = this.getEditable()) {
+            this.children.each(cv => cv.setEnabled(isEnable));
         },
 
         __setEnabled(enabled) {
-            BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
+            BaseCollectionEditorView.prototype.__setEnabled.call(this, enabled);
             this.__setEditorEnable();
         },
 
         __setReadonly(readonly) {
-            BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
+            BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
             this.__setEditorEnable();
             if (this.getEnabled()) {
                 this.$el.prop('tabindex', readonly ? -1 : 0);

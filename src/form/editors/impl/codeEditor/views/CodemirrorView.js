@@ -74,10 +74,22 @@ export default Marionette.View.extend({
             replaceElement: true,
             el: '.js-code-header-container'
         },
-        toolbarContainer: '.js-code-toolbar-container',
-        tooltipContainer: '.js-code-tooltip-container',
-        editorContainer: '.js-code-editor-container',
-        editorOutputContainer: '.js-code-output-container',
+        toolbarContainer: {
+            replaceElement: true,
+            el: '.js-code-toolbar-container'
+        },
+        tooltipContainer: {
+            replaceElement: true,
+            el: '.js-code-tooltip-container'
+        },
+        editorContainer: {
+            replaceElement: true,
+            el: '.js-code-editor-container'
+        },
+        editorOutputContainer: {
+            replaceElement: true,
+            el: '.js-code-output-container'
+        },
         outputTabs: '.output-tabs-region',
         output: '.dev-code-editor-output'
     },
@@ -106,7 +118,7 @@ export default Marionette.View.extend({
         this.toolbar.on('minimize', this.__onMinimize);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
-        if (this.options.mode === 'script') {
+        if (this.options.mode === 'script' && this.options.showDebug !== false) {
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
@@ -116,7 +128,7 @@ export default Marionette.View.extend({
             });
             this.showChildView('editorOutputContainer', this.output);
         }
-        this.ui.editor.css('height', this.options.height);
+
         this.hintIsShown = false;
 
         const extraKeys = {
@@ -175,7 +187,7 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
-            $('.dev-codemirror').scrollTop(0);
+            document.querySelector('.dev-codemirror').scrollTop = 0;
             if (this.currentHighlightedLine) {
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
@@ -247,7 +259,7 @@ export default Marionette.View.extend({
     },
 
     __hideHintOnClick(event) {
-        if (this.hintIsShown && !$(event).parents('.js-code-editor-container').length) {
+        if (this.hintIsShown && !event.target.contains('.js-code-editor-container')) {
             this.__hideHint();
         }
     },
@@ -260,9 +272,10 @@ export default Marionette.View.extend({
     __onMaximize() {
         this.$el.addClass(classes.maximized);
         this.ui.editor.css('height', '80%');
-        $(this.regions.editorOutputContainer).css('height', '30%');
-        $(this.regions.output).css('height', '100%');
-        $(this.regions.outputTabs).css('height', '100%');
+
+        document.querySelector(this.regions.editorOutputContainer).style.height = '30%';
+        document.querySelector(this.regions.output).style.height = '100%';
+        document.querySelector(this.regions.outputTabs).style.height = '100%';
         this.$el.appendTo('body');
         this.codemirror.refresh();
         this.codemirror.focus();
@@ -605,7 +618,7 @@ export default Marionette.View.extend({
     },
 
     __showTooltip(token, hintEl) {
-        $(hintEl).focus();
+        hintEl.focus();
         const tooltipModel = new Backbone.Model(this.__findObjectByText(token.text));
         const tooltipView = MappingService.getTooltipView(tooltipModel.get('type'));
         if (!tooltipView) {
@@ -621,7 +634,7 @@ export default Marionette.View.extend({
         this.showChildView('tooltipContainer', this.tooltip);
 
         const tooltipMargin = 10;
-        const hintPanel = $(hintEl).parent();
+        const hintPanel = hintEl.parentNode;
         const hintPanelPosition = hintPanel.position();
         const hintPanelWidth = hintPanel.width();
         const tooltipWidth = this.tooltip.$el.width();
@@ -662,20 +675,20 @@ export default Marionette.View.extend({
             return;
         }
 
-        const el = $(e.target);
-        let text = el.text();
+        const el = e.target;
+        let text = el.innerHTML;
 
         if (text.charAt(0) === '"') {
             text = text.substr(1, text.length - 2);
         }
 
-        if (!el || el[0].className === 'CodeMirror-search-hint') {
+        if (!el || el.className === 'CodeMirror-search-hint') {
             this.__hideTooltip();
             return;
         }
 
         const obj = this.__findObjectByText(text);
-        if (el[0].tagName.toLowerCase() === 'span' && obj) {
+        if (el.tagName.toLowerCase() === 'span' && obj) {
             const tooltipModel = new Backbone.Model(obj);
             const tooltipView = MappingService.getTooltipView(tooltipModel.get('type'));
 
@@ -724,6 +737,7 @@ export default Marionette.View.extend({
     },
 
     __onTooltipPeek() {
+        // eslint-disable-next-line no-undef
         const event = $.Event('keypdown');
         event.keyCode = 9;
         this.codemirror.triggerOnKeyDown(event);

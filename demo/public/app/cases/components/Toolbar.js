@@ -1,4 +1,4 @@
-export default function () {
+export default function() {
     const blinkColumns = new Backbone.Collection([
         {
             id: 'blink.1',
@@ -19,6 +19,7 @@ export default function () {
 
     blinkColumns.on('change:isHidden', (model, value) => alert(`isHidden = ${value}`));
     const toolbarView = new Core.components.Toolbar({
+        mode: 'Mobile',
         allItemsCollection: new Backbone.Collection([
             {
                 iconClass: 'plus',
@@ -32,7 +33,7 @@ export default function () {
                 iconClass: 'dog',
                 id: '2',
                 name: 'Some',
-                type: 'Action',
+                type: 'Search',
                 severity: 'Low',
                 description: 'createComponent'
             },
@@ -55,6 +56,73 @@ export default function () {
                 type: 'Action',
                 severity: 'Major',
                 context: 'Void'
+            },
+            {
+                iconClass: 'Undefined', //will be set by selected state.
+                type: 'SplitButton',
+                id: '32',
+                name: 'SplitButton',
+                severity: 'Normal',
+                stateIndex: 2,
+                items: [
+                    {
+                        id: 'headLine',
+                        type: 'Headline',
+                        name: 'some header'
+                    },
+                    {
+                        id: 'firstState',
+                        iconClass: 'align-left',
+                        name: 'Left'
+                    },
+                    {
+                        id: 'secondState',
+                        iconClass: 'align-center',
+                        name: 'Center'
+                    },
+                    {
+                        id: 'thirdState',
+                        iconClass: 'align-right',
+                        name: 'Right'
+                    },
+                    {
+                        id: 'fourthState',
+                        iconClass: 'align-justify',
+                        name: 'Justify'
+                    }
+                ]
+            },
+            {
+                iconClass: 'Undefined', //will be set by selected state.
+                type: 'SplitButton',
+                id: '33',
+                name: 'SplitButton',
+                kind: 'Const',
+                severity: 'Major',
+                juggleStates: true,
+                stateIndex: 1,
+                items: [
+                    {
+                        id: 'firstState',
+                        iconClass: 'align-left',
+                        name: 'Left'
+                    },
+                    {
+                        id: 'secondState',
+                        iconClass: 'align-center',
+                        name: 'Center'
+                    },
+                    {
+                        id: 'thirdState',
+                        iconClass: 'align-right',
+                        name: 'Right'
+                    },
+                    {
+                        id: 'fourthState',
+                        iconClass: 'align-justify',
+                        name: 'Justify'
+                    }
+                ]
             },
             {
                 iconClass: 'Undefined', //will be set by selected state.

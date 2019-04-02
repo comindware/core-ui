@@ -17,7 +17,7 @@ export default Marionette.View.extend({
 
     tagName: 'div',
 
-    template: false,
+    template: _.noop,
 
     className() {
         return `${classes.CLASS_NAME} ${this.options.class || ''}`;
@@ -51,7 +51,7 @@ export default Marionette.View.extend({
     onAttach() {
         this.columns.forEach(view => {
             view._isAttached = true;
-            view.triggerMethod('attach');
+            view.trigger('attach');
         });
     },
 

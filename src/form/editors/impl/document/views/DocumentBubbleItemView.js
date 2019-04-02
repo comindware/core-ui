@@ -5,15 +5,9 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+import ExtensionIconService from '../services/ExtensionIconService';
 
-const savedDocumentPrefix = 'document';
-
-const fileIconClasses = {
-    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
-    word: 'docx doc rtf',
-    excel: 'xls xlsx xlsm xlsb',
-    pdf: 'pdf'
-};
+import meta from '../meta';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -35,7 +29,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name'),
-            icon: this.__getExtIcon()
+            icon: ExtensionIconService.getIconForDocument(this.model.get('isLoading'), this.model.get('extension'))
         };
     },
 
@@ -62,28 +56,10 @@ export default Marionette.View.extend({
         'change:isLoading': 'render'
     },
 
-    __getExtIcon() {
-        if (this.model.get('isLoading')) {
-            return 'spinner pulse';
-        }
-        const ext = this.model.get('extension');
-        let icon;
-
-        if (ext) {
-            Object.keys(fileIconClasses).forEach(key => {
-                if (fileIconClasses[key].indexOf(ext.toLowerCase()) !== -1) {
-                    icon = key;
-                }
-            });
-        }
-
-        return icon || 'file';
-    },
-
     __getDocumentRevision() {
+        this.isRevisionButtonClicked = true;
         this.reqres.request('document:revise', this.model.id).then(revisionList => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
-            this.isRevisionOpen = true;
             this.documentRevisionPopout.open();
         });
     },
@@ -112,7 +88,7 @@ export default Marionette.View.extend({
                     autoOpen: false,
                     panelMinWidth: 'none'
                 });
-                this.documentRevisionPopout.on('close', () => (this.isRevisionOpen = false));
+                this.documentRevisionPopout.on('close', () => (this.isRevisionButtonClicked = false));
                 this.showChildView('reviseRegion', this.documentRevisionPopout);
                 this.isRevisonButtonShown = true;
             } else {
@@ -122,14 +98,14 @@ export default Marionette.View.extend({
     },
 
     __isNew() {
-        return !this.model.id?.startsWith(savedDocumentPrefix);
+        return !this.model.id?.startsWith(meta.savedDocumentPrefix);
     },
 
     __onMouseleave() {
         if (this.options.allowDelete) {
             this.el.removeChild(this.el.lastElementChild);
         }
-        if (!this.isRevisionOpen) {
+        if (!this.isRevisionButtonClicked) {
             this.ui.revise.hide();
         }
     }

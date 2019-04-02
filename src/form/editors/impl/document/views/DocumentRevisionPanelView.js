@@ -2,7 +2,7 @@
 import DocumentRevisionItemView from './DocumentRevisionItemView';
 import template from '../templates/documentRevisionPanel.html';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {

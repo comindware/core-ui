@@ -15,10 +15,14 @@ export default Marionette.View.extend({
             panelView: BlinkCheckboxPopoutPanelView,
             customAnchor: true,
             buttonViewOptions: {
-                model: options.model
+                model: options.model,
+                mode: options.mode,
+                showName: options.showName
             },
             panelViewOptions: {
-                model: options.model
+                model: options.model,
+                mode: options.mode,
+                showName: options.showName
             }
         });
 
@@ -32,7 +36,7 @@ export default Marionette.View.extend({
             });
         }
 
-        view.listenTo(view, 'button:keyup', this.__keyup);
+        view.listenTo(view, 'keyup', this.__keyup);
 
         return view;
     },

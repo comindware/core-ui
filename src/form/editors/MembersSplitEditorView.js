@@ -19,8 +19,8 @@ const defaultOptions = () => ({
     selectedItemsText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
     searchPlaceholder: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
     emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST'),
-    users: undefined,
-    groups: undefined,
+    users: [],
+    groups: [],
     showMode: null,
     memberService: undefined,
     getDisplayText: null
@@ -28,17 +28,17 @@ const defaultOptions = () => ({
 
 export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     initialize(options = {}) {
+        this.__applyOptions(options, defaultOptions);
         this.__initializeController(options);
     },
 
     className: 'member-split',
 
-    attributes: {
-        tabindex: 0
-    },
-
     regions: {
-        splitPanelRegion: '.js-split-panel-region'
+        splitPanelRegion: {
+            el: '.js-split-panel-region',
+            replaceElement: true
+        }
     },
 
     ui: {
@@ -63,6 +63,10 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         this.__value(value, false);
     },
 
+    isEmptyValue() {
+        return !this.value?.length;
+    },
+
     onRender() {
         if (this.getOption('showMode') !== 'button') {
             this.controller.initItems();
@@ -79,15 +83,6 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     __initializeController(options) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
-
-        const defOps = Object.assign(defaultOptions(), {
-            users: options.users || [],
-            groups: options.groups || []
-        });
-
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
-
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitController(this.options);
@@ -99,7 +94,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     __showPopup() {
-        if (!this.getEnabled()) {
+        if (!this.getEditable()) {
             return;
         }
         this.options.selected = this.getValue();
@@ -138,14 +133,14 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         WindowService.showPopup(popup);
     },
 
-    async __updateText() {
+    async updateText() {
         this.ui.membersText.text(await this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {
         this.options.selected = value;
         if (this.getOption('showMode') === 'button') {
-            this.__updateText();
+            this.updateText();
         }
         this.value = value;
 

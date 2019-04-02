@@ -1,23 +1,36 @@
-@keyframes fadingAnimation {
-    0%   {background-color: transparent;}
-    100% {background-color: rgba(2, 63, 103, 0.5);}
+.l-popup {
+    height: 600px;
+    width: 700px;
+    max-width: 80%;
+    max-height: 80%;
+    min-height: 300px;
+    margin: auto;
+    padding: 20px 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
 }
 
 .fadingPanel {
+    background-color: #023f67;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
+    opacity: 0;
     z-index: 100;
-    display: none;
-    animation-name: fadingAnimation;
-    animation-duration: 0.15s;
+    visibility: hidden;
+    transition: visibility 0.1s, opacity 0.1s;
 }
 
 .fadingPanel_open {
-    background-color: rgba(2, 63, 103, 0.5);
-    display: block;
+    opacity: .5;
+    visibility: visible;
+    transition: visibility 0.1s, opacity 0.1s;
 }
 
 .popup-fade {

@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     const data = [];
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 5000; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -56,8 +56,8 @@ describe('Components', () => {
     ];
 
     describe('Simple grid', () => {
-        it('should initialize', () => {
-            const gridController = new core.list.controllers.GridController({
+        it('should initialize', function() {
+            const gridController = new Core.list.GridView({
                 columns,
                 selectableBehavior: 'multi',
                 showSearch: true,
@@ -68,28 +68,7 @@ describe('Components', () => {
             window.app
                 .getView()
                 .getRegion('contentRegion')
-                .show(gridController.view);
-
-            expect(true).toBe(true);
-        });
-
-        it('should show help text icon in columns header', () => {
-            const gridController = new core.list.controllers.GridController({
-                columns: [
-                    {
-                        key: 'textCell',
-                        type: 'String',
-                        title: 'TextCell',
-                        helpText: 'this is help text'
-                    }
-                ],
-                collection: []
-            });
-
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(gridController.view);
+                .show(gridController);
 
             expect(true).toBe(true);
         });

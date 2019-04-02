@@ -1,14 +1,11 @@
 //@flow
 /* eslint-disable no-param-reassign */
-
 import form from 'form';
-import { columnWidthByType } from '../meta';
+import dropdown from 'dropdown';
 import { stickybits, transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
-import SelectionPanelView from './selections/SelectionPanelView';
-import SelectionCellView from './selections/SelectionCellView';
 import GridHeaderView from './header/GridHeaderView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
@@ -18,6 +15,18 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from '../views/EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
+import meta from '../meta';
+import VirtualCollection from '../../collections/VirtualCollection';
+import factory from '../factory';
+import ErrorButtonView from '../../views/ErrorButtonView';
+import InfoButtonView from '../../views/InfoButtonView';
+import TooltipPanelView from '../../views/TooltipPanelView';
+import ErrosPanelView from '../../views/ErrosPanelView';
+
+const classes = {
+    REQUIRED: 'required',
+    ERROR: 'error'
+};
 
 /*
     Public interface:
@@ -32,12 +41,25 @@ import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
+    columns: [],
     emptyView: EmptyGridView,
     emptyViewOptions: {
-        text: () => (options.columns.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'))
+        text: () => (options.columns?.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
+        colspan: options.columns ? options.columns.length + !!options.showCheckbox : 0
     },
-    stickyToolbarOffset: 0
+    stickyToolbarOffset: 0,
+    isSliding: true,
+    showHeader: true,
+    handleSearch: true,
+    updateToolbarEvents: '',
+    childHeight: 35
 });
+
+const config = {
+    VISIBLE_COLLECTION_RESERVE: 20,
+    VISIBLE_COLLECTION_RESERVE_HALF: 10,
+    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+};
 
 /**
  * @name GridView
@@ -51,7 +73,6 @@ const defaultOptions = options => ({
  * @param {Array} options.columns массив колонок
  * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк) или не инициализированы колонки.
  * @param {Number} options.childHeight высота строки списка (childView)
- * @param {Number} options.maxHeight максимальная высота всего списка
  * @param {Backbone.View} [options.childView] view строки списка
  * @param {Backbone.View} [options.childViewOptions] опции для childView
  * @param {Function} options.childViewSelector ?
@@ -60,38 +81,35 @@ const defaultOptions = options => ({
  * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию.
+ * @param {Array} options.excludeActions Array of strings. Example: <code>[ 'archive', 'delete' ]</code>.
+ * @param {Array} options.additionalActions Array of objects <code>[ id,  name,* type=button'|'checkbox', isChecked, iconClass, severity]</code>.
+ * @param {Boolean} options.showCheckbox show or hide checkbox
  * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
  * */
 
 export default Marionette.View.extend({
     initialize(options) {
-        _.defaults(options, defaultOptions(options));
+        _.defaults(this.options, defaultOptions(options));
+        const comparator = factory.getDefaultComparator(this.options.columns);
+
+        this.collection = factory.createWrappedCollection(Object.assign({}, this.options, { comparator }));
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
 
-        if (options.columns === undefined) {
-            throw new Error('You must provide columns definition ("columns" option)');
+        if (typeof this.options.transliteratedFields === 'object') {
+            transliterator.setOptionsToFieldsOfNewSchema(this.options.columns, this.options.transliteratedFields);
         }
 
-        if (typeof options.transliteratedFields === 'object') {
-            transliterator.setOptionsToFieldsOfNewSchema(options.columns, options.transliteratedFields);
-        }
+        this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
-        options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
 
         this.uniqueId = _.uniqueId('native-grid');
-        this.styleSheet = document.createElement('style');
+        this.childHeight = options.childHeight || 35; //todo fix it
 
         const HeaderView = this.options.headerView || GridHeaderView;
-
-        this.columnClasses = [];
-        options.columns.forEach((c, i) => {
-            const cClass = `${this.uniqueId}-column${i}`;
-
-            this.columnClasses.push(cClass);
-            c.columnClass = cClass;
-        });
 
         if (this.options.showHeader !== false) {
             this.options.showHeader = true;
@@ -101,35 +119,22 @@ export default Marionette.View.extend({
             this.headerView = new HeaderView(
                 _.defaultsPure(
                     {
-                        columns: options.columns,
+                        columns: this.options.columns,
                         gridEventAggregator: this,
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
                         isTree: this.options.isTree,
-                        expandOnShow: options.expandOnShow
+                        expandOnShow: options.expandOnShow,
+                        showCheckbox: this.options.showCheckbox
                     },
                     this.options
                 )
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
-            this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
         }
 
-        const childView = options.childView || RowView;
-
-        const showRowIndex = this.getOption('showRowIndex');
-
-        const childViewOptions = Object.assign(options.childViewOptions || {}, {
-            columns: options.columns,
-            transliteratedFields: options.transliteratedFields,
-            gridEventAggregator: this,
-            columnClasses: this.columnClasses,
-            isTree: this.options.isTree
-        });
-
-        this.isEditable = typeof options.editable === 'boolean' ? options.editable : options.columns.some(column => column.editable);
+        this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
         if (this.isEditable) {
             this.editableCellsIndexes = [];
             this.options.columns.forEach((column, index) => {
@@ -144,24 +149,18 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
-        this.listView = new ListView({
-            collection: this.collection,
-            gridEventAggregator: this,
-            childView,
-            childViewSelector: options.childViewSelector,
-            emptyView: options.emptyView,
-            emptyViewOptions: options.emptyViewOptions,
-            childHeight: options.childHeight,
-            childViewOptions,
-            loadingChildView: options.loadingChildView || LoadingChildView,
-            maxRows: options.maxRows,
-            height: options.height,
-            isTree: this.options.isTree,
-            isEditable: this.isEditable,
-            showRowIndex,
-            minimumVisibleRows: options.minimumVisibleRows
-        });
-
+        this.__updateActions(allToolbarActions, this.collection);
+        if (this.options.showToolbar || this.options.draggable) {
+            if (this.options.showCheckbox) {
+                this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
+            } else {
+                this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+            }
+            if (this.options.updateToolbarEvents) {
+                this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
+            }
+        }
+        /*
         if (this.options.showCheckbox) {
             const draggable = this.getOption('draggable');
             this.selectionPanelView = new SelectionPanelView({
@@ -191,28 +190,67 @@ export default Marionette.View.extend({
                 this.__initializeConfigurationPanel();
             }
         }
-
-        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
-            if (eventName.startsWith('childview')) {
-                this.trigger.apply(this, [eventName].concat(eventArguments));
-            }
-            if (eventName === 'empty:view:destroyed') {
-                this.__resetViewStyle();
-            }
-        });
-
-        this.collection = options.collection;
-
-        if (options.showToolbar) {
+        */
+        if (this.options.showToolbar) {
             this.toolbarView = new ToolbarView({
-                allItemsCollection: options.actions || new Backbone.Collection()
+                allItemsCollection: allToolbarActions || new Backbone.Collection()
             });
-            this.listenTo(this.toolbarView, 'command:execute', this.__executeAction);
+            this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         }
-        if (options.showSearch) {
+        if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
+    },
+
+    updatePosition(position, shouldScrollElement = false) {
+        const newPosition = this.__checkFillingViewport(position);
+        if (newPosition === this.listView.state.position || !this.collection.isSliding) {
+            return;
+        }
+
+        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.__updateTop();
+
+        this.listView.state.position = newPosition;
+        if (shouldScrollElement) {
+            this.internalScroll = true;
+
+            this.ui.tableWrapper[0].scrollTop = `${newPosition * this.childHeight}px`;
+
+            _.delay(() => (this.internalScroll = false), 100);
+        }
+
+        return newPosition;
+    },
+
+    __updateTop() {
+        requestAnimationFrame(() => {
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            this.ui.tableWrapper[0].style.paddingTop = `${top}px`; //todo use transforme
+        });
+    },
+
+    __checkFillingViewport(position) {
+        const maxPosFirstRow = Math.max(0, this.collection.length - this.listView.state.viewportHeight);
+
+        return Math.max(0, Math.min(maxPosFirstRow, position));
+    },
+
+    __onScroll() {
+        const nextScroll = this.ui.tableTopMostWrapper[0].scrollTop;
+        if (
+            this.listView.state.viewportHeight === undefined ||
+            this.__prevScroll === nextScroll ||
+            this.isDestroyed() ||
+            this.collection.length <= this.listView.state.viewportHeight ||
+            this.internalScroll
+        ) {
+            return;
+        }
+        this.__prevScroll = nextScroll;
+        const newPosition = Math.max(0, Math.ceil(nextScroll / this.listView.childHeight));
+        this.updatePosition(newPosition, false);
     },
 
     __onCursorMove(delta, options = {}) {
@@ -255,14 +293,9 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        headerRegion: {
-            el: '.js-grid-header-view',
-            replaceElement: true
-        },
-        contentRegion: '.js-grid-content-view',
-        selectionPanelRegion: '.js-grid-selection-panel-view',
-        selectionHeaderRegion: {
-            el: '.js-grid-selection-header-view',
+        headerRegion: '.js-grid-header-view',
+        contentRegion: {
+            el: '.js-grid-content-view',
             replaceElement: true
         },
         toolbarRegion: {
@@ -273,14 +306,19 @@ export default Marionette.View.extend({
             el: '.js-grid-tools-search-region',
             replaceElement: true
         },
-        loadingRegion: '.js-grid-loading-region'
+        loadingRegion: '.js-grid-loading-region',
+        errorTextRegion: '.js-error-text-region',
+        helpTextRegion: '.js-help-text-region'
     },
 
     ui: {
         title: '.js-grid-title',
         tools: '.js-grid-tools',
-        header: '.js-grid-header',
-        content: '.js-grid-content'
+        header: '.js-grid-header-view',
+        content: '.js-grid-content',
+        tableWrapper: '.grid-table-wrapper',
+        table: '.grid-content-wrp',
+        tableTopMostWrapper: '.grid-table-wrapper-war'
     },
 
     events: {
@@ -304,19 +342,10 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.showChildView('contentRegion', this.listView);
-
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
         } else {
             this.el.classList.add('grid__headless');
-        }
-
-        if (this.options.showCheckbox) {
-            if (this.options.showHeader) {
-                this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
-            }
-            this.showChildView('selectionPanelRegion', this.selectionPanelView);
         }
 
         if (this.options.showToolbar) {
@@ -335,24 +364,80 @@ export default Marionette.View.extend({
         } else {
             this.ui.title.parent().hide();
         }
-        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
+        if (this.options.helpText) {
+            const viewModel = new Backbone.Model({
+                helpText: this.options.helpText,
+                errorText: null
+            });
+
+            const infoPopout = dropdown.factory.createPopout({
+                buttonView: InfoButtonView,
+                panelView: TooltipPanelView,
+                panelViewOptions: {
+                    model: viewModel,
+                    textAttribute: 'helpText'
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('helpTextRegion', infoPopout);
+        }
+        this.setRequired(this.options.required);
         this.__updateState();
+        if (Core.services.MobileService.isIE) {
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll());
+        } else {
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll(), { passive: true });
+        }
     },
 
     onAttach() {
-        this.options.columns.forEach((column, i) => {
-            this.__setColumnWidth(i, column.width);
+        const childView = this.options.childView || RowView;
+
+        const showRowIndex = this.getOption('showRowIndex');
+
+        const childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+            columns: this.options.columns,
+            transliteratedFields: this.options.transliteratedFields,
+            gridEventAggregator: this,
+            isTree: this.options.isTree,
+            showCheckbox: this.options.showCheckbox,
+            draggable: this.options.draggable,
+            showRowIndex
         });
-        document.body && document.body.appendChild(this.styleSheet);
-        this.__bindListRegionScroll();
+
+        this.listView = new ListView({
+            collection: this.collection,
+            gridEventAggregator: this,
+            childView,
+            childViewSelector: this.options.childViewSelector,
+            emptyView: this.options.emptyView,
+            emptyViewOptions: this.options.emptyViewOptions,
+            childHeight: this.options.childHeight,
+            childViewOptions,
+            loadingChildView: this.options.loadingChildView || LoadingChildView,
+            maxRows: this.options.maxRows,
+            height: this.options.height,
+            isTree: this.options.isTree,
+            isEditable: this.isEditable,
+            showRowIndex,
+            parentEl: this.ui.tableWrapper[0],
+            parent$el: this.ui.tableWrapper,
+            table$el: this.ui.table,
+            minimumVisibleRows: this.options.minimumVisibleRows,
+            selectOnCursor: this.options.selectOnCursor
+        });
+        this.listenTo(this.listView, 'update:position:internal', state => this.updatePosition(state.topIndex, state.shouldScrollElement));
+
+        this.showChildView('contentRegion', this.listView);
+
         if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
-        this.ui.content.css('maxHeight', this.options.maxHeight || window.innerHeight);
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
-        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-wrp'), {
-            stickyBitStickyOffset: toolbarShowed ? 50 : this.options.stickyToolbarOffset,
+        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-view'), {
+            stickyBitStickyOffset: toolbarShowed ? 0 : this.options.stickyToolbarOffset,
             scrollEl: this.options.scrollEl,
             customStickyChangeNumber: this.options.customStickyChangeNumber,
             stateChangeCb: currentState => {
@@ -382,6 +467,8 @@ export default Marionette.View.extend({
                 }
             });
         }
+
+        this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
     },
 
     getChildren() {
@@ -392,34 +479,13 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
-    __executeAction(...args) {
-        this.trigger('execute:action', ...args);
-    },
-
-    __onSearch(text) {
-        this.trigger('search', text);
-        if (this.options.isTree) {
-            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
-        }
-    },
-
-    __bindListRegionScroll() {
-        const headerRegionEl = this.options.showHeader && this.headerView.el;
-        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
-
-        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
-            if (headerRegionEl) {
-                headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
-            }
-            if (selectionPanelRegionEl) {
-                selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
-            }
-        });
-    },
-
-    onDestroy() {
-        this.styleSheet && document.body && document.body.contains(this.styleSheet) && document.body.removeChild(this.styleSheet);
+    onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
+        if (Core.services.MobileService.isIE) {
+            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+        } else {
+            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+        }
     },
 
     sortBy(columnIndex, sorting) {
@@ -476,48 +542,67 @@ export default Marionette.View.extend({
     },
 
     validate() {
-        if (!this.isEditable) {
-            return;
+        let error;
+        if (this.required && this.collection.length === 0) {
+            error = {
+                type: 'required',
+                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID')
+            };
+        } else if (this.isEditable) {
+            const hasErrorInFields = this.options.columns.some(column => {
+                if (!column.editable || !column.validators) {
+                    return false;
+                }
+                const validators = [];
+                return column.validators.some(validator => {
+                    let result;
+                    if (typeof validator === 'function') {
+                        validators.push(validator);
+                    } else {
+                        const predefined = form.repository.validators[validator];
+                        if (typeof predefined === 'function') {
+                            validators.push(predefined());
+                        }
+                    }
+
+                    this.collection.forEach(model => {
+                        if (model._events['validate:force']) {
+                            const e = {};
+                            model.trigger('validate:force', e);
+                            if (e.validationResult) {
+                                result = e.validationResult;
+                            }
+                        } else if (!model.isValid()) {
+                            result = model.validationResult;
+                        } else {
+                            validators.some(v => {
+                                const filedError = v(model.get(column.key), model.attributes);
+                                if (filedError) {
+                                    result = model.validationResult = filedError;
+                                }
+                                return result;
+                            });
+                        }
+                    });
+                    return result;
+                });
+            });
+            if (hasErrorInFields) {
+                error = {
+                    type: 'gridError',
+                    message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR'),
+                    severity: 'Error'
+                };
+            }
         }
 
-        return this.options.columns.some(column => {
-            if (!column.editable || !column.validators) {
-                return false;
-            }
-            const validators = [];
-            return column.validators.some(validator => {
-                let result;
-                if (typeof validator === 'function') {
-                    validators.push(validator);
-                } else {
-                    const predefined = form.repository.validators[validator];
-                    if (typeof predefined === 'function') {
-                        validators.push(predefined());
-                    }
-                }
+        if (error) {
+            this.setError([error]);
+        } else {
+            this.clearError();
+        }
 
-                this.collection.forEach(model => {
-                    if (model._events['validate:force']) {
-                        const e = {};
-                        model.trigger('validate:force', e);
-                        if (e.validationResult) {
-                            result = e.validationResult;
-                        }
-                    } else if (!model.isValid()) {
-                        result = model.validationResult;
-                    } else {
-                        validators.some(v => {
-                            const error = v(model.get(column.key), model.attributes);
-                            if (error) {
-                                result = model.validationResult = error;
-                            }
-                            return result;
-                        });
-                    }
-                });
-                return result;
-            });
-        });
+        return error;
     },
 
     __handleDragLeave(e) {
@@ -531,73 +616,232 @@ export default Marionette.View.extend({
         }
     },
 
-    __setColumnWidth(index, width = 0, allColumnsWidth) {
-        const style = this.styleSheet;
-        const columnClass = this.columnClasses[index];
-        const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
-
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-            }
-        } else {
-            const column = this.options.columns[index];
-
-            if (column.format === 'HTML') {
-                basis = '0%';
-            } else {
-                const defaultWidth = columnWidthByType[column.dataType];
-
-                if (defaultWidth) {
-                    basis = `${defaultWidth}px`;
-                } else {
-                    basis = '0%';
-                }
-            }
-        }
-
-        const grow = width > 0 ? 0 : 1;
-        const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
-
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
-        }
-
-        this.__updateEmptyView(allColumnsWidth);
-    },
-
-    __updateEmptyView(allColumnsWidth) {
-        if (!this.options.emptyView) {
-            return;
-        }
-        if (this.listView.isEmpty()) {
-            this.emptyViewClass = this.emptyViewClass || (() => `.${new this.options.emptyView().className}`)();
-            const empty$el = this.listView.$el.find(this.emptyViewClass);
-
-            if (allColumnsWidth && empty$el) {
-                empty$el && empty$el.width(allColumnsWidth);
-            }
-
-            this.ui.content.css({
-                'min-height': `${this.listView.childHeight}px`,
-                height: '100%'
-            });
-        }
-    },
-
     __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
     },
 
-    __resetViewStyle() {
-        this.ui.content.css({
-            'min-height': '',
-            height: ''
+    __onSearch(text) {
+        if (this.options.isTree) {
+            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
+        }
+        if (!this.getOption('handleSearch')) {
+            this.trigger('search', text);
+            return;
+        }
+        if (text) {
+            this.__applyFilter(new RegExp(text, 'i'), this.options.columns, this.collection);
+            this.__highlightCollection(text, this.collection);
+        } else {
+            this.__clearFilter(this.collection);
+            this.__unhighlightCollection(this.collection);
+        }
+    },
+
+    __applyFilter(regexp, columns, collection) {
+        collection.filter(model => {
+            let result = false;
+            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
+            searchableColumns.forEach(column => {
+                const values = model.get(column);
+                const testValueFunction = value => {
+                    if (value) {
+                        const testValue = value.name || value.text || value.toString();
+                        return regexp.test(testValue);
+                    }
+                };
+                if (Array.isArray(values) && values.length) {
+                    values.forEach(value => {
+                        result = result || testValueFunction(value);
+                    });
+                } else {
+                    result = result || testValueFunction(values);
+                }
+            });
+
+            return result;
         });
+    },
+
+    __clearFilter(collection) {
+        collection.filter();
+    },
+
+    __highlightCollection(text, collection) {
+        collection.each(model => {
+            model.highlight(text);
+        });
+    },
+
+    __unhighlightCollection(collection) {
+        collection.each(model => {
+            model.unhighlight();
+        });
+    },
+
+    __getToolbarActions() {
+        let toolbarActions = [];
+        const defaultActions = meta.getDefaultActions();
+        if (!this.options.excludeActions) {
+            toolbarActions = defaultActions;
+        } else if (this.options.excludeActions !== 'all') {
+            toolbarActions = defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
+        }
+        if (this.options.additionalActions) {
+            toolbarActions = toolbarActions.concat(this.options.additionalActions);
+        }
+        return toolbarActions;
+    },
+
+    __updateActions(allToolbarActions, collection) {
+        const selected = this.__getSelectedItems(collection);
+        const selectedLength = selected.length;
+
+        allToolbarActions.filter(action => {
+            let isActionApplicable;
+            switch (action.get('contextType')) {
+                case 'one':
+                    isActionApplicable = selectedLength === 1;
+                    break;
+                case 'any':
+                    isActionApplicable = selectedLength;
+                    break;
+                case 'void':
+                default:
+                    isActionApplicable = true;
+            }
+            const condition = action.get('condition');
+            if (isActionApplicable && condition && typeof condition === 'function') {
+                isActionApplicable = condition(selected);
+            }
+            return isActionApplicable;
+        });
+    },
+
+    __getSelectedItems(collection) {
+        const selected = (this.options.showCheckbox ? collection.checked : collection.selected) || {};
+        if (selected instanceof Backbone.Model) {
+            return [selected];
+        }
+        return Object.values(selected);
+    },
+
+    __executeAction(model, collection, ...rest) {
+        const selected = this.__getSelectedItems(collection);
+        switch (model.get('id')) {
+            case 'delete':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'archive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'unarchive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'add':
+            default:
+                this.__triggerAction(model, selected, ...rest);
+                break;
+        }
+    },
+
+    __confirmUserAction(text, title, yesButtonText, noButtonText) {
+        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    },
+
+    __triggerAction(model, selected, ...rest) {
+        this.trigger('execute', model, selected, ...rest);
+    },
+
+    __onItemMoved(...args) {
+        this.trigger('move', ...args);
+    },
+
+    setError(errors: Array<any>): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+
+        this.$el.addClass(classes.ERROR);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('errorTextRegion', errorPopout);
+            this.isErrorShown = true;
+        }
+    },
+
+    clearError(): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.$el.removeClass(classes.ERROR);
+        this.errorCollection && this.errorCollection.reset();
+    },
+
+    setRequired(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.required = required;
+        this.__updateEmpty();
+        if (required) {
+            this.listenTo(this.collection, 'add remove reset update', this.__updateEmpty);
+        } else {
+            this.stopListening(this.collection, 'add remove reset update', this.__updateEmpty);
+        }
+    },
+
+    __updateEmpty() {
+        if (this.required) {
+            this.__toggleRequiredClass(this.collection.length === 0);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
+    },
+
+    __checkUiReady() {
+        return this.isRendered() && !this.isDestroyed();
     }
 });

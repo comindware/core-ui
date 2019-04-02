@@ -6,7 +6,7 @@ const pathResolver = require('../pathResolver');
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 module.exports = callback => {
-    exec('git tag -l 1.13.* --sort=v:refname', (err, stdout, stderr) => {
+    exec('git tag -l 2.0.* --sort=v:refname', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;

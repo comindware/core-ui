@@ -1,5 +1,4 @@
 import template from '../templates/membersSplitPanel.html';
-import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
@@ -57,7 +56,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        const availableList = (this.availableList = new Core.list.controllers.GridController({
+        const availableList = (this.availableList = new Core.list.GridView({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
             showSearch: true,
@@ -71,29 +70,22 @@ export default Marionette.View.extend({
                     key: 'name'
                 }
             ],
-            listViewOptions: {
-                height: 'auto',
-                childView: MembersListItemView,
-                childHeight: config.CHILD_HEIGHT,
-                emptyViewOptions: {
-                    text: this.model.get('emptyListText')
-                },
-                maxRows: 10,
-                childViewSelector: this.options.childViewSelector
-            }
-        }).view);
+            emptyViewOptions: {
+                text: this.model.get('emptyListText')
+            },
+            maxRows: 10
+        }));
 
-        availableList.on('childview:dblclick', this.__moveRight);
-        availableList.on('childview:dblclick', this.__moveRight);
+        availableList.on('dblclick', this.__moveRight);
+        availableList.on('dblclick', this.__moveRight);
         availableList.on('search', text => this.channel.trigger('items:search', text, 'available'));
-        this.listenTo(availableList, 'childview:dblclick', this.__moveRight);
+        this.listenTo(availableList, 'dblclick', this.__moveRight);
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.toggleElementsQuantityWarning();
 
         this.showChildView('availableItemsListRegion', availableList);
-        availableList.setLoading(this.model.initialized);
 
-        const selectedList = new Core.list.controllers.GridController({
+        const selectedList = new Core.list.GridView({
             collection: this.model.get('selected'),
             selectableBehavior: 'multi',
             columns: [
@@ -106,26 +98,21 @@ export default Marionette.View.extend({
             showSearch: true,
             handleSearch: false,
             showHeader: false,
-            listViewOptions: {
-                height: 'auto',
-                childView: MembersListItemView,
-                childHeight: config.CHILD_HEIGHT,
-                emptyViewOptions: {
-                    text: this.model.get('emptyListText')
-                },
-                maxRows: 10
+            height: 'auto',
+            emptyViewOptions: {
+                text: this.model.get('emptyListText')
             },
+            maxRows: 10,
             showCheckbox: true
-        }).view;
+        });
 
-        selectedList.on('childview:dblclick', this.__moveLeft);
+        selectedList.on('dblclick', this.__moveLeft);
         selectedList.on('search', text => this.channel.trigger('items:search', text, 'selected'));
 
         this.listenTo(this.model.get('available'), 'move:right enter', this.__moveRight);
         this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
-        selectedList.setLoading(this.model.initialized);
     },
 
     __moveRight(model) {

@@ -1,7 +1,6 @@
 // @flow
 import template from './templates/textAreaEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
-import LocalizationService from '../../services/LocalizationService';
 import { keyCode, helpers } from 'utils';
 import { autosize } from 'lib';
 import formRepository from '../formRepository';
@@ -16,13 +15,9 @@ const size = {
     fixed: 'fixed'
 };
 
-// used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
     changeMode: changeMode.blur,
     size: size.auto,
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
-    readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
-    disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
     maxLength: null,
     height: null,
     minHeight: 1,
@@ -46,32 +41,28 @@ const defaultOptions = () => ({
  * @param {String} [options.emptyPlaceholder='Field is empty'] Empty text placeholder.
  * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
  * в случае если эдитор имеет флаг <code>readonly</code>.
- * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
- * в случае если эдитор имеет флаг <code>enabled: false</code>.
  * @param {Number} [options.height=null] The height of the editor (in rows) when its size is fixed.
  * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 export default (formRepository.editors.TextArea = BaseEditorView.extend({
-    initialize(options = {}) {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
-
-        this.placeholder = this.options.emptyPlaceholder;
+    initialize(options) {
+        this.__applyOptions(options, defaultOptions);
     },
 
-    focusElement: '.js-textarea',
+    focusElement: '.js-input',
+
     className: 'editor editor_textarea',
 
     ui: {
-        textarea: '.js-textarea'
+        input: '.js-input'
     },
 
     events: {
         change: '__change',
-        'input @ui.textarea': '__input',
-        'keyup @ui.textarea': '__keyup'
+        'input @ui.input': '__input',
+        'keyup @ui.input': '__keyup'
     },
 
     template: Handlebars.compile(template),
@@ -82,59 +73,29 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
 
     onRender() {
         const value = this.getValue() || '';
-        this.ui.textarea.val(value);
+        this.ui.input.val(value);
         if (this.options.showTitle) {
             this.$el.prop('title', value);
         }
         switch (this.options.size) {
             case size.auto:
-                this.ui.textarea.attr('rows', this.options.minHeight);
+                this.ui.input.attr('rows', this.options.minHeight);
                 break;
             case size.fixed:
-                this.ui.textarea.attr('rows', this.options.height);
+                this.ui.input.attr('rows', this.options.height);
                 break;
             default:
                 helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
+
     onAttach() {
         if (this.options.size === size.auto) {
             if (this.options.maxHeight) {
-                const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
-                this.ui.textarea.css('maxHeight', maxHeight);
+                const maxHeight = parseInt(this.ui.input.css('line-height'), 10) * this.options.maxHeight;
+                this.ui.input.css('maxHeight', maxHeight);
             }
-            autosize(this.ui.textarea);
-        }
-    },
-    setPermissions(enabled, readonly) {
-        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.setPlaceholder();
-    },
-
-    setPlaceholder() {
-        if (!this.getEnabled()) {
-            this.placeholder = this.options.disablePlaceholder;
-        } else if (this.getReadonly()) {
-            this.placeholder = this.options.readonlyPlaceholder;
-        } else {
-            this.placeholder = this.options.emptyPlaceholder;
-        }
-
-        this.ui.textarea.prop('placeholder', this.placeholder);
-    },
-
-    __setEnabled(enabled) {
-        //noinspection Eslint
-        BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.textarea.prop('disabled', !enabled);
-    },
-
-    __setReadonly(readonly) {
-        //noinspection Eslint
-        BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.ui.textarea.prop('readonly', readonly);
-            this.ui.textarea.prop('tabindex', readonly ? -1 : 0);
+            autosize(this.ui.input);
         }
     },
 
@@ -148,7 +109,7 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
             this.$el.prop('title', value);
         }
         if (updateUi) {
-            this.ui.textarea.val(value);
+            this.ui.input.val(value);
         }
         if (triggerChange) {
             this.__triggerChange();
@@ -160,8 +121,8 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
      * @param {Number} position Новая позиция курсора.
      * */
     setCaretPos(position) {
-        this.ui.textarea.selectionStart = position;
-        this.ui.textarea.selectionEnd = position;
+        this.ui.input.selectionStart = position;
+        this.ui.input.selectionEnd = position;
     },
 
     setValue(value) {
@@ -170,13 +131,13 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
 
     __change() {
         this.__triggerInput();
-        this.__value(this.ui.textarea.val(), false, true);
+        this.__value(this.ui.input.val(), false, true);
     },
 
     __input() {
         this.__triggerInput();
         if (this.options.changeMode === changeMode.keydown) {
-            this.__value(this.ui.textarea.val(), false, true);
+            this.__value(this.ui.input.val(), false, true);
         }
     },
 
@@ -189,8 +150,8 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
         }
 
         const caret = {
-            start: this.ui.textarea[0].selectionStart,
-            end: this.ui.textarea[0].selectionEnd
+            start: this.ui.input[0].selectionStart,
+            end: this.ui.input[0].selectionEnd
         };
 
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
@@ -198,12 +159,12 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
         }
 
         this.oldCaret = caret;
-        const text = this.ui.textarea.val();
+        const text = this.ui.input.val();
         this.trigger('caretChange', text, caret);
     },
 
     __triggerInput() {
-        const text = this.ui.textarea.val();
+        const text = this.ui.input.val();
         if (this.oldText === text) {
             return;
         }
@@ -211,8 +172,8 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
         this.oldText = text;
 
         const caret = {
-            start: this.ui.textarea[0].selectionStart,
-            end: this.ui.textarea[0].selectionEnd
+            start: this.ui.input[0].selectionStart,
+            end: this.ui.input[0].selectionEnd
         };
 
         this.trigger('input', text, {
@@ -225,6 +186,6 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
      * Focuses the editor's input and selects all the text in it.
      * */
     select() {
-        this.ui.textarea.select();
+        this.ui.input.select();
     }
 }));

@@ -1,22 +1,25 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
+import editableCellField from '../templates/editableCellField.hbs';
 
 const config = {
     TRANSITION_DELAY: 400
 };
 
 const classes = {
+    checked: 'editor_checked',
+    checked_some: 'editor_checked_some',
     selected: 'selected',
-    expanded: 'collapsible-btn_expanded',
-    collapsible: 'js-collapsible-button',
-    collapsibleIcon: 'js-tree-first-cell',
     dragover: 'dragover',
     hover: 'hover',
     hover__transition: 'hover__transition',
+    rowChecked: 'row-checked',
+    expanded: 'collapsible-btn_expanded',
+    collapsible: 'js-collapsible-button',
+    collapsibleIcon: 'js-tree-first-cell',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
-    checked: 'row-checked',
     cell: 'cell'
 };
 
@@ -41,18 +44,48 @@ const defaultOptions = {
  * @param {Number} [options.paddingRight=10] Правый отступ
  * */
 export default Marionette.View.extend({
-    className: 'row',
+    tagName: 'tr',
 
     ui: {
         cells: '.js-grid-cell',
-        collapsibleButton: '.js-collapsible-button'
+        collapsibleButton: '.js-collapsible-button',
+        checkbox: '.js-checkbox',
+        dots: '.js-dots',
+        index: '.js-index'
     },
 
-        //'selected:exit': '__handleExit', !!todo
+    events: {
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
+        click: '__handleClick',
+        dblclick: '__handleDblClick',
+        'pointerdown @ui.collapsibleButton': '__toggleCollapse',
+        dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
+        dragleave: '__handleDragLeave',
+        drop: '__handleDrop',
+        pointerup: '__handlePointerDown',
+        contextmenu: '__handleContextMenu'
+    },
+
+    modelEvents: {
+        selected: '__handleSelection',
+        deselected: '__handleDeselection',
+        'select:pointed': '__selectPointed',
+        'selected:enter': '__handleEnter',
+        'selected:exit': '__handleExit',
+        highlighted: '__handleHighlight',
+        unhighlighted: '__handleUnhighlight',
+        change: '__handleChange',
+        blink: '__blink',
+        'toggle:collapse': 'updateCollapsed',
+        checked: '__addCheckedClass',
+        unchecked: '__removeCheckedClass',
+        'checked:some': '__updateState'
+    },
+
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
-        this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
     },
 
@@ -62,6 +95,7 @@ export default Marionette.View.extend({
 
     onRender() {
         const model = this.model;
+
         if (model.selected) {
             this.__handleSelection();
             if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
@@ -71,6 +105,7 @@ export default Marionette.View.extend({
         if (model.highlighted) {
             this.__handleHighlight(model.highlightedFragment);
         }
+        this.__updateState();
     },
 
     onDestroy() {
@@ -104,6 +139,10 @@ export default Marionette.View.extend({
         this.cellViews = [];
         this.cellViewsByKey = {};
 
+        if (this.getOption('showCheckbox')) {
+            this.__insertCellChechbox();
+        }
+
         const isTree = this.getOption('isTree');
         this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
@@ -113,25 +152,25 @@ export default Marionette.View.extend({
                 return;
             }
 
-            let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
-            if (gridColumn.editable) cellClasses += classes.cellEditable;
-
+            gridColumn.isCell = true;
             const cellView = new cell({
-                className: `${classes.cell} ${gridColumn.columnClass} ${cellClasses}`,
+                class: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
                 schema: gridColumn,
                 model: this.model,
-                key: gridColumn.key
+                key: gridColumn.key,
+                tagName: 'td'
             });
 
-            cellView.el.setAttribute('tabindex', -1);
+            cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
 
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
-            cellView.triggerMethod('attach');
+            cellView.trigger('attach');
 
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
+
         if (isTree) {
             const firstCell = this.options.columns[0];
 
@@ -148,7 +187,7 @@ export default Marionette.View.extend({
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
-                    const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+                    const element = this.el.getElementsByTagName('td')[index];
                     if (element) {
                         element.insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
                         this.el.removeChild(element);
@@ -159,18 +198,6 @@ export default Marionette.View.extend({
                 }
             });
         }
-    },
-
-    __handleClick(event) {
-        this.model.trigger('click', event);
-    },
-
-    __handleDblClick(event) {
-        this.model.trigger('dblclick', event);
-    },
-
-    __handleDragOver(event) {
-        event.preventDefault();
     },
 
     __handleDragEnter(event) {
@@ -201,29 +228,22 @@ export default Marionette.View.extend({
         return false;
     },
 
-    __handleModelDragOver() {
+    __handleDragOver(event) {
         this.el.classList.add(classes.dragover);
+        event.preventDefault();
     },
 
     __handleDragLeave(event) {
         if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) || event.relatedTarget.classList.contains('js-grid-content-view')) {
-            this.model.trigger('dragleave', event);
+            this.el.classList.remove(classes.dragover);
             delete this.model.dragover;
         }
     },
 
-    __handleModelDragLeave() {
-        this.el.classList.remove(classes.dragover);
-    },
-
-    __handleDrop(event) {
+    __handleDrop() {
         if (this.__allowDrop()) {
-            this.model.trigger('drop', event);
+            this.el.classList.remove(classes.dragover);
         }
-    },
-
-    __handleModelDrop() {
-        this.el.classList.remove(classes.dragover);
     },
 
     __handleContextMenu(event) {
@@ -244,7 +264,7 @@ export default Marionette.View.extend({
 
     insertFirstCellHtml(force) {
         if (this.isRendered()) {
-            const elements = this.el.getElementsByClassName(this.columnClasses[0]);
+            const elements = this.el.getElementsByTagName('td');
             if (elements.length) {
                 const el = elements[0];
                 const level = this.model.level || 0;
@@ -287,7 +307,47 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleModelClick(e) {
+    __insertCellChechbox() {
+        this.el.insertAdjacentHTML(
+            'afterBegin',
+            `
+            <td class="${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}">
+        ${
+            this.options.draggable
+                ? `
+<svg class="cell__dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+    x="0px" y="0px" viewBox="0 0 2 35" xml:space="preserve">
+    <circle cx="1" cy="12" r="1.2"></circle>
+    <circle cx="1" cy="17" r="1.2"></circle>
+    <circle cx="1" cy="22" r="1.2"></circle>
+</svg>`
+                : ''
+        }${
+                this.options.showRowIndex
+                    ? `
+<span class="js-index cell__index">
+    ${this.model.collection.indexOf(this.model) + 1}
+</span>`
+                    : ''
+            }
+<div class="checkbox js-checkbox">
+    <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked">
+        <use xlink:href="#icon-checked" />
+    </svg>
+</div>
+</td>
+        `
+        );
+    },
+
+    __handleCheckboxClick() {
+        this.model.toggleChecked();
+        if (this.getOption('bindSelection')) {
+            this.model.collection.updateTreeNodesCheck(this.model);
+        }
+    },
+
+    __handleClick(e) {
         const model = this.model;
 
         const selectFn = model.collection.selectSmart || model.collection.select;
@@ -309,11 +369,20 @@ export default Marionette.View.extend({
                 }
             }
         }
-        this.trigger('click', this.model);
+        this.gridEventAggregator.trigger('click', this.model);
     },
 
-    __handleModelDblClick() {
-        this.trigger('dblclick', this.model);
+    __handleDblClick() {
+        if (!Core.services.MobileService.isMobile) {
+            this.gridEventAggregator.trigger('row:pointer:down', this.model);
+            this.gridEventAggregator.trigger('dblclick', this.model);
+        }
+    },
+
+    __handlePointerDown() {
+        if (Core.services.MobileService.isMobile) {
+            this.gridEventAggregator.trigger('row:pointer:down', this.model);
+        }
     },
 
     __handleSelection() {
@@ -391,7 +460,7 @@ export default Marionette.View.extend({
     },
 
     __selectPointed(pointed, isFocusEditor, isFocusChangeNeeded = true) {
-        const pointedEl = this.el.querySelector(`.${this.columnClasses[pointed]}`);
+        const pointedEl = this.el.getElementsByTagName('td')[pointed];
         if (pointedEl == null) return;
 
         if (this.lastPointedEl && this.lastPointedEl !== pointedEl) {
@@ -448,22 +517,6 @@ export default Marionette.View.extend({
         return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
     },
 
-    __handleMouseEnter() {
-        this.model.trigger('mouseenter');
-    },
-
-    __handleModelMouseEnter() {
-        this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        this.model.trigger('mouseleave');
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
-    },
-
     __blink() {
         this.el.classList.add(classes.hover__transition);
         this.el.classList.add(classes.hover);
@@ -472,10 +525,39 @@ export default Marionette.View.extend({
     },
 
     __addCheckedClass() {
-        this.el.classList.add(classes.checked);
+        this.el.classList.add(classes.rowChecked);
+        this.__updateState();
     },
 
     __removeCheckedClass() {
-        this.el.classList.remove(classes.checked);
+        this.el.classList.remove(classes.rowChecked);
+        this.__updateState();
+    },
+
+    __updateState(model, checkedState) {
+        let state = checkedState;
+
+        if (!state) {
+            if (this.model.checked) {
+                state = 'checked';
+            } else if (this.model.checked === null) {
+                state = 'checkedSome';
+            }
+        }
+        switch (state) {
+            case 'checked':
+                this.ui.checkbox.addClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+            case 'checkedSome':
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.addClass(classes.checked_some);
+                break;
+            case 'unchecked':
+            default:
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+        }
     }
 });

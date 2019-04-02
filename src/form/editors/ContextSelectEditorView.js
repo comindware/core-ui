@@ -6,19 +6,21 @@ import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import dropdownFactory from '../../dropdown/factory';
 
-const defaultOptions = {
+const defaultOptions = () => ({
     recordTypeId: undefined,
+    emptyPlaceholder: Localizer.get('CORE.COMMON.NOTSET'),
     context: undefined,
     contextModel: undefined,
     propertyTypes: undefined,
     usePropertyTypes: true,
     allowBlank: false,
-    instanceRecordTypeId: undefined
-};
+    instanceRecordTypeId: undefined,
+    isInstanceExpandable: true
+});
 
 export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
 
         if (this.options.contextModel) {
             this.listenTo(this.options.contextModel, 'change:items', (model, value) => this.__onContextChange(value));
@@ -37,7 +39,9 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         });
 
         this.viewModel = new Backbone.Model({
-            button: new Backbone.Model(),
+            button: new Backbone.Model({
+                placeholder: this.__placeholderShouldBe()
+            }),
             panel: model
         });
 
@@ -46,10 +50,6 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
     ui: {
         clearButton: '.js-clear-button'
-    },
-
-    attributes: {
-        tabindex: 0
     },
 
     regions: {
@@ -90,6 +90,11 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.showChildView('contextPopoutRegion', this.popoutView);
 
         this.listenTo(this.popoutView, 'panel:childview:click', this.__applyContext);
+    },
+
+    setPermissions(enabled, readonly) {
+        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        this.viewModel.get('button').set('placeholder', this.__placeholderShouldBe());
     },
 
     setValue(value) {
@@ -180,7 +185,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         Object.values(deepContext).forEach(entry =>
             entry.forEach(innerEntry => {
-                if (innerEntry.get('type') === 'Instance') {
+                if (innerEntry.get('type') === 'Instance' && this.options.isInstanceExpandable) {
                     const model = deepContext[innerEntry.get('instanceTypeId')];
                     if (model) {
                         innerEntry.children = new Backbone.Collection(model.toJSON());

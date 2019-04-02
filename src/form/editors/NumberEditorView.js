@@ -61,13 +61,11 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     focusElement: '.js-input',
 
-    className() {
-        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
-
-        return `${this.options.class || ''} editor editor_number`;
-    },
+    className: 'editor editor_number',
 
     initialize(options) {
+        this.__applyOptions(options, defaultOptions);
+
         this.format = options.format || options.intlOptions || options.allowFloat;
         this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {
@@ -98,11 +96,16 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
         clearButton: '.js-clear-button',
     },
 
-    events: {
-        'click @ui.clearButton': '__clear',
-        'keyup @ui.input': '__keyup',
-        'change @ui.input': '__onChange',
-        mouseenter: '__onMouseenter'
+    events() {
+        const events = {
+            'click @ui.clearButton': '__clear',
+            'keyup @ui.input': '__keyup',
+            'change @ui.input': '__onChange'
+        };
+        if (!this.options.hideClearButton) {
+            events.mouseenter = '__onMouseenter';
+        }
+        return events;
     },
 
     onRender() {

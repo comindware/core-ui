@@ -1,9 +1,8 @@
 import PopupStackView from '../views/PopupStackView';
-import Backbone from 'backbone';
 import GlobalEventService from './GlobalEventService';
 
 export default {
-    initialize(options = {}) {
+    initialize() {
         Object.assign(this, Backbone.Events);
 
         const __popupStackRegionEl = document.createElement('div');
@@ -17,11 +16,11 @@ export default {
             replaceElement: true
         });
 
-        this.__popupStackView = new PopupStackView(options);
+        this.__popupStackView = new PopupStackView();
 
         rootView.showChildView('popupStackRegion', this.__popupStackView);
 
-        this.__popupStackView.on('popup:close', (popupId: string) => this.trigger('popup:close', popupId));
+        this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
     },
 
@@ -31,7 +30,7 @@ export default {
      * @param {Marionette.View} view A Marionette.View instance to show.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showPopup(view: Marionette.View<any>) {
+    showPopup(view) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: true,
             transient: false,
@@ -40,11 +39,34 @@ export default {
     },
 
     /**
+     * Shows a DOM el in a popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {DOMNode} el A DOM node.
+     * @returns {String} The popup id that you can use to close it.
+     * */
+    showElInPopup(view) {
+        return this.__popupStackView.showElInPopup(view, {
+            fadeBackground: true,
+            transient: false,
+            hostEl: null,
+            showedInEl: true
+        });
+    },
+
+    /**
      * Closes the top-level popup or does nothing if there is none.
      * @param {string} [popupId=null]
      * */
-    closePopup(popupId = null) {
-        this.__popupStackView && this.__popupStackView.closePopup(popupId);
+    closePopup(popupId = null, immediate) {
+        this.__popupStackView && this.__popupStackView.closePopup(popupId, immediate);
+    },
+
+    /**
+     * Closes the top-level popup or does nothing if there is none.
+     * @param {string} [popupId=null]
+     * */
+    closeElPopup(popupId = null, immediate) {
+        this.__popupStackView && this.__popupStackView.closeElPopup(popupId, immediate);
     },
 
     /**
@@ -54,15 +76,16 @@ export default {
      * @param {Object} options Options object.
      * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
      * */
-    showTransientPopup(view: Marionette.View<any>, options = { fadeBackground: false, hostEl: null }) {
+    showTransientPopup(view, options = { fadeBackground: false, hostEl: null }) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: options.fadeBackground,
+            anchorEl: options.anchorEl,
             transient: true,
             hostEl: options.hostEl
         });
     },
 
-    get(popupId: string) {
+    get(popupId) {
         return this.__popupStackView.get(popupId);
     },
 
@@ -71,15 +94,19 @@ export default {
         return stack.length > 0;
     },
 
-    fadeBackground(fade: boolean) {
+    fadeBackground(fade) {
         this.__popupStackView.fadeBackground(fade);
     },
 
-    isPopupOnTop(popupId: string) {
+    isPopupOnTop(popupId) {
         return this.__popupStackView.isPopupOnTop(popupId);
     },
 
-    __keyAction(event: KeyboardEvent) {
+    toggleFadeBackground(isToggleForced) {
+        return this.__popupStackView.toggleFadeBackground(isToggleForced);
+    },
+
+    __keyAction(event) {
         if (event.keyCode === 27) {
             this.__popupStackView.closeTopPopup();
         }

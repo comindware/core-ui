@@ -1,12 +1,19 @@
 .editor_focused:not(.editor_readonly):not(.editor_disabled) .input,
-.editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea {
+.editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea,
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.editor_focused,
+.editor_checkbox.editor_focused:not(.editor_readonly):not(.editor_disabled) .checkbox,
+.editor_date-time.editor_focused:not(.editor_readonly):not(.editor_disabled){
+  border-color: var(--input-active-border-color);
+}
+.focused input,
+.focused textarea{
   border-color: var(--input-active-border-color);
 }
 .editor_disabled {
   @apply --custom-cotrol-disabled-theme;
 }
-.editor_disabled.editor_bubble--single .bubbles__list,
-.editor_readonly.editor_bubble--single .bubbles__list {
+.editor_disabled.editor_bubble--single .bubbles,
+.editor_readonly.editor_bubble--single .bubbles {
     @apply --custom-cotrol-disabled-theme;
     color: var(--grey-400);
 }
@@ -99,44 +106,32 @@
 .selected .dd-list__i {
   font-weight: 600;
 }
-.bubbles__list .spinner {
+.bubbles .spinner {
   right: 25px;
-}
-.bubbles__list:empty:before {
-  content: '--';
-  padding: 3px 0 1px 0;
 }
 .bubbles__form {
   padding: 2px 0;
 }
-.dropdown.open.dropdown__wrp_down .bubbles__list {
+.open.dropdown__wrp_down .bubbles {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.dropdown.open.dropdown__wrp_up .bubbles__list {
+.open.dropdown__wrp_up .bubbles {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 .dropdown__wrp {
-  padding: 1px 0;
-  border: var(--border);
   border-radius: var(--border-radius);
+  transform: translateY(-50px);
+  opacity: 0;
+  transition: transform 0.1s linear, opacity 0.1s linear;
 }
+
 .dropdown__wrp.dropdown__wrp_down {
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .dropdown__wrp.dropdown__wrp_up {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
-}
-
-.dropdown__wrp_reference,
-.dropdown__wrp_time,
-.dropdown__wrp_datepicker {
-  margin-top: -1px;
-}
-
-.dropdown__wrp_reference.dropdown__wrp_up {
-  margin-top: 1px;
 }
 
 /* icons */
@@ -204,13 +199,21 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .error .form-label {
   color: var(--error-color);
 }
+.required .form-label__txt,
+.form-label_required .form-label__txt{
+  padding-right: 10px;
+}
+
 .required .form-label__txt::after,
-.form-label_required .form-label__txt::after,
+.form-label_required .form-label__txt::after{
+  content: '*';
+  color: var(--error-color);
+  position: absolute;
+  right: 0;
+}
 .cell.required::before {
   content: '*';
   color: var(--error-color);
-}
-.cell.required::before {
   position: absolute;
   top: 50%;
   left: 2px;
@@ -270,7 +273,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   top: 0;
   left: 0;
   right: 0;
-  padding: 0 20px 0 15px;
+  padding: 0 12px;
 }
 
 .cell > .context_select {
@@ -278,10 +281,21 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 4px 20px 4px 10px;
 }
 
-.cell > .editor.editor_document {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.cell.editor .textarea{
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+.cell.editor_document {
+  display: table-cell;
+  padding: 0;
+  vertical-align: bottom;
+}
+.cell.editor_document > form{
+  max-height: 35px;
+  overflow: hidden;
+  display: none;
 }
 
 .cell > .editor.editor_document > .documents {
@@ -297,7 +311,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
   margin-right: 2em;
 }
 
-.cell .documents__text {
+.cell .documents__text,
+.cell .field-documents__more{
   display: none;
 }
 
@@ -308,7 +323,15 @@ svg.svg-grid-icons.svg-icons_flag-none {
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: transparent; 
+  background-color: transparent;
+  cursor: pointer;
+  font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro';
+  font-weight: 900;
+}
+.cell .editor_empty .documents__drop-zone::before{
+  content: "\F0C6";
+  color: grey;
+  position: absolute;
 }
 
 .cell .documents__wrapper {
@@ -323,9 +346,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .cell .js-tree-first-cell + .editor,
 .cell .js-tree-first-cell + .editor.editor_bubble {
   padding: 0;
-}
-.cell .dropdown {
-  width: 100%;
 }
 .cell > .editor.editor_bubble {
   padding: 0 9px 0 15px;

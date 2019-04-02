@@ -16,9 +16,12 @@ import template from '../templates/emptyGrid.hbs';
 export default Marionette.View.extend({
     templateContext() {
         return {
-            text: _.result(this.options, 'text', Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY'))
+            text: _.result(this.options, 'text', Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')),
+            colspan: this.options.colspan
         };
     },
+
+    tagName: 'tr',
 
     template: Handlebars.compile(template),
 

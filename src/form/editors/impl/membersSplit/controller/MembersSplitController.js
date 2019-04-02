@@ -3,7 +3,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
 
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     initialize(options) {
         this.options = options;
         this.members = {};
@@ -75,11 +75,11 @@ export default Marionette.Object.extend({
     },
 
     async __updateItems() {
+        this.members = {};
         if (this.options.memberService) {
             try {
                 this.__setLoading(true);
                 const data = await this.options.memberService.getMembers(this.__getSettings());
-                this.members = {};
                 data.available.forEach(item => (this.members[item.id] = item));
                 data.selected.forEach(item => (this.members[item.id] = item));
                 this.__processValues();
@@ -183,7 +183,7 @@ export default Marionette.Object.extend({
             }
         }
 
-        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.checked);
+        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.getSelected());
         model && selected.push(model);
         if (!all && !selected.length) {
             return;

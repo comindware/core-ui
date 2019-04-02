@@ -1,7 +1,11 @@
 /* dropdown */
-.dropdown {
-    position: relative;
-    height: inherit;
+
+.js-core-ui__global-popup-region > .dropdown__wrp_down{
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    position: fixed;
+    z-index: 600;
+    border-radius: 2px;
 }
 
 .dropdown__button {
@@ -11,10 +15,8 @@
 .dropdown__wrp {
     margin: 0;
     background-color: #fff;
-    box-shadow: 0 0 8px rgba(0,0,0,.2);
-    position: fixed!important;
+    position: fixed;
     z-index: 600;
-    height: inherit!important;
 }
 .dropdown__wrp .dropdown__wrp_list {
     max-height: 400px;
@@ -262,6 +264,43 @@
     color: #1c80c1;
 }
 
+.datalist_selected-panel > .visible-collection{
+    height: 72px;
+    padding: 3px;
+}
+
+
+.datalist-panel_title{
+    font-weight: 600;
+    padding: 8px 4px 4px 14px;
+    background-color: white;
+}
+
+.datalist-panel__formatted .bubbles{
+    padding: 0 0 0 14px;
+    max-height: 130px;
+    overflow-y: scroll;
+    border: none;
+}
+
+.datalist-panel__formatted .bubbles__list > .bubbles__i{
+    width: 100%;
+    padding: 4px 20px 4px 0;
+    align-items: center;
+    display: flex;
+}
+
+.datalist-panel__formatted .bubbles__list > .bubbles__i > .datalist_user-bubble{
+    margin-right: 10px;
+    margin-top: -4px;
+}
+
+.datalist-panel__formatted .bubbles__list > .bubbles__i > a{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .reference-btn-more{
     color: #4d4d4d;
     font-weight: 600;
@@ -273,6 +312,33 @@
 .dd-list__list_reference + .dd-list__btn{
     padding-top:5px;
     height: 30px;
+}
+
+.datalist_user-bubble{
+    display: flex;
+}
+
+.user-bubble_img {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #0575bd;
+    margin-left: 1px;
+    margin-top: -1px;
+    margin-right: 5px;
+    color: #0575bd;
+    font-size: 10px;
+}
+
+.user-bubble_img img{
+    width: 22px;
+    height: 22px;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 /* /dd-list */
@@ -388,6 +454,7 @@
 
 .dropdown__wrp_list{
     overflow-y: auto;
+    display: flex;
 }
 
 /* icons panel */

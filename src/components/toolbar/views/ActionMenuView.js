@@ -1,24 +1,32 @@
 //@flow
-import ActionMenuPanelView from './actionMenu/ActionMenuPanelView';
+import CustomActionGroupView from './CustomActionGroupView';
 import ActionMenuButtonView from './actionMenu/ActionMenuButtonView';
-import keyCode from '../../../utils/keyCode';
+import { keyCode } from 'utils';
 
 export default Marionette.View.extend({
     constructor(options) {
         const menu = Core.dropdown.factory.createDropdown({
             buttonView: ActionMenuButtonView,
-            panelView: ActionMenuPanelView,
+            panelView: CustomActionGroupView,
             panelViewOptions: {
                 collection: options.model.get('items'),
-                class: options.model.get('dropdownClass')
+                class: options.model.get('dropdownClass'),
+                mode: options.mode,
+                showName: options.showName,
+                className() {
+                    return `toolbar-panel_container ${this.options.class || ''}`;
+                }
             },
             buttonViewOptions: {
-                model: options.model
+                model: options.model,
+                mode: options.mode,
+                showName: options.showName,
+                customAnchor: options.customAnchor
             }
         });
 
-        menu.listenTo(menu, 'panel:click:item', this.__handleSeveritySelect);
-        menu.listenTo(menu, 'button:keyup', this.__keyup);
+        menu.listenTo(menu, 'panel:command:execute', this.__onPanelCommandExecute);
+        menu.listenTo(menu, 'keyup', this.__keyup);
         return menu;
     },
 
@@ -28,8 +36,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleSeveritySelect(model) {
-        this.trigger('action:click', model);
+    __onPanelCommandExecute(model, options) {
+        this.trigger('action:click', model, options);
         this.close();
     }
 });

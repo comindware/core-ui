@@ -1,11 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -40,51 +36,31 @@ module.exports = () => {
         },
         module: {
             rules: [
-                PRODUCTION
-                    ? {
-                          test: /\.css$/,
-                          use: [
-                              MiniCssExtractPlugin.loader,
-                              'css-loader',
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: () => {
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          });
-                                          cssnano();
-                                      }
-                                  }
-                              }
-                          ]
-                      }
-                    : {
-                          test: /\.css$/,
-                          use: [
-                              {
-                                  loader: 'style-loader'
-                              },
-                              {
-                                  loader: 'css-loader',
-                                  options: {
-                                      sourceMap: true
-                                  }
-                              },
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: [
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          })
-                                      ]
-                                  }
-                              }
-                          ]
-                      },
+                {
+                    test: /\.css$/,
+                    use: [
+                        {
+                            loader: 'style-loader'
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                plugins: [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })
+                                ]
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -96,7 +72,21 @@ module.exports = () => {
                     include: [pathResolver.source()],
                     exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
-                        presets: ['env']
+                        cacheDirectory: true,
+                        presets: [
+                            [
+                                '@babel/preset-env',
+                                {
+                                    targets: {
+                                        ie: 11
+                                    },
+                                    useBuiltIns: 'usage',
+                                    corejs: 3,
+                                    modules: false
+                                }
+                            ]
+                        ],
+                        plugins: [require('@babel/plugin-syntax-dynamic-import')]
                     }
                 },
                 {
@@ -159,23 +149,9 @@ module.exports = () => {
             ]
         },
         plugins: [
-            /*new CleanWebpackPlugin([pathResolver.client()], {
-                verbose: false,
-                exclude: ['localization']
-            }),*/
-            new HtmlWebpackPlugin({
-                filename: 'index.html',
-                template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
-                hash: PRODUCTION,
-                inject: 'body',
-                chunks: ['app'],
-                minify: {
-                    collapseWhitespace: false
-                }
-            }),
             new WebpackPwaManifest({
-                name: 'Comindware business application platform',
-                short_name: 'Comindware',
+                name: 'Comindware Core-ui demo',
+                short_name: 'Core.Demo',
                 background_color: '#ffffff',
                 display: 'standalone',
                 theme_color: '#0575bd',
@@ -223,9 +199,6 @@ module.exports = () => {
                     }
                 ]
             }),
-            new MiniCssExtractPlugin({
-                filename: '[name].css'
-            }),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new GenerateSW({
                 swDest: pathResolver.client('sw.js'),
@@ -242,6 +215,10 @@ module.exports = () => {
                 {
                     from: `${__dirname}/../demo/public/ajaxStub`,
                     to: pathResolver.client('images')
+                },
+                {
+                    from: `${__dirname}/../demo/public/index.html`,
+                    to: pathResolver.client('')
                 }
             ])
         ],

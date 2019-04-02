@@ -44,20 +44,26 @@ const GridHeaderView = Marionette.View.extend({
 
     className: 'grid-header',
 
+    tagName: 'tr',
+
     ui: {
-        gridHeaderColumn: '.grid-header-column'
+        gridHeaderColumn: '.grid-header-column',
+        checkbox: '.js-checkbox',
+        dots: '.js-dots',
+        index: '.js-index'
     },
 
     events: {
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
-        'click .js-collapsible-button': '__toggleCollapseAll',
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
+        'pointerdown .grid-header-dragger': '__handleDraggerMousedown',
+        'pointerdown .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseover .grid-header-column': '__handleColumnSelect',
-        'click .grid-header-column-title': '__handleColumnSort',
-        'click .js-help-text-region': '__handleHelpMenuClick',
+        'pointerdown .grid-header-column-title': '__handleColumnSort',
+        'pointerdown .js-help-text-region': '__handleHelpMenuClick',
         mouseleave: '__onMouseLeaveHeader'
     },
 
@@ -70,20 +76,20 @@ const GridHeaderView = Marionette.View.extend({
             columns: this.options.columns.map(column =>
                 Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
-                    sortingDesc: column.sorting === 'desc'
+                    sortingDesc: column.sorting === 'desc',
+                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : ''
                 })
-            )
+            ),
+            showCheckbox: this.options.showCheckbox,
+            cellClass: this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'
         };
     },
 
     onRender() {
         if (this.options.isTree) {
             this.$el
-                .children()[0]
-                .insertAdjacentHTML(
-                    'afterbegin',
-                    `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>&nbsp;`
-                );
+                .find('.header-column-wrp')[0]
+                .insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>`);
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -112,6 +118,10 @@ const GridHeaderView = Marionette.View.extend({
         this.render();
     },
 
+    __handleCheckboxClick() {
+        this.collection.toggleCheckAll();
+    },
+
     __handleColumnSort(event) {
         if (this.options.columnSort === false) {
             return;
@@ -119,7 +129,7 @@ const GridHeaderView = Marionette.View.extend({
         if (event.target.className.includes('js-collapsible-button')) {
             return;
         }
-        const column = this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.parentElement.children, event.currentTarget.parentElement)];
+        const column = this.options.columns[Array.prototype.indexOf.call(this.el.children, event.currentTarget.parentNode.parentNode) - this.options.showCheckbox];
         const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
         this.options.columns.forEach(c => (c.sorting = null));
         column.sorting = sorting;
@@ -157,13 +167,14 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext = {
             pageOffsetX: e.pageX,
             dragger,
-            draggedColumn
+            draggedColumn,
+            resizingElement: column.getElementsByClassName('grid-header-column-title')[0]
         };
 
         dragger.classList.add('active');
 
-        document.addEventListener('mousemove', this.__draggerMouseMove);
-        document.addEventListener('mouseup', this.__draggerMouseUp);
+        document.addEventListener('pointermove', this.__draggerMouseMove);
+        document.addEventListener('pointerup', this.__draggerMouseUp);
     },
 
     __stopDrag() {
@@ -174,8 +185,8 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
 
-        document.removeEventListener('mousemove', this.__draggerMouseMove);
-        document.removeEventListener('mouseup', this.__draggerMouseUp);
+        document.removeEventListener('pointermove', this.__draggerMouseMove);
+        document.removeEventListener('pointerup', this.__draggerMouseUp);
     },
 
     __draggerMouseMove(e) {
@@ -216,12 +227,13 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
+        //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
+        //this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        this.dragContext.resizingElement.style.width = `${newColumnWidth}px`;
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
-        this.options.columns[index].width = newColumnWidth;
+        //this.options.columns[index].width = newColumnWidth;
     },
 
     __toggleCollapseAll() {

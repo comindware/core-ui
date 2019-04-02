@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
+    flex-shrink: 0;
 }
 
 .layout__vertical-layout-title {

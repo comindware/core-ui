@@ -60,11 +60,11 @@ export default Marionette.View.extend({
     },
 
     __isNestedInButton(target, panelView) {
-        return this.el === target || $.contains(this.el, target) || $.contains(panelView.el, target);
+        return this.el === target || this.el.contains(target) || panelView.el.contains(target);
     },
 
     __isNestedInPanel(testedEl) {
-        return !!$(testedEl).parents('.js-core-ui__global-popup-region').length || !!$(testedEl).parents('.js-grid-header-region').length;
+        return testedEl.closest('.js-core-ui__global-popup-region') || testedEl.closest('.js-grid-header-region');
     },
 
     __createPanelView(panelView, options) {
@@ -72,7 +72,7 @@ export default Marionette.View.extend({
     },
 
     __handleMouseLeave(event) {
-        if ($(event.toElement).parents(constants.contentRegion).length > 0) {
+        if (event.toElement.closest(constants.contentRegion)) {
             this.trigger('mouseleave');
         }
     }

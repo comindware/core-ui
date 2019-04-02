@@ -19,7 +19,8 @@ const defaultOptions = {
     height: 300,
     showMode: showModes.normal,
     ontologyService: null,
-    lineSeparator: undefined
+    lineSeparator: undefined,
+    showDebug: true
 };
 
 /**
@@ -34,10 +35,13 @@ const defaultOptions = {
  * */
 
 export default (formRepository.editors.Code = BaseEditorView.extend({
-    className: 'dev-code-editor-field editor',
+    className: 'code-editor editor',
 
     regions: {
-        editorContainer: '.js-code-codemirror-container'
+        editorContainer: {
+            el: '.js-code-codemirror-container',
+            replaceElement: true
+        } 
     },
 
     focusElement: 'textarea',
@@ -62,16 +66,11 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
     },
 
     onRender() {
-        this.editor = new CodemirrorView({
-            mode: this.options.mode,
-            height: this.options.height,
-            lineSeparator: this.options.lineSeparator,
-            ontologyService: this.options.ontologyService
-        });
+        this.editor = new CodemirrorView(this.options);
 
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', () => this.ui.fadingPanel.show());

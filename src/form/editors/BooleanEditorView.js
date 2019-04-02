@@ -28,7 +28,7 @@ const classes = {
 export default (formRepository.editors.Boolean = BaseEditorView.extend(
     {
         initialize(options = {}) {
-            _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+            this.__applyOptions(options, defaultOptions);
         },
 
         ui: {

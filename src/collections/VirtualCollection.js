@@ -194,7 +194,7 @@ const VirtualCollection = Backbone.Collection.extend({
             Object.assign({}, options, {
                 changes: {
                     removed,
-                    added: [],
+                    added: options.added || [],
                     merged: []
                 }
             })
@@ -263,51 +263,18 @@ const VirtualCollection = Backbone.Collection.extend({
      * @param {Number} newPosition Новая позиция скользящего окна
      * */
     updatePosition(newPosition) {
-        if (this.state.windowSize === undefined) {
-            throw 'updatePosition() has been called before setting window size';
-        }
-        this.internalUpdate = true;
-
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
             return newPosition;
         }
+        this.internalUpdate = true;
 
-        const actualWindowSize = this.visibleModels.length;
-        const delta = newPosition - this.state.position;
-        let oldValues = [];
-        let newValues = [];
-        if (Math.abs(delta) < actualWindowSize) {
-            // update collection via add/remove
-            if (delta > 0) {
-                oldValues = this.visibleModels.splice(0, delta);
-                this.visibleLength -= oldValues.length;
-                newValues = this.models.slice(this.state.position + actualWindowSize, this.state.position + actualWindowSize + delta);
-                this.visibleLength += newValues.length;
-                this.visibleModels.push(...newValues);
-            } else {
-                if (this.visibleLength >= this.state.windowSize) {
-                    // oldValues = this.innerCollection.last(-delta);
-                    oldValues = this.visibleModels.splice(this.visibleModels.length + delta, this.visibleModels.length);
-                    this.visibleLength -= oldValues.length;
-                }
+        this.state.position = newPosition;
+        const oldModels = this.visibleModels.concat();
+        this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
+        this.visibleLength = this.visibleModels.length;
+        this.__processDiffs(oldModels);
 
-                newValues = this.models.slice(newPosition, newPosition - delta);
-                this.visibleLength += newValues.length;
-                this.visibleModels.unshift(...newValues);
-            }
-            this.__removeModels(oldValues);
-            // newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
-            newValues.forEach(value => this.__addModel(value));
-            this.state.position = newPosition;
-            this.visibleLength = this.visibleModels.length;
-        } else {
-            this.state.position = newPosition;
-            const oldModels = this.visibleModels.concat();
-            this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
-            this.visibleLength = this.visibleModels.length;
-            this.__processDiffs(oldModels);
-        }
         this.internalUpdate = false;
 
         return newPosition;
@@ -315,34 +282,17 @@ const VirtualCollection = Backbone.Collection.extend({
 
     __processDiffs(oldModels, options = {}) {
         const diff = new diffHelper(oldModels, this.visibleModels);
-        diff.compose();
-        const diffObject = diff.getses();
-        const added = [];
-        const removed = [];
+        const diffObject = diff.compose();
 
-        Object.values(diffObject)
-            .sort((a, b) => a.t - b.t)
-            .forEach(object => {
-                switch (object.t) {
-                    case 0:
-                        this.trigger('update:child', object.elem);
-                        break;
-                    case -1:
-                        removed.push(object.elem);
-                        break;
-                    case 1:
-                        added.push(object.elem);
-                        break;
-                }
-            });
+        //diffObject.common.forEach(e => this.trigger('update:child', e)); why we need to trigger useless updates??
 
         // it's important remove items before add
-        this.__removeModels(removed, options);
-        added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
+        this.__removeModels(diffObject.remove, options);
+        diffObject.add.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
     },
 
     __normalizePosition(position) {
-        const maxPos = Math.max(0, this.length - 1);
+        const maxPos = Math.max(0, this.length - this.state.windowSize);
         return Math.max(0, Math.min(maxPos, position));
     },
 

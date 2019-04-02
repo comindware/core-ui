@@ -21,14 +21,12 @@ export default Marionette.View.extend({
 
     onAttach() {
         const collection = new Backbone.Collection(this.model.get('overloads'));
-        this.functionOverloads = new Core.list.factory.createDefaultList({
+        this.functionOverloads = new Core.list.GridView({
             collection: new Core.collections.VirtualCollection(collection),
-            listViewOptions: {
-                childView: FunctionOverloadView,
-                childHeight: FUNCTION_ITEM_HEIGHT,
-                height: 'auto',
-                maxRows: FUNCTIONS_MAX_ROWS
-            }
+            childView: FunctionOverloadView,
+            childHeight: FUNCTION_ITEM_HEIGHT,
+            height: 'auto',
+            maxRows: FUNCTIONS_MAX_ROWS
         });
         this.functionOverloads.on('childview:selected', model => {
             this.showChildView('functionParametersRegion', new FunctionParametersView({ model }));

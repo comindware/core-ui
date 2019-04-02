@@ -1,5 +1,5 @@
 // @flow
-import { helpers, keyCode } from 'utils';
+import { helpers } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
@@ -120,12 +120,6 @@ export default Marionette.View.extend({
         }
     },
 
-    __keyAction(event) {
-        if (event.keyCode === keyCode.ESCAPE && !this.__isNeedToPrevent()) {
-            this.__close();
-        }
-    },
-    
     setHeader(eventTitle) {
         this.ui.headerText.text(eventTitle);
     },

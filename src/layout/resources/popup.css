@@ -1,7 +1,9 @@
 .layout__popup-view {
     position: absolute;
     left: 0;
+    opacity: 0;
     top: 0;
+    transform: translateY(-50px);
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -10,6 +12,7 @@
     justify-content: center;
     align-items: center;
     padding: 30px;
+    transition: transform 0.1s linear, opacity 0.1s linear;
 }
 
 .cur_aI {
@@ -117,4 +120,16 @@
 .layout__popup-view-content .layout__group {
     width: 100%;
     margin: 22px 0;
+}
+
+.modal-window-wrapper {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
+
+.presented-modal-window {
+    transform: translateY(0)!important;
+    opacity: 1!important;
+    transition: transform 0.1s linear, opacity 0.1s linear;
 }

@@ -1,15 +1,30 @@
 <form class="js-file-form documents__drop-zone">
     <div class="documents__wrapper">
-        <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
-            style="display: none">
-
         <span class="documents__text">{{{placeHolderText}}}
             <span class="documents__upload js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
         </span>
     </div>
 </form>
-<div class="documents emptyDocumentPlaceholder" style="display: none">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>
-<ul class="documents fa-ul js-collection-container"></ul>
+
+<input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}"
+style="display: none">
+
+<div class="documents emptyDocumentPlaceholder">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>
+
+<ul class="documents fa-ul js-collection-container">
+    {{#each documents}}
+        <li class='task-links__i'>
+            <span class="fa-li" ><i class="{{iconPrefixer icon}}"></i></span>
+            {{#if url}}
+                <a class="task-links__link js-link" target="_blank" href="{{url}}" title="{{name}}">{{name}}</a>
+            {{else}}
+                <span>{{name}}</span>
+            {{/if}}
+            <span class="js-revise-button-region dev-btn-document-revise" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWREVISION'}}"></span>
+        </li>
+    {{/each}}
+</ul>
+
 <div class="btn field-documents__more js-show-more">
     <span class="js-show-more-text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWMORE'}}</span>
 </div>

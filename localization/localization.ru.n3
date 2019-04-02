@@ -98,6 +98,8 @@
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перед добавлением значений в таблицу необходимо создать запись"; l10n:originalData "You need to create record before adding values to the table"].
 
+<http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите цвет"; l10n:originalData "Enter color here"].
+
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
 <http://comindware.com/text/core/form/editors/date#invalidDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата неверна"; l10n:originalData "Invalid date"].
@@ -183,6 +185,8 @@
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].
+
+<http://comindware.com/text/core/form/editors/memberSelect#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбранные пользователи"; l10n:originalData "Selected users"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#all> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все"; l10n:originalData "All"].
 
@@ -276,6 +280,8 @@
 
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 
+<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содеражат ошибки"; l10n:originalData "Grid fields has erros"].
+
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 
 <http://comindware.com/text/core/form/validation#letters> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Можно использовать только буквы."; l10n:originalData "Only letters are allowed."].
@@ -287,6 +293,8 @@
 <http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат телефонного номера"; l10n:originalData "Invalid phone number"].
 
 <http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поле обязательно для заполнения."; l10n:originalData "This field is required."].
+
+<http://comindware.com/text/core/form/validation#requiredGrid> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Таблица должна иметь как минимум одну запись"; l10n:originalData "Grid must have at least one record"].
 
 <http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Системное имя может содержать только буквы латинского алфавита и арабские цифры. Первый символ должен быть буквой.\r\n"; l10n:originalData "The system name may contain only characters of the Latin alphabet and Arabic numerals. The first symbol should be a letter."].
 

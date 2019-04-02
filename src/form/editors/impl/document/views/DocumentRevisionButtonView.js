@@ -1,6 +1,6 @@
 //@flow
 export default Marionette.View.extend({
-    template: false,
+    template: _.noop,
 
     className: 'anchor fa fa-angle-down',
     tagName: 'i'

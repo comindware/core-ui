@@ -3,7 +3,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 // 1. Get some data
 export default function() {
     const dataArray = [];
-    for (let i = 0; i < 50000; i++) {
+    for (let i = 0; i < 500; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -57,7 +57,7 @@ export default function() {
     ];
 
     // 3. Create grid
-    const gridController = new Core.list.controllers.GridController({
+    const gridController = new Core.list.GridView({
         columns,
         selectableBehavior: 'multi',
         // disableMultiSelection: true, //another case of API
@@ -85,17 +85,86 @@ export default function() {
                 iconClass: 'low-vision',
                 severity: 'None',
                 class: 'customclass',
-                items:[{ class: 'customclass', userCommandId:'event.176', name: 'Delete', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.1', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
-                { userCommandId: 'event.176', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.176', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }]
+                items: [
+                    {
+                        class: 'customclass',
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 0,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        iconClass: 'braille',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    },
+                    {
+                        userCommandId: 'event.1',
+                        name: 'Create',
+                        order: 1,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        iconClass: 'wheelchair',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Create',
+                        resultType: 'DataChange'
+                    },
+                    {
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 2,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    },
+                    {
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 3,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    }
+                ]
             }
         ]
     });
 
     // 4. Show created views
     const canvasView = new CanvasView({
-        view: gridController.view,
+        view: gridController,
         canvas: {
             height: '250px',
             width: '400px'
@@ -134,8 +203,8 @@ export default function() {
                 break;
             default:
                 break;
-        };
-    }
+        }
+    };
 
     canvasView.listenTo(gridController, 'execute', canvasView.__executeAction);
 

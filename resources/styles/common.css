@@ -389,6 +389,16 @@ a:hover {
 
 
 /* loader */
+.l-loader {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.1s linear;
+}
+.l-loader.visible-loader {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0.1s, opacity 0.1s linear;
+}
 .l-loader:not(:empty) {
     position: absolute;
     left: 0;
@@ -452,6 +462,7 @@ a:hover {
     border: 0;
     outline: 0;
     display: block;
+    transition: background, border-color .2s ease-in-out;
 }
 
 .tr-search__placeholder {
@@ -643,6 +654,7 @@ a:hover {
     height: 100%;
     transition: all .2s;
     box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    position: relative;
 }
 
 .navigationDrawer__li {
@@ -846,6 +858,8 @@ a:hover {
     height: 100%;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
 }
 
 .columns-select__header {
@@ -892,8 +906,7 @@ a:hover {
 .columns-select-list {
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    overflow-y: auto;
+    display: flex;
 }
 
 .btn.btn_arrow-right{
@@ -980,6 +993,10 @@ a:hover {
     display: inline-flex;
 }
 
+.toolbar-container .tr-search__input{
+    height: 100%;
+}
+
 .toolbar-buttons_container {
     align-items: center;
     display: flex;
@@ -1010,6 +1027,13 @@ a:hover {
     margin: 3px;
 }
 
+.toolbar-btn.toolbar-btn_headline{
+    cursor: auto;
+}
+.toolbar-btn.toolbar-btn_headline:active{
+    box-shadow: none;
+}
+
 .toolbar-panel_container__select-state .toolbar-btn{
     width: 100%;
     margin: 0;
@@ -1029,9 +1053,18 @@ a:hover {
     background: unset;
 }
 
-.toolbar-menu-actions .popout__action-btn {
-    padding: 0 10px;
-    line-height: 30px;
+.toolbar-menu-actions .toolbar-btn,
+.toolbar-menu-actions .toolbar-btn:hover{
+    margin-left: 5px;
+    margin-right: 0;
+    background-color: transparent;
+    border-color: transparent;
+    color: unset;
+    font-weight: bold;
+    user-select: none;
+}
+.toolbar-menu-actions .toolbar-btn:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 .toolbar-btn .dropdown__button {

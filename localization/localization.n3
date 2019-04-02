@@ -75,6 +75,8 @@
 
 <http://comindware.com/text/core/form/editors#collection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-30T07:50:52.9669462Z"; l10n:modificationDate "2015-09-03T15:21:01.3350996Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "collection"].
 
+<http://comindware.com/text/core/form/editors#color> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:03:49.4989665Z"; l10n:modificationDate "2019-03-13T08:03:49.4989665Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "color"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors#date> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:01:38.5608815Z"; l10n:modificationDate "2015-07-31T11:53:33.3337378Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "date"].
 
 <http://comindware.com/text/core/form/editors#document> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2017-09-08T08:12:04.2411430Z"; l10n:modificationDate "2017-09-08T08:12:04.2411430Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "document"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
@@ -189,6 +191,8 @@
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Alexandra Sindyaeva"; l10n:creationDate "2015-10-14T12:56:19.9281709Z"; l10n:modificationDate "2015-10-16T13:47:49.7744889Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "You need to create record before adding values to the table"].
 
+<http://comindware.com/text/core/form/editors/color#emptyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:04:10.0810940Z"; l10n:modificationDate "2019-03-13T08:09:06.8051126Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter color here"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors/date#disabledPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:02:46.1244821Z"; l10n:modificationDate "2015-07-31T11:53:17.0221068Z"; l10n:param <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder>; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "{0}"].
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:01:48.7898815Z"; l10n:modificationDate "2015-07-31T13:06:07.0697161Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Date"].
@@ -294,6 +298,8 @@
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:exportToJs true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-04-03T08:30:22.5126374Z"; l10n:modificationDate "2016-01-13T11:27:49.3334398Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-06-01T08:03:27.5732864Z"; l10n:modificationDate "2016-01-13T11:27:49.3344386Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Search..."].
+
+<http://comindware.com/text/core/form/editors/memberSelect#selectedUsers> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-02-12T14:58:30.8581672Z"; l10n:modificationDate "2019-02-12T14:58:42.4524497Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Selected users"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#all> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2018-01-17T09:11:36.7675346Z"; l10n:modificationDate "2018-01-17T09:12:49.7929616Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "All"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
@@ -413,6 +419,8 @@
 
 <http://comindware.com/text/core/form/validation#email> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2018-05-17T05:52:16.4929891Z"; l10n:modificationDate "2018-05-17T05:52:20.9412626Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Invalid email address"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/form/validation#gridError> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-03-05T12:45:04.8363218Z"; l10n:modificationDate "2019-03-05T12:45:20.2076007Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Grid fields has errors"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/validation#length> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:51:52.6000877Z"; l10n:modificationDate "2015-08-25T12:47:39.2846339Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Wrong number of characters."].
 
 <http://comindware.com/text/core/form/validation#letters> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:54:53.7720877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Only letters are allowed."].
@@ -424,6 +432,8 @@
 <http://comindware.com/text/core/form/validation#phone> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:56:53.1220877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Invalid phone number"].
 
 <http://comindware.com/text/core/form/validation#required> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T08:00:03.1650877Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "This field is required"].
+
+<http://comindware.com/text/core/form/validation#requiredGrid> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-03-05T12:43:36.6779792Z"; l10n:modificationDate "2019-03-05T12:44:28.2542739Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Grid must have at least one record"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/validation#systemName> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-06-11T13:46:33.2584919Z"; l10n:modificationDate "2015-08-25T12:47:39.2856304Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "The system name may contain only characters of the Latin alphabet and Arabic numerals. The first symbol should be a letter."].
 

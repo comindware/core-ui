@@ -26,8 +26,7 @@ const defaultOptions = {
  * */
 export default (formRepository.editors.Mention = BaseEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-
+        this.__applyOptions(options, defaultOptions);
         this.__createViewModel();
     },
 
@@ -78,11 +77,11 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
         });
 
         this.showChildView('dropdownRegion', this.dropdownView);
-        this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
-        this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
-        this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
-        this.listenTo(this.dropdownView, 'button:input', this.__onInput);
-        this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
+        this.listenTo(this.dropdownView, 'change', this.__onTextChange);
+        this.listenTo(this.dropdownView, 'focus', this.__onFocus);
+        this.listenTo(this.dropdownView, 'blur', this.__onBlur);
+        this.listenTo(this.dropdownView, 'input', this.__onInput);
+        this.listenTo(this.dropdownView, 'caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);
@@ -127,7 +126,7 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
     },
 
     __onTextChange(): void {
-        this.value = this.dropdownView.button.getValue();
+        this.value = this.dropdownView.getValue();
         this.__triggerChange();
     },
 
@@ -185,7 +184,7 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
             return;
         }
 
-        const editor = this.dropdownView.button;
+        const editor = this.dropdownView;
         const text = this.mentionState.text;
 
         let mention = selectedMember.get('userName') || '';
@@ -226,8 +225,8 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
 
     setValue(value) {
         if (this.dropdownView) {
-            this.dropdownView.button.setValue(value);
-            this.value = this.dropdownView.button.getValue();
+            this.dropdownView.setValue(value);
+            this.value = this.dropdownView.getValue();
         } else {
             this.value = value;
         }
@@ -242,14 +241,14 @@ export default (formRepository.editors.Mention = BaseEditorView.extend({
     __setEnabled(enabled: boolean): void {
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
-            this.dropdownView.button.setEnabled(enabled);
+            this.dropdownView.setEnabled(enabled);
         }
     },
 
     __setReadonly(readonly: boolean): void {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
-            this.dropdownView.button.setReadonly(readonly);
+            this.dropdownView.setReadonly(readonly);
         }
     }
 }));

@@ -10,11 +10,12 @@ export default function () {
 
             this.selected = true;
 
-            this.trigger('selected', this, options);
-
-            if (this.collection) {
-                this.collection.select(this, undefined, undefined, undefined, options);
+            const collection = this.selectableCollection || this.collection;
+            if (collection && collection.select) {
+                collection.select(this, undefined, undefined, undefined, options);
             }
+
+            this.trigger('selected', this, options);
         },
 
         // Deselect this model, and tell our
@@ -26,11 +27,12 @@ export default function () {
 
             this.selected = false;
 
-            this.trigger('deselected', this, options);
-
-            if (this.collection && this.collection.deselect) {
-                this.collection.deselect(this, undefined, undefined, undefined, options);
+            const collection = this.selectableCollection || this.collection;
+            if (collection && collection.deselect) {
+                collection.deselect(this, undefined, undefined, undefined, options);
             }
+
+            this.trigger('deselected', this, options);
         },
 
         pointTo() {

@@ -1,5 +1,5 @@
 {{#if checkbox}}
-    <span class='js-action toolbar-btn__text' title="{{description}}">
+    <span class='js-action toolbar-btn__text'>
     <div class="js-check editor_checkbox">
         <span class="checkbox">
             <svg class="svg-icons svg-icons_checked">
@@ -14,11 +14,15 @@
         <i class="{{iconPrefixer iconClass}}" aria-hidden="true"></i>
     </div>
 {{/if}}
-{{#if name}}
-    <span class='js-action toolbar-btn__text' title="{{description}}">{{name}}</span>
+{{#if showName}}
+    <span class='js-action toolbar-btn__text'>{{name}}</span>
 {{/if}}
 {{#if isGroup}}
+    {{#if customAnchor}}
+    {{{customAnchor}}}
+    {{else}}
     <span class="toolbar__icons toolbar__icons_arrow js-anchor">
         <i class="fa fa-chevron-down"></i>
     </span>
+    {{/if}}
 {{/if}}

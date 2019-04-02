@@ -13,6 +13,7 @@ import { dateHelpers, keyCode } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import DurationEditorView from './DurationEditorView';
 import { getClasses } from './impl/dateTime/meta';
+import MobileService from 'services/MobileService';
 
 const defaultOptions = () => ({
     allowEmptyValue: true,
@@ -30,9 +31,13 @@ const defaultOptions = () => ({
     }
 });
 
-const millisecondsPerDay = 86400000; // 24 * 60 * 60 * 1000
-
 const defaultClasses = 'editor editor_date-time dropdown_root';
+
+const editorTypes = {
+    dateTime: 'dateTime',
+    date: 'date',
+    time: 'time'
+};
 
 /**
  * @name DateTimeEditorView
@@ -52,19 +57,40 @@ const defaultClasses = 'editor editor_date-time dropdown_root';
  * */
 
 export default (formRepository.editors.DateTime = BaseEditorView.extend({
-    initialize() {
+    initialize(options = {}) {
+        this.__applyOptions(options, defaultOptions);
         this.value = this.__adjustValue(this.value);
-        this.enabled = this.getEnabled();
-        this.readonly = this.getReadonly();
+        this.editorType = this.options.showDate ?
+            (this.options.showTime ? editorTypes.dateTime : editorTypes.date) :
+            this.options.showTime ? editorTypes.time : console.warn('DateTimeEditor: showDate and showTime is false');
     },
 
     ui: {
-        clearButton: '.js-clear-button'
+        clearButton: '.js-clear-button',
+        mobileInput: '.js-mobile-input'
     },
 
-    events: {
-        'click @ui.clearButton': '__onClear',
-        mouseenter: '__onMouseenter'
+    events(){
+        const events = {
+            'click @ui.clearButton': '__onClear',
+            mouseenter: '__onMouseenter'
+        };
+        if (MobileService.isMobile) {
+            const mobileEvents = {
+                'input @ui.mobileInput': '__onMobileInput',
+                click: '__onClickMobileMode'
+            };
+
+            Object.assign(events, mobileEvents);
+        }
+        return events;
+    },
+
+    __onClickMobileMode(event, inner) {
+        if (inner || !this.getEditable()) {
+            return;
+        }
+        this.__openNativePicker();
     },
 
     regions: {
@@ -79,8 +105,6 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     className() {
-        _.defaults(this.options, _.pick(this.options?.schema ? this.options?.schema : this.options, Object.keys(defaultOptions())), defaultOptions());
-
         this.displayClasses = getClasses();
 
         return this.__getClassName();
@@ -89,11 +113,23 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return this.options;
+        const mobileInputType = {
+            [editorTypes.dateTime]: 'datetime-local',
+            [editorTypes.date]: 'date',
+            [editorTypes.time]: 'time'
+        };
+        
+        return _.defaultsPure(
+            {
+                isMobile: MobileService.isMobile,
+                mobileInputType: mobileInputType[this.editorType]
+            },
+            this.options
+        );
     },
 
-    setValue(value: String): void {
-        this.__value(value, true, false);
+    setValue(value: String, { updateButtons = true, triggerChange = false } = {}): void {
+        this.__value(value, updateButtons, triggerChange);
     },
 
     getValue(): string {
@@ -101,18 +137,38 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     onRender(): void {
+        this.__updateClearButton();
         this.__presentView();
     },
 
-    focusElement: '.editor_date-time_date input',
+    onAttach() {
+        if (MobileService.isMobile) {
+            this.timeDropdownView?.ui.input[0].setAttribute('readonly', '');
+            this.calendarDropdownView?.ui.input[0].setAttribute('readonly', '');
+
+            this.__setValueToMobileInput(this.value);
+        }
+    },
+
+    __setValueToMobileInput(value) {
+        const nativeFormats = {
+            [editorTypes.dateTime]: 'YYYY-MM-DDTHH:mm',
+            [editorTypes.date]: 'YYYY-MM-DD',
+            [editorTypes.time]: 'HH:mm'
+        };
+
+        this.ui.mobileInput[0].value = value ?
+            moment(value).format(nativeFormats[this.editorType]) :
+            null;
+    },
+
+    focusElement: null,
 
     focus(): void {
         if (this.options.showDate) {
-            this.__openCalendarPicker();
-            this.calendarDropdownView?.button?.focus();
+            this.calendarDropdownView?.focus();
         } else if (this.options.showTime) {
-            this.timeDropdownView?.open();
-            this.timeDropdownView?.button?.focus();
+            this.timeDropdownView?.focus();
         }
     },
 
@@ -122,7 +178,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     setFormat(newFormat) {
-        if (typeof newFormat !== 'object') {
+        if (typeof newFormat !== 'object' || newFormat === null) {
             return;
         }
         this.options.dateDisplayFormat = newFormat.dateDisplayFormat;
@@ -134,6 +190,35 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         this.__presentView();
 
         this.$el.attr('class', this.__getClassName());
+    },
+
+    __onMobileInput(event) {
+        const input = event.target;
+        const value = input.value;
+
+        this.setValue(
+            this.__mapNativeToValue(value),
+            { updateButtons: true, triggerChange: true }
+        );
+    },
+
+    __mapNativeToValue(value) {
+        if (!value) {
+            return null;
+        }
+        if (this.options.showDate) {
+            return moment(value).toISOString();
+        } else if (this.options.showTime) {
+            const parsedTime = value.split(':');
+            const hour = parsedTime[0];
+            const minutes = parsedTime[1];
+            return moment(this.value || undefined)
+                .hour(hour)
+                .minutes(minutes)
+                .seconds(0)
+                .milliseconds(0)
+                .toISOString();
+        }
     },
 
     __dateButtonInputKeydown(buttonView, event) {
@@ -149,6 +234,13 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                 this.__triggerChange();
                 this.__toggleCalendarPicker();
                 return;
+            case keyCode.TAB:
+                // if tab go to time input(default browser behavior),
+                // not trigger tab on parent grid.
+                if (!event.shiftKey) {
+                    event.stopPropagation();
+                }
+                return;
             default:
                 break;
         }
@@ -161,24 +253,16 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         const oldValue = this.value === null ? undefined : this.value;
         switch (event.keyCode) {
             case keyCode.UP:
-                newValue = event.shiftKey ?
-                    moment(oldValue).add(1, 'years') :
-                    moment(oldValue).subtract(1, 'weeks');
+                newValue = event.shiftKey ? moment(oldValue).add(1, 'years') : moment(oldValue).subtract(1, 'weeks');
                 break;
             case keyCode.DOWN:
-                newValue = event.shiftKey ?
-                    moment(oldValue).subtract(1, 'years') :
-                    moment(oldValue).add(1, 'weeks');
+                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'years') : moment(oldValue).add(1, 'weeks');
                 break;
             case keyCode.LEFT:
-                newValue = event.shiftKey ?
-                    moment(oldValue).subtract(1, 'months') :
-                    moment(oldValue).subtract(1, 'days');
+                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'months') : moment(oldValue).subtract(1, 'days');
                 break;
             case keyCode.RIGHT:
-                newValue = event.shiftKey ?
-                    moment(oldValue).add(1, 'months') :
-                    moment(oldValue).add(1, 'days');
+                newValue = event.shiftKey ? moment(oldValue).add(1, 'months') : moment(oldValue).add(1, 'days');
                 break;
             default:
                 return;
@@ -186,13 +270,23 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
         const amountMilliseconds = newValue.valueOf();
 
-        this.__value(
-            amountMilliseconds,
-            true,
-            false
-        );
+        this.__value(amountMilliseconds, true, false);
 
         this.__updatePickerDate(amountMilliseconds);
+    },
+
+    __timeButtonInputKeydown(event) {
+        switch (event.keyCode) {
+            case keyCode.TAB:
+                // if tab go to date input(default browser behavior),
+                // not trigger tab on parent grid.
+                if (event.shiftKey) {
+                    event.stopPropagation();
+                }
+                break;
+            default:
+                break;
+        }
     },
 
     __updatePickerDate(date) {
@@ -232,6 +326,10 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             this.options.showTime && this.__setValueToTimeButton(value);
         }
 
+        if (MobileService.isMobile) {
+            this.__setValueToMobileInput(this.value);
+        }
+
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -241,16 +339,16 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
         this.enabled = this.getEnabled();
         //__setEnabled() from descendants
-        this.calendarDropdownView?.button?.setEnabled(enabled);
-        this.timeDropdownView?.button?.setEnabled(enabled);
+        this.calendarDropdownView?.setEnabled(enabled);
+        this.timeDropdownView?.setEnabled(enabled);
     },
 
     __setReadonly(readonly: boolean): void {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.readonly = this.getReadonly();
         //__setReadonly() from descendants
-        this.calendarDropdownView?.button?.setReadonly(readonly);
-        this.timeDropdownView?.button?.setReadonly(readonly);
+        this.calendarDropdownView?.setReadonly(readonly);
+        this.timeDropdownView?.setReadonly(readonly);
     },
 
     __onClear(): boolean {
@@ -301,27 +399,38 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             class: 'editor_date-time_date'
         });
 
-        this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
-        this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange, this);
+        this.listenTo(this.calendarDropdownView, 'focus', this.__onDateButtonFocus);
+        this.listenTo(this.calendarDropdownView, 'blur', this.onBlur);
+        this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
-        this.listenTo(this.calendarDropdownView.buttonView, 'keydown', this.__dateButtonInputKeydown);
+        this.listenTo(this.calendarDropdownView, 'keydown', this.__dateButtonInputKeydown);
     },
 
     __updateDateAndValidateToButton(recipientISO, fromFormatted, { includeTime = false }) {
         const recipientMoment = moment(recipientISO || {});
         const fromMoment = DateTimeService.tryGetValidMoment(fromFormatted, this.options.dateDisplayFormat);
         if (fromMoment) {
-            recipientMoment.date(fromMoment.date());
-            recipientMoment.month(fromMoment.month());
             recipientMoment.year(fromMoment.year());
+            recipientMoment.month(fromMoment.month());
+            recipientMoment.date(fromMoment.date());
             if (includeTime) {
+                recipientMoment.milliseconds(fromMoment.milliseconds());
                 recipientMoment.seconds(fromMoment.seconds());
                 recipientMoment.minutes(fromMoment.minutes());
                 recipientMoment.hours(fromMoment.hours());
+            } else if (recipientISO == null) {
+                recipientMoment.milliseconds(0);
+                recipientMoment.seconds(0);
+                recipientMoment.minutes(0);
+                recipientMoment.hours(0);
             }
-            this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat));
+            this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat), {
+                inner: true
+            });
         } else {
-            this.dateButtonModel.set(this.key, Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'));
+            this.dateButtonModel.set(this.key, Localizer.get('CORE.FORM.EDITORS.DATE.INVALIDDATE'), {
+                inner: true
+            });
         }
         return recipientMoment.toISOString();
     },
@@ -330,29 +439,17 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         if (options.inner) {
             return;
         }
-        this.__value(
-            this.__updateDateAndValidateToButton(this.value, formattedDate, { includeTime: false }),
-            false,
-            true
-        );
+        this.__value(this.__updateDateAndValidateToButton(this.value, formattedDate, { includeTime: false }), false, true);
     },
 
     __setValueToDate(value) {
-        this.dateButtonModel.set(
-            this.key,
-            value == null ? value : moment(value).format(this.options.dateDisplayFormat),
-            {
-                inner: true
-            }
-        );
+        this.dateButtonModel.set(this.key, value == null ? value : moment(value).format(this.options.dateDisplayFormat), {
+            inner: true
+        });
     },
 
     __onPanelDateChange(jsDate) {
-        this.__value(
-            this.__updateDateAndValidateToButton(this.value, jsDate, { includeTime: false }),
-            true,
-            true
-        );
+        this.__value(this.__updateDateAndValidateToButton(this.value, jsDate, { includeTime: false }), true, true);
         this.stopListening(GlobalEventService);
         this.calendarDropdownView?.close();
     },
@@ -363,22 +460,69 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __openCalendarPicker() {
-        if (this.enabled && !this.readonly) {
+        if (!this.getEditable()) {
+            return;
+        }
+        if (MobileService.isMobile) {
+            this.__openNativePicker();
+        } else {
             this.calendarDropdownView?.open();
             this.__updatePickerDate(this.value);
             this.calendarDropdownView?.adjustPosition();
         }
     },
 
+    __openTimePicker() {
+        if (!this.getEditable()) {
+            return;
+        }
+        if (MobileService.isMobile) {
+            this.__openNativePicker();
+        } else {
+            this.__timeDropdownOpen();
+        }
+    },
+
+    __openNativePicker() {
+        this.ui.mobileInput.trigger('click', true);
+    },
+
+    __timeDropdownOpen() {
+        this.timeDropdownView?.open();
+        const panelView = this.timeDropdownView?.panelView;
+        if (!panelView?.collection.length) {
+            panelView.collection.reset(this.__getTimeCollection());
+        }
+    },
+
+    __getTimeCollection() {
+        const timeArray = [];
+
+        for (let h = 0; h < 24; h++) {
+            for (let m = 0; m < 60; m += 15) {
+                const val = { hours: h, minutes: m };
+                const time = moment(val);
+                const formattedTime = dateHelpers.getDisplayTime(time);
+
+                timeArray.push({
+                    time,
+                    formattedTime
+                });
+            }
+        }
+
+        return timeArray;
+    },
+
     __dateBlur() {
         this.calendarDropdownView?.close();
-        this.calendarDropdownView?.button?.blur();
+        this.calendarDropdownView?.blur();
         this.onBlur();
     },
 
     __timeBlur() {
         this.timeDropdownView?.close();
-        this.timeDropdownView?.button?.blur();
+        this.timeDropdownView?.blur();
         this.onBlur();
     },
 
@@ -398,6 +542,8 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     allowHours: true,
                     allowMinutes: true,
                     allowSeconds: isFormatHasSeconds,
+                    allFocusableParts: this.options.allFocusableParts,
+                    seconds: this.options.seconds,
                     minutes: {
                         text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
                     },
@@ -407,9 +553,12 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     normalTime: true,
                     showTitle: false,
                     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
+                    key: this.options.key,
+                    autocommit: true,
+                    readonly: this.getReadonly(),
+                    editable: this.getEditable(),
                     model
-                },
-                this.options
+                }
             ),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
@@ -436,15 +585,17 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             class: 'editor_date-time_time'
         });
 
-        this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
-        this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus, this);
-        this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
+        this.listenTo(this.timeDropdownView, 'focus', this.__onTimeButtonFocus);
+        this.listenTo(this.timeDropdownView, 'blur', this.onBlur);
+        this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus);
+        this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
+        this.listenTo(this.timeDropdownView, 'keydown', this.__timeButtonInputKeydown);
     },
 
     __updateTime(ISOstr) {
         //replace time of ISO string to time from timebutton
-        const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
+        const valTimeModel = this.timeDropdownView && this.timeDropdownView.model.get(this.key);
         if (!valTimeModel) {
             return;
         }
@@ -465,7 +616,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
     __setValueToTimeButton(dateISOstring) {
         const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
-        this.timeDropdownView && this.timeDropdownView.button.setValue(newDuration, true);
+        this.timeDropdownView && this.timeDropdownView.setValue(newDuration, true);
     },
 
     __onTimePanelSelect(time) {
@@ -473,50 +624,20 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         this.timeDropdownView.close();
     },
 
-    __timeDropdownOpen() {
-        if (this.enabled && !this.readonly) {
-            this.timeDropdownView.open();
-            const panelView = this.timeDropdownView.panelView;
-            if (!panelView.collection.length) {
-                panelView.collection.reset(this.__getTimeCollection());
-            }
-        }
-    },
-
-    __getTimeCollection() {
-        const timeArray = [];
-
-        for (let h = 0; h < 24; h++) {
-            for (let m = 0; m < 60; m += 15) {
-                const val = { hours: h, minutes: m };
-                const time = moment(val);
-                const formattedTime = dateHelpers.getDisplayTime(time);
-
-                timeArray.push({
-                    time,
-                    formattedTime
-                });
-            }
-        }
-
-        return timeArray;
-    },
-
     __onTimeButtonFocus() {
-        this.__timeDropdownOpen();
+        this.__openTimePicker();
         this.onFocus();
     },
 
     __onMouseenter() {
         this.$el.off('mouseenter');
 
-        if (!this.options.hideClearButton) {
+        if (!MobileService.isMobile && !this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
         }
     },
 
     __presentView() {
-        this.__updateClearButton();
         if (this.options.showTitle) {
             this.__updateTitle();
         }

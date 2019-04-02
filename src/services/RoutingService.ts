@@ -1,12 +1,9 @@
-import ContentLoadingView from '../views/ContentLoadingView';
+//@flow
 import WindowService from './WindowService';
-import Backbone from 'backbone';
-import Marionette from 'backbone.marionette';
-import _ from 'underscore';
 
 // storing active url to get back to it while canceling module leave
-let previousUrl: string;
-let activeUrl: string;
+let previousUrl;
+let activeUrl;
 let shouldCheckUrl = true;
 
 const originalCheckUrl = Backbone.history.checkUrl;
@@ -15,7 +12,7 @@ Backbone.history.checkUrl = () => {
     activeUrl = window.location.hash;
 
     if (shouldCheckUrl) {
-        originalCheckUrl.apply(this, arguments);
+        originalCheckUrl.apply(this);
     }
     shouldCheckUrl = true;
 };
@@ -23,6 +20,7 @@ Backbone.history.checkUrl = () => {
 export default {
     initialize(options) {
         Object.assign(this, Backbone.Events);
+        this.loadersCount = 0;
         this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
             const controller = {};
@@ -50,16 +48,22 @@ export default {
         Backbone.history.checkUrl();
 
         window.addEventListener('beforeunload', e => {
-            this.trigger('module:leave', {
-                page: this.activeModule ? this.activeModule.moduleId : null
-            });
             const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
             if (canLeave !== true) {
-                // We need just to return smth to show default drowser leaving alert
-                (e || window.event).returnValue = '42';
-                return '42';
+                const tabCloseLeavingMessage = this.activeModule.tabCloseLeavingMessage || 'Do you wanna leave?';
+
+                (e || window.event).returnValue = tabCloseLeavingMessage;
+
+                return tabCloseLeavingMessage;
             }
+        });
+
+        window.addEventListener('unload', () => {
+            this.trigger('module:leave', {
+                page: this.activeModule ? this.activeModule.moduleId : null,
+                isUnload: true
+            });
         });
     },
 
@@ -72,7 +76,7 @@ export default {
     },
 
     // options: replace (history), trigger (routing), split (show in split)
-    navigateToUrl(url: string, options = {}) {
+    navigateToUrl(url, options = {}) {
         let newUrl = url;
 
         if (options.trigger === undefined) {
@@ -106,13 +110,13 @@ export default {
         this.navigateToUrl(activeUrl);
     },
 
-    setDefaultUrl(newDefaultUrl: string) {
+    setDefaultUrl(newDefaultUrl) {
         this.defaultUrl = newDefaultUrl;
     },
 
     getRoutHandlers(url = '') {
         const urlParts = url.split('&nxt').splice(1);
-        const matchingUrls: Array<string>;
+        const matchingUrls = [];
 
         return (Backbone.history.handlers.filter(handler => urlParts.some(part => handler.route.test(part) && matchingUrls.push(part))) || []).map((h, i) => ({
             callback: h.callback,
@@ -125,7 +129,11 @@ export default {
         return activeUrl?.startsWith('#custom');
     },
 
-    async __onModuleLoaded(callbackName: string, routingArgs: Array<string>, config, Module) {
+    setModuleLoading(show, useForce) {
+        show ? this.__showViewPlaceholder() : this.__hideViewPlaceholder(useForce);
+    },
+
+    async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
             config,
@@ -135,9 +143,7 @@ export default {
 
         const customModuleRegion = this.__tryGetSubmoduleRegion(config);
 
-        if (!this.activeModule) {
-            this.__showViewPlaceholder();
-        } else if (!customModuleRegion) {
+        if (this.activeModule && !customModuleRegion) {
             const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
             if (!isLeaved) {
                 return;
@@ -150,15 +156,6 @@ export default {
         }
 
         this.loadingContext.loaded = true;
-        // reset loading region
-        window.app
-            .getView()
-            .getRegion('contentLoadingRegion')
-            .reset();
-
-        if (this.activeModule) {
-            this.activeModule.view.setModuleLoading(false);
-        }
 
         const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
 
@@ -175,10 +172,10 @@ export default {
             }
         }
 
-        // destroy active module
         if (this.activeModule && movingOut && !customModuleRegion) {
             this.activeModule.destroy();
         }
+        this.setModuleLoading(true);
 
         let activeSubModule = null;
 
@@ -188,7 +185,7 @@ export default {
                     config,
                     region: customModuleRegion
                 });
-                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
+                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.trigger(...rest));
             } else {
                 this.activeModule = new Module({
                     config,
@@ -223,7 +220,8 @@ export default {
                     this.__callRoutingActionForActiveModule(callbackName, routingArgs);
                 }
             } catch (e) {
-                Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
+                this.setModuleLoading(false, true);
+                Core.utils.helpers.throwError(e);
             }
         } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
             this.__callRoutingActionForActiveModule(callbackName, routingArgs);
@@ -232,13 +230,22 @@ export default {
         }
 
         this.__setupComponentQuery(componentQuery);
+        this.setModuleLoading(false);
     },
 
     __showViewPlaceholder() {
-        window.app
-            .getView()
-            .getRegion('contentLoadingRegion')
-            .show(new ContentLoadingView());
+        this.loadersCount++;
+        window.contentLoadingRegion.$el.addClass('visible-loader');
+    },
+
+    __hideViewPlaceholder(useForce) {
+        this.loadersCount--;
+        if (this.loadersCount <= 0 || useForce) {
+            window.contentLoadingRegion.$el.removeClass('visible-loader');
+        }
+        if (this.loadersCount < 0 || useForce) {
+            this.loadersCount = 0;
+        }
     },
 
     async __tryLeaveActiveModule() {
@@ -252,18 +259,20 @@ export default {
 
         //do not trigger events and cancel requests for submodules
         this.trigger('module:leave', {
-            page: this.activeModule?.moduleId
+            page: this.activeModule ? this.activeModule.moduleId : null,
+            activeUrl,
+            previousUrl
         });
         //clear all promises of the previous module
         Core.services.PromiseService.cancelAll();
         if (!this.loadingContext.loaded) {
-            this.activeModule.view.setModuleLoading(true);
+            this.setModuleLoading(false);
         }
         return true;
     },
 
     __tryGetSubmoduleRegion(config) {
-        if (this.activeModule?.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
@@ -277,9 +286,9 @@ export default {
         return null;
     },
 
-    __callRoutingActionForActiveSubModule(callbackName: string, routingArgs, activeSubModule) {
+    __callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule) {
         if (activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
-            const configuration = activeSubModule.routingActions[callbackName];
+            const configuration = activeSubModule.routingActions[callbackName].bind(activeSubModule);
 
             configuration.routingAction = callbackName;
 
@@ -294,7 +303,7 @@ export default {
         }
     },
 
-    __callRoutingActionForActiveModule(callbackName: string, routingArgs) {
+    __callRoutingActionForActiveModule(callbackName, routingArgs) {
         if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
             const configuration = this.activeModule.routingActions[callbackName];
 
@@ -334,8 +343,8 @@ export default {
         });
     },
 
-    __getSplitModuleUrl(nextModuleUrl: string) {
-        if (this.__isCurrentModuleSplit()) {
+    __getSplitModuleUrl(nextModuleUrl) {
+        if (this.isCurrentModuleSplit()) {
             return this.__getUpdatedUrl(nextModuleUrl);
         }
 

@@ -9,18 +9,26 @@ import WebSocketService from './services/WebSocketService';
 import RoutingService from './services/RoutingService';
 import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
-import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
+import ContentLoadingView from './views/ContentLoadingView';
 
 import 'backbone.trackit';
 
 export default {
-    async start(options = {}) {
+    async start(options) {
         Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
-        options.animation = options.animation !== false; //todo make it perfect
-        LocalizationService.initialize(options.localizationService);
+        const appView = window.app.getView();
+
+        if (appView) {
+            window.contentLoadingRegion = appView.getRegion('contentLoadingRegion');
+            window.contentRegion = appView.getRegion('contentRegion');
+
+            if (window.contentLoadingRegion) {
+                this.__initializeLoadingMaskAndHideIt();
+            }
+        }
 
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
@@ -44,13 +52,13 @@ export default {
         }
 
         options.userService && UserService.initialize(options.userService);
-        WindowService.initialize({ animation: options.animation });
+        WindowService.initialize();
+        LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
         marionetteApp.defaultContentView = options.contentView;
         marionetteApp.options = options;
 
         CTEventsService.initialize();
-        MobileService.initialize();
 
         if (options.navigationConfiguration) {
             marionetteApp.navigationController = new options.navigationConfiguration.controller({
@@ -70,17 +78,12 @@ export default {
             WebSocketService.initialize({ url: options.webSocketConfiguration.url });
         }
 
-        // Backbone default behaviors path (obsolete because of inconsistency: we store behaviors in many different paths)
-        Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
-
         this.initializeThirdParties();
         marionetteApp.start();
 
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
 
         ThemeService.initialize(options.themeService);
-
-        window.contentRegion = window.app.getView().getRegion('contentRegion');
 
         return marionetteApp;
     },
@@ -97,6 +100,10 @@ export default {
                 meridiem: LocalizationService.get('CORE.FORMATS.DATETIME.MERIDIEM').split(',')
             }
         };
-        initializeDatePicker($, dates);
+        initializeDatePicker(Backbone.$, dates);
+    },
+
+    __initializeLoadingMaskAndHideIt() {
+        window.contentLoadingRegion.show(new ContentLoadingView());
     }
 };

@@ -103,7 +103,7 @@ const variables = {
     'grid-header-selection-bg': 'var(--grey-100)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-border': 'inset -1px -1px 0 0 var(--grid-header-border-color)',
+    'grid-cell-border': '1px solid var(--grid-header-border-color)',
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
     'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color)',
     'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
@@ -121,6 +121,7 @@ const variables = {
     'grid-selection-bg': 'var(--grid-cell-bg)',
     'grid-selection-index-width': '53px',
     'grid-selection-index-padding-x': '10px',
+    'grid-selection-index-padding-checkbox': '21px',
 
     'grid-sort-icon-size': '11px',
     'grid-sort-icon-offset-y': '2px',
@@ -164,10 +165,15 @@ module.exports.variables = variables;
 // postcss apply добавляет правила по очереди в начало (prepend), что бы не переопределить свойства которые присутствуют изначально, в связи с этим приходится писать свойства в обратном порядке если нам нужно сначала сбросить свойство, а потом добавить его частично(https://github.com/pascalduez/postcss-apply/issues/43)
 
 module.exports.apply = {
-    'absolute-center-theme': {
+    'absolute-center-y-theme': {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)'
+    },
+    'relative-center-y-theme': {
+        position: 'relative',
+        'margin-top': 'auto',
+        'margin-bottom': 'auto'
     },
     'button-theme': {
         'font-size': '12px',
@@ -222,8 +228,8 @@ module.exports.apply = {
         'line-height': variables['line-height']
     },
     'input-disabled-theme': {
-        'border-bottom-color': 'transparent',
-        background: 'none'
+        'background-color': 'transparent',
+        'border-color': 'transparent'
     },
     'input-search-clear-theme': {
         width: '26px',

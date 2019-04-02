@@ -1,11 +1,8 @@
 //@flow
-import template from '../templates/customActionGroupView.html';
 import meta from '../meta';
 
 export default Marionette.CollectionView.extend({
-    className: 'js-icon-container toolbar-items-wrp',
-
-    template: Handlebars.compile(template),
+    className: 'toolbar-items-wrp',
 
     childView(model) {
         return meta.getViewByModel(model);
@@ -13,15 +10,23 @@ export default Marionette.CollectionView.extend({
 
     childViewOptions() {
         return {
-            reqres: this.getOption('reqres')
+            reqres: this.getOption('reqres'),
+            mode: this.options.mode,
+            showName: this.options.showName
         };
     },
 
     childViewEvents: {
-        'action:click': '__handleClick'
+        'action:click': '__handleCommand',
+        search(searchString, { model }) {
+            return this.__handleCommand(model, { searchString });
+        }
     },
 
-    __handleClick(model, options) {
-        this.trigger('actionSelected', model, options);
+    __handleCommand(model, options) {
+        if (model.get('type') === meta.toolbarItemType.HEADLINE) {
+            return;
+        }
+        this.trigger('command:execute', model, options);
     }
 });

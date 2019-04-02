@@ -3,7 +3,7 @@ import GroupItemView from './views/DrawerItemView';
 import GroupsCollection from './collections/GroupsCollection';
 import template from './templates/navigationDrawer.html';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         this.collection = new GroupsCollection(options.collection);
         this.collapsed = options.collapsed;
@@ -14,12 +14,15 @@ export default Marionette.CompositeView.extend({
 
     ui: {
         titleContainer: '.js-drawer-title',
-        collapseButton: '.js-drawer-collapse'
+        collapseButton: '.js-drawer-collapse',
+        resizer: '.js-resizer'
     },
 
     events: {
-        'click @ui.collapseButton': '__toggleCollapse'
+        'pointerdown @ui.collapseButton': '__toggleCollapse'
     },
+
+    tagName: 'nav',
 
     className() {
         return `navigationDrawer__ul ${this.options.isAbsolute ? 'navigationDrawer_absolute' : ''}`;
@@ -37,6 +40,29 @@ export default Marionette.CompositeView.extend({
 
     onRender() {
         this.__updatePanelStyle();
+        Core.services.UIService.draggable({
+            el: this.ui.resizer[0],
+            axis: 'x',
+            drag: this.__onDrag.bind(this),
+            start: this.__onDragStart.bind(this),
+            stop: this.__onDragStop.bind(this),
+            setProperties: []
+        });
+    },
+
+    __onDragStart() {
+        this.el.style.transition = 'unset';
+    },
+
+    __onDragStop() {
+        this.el.style.transition = '';
+    },
+
+    __onDrag(event, { position: { left } }) {
+        if (left < 240) {
+            return;
+        }
+        this.el.style.width = `${left}px`;
     },
 
     __toggleCollapse() {

@@ -14,7 +14,7 @@ module.exports = function(config) {
         plugins: [/*'karma-safari-launcher',*/ 'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
 
         // list of files / patterns to load in the browser
-        files: ['node_modules/@babel/polyfill/dist/polyfill.js', 'tests/tests.bundle.js', 'dist/core.css'],
+        files: ['tests/tests.bundle.js', 'dist/core.css'],
 
         // list of files to exclude
         exclude: [],

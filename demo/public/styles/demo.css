@@ -57,6 +57,12 @@ body {
     height: 40px;
 }
 
+.demo-nav__i {
+    color: #fff;
+    padding: 0 15px;
+    font-size: 15px;
+}
+
 .demo-nav__i:hover {
     color: #fff;
     text-decoration: none;
@@ -119,6 +125,7 @@ body {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     text-decoration: none;
     font-size: 1.5rem;
+    border-radius: 4px;
 }
 
 .demo-welcome__item:hover {
@@ -199,6 +206,7 @@ body {
 @media screen and (min-width: 1000px) {
     .demo-content_container {
         flex-direction: row;
+        padding: 1rem;
     }
     .demo-content__function {
         max-width: 50%;
@@ -211,6 +219,7 @@ body {
 @media screen and (max-width: 999px) {
     .demo-content_container {
         flex-direction: column;
+        padding: 1rem 0 0;
     }
     .demo-content__function {
         max-width: 100%;
@@ -229,8 +238,7 @@ body {
     flex: 1 1;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    overflow: auto;
 }
 
 /*-------------------------*/
@@ -238,16 +246,16 @@ body {
     position: relative;
     padding: 10px;
     margin-top: 15px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow: auto;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
+    background-color: white;
 }
 
 .demo-content_container {
     height: 100%;
     width: 100%;
     display: flex;
-    padding: 0 15px 15px 15px;
     justify-content: space-between;
 }
 .demo-content__function {
@@ -255,16 +263,28 @@ body {
     max-width: 100%;
     position: relative;
     padding: 10px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow: auto;
     flex: 1 1;
+    background-color: white;
+    min-height: 30%;
 }
 .demo-content__description {
-    font-size: 32px;
-    line-height: 32px;
-    padding: 0 0.5rem;
-    flex: 1 1;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    flex: 2;
 }
+.demo-content__toolbar {
+    flex: 1 0 40px;
+    overflow: hidden;
+}
+.demo-content__toolbar .toolbar-menu-actions{
+    margin-left: auto;
+}
+.demo-content__toolbar .toolbar-buttons_container__const{
+    margin-left: unset;
+}
+
 .demo-content__code {
     overflow: auto;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -272,6 +292,10 @@ body {
 }
 .demo-content__code pre {
     margin: 0 !important;
+    height: 100%;
+}
+
+.demo-content__code .code-editor,.demo-content__code .dev-codemirror  {
     height: 100%;
 }
 
@@ -287,7 +311,6 @@ body {
 }
 
 .h3-demo{
-    margin: 15px 5px 10px;
     line-height: 14px;
     font-size: 13px;
     font-family: monospace;
@@ -543,12 +566,10 @@ body {
 }
 
 .editor-region-wrp{
-    overflow: hidden;
     max-height: 100%;
     width: 100%;
     flex: 0 1 auto;
     display: flex;
-    padding-bottom: 1px;
 }
 
 .body-container {
@@ -563,9 +584,53 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px;
+    padding: 1rem 1rem 0 1rem;
+    height: 3rem;
 }
 
-.demo-content__toolbar {
-    flex: 1;
+/* resizer */
+
+.left-menu__resizer{
+    cursor: e-resize;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    padding-left: 5px;
+    right: 0;
+    position: absolute;
+    z-index: 5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
+
+.left-menu__resizer:before,
+.left-menu__resizer:after{
+    content: '';
+    width: 1px;
+    height: 20px;
+    position: absolute;
+    left: 1px;
+    top:50%;
+    margin-top: -10px;
+    visibility: hidden;
+}
+.left-menu__resizer:after{
+    left: auto;
+    right: -5px;
+}
+.left-menu__resizer:hover:before,
+.left-menu__resizer:hover:after{
+    visibility: visible;
+}
+.left-menu__resizer{
+    border-right: 1px solid transparent;
+}
+.left-menu__resizer:hover{
+    border-right-color: #8f979c;
+}
+.left-menu__resizer:before,
+.left-menu__resizer:after{
+    background-color: #8f979c;
+}
+
+/* end of resizer */

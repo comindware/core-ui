@@ -13,7 +13,7 @@ const defaultOptions = {
  * @param {string} options.defaultURL - Default image URL to display when neither image value for <code>getImage</code>
  * method nor full name for {@link module:core.form.editors.AvatarEditorView AvatarEditorView} provided.
  */
-export default Marionette.Object.extend({
+export default Marionette.MnObject.extend({
     /**
      * Object containing default options to be used when no corresponding options are provided while instantiating controller
      */

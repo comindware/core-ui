@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const pathResolver = require('./pathResolver');
 
 const jsFileName = 'core.js';
@@ -32,6 +31,7 @@ module.exports = options => {
                         pathResolver.node_modules(),
                         pathResolver.source('external'),
                         pathResolver.source('collections'),
+                        pathResolver.source('services/AjaxService.js'),
                         pathResolver.source('Meta.js'),
                         pathResolver.source('form/editors/impl/dateTime/views/initializeDatePicker.js'),
                         pathResolver.tests(),
@@ -45,11 +45,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /\.tsx?$/,
-                    loader: 'ts-loader',
-                    exclude: /node_modules/
-                },
-                {
                     test: /\.(ts)|(js)$/,
                     loader: 'babel-loader',
                     exclude: [pathResolver.node_modules()],
@@ -61,19 +56,19 @@ module.exports = options => {
                                 '@babel/preset-env',
                                 {
                                     targets: {
-                                        ie: 11,
-                                        chrome: 58
+                                        ie: 11
                                     },
                                     useBuiltIns: 'usage',
-                                    modules: false,
-                                    loose: true
+                                    corejs: 3,
+                                    modules: false
                                 }
                             ]
                         ],
                         plugins: [
                             require('@babel/plugin-proposal-optional-chaining'),
                             require('@babel/plugin-proposal-object-rest-spread'),
-                            require('@babel/plugin-transform-parameters')
+                            require('@babel/plugin-transform-parameters'),
+                            require('@babel/plugin-proposal-class-properties')
                         ],
                         cacheDirectory: true
                     }
@@ -266,38 +261,19 @@ module.exports = options => {
             extensions: ['.ts', '.js', '.json']
         },
         devServer: {
-            stats: {
-                colors: true,
-                chunks: false,
-                source: false,
-                hash: false,
-                modules: false,
-                errorDetails: true,
-                version: false,
-                assets: false,
-                chunkModules: false,
-                children: false
-            }
+            noInfo: true,
+            stats: 'minimal'
         }
     };
 
     if (!TEST) {
-        webpackConfig.entry = ['@babel/polyfill', pathResolver.source('coreApi.js')];
+        webpackConfig.entry = [pathResolver.source('coreApi.js')];
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,
             library: 'core',
             libraryTarget: 'umd'
         };
-        if (options.clean !== false) {
-            webpackConfig.plugins.push(
-                new CleanWebpackPlugin([pathResolver.compiled()], {
-                    root: pathResolver.root(),
-                    verbose: false,
-                    exclude: ['localization']
-                })
-            );
-        }
     }
     if (TEST_COVERAGE) {
         webpackConfig.module.rules.push({

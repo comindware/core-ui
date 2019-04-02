@@ -23,7 +23,7 @@ export default {
         if (channel) {
             channel.controllers.forEach(listener => {
                 if (listener.id !== controller.id) {
-                    listener.triggerMethod('eventName', options);
+                    listener.trigger('eventName', options);
                 }
             });
         }

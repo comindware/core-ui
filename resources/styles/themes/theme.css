@@ -81,7 +81,7 @@ body {
   color: var(--editor-text-color);
 }
 
-.editor_empty{
+.editor.context_select.editor_empty{
   color: var(--editor-empty-text-color);
 }
 
@@ -91,13 +91,56 @@ body {
 .editor_readonly .input:hover,
 .editor_disabled .textarea,
 .editor_readonly .textarea,
-.editor_disabled .bubbles__list,
-.editor_disabled .bubbles__list:hover,
-.editor_readonly .bubbles__list,
-.editor_readonly .bubbles__list:hover,
+.editor_disabled .bubbles,
+.editor_disabled .bubbles:hover,
+.editor_readonly .bubbles,
+.editor_readonly .bubbles:hover,
 .editor.context_select.editor_readonly,
 .editor.context_select.editor_disabled {
   @apply --input-disabled-theme;
+}
+
+.editor_disabled .input,
+.editor_disabled .textarea,
+.editor_disabled .bubbles,
+.editor.context_select.editor_disabled {
+  user-select: none;
+}
+
+:-ms-input-placeholder{
+  color: var(--editor-empty-text-color) !important;
+}
+
+::-ms-input-placeholder{
+  color: var(--editor-empty-text-color) !important;
+}
+::placeholder{
+  color: var(--editor-empty-text-color) !important;
+  opacity: 1;
+}
+
+.member-split.editor_readonly.editor_empty *,
+.member-split.editor_disabled.editor_empty *,
+.user-avatar-wrp.editor_readonly.editor_empty *,
+.user-avatar-wrp.editor_disabled.editor_empty *,
+.editor_icon.editor_readonly.editor_empty *,
+.editor_icon.editor_disabled.editor_empty *{
+  display: none;
+}
+.member-split.editor_readonly.editor_empty::after,
+.member-split.editor_disabled.editor_empty::after,
+.user-avatar-wrp.editor_readonly.editor_empty::after,
+.user-avatar-wrp.editor_disabled.editor_empty::after,
+.editor_icon.editor_readonly.editor_empty::after,
+.editor_icon.editor_disabled.editor_empty::after{
+  content: '-';
+  color: var(--editor-empty-text-color) !important;
+  opacity: 1;
+}
+.user-avatar-wrp.editor_readonly.editor_empty,
+.user-avatar-wrp.editor_disabled.editor_empty{
+  width: auto;
+  height: auto;
 }
 
 .cell .editor_disabled .input,
@@ -106,20 +149,20 @@ body {
 .cell .editor_readonly .input:hover,
 .cell .editor_disabled .textarea,
 .cell .editor_readonly .textarea,
-.cell .editor_disabled .bubbles__list,
-.cell .editor_disabled .bubbles__list:hover,
-.cell .editor_readonly .bubbles__list,
-.cell .editor_readonly .bubbles__list:hover,
+.cell .editor_disabled .bubbles,
+.cell .editor_disabled .bubbles:hover,
+.cell .editor_readonly .bubbles,
+.cell .editor_readonly .bubbles:hover,
 .cell .editor.context_select.editor_readonly,
 .cell .editor.context_select.editor_disabled {
   @apply --cell-input-disabled-theme;
 }
 
-.error .editor .input,
-.error .editor .textarea,
-.error .editor .bubbles__list,
-.error .editor .popout-field-user,
-.error .editor_date-time {
+.editor_error.editor .input,
+.editor_error.editor .textarea,
+.editor_error.editor .bubbles,
+.editor_error.editor .popout-field-user,
+.editor_error.editor_date-time {
   border-color: var(--error-color);
 }
 
@@ -133,9 +176,18 @@ body {
     color: var(--text-color);
 }
 
-.editor .bubbles .bubbles__i.bubble_focused{
+.bubbles__i{
+  border: var(--focus);
+  border-color: transparent;
+}
+
+.bubbles__i.bubble__focused{
     border: var(--focus);
     border-radius: 4px;
+}
+.reference-btn.bubble__focused{
+  border: var(--focus);
+  border-radius: 4px;
 }
 /*------------------ End Form Editor ------------------*/
 
@@ -163,6 +215,17 @@ body {
   @apply --textarea-theme;
   min-height: var(--textarea-min-height);
   padding: var(--textarea-padding);
+}
+
+.cell.editor .textarea {
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+  max-height: 35px;
+  line-height: 34px;
 }
 
 /* /textarea/ */
@@ -212,6 +275,12 @@ body {
 .editor_disabled .editor_radiobutton,
 .editor_readonly .editor_radiobutton{
   padding: var(--form-label-padding);
+}
+
+.editor_document.editor_empty.editor_disabled .emptyDocumentPlaceholder,
+.editor_document.editor_empty.editor_readonly .emptyDocumentPlaceholder{
+  padding: var(--form-label-padding);
+  margin-left: 0;
 }
 
 .radiobutton {
@@ -307,6 +376,12 @@ svg.svg-grid-icons {
   color: var(--grid-header-color);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
+  vertical-align: top;
+}
+
+
+.grid-header .cell_selection-index {
+  background-color: var(--grid-header-bg);
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
@@ -316,18 +391,28 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-header-border-last);
 }
 
-.row.selected{
-  background: transparent;
-}
-
 .cell {
   height: var(--grid-cell-height);
   line-height: var(--grid-cell-height);
   font-size: var(--grid-header-font-size);
   color: var(--text-color);
-  box-shadow: var(--grid-cell-border);
   padding: var(--grid-cell-padding);
-  background-color: var(--grid-cell-bg);
+  border: 1px solid #e2e2e2;
+}
+
+.cell.editor {
+  height: auto;
+  line-height: initial;
+  min-height: 34px;
+  max-height: 34px;
+}
+
+.compact.grid-container .cell.editor{
+  height: auto;
+  line-height: initial;
+  font-size: 12px;
+  min-height: 26px;
+  max-height: 26px;
 }
 
 .cell .layout__vertical-layout {
@@ -354,6 +439,13 @@ svg.svg-grid-icons {
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
+  box-shadow: var(--grid-cell-border-first);
+  padding-left: 10px;
+}
+
+.cell_draggable {
+  color: var(--grid-selection-color);
+  width: 25px;
   background-color: var(--grid-selection-bg);
   box-shadow: var(--grid-cell-border-first);
 }
@@ -369,7 +461,7 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
-.row-checked .cell,
+tr.row-checked,
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
   background-color: #c2d7e5;
@@ -379,23 +471,22 @@ svg.svg-grid-icons {
   color: #666;
 }
 
-.selected .cell,
-.cell_selection.selected,
-.cell_selection-index.selected{
-  background-color: var(--grid-row-selected-color);
+tr.selected,
+tr.selected .cell_selection,
+tr.selected .cell_selection-index{
   background-color: #eaf3f8;
 }
 
-.row.hover .cell, .cell_selection.hover, .cell_selection-index.hover {
-  background-color: var(--grid-row-hover-color);
+.row-checked .cell_selection,
+.row-checked .cell_selection-index{
+  background-color: #c2d7e5;
+  color: #666;
+}
+
+tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background-color: #efefef;
 }
 
-.cell_selection.row-checked.selected,
-.cell_selection.row-checked.hover,
-.cell_selection-index.row-checked.hover{
-  color: #c1c1c1;;
-}
 
 .row.hover__transition .cell, .cell_selection.hover__transition, .cell_selection-index.hover__transition {
   /* delay used in js TRANSITION_DELAY*/
@@ -418,6 +509,10 @@ svg.svg-grid-icons {
   font-size: var(--grid-checkbox-icon-size);
   width: var(--grid-checkbox-size);
   height: var(--grid-checkbox-size);
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -8px;
 }
 
 .cell .input {
@@ -426,10 +521,6 @@ svg.svg-grid-icons {
 
 .grid-selection-cell-all {
   min-width: var(--grid-selection-width);
-}
-
-.grid-selection-panel {
-  width: var(--grid-selection-width);
 }
 
 .grid-selection-cell-all {
@@ -445,10 +536,14 @@ svg.svg-grid-icons {
 
 .cell_selection-index {
   width: var(--grid-selection-index-width);
-  padding: 0 var(--grid-selection-index-padding-x);
+  padding: 0 var(--grid-selection-index-padding-checkbox) 0 var(--grid-selection-index-padding-x);
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
-  box-shadow: var(--grid-cell-border-first);
+  border: 1px solid #e2e2e2;
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  z-index: 10;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -459,9 +554,10 @@ svg.svg-grid-icons {
 }
 
 .cell__dots{
-  left: -6px;
+  position: absolute;
+  top: 0;
+  left: 3px;
   width: 2px;
-  position: relative;
 }
 
 .cell__dots svg{
@@ -477,7 +573,9 @@ svg.svg-grid-icons {
 .cell-focused.error{
   outline-color: #e61212 !important;
 }
-
+.cell_selection.cell-focused{
+  outline: none !important;
+}
 
 .collapsible-btn {
   position: relative;
@@ -572,7 +670,7 @@ svg.svg-grid-icons {
 
 /* Dropdown Bubbles */
 
-.bubbles__list {
+.bubbles {
   @apply --input-theme;
   padding: var(--dropdown-padding);
 }
@@ -580,9 +678,9 @@ svg.svg-grid-icons {
   @apply --dropdown-caret-theme;
 }
 .editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {
-  color: inherit;
+  display: none;
 }
-.bubbles__list .editor__icons {
+.bubbles .editor__icons {
   cursor: pointer;
   transform: none;
   top: var(--bubbles-icon-offset-x);
@@ -610,24 +708,48 @@ svg.svg-grid-icons {
 .bubbles__i {
   @apply --bubbles-item-theme;
 }
+.bubbles__i:hover {
+  /*@apply --bubbles-item-theme-hover;*/
+}
+
+.bubbles__list .bubbles__i + .bubbles__i{
+  margin-left: 5px;
+}
 .bubbles__i a,
 .bubbles__i span {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
+}
+.bubbles__i:hover a,
+.bubbles__i:hover span {
+  width: calc(100% - 20px);
+  
 }
 
-.bubbles__list .bubbles__caret,
-.bubbles__list .spinner {
-  @apply --absolute-center-theme;
+.bubbles .bubbles__caret,
+.bubbles .spinner {
+  @apply --absolute-center-y-theme;
+}
+.bubbles .bubble-doc_icon{
+  /* @apply --relative-center-y-theme; this stuff not working! */
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+}
+.bubbles .bubble-doc_text{
+  height: 100%;
+  line-height: 100%;
 }
 .bubbles .spinner {
   line-height: 1;
   right: 0;
 }
 
-.cell .bubbles__list {
+.cell .bubbles {
   padding-left: 0;
   height: 100%;
   border: none;
@@ -635,8 +757,8 @@ svg.svg-grid-icons {
   flex-wrap: nowrap;
   align-items: center;
 }
-.cell .editor_disabled .bubbles__list,
-.cell .editor_readonly .bubbles__list {
+.cell .editor_disabled .bubbles,
+.cell .editor_readonly .bubbles {
   background: transparent;
 }
 
@@ -686,6 +808,9 @@ svg.svg-grid-icons {
 }
 .btn-pale:active{
   @apply --button-pale-active-theme;
+}
+.layout__button .btn:focus{
+  outline: var(--focus);
 }
 
 /* tabs */
@@ -790,6 +915,9 @@ svg.svg-grid-icons {
   color: #636262;
 } */
 
+.split-btn_low{
+  @apply --toolbar-btn-low-theme;
+}
 .toolbar-btn_low{
   @apply --toolbar-btn-low-theme;
 }
@@ -800,6 +928,9 @@ svg.svg-grid-icons {
   @apply --toolbar-btn-low-active-theme;
 }
 
+.split-btn_normal{
+  @apply --toolbar-btn-normal-theme;
+}
 .toolbar-btn_normal{
   @apply --toolbar-btn-normal-theme;
 }
@@ -810,6 +941,9 @@ svg.svg-grid-icons {
   @apply --toolbar-btn-normal-active-theme;
 }
 
+.split-btn_major{
+  @apply --toolbar-btn-major-theme;
+}
 .toolbar-btn_major{
   @apply --toolbar-btn-major-theme;
 }
@@ -820,6 +954,9 @@ svg.svg-grid-icons {
   @apply --toolbar-btn-major-active-theme;
 }
 
+.split-btn_critical{
+  @apply --toolbar-btn-critical-theme;
+}
 .toolbar-btn_critical{
   @apply --toolbar-btn-critical-theme;
 }
@@ -830,6 +967,9 @@ svg.svg-grid-icons {
   @apply --toolbar-btn-critical-active-theme;
 }
 
+.split-btn_fatal{
+  @apply --toolbar-btn-fatal-theme;
+}
 .toolbar-btn_fatal{
   @apply --toolbar-btn-fatal-theme;
 }
@@ -914,6 +1054,7 @@ svg.svg-grid-icons {
 
 .layout__popup-view-window {
   background: var(--popup-window-bg);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .layout__popup-view-header {
@@ -1087,6 +1228,11 @@ svg.svg-grid-icons {
 }
 .documents__drop-zone.documents__drop-zone--active {
   @apply --drop-zone-active-theme;
+}
+
+.editor_document.editor_readonly .documents__drop-zone,
+.editor_document.editor_disabled .documents__drop-zone{
+  display: none;
 }
 
 .documents__wrapper {

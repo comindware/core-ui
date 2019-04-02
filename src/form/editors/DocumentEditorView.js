@@ -1,13 +1,14 @@
 // @flow
 import PromiseService from '../../services/PromiseService';
 import template from './templates/documentEditor.html';
-import BaseCompositeEditorView from './base/BaseCompositeEditorView';
+import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
 import PanelView from './impl/datalist/views/PanelView';
 import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView.js';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
+import DocumentsCollection from './impl/document/collections/DocumentsCollection';
 
 const classes = {
     dropZone: 'documents__drop-zone',
@@ -20,31 +21,24 @@ const MultiselectAddButtonView = Marionette.View.extend({
     template: Handlebars.compile('{{text}}')
 });
 
-const defaultOptions = {
+const defaultOptions = options => ({
     readonly: false,
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
     showRevision: true,
-    showAll: false,
+    showAll: Boolean(options.isCell),
     createDocument: null,
     removeDocument: null,
-    displayText: ''
-};
+    displayText: '',
+    isCell: false
+});
 
-export default (formRepository.editors.Document = BaseCompositeEditorView.extend({
+export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
 
-        this.collection = new Backbone.Collection(this.value);
-
-        this.on('change', this.checkEmpty.bind(this));
-        this.on('uploaded', documents => {
-            if (this.options.multiple === false) {
-                this.collection.reset();
-            }
-            this.addItems(documents);
-        });
+        this.collection = new DocumentsCollection(this.value);
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -61,10 +55,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
         this.createdUrls = [];
-    },
-
-    checkEmpty() {
-        this.$el.toggleClass('pr-empty', this.collection && this.collection.length === 0);
     },
 
     canAdd: false,
@@ -100,22 +90,24 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     templateContext() {
         return Object.assign(this.options, {
-            displayText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            placeHolderText: this.options.readonly ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
     },
 
-    events: {
-        'click @ui.showMore': 'toggleShowMore',
-        keydown: '__handleKeydown',
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick',
-        'dragenter @ui.form': '__onDragenter',
-        'dragover @ui.form': '__onDragover',
-        'dragleave @ui.form': '__onDragleave',
-        'drop @ui.form': '__onDrop'
+    events() {
+        return {
+            'click @ui.showMore': 'toggleShowMore',
+            keydown: '__handleKeydown',
+            'change @ui.fileUpload': 'onSelectFiles',
+            [`click @ui.${this.options.schema?.isCell ? 'form' : 'fileUploadButton'}`]: '__onItemClick',
+            'dragenter @ui.form': '__onDragenter',
+            'dragover @ui.form': '__onDragover',
+            'dragleave @ui.form': '__onDragleave',
+            'drop @ui.form': '__onDrop'
+        };
     },
 
     childViewEvents: {
@@ -131,8 +123,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         return this.value;
     },
 
-    onRender() {
-        this.renderUploadButton(this.options.readonly);
+    isEmptyValue() {
+        return !this.collection.length;
     },
 
     onDestroy() {
@@ -198,14 +190,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             : [];
     },
 
-    renderUploadButton(isReadonly) {
-        this.el.querySelector('.documents__text').hidden = isReadonly;
-        this.ui.fileUploadButton.toggle(!isReadonly);
-    },
-
     addItems(items) {
         this.onValueAdd(items);
-        this.__onCollectionLengthChange();
+        this.__updateEmpty();
     },
 
     removeItem(view) {
@@ -223,24 +210,12 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         }
     },
 
-    __setEnabled(enabled) {
-        BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
-        this.renderUploadButton(!enabled);
-    },
-
-    __setReadonly(readonly) {
-        BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.renderUploadButton(readonly);
-        }
-    },
-
     __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
         this.value = value;
-        this.collection.set(value);
+        this.collection.set(value || []);
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -264,6 +239,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     uploadUrl: '/api/UploadAttachment',
 
+    openFileUploadWindow() {
+        this.ui.fileUpload.click();
+    },
+
     __onItemClick() {
         this.ui.fileUpload.click();
     },
@@ -282,6 +261,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     _uploadFiles(files, items) {
         this.trigger('beforeUpload');
+        this.trigger('set:loading', true);
         //todo loading
         if (items) {
             //todo wtf
@@ -354,6 +334,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             resultObjects.push(obj);
         }
         this.trigger('uploaded', resultObjects);
+        if (this.options.multiple === false) {
+            this.collection.reset();
+        }
+        this.addItems(resultObjects);
 
         const config = {
             url: this.uploadUrl,
@@ -373,15 +357,16 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
                     const model = this.collection.findWhere({ uniqueId: resultObjects[i]?.uniqueId });
                     if (model) {
+                        const streamId = tempResult.fileIds[i];
                         model.set({
-                            streamId: tempResult.fileIds[i],
+                            streamId,
                             isLoading: false
                         });
-                        model.unset('uniqueId');
                         const id = this.options.createDocument?.(model.toJSON());
                         if (id) {
                             model.set({ id });
                         }
+                        model.set({ uniqueId: id || streamId });
                     }
                 }
                 this.internalChange = true;
@@ -389,12 +374,15 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.internalChange = false;
                 this.ui.form.trigger('reset');
                 this.__triggerChange();
+                this.trigger('set:loading', false);
             },
             error: () => {
+                this.trigger('set:loading', false);
                 this.trigger('failed');
             }
         };
 
+        // eslint-disable-next-line no-undef
         PromiseService.registerPromise($.ajax(config), true);
     },
 
@@ -506,12 +494,13 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         if (this.isDestroyed()) {
             return;
         }
-        if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
+        const documentElements = this.$container.children();
+        if (documentElements.length === 0) {
             this.ui.showMore.hide();
             return;
         }
         const affordabletWidth = this.$el.width();
-        const childViews = this.getChildViewContainer(this).children();
+        const childViews = documentElements;
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
         const length = this.collection.length;
@@ -531,13 +520,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         } else {
             this.ui.showMore.hide();
         }
-        this.__onCollectionLengthChange();
     },
 
     expandShowMore() {
-        this.getChildViewContainer(this)
-            .children()
-            .show();
+        this.$container.children().show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },

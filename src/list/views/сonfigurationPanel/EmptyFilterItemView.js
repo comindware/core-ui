@@ -1,3 +1,3 @@
 export default Marionette.View.extend({
-    template: false
+    template: _.noop,
 });

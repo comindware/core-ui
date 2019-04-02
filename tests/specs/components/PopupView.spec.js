@@ -4,12 +4,12 @@ import 'jasmine-jquery';
 const $ = core.lib.$;
 
 describe('Components', () => {
-    describe('PopupView', () => {
-        afterEach(() => {
-            core.services.WindowService.closePopup();
-        });
+    afterEach(() => {
+        core.services.WindowService.closePopup(null, true);
+    });
 
-        it('should open and close popup on base init', done => {
+    describe('PopupView', () => {
+        it('should open and close popup on base init', () => {
             const popupView = new core.layout.Popup({
                 size: {
                     width: 700,
@@ -28,7 +28,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -38,17 +38,11 @@ describe('Components', () => {
             });
 
             core.services.WindowService.showPopup(popupView);
-
-            expect(document.contains(popupView.el)).toEqual(true);
-            core.services.WindowService.closePopup();
-
-            const int = setInterval(() => {
-                if ($('.js-core-ui__global-popup-region').find('.js-window').length === 0) {
-                    clearInterval(int);
-                    expect($('.js-core-ui__global-popup-region').find('.js-window').length).toEqual(0);
-                    done();
-                }
-            }, 100);
+            let popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
+            expect(popupEl.length).toEqual(1);
+            core.services.WindowService.closePopup(null, true);
+            popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
+            expect(popupEl.length).toEqual(0);
         });
 
         it('should match it configuration size', () => {
@@ -70,7 +64,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -105,7 +99,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -140,7 +134,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -175,7 +169,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -209,7 +203,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],
@@ -219,7 +213,7 @@ describe('Components', () => {
             });
 
             core.services.WindowService.showPopup(popupView);
-            const buttons = popupView.$el.find('.btn__text');
+            const buttons = $('.js-core-ui__global-popup-region').find('.js-window .toolbar-btn__text');
 
             expect(buttons.length).toEqual(2);
         });
@@ -243,7 +237,7 @@ describe('Components', () => {
                         id: 'reject',
                         text: 'Reject',
                         handler() {
-                            core.services.WindowService.closePopup();
+                            core.services.WindowService.closePopup(null, true);
                         }
                     }
                 ],

@@ -35,7 +35,8 @@ export default Marionette.View.extend({
 
     attributes() {
         return {
-            draggable: this.getOption('draggable')
+            draggable: this.getOption('draggable'),
+            showCheckbox: this.getOption('showCheckbox')
         };
     },
 
@@ -46,12 +47,13 @@ export default Marionette.View.extend({
         }
         return {
             draggable: this.getOption('draggable'),
-            index
+            index,
+            showCheckbox: this.getOption('showCheckbox')
         };
     },
 
     className() {
-        return `${this.getOption('draggable') ? 'js-dots' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
+        return `${this.getOption('draggable') ? 'js-dots cell_draggable' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
     },
 
     ui: {
@@ -60,8 +62,32 @@ export default Marionette.View.extend({
         index: '.js-index'
     },
 
-        //'dragstart @ui.dots': '__handleDragStart', !! todo
-        //'dragend @ui.dots': '__handleDragEnd',
+    events: {
+        'pointerdown @ui.checkbox': '__handleCheckboxClick',
+        dragstart: '__handleDragStart',
+        dragend: '__handleDragEnd',
+        click: '__handleClick',
+        dblclick: '__handleDblClick',
+        dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
+        dragleave: '__handleDragLeave',
+        drop: '__handleDrop',
+        mouseleave: '__handleMouseLeave',
+        contextmenu: '__handleContextMenu'
+    },
+
+    modelEvents: {
+        'update:model': '__updateIndex',
+        selected: '__handleSelection',
+        deselected: '__handleDeselection',
+        dragover: '__handleModelDragOver',
+        dragleave: '__handleModelDragLeave',
+        drop: '__handleModelDrop',
+        blink: '__blink',
+        checked: '__addCheckedClass',
+        unchecked: '__removeCheckedClass'
+    },
+
     onRender() {
         this.__updateState();
 
@@ -226,24 +252,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleMouseEnter() {
-        if (this.model) {
-            this.model.trigger('mouseenter');
-        }
-    },
-
     __handleModelMouseEnter() {
         this.el.classList.add(classes.hover);
-    },
-
-    __handleMouseLeave() {
-        if (this.model) {
-            this.model.trigger('mouseleave');
-        }
-    },
-
-    __handleModelMouseLeave() {
-        this.el.classList.remove(classes.hover);
     },
 
     __blink() {

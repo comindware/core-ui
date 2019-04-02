@@ -1,9 +1,5 @@
 import template from '../templates/popoutButton.html';
 
-const classes = {
-    EMPTY: 'dev-context-editor__empty'
-};
-
 export default Marionette.View.extend({
     tagName: 'span',
 
@@ -14,15 +10,12 @@ export default Marionette.View.extend({
     templateContext() {
         const value = this.model.get('value');
         return {
-            buttonText: value || Localizer.get('CORE.GRID.NOTSET')
+            buttonText: value || this.model.get('placeholder')
         };
     },
 
     modelEvents: {
-        'change:value': 'render'
-    },
-
-    onRender() {
-        this.$el.toggleClass(classes.EMPTY, !this.model.get('value'));
+        'change:value': 'render',
+        'change:placeholder': 'render'
     }
 });

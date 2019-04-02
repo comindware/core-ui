@@ -1,5 +1,4 @@
 import FieldView from '../fields/FieldView';
-import SimplifiedFieldView from '../fields/SimplifiedFieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 import transliterator from '../../utils/transliterator';
 
@@ -11,7 +10,7 @@ const componentTypes = {
 // every of options.transliteratedFields becomes required-like, and overwrite next property in schema { changeMode: 'blur', autocommit: true, forceCommit: true}
 // allowEmptyValue: true; // in schema turn off required-like behavior for name
 
-const Form = Marionette.Object.extend({
+const Form = Marionette.MnObject.extend({
     /**
      * Constructor
      *
@@ -37,7 +36,7 @@ const Form = Marionette.Object.extend({
 
         Object.entries(this.schema).forEach(entry => {
             const fieldScema = entry[1];
-            const FieldType = fieldScema.field || options.field || (fieldScema.simplified ? SimplifiedFieldView : FieldView); //TODO fix api
+            const FieldType = fieldScema.field || options.field || FieldView; //TODO fix api
             let field;
             try {
                 field = new FieldType({
@@ -45,7 +44,7 @@ const Form = Marionette.Object.extend({
                     schema: fieldScema,
                     model: this.model
                 });
-                this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+                this.listenTo(field, 'all', this.__handleEditorEvent);
             } catch (e) {
                 field = new ErrorPlaceholderView();
                 Core.InterfaceError.logError(e, field.getId());
@@ -63,7 +62,7 @@ const Form = Marionette.Object.extend({
             const currentView = region.currentView;
             if (currentView) {
                 currentView._isAttached = true;
-                currentView.triggerMethod('attach');
+                currentView.trigger('attach');
             }
         });
     },
@@ -115,7 +114,7 @@ const Form = Marionette.Object.extend({
         if (!field) {
             throw new Error(`Field not found: ${key}`);
         }
-        return field.editor;
+        return field;
     },
 
     /**
@@ -172,7 +171,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = Object.values(this.fields).find(f => f.editor.hasFocus);
+                    const focusedField = Object.values(this.fields).find(f => f.editor?.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
@@ -260,7 +259,7 @@ const Form = Marionette.Object.extend({
         if (!field) {
             return;
         }
-        field.editor.focus();
+        field.focus();
     },
 
     /**
@@ -271,9 +270,9 @@ const Form = Marionette.Object.extend({
             return;
         }
 
-        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.hasFocus);
         if (focusedField) {
-            focusedField.editor.blur();
+            focusedField.blur();
         }
     },
 
@@ -288,8 +287,7 @@ const Form = Marionette.Object.extend({
                 const fieldRegion = view.addRegion(regionName, { el });
                 this.regions.push(fieldRegion); //todo chech this out
                 if (this.fields[key]) {
-                    const componentView = componentType === componentTypes.field ? this.fields[key] : this.fields[key].editor;
-                    view.showChildView(regionName, componentView);
+                    view.showChildView(regionName, this.fields[key]);
                 }
             }
         });
@@ -324,15 +322,8 @@ const Form = Marionette.Object.extend({
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         view.renderForm = this.__renderForm.bind(this);
-    },
-
-    defaults: {
-        model() {
-            return this.model;
-        },
-        schema() {
-            return this.schema;
-        }
+        this.model = options.model;
+        this.schema = options.schema;
     },
 
     onRender() {
@@ -381,6 +372,7 @@ export default Marionette.Behavior.extend({
         if (this.view.initForm) {
             this.view.initForm();
         }
-        this.view.triggerMethod('form:render', form);
+        this.view.trigger('form:render', form);
+        this.view.onFormRender?.apply(this.view, form);
     }
 });

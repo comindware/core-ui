@@ -1,14 +1,14 @@
+//@flow
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
-import RoutingService from '../services/RoutingService';
 import ToastNotificationService from '../services/ToastNotificationService';
+import RoutingService from '../services/RoutingService';
 import PresenterService from '../services/PresenterService';
-import Marionette from 'backbone.marionette';
-import Backbone from 'backbone';
 
-export default Marionette.Object.extend({
+export default class Controller {
     constructor(options = {}) {
-        Marionette.Object.prototype.constructor.apply(this, arguments);
+        this.moduleRegion = window.contentRegion;
+        this.options = options;
         /*
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
         if (WebSocketService.isConnected()) {
@@ -16,11 +16,10 @@ export default Marionette.Object.extend({
         }
         */
         this.moduleId = options.config.id;
-    },
+        this.initialize && this.initialize(options);
+    }
 
-    moduleRegion: window.contentRegion,
-
-    leave(isCalledByUnloadEvent: boolean) {
+    leave(isCalledByUnloadEvent) {
         if (typeof this.onLeave === 'function') {
             const moduleLeaveConfig = this.onLeave();
 
@@ -36,24 +35,22 @@ export default Marionette.Object.extend({
         }
 
         return this.__checkPromisesAndLeave(true);
-    },
+    }
 
-    setLoading(isLoading: boolean) {
+    static setLoading(isLoading) {
         RoutingService.setModuleLoading(isLoading);
         if (isLoading === false) {
             this.__onModuleReady();
         }
-    },
-
-    contentViewOptions: null,
+    }
 
     triggerEvent(eventId, data) {
         CTEventsService.triggerStorageEvent(eventId, data);
-    },
+    }
 
     sendWebSocketMessage(data) {
         WebSocketService.send(this.moduleId, data);
-    },
+    }
 
     async handleRouterEvent(configuration, callParams) {
         const { view, viewModel, additionalViewOptions, errorView, viewEvents, routingAction, urlParams } = configuration;
@@ -65,7 +62,7 @@ export default Marionette.Object.extend({
                 if (errorView) {
                     const presentingView = new errorView();
                     if (viewEvents) {
-                        Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                     }
                     this.moduleRegion.show(presentingView);
                 }
@@ -80,7 +77,7 @@ export default Marionette.Object.extend({
 
                     const presentingView = new view(viewParams);
                     if (viewEvents) {
-                        Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                        Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                     }
                     presentingView.request = this.__handleViewResourceRequest.bind(this);
                     this.moduleRegion.show(presentingView);
@@ -95,13 +92,18 @@ export default Marionette.Object.extend({
                 viewParams.currentState = callParams;
                 const presentingView = new view(viewParams);
                 if (viewEvents) {
-                    Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                    Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key]));
                 }
                 presentingView.request = this.__handleViewResourceRequest.bind(this);
                 this.moduleRegion.show(presentingView);
             }
         }
-    },
+    }
+
+    destroy(...rest) {
+        this.moduleRegion.reset();
+        this.onDestroy?.(...rest);
+    }
 
     __checkPromisesAndLeave(canLeave) {
         if (Core.services.PromiseService.checkBeforeLeave()) {
@@ -111,19 +113,19 @@ export default Marionette.Object.extend({
         }
 
         return canLeave;
-    },
+    }
 
     __handleEvent(data) {
         if (this.eventsHandlers && this.eventsHandlers[data.id]) {
             this.eventsHandlers[data.id](data.data);
         }
-    },
+    }
 
     __handleSocketEvent(data) {
         if (this.eventsHandlers && this.moduleId === data.id && this.eventsHandlers.onWebSocketMessage) {
             this.eventsHandlers.onWebSocketMessage.call(this, data.data);
         }
-    },
+    }
 
     //todo extract view params and pass to failure
     async __request(configuration, methodParams, callParams) {
@@ -155,7 +157,7 @@ export default Marionette.Object.extend({
         } finally {
             showMask && RoutingService.setModuleLoading(false);
         }
-    },
+    }
 
     async __handleViewResourceRequest(requestId, requestData) {
         const requestConfig = this.requests[requestId];
@@ -191,13 +193,13 @@ export default Marionette.Object.extend({
             }
         }
         return null; //todo handle error
-    },
+    }
 
     __applyState(callParams, parameters) {
         this.currentState = {};
 
         parameters.forEach((param, i) => (this.currentState[param.name] = callParams[i]));
-    },
+    }
 
     __applyCallParamsFilter(callParams, urlParams, routingAction) {
         if (routingAction && urlParams) {
@@ -211,11 +213,11 @@ export default Marionette.Object.extend({
         }
 
         return callParams;
-    },
+    }
 
-    __onModuleReady() {
+    static __onModuleReady() {
         if (this.componentQuery) {
             PresenterService.presentComponentSequence(this.componentQuery);
         }
     }
-});
+}

@@ -25,20 +25,18 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.listView = list.factory.createDefaultList({
+        this.listView = list.GridView({
             collection: this.options.collection,
-            listViewOptions: {
-                childView: ListItemView,
-                childViewOptions: {
-                    reqres: this.reqres
-                },
-                emptyViewOptions: {
-                    className: classes.EMPTY_VIEW
-                },
-                childHeight: config.CHILD_HEIGHT,
-                height: 'auto',
-                maxRows: 12
-            }
+            childView: ListItemView,
+            childViewOptions: {
+                reqres: this.reqres
+            },
+            emptyViewOptions: {
+                className: classes.EMPTY_VIEW
+            },
+            childHeight: config.CHILD_HEIGHT,
+            height: 'auto',
+            maxRows: 12
         });
 
         this.listenTo(this.listView, 'childview:member:select', (view, model) => {

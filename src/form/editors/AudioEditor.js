@@ -14,7 +14,7 @@ import BaseEditorView from './base/BaseEditorView';
 export default (formRepository.editors.AudioEditor = BaseEditorView.extend({
     tagName: 'audio',
 
-    template: false,
+    template: _.noop,
 
     templateContext() {
         return Object.assign(this.options, {

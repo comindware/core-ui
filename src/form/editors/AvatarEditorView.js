@@ -29,10 +29,6 @@ const defaultOptions = {
 export default (formRepository.editors.Avatar = BaseEditorView.extend({
     className: 'user-avatar-wrp',
 
-    attributes: {
-        tabindex: 0
-    },
-
     template: Handlebars.compile(template),
 
     ui: {
@@ -48,13 +44,18 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, options.schema, defaultOptions);
+        this.__applyOptions(options, defaultOptions);
 
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');
         this.__removed = false;
         this.__previewURL = null;
         this.__initFileInput();
+    },
+
+    isEmptyValue() {
+        const value = this.value || (this.key && this.model.get(this.key)) || this.getOption('fullName');
+        return !value;
     },
 
     onRender() {

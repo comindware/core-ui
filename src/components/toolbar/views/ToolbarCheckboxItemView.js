@@ -11,9 +11,13 @@ export default ActionView.extend({
     },
 
     templateContext() {
-        return {
-            checkbox: true
-        };
+        return Object.assign(
+            ActionView.prototype.templateContext.apply(this, arguments),
+            {
+                checkbox: true,
+                showName: this.model.get('name')
+            }
+        );
     },
 
     onRender() {

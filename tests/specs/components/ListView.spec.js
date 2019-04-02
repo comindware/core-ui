@@ -19,12 +19,10 @@ describe('Components', () => {
 
     describe('ListView', () => {
         it('should initialize', () => {
-            const listView = core.list.factory.createDefaultList({
+            const listView = new core.list.GridView({
                 collection: data,
-                listViewOptions: {
-                    childView: ListItemView,
-                    childHeight: 25
-                }
+                childView: ListItemView,
+                childHeight: 25
             });
 
             window.app

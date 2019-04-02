@@ -7,7 +7,7 @@ export default Marionette.View.extend({
         helpers.ensureOption(options, 'key');
     },
 
-    template: false,
+    template: _.noop,
 
     attributes() {
         return {

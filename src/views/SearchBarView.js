@@ -32,7 +32,17 @@ export default Marionette.View.extend({
 
     events: {
         'keyup @ui.input': '__trySearching',
-        'click @ui.clear': '__clear'
+        'pointerdown @ui.clear': '__clear',
+        'focus @ui.input': 'onFocus',
+        'blur @ui.input': 'onBlur'
+    },
+
+    onFocus() {
+        this.$el.addClass('focused');
+    },
+
+    onBlur() {
+        this.$el.removeClass('focused');
     },
 
     onRender() {
@@ -79,7 +89,7 @@ export default Marionette.View.extend({
     },
 
     __triggerSearch(value) {
-        this.trigger('search', value);
+        this.trigger('search', value, { model: this.model });
     },
 
     __clear() {

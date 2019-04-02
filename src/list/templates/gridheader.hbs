@@ -1,10 +1,23 @@
+{{#if showCheckbox}}
+<td class="{{cellClass}}">
+    <div class="checkbox js-checkbox">
+        <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked">
+            <use xlink:href="#icon-checked" />
+        </svg>
+    </div>
+</td>
+{{/if}}
 {{#each columns}}
-    <div class="grid-header-column {{columnClass}}" title="{{title}}">
-    {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
-    {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
-    {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
+<td class="grid-header-column" title="{{title}}">
+    <div class="header-column-wrp">
+        {{#unless alignRight}}<div class="grid-header-column-title" {{#if width}}style="width:{{width}};" {{/if}}>
+            {{title}}</div>{{/unless}}
+        {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
+        {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
         <span class="js-help-text-region collection-grid-header__help"></span>
-    {{#if alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/if}}
+        {{#if alignRight}}<div class="grid-header-column-title" {{#if width}}style="width:{{width}};" {{/if}}>{{title}}
+        </div>{{/if}}
         <div class="grid-header-dragger"></div>
     </div>
+</td>
 {{/each}}

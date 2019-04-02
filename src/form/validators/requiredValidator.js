@@ -2,22 +2,20 @@
 
 import LocalizationService from '../../services/LocalizationService';
 
-export default function(config) {
-    let options = _.extend(
-        {
-            type: 'required',
-            message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
-        },
-        config
-    );
+export default function(
+    {
+        type = 'required',
+        message = LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED'),
+        enabled = () => true
+    } = {}
+    ) {
 
-    return function required(value) {
-        const val = value instanceof Object && 'value' in value ? value.value : value;
-        options.value = val;
+    const requiredValidator = function(value) {
+        const val = _.isObject(value) && 'value' in value ? value.value : value;
 
         const err = {
-            type: options.type,
-            message: typeof options.message === 'function' ? options.message(options) : options.message
+            type,
+            message: typeof message === 'function' ? message({ type, message }) : message
         };
         if (val === null || val === undefined || val === '') {
             return err;
@@ -26,4 +24,12 @@ export default function(config) {
             return err;
         }
     };
+
+    const required = function required(value) {
+        return enabled() ? requiredValidator(value) : undefined
+    };
+
+    required.name || (required.name = 'required'); //IE has no default name.
+
+    return required;
 }

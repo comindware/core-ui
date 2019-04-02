@@ -1,8 +1,6 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
-import { moment } from '../lib';
-import _ from 'underscore';
 
 const dateTimeFormats = {
     en: {
@@ -103,7 +101,7 @@ const dateTimeFormats = {
         monthDay: { general: 'D MMMM' /* 3 декабря */ },
         yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */ },
         fullDateShortTime: {
-            general: 'D MMMM, YYYY HH:mm' /* 3 декабря 2014 19:00 */,
+            general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
@@ -161,7 +159,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         };
     },
 
-    dateISOToDuration(dateIsoString: Date, options) {
+    dateISOToDuration(dateIsoString, options) {
         const opt = _.defaults(options, { seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
         const mom = moment(dateIsoString);
 
@@ -198,7 +196,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return startDay;
     },
 
-    getDisplayDate(val: Date) {
+    getDisplayDate(val) {
         const format = this.getFormat('dateISO');
 
         return val ? moment(val).format(format) : '';
@@ -206,6 +204,9 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     getFormat(formatName) {
         const lang = LocalizationService.langCode;
+        if (!dateTimeFormats[lang][formatName]) {
+            throw new Error(`Unexpected format ${formatName}`);
+        }
         return dateTimeFormats[lang][formatName].general;
     },
 
@@ -216,11 +217,13 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return time.format(format);
     },
 
-    getTimeEditFormat(hasSeconds: boolean) {
-        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+    getTimeEditFormat(hasSeconds) {
+        return hasSeconds
+            ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time
+            : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
-    dateToDateTimeString(date: Date, formatName) {
+    dateToDateTimeString(date, formatName) {
         const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
     }

@@ -1,85 +1,15 @@
-// @flow
 import template from './templates/field.hbs';
 import dropdown from 'dropdown';
-import ErrorButtonView from './views/ErrorButtonView';
-import InfoButtonView from './views/InfoButtonView';
-import TooltipPanelView from './views/TooltipPanelView';
-import ErrosPanelView from './views/ErrosPanelView';
+import ErrorButtonView from '../../views/ErrorButtonView';
+import InfoButtonView from '../../views/InfoButtonView';
+import TooltipPanelView from '../../views/TooltipPanelView';
+import ErrosPanelView from '../../views/ErrosPanelView';
 import formRepository from '../formRepository';
 
-const classes = {
-    REQUIRED: 'required',
-    READONLY: 'readonly',
-    DISABLED: 'disabled',
-    ERROR: 'error'
-};
+const editorFieldExtention = {
+    validate(...args) {
+        const error = Object.getPrototypeOf(Object.getPrototypeOf(this)).validate.call(this, ...args);
 
-export default Marionette.View.extend({
-    initialize(options = {}) {
-        this.schema = options.schema;
-
-        this.fieldId = _.uniqueId('field-');
-
-        this.__createEditor(this.options, this.fieldId);
-
-        if (this.schema.getReadonly || this.schema.getHidden) {
-            this.listenTo(this.model, 'change', this.__updateExternalChange);
-        }
-
-        if (this.schema.updateEditorEvents) {
-            this.listenTo(this.model, this.schema.updateEditorEvents, this.__updateEditor);
-        }
-    },
-
-    templateContext() {
-        return {
-            title: this.schema.title,
-            fieldId: this.fieldId
-        };
-    },
-
-    template: Handlebars.compile(template),
-
-    regions: {
-        editorRegion: {
-            el: '.js-editor-region',
-            replaceElement: true
-        },
-        errorTextRegion: '.js-error-text-region',
-        helpTextRegion: '.js-help-text-region'
-    },
-
-    onRender() {
-        this.showChildView('editorRegion', this.editor);
-        if (this.schema.helpText) {
-            const viewModel = new Backbone.Model({
-                helpText: this.schema.helpText,
-                errorText: null
-            });
-
-            const infoPopout = dropdown.factory.createPopout({
-                buttonView: InfoButtonView,
-                panelView: TooltipPanelView,
-                panelViewOptions: {
-                    model: viewModel,
-                    textAttribute: 'helpText'
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            this.showChildView('helpTextRegion', infoPopout);
-        }
-        this.setRequired(this.schema.required);
-        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-    },
-
-    /**
-     * Check the validity of the field
-     *
-     * @return {String}
-     */
-    validate() {
-        const error = this.editor.validate();
         if (error) {
             this.setError([error]);
         } else {
@@ -93,7 +23,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.$el.addClass(classes.ERROR);
+        this.$el.parent().parent().addClass(this.classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -105,7 +35,8 @@ export default Marionette.View.extend({
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.showChildView('errorTextRegion', errorPopout);
+            this.errorsRegion.show(errorPopout);
+
             this.isErrorShown = true;
         }
     },
@@ -114,118 +45,120 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.removeClass(classes.ERROR);
+        this.$el.parent().parent().removeClass(this.classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 
-    /**
-     * Update the model with the new value from the editor
-     *
-     * @return {Mixed}
-     */
-    commit() {
-        return this.editor.commit();
-    },
+    __checkUiReady() {
+        return this.isRendered() && !this.isDestroyed();
+    }
+};
 
-    /**
-     * Get the value from the editor
-     *
-     * @return {Mixed}
-     */
-    getValue() {
-        return this.editor.getValue();
-    },
+export default class {
+    constructor(options = {}) {
+        this.fieldId = _.uniqueId('field-');
+        this.model = options.model;
+        options.template = options.template || template;
+        this.__createEditor(options, this.fieldId);
 
-    /**
-     * Set/change the value of the editor
-     *
-     * @param {Mixed} value
-     */
-    setValue(value) {
-        this.editor.setValue(value);
-    },
-
-    /**
-     * Give the editor focus
-     */
-    focus() {
-        this.editor.focus();
-    },
-
-    /**
-     * Remove focus from the editor
-     */
-    blur() {
-        this.editor.blur();
-    },
-
-    setRequired(required) {
-        if (!this.__checkUiReady()) {
-            return;
+        if (options.schema.getReadonly || options.schema.getHidden) {
+            this.model.on('change', this.__updateExternalChange);
         }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-    },
 
-    __updateEditorState(readonly, enabled) {
-        if (!this.__checkUiReady()) {
-            return;
+        if (options.schema.updateEditorEvents) {
+            this.model.on(options.schema.updateEditorEvents, this.__updateEditor);
         }
-        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
-        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
-    },
+
+        return this.editor;
+    }
 
     __updateExternalChange() {
-        if (typeof this.schema.getReadonly === 'function') {
-            this.editor.setReadonly(this.schema.getReadonly(this.model));
+        if (typeof this.options.getReadonly === 'function') {
+            this.setReadonly(Boolean(this.options.getReadonly(this.model)));
         }
-        if (typeof this.schema.getHidden === 'function') {
-            this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
+        if (typeof this.options.getHidden === 'function') {
+            this.setHidden(Boolean(this.options.getHidden(this.model)));
         }
-    },
+    }
 
     __createEditor(options, fieldId) {
         let schemaExtension = {};
 
-        if (_.isFunction(this.schema.schemaExtension)) {
-            schemaExtension = this.schema.schemaExtension(this.model);
+        if (_.isFunction(options.schema.schemaExtension)) {
+            schemaExtension = options.schema.schemaExtension(this.model);
         }
 
-        this.schema = Object.assign({}, this.schema, schemaExtension);
+        const schema = Object.assign({}, options.schema, schemaExtension);
 
-        const EditorConsturctor = typeof this.schema.type === 'string' ? formRepository.editors[this.schema.type] : this.schema.type;
+        const EditorConstructor = formRepository.editors[schema.type];
+        const FieldConstructor = EditorConstructor.extend(editorFieldExtention);
 
-        this.editor = new EditorConsturctor({
-            schema: this.schema,
+        this.editor = new FieldConstructor({
+            ...schema,
             form: options.form,
-            field: this,
+            class: options.class,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
-            value: this.options.value,
-            fieldId
+            value: options.value,
+            fieldId,
+            tagName: options.tagName || 'div'
         });
+
         this.key = options.key;
-        this.editor.on('readonly', readonly => {
-            this.__updateEditorState(readonly, this.editor.getEnabled());
+
+        this.editor.on('before:attach', () => {
+            const fieldTempParts = Handlebars.compile(options.template)(schema);
+            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
+
+            this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
+
+            if (schema.helpText) {
+                const viewModel = new Backbone.Model({
+                    helpText: schema.helpText,
+                    errorText: null
+                });
+
+                const infoPopout = dropdown.factory.createPopout({
+                    buttonView: InfoButtonView,
+                    panelView: TooltipPanelView,
+                    panelViewOptions: {
+                        model: viewModel,
+                        textAttribute: 'helpText'
+                    },
+                    popoutFlow: 'right',
+                    customAnchor: true
+                });
+
+                this.editor.helpTextRegion = new Marionette.Region({
+                    el: this.editor.$el
+                        .parent()
+                        .parent()
+                        .find('.js-help-text-region')
+                });
+                this.editor.helpTextRegion.show(infoPopout);
+
+                this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
+            }
+            this.editor.errorsRegion = new Marionette.Region({
+                el: this.editor.$el
+                    .parent()
+                    .parent()
+                    .find('.js-error-text-region')
+            });
+            this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
         });
-        this.editor.on('enabled', enabled => {
-            this.__updateEditorState(this.editor.getReadonly(), enabled);
-        });
-    },
+    }
 
     __updateEditor() {
         this.__createEditor(this.options, this.fieldId);
         this.showChildView('editorRegion', this.editor);
-    },
+    }
 
     __createEditorId(key) {
         if (this.model) {
             return `${this.model.cid}_${key}`;
         }
         return key;
-    },
-
-    __checkUiReady() {
-        return this.isRendered() && !this.isDestroyed();
     }
-});
+}

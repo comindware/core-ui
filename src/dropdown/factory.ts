@@ -1,7 +1,6 @@
 import DefaultButtonView from './views/DefaultButtonView';
 import MenuPanelView from './views/MenuPanelView';
 import DropdownView from './views/DropdownView';
-import Backbone from 'backbone';
 
 /**
  * The factory covers common use cases of Popout/Dropdown views.

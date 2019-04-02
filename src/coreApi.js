@@ -1,4 +1,5 @@
 //@flow
+import 'core-js/stable';
 import '../resources/styles/date-picker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
@@ -43,6 +44,8 @@ import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import ThemeService from './services/ThemeService';
+import TestService from './services/TestService';
+import UIService from './services/UIService';
 
 import VirtualCollection from './collections/VirtualCollection';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
@@ -88,7 +91,9 @@ const core = {
         PromiseService,
         UserService,
         MobileService,
-        ThemeService
+        ThemeService,
+        TestService,
+        UIService
     },
     /**
      * Backbone collections of general use.

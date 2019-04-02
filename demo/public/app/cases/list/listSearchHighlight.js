@@ -1,5 +1,3 @@
-
-
 import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 
 // Most of this steps came from 'Basic Usage' example.
@@ -7,8 +5,7 @@ import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 
 export default function() {
     // 1. Create Backbone.Model that implement ListItemBehavior
-    const ListItemModel = Backbone.Model.extend({
-    });
+    const ListItemModel = Backbone.Model.extend({});
 
     // 2. Create VirtualCollection that use this model (and do other stuff maybe)
     // [NEW] apply HighlightableBehavior on it
@@ -18,10 +15,12 @@ export default function() {
 
     // 3. Get some data (inline or by collection.fetch)
     const collection = new ListItemCollection(undefined, { isSliding: true });
-    collection.reset(_.times(1000, i => ({
-        id: i + 1,
-        title: `My Task ${i + 1}`
-    })));
+    collection.reset(
+        _.times(1000, i => ({
+            id: i + 1,
+            title: `My Task ${i + 1}`
+        }))
+    );
 
     // 4. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
@@ -33,7 +32,7 @@ export default function() {
             title: '.js-title'
         },
 
-        behaviors: [ Core.list.views.behaviors.ListItemViewBehavior],
+        behaviors: [Core.list.views.behaviors.ListItemViewBehavior],
 
         // It's your responsibility to visualize text highlight
         onHighlighted(fragment) {
@@ -60,13 +59,11 @@ export default function() {
     });
 
     // 6. At last, create list view bundle (ListView and ScrollbarView)
-    const listView = Core.list.factory.createDefaultList({
+    const listView = Core.list.GridView({
         collection, // Take a note that in simple scenario you can pass in
         // a regular Backbone.Collection or even plain javascript array
-        listViewOptions: {
-            childView: ListView,
-            childHeight: 34
-        }
+        childView: ListView,
+        childHeight: 34
     });
 
     // 7. Show created views in corresponding regions

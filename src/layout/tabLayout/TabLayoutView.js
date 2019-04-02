@@ -4,6 +4,7 @@ import template from './templates/tabLayout.hbs';
 import HeaderView from './HeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 
 type Tab = { view: any, id: string };
 
@@ -60,7 +61,8 @@ export default Marionette.View.extend({
 
     regions: {
         headerRegion: '.js-header-region',
-        stepperRegion: '.js-stepper-region'
+        stepperRegion: '.js-stepper-region',
+        loadingRegion: '.js-loading-region'
     },
 
     ui: {
@@ -77,6 +79,10 @@ export default Marionette.View.extend({
     behaviors: {
         LayoutBehavior: {
             behaviorClass: LayoutBehavior
+        },
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
         }
     },
 
@@ -88,26 +94,15 @@ export default Marionette.View.extend({
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
 
-        this.__tabsCollection.each(tabModel => {
-            const regionEl = document.createElement('div');
-            regionEl.className = classes.PANEL_REGION;
-            this.ui.panelContainer.append(regionEl);
-            const region = this.addRegion(`${tabModel.id}TabRegion`, {
-                el: regionEl
+        if (this.getOption('deferRender')) {
+            const selectedTab = this.__findSelectedTab();
+            this.__renderTab(selectedTab, false);
+        } else {
+            this.__tabsCollection.forEach(model => {
+                this.__renderTab(model, false);
             });
-            const view = tabModel.get('view');
+        }
 
-            view.on('all', (...args) => {
-                args[0] = `tab:${args[0]}`;
-                this.triggerMethod(...args);
-            });
-            region.show(view);
-            tabModel.set({
-                region,
-                regionEl
-            });
-            this.__updateTabRegion(tabModel);
-        });
         this.__updateState();
         if (this.getOption('showStepper')) {
             const stepperView = new StepperView({ collection: this.__tabsCollection });
@@ -166,6 +161,9 @@ export default Marionette.View.extend({
             this.selectTabIndex = this.__getSelectedTabIndex(tab);
         }
         if (tab.get('enabled')) {
+            if (!tab.get('isRendered') && this.isRendered()) {
+                this.__renderTab(tab, Boolean(this.getOption('deferRender')));
+            }
             tab.set('selected', true);
         }
     },
@@ -238,6 +236,44 @@ export default Marionette.View.extend({
         }
     },
 
+    setLoading(state: Boolean | Promise<any>) {
+        this.loading.setLoading(state);
+    },
+
+    __renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean) {
+        const regionEl = document.createElement('div');
+        regionEl.className = classes.PANEL_REGION;
+        this.ui.panelContainer.append(regionEl);
+        const region = this.addRegion(`${tabModel.id}TabRegion`, {
+            el: regionEl
+        });
+        const view = tabModel.get('view');
+
+        view.on('all', (...args) => {
+            args[0] = `tab:${args[0]}`;
+            this.trigger(...args);
+        });
+        if (isLoadingNeeded) {
+            this.setLoading(true);
+            setTimeout(() => {
+                this.__showTab(region, tabModel, view, regionEl);
+                this.setLoading(false);
+            });
+        } else {
+            this.__showTab(region, tabModel, view, regionEl);
+        }
+    },
+
+    __showTab(region, tabModel, view, regionEl) {
+        region.show(view);
+        tabModel.set({
+            region,
+            regionEl,
+            isRendered: true
+        });
+        this.__updateTabRegion(tabModel);
+    },
+
     __findSelectedTab() {
         return this.__tabsCollection.find(x => x.get('selected'));
     },
@@ -269,12 +305,16 @@ export default Marionette.View.extend({
     },
 
     __updateTabRegion(model: Backbone.Model): void {
+        const regionEl = model.get('regionEl');
+        if (!regionEl) {
+            return;
+        }
         const selected = model.get('selected');
 
         if (selected) {
-            model.get('regionEl').classList.remove(classes.HIDDEN);
+            regionEl.classList.remove(classes.HIDDEN);
         } else {
-            model.get('regionEl').classList.add(classes.HIDDEN);
+            regionEl.classList.add(classes.HIDDEN);
         }
 
         this.trigger('changed:selectedTab', model);

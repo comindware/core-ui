@@ -1,6 +1,6 @@
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 
-export default Marionette.CompositeView.extend({
+export default Marionette.CollectionView.extend({
     className: 'dataset-options-editor dev-dataset-options-editor',
 
     template: Handlebars.compile(''), //cause can not init without template

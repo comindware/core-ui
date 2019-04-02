@@ -17,5 +17,9 @@ export default Marionette.View.extend({
 
     getId() {
         return this.id;
+    },
+
+    validate() {
+        return undefined;
     }
 });

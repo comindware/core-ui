@@ -1,4 +1,5 @@
 import 'jasmine-jquery';
+import 'jasmine-expect';
 
 const show = view => window.app
 .getView()

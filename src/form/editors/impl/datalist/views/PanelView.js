@@ -1,12 +1,12 @@
 // @flow
 import list from 'list';
-import template from '../templates/bubblePanel.hbs';
-import LocalizationService from '../../../../../services/LocalizationService';
-import AddNewButtonView from './AddNewButtonView';
-import ElementsQuantityWarningView from './ElementsQuantityWarningView';
+import template from '../templates/panel.hbs';
+import BubbleItemView from './BubbleItemView';
+import meta from '../meta';
 
 const config = {
-    CHILD_HEIGHT: 35
+    CHILD_HEIGHT: 35,
+    SELECTED_CHILD_HEIGHT: 24
 };
 
 const classes = {
@@ -15,11 +15,6 @@ const classes = {
 };
 
 export default Marionette.View.extend({
-    initialize(options) {
-        this.reqres = options.reqres;
-        this.showAddNewButton = this.options.showAddNewButton;
-    },
-
     className() {
         return `dropdown__wrp dropdown__wrp_reference ${this.options.class || ''}`;
     },
@@ -27,97 +22,119 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const showSelectedCollection = Boolean(this.options.selectedCollection);
         return {
-            showAddNewButton: this.showAddNewButton
+            showAddNewButton: Boolean(this.options.addNewItem),
+            showSelectedCollection,
+            addNewItemText: this.options.addNewItemText,
+            showCollection: this.options.showCollection,
+            showListTitle: this.options.showCollection && this.options.listTitle,
+            showSelectedTitle: showSelectedCollection && this.options.selectedTitle,
+            selectedTitle: this.options.selectedTitle,
+            listTitle: this.options.listTitle
         };
     },
 
     regions: {
+        selectedRegion: {
+            el: '.js-selected',
+            replaceElement: false //defaultList (collectionView) change parent height
+        },
         listRegion: {
             el: '.js-list-region',
             replaceElement: true
-        },
-        addNewButtonRegion: '.js-add-new-button-region',
-        listTitleRegion: '.js-list-title-region',
-        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
+        }
+    },
+
+    events() {
+        return this.options.addNewItem
+            ? {
+                  'click @ui.addNewButton': this.options.addNewItem
+              }
+            : undefined;
+    },
+
+    ui: {
+        addNewButton: '.js-add-new',
+        warning: '.js-warning',
+        selected: '.js-selected'
     },
 
     onAttach() {
         this.collection = this.getOption('collection');
+        const selectedCollection = this.options.selectedCollection;
+        if (selectedCollection) {
+            this.selected = new list.GridView({
+                collection: selectedCollection,
+                childView: BubbleItemView,
+                childViewOptions: this.options.bubbleItemViewOptions,
+                columns: [],
+                disableKeydownHandler: true,
+                customHeight: true,
+                childHeight: config.SELECTED_CHILD_HEIGHT,
+                emptyView: null
+            });
 
-        this.listView = list.factory.createDefaultList({
-            collection: this.collection,
-            listViewOptions: {
+            this.showChildView('selectedRegion', this.selected);
+        }
+
+        if (this.options.showCollection) {
+            this.listView = new list.GridView({
+                collection: this.collection,
                 class: 'datalist-panel_list',
                 childView: this.options.listItemView,
+                disableKeydownHandler: true,
+                columns: [],
                 childViewOptions: {
-                    reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,
                     showCheckboxes: this.options.showCheckboxes,
                     canSelect: this.options.canSelect
                 },
                 emptyViewOptions: {
-                    text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+                    text: Localizer.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
                     className: classes.EMPTY_VIEW
                 },
                 selectOnCursor: false,
                 childHeight: config.CHILD_HEIGHT
-            }
-        });
+            });
 
-        if (this.showAddNewButton) {
-            this.$el.addClass('dropdown__wrp_reference-button');
-            const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.showChildView('addNewButtonRegion', addNewButton);
-        }
-        this.showChildView('listRegion', this.listView);
+            this.showChildView('listRegion', this.listView);
 
-        this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
-        this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount);
+            this.__toggleExcessWarning();
 
-        this.listenTo(this.listView, 'update:height', () => {
-            this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount);
-            this.trigger('change:content');
-        });
-        this.listenTo(this.collection, 'add reset update', () => this.__toggleElementsQuantityWarning(this.collection.length, this.collection.totalCount));
+            this.listenTo(this.listView, 'update:height', () => {
+                this.trigger('change:content');
+            });
+            this.listenTo(this.collection, 'add reset update', _.debounce(this.__toggleExcessWarning, 0));
 
-        if (typeof this.options.canSelect === 'function') {
-            this.__changeSelected();
-            this.listenTo(this.collection, 'selected deselected', this.__changeSelected);
+            this.toggleSelectable();
         }
     },
 
-    onBeforeDestroy() {
-        if (typeof this.options.canSelect === 'function') {
-            this.stopListening(this.collection, 'selected deselected', this.__changeSelected);
+    toggleSelectable(canAddItem = this.options.canAddItem()) {
+        if (this.isAttached() && this.options.showCollection) {
+            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !canAddItem);
         }
     },
 
-    handleCommand(command) {
-        switch (command) {
-            case 'up':
-                this.listView.moveCursorBy(-1, { shiftPressed: false });
-                break;
-            case 'down':
-                this.listView.moveCursorBy(1, { shiftPressed: false });
-                break;
-            default:
-                break;
-        }
-    },
-
-    __changeSelected() {
+    toggleSelectAddNewButton(state) {
         if (this.isAttached()) {
-            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !this.options.canSelect());
+            this.ui.addNewButton.toggleClass(meta.classes.BUBBLE_SELECT, !!state);
         }
     },
 
-    __toggleElementsQuantityWarning(collectionLength, count) {
-        const warningRegion = this.getRegion('elementsQuantityWarningRegion');
+    __toggleExcessWarning() {
+        if (this.isDestroyed()) {
+            return;
+        }
+        const collectionLength = this.collection.length;
+        const count = this.collection.totalCount;
 
-        if (warningRegion) {
-            count > collectionLength ? warningRegion.$el.show() : warningRegion.$el.hide();
+        if (count > collectionLength) {
+            this.ui.warning[0].removeAttribute('hidden');
+        } else {
+            this.ui.warning[0].setAttribute('hidden', '');
         }
     }
 });

@@ -1,63 +1,83 @@
 // @flow
 import template from '../templates/button.hbs';
+import TextEditorView from '../../../TextEditorView';
 import BubbleCollectionView from './BubbleCollectionView';
-import LoadingView from './LoadingView';
 
-const classes = {
-    CLASS_NAME: 'bubbles',
-    DISABLED: ' disabled'
-};
-
-export default Marionette.View.extend({
+export default TextEditorView.extend({
     initialize(options) {
-        this.reqres = options.reqres;
+        TextEditorView.prototype.initialize.call(this, options);
+        this.collectionView = new BubbleCollectionView(this.options);
     },
 
     template: Handlebars.compile(template),
 
-    className() {
-        return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
-    },
+    className: 'bubbles',
 
     regions: {
         collectionRegion: {
             el: '.js-collection-region',
             replaceElement: true
+        }
+    },
+
+    focusElement: '.js-input',
+
+    ui: {
+        input: '.js-input',
+        loading: '.js-datalist-loading',
+        counterHidden: '.js-counter-hidden'
+    },
+
+    triggers: {
+        click: {
+            event: 'click',
+            preventDefault: false,
+            stopPropagation: false
         },
-        loadingRegion: '.js-datalist-loading-region'
+        'keydown @ui.input': {
+            event: 'input:keydown',
+            preventDefault: false,
+            stopPropagation: false
+        },
+        'input @ui.input': {
+            event: 'input:search',
+            preventDefault: false,
+            stopPropagation: false
+        }
     },
 
-    events: {
-        click: '__click'
-    },
-
-    __click() {
-        this.reqres.request('button:click');
-    },
+    events: false,
 
     onRender(): void {
-        this.collectionView = new BubbleCollectionView(this.options);
         this.showChildView('collectionRegion', this.collectionView);
-        this.collectionView.on('add:child remove:child', () => this.trigger('change:content'));
     },
 
-    focus(options) {
-        this.collectionView.focus(options);
-    },
-
-    blur() {
-        this.collectionView.blur();
+    setPermissions(enabled, readonly) {
+        TextEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        this.options.enabled = enabled;
+        this.options.readonly = readonly;
     },
 
     setLoading(state) {
         if (this.isDestroyed()) {
             return;
         }
-        // this.isLoading = state;
         if (state) {
-            this.showChildView('loadingRegion', new LoadingView());
+            this.ui.loading[0].removeAttribute('hidden');
         } else {
-            this.getRegion('loadingRegion').reset();
+            this.ui.loading[0].setAttribute('hidden', '');
         }
+    },
+
+    getInputValue() {
+        return this.ui.input.val && this.ui.input.val();
+    },
+
+    setInputValue(value) {
+        return this.ui.input.val && this.ui.input.val(value);
+    },
+
+    setCounter(count) {
+        this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
     }
 });

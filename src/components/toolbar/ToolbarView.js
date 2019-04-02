@@ -1,16 +1,21 @@
-//@flow
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
 import meta from './meta';
-import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
 
 const actionsMenuLabel = '⋮';
+
+const getDefaultOptions = options => ({
+    mode: 'Normal', // 'Mobile'
+    showName: options.mode !== 'Mobile',
+    class: ''
+});
 
 export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
+        _.defaults(this.options, getDefaultOptions(this.options));
 
         this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new ToolbarItemsCollection();
@@ -28,7 +33,9 @@ export default Marionette.View.extend({
         this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
     },
 
-    className: 'js-toolbar-actions toolbar-container',
+    className() {
+        return `${this.options.class || ''} js-toolbar-actions toolbar-container`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -52,9 +59,11 @@ export default Marionette.View.extend({
     __createActionsGroupsView(collection) {
         const view = new CustomActionGroupView({
             collection,
-            reqres: this.options.reqres
+            reqres: this.options.reqres,
+            mode: this.options.mode,
+            showName: this.options.showName
         });
-        this.listenTo(view, 'actionSelected', (model, options = {}) => this.trigger('command:execute', model, options));
+        this.listenTo(view, 'command:execute', (model, options = {}) => this.trigger('command:execute', model, options));
         return view;
     },
 
@@ -122,21 +131,19 @@ export default Marionette.View.extend({
     },
 
     __createDropdownActionsView() {
-        const view = Core.dropdown.factory.createMenu({
-            text: actionsMenuLabel,
-            items: this.menuItemsCollection,
-            popoutFlow: 'right',
-            customAnchor: true,
-            panelView: MenuPanelViewWithSplitter
+        const GroupView = meta.viewsByType[meta.toolbarItemType.GROUP];
+        const view = new GroupView({
+            model: new Backbone.Model({
+                items: this.menuItemsCollection
+            }),
+            customAnchor: actionsMenuLabel
         });
-        this.listenTo(view, 'execute', this.__executeDropdownCommand);
+
+        this.listenTo(view, 'action:click', this.__executeDropdownCommand);
         return view;
     },
 
-    __executeDropdownCommand(action, model, options = {}) {
-        if (model.get('type') === meta.toolbarItemType.CHECKBOX) {
-            model.toggleChecked && model.toggleChecked();
-        }
+    __executeDropdownCommand(model, options = {}) {
         this.trigger('command:execute', model, options);
     }
 });

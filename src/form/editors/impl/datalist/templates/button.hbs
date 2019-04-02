@@ -1,13 +1,11 @@
-{{#each items}}
-<div class="bubbles__i">
-    {{#if customTemplate}}{{{customTemplate}}}{{/if}}
-    {{#if url}}
-    <a href="{{url}}" target="_blank" tabindex="-1">{{text}}</a>
-    {{else}}
-    <span>{{text}}</span>
-    {{/if}}
+<div class="bubbles__list">
+    <span class="js-collection-region"></span>
+    <span class="js-counter-hidden counter-hidden"></span>
+    <span class="bubbles__form">
+        <input type="text" class="js-input bubbles__input" autocomplete="off">
+    </span>
 </div>
-{{/each}}
-<div class="js-datalist-search-region" {{#if hidden}}hidden{{/if}}></div>
-<div class="js-datalist-loading-region" ></div>
-<i class="fa fa-angle-down bubbles__caret"></i>
+<span class="spinner">
+    <i class="{{iconPrefixer 'spinner pulse'}} js-datalist-loading" hidden></i>
+</span>
+<i class="{{iconPrefixer 'angle-down'}} bubbles__caret"></i>

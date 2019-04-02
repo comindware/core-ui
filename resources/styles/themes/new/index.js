@@ -40,7 +40,7 @@ const variables = {
 
     'border-color': 'var(--grey-400)',
     'border-radius': '4px',
-    'border-radius-big': '7px',
+    'border-radius-big': '5px',
     border: '1px solid #c1c1c1',
 
     focus: '1px solid var(--blue-300)',
@@ -64,7 +64,7 @@ const variables = {
     // form editor
     'editor-font-size': 'inherit',
     'editor-text-color': 'var(--text-color)',
-    'editor-empty-text-color': 'var(--text-color)',
+    'editor-empty-text-color': 'rgba(0,0,0,.3)',
 
     // input
     'input-padding': '4px 20px 4px var(--form-input-padding)',
@@ -119,7 +119,7 @@ const variables = {
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 0 0 0 var(--grey-300)',
     'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 0px 1px 0 0 var(--grey-300)',
     'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 1px 0 0 var(--grey-300)',
-    'grid-cell-height': 'var(--grid-header-height)',
+    'grid-cell-height': '34px',
     'grid-cell-padding': '0 15px',
     'grid-cell-input-padding': '0',
     'grid-row-selected-color': 'var(--blue-100)',
@@ -130,6 +130,7 @@ const variables = {
     'grid-selection-bg': 'var(--grid-cell-bg)',
     'grid-selection-index-width': '58px',
     'grid-selection-index-padding-x': '10px',
+    'grid-selection-index-padding-checkbox': '21px',
 
     'grid-dots-width': 'var(--grid-selection-index-width)',
     'grid-dots-padding': '0 20px 0 4px',
@@ -173,13 +174,12 @@ const variables = {
 module.exports.variables = variables;
 
 module.exports.apply = {
-    'absolute-center-theme': {
+    'absolute-center-y-theme': {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)'
     },
     'button-theme': {
-        display: 'inline-block',
         'vertical-align': 'middle',
         cursor: 'pointer',
         'font-size': '15px',
@@ -244,6 +244,9 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
+        padding: '2px 0'
+    },
+    'bubbles-item-theme-hover': {
         padding: '2px 20px 2px 0'
     },
     'input-theme': {
@@ -252,7 +255,8 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'input-disabled-theme': {
-        'background-color': variables['grey-100']
+        'background-color': 'transparent',
+        'border-color': 'transparent'
     },
     'cell-input-disabled-theme': {
         'background-color': 'transparent'
@@ -271,7 +275,7 @@ module.exports.apply = {
         'line-height': '1.5'
     },
     'custom-cotrol-disabled-theme': {
-        cursor: 'not-allowed'
+        cursor: 'default'
     },
     'checkbox-theme': {
         display: 'flex',
@@ -322,7 +326,7 @@ module.exports.apply = {
     },
     'tab-item-disabled-theme': {
         color: variables['grey-400'],
-        cursor: 'not-allowed'
+        cursor: 'default'
     },
     'tab-item-hidden-theme': {
         display: 'none'

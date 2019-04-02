@@ -22,7 +22,7 @@ const defaultOptions = {
     showContext: true,
     showExpression: true,
     showScript: true,
-    showTemplate: false,
+    showtemplate: _.noop,
     enabled: true,
     valueEditor: formRepository.editors.Text,
     valueEditorOptions: {},
@@ -66,7 +66,7 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        this.__applyOptions(options, defaultOptions);
 
         _.extend(this, _.pick(options, 'field'));
         if (typeof this.options.valueEditor === 'string') {
@@ -197,7 +197,16 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             return;
         }
 
-        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'contextModel', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
+        const contextOptions = _.pick(this.options.schema || this.options,
+            'recordTypeId',
+            'context',
+            'contextModel',
+            'propertyTypes',
+            'usePropertyTypes',
+            'popoutFlow',
+            'allowBlank',
+            'isInstanceExpandable'
+        );
 
         _.extend(contextOptions, {
             value: this.value.type === valueTypes.context ? this.value.value : null

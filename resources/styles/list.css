@@ -49,9 +49,11 @@
     outline: none;
 }
 
+
 .grid-content-wrp {
-    overflow: hidden;
-    display: flex;
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .grid-header-wrp {
@@ -63,8 +65,15 @@
     z-index: 1;
 }
 
-.grid-header-wrp > .cell_selection, .grid-header-wrp > .cell_selection-index {
+.grid-header > .cell_selection {
     box-shadow: inset -1px 0 0 0 #90c3eb, inset 1px 1px 0 0 #0575bd;
+    background-color: #0575bd;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 9px 0 0 17px;
+}
+.grid-header:hover > .cell_selection {
     background-color: #0575bd;
 }
 
@@ -161,11 +170,8 @@
 
 .grid-header-view {
     position: relative;
-    width: 100%;
     border-collapse: collapse;
-    overflow: hidden;
-    flex: none;
-    display: flex;
+    display: table-header-group;
 }
 
 .grid-header-column-title {
@@ -178,14 +184,7 @@
     display: none;
 }
 
-.grid-header {
-    display: inline-flex;
-    width: 100%;
-    overflow: hidden;
-}
-
 .grid-header-column {
-    position: relative;
     min-width: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -193,16 +192,24 @@
     text-align: left;
     cursor: default;
     height: 35px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.header-column-wrp{
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .grid-header-dragger {
     position: absolute;
-    right: -3px;
+    touch-action: none;
+    right: -8px;
     top: 0;
     bottom: 0;
-    width: 7px;
+    width: 16px;
     cursor: e-resize;
     z-index: 3;
     opacity: .8;
@@ -277,16 +284,15 @@
 
 /* Empty View */
 .empty-view {
-    position: absolute;
-    display: flex;
     width: 100%;
     height: 100%;
-    align-items: center;
-    justify-content: center;
     font-size: 18px;
     font-weight: 300;
     color: #70787F;
     min-height: 25px;
+}
+.empty-view_text {
+    text-align: center;
 }
 /* /Empty View */
 
@@ -414,14 +420,6 @@
 /* /Editable Grid */
 
 /* New grid */
-.row {
-    display: flex;
-}
-
-.row.selected{
-    background: transparent;
-}
-
 .cell {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -435,15 +433,26 @@
     align-items: center;
 }
 .cell_selection, .cell_selection-index {
-    display: flex;
     align-items: center;
-    flex: none;
-    height: 35px;
-    line-height: 35px;
+    /*height: 35px;
+    line-height: 35px;*/
 }
 
 .cell_selection {
-    justify-content: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+}
+tr.row-checked .cell_selection{
+    background-color: #c2d7e5;
+}
+tr.selected .cell_selection{
+    background-color: #eaf3f8;
+}
+tr:hover .cell_selection {
+    background-color: #efefef
 }
 
 .cell-focused {
@@ -457,6 +466,7 @@
 .cell.selected{
     outline-offset: -1px;
 }
+
 
 .cell .editor{
     height: 100%;
@@ -501,6 +511,15 @@
     background-color: transparent;
     font-size: 13px;
 }
+.cell .textarea{
+    border: none;
+    height: 100%;
+    line-height: 35px;
+    background-color: transparent;
+    font-size: 13px;
+    white-space: pre;
+    padding: 0;
+}
 
 .cell a{
     font-size: 13px;
@@ -530,6 +549,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 13px;
+    margin: 0 3px 0 -3px;
 }
 
 .cell .checkbox {
@@ -549,6 +569,10 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKCAYAAACXDi8zAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjZGREJCMUI0OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjZGREJCMUI1OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NkZEQkIxQjI5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NkZEQkIxQjM5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz447xZHAAAAO0lEQVR42mJmYGCoBmJxIL7GgAZ4gHgBEIcwYAHESzIjSfwC4j1AXADiMDEQAbDaQ7wgA9SDGIIAAQYAdcoKZphNcRcAAAAASUVORK5CYII=');
 }
 
+.cell.editor_bubble .bubbles__i{
+    height: auto;
+}
+
 /*-- Compact list --*/
 .compact.grid-container .cell .input,
 .compact.grid-container .cell .bubbles__input,
@@ -564,6 +588,8 @@
     height: 26px;
     line-height: 26px;
     font-size: 12px;
+    min-height: 26px;
+    max-height: 26px;
 }
 
 .compact.grid-container .cell .checkbox {
@@ -669,4 +695,13 @@
 
 .collection-grid-header__help {
     float: right;
+}
+
+.grid-table-wrapper {
+    min-height: 100%;
+}
+
+.grid-table-wrapper-war {
+    overflow: auto;
+    flex: 1;
 }

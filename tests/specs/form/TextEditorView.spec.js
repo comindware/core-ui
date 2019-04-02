@@ -1,5 +1,6 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
+import 'jasmine-expect';
 import FocusTests from './FocusTests';
 
 describe('Editors', () => {
@@ -467,7 +468,7 @@ describe('Editors', () => {
             expect(view.validate()).toBeUndefined();
         });
 
-        it('should set phone placeholder, mask and validator if same format was passed', () => {
+        it('should set tel placeholder, mask and validator if same format was passed', () => {
             const model = new Backbone.Model({
                 data: '123456789'
             });
@@ -476,7 +477,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown',
                 autocommit: true,
-                format: 'phone'
+                format: 'tel'
             });
 
             window.app
@@ -485,8 +486,8 @@ describe('Editors', () => {
                 .show(view);
 
             const input = view.ui.input;
-            expect(input.prop('placeholder')).toEqual('5 (555) 555-55-55');
-            expect(input.val()).toEqual('1 (234) 567-89-__');
+            expect(input.prop('placeholder')).toBe('5 (555) 555-55-55');
+            expect(input.val()).toBe('1 (234) 567-89-__');
             model.set('data', 'invalid');
             expect(view.validate()).toEqual({
                 type: 'phone',

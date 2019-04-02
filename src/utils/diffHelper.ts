@@ -1,6 +1,7 @@
 type diffObject = {
-    elem: {},
-    t: -1 | 0 | 1
+    add: [],
+    remove: [],
+    common: []
 };
 
 export default function(a_: Array<any>, b_: Array<any>) {
@@ -13,7 +14,11 @@ export default function(a_: Array<any>, b_: Array<any>) {
     let offset = m + 1;
     const path = [];
     const pathposi: Array<{ x: number, y: number, k: number }> = [];
-    const ses: Array<diffObject> = [];
+    const ses: diffObject = {
+        add: [],
+        remove: [],
+        common: []
+    };
     let lcs = '';
     const SES_DELETE = -1;
     const SES_COMMON = 0;
@@ -50,13 +55,6 @@ export default function(a_: Array<any>, b_: Array<any>) {
         };
     };
 
-    const seselem = function(elem, t) {
-        return {
-            elem,
-            t
-        };
-    };
-
     const snake = function(k: number, p, pp) {
         let r: number;
         let x: number;
@@ -89,20 +87,20 @@ export default function(a_: Array<any>, b_: Array<any>) {
             while (px_idx < epc[i].x || py_idx < epc[i].y) {
                 if (epc[i].y - epc[i].x > py_idx - px_idx) {
                     if (reverse) {
-                        ses[ses.length] = new seselem(b[py_idx], SES_DELETE);
+                        ses.remove.push(b[py_idx]);
                     } else {
-                        ses[ses.length] = new seselem(b[py_idx], SES_ADD);
+                        ses.add.push(b[py_idx]);
                     }
                     ++py_idx;
                 } else if (epc[i].y - epc[i].x < py_idx - px_idx) {
                     if (reverse) {
-                        ses[ses.length] = new seselem(a[px_idx], SES_ADD);
+                        ses.add.push(a[px_idx]);
                     } else {
-                        ses[ses.length] = new seselem(a[px_idx], SES_DELETE);
+                        ses.remove.push(a[px_idx]);
                     }
                     ++px_idx;
                 } else {
-                    ses[ses.length] = new seselem(a[px_idx], SES_COMMON);
+                    ses.common.push(a[px_idx]);
                     lcs += a[px_idx];
                     ++px_idx;
                     ++py_idx;
@@ -163,6 +161,8 @@ export default function(a_: Array<any>, b_: Array<any>) {
                 }
             }
             recordseq(epc);
+
+            return ses;
         }
     };
 }
