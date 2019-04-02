@@ -70,7 +70,7 @@ const dateTimeFormats = {
             time: 'HH:mm' // 19:00
         },
         generalDateLongTime: {
-            general: 'DD.MM.YYYY HH:mm:ss', // 6/15/2009 1:45:30 PM
+            general: 'DD.MM.YYYY HH:mm:ss', // 03.11.2014 19:00:00
             date: 'DD.MM.YYYY', // 6/15/2009
             time: 'HH:mm:ss' //1:45:30 PM
         },
@@ -202,12 +202,12 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return val ? moment(val).format(format) : '';
     },
 
-    getFormat(formatName) {
+    getFormat(formatName, formatPart = 'general') {
         const lang = LocalizationService.langCode;
         if (!dateTimeFormats[lang][formatName]) {
             throw new Error(`Unexpected format ${formatName}`);
         }
-        return dateTimeFormats[lang][formatName].general;
+        return dateTimeFormats[lang][formatName][formatPart];
     },
 
     getDisplayTime(time) {
