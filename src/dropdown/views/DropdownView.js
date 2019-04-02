@@ -335,7 +335,7 @@ export default Marionette.View.extend({
         } else {
             this.open(...args);
         }
-    }
+    },
 
     __handleClick() {
         this.trigger('click');
