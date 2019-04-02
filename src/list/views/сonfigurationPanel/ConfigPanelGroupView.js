@@ -20,10 +20,6 @@ export default Marionette.View.extend({
         groupRadioRegion: '.js-button-group'
     },
 
-    triggers: {
-        'js-apply-button': 'trigger:apply'
-    },
-
     onRender() {
         const groupRadioButton = this.__createGroupByColumn();
 
@@ -36,7 +32,7 @@ export default Marionette.View.extend({
             {
                 id: constants.groupByCollumnId,
                 title: Localizer.get('PROCESS.DATASET.QUERYBUILDER.GROUPBY'),
-                displayHtml: `<span class=${constants.groupByClass}></span>`
+                displayText: Localizer.get('PROCESS.DATASET.QUERYBUILDER.GROUPBY')
             }
         ];
 
@@ -44,7 +40,7 @@ export default Marionette.View.extend({
             radioOptions.push({
                 id: constants.subGroupByCollumnId,
                 title: Localizer.get('PROCESS.DATASET.QUERYBUILDER.SUBGROUPBY'),
-                displayHtml: `<span class=${constants.subGroupByClass}></span>`
+                displayText: Localizer.get('PROCESS.DATASET.QUERYBUILDER.SUBGROUPBY')
             });
         }
 

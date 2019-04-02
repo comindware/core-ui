@@ -1,11 +1,11 @@
 import template from '../../templates/filterPanel/filterItem.html';
-import { columnTypes, filterPredicates } from '../../meta';
+import { columnType, enabledFilterEditor } from '../../meta';
 import FilterValueItemView from './FilterValueItemView';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 
 export default Marionette.View.extend({
     initialize(options) {
-        this.__createFilterCompositeView(options.filtersConfigurationModel.get('columnTypes'));
+        this.__createFilterCompositeView(options.filtersConfigurationModel.get('columnType'));
     },
 
     regions: {
@@ -33,6 +33,7 @@ export default Marionette.View.extend({
 
     onRender() {
         this.showChildView('filterRegion', this.filterView);
+        this.listenTo(this.filterView, 'change', () => this.trigger('change'));
         this.listenTo(this.filterView, 'keyup:editor', this.__applyFilterChange);
         if (this.filterPredicateDropdown) {
             this.showChildView('predicateDropdownRegion', this.filterPredicateDropdown);
@@ -42,10 +43,25 @@ export default Marionette.View.extend({
         this.__applyEditorVisibility(this.model.get('operator'));
     },
 
+    isEmptyValue() {
+        return this.filterView.children.some(child => child.editor.isEmptyValue());
+    },
+
+    validate() {
+        return this.filterView.children.reduce((res, child) => {
+            const error = child.validate && child.validate();
+            if (error) {
+                res.push(error);
+            }
+            return res;
+        }, []);
+    },
+
     __createFilterView() {
         return new FilterValueItemView({
             filtersConfigurationModel: this.getOption('filtersConfigurationModel'),
-            collection: this.model.get('values')
+            collection: this.model.get('values'),
+            parentModel: this.model
         });
     },
 
@@ -55,21 +71,21 @@ export default Marionette.View.extend({
 
     __createFilterCompositeView(filterType) {
         switch (filterType) {
-            case columnTypes.string:
-            case columnTypes.integer:
-            case columnTypes.decimal:
-            case columnTypes.datetime:
-            case columnTypes.duration:
-            case columnTypes.users:
-            case columnTypes.reference:
+            case columnType.string:
+            case columnType.integer:
+            case columnType.decimal:
+            case columnType.datetime:
+            case columnType.duration:
+            case columnType.users:
+            case columnType.reference:
                 this.filterView = this.__createFilterView();
                 this.filterPredicateDropdown = this.__createFilterPredicateDropdown(this.getOption('filtersConfigurationModel').get('columnType'), this.model);
                 this.$el.removeClass('filters_settings-inline-after');
                 break;
-            case columnTypes.id:
-            case columnTypes.enumerable:
-            case columnTypes.boolean:
-            case columnTypes.document:
+            case columnType.id:
+            case columnType.enumerable:
+            case columnType.boolean:
+            case columnType.document:
                 this.filterView = this.__createFilterView();
                 this.$el.addClass('filters_settings-inline-after');
                 break;
@@ -79,7 +95,7 @@ export default Marionette.View.extend({
     },
 
     __applyFilterPredicateChange() {
-        this.__applyEditorVisibility(this.model.get('operator'));
+        this.__applyEditorVisibility();
     },
 
     __applyFilterChange() {
@@ -88,9 +104,10 @@ export default Marionette.View.extend({
 
     __adjustRemoveFilterButtonVisibility() {
         switch (this.getOption('filtersConfigurationModel').get('columnType')) {
-            case columnTypes.enumerable:
-            case columnTypes.users:
-            case columnTypes.document:
+            case columnType.enumerable:
+            case columnType.users:
+            case columnType.document:
+            case columnType.boolean:
                 this.ui.removeButton.hide();
                 break;
             default:
@@ -98,13 +115,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __applyEditorVisibility(operator) {
-        const filterRegionEl = this.getRegion('filterRegion').$el;
-
-        if (operator === filterPredicates.set || operator === filterPredicates.notSet) {
-            filterRegionEl.hide();
-        } else {
-            filterRegionEl.show();
-        }
+    __applyEditorVisibility() {
+        this.getRegion('filterRegion').$el.toggle(enabledFilterEditor(this.model));
     }
 });

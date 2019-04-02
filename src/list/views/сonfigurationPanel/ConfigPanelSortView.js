@@ -15,11 +15,6 @@ export default Marionette.View.extend({
         changeNullPositionRegion: '.js-change-null-position-region'
     },
 
-    triggers: {
-        'js-apply-button': 'trigger:apply',
-        'js-add-filter-button': 'trigger:add:filter'
-    },
-
     onRender() {
         if (this.model.get('columnModel').has('sort')) {
             const nullOnTopCheckBox = this.__createNullOnTopCheckBox();

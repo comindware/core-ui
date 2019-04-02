@@ -106,7 +106,32 @@ export const booleanDropdown = {
     null: null
 };
 
+export const pageSize = {
+    10: '10',
+    25: '25',
+    50: '50',
+    100: '100',
+    500: '500',
+    1000000000: 'ALL'
+};
+
+export const enabledFilterEditor = model => {
+    const operator = model.get('operator');
+    return ![filterPredicates.set, filterPredicates.notSet].includes(operator);
+};
+
+export const pagingControlsTypes = {
+    firstPage: 'fp',
+    previousPage: 'pp',
+    twoPagesBefore: 'tpb',
+    currentPage: 'cp',
+    nextPage: 'np',
+    twoPagesNext: 'tpn',
+    lastPage: 'lp'
+};
+
 export default {
+    pageSize,
     contextTypes,
     columnTypes,
     getDefaultActions

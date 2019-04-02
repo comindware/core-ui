@@ -1,6 +1,6 @@
 import template from '../../templates/filterPanel/configPanelFilter.html';
 import FilterItemView from './FilterItemView';
-import EmptyFilterItemView from './EmptyFilterItemView';
+import { columnType } from '../../meta';
 
 export default Marionette.CollectionView.extend({
     initialize() {
@@ -11,16 +11,27 @@ export default Marionette.CollectionView.extend({
         this.__updateCollection();
     },
 
-    childView: FilterItemView,
-
-    emptyView: EmptyFilterItemView,
-
-    childViewEvents: {
-        'click:removeButton': '__onClickRemoveButton'
+    templateContext() {
+        return {
+            showAddButton: this.model.get('columnType') !== columnType.boolean
+        };
     },
 
+    template: Handlebars.compile(template),
+
+    childView: FilterItemView,
+
+    childViewEvents: {
+        'click:removeButton': '__onClickRemoveButton',
+        attach: '__updateAddFilterButton',
+        change: '__updateAddFilterButton'
+    },
+
+    childViewContainer: '.js-config-panel-filter',
+
     triggers: {
-        'js-apply-button': 'trigger:apply'
+        'click .js-apply-button': 'apply:filter',
+        'click .js-add-filter-button': 'add:filter'
     },
 
     childViewOptions() {
@@ -29,7 +40,25 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    template: Handlebars.compile(template),
+    ui: {
+        addFilterButton: '.js-add-filter-button'
+    },
+
+    __updateAddFilterButton() {
+        this.ui.addFilterButton.toggle(!this.children.some(child => child.isEmptyValue && child.isEmptyValue()));
+    },
+
+    validate() {
+        const errors = this.children.reduce((res, child) => {
+            const childErrors = child.validate();
+            if (childErrors.length) {
+                res.push(...childErrors);
+            }
+            return res;
+        }, []);
+
+        return errors.length;
+    },
 
     __updateCollection() {
         this.collection = this.model.get('columnModel').get('filters');
@@ -37,7 +66,10 @@ export default Marionette.CollectionView.extend({
     },
 
     __onClickRemoveButton(view) {
-        this.model.get('columnModel').get('filters').remove(view.model);
+        this.model
+            .get('columnModel')
+            .get('filters')
+            .remove(view.model);
         this.render();
     }
 });

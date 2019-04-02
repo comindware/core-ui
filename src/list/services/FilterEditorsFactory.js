@@ -1,6 +1,6 @@
-import DatasetViewReferenceCollection from '../collections/DatasetViewReferenceCollection';
-import { filterPredicates, aggregationPredicates, booleanDropdown, columnTypes } from '../meta';
 import { objectPropertyFormats as dateFormats } from '../../Meta';
+import DatasetViewReferenceCollection from '../collections/DatasetViewReferenceCollection';
+import { filterPredicates, aggregationPredicates, booleanDropdown, columnType, enabledFilterEditor } from '../meta';
 import formatService from 'services/FormatService';
 
 const constants = {
@@ -9,31 +9,40 @@ const constants = {
 };
 
 export default {
-    getFilterEditor(filtersConfigurationModel, model) {
+    getFilterEditorOptions(filtersConfigurationModel, model, parentModel) {
         const editorColumnType = filtersConfigurationModel.get('columnType');
 
+        const requiredValidator = Core.form.repository.validators.required();
+        const requiredIfEnabled = function required(value) {
+            return enabledFilterEditor(parentModel) ? requiredValidator(value) : undefined;
+        };
+
         switch (editorColumnType) {
-            case columnTypes.decimal:
-                return new Core.form.editors.NumberEditor({
+            case columnType.decimal:
+                return {
+                    type: 'Number',
                     model,
                     key: 'value',
                     changeMode: 'keydown',
                     autocommit: true,
+                    validators: [requiredIfEnabled],
                     min: null,
                     max: null,
                     allowFloat: true
-                });
-            case columnTypes.integer:
-                return new Core.form.editors.NumberEditor({
+                };
+            case columnType.integer:
+                return {
+                    type: 'Number',
                     model,
                     key: 'value',
                     changeMode: 'keydown',
                     autocommit: true,
+                    validators: [requiredIfEnabled],
                     min: null,
                     max: null,
                     allowFloat: false
-                });
-            case columnTypes.datetime: {
+                };
+            case columnType.datetime: {
                 const dateDisplayFormat = formatService.getDateDisplayFormat(filtersConfigurationModel.get('dataFormat'));
                 const filterDateFormat = filtersConfigurationModel.get('dataFormat');
                 if (
@@ -43,37 +52,44 @@ export default {
                     filterDateFormat === dateFormats.MONTH_DAY ||
                     filterDateFormat === dateFormats.YEAR_MONTH
                 ) {
-                    return new Core.form.editors.DateEditor({
+                    return {
+                        type: 'Date',
                         dateDisplayFormat,
                         model,
                         key: 'value',
+                        validators: [requiredIfEnabled],
                         changeMode: 'keydown',
                         autocommit: true
-                    });
+                    };
                 }
-                return new Core.form.editors.DateTimeEditor({
+                return {
+                    type: 'DateTime',
                     dateDisplayFormat,
                     model,
                     key: 'value',
                     changeMode: 'keydown',
+                    validators: [requiredIfEnabled],
                     autocommit: true
-                });
+                };
             }
-            case columnTypes.duration:
-                return new Core.form.editors.DurationEditor({
+            case columnType.duration:
+                return {
+                    type: 'Duration',
                     model,
                     key: 'value',
                     changeMode: 'keydown',
+                    validators: [requiredIfEnabled],
                     autocommit: true,
                     showEmptyParts: true
-                });
-            case columnTypes.boolean:
-                return new Core.form.editors.RadioGroupEditor({
+                };
+            case columnType.boolean:
+                return {
+                    type: 'BooleanGroup',
                     model,
                     key: 'value',
                     changeMode: 'keydown',
                     autocommit: true,
-                    radioOptions: [
+                    items: [
                         {
                             id: booleanDropdown.yes,
                             displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.YES')
@@ -87,9 +103,10 @@ export default {
                             displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NULL')
                         }
                     ]
-                });
-            case columnTypes.document:
-                return new Core.form.editors.RadioGroupEditor({
+                };
+            case columnType.document:
+                return {
+                    type: 'RadioGroup',
                     model,
                     key: 'value',
                     changeMode: 'keydown',
@@ -104,18 +121,20 @@ export default {
                             displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NOTEXIST')
                         }
                     ]
-                });
-            case columnTypes.string:
-                return new Core.form.editors.TextEditor({
+                };
+            case columnType.string:
+                return {
+                    type: 'Text',
                     model,
                     key: 'value',
+                    validators: [requiredIfEnabled],
                     autocommit: true,
                     changeMode: 'keydown'
-                });
-            case columnTypes.id:
-            case columnTypes.users:
-            case columnTypes.reference:
-            case columnTypes.enumerable: {
+                };
+            case columnType.id:
+            case columnType.users:
+            case columnType.reference:
+            case columnType.enumerable: {
                 const datasourceId = filtersConfigurationModel.get('datasourceId');
                 model.set('datasourceId', datasourceId, { silent: true });
                 let searchId = null;
@@ -124,7 +143,8 @@ export default {
                 if (typeof editorValue === 'string' || typeof editorValue === 'number') {
                     searchId = editorValue;
                 }
-                return new Core.form.editors.DatalistEditor({
+                return {
+                    type: 'Datalist',
                     model,
                     key: 'value',
                     autocommit: true,
@@ -133,9 +153,10 @@ export default {
                     }),
                     textFilterDelay: 1000,
                     showCheckboxes: true,
+                    validators: [requiredIfEnabled],
                     maxQuantitySelected: Infinity,
                     valueType: 'id'
-                });
+                };
             }
             default:
                 throw new Error(`Creation of filter's editor failed: Unknown column type ${editorColumnType}`);
@@ -147,18 +168,18 @@ export default {
             {
                 id: aggregationPredicates.count,
                 title: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.COUNT'),
-                displayHtml: `<span class=${constants.aggregationCountClass}></span>`
+                displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.COUNT')
             }
         ];
 
         switch (inputColumnType) {
-            case columnTypes.decimal:
-            case columnTypes.integer:
-            case columnTypes.duration:
+            case columnType.decimal:
+            case columnType.integer:
+            case columnType.duration:
                 aggregationMethodsList.push({
                     id: aggregationPredicates.sum,
                     title: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.SUM'),
-                    displayHtml: `<span class=${constants.aggregationSumClass}></span>`
+                    displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.SUM')
                 });
                 break;
             default:
@@ -178,10 +199,10 @@ export default {
         let filterPredicateCollection;
 
         switch (inputColumnType) {
-            case columnTypes.decimal:
-            case columnTypes.integer:
-            case columnTypes.duration:
-            case columnTypes.datetime:
+            case columnType.decimal:
+            case columnType.integer:
+            case columnType.duration:
+            case columnType.datetime:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {
@@ -216,7 +237,7 @@ export default {
                     { comparator: null }
                 );
                 break;
-            case columnTypes.string:
+            case columnType.string:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {
@@ -255,9 +276,9 @@ export default {
                     { comparator: null }
                 );
                 break;
-            case columnTypes.users:
-            case columnTypes.reference:
-            case columnTypes.enumerable:
+            case columnType.users:
+            case columnType.reference:
+            case columnType.enumerable:
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {
