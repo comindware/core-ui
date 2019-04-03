@@ -63,6 +63,7 @@ export default {
                     'min-width': '300px'
                 }, //don't use min-values if fullscreenToggleDisabled: false
                 fullscreenToggleDisabled: true,
+                isSystemPopup: true,
                 header: text || description,
                 onClose() {
                     resolve(false);
