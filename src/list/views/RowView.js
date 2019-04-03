@@ -164,8 +164,9 @@ export default Marionette.View.extend({
             cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
 
             cellView.render();
+            cellView.triggerMethod('before:attach');
             this.el.insertAdjacentElement('beforeend', cellView.el);
-            cellView.trigger('attach');
+            cellView.triggerMethod('attach');
 
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
