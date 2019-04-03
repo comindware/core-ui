@@ -17,18 +17,10 @@ export default {
     },
 
     ask(options) {
-        return this.askYesNo(
-            options.description,
-            options.title,
-            options.yesText,
-            options.noText
-        );
+        return this.askYesNo(options.description, options.title, options.yesText, options.noText);
     },
 
-    askYesNo(description, text,
-        yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'),
-        noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')
-    ) {
+    askYesNo(description, text, yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'), noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')) {
         return this.showMessageDialog(
             description,
             text,
@@ -71,6 +63,7 @@ export default {
                     'min-width': '300px'
                 }, //don't use min-values if fullscreenToggleDisabled: false
                 fullscreenToggleDisabled: true,
+                isSystemPopup: true,
                 header: text || description,
                 onClose() {
                     resolve(false);

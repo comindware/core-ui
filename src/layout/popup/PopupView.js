@@ -7,17 +7,17 @@ import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
 import meta from 'Meta';
+import mobileService from 'services/mobileService';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view',
+    CLASS_NAME_MOBILE: 'layout__popup-view_mobile',
+    CLASS_NAME_MOBILE_SYSTEM_TYPE: 'layout__popup-view_mobile_system_type',
     EXPAND: 'layout__popup-view-window_expand',
     CURSOR_AUTO: 'cur_aI'
 };
 
-const cutOffTo = (string, toStr) => 
-    (string.includes(toStr) ?
-    string.slice(0, string.indexOf(toStr)) :
-    string);
+const cutOffTo = (string, toStr) => (string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : string);
 
 const getValueOf = str => Number(cutOffTo(str, 'px'));
 
@@ -50,7 +50,14 @@ export default Marionette.View.extend({
         );
     },
 
-    className: classes.CLASS_NAME,
+    className() {
+        if (mobileService.isMobile && !this.options.isSystemPopup) {
+            return classes.CLASS_NAME_MOBILE;
+        } else if (mobileService.isMobile && this.options.isSystemPopup) {
+            return classes.CLASS_NAME_MOBILE_SYSTEM_TYPE;
+        }
+        return classes.CLASS_NAME;
+    },
 
     behaviors: {
         LayoutBehavior: {
@@ -150,13 +157,10 @@ export default Marionette.View.extend({
     __callWithTransition(callback, callbackAfterTransition) {
         this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
         typeof callback === 'function' && callback();
-        setTimeout(
-            () => {
-                this.ui.window.css('transition', 'unset');
-                typeof callbackAfterTransition === 'function' && callbackAfterTransition();
-            },
-            TRANSITION
-        );
+        setTimeout(() => {
+            this.ui.window.css('transition', 'unset');
+            typeof callbackAfterTransition === 'function' && callbackAfterTransition();
+        }, TRANSITION);
     },
 
     async close() {
@@ -220,20 +224,13 @@ export default Marionette.View.extend({
     },
 
     __eventOutOfClient(e) {
-        return e.clientX > this.dragContext.documentWidth
-            || e.clientY > this.dragContext.documentHeight
-            || e.clientX < 0
-            || e.clientY < 0;
+        return e.clientX > this.dragContext.documentWidth || e.clientY > this.dragContext.documentHeight || e.clientX < 0 || e.clientY < 0;
     },
 
     __getCorrectPopupDiffs(assumedDiffX, assumedDiffY) {
         return {
-            diffX: this.__checkLeftContainment(
-                this.__checkRightContainment(assumedDiffX)
-            ),
-            diffY: this.__checkTopContainment(
-                this.__checkBottomContainment(assumedDiffY)
-            )
+            diffX: this.__checkLeftContainment(this.__checkRightContainment(assumedDiffX)),
+            diffY: this.__checkTopContainment(this.__checkBottomContainment(assumedDiffY))
         };
     },
 
@@ -252,7 +249,7 @@ export default Marionette.View.extend({
 
     __checkTopContainment(diffY) {
         const offsetTop = this.dragContext.startOffsetTop + diffY;
-    
+
         if (offsetTop < 0) {
             return -this.dragContext.startOffsetTop;
         }
