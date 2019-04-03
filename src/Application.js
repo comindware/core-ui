@@ -11,6 +11,7 @@ import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
+import getIconUnicode from './utils/handlebars/getIconUnicode';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
 import ContentLoadingView from './views/ContentLoadingView';
 
@@ -18,11 +19,11 @@ import 'backbone.trackit';
 
 export default {
     async start(options) {
-        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options));
+        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options.iconService));
+        Handlebars.registerHelper('iconUnicode', getIconUnicode(options.iconService));
         const appView = window.app.getView();
 
         if (appView) {
-            window.contentLoadingRegion = appView.getRegion('contentLoadingRegion');
             window.contentRegion = appView.getRegion('contentRegion');
 
             if (window.contentLoadingRegion) {

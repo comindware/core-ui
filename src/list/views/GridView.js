@@ -22,6 +22,7 @@ import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
+import GlobalEventService from '../../services/GlobalEventService';
 
 const classes = {
     REQUIRED: 'required',
@@ -307,8 +308,8 @@ export default Marionette.View.extend({
             replaceElement: true
         },
         loadingRegion: '.js-grid-loading-region',
-        errorTextRegion: '.js-error-text-region',
-        helpTextRegion: '.js-help-text-region'
+        errorTextRegion: '.js-grid-error-text-region',
+        helpTextRegion: '.js-grid-help-text-region'
     },
 
     ui: {
@@ -469,6 +470,7 @@ export default Marionette.View.extend({
         }
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
+        this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
     },
 
     getChildren() {
