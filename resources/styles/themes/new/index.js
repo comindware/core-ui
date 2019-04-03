@@ -446,7 +446,8 @@ module.exports.apply = {
         padding: '15px',
         'background-color': variables.white,
         'border-radius': variables['border-radius-big'],
-        'overflow-y': 'auto'
+        'overflow-y': 'auto',
+        flex: '1'
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],

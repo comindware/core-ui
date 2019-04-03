@@ -1,5 +1,5 @@
 // Show Confirmation dialog
-const showConfirm = function () {
+const showConfirm = function() {
     const description = 'Confirm Message';
 
     Core.services.MessageService.confirm(description).then(result => {
@@ -8,7 +8,7 @@ const showConfirm = function () {
 };
 
 // Show 'Ask Yes/No' dialog
-const showAskYesNo = function () {
+const showAskYesNo = function() {
     const description = 'Message question';
     const text = 'Question';
 
@@ -18,7 +18,7 @@ const showAskYesNo = function () {
 };
 
 // Show Error dialog
-const showError = function () {
+const showError = function() {
     const description = 'Error message';
     const text = 'Error';
 
@@ -28,7 +28,7 @@ const showError = function () {
 };
 
 // Show Custom Message dialog
-const showCustomMessageDialog = function () {
+const showCustomMessageDialog = function() {
     const description = 'Message description';
     const text = 'Title';
 
@@ -42,10 +42,11 @@ const showCustomMessageDialog = function () {
 
 const View = Marionette.View.extend({
     template: Handlebars.compile(
-        '<input class="js-confirm__button message-service__button" type="button" value="Show Confirm">'
-        + '<input class="js-yes-no__button message-service__button" type="button" value="Show Ask Yes/No">'
-        + '<input class="js-error__button message-service__button" type="button" value="Show Error">'
-        + '<input class="js-message-dialog__button message-service__button" type="button" value="Show Custom Message Dialog">'),
+        '<input class="js-confirm__button message-service__button" type="button" value="Show Confirm">' +
+            '<input class="js-yes-no__button message-service__button" type="button" value="Show Ask Yes/No">' +
+            '<input class="js-error__button message-service__button" type="button" value="Show Error">' +
+            '<input class="js-message-dialog__button message-service__button" type="button" value="Show Custom Message Dialog">'
+    ),
     ui: {
         showConfirm: '.js-confirm__button',
         showAskYesNo: '.js-yes-no__button',
@@ -60,4 +61,6 @@ const View = Marionette.View.extend({
     }
 });
 
-export default new View();
+export default function() {
+    return new View();
+}

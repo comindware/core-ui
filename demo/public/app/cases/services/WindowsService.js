@@ -1,4 +1,3 @@
-
 export default function() {
     var PopupView = Marionette.View.extend({
         initialize(options) {
@@ -7,8 +6,9 @@ export default function() {
 
         template: Handlebars.compile(
             '<div class="msg-popup__desc">Your popup message {{index}}</div> ' +
-            '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
-            '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
+                '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
+                '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'
+        ),
 
         templateContext() {
             return {
@@ -28,9 +28,11 @@ export default function() {
         },
 
         __showPopup() {
-            Core.services.WindowService.showPopup(new PopupView({
-                index: this.index + 1 || 1
-            }));
+            Core.services.WindowService.showPopup(
+                new PopupView({
+                    index: this.index + 1 || 1
+                })
+            );
         }
     });
 
