@@ -7,7 +7,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
 import meta from 'Meta';
-import mobileService from 'services/mobileService';
+import MobileService from 'services/MobileService';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view',
@@ -51,9 +51,9 @@ export default Marionette.View.extend({
     },
 
     className() {
-        if (mobileService.isMobile && !this.options.isSystemPopup) {
+        if (MobileService.isMobile && !this.options.isSystemPopup) {
             return classes.MOBILE;
-        } else if (mobileService.isMobile && this.options.isSystemPopup) {
+        } else if (MobileService.isMobile && this.options.isSystemPopup) {
             return classes.MOBILE_SYSTEM_TYPE;
         }
         return classes.CLASS_NAME;
@@ -94,7 +94,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.options.size && !mobileService.isMobile) {
+        if (this.options.size && !MobileService.isMobile) {
             this.ui.window.css(this.options.size);
         }
         this.showChildView('contentRegion', this.options.content);
@@ -224,10 +224,7 @@ export default Marionette.View.extend({
     },
 
     __eventOutOfClient(e) {
-        return e.clientX > this.dragContext.documentWidth
-            || e.clientY > this.dragContext.documentHeight
-            || e.clientX < 0
-            || e.clientY < 0;
+        return e.clientX > this.dragContext.documentWidth || e.clientY > this.dragContext.documentHeight || e.clientX < 0 || e.clientY < 0;
     },
 
     __getCorrectPopupDiffs(assumedDiffX, assumedDiffY) {
