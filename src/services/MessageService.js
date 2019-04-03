@@ -20,7 +20,10 @@ export default {
         return this.askYesNo(options.description, options.title, options.yesText, options.noText);
     },
 
-    askYesNo(description, text, yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'), noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')) {
+    askYesNo(description, text,
+        yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'),
+        noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')
+    ) {
         return this.showMessageDialog(
             description,
             text,

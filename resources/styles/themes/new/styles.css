@@ -261,7 +261,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
   opacity: 1;
 }
 
-.layout__popup-view_mobile .layout__popup-view-header__btn, .layout__popup-view_mobile_system_type .layout__popup-view-header__btn {
+.layout__popup-view_mobile .layout__popup-view-header__btn,
+.layout__popup-view_mobile-system-type .layout__popup-view-header__btn {
   display: none;
 }
 

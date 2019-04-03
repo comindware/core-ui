@@ -1,4 +1,4 @@
-.layout__popup-view, .layout__popup-view_mobile_system_type {
+.layout__popup-view, .layout__popup-view_mobile-system-type {
     position: absolute;
     left: 0;
     opacity: 0;
@@ -31,14 +31,14 @@
 }
 
 .layout__popup-view_mobile > .layout__popup-view-window {
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
+    height: 100%;
     box-shadow: none;
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
     position: relative;
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 
 .cur_aI {
