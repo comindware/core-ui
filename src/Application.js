@@ -24,6 +24,7 @@ export default {
         const appView = window.app.getView();
 
         if (appView) {
+            window.contentLoadingRegion = appView.getRegion('contentLoadingRegion');
             window.contentRegion = appView.getRegion('contentRegion');
 
             if (window.contentLoadingRegion) {
