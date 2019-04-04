@@ -126,7 +126,7 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
                 // if not, we select the range
                 let lastSelectedIndex = 0;
                 let thisIndex = 0;
-                collection.each((m, i) => {
+                collection.forEach((m, i) => {
                     if (m.cid === lastSelectedModel) {
                         lastSelectedIndex = i;
                     }
@@ -169,7 +169,7 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 
     // Select all models in this collection
     selectAll(options) {
-        this.each(model => {
+        this.forEach(model => {
             model.select(options);
         });
         calculateSelectedLength(this, options);
@@ -177,7 +177,7 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 
     // Deselect all models in this collection
     selectNone(options) {
-        this.each(model => {
+        this.forEach(model => {
             model.deselect(options);
         });
         calculateSelectedLength(this, options);
@@ -205,9 +205,7 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 // A selectable mixin for Backbone.Model, allowing a model to be selected,
 // enabling it to work with SelectableBehavior.MultiSelect or on it's own
 
-SelectableBehavior.Selectable = function(model) {
-    this.model = model;
-};
+SelectableBehavior.Selectable = function() {};
 
 _.extend(SelectableBehavior.Selectable.prototype, {
     // Select this model, and tell our
@@ -252,11 +250,11 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 
     // Change selected to the opposite of what
     // it currently is
-    toggleSelected(options) {
-        if (this.selected) {
-            this.deselect(options);
-        } else {
+    toggleSelected(isSelect = !this.selected, options) {
+        if (isSelect) {
             this.select(options);
+        } else {
+            this.deselect(options);
         }
     }
 });
@@ -268,7 +266,9 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
 const calculateSelectedLength = _.debounce((collection, options) => {
-    collection.selectedLength = _.filter(collection.models, model => model.selected).length;
+    collection.selectedLength = collection.parentCollection ?
+        collection.models.filter(model => model.selected).length :
+        collection.filter(model => model.selected).length ;
 
     const selectedLength = collection.selectedLength;
     const length = collection.length;
