@@ -23,7 +23,10 @@ const editorFieldExtention = {
             return;
         }
 
-        this.$el.parent().parent().addClass(this.classes.ERROR);
+        this.$el
+            .parent()
+            .parent()
+            .addClass(this.classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -45,7 +48,10 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.parent().parent().removeClass(this.classes.ERROR);
+        this.$el
+            .parent()
+            .parent()
+            .removeClass(this.classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -109,9 +115,9 @@ export default class {
 
         this.editor.on('before:attach', () => {
             const fieldTempParts = Handlebars.compile(options.template)(schema);
-            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
 
-            this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
+            this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
+            this.editor.el.parentElement.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
 
             if (schema.helpText) {
                 const viewModel = new Backbone.Model({
