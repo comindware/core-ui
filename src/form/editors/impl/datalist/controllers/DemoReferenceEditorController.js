@@ -1,12 +1,13 @@
 import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
-const createDemoData = function () {
+const createDemoData = function() {
     return _.times(1000, i => {
         const id = `task.${i}`;
         return {
             id,
-            text: `Test Reference ${i}`
+            text: `Test Reference ${i}`,
+            subtext: `Test subtext ${i}`
         };
     });
 };

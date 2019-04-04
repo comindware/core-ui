@@ -16,7 +16,9 @@ import StaticController from './impl/datalist/controllers/StaticController';
 type DataValue = {
     id: string,
     name?: string,
-    text?: string
+    text?: string,
+    subname?: string,
+    subtext?: string
 };
 
 type DatalistValue = Array<DataValue>;
@@ -27,12 +29,12 @@ const ReferenceCollection = Backbone.Collection.extend({
 
 const defaultOptions = {
     displayAttribute: 'name',
+    subtextProperty: 'subname',
     controller: null,
     showAddNewButton: false,
     showEditButton: false,
     buttonView: ButtonView,
     showAdditionalList: false,
-    subtextProperty: '',
     iconProperty: '',
     listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
@@ -102,7 +104,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.options.controller ||
             new StaticController({
                 collection: options.collection,
-                displayAttribute: options.displayAttribute
+                displayAttribute: options.displayAttribute,
+                subtextProperty: options.subtextProperty
             });
 
         this.__value(this.value, false, true);
@@ -560,14 +563,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __getDisplayText(value, displayAttribute): string {
+    __getDisplayText(value, displayAttribute, valueProperty = 'text'): string {
         if (value == null) {
             return '';
         }
         if (typeof displayAttribute === 'function') {
             return displayAttribute(value, this.model);
         }
-        return value[displayAttribute] || value.text || `#${value.id}`;
+        return value[displayAttribute] || value[valueProperty] || `#${value.id}`;
     },
 
     __focusButton(options): void {
