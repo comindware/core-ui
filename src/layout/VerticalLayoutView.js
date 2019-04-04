@@ -51,6 +51,7 @@ export default Marionette.View.extend({
     onAttach() {
         this.rows.forEach(view => {
             view._isAttached = true;
+            view.triggerMethod('before:attach');
             view.triggerMethod('attach');
         });
     },

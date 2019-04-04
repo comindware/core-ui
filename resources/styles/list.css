@@ -29,7 +29,6 @@
 .visible-collection {
     height: 100%;
     width: auto;
-    position: relative;
 }
 
 .visible-collection-wrp, .selection-panel-wrp {
@@ -423,10 +422,7 @@
 .cell {
     text-overflow: ellipsis;
     white-space: nowrap;
-    cursor: default;
     overflow: hidden;
-    min-width: 50px;
-    position: relative;
 }
 .cell_editable {
     display: flex;
@@ -498,10 +494,6 @@ tr:hover .cell_selection {
 .cell .editor_checkbox {
     display: flex;
     align-items: center;
-}
-
-.grid-container .cell{
-    font-size: 13px;
 }
 
 .cell .input{

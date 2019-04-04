@@ -125,7 +125,7 @@ export default class {
                 this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
             }
 
-            if (schema.helpText) {
+            if (schema.helpText && !schema.isCell) {
                 const viewModel = new Backbone.Model({
                     helpText: schema.helpText,
                     errorText: null

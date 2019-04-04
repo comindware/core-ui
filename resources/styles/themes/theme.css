@@ -394,8 +394,7 @@ svg.svg-grid-icons {
 .cell {
   height: var(--grid-cell-height);
   line-height: var(--grid-cell-height);
-  font-size: var(--grid-header-font-size);
-  color: var(--text-color);
+  font-size: 13px;
   padding: var(--grid-cell-padding);
   border: 1px solid #e2e2e2;
 }
