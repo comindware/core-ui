@@ -481,6 +481,19 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    updateListViewResize(options) {
+        if (options.newMaxHeight) {
+            this.ui.content.css('maxHeight', options.newMaxHeight);
+        }
+        this.listView.handleResize(options.shouldUpdateScroll);
+        if (this.stickyHeaderInstance) {
+            this.stickyHeaderInstance.update();
+        }
+        if (this.stickyToolbarInstance) {
+            this.stickyToolbarInstance.update();
+        }
+    },
+
     onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
         if (Core.services.MobileService.isIE) {
