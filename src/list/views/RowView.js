@@ -1,7 +1,6 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
-import editableCellField from '../templates/editableCellField.hbs';
 
 const config = {
     TRANSITION_DELAY: 400
