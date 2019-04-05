@@ -13,29 +13,17 @@ export default (window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
-            /* eslint-disable */
             const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
 
-            // The result of compilation below is something like this:
-            //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
-            //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
-            //     };
-            const actionParameters = actionInfo.parameters.map(parameterInfo => `/*${parameterInfo.typeName}*/ ${parameterInfo.name}`);
-
-            actionParameters.push('/*optional*/ callback');
-            const actionBody = helpers.format(
-                "return window.Ajax.getJsApiResponse('{0}', [ {1} ], _.take(arguments, {2}) || [], '{3}', '{4}', callback);",
-                actionInfo.url,
-                actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
-                actionInfo.parameters.length,
-                actionInfo.httpMethod,
-                actionInfo.protocol
-            );
-            //noinspection JSUnresolvedVariable
-            const actionFn = helpers.format('function {0}_{1}({2}) {\r\n{3}\r\n}', actionInfo.className, actionInfo.methodName, actionParameters.join(', '), actionBody);
-
-            eval(`controller[actionInfo.methodName] = ${actionFn};`);
-            /* eslint-enable */
+            controller[actionInfo.methodName] = function() {
+                return this.getJsApiResponse.call(
+                    `${actionInfo.className}/${actionInfo.methodName}`,
+                    actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
+                    Object.values(arguments),
+                    actionInfo.httpMethod,
+                    actionInfo.protocol
+                );
+            };
         });
 
         if (options.beforeSent) {
