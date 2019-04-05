@@ -17,8 +17,7 @@ export default Marionette.View.extend({
             customTemplate: options.customTemplate ? Handlebars.compile(options.customTemplate)(this.model.toJSON()) : null,
             url: options.createValueUrl(this.model.attributes),
             text: options.getDisplayText(attributes),
-            subtext: options.getDisplayText(attributes, options.subtextProperty),
-            showButtonSubtext: this.options.showButtonSubtext
+            subtext: options.showButtonSubtext ? options.getDisplayText(attributes, options.subtextProperty) : null
         };
     },
 
