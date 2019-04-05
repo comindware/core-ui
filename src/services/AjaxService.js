@@ -16,7 +16,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
             const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
 
             controller[actionInfo.methodName] = function() {
-                return this.getJsApiResponse(actionInfo.url, actionInfo.parameters.map(p => `'${p.name}'`), Object.values(arguments), actionInfo.httpMethod, actionInfo.protocol);
+                return this.getJsApiResponse(actionInfo.url, actionInfo.parameters.map(p => `${p.name}`), Object.values(arguments), actionInfo.httpMethod, actionInfo.protocol);
             }.bind(this);
         });
 
