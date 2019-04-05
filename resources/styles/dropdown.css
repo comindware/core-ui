@@ -438,3 +438,14 @@
     width: 100%;
 }
 /*-----//------*/
+
+.bubbles__list .bubbles__i {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bubbles__list .bubbles-subtext {
+    color: gray;
+    font-style: italic;
+}

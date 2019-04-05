@@ -29,7 +29,8 @@ const ReferenceCollection = Backbone.Collection.extend({
 
 const defaultOptions = {
     displayAttribute: 'name',
-    subtextProperty: 'subname',
+    subtextProperty: 'subtext',
+    showButtonSubtext: false,
     controller: null,
     showAddNewButton: false,
     showEditButton: false,
@@ -147,7 +148,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             buttonViewOptions: {
                 collection: this.selectedButtonCollection,
                 reqres,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                getDisplayText: (value, displayAttribute) => this.__getDisplayText(value, displayAttribute),
+                showButtonSubtext: this.options.showButtonSubtext,
+                subtextProperty: this.options.showButtonSubtext ? this.options.subtextProperty : null,
                 showEditButton: this.options.showEditButton,
                 customTemplate: this.options.customTemplate,
                 canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
@@ -163,7 +166,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                getDisplayText: value => this.__getDisplayText(value),
                 canSelect: () => this.__canAddItem(),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
@@ -308,7 +311,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         try {
             const complexData = await this.controller.fetch({
                 text: fetchedDataForSearchText,
-                getDisplayText: editorValue => this.__getDisplayText(editorValue, this.options.displayAttribute)
+                getDisplayText: editorValue => this.__getDisplayText(editorValue)
             });
 
             if (this.searchText !== fetchedDataForSearchText) {
@@ -563,14 +566,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __getDisplayText(value, displayAttribute, valueProperty = 'text'): string {
+    __getDisplayText(value, displayAttribute = this.options.displayAttribute): string {
         if (value == null) {
             return '';
         }
         if (typeof displayAttribute === 'function') {
             return displayAttribute(value, this.model);
         }
-        return value[displayAttribute] || value[valueProperty] || `#${value.id}`;
+        return value[displayAttribute] || value.text || `#${value.id}`;
     },
 
     __focusButton(options): void {

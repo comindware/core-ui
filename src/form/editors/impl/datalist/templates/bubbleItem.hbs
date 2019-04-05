@@ -6,7 +6,9 @@
 {{/if}}
 {{else}}
 <span class="bubbles-text">{{text}}</span>
-{{#if subtext}}
-<span class="bubbles-subtext">{{subtext}}</span>
-{{/if}}
+    {{#if showButtonSubtext}}
+        {{#if subtext}}
+            <span class="bubbles-subtext">{{subtext}}</span>
+        {{/if}}
+    {{/if}}
 {{/if}}
