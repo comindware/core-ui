@@ -11,11 +11,13 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const options = this.options;
+        const attributes = options.model.attributes;
         return {
-            customTemplate: this.options.customTemplate ? Handlebars.compile(this.options.customTemplate)(this.model.toJSON()) : null,
-            url: this.options.createValueUrl(this.model.attributes),
-            text: this.options.getDisplayText(this.options.model.attributes),
-            subtext: this.options.getDisplayText(this.options.model.attributes, 'subtext')
+            customTemplate: options.customTemplate ? Handlebars.compile(options.customTemplate)(this.model.toJSON()) : null,
+            url: options.createValueUrl(this.model.attributes),
+            text: options.getDisplayText(attributes),
+            subtext: options.showButtonSubtext ? options.getDisplayText(attributes, options.subtextProperty) : null
         };
     },
 
