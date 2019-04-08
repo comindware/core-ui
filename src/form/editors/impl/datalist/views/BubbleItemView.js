@@ -10,13 +10,9 @@ export default Marionette.View.extend({
     templateContext() {
         const attributes = this.model.toJSON();
         return {
-            customTemplate: !this.options.customTemplate ?
-                null :
-                Handlebars.compile(
-                    typeof this.options.customTemplate === 'function' ?
-                        this.options.customTemplate(attributes) :
-                        this.options.customTemplate
-                )(attributes),
+            customTemplate: !this.options.customTemplate
+                ? null
+                : Handlebars.compile(typeof this.options.customTemplate === 'function' ? this.options.customTemplate(attributes) : this.options.customTemplate)(attributes),
             url: this.options.createValueUrl && this.options.createValueUrl(attributes),
             text: this.options.getDisplayText(attributes)
         };
@@ -98,6 +94,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
+            this.$el.addClass(meta.classes.PENCIL_EDIT);
         }
     },
 
@@ -107,6 +104,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.removeChild(this.el.lastElementChild);
+            this.$el.removeClass(meta.classes.PENCIL_EDIT);
         }
     }
 });
