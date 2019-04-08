@@ -1,12 +1,5 @@
-//@flow
 import GalleryWindowView from './views/GalleryWindowView';
-
-const classes = {
-    IMAGE: 'galleryImageBuffer',
-    HIDDEN: 'hidden'
-};
-
-const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg2000', 'exif', 'tiff', 'ppm', 'pgm', 'pbm', 'pnm', 'webp', 'bpg', 'bat'];
+import SelectableDocsCollection from './collections/SelectableDocsCollection';
 
 export default Marionette.MnObject.extend({
     initialize() {
@@ -16,17 +9,20 @@ export default Marionette.MnObject.extend({
 
     bindReqres() {
         this.reqres = Backbone.Radio.channel(_.uniqueId('attachC'));
-        this.reqres.reply('close', this.__closeGallery, this);
-        this.reqres.reply('image:get', this.__getImage, this);
+        this.reqres.reply('gallery:close', this.__closeGallery, this);
+        this.reqres.reply('image:download', model => this.__onDownload(model));
+        this.reqres.reply('image:delete', model => this.__onDelete(model));
     },
 
     showGallery(model) {
-        if (this.__isImage(model)) {
+        if (model.get('previewTag')) {
+            this.imagesCollection = new SelectableDocsCollection(model.collection.filter(item => item.get('previewTag')));
             this.view = new GalleryWindowView({
                 reqres: this.reqres,
-                imagesCollection: new Backbone.Collection(model.collection.filter(m => this.__isImage(m))),
+                imagesCollection: this.imagesCollection,
                 model
             });
+
             Core.services.WindowService.showPopup(this.view);
             return false;
         }
@@ -37,28 +33,18 @@ export default Marionette.MnObject.extend({
         Core.services.WindowService.closePopup();
     },
 
-    __getImage(model) {
-        const modelId = model.get('id');
-        if (modelId in this.imagesBuffer) {
-            return this.imagesBuffer[modelId];
+    __onDownload(model) {
+        const url = model.get('url');
+        if (url) {
+            window.open(url);
         }
-        this.view.setLoading(true);
-        const image = document.createElement('img');
-        image.classList.add(classes.IMAGE);
-        image.setAttribute('src', model.get('url'));
-        image.addEventListener('load', () => {
-            this.view.setLoading(false);
-        });
-        this.imagesBuffer[modelId] = image;
-        return image;
     },
 
-    __isImage(model) {
-        let isImage = false;
-        const extension = model.get('extension');
-        if (extension && typeof extension === 'string' && graphicFileExtensions.indexOf(extension.toLowerCase()) > -1) {
-            isImage = true;
-        }
-        return isImage;
-    }
+    __onDelete(cloneModel) {
+        const modelToDelete = this.imagesCollection.find(model => _.isEqual(model.toJSON(), cloneModel.toJSON()));
+        this.__deleteDocument(modelToDelete);
+        this.__closeGallery();
+    },
+
+    __deleteDocument(modelToDelete) {} //TODO
 });

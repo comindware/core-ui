@@ -1,7 +1,7 @@
 .galleryWindow {
     width: 100%;
     height: 100%;
-    position : absolute;
+    position: relative;
     border : 1px solid gray;
     top : 0;
     left : 0;
@@ -9,122 +9,211 @@
     overflow : hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.galleryButton {
-    position : absolute;
-    top: 0;
-    right: 0;
-    width:24px;
-    height: 24px;
-    line-height: 24px;
-    text-align: center;
-    cursor:pointer;
-    font-size: 18px;
-    font-weight: 600;
-    color: #fff;
+.gallery-previous {
+    top: 40%;
+    left: 70px;
 }
 
-.galleryButton:hover {
+.gallery-next {
+    top: 40%;
+    right: 70px;
 }
-.galleryMove {
-    position: absolute;
-    z-index: 100500;
-    width:20px;
-    height: 80px;
+
+.galleryWindow  img, .galleryWindow  video {
+    height: 100%;
     overflow: hidden;
-    border:none;
-    cursor:pointer;
-    bottom: 37px;
-    right:3px;
-    opacity: 0.6
-}
-.galleryMove:hover {
-    opacity: 1.0
-}
-.leftMove {
-    background-position: 0 45px;
-    right:auto;
-    left:3px;
+    background: black;
 }
 
 
-.galleryImage {
-    padding: 25px;
-    position: relative;
-    max-height: 90%;
+.gallery-image {
     display: flex;
-    flex: 1 1 auto;
-    text-align: center;
-}
-.galleryImage img {
-    border: 2px solid #fff;
-    margin: auto;
-    position: static;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    display: inline-block;
-    vertical-align: middle;
+    height: 100%;
 }
 
-.galleryImageBuffer {
-    position : absolute;
-    z-index : -100500;
-}
-.galleryStripe {
-    position : absolute;
-    bottom : 20px;
-    text-align: center;
-    padding :0 20px;
-    height : 80px;
-    width : 100%;
-    overflow : hidden;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-.galleryThumbnail {
-    margin-top : 5px;
-    margin-bottom : 5px;
-    margin-right : 5px;
-    border : 2px solid white;
-    background : black;
-    width : 64px;
-    height : 64px;
-    color : white;
-    font : bold 14px verdana;
-    display: inline-block;
+.previews-collection-wrp {
+    display: flex;
+    margin-bottom: 20px;
 }
 
-.galleryThumbnail:hover {
-    border : 2px solid yellow;
+.previews-collection-wrp .gallery-image {
+    width: 120px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 5px;
+    border: solid 1px white;
+    cursor: pointer;
 }
 
-.galleryThumbnailInfo {
-    position : absolute;
-    height : 20px;
-    color : white;
-    text-align: center;
-    width : 100%;
-    bottom : 0;
+.gallery-main-image{
+    display: flex;
+    height: 100%;
+    margin-bottom: 20px;
+    margin-top: 100px;
+    z-index: -1;
+}
+
+.gallery-main-image.zoomed-in {
+    transform: scale(1.2) translateY(9%);
+}
+
+.gallery-image.active {
+    border: 3px solid;
+    border-color: aqua;
+}
+
+.gallery-image.active > * {
+    filter: hue-rotate(240deg) saturate(3);
+}
+
+.gallery-top-menu{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.gallery-nav-btn {
+    position: absolute;
+    font-size: 38px;
+}
+
+.gallery-top-menu-buttons-wrp{
+    justify-content: space-between;
+    width: max-content;
+    position: absolute;
+    right: 15px;
+}
+
+.gallery-top-menu-buttons-wrp > * {
+    margin-left: 10px;
+}
+
+.gallery-btn {
+    color: white;
+    cursor: pointer;
+    -webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+
+.gallery-btn:hover {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+.galleryWindow .gallery-controls-menu-wrp {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.gallery-controls-menu-wrp span {
+    margin-left: 5px;
+    font-weight: normal;
+}
+
+.gallery-filename {
+    color: white;
+    cursor: default;
+}
+
+.gallery-previews-collection{
+    margin-top: auto;
+}
+
+.gallery-info-widget {
+    display: flex;
+    min-height: 30px;
+    height: 30px;
+    width: 150px;
+    margin-top: 100px;
+}
+
+.js-info-widget-icon {
+    min-width: 25px;
+    min-height: 25px;
+    max-width: 25px;
+    max-height: 25px;
+    align-self: center;
+}
+
+.info-widget-text-container {
+    font-size: 10px;
+    color: white;
+    width: 100%;
+    margin-left: 5px;
+}
+
+.js-info-widget-text {
+    font-weight: bold;
+}
+
+.info-widget-subtext {
+    text-decoration: underline;
+}
+
+.info-widget-text, .info-widget-subtext {
+    text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-}
-.galleryThumbnailInfo span{
-    color:#999;
-    padding: 0 10px;
 }
 
-.dev-l-loader-image-gallery .l-loader {
-    background: none;
+
+
+.gallery-top-menu .gallery-filename {
+    display: none;
 }
 
-.dev-l-loader-image-gallery .loader {
-    color: #fff;
+/* fullscreen-mode */
+
+.galleryWindow.fullscreen-mode .gallery-main-image {
+    margin: 0 auto;
 }
+
+.galleryWindow.fullscreen-mode .gallery-controls-menu-wrp, 
+.galleryWindow.fullscreen-mode .gallery-previews-collection {
+    display: none;
+}
+
+.galleryWindow.fullscreen-mode .gallery-top-menu {
+    justify-content: space-between;
+}
+
+.galleryWindow.fullscreen-mode .gallery-top-menu, 
+.galleryWindow.fullscreen-mode .gallery-nav-btn{
+    background-color: rgba(0,17,200,0.4);
+}
+
+
+.galleryWindow.fullscreen-mode .gallery-info-widget{
+    margin-left: 15px;
+    margin-top: 0;
+}
+
+.galleryWindow.fullscreen-mode .gallery-top-menu-buttons-wrp {
+    margin-right: 15px;
+    position: initial;
+}
+
+.galleryWindow.fullscreen-mode .gallery-top-menu .gallery-filename {
+    display: initial
+}
+
+/* -- end fullscreen-mode -- */
