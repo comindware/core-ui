@@ -29,6 +29,7 @@ export default function() {
         showCheckboxes: true,
         maxQuantitySelected: 5,
         fetchFiltered: true,
+        canDeleteItem: false,
         collection
     });
 

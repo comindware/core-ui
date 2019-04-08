@@ -182,12 +182,16 @@ body {
 }
 
 .bubbles__i.bubble__focused{
-    border: var(--focus);
-    border-radius: 4px;
+  border: 1px solid #bdb8b8;
+  border-radius: 2px;
+  background: #f5f5f5;
+  padding: 2px;
 }
 .reference-btn.bubble__focused{
-  border: var(--focus);
-  border-radius: 4px;
+  border: 1px solid #bdb8b8;
+  border-radius: 2px;
+  background: #f5f5f5;
+  padding: 2px;
 }
 /*------------------ End Form Editor ------------------*/
 
@@ -722,10 +726,15 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   white-space: nowrap;
   width: 100%;
 }
-.bubbles__i:hover a,
-.bubbles__i:hover span {
+.bubble__pencil-edit:hover a,
+.bubble__pencil-edit:hover span {
   width: calc(100% - 20px);
   
+}
+.editor_readonly .bubble__pencil-edit:hover a,
+.editor_disabled .bubble__pencil-edit:hover span {
+  width: 100%;
+
 }
 
 .bubbles .bubbles__caret,
