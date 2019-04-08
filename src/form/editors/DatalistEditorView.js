@@ -993,7 +993,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __checkEntryToBubbles(e) {
         const input = e.target;
-        return input.selectionEnd === 0 && e.keyCode === keyCode.LEFT;
+        return input.selectionEnd === 0 && [keyCode.LEFT, keyCode.BACKSPACE].includes(e.keyCode);
     },
 
     __checkEntryToPanel(e) {
@@ -1003,7 +1003,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __checkExitFromPanelControlToBubble(e) {
         const __isFirstPanelRowSelected = () => this.panelCollection.indexOf(this.panelCollection.lastPointedModel) === 0;
-        return this.selectedCollection.length && (!this.panelCollection.length || (__isFirstPanelRowSelected() && [keyCode.LEFT, keyCode.UP].includes(e.keyCode)));
+        return this.selectedCollection.length &&
+            (!this.panelCollection.length ||
+                (__isFirstPanelRowSelected() && [keyCode.LEFT, keyCode.UP].includes(e.keyCode))
+                    || e.keyCode === keyCode.BACKSPACE);
     },
 
     __checkExitFromPanelControlToAddNewItem(e) {
