@@ -59,7 +59,7 @@
         "@types/handlebars": "^4.1.0",
         "@types/moment-timezone": "^0.5.12",
         "@types/underscore": "^1.8.14",
-        "autoprefixer": "^9.5.0",
+        "autoprefixer": "^9.5.1",
         "awesome-typescript-loader": "^5.2.1",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
