@@ -6,7 +6,8 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    showTemplate: true
+    showTemplate: true,
+    templateEditorOptions: undefined
 };
 
 const valueTypes = {
