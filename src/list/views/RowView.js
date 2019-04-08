@@ -104,7 +104,9 @@ export default Marionette.View.extend({
         if (model.highlighted) {
             this.__handleHighlight(model.highlightedFragment);
         }
-        this.__updateState();
+        if (this.model.checked !== undefined) {
+            this.__updateState();
+        }
     },
 
     onDestroy() {

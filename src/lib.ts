@@ -21,7 +21,7 @@ import * as mixin from './utils/underscore';
 import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
 // @ts-ignore
-import { OldCollectionView, OldCompositeView } from 'marionette.oldcollectionview';
+import { OldCollectionView } from 'marionette.oldcollectionview';
 // @ts-ignore
 import AppRouter from 'marionette.approuter';
 import 'backbone-computedfields';
@@ -40,13 +40,11 @@ import domapi from './utils/DOMApi';
 
 (<any>window)._ = _underscore.mixin(mixin.default);
 // @ts-ignore
-Marionette_.setDomApi(domapi);
-// @ts-ignore
 Marionette_.AppRouter = AppRouter;
 // @ts-ignore
-Marionette_.PartialCollectionView = OldCollectionView;
+Marionette_.PartialCollectionView = OldCollectionView.setDomApi(domapi);
 // @ts-ignore
-Marionette_.PartialCompositeView = OldCompositeView; 
+Marionette_.setDomApi(domapi);
 
 (<any>window).Marionette = Marionette_;
 
