@@ -22,7 +22,17 @@
 
 <http://comindware.com/text/core/form/editors#icon> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "icon"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/form/editors/document#next> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "next"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/document#nextImage> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Next Image"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/document#previousImage> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Previous Image"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors/document/documentRevision#download> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Download"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/document/gallery#zoom> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Zoom in"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/document/gallery#zoomin2> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Zoom in"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#memberTitle> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "memberTitle"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 

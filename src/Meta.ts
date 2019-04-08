@@ -67,7 +67,13 @@ export const iconsNames = {
     expand: 'expand',
     minimize: 'compress',
     goTo: 'share-square',
-    close: 'times'
+    close: 'times',
+    zoomIn: 'search-plus',
+    zoomOut: 'search-minus',
+    delete: 'trash-alt',
+    download: 'download',
+    previous: 'arrow-left',
+    next: 'arrow-right'
 };
 
 export const objectPropertyFormats = {
