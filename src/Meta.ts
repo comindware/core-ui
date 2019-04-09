@@ -66,7 +66,7 @@ export const presentingComponentsTypes = {
 export const iconsNames = {
     expand: 'expand',
     minimize: 'compress',
-    goTo: 'share-square',
+    goTo: 'external-link-square',
     close: 'times',
     zoomIn: 'search-plus',
     zoomOut: 'search-minus',
