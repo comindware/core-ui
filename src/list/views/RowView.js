@@ -107,6 +107,11 @@ export default Marionette.View.extend({
         if (this.model.checked !== undefined) {
             this.__updateState();
         }
+        if (this.getOption('isTree')) {
+            const firstCell = this.options.columns[0];
+
+            this.insertFirstCellHtml(firstCell.cellView === 'string' || !firstCell.editable);
+        }
     },
 
     onDestroy() {
@@ -144,7 +149,6 @@ export default Marionette.View.extend({
             this.__insertCellChechbox();
         }
 
-        const isTree = this.getOption('isTree');
         this.options.columns.forEach(gridColumn => {
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
@@ -173,16 +177,6 @@ export default Marionette.View.extend({
             this.cellViewsByKey[gridColumn.key] = cellView;
             this.cellViews.push(cellView);
         });
-
-        if (isTree) {
-            const firstCell = this.options.columns[0];
-
-            if (typeof firstCell.cellView === 'string' || !firstCell.editable) {
-                this.insertFirstCellHtml();
-            } else {
-                this.insertFirstCellHtml(true);
-            }
-        }
     },
 
     __handleChange() {
@@ -266,47 +260,45 @@ export default Marionette.View.extend({
     },
 
     insertFirstCellHtml(force) {
-        if (this.isRendered()) {
-            const elements = this.el.getElementsByTagName('td');
-            if (elements.length) {
-                const el = elements[0];
-                const level = this.model.level || 0;
-                let margin = level * this.options.levelMargin;
-                const hasChildren = this.model.children && this.model.children.length;
-                const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
-                if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
-                    return;
-                }
-
-                if (treeFirstCell) {
-                    el.removeChild(treeFirstCell);
-                }
-
-                const isContext = el.getElementsByClassName('context-icon')[0];
-                if (isContext) {
-                    margin = level * this.options.contextLevelMargin;
-                    if (hasChildren) {
-                        el.insertAdjacentHTML(
-                            'beforeend',
-                            `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
-                                this.model.collapsed === false ? classes.expanded : ''
-                            }"></span></div>`
-                        );
-                    }
-                    isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
-                } else if (hasChildren) {
-                    el.insertAdjacentHTML(
-                        'afterbegin',
-                        `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                            this.model.collapsed === false ? classes.expanded : ''
-                        }" style="margin-left:${margin}px;"></span>`
-                    );
-                } else {
-                    el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
-                }
-                this.lastHasChildren = hasChildren;
-                this.lastMargin = margin;
+        const elements = this.el.getElementsByTagName('td');
+        if (elements.length) {
+            const el = elements[0];
+            const level = this.model.level || 0;
+            let margin = level * this.options.levelMargin;
+            const hasChildren = this.model.children && this.model.children.length;
+            const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
+            if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
+                return;
             }
+
+            if (treeFirstCell) {
+                el.removeChild(treeFirstCell);
+            }
+
+            const isContext = el.getElementsByClassName('context-icon')[0];
+            if (isContext) {
+                margin = level * this.options.contextLevelMargin;
+                if (hasChildren) {
+                    el.insertAdjacentHTML(
+                        'beforeend',
+                        `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
+                            this.model.collapsed === false ? classes.expanded : ''
+                        }"></span></div>`
+                    );
+                }
+                isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
+            } else if (hasChildren) {
+                el.insertAdjacentHTML(
+                    'afterbegin',
+                    `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
+                        this.model.collapsed === false ? classes.expanded : ''
+                    }" style="margin-left:${margin}px;"></span>`
+                );
+            } else {
+                el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
+            }
+            this.lastHasChildren = hasChildren;
+            this.lastMargin = margin;
         }
     },
 
