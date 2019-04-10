@@ -130,7 +130,7 @@ const GridHeaderView = Marionette.View.extend({
         if (event.target.className.includes('js-collapsible-button')) {
             return;
         }
-        const column = this.options.columns[Array.prototype.indexOf.call(this.el.children, event.currentTarget.parentNode.parentNode) - this.options.showCheckbox];
+        const column = this.options.columns[Array.prototype.indexOf.call(this.el.children, event.currentTarget.parentNode.parentNode) - !!this.options.showCheckbox];
         const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
         this.options.columns.forEach(c => (c.sorting = null));
         column.sorting = sorting;
