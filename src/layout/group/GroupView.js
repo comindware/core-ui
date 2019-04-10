@@ -1,11 +1,11 @@
 // @flow
-import { helpers } from 'utils';
 import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
-const defaults = {
-    collapsed: false
-};
+const defaultOptions = ({ view }) => ({
+    collapsed: false,
+    collapsible: Boolean(view)
+});
 
 const classes = {
     CLASS_NAME: 'layout-group',
@@ -14,11 +14,11 @@ const classes = {
 
 export default Marionette.View.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'view');
-
-        this.model = new Backbone.Model(Object.assign(defaults, options));
-        this.model.set({ collapsible: options.collapsible === undefined ? true : options.collapsible });
+        _.defaults(options, defaultOptions(options));
+        this.model = new Backbone.Model(options);
         this.listenTo(this.model, 'change:collapsed', this.__onCollapsedChange);
+
+        this.update = this.update.bind(this);
     },
 
     template: Handlebars.compile(template),
@@ -36,24 +36,29 @@ export default Marionette.View.extend({
     },
 
     ui: {
-        toggleCollapseButton: '.js-toggle'
+        toggleCollapseButton: '.js-toggle',
+        containerRegion: '.js-container-region'
     },
 
     events: {
-        'click @ui.toggleCollapseButton': '__toggleCollapse'
+        'click @ui.toggleCollapseButton': 'toggleCollapse',
+        'click @ui.containerRegion': () => false
     },
 
     onRender() {
         const view = this.model.get('view');
         if (view) {
             this.showChildView('containerRegion', view);
+        } else {
+            this.ui.containerRegion[0].setAttribute('hidden', '');
         }
         this.__updateState();
+        this.__onCollapsedChange();
     },
 
     update() {
         const view = this.model.get('view');
-        if (view.update) {
+        if (view?.update) {
             view.update();
         }
         this.__updateState();
@@ -61,28 +66,24 @@ export default Marionette.View.extend({
 
     validate() {
         const view = this.model.get('view');
-        if (view.validate) {
+        if (view?.validate) {
             return view.validate();
         }
     },
 
-    __toggleCollapse() {
+    toggleCollapse(collapse = !this.model.get('collapsed')) {
         if (!this.model.get('collapsible')) {
             return;
         }
-        if (this.model.get('collapsible') !== false) {
-            this.model.set('collapsed', !this.model.get('collapsed'));
-            return false;
-        }
+        this.model.set('collapsed', collapse);
     },
 
-    __onCollapsedChange(model, collapsed) {
+    __onCollapsedChange(model = this.model, collapsed = this.model.get('collapsed')) {
         this.ui.toggleCollapseButton.toggleClass(classes.COLLAPSED_CLASS, collapsed);
         if (collapsed) {
             this.getRegion('containerRegion').$el.hide(200);
         } else {
             this.getRegion('containerRegion').$el.show(200);
         }
-        return false;
     }
 });
