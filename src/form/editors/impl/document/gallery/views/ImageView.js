@@ -1,5 +1,5 @@
 import LoadingBehavior from '../../../../../../views/behaviors/LoadingBehavior';
-import template from '../templates/Image.html';
+import template from '../templates/image.html';
 
 const playIconClassName = 'play-icon';
 
