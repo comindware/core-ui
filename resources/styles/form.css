@@ -976,8 +976,26 @@ input[type="color"], .colorpicker{
 }
 
 .cell.editor_document .documents {
-    margin: 0 0 0 2em;
+    margin: 0;
     line-height: initial;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 15px;
+}
+.cell.editor_document .documents .task-links__i{
+    margin: 0;
+}
+.cell.editor_document .documents .task-links__i + .task-links__i{
+
+}
+.cell.editor_document .documents .task-links__i .fa-li{
+    position: static;
+    width: auto;
+    margin: 0 5px 0 0;
+}
+.cell.editor_document .emptyDocumentPlaceholder{
+    display: none;
 }
 
 .dev-btn-document-revise{

@@ -320,7 +320,9 @@ body {
   padding: var(--input-padding);
   overflow: hidden;
 }
-
+.cell.editor_date-time {
+  background: transparent;
+}
 .editor_disabled.editor_date-time,
 .editor_disabled.editor_date-time:hover,
 .editor_readonly.editor_date-time,
@@ -384,8 +386,14 @@ svg.svg-grid-icons {
 }
 
 
-.grid-header .cell_selection-index {
+.grid-header .cell_selection-index,
+.grid-header .cell_selection-index:hover,
+.grid-header:hover .cell_selection-index{
   background-color: var(--grid-header-bg);
+  top: 0;
+  border: none;
+  box-shadow: inset -1px 0 0 0 #90c3eb, inset 0 1px 0 0 #0575bd;
+  z-index: 20;
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
