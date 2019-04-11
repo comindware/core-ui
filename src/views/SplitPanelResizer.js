@@ -26,7 +26,8 @@ export default Marionette.View.extend({
             this.minimumTop = this.firstPanel.el.offsetTop + constants.MIN_HEIGHT;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
 
-            this.$el.draggable({
+            Core.services.UIService({
+                el: this.el,
                 axis: 'y',
                 drag: (event, ui) => this.__onResizerDragHorizontal(ui)
             });
@@ -39,7 +40,8 @@ export default Marionette.View.extend({
             this.minimumLeft = this.firstPanel.el.offsetLeft + constants.MIN_WIDTH;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
 
-            this.$el.draggable({
+            Core.services.UIService({
+                el: this.el,
                 axis: 'x',
                 drag: (event, ui) => this.__onResizerDragVertical(ui)
             });

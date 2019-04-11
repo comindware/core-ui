@@ -131,7 +131,7 @@
         "backbone.radio": "^2.0.0",
         "codemirror": "^5.45.0",
         "core-js": "^3.0.1",
-        "jquery": "^3.3.1",
+        "jquery": "^3.4.0",
         "marionette.approuter": "^1.0.1",
         "marionette.oldcollectionview": "^1.0.0",
         "moment": "^2.24.0",
