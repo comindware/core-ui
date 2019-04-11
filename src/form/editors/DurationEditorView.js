@@ -263,6 +263,10 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         this.ui.input[0].setSelectionRange(pos, pos);
     },
 
+    moveCaret(delta) {
+        this.setCaretPos(this.getCaretPos() + delta);
+    },
+
     getSegmentIndex(pos) {
         // returns the index of the segment where we are at
         let i;
@@ -308,6 +312,10 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
             result.push('0');
         }
         return index !== undefined ? result[index + 1] : result.slice(1, this.focusableParts.length + 1);
+    },
+
+    getCurrentSegmentValue() {
+        return this.getSegmentValue(this.getSegmentIndex(this.getCaretPos()));
     },
 
     setSegmentValue(index, value, replace) {
@@ -396,18 +404,22 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
                     this.__setCaretToNextPart(index);
                     return false;
                 }
-                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0');
-                this.setCaretPos(this.getCaretPos() + 1); //move right
-                event.preventDefault();
-                return false;
+                if (this.getCurrentSegmentValue().length === 1) {
+                    this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0', 'right');
+                    this.moveCaret(1);
+                    return false;
+                }
+                break;
             case keyCode.BACKSPACE:
                 if (this.atSegmentStart(position)) {
                     this.__setCaretToPreviousPart(index);
                     return false;
                 }
-                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0', 'left');
-                this.setCaretPos(this.getCaretPos() - 1); //move left
-                event.preventDefault();
+                if (this.getCurrentSegmentValue().length === 1) {
+                    this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0', 'left');
+                    this.moveCaret(-1);
+                    return false;
+                }
                 break;
             case keyCode.ESCAPE:
                 this.ui.input.blur();
@@ -442,7 +454,12 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
                 if (!valid) {
                     return false;
                 }
-                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
+                if (this.getCurrentSegmentValue() === '0' && this.atSegmentEnd(position)) {
+                    this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '', 'left');
+                    this.moveCaret(-1);
+                } else {
+                    this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
+                }
                 if (this.getSegmentValue(index).length >= focusablePart.maxLength) {
                     return false;
                 }
@@ -508,7 +525,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         }
     },
 
-    __replaceModeFor(arrChar, insertChar, direction = 'right') {
+    __replaceModeFor(arrChar, insertChar = '', direction = 'right') {
         const inpValue = this.ui.input.val();
         const dirClarity = direction === 'left' ? 1 : 0;
         const caretPos = this.getCaretPos();
