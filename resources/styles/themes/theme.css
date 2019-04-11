@@ -450,7 +450,6 @@ svg.svg-grid-icons {
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
-  box-shadow: var(--grid-cell-border-first);
   padding-left: 10px;
 }
 
@@ -458,7 +457,6 @@ svg.svg-grid-icons {
   color: var(--grid-selection-color);
   width: 25px;
   background-color: var(--grid-selection-bg);
-  box-shadow: var(--grid-cell-border-first);
 }
 
 .cell_selection[draggable], .cell_selection-index[draggable] {
