@@ -357,17 +357,35 @@ module.exports.apply = {
     },
     'toolbar-btn-low-theme': {
         'background-color': '#e1e1e1',
-        'border-color': '#e1e1e1'
+        'border-color': '#e1e1e1',
+        color: 'black'
     },
-    'toolbar-btn-low-hover-theme': {},
-    'toolbar-btn-low-active-theme': {},
+    'toolbar-btn-low-hover-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
+    'toolbar-btn-low-active-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
 
     'toolbar-btn-normal-theme': {
         'background-color': '#d7fdf4',
-        'border-color': '#d7fdf4'
+        'border-color': '#d7fdf4',
+        color: 'black'
     },
-    'toolbar-btn-normal-hover-theme': {},
-    'toolbar-btn-normal-active-theme': {},
+    'toolbar-btn-normal-hover-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
+    'toolbar-btn-normal-active-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
 
     'toolbar-btn-major-theme': {
         color: variables.white,
