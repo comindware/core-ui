@@ -355,11 +355,17 @@ module.exports.apply = {
     'toolbar-btn-theme': {
         'margin-right': '5px'
     },
-    'toolbar-btn-low-theme': {},
+    'toolbar-btn-low-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1'
+    },
     'toolbar-btn-low-hover-theme': {},
     'toolbar-btn-low-active-theme': {},
 
-    'toolbar-btn-normal-theme': {},
+    'toolbar-btn-normal-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4'
+    },
     'toolbar-btn-normal-hover-theme': {},
     'toolbar-btn-normal-active-theme': {},
 
