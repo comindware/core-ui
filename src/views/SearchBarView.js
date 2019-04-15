@@ -5,7 +5,7 @@ import keyCode from '../utils/keyCode';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
-    delay: 300
+    delay: 200
 });
 
 export default Marionette.View.extend({
@@ -16,6 +16,10 @@ export default Marionette.View.extend({
     },
 
     template: Handlebars.compile(template),
+
+    attributes: {
+        autocomplete: false
+    },
 
     templateContext() {
         return {
