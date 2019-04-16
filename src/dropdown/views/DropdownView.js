@@ -256,11 +256,12 @@ export default class DropdownView {
         this.panelEl = this.panelView.el;
 
         this.button.isOpen = true;
-        this.__adjustPosition();
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.button.el
         });
+
+        this.__adjustPosition();
 
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
