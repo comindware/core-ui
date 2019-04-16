@@ -1,6 +1,6 @@
-<span class="document-icon" ><i class="{{iconPrefixer icon}}"></i></span>
+<i class="bubble-doc_icon {{documentIcon}}"></i>
 {{#if url}}
-    <a class="task-links__link js-link" target="_blank" href="{{url}}" download="{{name}}">{{name}}</a>
+    <a class="task-links__link" target="_blank" href="{{url}}" download="{{name}}">{{name}}</a>
 {{else}}
-    <span>{{name}}</span>
+    <span class="bubble-doc_text">{{name}}</span>
 {{/if}}

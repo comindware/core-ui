@@ -15,7 +15,7 @@ export default function() {
                     ? [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }]
                     : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
             referenceCell: i > 3 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
-            documentCell: i > 3 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc 1', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
+            documentCell: i > 3 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
             enumCell: { valueExplained: ['123'] }
         });
     }

@@ -200,12 +200,12 @@ export default (factory = {
 
     __getReferenceCell({ values, column, model }) {
         values.forEach(value => {
-            if (!value.name) {
-                value.name = userHelpers.getAbbreviation(value.text);
+            if (!value.text) {
+                value.text = value.name;
             }
         });
 
-        const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
+        const title = this.__getTitle({ column, model, values: values.map(v => v.text) });
 
         if (values.length === 1) {
             return Handlebars.compile(`<td class="cell" title="${title}">${compositeReferenceCell}</td>`)(values[0]);

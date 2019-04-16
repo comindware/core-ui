@@ -10,9 +10,10 @@ import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
 import formRepository from '../formRepository';
 import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
-import userBubble from './impl/datalist/templates/userBubble.hbs';
-import documentSimpleBubble from './impl/document/templates/documentSimpleBubble';
 import DocumentEditorView from './DocumentEditorView';
+import compositeReferenceCell from '../../list/templates/compositeReferenceCell.html';
+import compositeDocumentCell from '../../list/templates/compositeDocumentCell.html';
+import compositeUserCell from '../../list/templates/compositeUserCell.html';
 
 const defaultOptions = () => ({
     displayAttribute: 'name',
@@ -43,8 +44,8 @@ const defaultOptions = () => ({
     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
 
     class: undefined,
-    buttonBubbleTemplate: undefined,
-    panelBubbleTemplate: undefined,
+    buttonBubbleTemplate: compositeReferenceCell,
+    panelBubbleTemplate: compositeReferenceCell,
 
     boundEditor: undefined,
 
@@ -69,8 +70,8 @@ const presetsDefaults = {
     document: options => ({
         listTitle: options.title,
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: documentSimpleBubble,
-        panelBubbleTemplate: documentSimpleBubble,
+        buttonBubbleTemplate: compositeDocumentCell,
+        panelBubbleTemplate: compositeDocumentCell,
         valueType: 'normal',
         showCollection: false,
         idProperty: 'uniqueId',
@@ -83,8 +84,8 @@ const presetsDefaults = {
         listTitle: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         title: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: userBubble,
-        panelBubbleTemplate: userBubble
+        buttonBubbleTemplate: compositeUserCell,
+        panelBubbleTemplate: compositeUserCell
     })
 };
 
@@ -1003,10 +1004,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __checkExitFromPanelControlToBubble(e) {
         const __isFirstPanelRowSelected = () => this.panelCollection.indexOf(this.panelCollection.lastPointedModel) === 0;
-        return this.selectedCollection.length &&
-            (!this.panelCollection.length ||
-                (__isFirstPanelRowSelected() && [keyCode.LEFT, keyCode.UP].includes(e.keyCode))
-                    || e.keyCode === keyCode.BACKSPACE);
+        return (
+            this.selectedCollection.length &&
+            (!this.panelCollection.length || (__isFirstPanelRowSelected() && [keyCode.LEFT, keyCode.UP].includes(e.keyCode)) || e.keyCode === keyCode.BACKSPACE)
+        );
     },
 
     __checkExitFromPanelControlToAddNewItem(e) {
@@ -1048,8 +1049,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.dropdownView.isOpen) {
             return;
         }
-        
-        this.panelCollection.trigger('moveCursorBy', delta, { isLoop: false, shiftPressed: false  });
+
+        this.panelCollection.trigger('moveCursorBy', delta, { isLoop: false, shiftPressed: false });
     },
 
     //start fetch
