@@ -17,6 +17,11 @@ const classes = {
 const WINDOW_BORDER_OFFSET = 10;
 const MAX_DROPDOWN_PANEL_WIDTH = 200;
 
+const popoutFlow = {
+    LEFT: 'left',
+    RIGHT: 'right'
+};
+
 const panelPosition = {
     DOWN: 'down',
     UP: 'up'
@@ -28,6 +33,7 @@ const panelMinWidth = {
 };
 
 const defaultOptions = {
+    popoutFlow: popoutFlow.LEFT,
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
@@ -175,6 +181,62 @@ export default class DropdownView {
             position = panelPosition.DOWN;
         }
 
+        const viewport = {
+            height: window.innerHeight,
+            width: window.innerWidth
+        };
+
+        const panelRect = this.panelEl.getBoundingClientRect();
+
+        const css: {
+            left?: number,
+            right?: number
+        } = {};
+
+        switch (this.options.popoutFlow) {
+            case popoutFlow.RIGHT: {
+                const leftCenter = buttonRect.left + buttonRect.width / 2;
+
+                if (leftCenter < WINDOW_BORDER_OFFSET) {
+                    css.left = WINDOW_BORDER_OFFSET;
+                } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                    css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else {
+                    css.left = leftCenter;
+                }
+
+                this.panelEl.style.left = `${css.left}px`;
+                break;
+            }
+            case popoutFlow.LEFT: {
+                const anchorRightCenter = viewport.width - (buttonRect.left + buttonRect.width / 2);
+
+                if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
+                    css.right = WINDOW_BORDER_OFFSET;
+                } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                    css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else {
+                    css.right = anchorRightCenter;
+                }
+
+                this.panelEl.style.left = `${css.right}px`;
+                break;
+            }
+            default:
+                break;
+        }
+
+        // class adjustments
+        if (this.options.popoutFlow === popoutFlow.LEFT) {
+            this.panelEl.classList.add(classes.FLOW_LEFT);
+
+            this.panelEl.classList.remove(classes.FLOW_RIGHT);
+        } else if (position === panelPosition.UP) {
+            this.panelEl.classList.add(classes.FLOW_RIGHT);
+
+            this.panelEl.classList.remove(classes.FLOW_LEFT);
+        }
+
         // class adjustments
         if (position === panelPosition.DOWN) {
             this.button.el.classList.add(classes.DROPDOWN_DOWN);
@@ -225,11 +287,6 @@ export default class DropdownView {
         }
 
         this.panelEl.style.top = `${top}px`;
-
-        if (panelWidth > buttonRect.width) {
-            leftOffset -= panelWidth - buttonRect.width;
-        }
-        this.panelEl.style.left = `${leftOffset}px`;
 
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.button.el);
