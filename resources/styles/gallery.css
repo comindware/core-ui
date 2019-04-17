@@ -94,6 +94,7 @@
     width: max-content;
     position: absolute;
     right: 15px;
+    font-size: 21px;
 }
 
 .gallery-top-menu-buttons-wrp > * {
@@ -126,7 +127,7 @@
 
 .gallery-controls-menu-wrp span {
     margin-left: 5px;
-    font-weight: normal;
+    font: normal 14px/1.4 OpenSans,Arial,sans-serif;
 }
 
 .gallery-filename {
@@ -152,6 +153,7 @@
     max-width: 25px;
     max-height: 25px;
     align-self: center;
+    border-radius: 50%;
 }
 
 .info-widget-text-container {
@@ -198,8 +200,14 @@
 
 .galleryWindow.fullscreen-mode .gallery-top-menu, 
 .galleryWindow.fullscreen-mode .gallery-nav-btn{
-    background-color: rgba(0,17,200,0.4);
+    background-color: rgba(0,0,0,.7);
+    padding: 10px;
+    border-radius: 10px;
 }
+.galleryWindow.fullscreen-mode .gallery-top-menu{
+    border-radius: 0;
+}
+
 
 
 .galleryWindow.fullscreen-mode .gallery-info-widget{

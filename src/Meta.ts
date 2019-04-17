@@ -72,8 +72,8 @@ export const iconsNames = {
     zoomOut: 'search-minus',
     delete: 'trash-alt',
     download: 'download',
-    previous: 'arrow-left',
-    next: 'arrow-right'
+    previous: 'chevron-left',
+    next: 'chevron-right'
 };
 
 export const objectPropertyFormats = {
