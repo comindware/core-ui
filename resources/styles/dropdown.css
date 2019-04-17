@@ -518,3 +518,14 @@
     border: 1px solid #0575bd;
     border-bottom-color: #fff;
 }
+
+.bubbles__list .bubbles__i {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bubbles__list .bubbles-subtext {
+    color: gray;
+    font-style: italic;
+}

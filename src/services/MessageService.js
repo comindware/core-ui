@@ -60,7 +60,7 @@ export default {
                 size: {
                     width: 'auto',
                     height: 'auto',
-                    'min-width': '300px'
+                    'min-width': '330px'
                 }, //don't use min-values if fullscreenToggleDisabled: false
                 fullscreenToggleDisabled: true,
                 isSystemPopup: true,
@@ -115,7 +115,7 @@ export default {
         ];
 
         if (messageConfiguration.beforeLeaveFn) {
-            buttons.add({
+            buttons.push({
                 id: 'saveAndLeave',
                 text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.SAVEANDLEAVE'),
                 customClass: 'btn-small',

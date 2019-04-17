@@ -31,7 +31,7 @@ export default {
         return pureJSType;
     },
 
-    guid() {
+    guid(): string {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
             const r = (Math.random() * 16) | 0;
 
@@ -40,7 +40,7 @@ export default {
         });
     },
 
-    defaultsPure(...args: Array<any>) {
+    defaultsPure(...args: Array<any>): object {
         return Object.assign({}, ...args.reverse());
     },
 
@@ -48,5 +48,13 @@ export default {
         return string.includes(toStr) ?
             string.slice(0, string.indexOf(toStr)) :
             string;
+    },
+    
+    capitalize(string: string): string {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    unCapitalize(string: string): string {
+        return string.charAt(0).toLowerCase() + string.slice(1);
     }
 };

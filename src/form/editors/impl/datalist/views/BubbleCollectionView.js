@@ -13,7 +13,9 @@ export default Marionette.CollectionView.extend({
     childViewOptions() {
         return Object.assign(
             {
-                parent: this.$el
+                parent: this.$el,
+                showButtonSubtext: this.options.showButtonSubtext,
+                subtextProperty: this.options.subtextProperty
             },
             this.options.bubbleItemViewOptions
         );

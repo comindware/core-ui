@@ -47,11 +47,11 @@ export default function () {
 
         // Change selected to the opposite of what
         // it currently is
-        toggleSelected(options) {
-            if (this.selected) {
-                this.deselect(options);
-            } else {
+        toggleSelected(isSelect = !this.selected, options) {
+            if (isSelect) {
                 this.select(options);
+            } else {
+                this.deselect(options);
             }
         },
 

@@ -12,20 +12,20 @@ export default function() {
         dropdownValue: '120'
     });
 
-    const view = new Core.form.editors.DatalistEditor({
-        model,
-        key: 'dropdownValue',
-        autocommit: true,
-        collection: possibleItems,
-        valueType: 'id',
-        showAdditionalList: true,
-        iconProperty: 'contextIcon',
-        subtextProperty: 'subtext',
-        allowEmptyValue: false
-    });
-
     return new CanvasView({
-        view,
+        view: new Core.form.editors.DatalistEditor({
+            model,
+            key: 'dropdownValue',
+            autocommit: true,
+            collection: possibleItems,
+            valueType: 'id',
+            showAdditionalList: true,
+            iconProperty: 'contextIcon',
+            subtextProperty: 'subtext',
+            allowEmptyValue: false,
+            displayAttribute: attr => `id: ${attr.id}, text: ${attr.text}`,
+            subtextProperty: attr => `id: ${attr.id}, subtext: ${attr.subtext}`
+        }),
         presentation: '{{dropdownValue}}',
         isEditor: true
     });
