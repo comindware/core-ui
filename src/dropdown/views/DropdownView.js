@@ -166,7 +166,6 @@ export default class DropdownView {
             this.panelEl.style.width = `${panelWidth}px`;
         }
 
-        let leftOffset = buttonRect.left;
         let offsetHeight = this.panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
@@ -219,7 +218,7 @@ export default class DropdownView {
                     css.right = anchorRightCenter;
                 }
 
-                this.panelEl.style.left = `${css.right}px`;
+                this.panelEl.style.right = `${css.right}px`;
                 break;
             }
             default:
@@ -314,11 +313,11 @@ export default class DropdownView {
 
         this.button.isOpen = true;
 
+        this.__adjustPosition();
+
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.button.el
         });
-
-        this.__adjustPosition();
 
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
