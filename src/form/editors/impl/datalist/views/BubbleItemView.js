@@ -1,20 +1,20 @@
 // @flow
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
-import template from '../templates/bubbleItem.hbs';
 import meta from '../meta';
 
 export default Marionette.View.extend({
-    template: Handlebars.compile(template),
+    template: Handlebars.compile('{{{customTemplate}}}'),
 
     templateContext() {
         const attributes = this.model.toJSON();
-        return {
-            customTemplate: !this.options.customTemplate
-                ? null
-                : Handlebars.compile(typeof this.options.customTemplate === 'function' ? this.options.customTemplate(attributes) : this.options.customTemplate)(attributes),
+        const data = {
             url: this.options.createValueUrl && this.options.createValueUrl(attributes),
-            text: this.options.getDisplayText(attributes)
+            text: this.options.getDisplayText(attributes),
+            ...attributes
+        };
+        return {
+            customTemplate: Handlebars.compile(this.options.customTemplate)(data)
         };
     },
 

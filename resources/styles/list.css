@@ -565,6 +565,10 @@ tr:hover .cell_selection {
     height: auto;
 }
 
+.cell > .task-links__link  {
+    display: initial;
+}
+
 /*-- Compact list --*/
 .compact.grid-container .cell .input,
 .compact.grid-container .cell .bubbles__input,
@@ -696,4 +700,69 @@ tr:hover .cell_selection {
 .grid-table-wrapper-war {
     overflow: auto;
     flex: 1;
+}
+
+.composite-user-abr__container{
+    height: 23px;
+    width: 23px;
+    text-align: center;
+    line-height: 23px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 1px solid #e2e2e2;
+    flex: 0 0 auto;
+}
+.composite-user-abr__container img {
+    height: 23px;
+    width: 23px;
+    border-radius: 50%;
+}
+.composite-user-abr__name {
+    margin-left: 0.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.composite-cell__count {
+    margin-left: auto;
+    opacity: 0.6;
+}
+
+.composite-user-abr__avatar {
+    width: 27px;
+    height: 27px;
+}
+
+.grid_composite-cell .dropdown__button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid-composite_panel {
+    position: fixed;
+    font-size: 12px;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 600;
+}
+
+.composite-cell_container {
+    display: flex;
+    min-width: 200px;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.composite-cell__wrp {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.composite-cell__wrp .bubbles__caret{
+    margin-left: 0.5rem;
+}
+
+.composite-cell_container .task-links__link, .composite-cell__wrp .task-links__link {
+    margin-left: 0.25rem;
 }

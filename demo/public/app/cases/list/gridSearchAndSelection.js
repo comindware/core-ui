@@ -10,10 +10,13 @@ export default function() {
             dateTimeCell: '2015-07-24T08:13:13.847Z',
             durationCell: 'P12DT5H42M',
             booleanCell: true,
-            userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
-            enumCell: { valueExplained: ['123'] },
-            documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+            userCell:
+                i > 3
+                    ? [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }]
+                    : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
+            referenceCell: i > 3 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
+            documentCell: i > 3 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
+            enumCell: { valueExplained: ['123'] }
         });
     }
 
@@ -38,6 +41,11 @@ export default function() {
             key: 'durationCell',
             type: 'Duration',
             title: 'Duration Cell'
+        },
+        {
+            key: 'userCell',
+            type: 'Account',
+            title: 'User'
         },
         {
             key: 'booleanCell',

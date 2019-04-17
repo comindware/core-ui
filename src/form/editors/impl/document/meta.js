@@ -1,4 +1,4 @@
-const cutOffTo = (string, toStr) => (string?.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : '');
+const cutOffTo = (string, toStr) => (string?.includes(toStr) ? string.slice(-string.lastIndexOf(toStr) + 1) : '');
 
 const getExtensionFromName = name => cutOffTo(name, '.');
 
@@ -69,7 +69,7 @@ export default {
         let icon;
 
         if (ext) {
-            icon = Object.keys(fileIconClasses).find(key => fileIconClasses[key] === ext.toLowerCase());
+            icon = Object.keys(fileIconClasses).find(key => fileIconClasses[key].includes(ext.toLowerCase()));
         }
 
         return icon || 'file';

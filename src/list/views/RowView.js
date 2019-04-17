@@ -156,6 +156,10 @@ export default Marionette.View.extend({
                 this.el.insertAdjacentHTML('beforeend', cell);
                 return;
             }
+            if (typeof cell === 'object') {
+                this.el.insertAdjacentElement('beforeend', cell);
+                return;
+            }
 
             gridColumn.isCell = true;
             const cellView = new cell({
@@ -184,9 +188,16 @@ export default Marionette.View.extend({
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
                 if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
-                    const element = this.el.getElementsByTagName('td')[index];
+                    const element = this.el.getElementsByTagName('td')[index + 1];
                     if (element) {
-                        element.insertAdjacentHTML('afterend', CellViewFactory.getCellHtml(column, this.model));
+                        const cell = CellViewFactory.getCell(column, this.model);
+
+                        if (typeof cell === 'string') {
+                            element.insertAdjacentHTML('afterend', cell);
+                        } else {
+                            element.insertAdjacentElement('afterend', cell);
+                        }
+
                         this.el.removeChild(element);
                         if (this.getOption('isTree') && index === 0) {
                             this.insertFirstCellHtml(true);

@@ -12,6 +12,7 @@ import InterfaceErrorMessageService from './services/InterfaceErrorMessageServic
 import ThemeService from './services/ThemeService';
 import getIconPrefixer from './utils/handlebars/getIconPrefixer';
 import getIconUnicode from './utils/handlebars/getIconUnicode';
+import getDocumentIcon from './utils/handlebars/getDocumentIcon';
 import initializeDatePicker from './form/editors/impl/dateTime/views/initializeDatePicker';
 import ContentLoadingView from './views/ContentLoadingView';
 
@@ -19,8 +20,10 @@ import 'backbone.trackit';
 
 export default {
     async start(options) {
-        Handlebars.registerHelper('iconPrefixer', getIconPrefixer(options.iconService));
+        const iconPrefixer = getIconPrefixer(options.iconService);
+        Handlebars.registerHelper('iconPrefixer', iconPrefixer);
         Handlebars.registerHelper('iconUnicode', getIconUnicode(options.iconService));
+        Handlebars.registerHelper('documentIcon', getDocumentIcon(iconPrefixer)); // must be registred after iconPrefixer
         const appView = window.app.getView();
 
         if (appView) {
