@@ -135,7 +135,7 @@
         "marionette.approuter": "^1.0.1",
         "marionette.oldcollectionview": "^1.0.0",
         "moment": "^2.24.0",
-        "moment-timezone": "^0.5.23",
+        "moment-timezone": "^0.5.25",
         "spectrum-colorpicker": "^1.8.0",
         "text-mask-addons": "^3.8.0",
         "underscore": "^1.9.1",
