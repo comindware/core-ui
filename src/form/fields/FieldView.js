@@ -118,7 +118,7 @@ export default class {
             const fieldTempParts = Handlebars.compile(options.template)(schema);
 
             if (schema.isCell) {
-                this.editor.el.insertAdjacentHTML('afterend', fieldTempParts);
+                this.editor.el.insertAdjacentHTML('beforeend', fieldTempParts);
             } else {
                 this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
 
