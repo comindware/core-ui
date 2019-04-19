@@ -299,7 +299,7 @@ const GridHeaderView = Marionette.View.extend({
         this.trigger('handleColumnSelect', {
             event,
             el: event.currentTarget,
-            model: this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
+            model: this.options.columns[Array.prototype.indexOf.call(this.el.children, event.currentTarget.parentNode.parentNode) - !!this.options.showCheckbox]
         });
     },
 
