@@ -138,7 +138,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
         const firstChild = this.el.children[0];
-        if (!firstChild) {
+        if (!(firstChild && firstChild.classList.contains('row'))) {
             return;
         }
 
@@ -561,7 +561,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __handleFilter() {
-        this.parent$el.scrollTop(0);
+        this.parent$el?.scrollTop(0);
         this.scrollTo(0);
         this.debouncedHandleResizeShort();
     }

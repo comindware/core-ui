@@ -73,7 +73,9 @@ export const iconsNames = {
     delete: 'trash-alt',
     download: 'download',
     previous: 'arrow-left',
-    next: 'arrow-right'
+    next: 'arrow-right',
+    user: 'address-card',
+    users: 'users'
 };
 
 export const objectPropertyFormats = {
@@ -110,6 +112,11 @@ export const objectPropertyFormats = {
 
     PLAIN_TEXT: 'PlainText',
     HTML_TEXT: 'HtmlText'
+};
+
+export const virtualCollectionFilterActions = {
+    PUSH: 'push',
+    REMOVE: 'remove'
 };
 
 export default {

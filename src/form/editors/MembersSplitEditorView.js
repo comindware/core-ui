@@ -4,9 +4,12 @@ import MembersSplitController from './impl/membersSplit/controller/MembersSplitC
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
+import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
+    filterFnParameters: undefined,
+    memberTypes: undefined,
     exclude: [],
     displayText: '',
     hideUsers: false,
@@ -38,7 +41,10 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     regions: {
-        splitPanelRegion: '.js-split-panel-region'
+        splitPanelRegion: {
+            el: '.js-split-panel-region',
+            replaceElement: true
+        }
     },
 
     ui: {
@@ -87,6 +93,14 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         });
 
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
+        if (options.memberService) {
+            Object.assign(this.options, {
+                filterFnParameters: options.memberService.filterFnParameters,
+                memberTypes: options.memberService.memberTypes
+            });
+        }
+        helpers.ensureOption(this.options, 'filterFnParameters');
+        helpers.ensureOption(this.options, 'memberTypes');
 
         this.options.selected = this.getValue();
 

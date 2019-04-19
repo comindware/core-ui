@@ -208,6 +208,8 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#searchUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "Search by name"].
 
+<http://comindware.com/text/core/form/editors/memberSplit#selectAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрать все"; l10n:originalData "selectAll"].
+
 <http://comindware.com/text/core/form/editors/memberSplit#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, один из которых может стать исполнителем задачи"; l10n:originalData "Select users who may become task assignee"].
