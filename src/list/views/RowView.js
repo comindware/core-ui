@@ -77,8 +77,8 @@ export default Marionette.View.extend({
         change: '__handleChange',
         blink: '__blink',
         'toggle:collapse': 'updateCollapsed',
-        checked: '__addCheckedClass',
-        unchecked: '__removeCheckedClass',
+        checked: '__updateState',
+        unchecked: '__updateState',
         'checked:some': '__updateState'
     },
 
@@ -530,16 +530,6 @@ export default Marionette.View.extend({
         setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
     },
 
-    __addCheckedClass() {
-        this.el.classList.add(classes.rowChecked);
-        this.__updateState();
-    },
-
-    __removeCheckedClass() {
-        this.el.classList.remove(classes.rowChecked);
-        this.__updateState();
-    },
-
     __updateState(model, checkedState) {
         let state = checkedState;
 
@@ -554,15 +544,21 @@ export default Marionette.View.extend({
             case 'checked':
                 this.ui.checkbox.addClass(classes.checked);
                 this.ui.checkbox.removeClass(classes.checked_some);
+
+                this.el.classList.add(classes.rowChecked);
                 break;
             case 'checkedSome':
                 this.ui.checkbox.removeClass(classes.checked);
                 this.ui.checkbox.addClass(classes.checked_some);
+
+                this.el.classList.add(classes.rowChecked);
                 break;
             case 'unchecked':
             default:
                 this.ui.checkbox.removeClass(classes.checked);
                 this.ui.checkbox.removeClass(classes.checked_some);
+
+                this.el.classList.remove(classes.rowChecked);
                 break;
         }
     }

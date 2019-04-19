@@ -405,8 +405,8 @@ export default Marionette.PartialCollectionView.extend({
             }
             // scroll in case of search, do not scroll in case of collapse
             if (options.add) {
-                const row = collection.indexOf(model);
-                this.scrollTo(row, true);
+                const rowIndex = collection.indexOf(model);
+                this.scrollTo(rowIndex, true);
                 model.trigger('blink');
             } else if (options.scroll !== false) {
                 this.scrollTo(0, true);
