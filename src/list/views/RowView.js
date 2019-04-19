@@ -239,7 +239,7 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) || event.relatedTarget.classList.contains('js-grid-content-view')) {
+        if (this.model.collection.dragoverModel !== this.model) {
             this.model.trigger('dragleave', event);
             delete this.model.dragover;
         }
@@ -250,6 +250,7 @@ export default Marionette.View.extend({
     },
 
     __handleDrop(event) {
+        event.preventDefault();
         if (this.__allowDrop()) {
             this.model.trigger('drop', event);
         }
