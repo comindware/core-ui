@@ -60,9 +60,13 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
         this.value = this.__adjustValue(this.value);
-        this.editorType = this.options.showDate ?
-            (this.options.showTime ? editorTypes.dateTime : editorTypes.date) :
-            this.options.showTime ? editorTypes.time : console.warn('DateTimeEditor: showDate and showTime is false');
+        this.editorType = this.options.showDate
+            ? this.options.showTime
+                ? editorTypes.dateTime
+                : editorTypes.date
+            : this.options.showTime
+            ? editorTypes.time
+            : console.warn('DateTimeEditor: showDate and showTime is false');
     },
 
     ui: {
@@ -70,7 +74,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         mobileInput: '.js-mobile-input'
     },
 
-    events(){
+    events() {
         const events = {
             'click @ui.clearButton': '__onClear',
             mouseenter: '__onMouseenter'
@@ -118,7 +122,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             [editorTypes.date]: 'date',
             [editorTypes.time]: 'time'
         };
-        
+
         return _.defaultsPure(
             {
                 isMobile: MobileService.isMobile,
@@ -157,9 +161,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             [editorTypes.time]: 'HH:mm'
         };
 
-        this.ui.mobileInput[0].value = value ?
-            moment(value).format(nativeFormats[this.editorType]) :
-            null;
+        this.ui.mobileInput[0].value = value ? moment(value).format(nativeFormats[this.editorType]) : null;
     },
 
     focusElement: null,
@@ -196,10 +198,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
         const input = event.target;
         const value = input.value;
 
-        this.setValue(
-            this.__mapNativeToValue(value),
-            { updateButtons: true, triggerChange: true }
-        );
+        this.setValue(this.__mapNativeToValue(value), { updateButtons: true, triggerChange: true });
     },
 
     __mapNativeToValue(value) {
@@ -395,6 +394,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             },
             renderAfterClose: false,
             autoOpen: false,
+            popoutFlow: 'right',
             panelMinWidth: 'none',
             class: 'editor_date-time_date'
         });
@@ -536,30 +536,28 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
 
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: DurationEditorView,
-            buttonViewOptions: _.defaultsPure(
-                {
-                    allowDays: false,
-                    allowHours: true,
-                    allowMinutes: true,
-                    allowSeconds: isFormatHasSeconds,
-                    allFocusableParts: this.options.allFocusableParts,
-                    seconds: this.options.seconds,
-                    minutes: {
-                        text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
-                    },
-                    showEmptyParts: true,
-                    hideClearButton: true,
-                    fillZero: true,
-                    normalTime: true,
-                    showTitle: false,
-                    emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
-                    key: this.options.key,
-                    autocommit: true,
-                    readonly: this.getReadonly(),
-                    editable: this.getEditable(),
-                    model
-                }
-            ),
+            buttonViewOptions: _.defaultsPure({
+                allowDays: false,
+                allowHours: true,
+                allowMinutes: true,
+                allowSeconds: isFormatHasSeconds,
+                allFocusableParts: this.options.allFocusableParts,
+                seconds: this.options.seconds,
+                minutes: {
+                    text: this.options.minutes ? this.options.minutes.text : isFormatHasSeconds ? ':' : ''
+                },
+                showEmptyParts: true,
+                hideClearButton: true,
+                fillZero: true,
+                normalTime: true,
+                showTitle: false,
+                emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
+                key: this.options.key,
+                autocommit: true,
+                readonly: this.getReadonly(),
+                editable: this.getEditable(),
+                model
+            }),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',

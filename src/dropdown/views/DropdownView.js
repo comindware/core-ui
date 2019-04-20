@@ -190,14 +190,12 @@ export default class DropdownView {
 
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
-                const leftCenter = buttonRect.left + buttonRect.width;
-
-                if (leftCenter < WINDOW_BORDER_OFFSET) {
+                if (buttonRect.left < WINDOW_BORDER_OFFSET) {
                     css.left = WINDOW_BORDER_OFFSET;
-                } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                } else if (buttonRect.left + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
                     css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
                 } else {
-                    css.left = leftCenter;
+                    css.left = buttonRect.left;
                 }
 
                 this.panelEl.style.left = `${css.left}px`;
