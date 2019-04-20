@@ -151,15 +151,11 @@ export default class DropdownView {
 
         const viewportHeight = window.innerHeight;
         const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
-        const dropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
-        const dropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
-        const buttonEl = dropDownRoot || this.button.el;
-        const buttonRect = buttonEl.getBoundingClientRect();
-
+        const isDropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
+        const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
+        const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
-
         const computedWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
-
         const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
@@ -170,9 +166,9 @@ export default class DropdownView {
 
         let position = this.options.panelPosition;
 
-        if (dropDownRoot && dropDownRootPositionUp) {
+        if (dropDownRoot && isDropDownRootPositionUp) {
             position = panelPosition.UP;
-        } else if (dropDownRoot && dropDownRootPositionDown) {
+        } else if (dropDownRoot && isDropDownRootPositionDown) {
             position = panelPosition.DOWN;
         } else if (position === panelPosition.DOWN && ((bottom < offsetHeight && buttonRect.top > bottom) || bottom < this.options.minAvailableHeight + offsetHeight)) {
             position = panelPosition.UP;
@@ -250,7 +246,6 @@ export default class DropdownView {
             this.button.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
-        this.panelEl.classList.add('dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 
@@ -313,11 +308,13 @@ export default class DropdownView {
 
         this.button.isOpen = true;
 
-        this.__adjustPosition();
+        this.panelEl.classList.add('dropdown__wrp');
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.button.el
         });
+
+        this.__adjustPosition();
 
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
