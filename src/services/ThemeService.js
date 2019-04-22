@@ -23,6 +23,10 @@ export default class ThemeService {
         this._setSprite();
     }
 
+    static getTheme() {
+        return this.currentTheme;
+    }
+
     static _setStyle() {
         const url = `${this.url}/theme.css`;
         const themeHtml = `<link rel='stylesheet' type='text/css' id="core-ui-theme-styles" href="${url}">`;

@@ -53,7 +53,9 @@ export default Marionette.View.extend({
     },
 
     className() {
-        return `${this.getOption('draggable') ? 'js-dots cell_draggable' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`;
+        return `${this.getOption('draggable') ? 'js-dots cell_draggable' : ''} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'} ${
+            this.options.checkboxColumnClass
+        }`;
     },
 
     ui: {
