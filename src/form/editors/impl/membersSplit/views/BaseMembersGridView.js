@@ -14,7 +14,8 @@ export default Marionette.View.extend({
         const toolbarFlags = {
             showGroups: options.model.get('showGroups'),
             showUsers: options.model.get('showUsers'),
-            filterFnParameters: this.filterFnParameters
+            filterFnParameters: this.filterFnParameters,
+            hideToolbar: options.hideToolbar
         };
 
         this.gridView = this.__getGridView({
@@ -58,7 +59,7 @@ export default Marionette.View.extend({
             selectableBehavior: 'multi',
             showSearch: true,
             handleSearch,
-            showToolbar: true,
+            showToolbar: !toolbarFlags.hideToolbar,
             showCheckbox: false,
             showHeader: false,
             additionalActions: this.__getToolbarItems(toolbarFlags),

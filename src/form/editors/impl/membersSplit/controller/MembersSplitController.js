@@ -146,6 +146,7 @@ export default Marionette.Object.extend({
         const gridViewOptions = {
             model: this.model,
             config: this.options.config,
+            hideToolbar: this.options.hideToolbar,
             filterFnParameters: this.filterFnParameters
         };
         const availableText = this.options.itemsToSelectText;

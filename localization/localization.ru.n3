@@ -208,8 +208,6 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, один из которых может стать исполнителем задачи"; l10n:originalData "Select users who may become task assignee"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#update> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
-
 <http://comindware.com/text/core/form/editors/memberSplit#users> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} человек,{0} человека,{0} человек"; l10n:originalData "{0} person,{0} people"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#usersToSelect> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Доступно"; l10n:originalData "Available"].
