@@ -3,6 +3,7 @@ import GridView from '../views/GridView';
 import meta from '../meta';
 import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
+import { virtualCollectionFilterActions } from 'Meta';
 
 /*
  * @param {Array} options.excludeActions Array of strings. Example: <code>[ 'archive', 'delete' ]</code>.
@@ -41,9 +42,10 @@ export default Marionette.Object.extend({
         const comparator = factory.getDefaultComparator(options.columns);
         const collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
 
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);
         if (this.options.showToolbar) {
+            const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
+
             if (this.options.showCheckbox) {
                 this.listenTo(collection, 'check:all check:some check:none', debounceUpdateAction);
             } else {
@@ -78,13 +80,13 @@ export default Marionette.Object.extend({
             this.__applyFilter(new RegExp(text, 'i'), columns, collection);
             this.__highlightCollection(text, collection);
         } else {
-            this.__clearFilter(collection);
+            this.__clearSearchFilter(collection);
             this.__unhighlightCollection(collection);
         }
     },
 
     __applyFilter(regexp, columns, collection) {
-        collection.filter(model => {
+        const filterFnSearch = model => {
             let result = false;
             const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
             searchableColumns.forEach(column => {
@@ -105,11 +107,15 @@ export default Marionette.Object.extend({
             });
 
             return result;
-        });
+        };
+
+        Object.defineProperty(filterFnSearch, 'name', { value: 'searchFilter' });
+        this.__clearSearchFilter(collection);
+        collection.filter(filterFnSearch, { action: virtualCollectionFilterActions.PUSH });
     },
 
-    __clearFilter(collection) {
-        collection.filter();
+    __clearSearchFilter(collection) {
+        collection.filter('searchFilter', { action: virtualCollectionFilterActions.REMOVE });
     },
 
     __highlightCollection(text, collection) {

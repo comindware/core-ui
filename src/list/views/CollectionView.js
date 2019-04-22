@@ -138,7 +138,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
         const firstChild = this.el.children[0];
-        if (!firstChild) {
+        if (!(firstChild && firstChild.classList.contains('row'))) {
             return;
         }
 

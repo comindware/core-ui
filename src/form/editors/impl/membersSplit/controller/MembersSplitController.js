@@ -1,36 +1,55 @@
-import MembersSplitPanelView from '../views/MembersSplitPanelView';
 import LocalizationService from '../../../../../services/LocalizationService';
 import helpers from '../../../../../utils/helpers';
 import ItemCollection from '../collection/ItemsCollection';
+import FilterState from '../classes/FilterState';
+import AvailableGridView from '../views/AvailableGridView';
+import SelectedGridView from '../views/SelectedGridView';
+import { virtualCollectionFilterActions } from 'Meta';
+
+const toolbarActions = {
+    MOVE_ALL: 'Move-all'
+};
+
+const filterFnsConst = {
+    filterFnUsers: (model, parameters) => model.get('type') !== parameters.users,
+    filterFnGroups: (model, parameters) => model.get('type') !== parameters.groups
+};
+
+const debounceInterval = {
+    short: 100,
+    medium: 300
+};
 
 export default Marionette.Object.extend({
     initialize(options) {
         this.options = options;
+        this.filterFnParameters = options.filterFnParameters;
+        this.filterFns = {
+            [`filterFn_${this.filterFnParameters.users}`]: filterFnsConst.filterFnUsers.bind({}),
+            [`filterFn_${this.filterFnParameters.groups}`]: filterFnsConst.filterFnGroups.bind({})
+        };
+        Object.values(this.filterFns).forEach(fn => Object.defineProperty(fn, 'parameters', { value: options.memberTypes }));
+
         this.members = {};
-        this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplit'));
-        this.channel.on('items:move', this.moveItems, this);
-        this.channel.on('items:update', this.updateMembers, this);
-        this.channel.on('items:cancel', this.cancelMembers, this);
-        this.channel.on('items:select', this.selectItemsByToolbar, this);
-        this.channel.on('items:move', this.__onItemsMove, this);
-        this.channel.on('items:search', this.__onItemsSearch, this);
-        this.collectionTypeValue = {};
-        this.collectionSearchValue = {};
+        this.bondedCollections = {};
+        this.isMemberService = options.memberService && options.memberService.getMembers;
+
         this.__createModel();
     },
 
     fillInModel() {
-        this.model.initialized = this.__updateItems();
+        const showUsers = !this.options.hideUsers;
+        const showGroups = !this.options.hideGroups;
+        this.filterState = new FilterState({ showUsers, showGroups, filterFnParameters: this.filterFnParameters });
+        this.model.initialized = this.__updateItems(this.filterState);
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
             items: this.members,
-            showUsers: !this.options.hideUsers,
-            showGroups: !this.options.hideGroups,
-            showAll: !this.options.hideUsers && !this.options.hideGroups,
+            showUsers,
+            showGroups,
             itemsToSelectText: this.options.itemsToSelectText,
             selectedItemsText: this.options.selectedItemsText,
             confirmEdit: true,
-            showToolbar: !this.options.hideToolbar,
             emptyListText: this.options.emptyListText
         });
     },
@@ -74,28 +93,39 @@ export default Marionette.Object.extend({
         return resultText;
     },
 
-    async __updateItems() {
+    async __updateItems(filterState) {
         this.members = {};
-        if (this.options.memberService) {
+        if (this.isMemberService) {
             try {
-                this.__setLoading(true);
-                const data = await this.options.memberService.getMembers(this.__getSettings());
+                this.__setLoading(true, { both: false });
+                const data = await this.options.memberService.getMembers(this.__getSettings(filterState));
                 data.available.forEach(item => (this.members[item.id] = item));
                 data.selected.forEach(item => (this.members[item.id] = item));
-                this.__processValues();
+                this.__processValues(data.selected);
                 this.model.get('available').totalCount = data.totalCount;
-                this.view && this.view.toggleElementsQuantityWarning();
             } catch (e) {
                 console.log(e);
             } finally {
                 this.__setLoading(false);
             }
         } else {
+            this.__setLoading(true, { both: false });
             const users = await this.options.users;
             const groups = await this.options.groups;
             users.forEach(model => (this.members[model.id] = model));
             groups.forEach(model => (this.members[model.id] = model));
+            this.__setLoading(false);
         }
+    },
+
+    __getSettings(filterState) {
+        const selected = this.model.initialized ? this.model.get('selected').parentCollection.map(item => item.id) : this.options.selected;
+
+        return {
+            filterText: filterState.searchString || '',
+            filterType: filterState.filterType,
+            selected: selected || []
+        };
     },
 
     __getFullMemberSplitTitle() {
@@ -113,16 +143,101 @@ export default Marionette.Object.extend({
     },
 
     createView() {
-        this.view = new MembersSplitPanelView({
-            channel: this.channel,
+        const gridViewOptions = {
             model: this.model,
-            memberService: this.options.memberService
+            config: this.options.config,
+            hideToolbar: this.options.hideToolbar,
+            filterFnParameters: this.filterFnParameters
+        };
+        const availableText = this.options.itemsToSelectText;
+        const availableGridView = this.isMemberService
+            ? new AvailableGridView(
+                  Object.assign({}, gridViewOptions, {
+                      memberService: this.options.memberService,
+                      filterFns: this.filterFns,
+                      filterState: this.filterState,
+                      title: availableText
+                  })
+              )
+            : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
+        const selectedGridView = new SelectedGridView(
+            Object.assign({}, gridViewOptions, {
+                title: this.options.selectedItemsText
+            })
+        );
+
+        this.view = new Core.layout.HorizontalLayout({
+            class: 'member-split-wrp',
+            columns: [availableGridView, selectedGridView]
         });
+
+        this.bondedCollections[availableGridView.cid] = availableGridView.collection;
+        this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
+
+        [availableGridView, selectedGridView].forEach(view => {
+            this.listenTo(view.gridView, 'execute:action', act => this.__executeAction(view, act));
+            this.listenTo(view.controller, 'click', model => this.__moveItems(view, model));
+        });
+        if (this.isMemberService) {
+            this.listenTo(availableGridView, 'members:update', filterState => this.__updateItems(filterState));
+        }
+
+        this.view.once('attach', () => availableGridView.gridView.searchView.focus());
+        this.view.once('detach', () => (this.bondedCollections = {}));
     },
 
-    __onItemsMove(...args) {
-        this.moveItems(...args);
-        setTimeout(() => this.updateMembers(), 100);
+    __executeAction(gridView, act) {
+        switch (act.get('id')) {
+            case this.filterFnParameters.users:
+            case this.filterFnParameters.groups:
+                if (gridView.options.memberService) {
+                    this.__updateFilterState(gridView, act);
+                    break;
+                }
+                this.__applyFilter(gridView, act);
+                break;
+            case toolbarActions.MOVE_ALL:
+                this.__moveItems(gridView);
+                break;
+            default:
+                break;
+        }
+    },
+
+    __updateFilterState(gridView, act) {
+        const filterState = gridView.filterState;
+        if (act.get('isChecked')) {
+            filterState.add(act.get('id'));
+        } else {
+            filterState.remove(act.get('id'));
+        }
+
+        if (filterState.filterType) {
+            gridView.collection.filter();
+            this.__updateItems(filterState);
+        } else {
+            gridView.collection.filter(() => false);
+        }
+    },
+
+    __applyFilter(gridView, act) {
+        const collection = gridView.collection;
+        const actionId = act.get('id');
+        const computedName = `${gridView.cid}_${actionId}`;
+        const filterFn = this.filterFns[`filterFn_${actionId}`];
+
+        if (!collection.filterFn) {
+            collection.filterFn = [];
+        }
+        if (!act.get('isChecked')) {
+            if (filterFn) {
+                Object.defineProperty(filterFn, 'name', { value: computedName });
+            }
+            collection.filter(filterFn, { action: virtualCollectionFilterActions.PUSH });
+
+            return;
+        }
+        collection.filter(computedName, { action: virtualCollectionFilterActions.REMOVE });
     },
 
     initItems() {
@@ -131,113 +246,13 @@ export default Marionette.Object.extend({
     },
 
     updateMembers() {
-        const allSelectedModels = Object.assign({}, this.model.get('selected'));
-        //allSelectedModels.filter(null); todo figure it out, WHY?!
+        const allSelectedModels = Object.assign({}, this.model.get('selected').parentCollection);
         this.options.selected = allSelectedModels.models.map(model => model.id);
         this.trigger('popup:ok');
     },
 
     cancelMembers() {
         this.trigger('popup:cancel');
-    },
-
-    selectItemsByToolbar(type, value) {
-        this.collectionTypeValue[type] = value;
-        this.__applyFilter(type);
-    },
-
-    __applyFilter(type) {
-        const filterValue = this.collectionTypeValue[type];
-        const searchValue = this.collectionSearchValue[type];
-
-        if (this.options.memberService && type === 'available') {
-            this.__updateItems();
-        } else {
-            this.__createCollection(type);
-            this.collection.selectNone();
-            this.collection.unhighlight();
-            if (!filterValue && !searchValue) {
-                this.collection.filter(null);
-                return;
-            }
-            const regex = new RegExp(searchValue, 'i');
-            this.collection.filter(model => {
-                const modelType = model.get('type');
-                const modelName = model.get('name');
-
-                return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && regex.test(modelName) : true);
-            });
-        }
-    },
-
-    moveItems(typeFrom, typeTo, all, model) {
-        const modelsTo = this.model.get(typeTo);
-        const allSelectedModels = Object.assign({}, modelsTo);
-        const modelsFrom = this.model.get(typeFrom);
-
-        const maxQuantitySelected = this.model.get('maxQuantitySelected');
-        if (maxQuantitySelected && typeTo === 'selected') {
-            allSelectedModels.filter(null);
-            if (allSelectedModels.length >= maxQuantitySelected) {
-                return;
-            }
-        }
-
-        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.checked);
-        model && selected.push(model);
-        if (!all && !selected.length) {
-            return;
-        }
-
-        if (maxQuantitySelected && typeTo === 'selected' && allSelectedModels) {
-            if (allSelectedModels.length + selected.length > maxQuantitySelected) {
-                selected = selected.slice(0, maxQuantitySelected - allSelectedModels.length);
-            }
-        }
-
-        const selectedIndexFrom = [];
-
-        modelsFrom.selectNone && modelsFrom.selectNone();
-        modelsTo.selectNone && modelsTo.selectNone();
-        modelsFrom.uncheckAll && modelsFrom.uncheckAll();
-        modelsTo.uncheckAll && modelsTo.uncheckAll();
-
-        const newSelectedFragment = this.collectionSearchValue[typeTo];
-
-        selected.forEach(selectedModel => {
-            if (!(selectedModel instanceof Backbone.Model)) {
-                return;
-            }
-            if (this.options.orderEnabled) {
-                if (typeTo === 'selected') {
-                    const newOrder = modelsTo.length ? modelsTo.at(modelsTo.length - 1).get('order') + 1 : 1;
-                    selectedModel.set('order', newOrder);
-                } else {
-                    selectedModel.unset('order');
-                }
-            }
-            !all && selectedIndexFrom.push(modelsFrom.indexOf(selectedModel));
-            modelsFrom.remove(selectedModel);
-            modelsTo.add(selectedModel, { delayed: false });
-            selectedModel.unhighlight();
-            if (newSelectedFragment) {
-                selectedModel.highlight(newSelectedFragment);
-            }
-            if (!all) {
-                selectedModel.select();
-            }
-        });
-
-        if (all) {
-            return;
-        }
-
-        const nextIndexFrom = Math.min(Math.min.apply(0, selectedIndexFrom), modelsFrom.length - 1);
-        if (nextIndexFrom < 0) {
-            return;
-        }
-        const selectedElemFrom = modelsFrom.at(nextIndexFrom);
-        selectedElemFrom.select();
     },
 
     __createCollection(type) {
@@ -249,7 +264,7 @@ export default Marionette.Object.extend({
 
         const availableModels = new ItemCollection(new Backbone.Collection([]), {
             isSliding: true,
-            selectableBehavior: 'multi',
+            selectableBehavior: 'single',
             comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
         });
         if (this.groupConfig) {
@@ -264,39 +279,29 @@ export default Marionette.Object.extend({
 
         const selectedModels = new ItemCollection(new Backbone.Collection([]), {
             isSliding: true,
-            selectableBehavior: 'multi',
+            selectableBehavior: 'single',
             comparator: selectedComparator
         });
         this.model.set('selected', selectedModels);
-
-        this.model.set({
-            maxQuantitySelected: this.options.maxQuantitySelected
-        });
 
         this.model.set('allowRemove', this.options.allowRemove);
         this.fillInModel();
     },
 
     async setValue() {
-        this.collectionTypeValue = {};
-        this.collectionSearchValue = {};
-        if (!this.options.memberService) {
-            this.__applyFilter('available');
-        }
-        this.__applyFilter('selected');
         await this.model.initialized;
         this.__processValues();
     },
 
-    __processValues() {
+    __processValues(selected = this.options.selected) {
         const items = Object.assign({}, this.members);
         this.options.exclude.forEach(id => {
             if (items[id]) {
                 delete items[id];
             }
         });
-        const selected = this.options.selected;
-        let selectedItems = Array.isArray(selected)
+
+        const selectedItems = Array.isArray(selected)
             ? this.options.selected.map(id => {
                   const model = items[id];
                   delete items[id];
@@ -305,43 +310,35 @@ export default Marionette.Object.extend({
             : [];
 
         const availableItems = Object.values(items);
-        let i = 1;
-        selectedItems = _.chain(selectedItems)
-            .filter(item => item !== undefined)
-            .map(item => {
-                if (this.options.orderEnabled) {
-                    item.order = i++;
-                }
-                return item;
-            })
-            .value();
 
-        this.model.get('available').reset(availableItems);
-        this.model.get('selected').reset(selectedItems);
+        this.model.get('available').set(availableItems);
+        this.model.get('selected').set(selectedItems);
     },
 
-    __getSettings() {
-        const selected = this.model.initialized ? this.model.get('selected').map(item => item.id) : this.options.selected;
-        let filterType = this.collectionTypeValue.available || 'all';
-        if (this.options.hideUser) {
-            filterType = 'groups';
-        } else if (this.options.hideGroups) {
-            filterType = 'users';
+    __moveItems(gridView, model) {
+        const source = this.bondedCollections[gridView.cid];
+        const target = Object.entries(this.bondedCollections).find(x => x[0] !== gridView.cid)[1];
+        const movingModels = model || Object.assign([], source.models);
+
+        target.parentCollection.add(movingModels);
+        source.parentCollection.remove(movingModels);
+        _.debounce(this.updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
+        target.rebuild();
+        source.rebuild();
+        if (!model) {
+            source.trigger('filter');
         }
-
-        return {
-            filterText: this.collectionSearchValue.available || '',
-            filterType,
-            selected: selected || []
-        };
     },
 
-    __onItemsSearch(text, type) {
-        this.collectionSearchValue[type] = text;
-        this.__applyFilter(type);
-    },
-
-    __setLoading(state) {
-        this.view && !this.view.isDestroyed() && this.view.setLoading(state);
+    __setLoading(state, { both } = { both: true }) {
+        if (this.view && !this.view.isDestroyed()) {
+            if (both) {
+                this.view.columns.forEach(view => {
+                    view.setLoading(state);
+                });
+            } else {
+                this.view.columns[0].setLoading(state);
+            }
+        }
     }
 });
