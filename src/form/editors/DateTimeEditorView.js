@@ -390,7 +390,11 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             panelView: DatePanelView,
             panelViewOptions: {
                 value: this.value,
-                allowEmptyValue: this.options.allowEmptyValue
+                allowEmptyValue: this.options.allowEmptyValue,
+                startDate: this.options.startDate,
+                endDate: this.options.endDate,
+                datesDisabled: this.options.datesDisabled,
+                daysOfWeekDisabled: this.options.daysOfWeekDisabled
             },
             renderAfterClose: false,
             autoOpen: false,

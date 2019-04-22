@@ -203,11 +203,11 @@ export default function($, dates) {
 
         setDatesDisabled(datesDisabled) {
             this.datesDisabled = datesDisabled || [];
-            if (!$.isArray(this.datesDisabled)) {
+            if (!Array.isArray(this.datesDisabled)) {
                 this.datesDisabled = this.datesDisabled.split(/,\s*/);
             }
             const mThis = this;
-            this.datesDisabled = $.map(this.datesDisabled, d => DPGlobal.parseDate(d, mThis.format, mThis.language, mThis.formatType, mThis.timezone).toDateString());
+            this.datesDisabled = this.datesDisabled.map(d => DPGlobal.parseDate(d, mThis.format, mThis.language, mThis.formatType, mThis.timezone).toDateString());
         },
 
         setTitle(selector, value) {
@@ -219,10 +219,10 @@ export default function($, dates) {
 
         setDaysOfWeekDisabled(daysOfWeekDisabled) {
             this.daysOfWeekDisabled = daysOfWeekDisabled || [];
-            if (!$.isArray(this.daysOfWeekDisabled)) {
+            if (!Array.isArray(this.daysOfWeekDisabled)) {
                 this.daysOfWeekDisabled = this.daysOfWeekDisabled.split(/,\s*/);
             }
-            this.daysOfWeekDisabled = $.map(this.daysOfWeekDisabled, d => parseInt(d, 10));
+            this.daysOfWeekDisabled = this.daysOfWeekDisabled.map(d => parseInt(d, 10));
         },
 
         hour_minute: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
@@ -338,8 +338,8 @@ export default function($, dates) {
                 if (
                     prevMonth.valueOf() + 86400000 <= this.startDate ||
                     prevMonth.valueOf() > this.endDate ||
-                    $.inArray(prevMonth.getDay(), this.daysOfWeekDisabled) !== -1 ||
-                    $.inArray(prevMonth.toDateString(), this.datesDisabled) !== -1
+                    this.daysOfWeekDisabled.includes(prevMonth.getDay()) ||
+                    this.datesDisabled.includes(prevMonth.toDateString())
                 ) {
                     classes.push('disabled');
                 }
@@ -1060,7 +1060,7 @@ export default function($, dates) {
 
                                     return m === p;
                                 });
-                                val = $.inArray(filtered[0], dates[language].months) + 1;
+                                val = dates[language].months.includes(filtered[0]) + 1;
                                 break;
                             case 'M':
                                 filtered = $(dates[language].monthsShort).filter(() => {
@@ -1069,11 +1069,11 @@ export default function($, dates) {
 
                                     return m.toLowerCase() === p.toLowerCase();
                                 });
-                                val = $.inArray(filtered[0], dates[language].monthsShort) + 1;
+                                val = dates[language].monthsShort.includes(filtered[0]) + 1;
                                 break;
                             case 'p':
                             case 'P':
-                                val = $.inArray(parts[i].toLowerCase(), dates[language].meridiem);
+                                val = dates[language].meridiem.includes(parts[i].toLowerCase());
                                 break;
                             case 'z':
                             case 'Z':
