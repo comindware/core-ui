@@ -3,8 +3,10 @@ import formRepository from '../../formRepository';
 import { keyCode } from 'utils';
 
 const classes = {
-    disabled: 'editor_disabled disabled',
-    readonly: 'editor_readonly readonly',
+    editorDisabled: 'editor_disabled',
+    disabled: 'disabled',
+    readonly: 'readonly',
+    editorReadonly: 'editor_readonly',
     hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty',
@@ -318,9 +320,9 @@ export default {
                 this.enabled = enabled;
                 this.__setEnabledFocusElement(enabled);
                 if (!this.enabled) {
-                    this.el.classList.add(classes.disabled);
+                    this.el.classList.add(classes.disabled, classes.editorDisabled);
                 } else {
-                    this.el.classList.remove(classes.disabled);
+                    this.el.classList.remove(classes.disabled, classes.editorDisabled);
                 }
                 this.trigger('enabled', enabled);
             },
@@ -345,9 +347,9 @@ export default {
                 this.readonly = readonly;
                 this.__setReadonlyFocusElement(readonly);
                 if (this.readonly && this.getEnabled()) {
-                    this.el.classList.add(classes.readonly);
+                    this.el.classList.add(classes.readonly, classes.editorReadonly);
                 } else {
-                    this.el.classList.remove(classes.readonly);
+                    this.el.classList.remove(classes.readonly, classes.editorReadonly);
                 }
                 this.trigger('readonly', readonly);
             },
