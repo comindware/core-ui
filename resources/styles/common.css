@@ -1302,8 +1302,12 @@ a:hover {
     flex-direction: column;
 }
 
+.member-split-wrp .member-split-grid {
+    overflow-x: unset;
+}
+
 .member-split-wrp .grid-container, .member-split-wrp .grid-content-wrp {
-    height: 100%;
+    height: calc(100% - 60px);
     margin-bottom: 0;
 }
 
@@ -1311,7 +1315,19 @@ a:hover {
     text-align: center;
     font-size: 12px;
     color: #a3abb0;
-    margin: 5px auto 5px;
+    margin: 5px auto;
+    height: 30px;
+}
+
+.members-grid-title {
+    display: inline-block;
+    padding: 5px;
+    font-weight: 600;
+    padding-left: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* end member-split custom styles*/

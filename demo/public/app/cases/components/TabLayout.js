@@ -50,7 +50,7 @@ export default function() {
                         text: 'Commit',
                         type: 'Button',
                         handler() {
-                            console.log((window.temp = view));
+                            console.log(window.temp = view);
                             view.form.commit();
                             // alert(JSON.stringify(model.toJSON(), null, 4));
                         }

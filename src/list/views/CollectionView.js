@@ -561,7 +561,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __handleFilter() {
-        this.parent$el?.scrollTop(0);
+        this.parent$el.scrollTop(0);
         this.scrollTo(0);
         this.debouncedHandleResizeShort();
     }

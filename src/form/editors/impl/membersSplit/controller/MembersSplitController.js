@@ -6,6 +6,10 @@ import AvailableGridView from '../views/AvailableGridView';
 import SelectedGridView from '../views/SelectedGridView';
 import { virtualCollectionFilterActions } from 'Meta';
 
+const toolbarActions = {
+    MOVE_ALL: 'Move-all'
+};
+
 const filterFnsConst = {
     filterFnUsers: (model, parameters) => model.get('type') !== parameters.users,
     filterFnGroups: (model, parameters) => model.get('type') !== parameters.groups
@@ -29,12 +33,6 @@ export default Marionette.Object.extend({
         this.members = {};
         this.bondedCollections = {};
         this.isMemberService = options.memberService && options.memberService.getMembers;
-
-        this.reqres = new Backbone.Radio.channel(_.uniqueId('membersSplit'));
-        this.reqres.reply('members:filter:apply', (gridView, act) => this.__applyFilter(gridView, act));
-        this.reqres.reply('members:filter:updateState', (gridView, act) => this.__updateFilterState(gridView, act));
-        this.reqres.reply('members:move', (gridView, act) => this.__moveItems(gridView, act));
-        this.reqres.reply('members:update', filterState => this.__updateItems(filterState));
 
         this.__createModel();
     },
@@ -146,23 +144,99 @@ export default Marionette.Object.extend({
 
     createView() {
         const gridViewOptions = {
-            reqres: this.reqres,
             model: this.model,
-            memberService: this.options.memberService,
-            bondedCollections: this.bondedCollections,
             config: this.options.config,
             filterFnParameters: this.filterFnParameters
         };
-
+        const availableText = this.options.itemsToSelectText || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT');
         const availableGridView = this.isMemberService
-            ? new AvailableGridView(Object.assign({}, gridViewOptions, { filterFns: this.filterFns, filterState: this.filterState }))
-            : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available') }));
+            ? new AvailableGridView(
+                  Object.assign({}, gridViewOptions, {
+                      memberService: this.options.memberService,
+                      filterFns: this.filterFns,
+                      filterState: this.filterState,
+                      title: availableText
+                  })
+              )
+            : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
+        const selectedGridView = new SelectedGridView(
+            Object.assign({}, gridViewOptions, {
+                title: this.options.selectedItemsText || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS')
+            })
+        );
 
         this.view = new Core.layout.HorizontalLayout({
             class: 'member-split-wrp',
-            columns: [availableGridView, new SelectedGridView(gridViewOptions)]
+            columns: [availableGridView, selectedGridView]
         });
+
+        this.bondedCollections[availableGridView.cid] = availableGridView.collection;
+        this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
+
+        [availableGridView, selectedGridView].forEach(view => {
+            this.listenTo(view.gridView, 'execute:action', act => this.__executeAction(view, act));
+            this.listenTo(view.controller, 'click', model => this.__moveItems(view, model));
+        });
+        if (this.isMemberService) {
+            this.listenTo(availableGridView, 'members:update', filterState => this.__updateItems(filterState));
+        }
+
         this.view.once('attach', () => availableGridView.gridView.searchView.focus());
+        this.view.once('detach', () => (this.bondedCollections = {}));
+    },
+
+    __executeAction(gridView, act) {
+        switch (act.get('id')) {
+            case this.filterFnParameters.users:
+            case this.filterFnParameters.groups:
+                if (gridView.options.memberService) {
+                    this.__updateFilterState(gridView, act);
+                    break;
+                }
+                this.__applyFilter(gridView, act);
+                break;
+            case toolbarActions.MOVE_ALL:
+                this.__moveItems(gridView);
+                break;
+            default:
+                break;
+        }
+    },
+
+    __updateFilterState(gridView, act) {
+        const filterState = gridView.filterState;
+        if (act.get('isChecked')) {
+            filterState.add(act.get('id'));
+        } else {
+            filterState.remove(act.get('id'));
+        }
+
+        if (filterState.filterType) {
+            gridView.collection.filter();
+            this.__updateItems(filterState);
+        } else {
+            gridView.collection.filter(() => false);
+        }
+    },
+
+    __applyFilter(gridView, act) {
+        const collection = gridView.collection;
+        const actionId = act.get('id');
+        const computedName = `${gridView.cid}_${actionId}`;
+        const filterFn = this.filterFns[`filterFn_${actionId}`];
+
+        if (!collection.filterFn) {
+            collection.filterFn = [];
+        }
+        if (!act.get('isChecked')) {
+            if (filterFn) {
+                Object.defineProperty(filterFn, 'name', { value: computedName });
+            }
+            collection.filter(filterFn, { action: virtualCollectionFilterActions.PUSH });
+
+            return;
+        }
+        collection.filter(computedName, { action: virtualCollectionFilterActions.REMOVE });
     },
 
     initItems() {
@@ -242,42 +316,6 @@ export default Marionette.Object.extend({
 
         this.model.get('available').set(availableItems);
         this.model.get('selected').set(selectedItems);
-    },
-
-    __updateFilterState(gridView, act) {
-        const filterState = gridView.filterState;
-        if (act.get('isChecked')) {
-            filterState.add(act.get('id'));
-        } else {
-            filterState.remove(act.get('id'));
-        }
-
-        if (filterState.filterType) {
-            gridView.collection.filter();
-            this.__updateItems(filterState);
-        } else {
-            gridView.collection.filter(() => false);
-        }
-    },
-
-    __applyFilter(gridView, act) {
-        const collection = gridView.collection;
-        const actionId = act.get('id');
-        const computedName = `${gridView.cid}_${actionId}`;
-        const filterFn = this.filterFns[`filterFn_${actionId}`];
-
-        if (!collection.filterFn) {
-            collection.filterFn = [];
-        }
-        if (!act.get('isChecked')) {
-            if (filterFn) {
-                Object.defineProperty(filterFn, 'name', { value: computedName });
-            }
-            collection.filter(filterFn, { action: virtualCollectionFilterActions.PUSH });
-
-            return;
-        }
-        collection.filter(computedName, { action: virtualCollectionFilterActions.REMOVE });
     },
 
     __moveItems(gridView, model) {
