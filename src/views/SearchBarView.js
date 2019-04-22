@@ -42,11 +42,11 @@ export default Marionette.View.extend({
     },
 
     onFocus() {
-        this.$el.addClass('focused');
+        this.el.classList.add('focused');
     },
 
     onBlur() {
-        this.$el.removeClass('focused');
+        this.el.classList.remove('focused');
     },
 
     onRender() {

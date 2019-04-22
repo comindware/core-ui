@@ -270,7 +270,7 @@ export default Marionette.View.extend({
     },
 
     __onMaximize() {
-        this.$el.addClass(classes.maximized);
+        this.el.classList.add(classes.maximized);
         this.ui.editor.css('height', '80%');
 
         document.querySelector(this.regions.editorOutputContainer).style.height = '30%';
@@ -284,7 +284,7 @@ export default Marionette.View.extend({
     __onMinimize() {
         this.trigger('minimize', this);
         this.$el.appendTo(this.parentElement);
-        this.$el.removeClass(classes.maximized);
+        this.el.classList.remove(classes.maximized);
         this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();
         this.__change();

@@ -63,7 +63,7 @@ export default Marionette.View.extend({
 
         view.once('attach', () =>
             requestAnimationFrame(() => {
-                view.$el.addClass('presented-modal-window');
+                view.el.classList.add('presented-modal-window');
             })
         );
         this.getRegion(popupId).show(view);
@@ -301,7 +301,7 @@ export default Marionette.View.extend({
             );
         }
 
-        popupDef.view.$el.removeClass('presented-modal-window');
+        popupDef.view.el.classList.remove('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
     },
 

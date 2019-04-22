@@ -238,13 +238,13 @@ export default {
 
     __showViewPlaceholder() {
         this.loadersCount++;
-        window.contentLoadingRegion.$el.addClass('visible-loader');
+        window.contentLoadingRegion.el.classList.add('visible-loader');
     },
 
     __hideViewPlaceholder(useForce) {
         this.loadersCount--;
         if (this.loadersCount <= 0 || useForce) {
-            window.contentLoadingRegion.$el.removeClass('visible-loader');
+            window.contentLoadingRegion.el.classList.remove('visible-loader');
         }
         if (this.loadersCount < 0 || useForce) {
             this.loadersCount = 0;

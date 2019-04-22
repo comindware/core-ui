@@ -41,7 +41,7 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         editorContainer: {
             el: '.js-code-codemirror-container',
             replaceElement: true
-        } 
+        }
     },
 
     focusElement: 'textarea',
@@ -80,7 +80,7 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         this.ui.fadingPanel.hide();
         if (this.options.showMode === showModes.button) {
             this.ui.editor.hide();
-            this.$el.addClass(classes.buttonMode);
+            this.el.classList.add(classes.buttonMode);
         } else {
             this.ui.editBtn.hide();
             this.ui.clearBtn.hide();

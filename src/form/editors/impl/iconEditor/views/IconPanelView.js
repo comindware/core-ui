@@ -31,7 +31,7 @@ export default Marionette.View.extend({
         });
 
         if (this.options.showColorPicker) {
-            this.getRegion('colorPickerRegion').$el.show();
+            this.getRegion('colorPickerRegion').el.removeAttribute('hidden');
             this.$('.icons-panel-head__title').show();
 
             this.colorPicker = new Core.form.editors.ColorPickerEditor({
@@ -43,7 +43,7 @@ export default Marionette.View.extend({
 
             this.showChildView('colorPickerRegion', this.colorPicker);
         } else {
-            this.getRegion('colorPickerRegion').$el.hide();
+            this.getRegion('colorPickerRegion').el.setAttribute('hidden', true);
             this.$('.icons-panel-head__title:eq(0)').hide();
         }
 
@@ -68,8 +68,8 @@ export default Marionette.View.extend({
             const matchesItems = this.__searchItem(value);
             this.__showSearchResult(matchesItems);
         } else {
-            this.getRegion('collectionAreaRegion').$el.show();
-            this.getRegion('searchAreaRegion').$el.hide();
+            this.getRegion('collectionAreaRegion').el.removeAttribute('hidden');
+            this.getRegion('searchAreaRegion').el.setAttribute('hidden', true);
         }
     },
 
@@ -85,8 +85,8 @@ export default Marionette.View.extend({
 
         const searchAreaRegion = this.getRegion('searchAreaRegion');
         searchAreaRegion.show(iconItemCategoryView);
-        searchAreaRegion.$el.show();
-        this.getRegion('collectionAreaRegion').$el.hide();
+        searchAreaRegion.el.removeAttribute('hidden');
+        this.getRegion('collectionAreaRegion').el.setAttribute('hidden', true);
         this.listenTo(iconItemCategoryView, 'click:item', id => this.trigger('click:item', id));
     },
 
@@ -103,10 +103,7 @@ export default Marionette.View.extend({
 
         this.iconGroupsCollection.each(groupItem => {
             _.each(groupItem.get('groupItems'), item => {
-                if (
-                    matchSearch(item.id) ||
-                    (item.filter && item.filter.find(filterItem => matchSearch(filterItem)))
-                ) {
+                if (matchSearch(item.id) || (item.filter && item.filter.find(filterItem => matchSearch(filterItem)))) {
                     const isItemExistInCollection = _.some(matchesItems, matchesItem => item.id === matchesItem.id);
                     if (!matchesItems.length || !isItemExistInCollection) {
                         matchesItems.push(item);

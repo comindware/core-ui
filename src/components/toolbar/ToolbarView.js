@@ -53,7 +53,7 @@ export default Marionette.View.extend({
         this.showChildView('toolbarItemsRegion', this.toolbarActions);
         this.showChildView('popupMenuRegion', this.popupMenu);
         this.showChildView('toolbarConstItemsRegion', this.constToolbarActions);
-        this.getRegion('popupMenuRegion').$el.hide();
+        this.getRegion('popupMenuRegion').el.setAttribute('hidden', true);
     },
 
     __createActionsGroupsView(collection) {
@@ -73,9 +73,7 @@ export default Marionette.View.extend({
         }
 
         this.__resetCollections();
-        const toolbarActions = this.getRegion('toolbarItemsRegion')
-            .$el.children()
-            .children();
+        const toolbarActions = this.getRegion('toolbarItemsRegion').el.children.children;
         if (toolbarActions.length === 0) {
             return;
         }
@@ -100,7 +98,7 @@ export default Marionette.View.extend({
         });
 
         if (notFitItem >= 0) {
-            this.getRegion('popupMenuRegion').$el.show();
+            this.getRegion('popupMenuRegion').el.removeAttribute('hidden');
 
             //Ungroup grouped items
             const ungroupedCollection = new Backbone.Collection();
@@ -117,7 +115,7 @@ export default Marionette.View.extend({
             this.menuItemsCollection.reset(ungroupedCollection.models.slice(notFitItem));
             this.toolbarItemsCollection.reset(this.toolbarItemsCollection.models.slice(0, notFitItem));
         } else {
-            this.getRegion('popupMenuRegion').$el.hide();
+            this.getRegion('popupMenuRegion').el.setAttribute('hidden', true);
         }
     },
 

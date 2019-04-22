@@ -126,7 +126,7 @@ export default {
 
                 this.on('render', this.__onEditorRender.bind(this));
                 this.on('change', onChange.bind(this));
-    
+
                 const fn = this.setValue;
                 this.setValue = function() {
                     fn.apply(this, arguments);
@@ -141,7 +141,7 @@ export default {
                 this.enabled = this.options.enabled;
                 this.readonly = this.options.readonly;
                 this.hidden = this.options.hidden;
-                
+
                 viewClass.prototype.constructor.apply(this, arguments);
 
                 const isEmpty = this.isEmptyValue();
@@ -154,15 +154,12 @@ export default {
                     REQUIRED: this.options.required && isEmpty
                 };
 
-                const classList = Object.entries(classes).reduce(
-                    (classesList, [key, classString]) => {
-                        if (classState[key]) {
-                            classesList.push(...classString.split(' '));
-                        }
-                        return classesList;
-                    },
-                    []
-                );
+                const classList = Object.entries(classes).reduce((classesList, [key, classString]) => {
+                    if (classState[key]) {
+                        classesList.push(...classString.split(' '));
+                    }
+                    return classesList;
+                }, []);
 
                 if (classList.length) {
                     this.el.classList.add(...classList);
@@ -189,7 +186,7 @@ export default {
                 }
                 this.$el.toggleClass(classes.EMPTY, Boolean(isEmpty));
             },
-        
+
             __toggleRequiredClass(required) {
                 this.$el.toggleClass(this.classes.REQUIRED, Boolean(required));
             },
@@ -206,9 +203,7 @@ export default {
 
             __applyClass() {
                 if (this.options.class) {
-                    this.el.classList.add(
-                        ...(this.options.class.split(' ').filter(className => className))
-                    );
+                    this.el.classList.add(...this.options.class.split(' ').filter(className => className));
                 }
             },
 
@@ -323,9 +318,9 @@ export default {
                 this.enabled = enabled;
                 this.__setEnabledFocusElement(enabled);
                 if (!this.enabled) {
-                    this.$el.addClass(classes.disabled);
+                    this.el.classList.add(classes.disabled);
                 } else {
-                    this.$el.removeClass(classes.disabled);
+                    this.el.classList.remove(classes.disabled);
                 }
                 this.trigger('enabled', enabled);
             },
@@ -350,9 +345,9 @@ export default {
                 this.readonly = readonly;
                 this.__setReadonlyFocusElement(readonly);
                 if (this.readonly && this.getEnabled()) {
-                    this.$el.addClass(classes.readonly);
+                    this.el.classList.add(classes.readonly);
                 } else {
-                    this.$el.removeClass(classes.readonly);
+                    this.el.classList.remove(classes.readonly);
                 }
                 this.trigger('readonly', readonly);
             },
@@ -510,7 +505,7 @@ export default {
             },
 
             onFocus(event, options) {
-                this.$el.addClass(classes.FOCUSED);
+                this.el.classList.add(classes.FOCUSED);
                 //ToDo what for pass 'this' as first argument ?
                 this.trigger('focus', this, event, options);
             },
@@ -519,7 +514,7 @@ export default {
                 if (options.triggerChange === undefined || options.triggerChange === true) {
                     this.checkChange();
                 }
-                this.$el.removeClass(classes.FOCUSED);
+                this.el.classList.remove(classes.FOCUSED);
                 this.trigger('blur', this, event, options);
             },
 

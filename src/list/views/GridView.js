@@ -803,7 +803,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.$el.addClass(classes.ERROR);
+        this.el.classList.add(classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -824,7 +824,7 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.removeClass(classes.ERROR);
+        this.el.classList.remove(classes.ERROR);
         this.errorCollection && this.errorCollection.reset();
     },
 

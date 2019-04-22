@@ -95,7 +95,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
-            this.$el.addClass(meta.classes.PENCIL_EDIT);
+            this.el.classList.add(meta.classes.PENCIL_EDIT);
         }
     },
 
@@ -105,7 +105,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.removeChild(this.el.lastElementChild);
-            this.$el.removeClass(meta.classes.PENCIL_EDIT);
+            this.el.classList.remove(meta.classes.PENCIL_EDIT);
         }
     }
 });

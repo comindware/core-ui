@@ -81,7 +81,7 @@ export default Marionette.View.extend({
         regions[0].el.style.flex = '';
 
         for (let i = 1; i < regions.length; i++) {
-            this.resisersList[i - 1].$el.hide();
+            this.resisersList[i - 1].el.setAttribute('hidden', true);
             regions[i].el.setAttribute('hidden', '');
         }
     },
@@ -93,7 +93,7 @@ export default Marionette.View.extend({
         for (let i = 1; i < regions.length; i++) {
             const resizer = this.resisersList[i - 1];
 
-            resizer.$el.show();
+            resizer.el.removeAttribute('hidden');
             regions[i].el.removeAttribute('hidden');
 
             resizer.doManualResize();

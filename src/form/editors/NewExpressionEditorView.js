@@ -143,7 +143,7 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
         this.__showTypeEditor();
         this.__updateEditorState();
         if (this.options.displayInline) {
-            this.$el.addClass(classes.inline);
+            this.el.classList.add(classes.inline);
         }
     },
 
@@ -197,7 +197,8 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             return;
         }
 
-        const contextOptions = _.pick(this.options.schema || this.options,
+        const contextOptions = _.pick(
+            this.options.schema || this.options,
             'recordTypeId',
             'context',
             'contextModel',

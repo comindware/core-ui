@@ -19,13 +19,7 @@
     2. (!) Be sure that the text you set into html is escaped.
 */
 
-const eventBubblingIgnoreList = ['before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'];
+const eventBubblingIgnoreList = ['before:render', 'render', 'dom:refresh', 'before:show', 'show', 'before:destroy', 'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
@@ -72,19 +66,19 @@ export default Marionette.Behavior.extend({
     },
 
     __handleSelection() {
-        this.getOption('selectOnCursor') !== false && this.$el.addClass('selected');
+        this.getOption('selectOnCursor') !== false && this.el.classList.add('selected');
     },
 
     __handleDeselection() {
-        this.getOption('selectOnCursor') !== false && this.$el.removeClass('selected');
+        this.getOption('selectOnCursor') !== false && this.el.classList.remove('selected');
     },
 
     __handlePointedOn() {
-        this.$el.addClass('selected');
+        this.el.classList.add('selected');
     },
 
     __handlePointedOff() {
-        this.$el.removeClass('selected');
+        this.el.classList.remove('selected');
     },
 
     __handleDebouncedClick(e) {

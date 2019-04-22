@@ -80,14 +80,14 @@ export default Marionette.View.extend({
             case columnType.reference:
                 this.filterView = this.__createFilterView();
                 this.filterPredicateDropdown = this.__createFilterPredicateDropdown(this.getOption('filtersConfigurationModel').get('columnType'), this.model);
-                this.$el.removeClass('filters_settings-inline-after');
+                this.el.classList.remove('filters_settings-inline-after');
                 break;
             case columnType.id:
             case columnType.enumerable:
             case columnType.boolean:
             case columnType.document:
                 this.filterView = this.__createFilterView();
-                this.$el.addClass('filters_settings-inline-after');
+                this.el.classList.add('filters_settings-inline-after');
                 break;
             default:
                 throw new Error(`Unknown filter type ${filterType}`);

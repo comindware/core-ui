@@ -30,10 +30,10 @@ export default Marionette.CollectionView.extend({
     },
 
     __activateImage(model) {
-        this.children.findByModel(model).$el.addClass(ACTIVE_CLASS);
+        this.children.findByModel(model).el.classList.add(ACTIVE_CLASS);
     },
 
     __deActivateImage(model) {
-        this.children.findByModel(model).$el.removeClass(ACTIVE_CLASS);
+        this.children.findByModel(model).el.classList.remove(ACTIVE_CLASS);
     }
 });
