@@ -148,7 +148,7 @@ export default Marionette.Object.extend({
             config: this.options.config,
             filterFnParameters: this.filterFnParameters
         };
-        const availableText = this.options.itemsToSelectText || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT');
+        const availableText = this.options.itemsToSelectText;
         const availableGridView = this.isMemberService
             ? new AvailableGridView(
                   Object.assign({}, gridViewOptions, {
@@ -161,7 +161,7 @@ export default Marionette.Object.extend({
             : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
         const selectedGridView = new SelectedGridView(
             Object.assign({}, gridViewOptions, {
-                title: this.options.selectedItemsText || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS')
+                title: this.options.selectedItemsText
             })
         );
 
