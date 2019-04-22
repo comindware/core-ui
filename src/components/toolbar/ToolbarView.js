@@ -73,18 +73,18 @@ export default Marionette.View.extend({
         }
 
         this.__resetCollections();
-        const toolbarActions = this.getRegion('toolbarItemsRegion').el.children.children;
+        const toolbarActions = this.getRegion('toolbarItemsRegion').el.firstChild.children;
         if (toolbarActions.length === 0) {
             return;
         }
         let toolbarWidth = this.$el.width();
-        const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
-        constItemsEl.length && (toolbarWidth -= constItemsEl.outerWidth());
-        const menuActionsWidth = this.getRegion('popupMenuRegion').$el.outerWidth();
+        const constItemsEl = this.getRegion('toolbarConstItemsRegion').el;
+        constItemsEl && (toolbarWidth -= constItemsEl.offsetWidth);
+        const menuActionsWidth = this.getRegion('popupMenuRegion').el.offsetWidth;
 
         let childWidth = 0;
         let notFitItem = -1;
-        toolbarActions.each((i, val) => {
+        toolbarActions.forEach((i, val) => {
             childWidth += val.offsetWidth;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 if (i === toolbarActions.length - 1) {
