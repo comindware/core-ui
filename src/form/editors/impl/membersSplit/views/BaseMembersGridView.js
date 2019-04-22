@@ -95,6 +95,7 @@ export default Marionette.View.extend({
             result.push({
                 id: filterFnParameters.users,
                 type: 'Checkbox',
+                class: 'filter-users-btn',
                 isChecked: true,
                 iconClass: iconsNames.user,
                 description: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.PEOPLE')
@@ -102,6 +103,7 @@ export default Marionette.View.extend({
             result.push({
                 id: filterFnParameters.groups,
                 type: 'Checkbox',
+                class: 'filter-groups-btn',
                 isChecked: true,
                 iconClass: iconsNames.users,
                 description: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUP')
@@ -110,6 +112,7 @@ export default Marionette.View.extend({
         result.push({
             id: toolbarActions.MOVE_ALL,
             iconClass: 'check-double',
+            class: 'move-all-btn',
             type: 'Button',
             description: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTALL')
         });

@@ -8,8 +8,8 @@ import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
-    filterFnParameters: undefined,
-    memberTypes: undefined,
+    filterFnParameters: { users: undefined, groups: undefined },
+    memberTypes: { users: undefined, groups: undefined },
     exclude: [],
     displayText: '',
     hideUsers: false,
