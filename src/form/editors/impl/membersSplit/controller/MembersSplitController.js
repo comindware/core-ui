@@ -284,10 +284,6 @@ export default Marionette.Object.extend({
         });
         this.model.set('selected', selectedModels);
 
-        this.model.set({
-            maxQuantitySelected: this.options.maxQuantitySelected
-        });
-
         this.model.set('allowRemove', this.options.allowRemove);
         this.fillInModel();
     },

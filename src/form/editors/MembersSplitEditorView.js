@@ -15,7 +15,6 @@ const defaultOptions = () => ({
     hideUsers: false,
     hideGroups: false,
     hideToolbar: false,
-    maxQuantitySelected: null,
     allowRemove: true,
     title: '',
     itemsToSelectText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
