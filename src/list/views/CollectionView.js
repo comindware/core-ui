@@ -181,6 +181,12 @@ export default Marionette.PartialCollectionView.extend({
         }
     },
 
+    _setupChildView(view, index) {
+        if (this.sort) {
+            view._index = index;
+        }
+    },
+
     childView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
