@@ -494,6 +494,9 @@ export default Marionette.CollectionView.extend({
         }
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
+        if (this.getOption('showRowIndex') && this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:index');
+        }
         this.handleResize(shouldUpdateScroll, model, collection, options);
     },
 

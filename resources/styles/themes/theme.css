@@ -442,7 +442,6 @@ svg.svg-grid-icons {
 }
 
 .cell_selection-index {
-  width: var(--grid-selection-index-width);
   padding: 0 var(--grid-selection-index-padding-x);
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);

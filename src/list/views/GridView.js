@@ -176,15 +176,23 @@ export default Marionette.View.extend({
         const draggable = this.getOption('draggable');
 
         if (this.options.showCheckbox || draggable) {
+            let checkboxColumnClass = '';
+            if (showRowIndex) {
+                this.on('update:top update:index', this.__setCheckBoxColummWidth);
+                checkboxColumnClass = `${this.uniqueId}-checkbox-column`;
+                this.columnClasses.push(checkboxColumnClass);
+            }
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
                 gridEventAggregator: this,
+                checkboxColumnClass,
                 showRowIndex: this.options.showRowIndex,
                 childViewOptions: {
                     draggable,
                     showCheckbox: options.showCheckbox,
                     showRowIndex,
-                    bindSelection: this.getOption('bindSelection')
+                    bindSelection: this.getOption('bindSelection'),
+                    checkboxColumnClass
                 }
             });
 
@@ -193,6 +201,7 @@ export default Marionette.View.extend({
                 selectionType: 'all',
                 showCheckbox: options.showCheckbox,
                 gridEventAggregator: this,
+                checkboxColumnClass,
                 showRowIndex
             });
 
@@ -595,10 +604,19 @@ export default Marionette.View.extend({
         }
     },
 
-    __setColumnWidth(index, width = 0, allColumnsWidth) {
+    __setCheckBoxColummWidth() {
+        const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
+        const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
+        const baseWidth = isMainTheme ? 37 : 42;
+        const numberWidth = isMainTheme ? 7.3 : 7.44;
+        this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
+    },
+
+    __setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
         const style = this.styleSheet;
         const columnClass = this.columnClasses[index];
-        const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+
+        const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
         let basis;
 
         if (width > 0) {
@@ -624,7 +642,7 @@ export default Marionette.View.extend({
         }
 
         const grow = width > 0 ? 0 : 1;
-        const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+        const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
