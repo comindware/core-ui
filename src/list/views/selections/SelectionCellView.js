@@ -130,8 +130,9 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleDragStart() {
+    __handleDragStart(event) {
         this.collection.draggingModel = this.model;
+        event.originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
     },
 
     __handleDragEnd() {
@@ -179,11 +180,7 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if (
-            (!this.el.contains(event.relatedTarget) && (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined)) ||
-            event.relatedTarget.classList.contains('js-grid-content-view') ||
-            event.relatedTarget.classList.contains('js-grid-selection-panel-view')
-        ) {
+        if (this.model ? this.collection.dragoverModel !== this.model : this.collection.dragoverModel !== undefined) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragleave:head', event);
             } else {
@@ -198,6 +195,7 @@ export default Marionette.View.extend({
     },
 
     __handleDrop(event) {
+        event.preventDefault();
         this.__triggerIfAllow('drop', event);
     },
 

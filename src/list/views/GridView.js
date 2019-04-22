@@ -583,8 +583,9 @@ export default Marionette.View.extend({
         return error;
     },
 
-    __handleDragLeave(e) {
-        if (!this.el.contains(e.relatedTarget)) {
+    __handleDragLeave(event) {
+        const element = document.elementFromPoint(event.pageX, event.pageY);
+        if (!this.el.contains(element)) {
             if (this.collection.dragoverModel) {
                 this.collection.dragoverModel.trigger('dragleave');
             } else {
