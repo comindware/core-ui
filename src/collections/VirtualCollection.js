@@ -71,7 +71,7 @@ const VirtualCollection = Backbone.Collection.extend({
         }
 
         if (options.filter !== undefined) {
-            this.filterFn = typeof this.filterFn === 'function' ? [options.filter] : options.filter || [];
+            this.filterFn = typeof options.filter === 'function' ? [options.filter] : options.filter || [];
         }
 
         this._reset();
