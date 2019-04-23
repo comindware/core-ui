@@ -72,7 +72,7 @@ export default {
                     id: button.id,
                     text: button.text,
                     customClass: button.customClass,
-                    handler() {
+                    handler: () => {
                         if (button.beforeLeaveFn) {
                             button.beforeLeaveFn().then(() => {
                                 WindowService.closePopup(this.openedPopupId);
