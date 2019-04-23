@@ -99,6 +99,12 @@ export default Marionette.Object.extend({
             try {
                 this.__setLoading(true, { both: false });
                 const data = await this.options.memberService.getMembers(this.__getSettings(filterState));
+                if (!data.available) {
+                    data.available = [];
+                }
+                if (!data.selected) {
+                    data.selected = [];
+                }
                 data.available.forEach(item => (this.members[item.id] = item));
                 data.selected.forEach(item => (this.members[item.id] = item));
                 this.__processValues(data.selected);
@@ -301,13 +307,14 @@ export default Marionette.Object.extend({
             }
         });
 
-        const selectedItems = Array.isArray(selected)
-            ? this.options.selected.map(id => {
-                  const model = items[id];
-                  delete items[id];
-                  return model;
-              })
-            : [];
+        const selectedItems =
+            Array.isArray(selected) && this.options.selected
+                ? this.options.selected.map(id => {
+                      const model = items[id];
+                      delete items[id];
+                      return model;
+                  })
+                : [];
 
         const availableItems = Object.values(items);
 
