@@ -184,11 +184,12 @@ export default Marionette.Object.extend({
                         break;
                     }
                     case 'GET':
-                        return data;
                     default:
                         break;
                 }
             }
+
+            return data;
         }
         return null; //todo handle error
     },
