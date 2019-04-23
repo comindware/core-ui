@@ -249,5 +249,125 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
         });
+
+        it('should correctly filter items by type if filter checkbox was checked', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const listGroups = core.services.UserService.listGroups();
+            const listUsers = core.services.UserService.listUsers();
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selectes',
+                autocommit: true,
+                users: listUsers,
+                groups: listGroups,
+                filterFnParameters: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                memberTypes: {
+                    users: 'users',
+                    groups: 'groups'
+                }
+            });
+
+            view.on('render', () => {
+                view.controller.view.on('attach', () => {
+                    const first = setInterval(() => {
+                        if (!isAvailableListEmpty(view)) {
+                            clearTimeout(first);
+                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                                .first()
+                                .click();
+                            let i = 0;
+                            const second = setInterval(() => {
+                                i++;
+                                if (
+                                    view
+                                        .$('.member-split-wrp .member-split-grid .visible-collection')
+                                        .first()
+                                        .children().length === listUsers.length
+                                ) {
+                                    clearTimeout(second);
+                                    expect(i < 10).toEqual(true);
+                                    done();
+                                }
+                            }, 100);
+                        }
+                    }, 10);
+                });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly filter items by type if memberService enabled', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const listGroups = core.services.UserService.listGroups();
+            const listUsers = core.services.UserService.listUsers();
+            const memberService = {
+                filterFnParameters: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                memberTypes: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                getMembers: options => {
+                    const list = options.filterType === 'groups' ? listGroups : options.filterType === 'users' ? listUsers : listUsers.concat(listGroups);
+                    return { available: list, selected: [] };
+                }
+            };
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selectes',
+                autocommit: true,
+                users: listUsers,
+                groups: listGroups,
+                memberService
+            });
+
+            view.on('render', () => {
+                view.controller.view.on('attach', () => {
+                    const first = setInterval(() => {
+                        if (!isAvailableListEmpty(view)) {
+                            clearTimeout(first);
+                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                                .first()
+                                .click();
+                            let i = 0;
+                            const second = setInterval(() => {
+                                i++;
+                                if (
+                                    view
+                                        .$('.member-split-wrp .member-split-grid .visible-collection')
+                                        .first()
+                                        .children().length === listUsers.length
+                                ) {
+                                    clearTimeout(second);
+                                    expect(i < 10).toEqual(true);
+                                    done();
+                                }
+                            }, 100);
+                        }
+                    }, 10);
+                });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
     });
 });

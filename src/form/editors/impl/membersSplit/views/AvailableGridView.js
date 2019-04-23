@@ -34,10 +34,12 @@ export default BaseMembersGridView.extend({
     },
 
     __toggleQuantityWarning() {
-        if (this.collection.length < this.collection.totalCount) {
-            this.getRegion('quantityWarningRegion').$el.show();
-        } else {
-            this.getRegion('quantityWarningRegion').$el.hide();
+        if (!this.isDestroyed()) {
+            if (this.collection.length < this.collection.totalCount) {
+                this.getRegion('quantityWarningRegion').$el.show();
+            } else {
+                this.getRegion('quantityWarningRegion').$el.hide();
+            }
         }
     }
 });
