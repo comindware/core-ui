@@ -17,18 +17,10 @@ export default {
     },
 
     ask(options) {
-        return this.askYesNo(
-            options.description,
-            options.title,
-            options.yesText,
-            options.noText
-        );
+        return this.askYesNo(options.description, options.title, options.yesText, options.noText);
     },
 
-    askYesNo(description, text,
-        yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'),
-        noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')
-    ) {
+    askYesNo(description, text, yesText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES'), noText = LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO')) {
         return this.showMessageDialog(
             description,
             text,
@@ -100,7 +92,7 @@ export default {
             if (this.openedPopupId) {
                 WindowService.closePopup(this.openedPopupId);
             }
-            this.openedPopupId = WindowService.showPopup(view);
+            this.openedPopupId = WindowService.showTransientPopup(view, { fadeBackground: true });
         });
     },
 
