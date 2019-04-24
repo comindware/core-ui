@@ -1,4 +1,4 @@
-export default function () {
+export default function() {
     const blinkColumns = new Backbone.Collection([
         {
             id: 'blink.1',
