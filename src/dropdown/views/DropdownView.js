@@ -80,6 +80,7 @@ export default Marionette.View.extend({
         helpers.ensureOption(options, 'panelView');
 
         _.defaults(this.options, Object.assign({}, defaultOptions), options);
+        this.model = this.options.model || options.buttonViewOptions.model; //TODO delete in 2.0
 
         _.bindAll(this, 'open', 'close', '__onBlur');
 

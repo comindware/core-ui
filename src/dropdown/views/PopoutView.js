@@ -109,6 +109,7 @@ export default Marionette.View.extend({
         _.defaults(this.options, defaultOptions);
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
+        this.model = this.options.model || options.buttonViewOptions.model; //TODO delete in 2.0
         _.bindAll(this, 'open', 'close');
 
         this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
