@@ -12,10 +12,11 @@ import AppRouter from './AppRouter';
 import AppController from './AppController';
 
 Application.appRouter = new AppRouter({
-    controller: new AppController()
+    controller: AppController
 });
 const app = new Application();
 window.app = app;
+app.once('before:start', () => (AppController.contentView = window.app.getView()));
 app.start();
 
 if ('serviceWorker' in navigator) {

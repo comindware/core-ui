@@ -273,7 +273,7 @@ export default Marionette.View.extend({
         this.el.classList.add(classes.maximized);
         this.ui.editor.css('height', '80%');
 
-        document.querySelector(this.regions.editorOutputContainer).style.height = '30%';
+        document.querySelector(this.regions.editorOutputContainer.el).style.height = '30%';
         document.querySelector(this.regions.output).style.height = '100%';
         document.querySelector(this.regions.outputTabs).style.height = '100%';
         this.$el.appendTo('body');

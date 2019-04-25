@@ -31,13 +31,15 @@ export default Marionette.Application.extend({
         replaceElement: true
     },
 
+    onBeforeStart() {
+        this.showView(new rootView());
+    },
+
     onStart() {
         const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
 
         const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
         const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
-
-        this.showView(new rootView());
 
         Core.Application.start({
             ajaxService: {
