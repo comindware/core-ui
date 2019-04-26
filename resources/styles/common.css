@@ -946,6 +946,12 @@ a:hover {
 
 .toolbar-items-wrp {
     display: flex;
+    width: 100%;
+}
+
+.toolbar-items-wrp > * {
+    overflow: hidden;
+    min-width: fit-content;
 }
 
 .toolbar-btn__text {
@@ -972,15 +978,17 @@ a:hover {
 .toolbar-container {
     width: 100%;
     display: inline-flex;
+    justify-content: space-between;
 }
 
 .toolbar-buttons_container {
     align-items: center;
     display: flex;
+    overflow: hidden;
 }
 
 .toolbar-buttons_container__const{
-    margin-left: auto;
+    flex: 0 0 auto;
 }
 
 .toolbar-panel_container {
@@ -1021,6 +1029,10 @@ a:hover {
 
 .toolbar-panel_container__select-state .toolbar-btn .editor_checked.editor_checkbox .checkbox{
     background: unset;
+}
+
+.toolbar-menu-actions {
+    margin-right: auto;
 }
 
 .toolbar-menu-actions .popout__action-btn {

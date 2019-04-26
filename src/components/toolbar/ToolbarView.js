@@ -54,14 +54,14 @@ export default Marionette.View.extend({
         this.showChildView('toolbarItemsRegion', this.mainActionsView);
         this.showChildView('popupMenuRegion', this.popupMenuView);
         this.showChildView('toolbarConstItemsRegion', this.constActionsView);
-        const popupMenuRegion = this.getRegion('popupMenuRegion');
-        popupMenuRegion.$el.hide();
+        const popupMenuRegionElementStyle = this.getRegion('popupMenuRegion').el.style;
+        popupMenuRegionElementStyle.visibility = 'hidden';
         const menuItems = this.groupedCollection.groups[groupNames.menu];
         this.listenTo(menuItems, 'reset update', () => {
             if (menuItems.length) {
-                popupMenuRegion.$el.show();
+                popupMenuRegionElementStyle.visibility = 'visible';
             } else {
-                popupMenuRegion.$el.hide();
+                popupMenuRegionElementStyle.visibility = 'hidden';
             }
         });
     },
@@ -93,7 +93,6 @@ export default Marionette.View.extend({
 
     __resetCollections() {
         Object.values(this.groupedCollection.groups).forEach(group => group.reset());
-        this.groupedCollection.ungrouped.reset();
         this.groupedCollection.getAllItemsModels().forEach(model => {
             this.groupedCollection.move(model, model.get('kind') === meta.kinds.CONST ? groupNames.const : groupNames.main);
         });
@@ -105,24 +104,26 @@ export default Marionette.View.extend({
             return false;
         }
 
-        const ungroupedModels = this.groupedCollection.ungroup(groupNames.main, groupNames.menu);
+        const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
+        const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
 
-        if (ungroupedModels.length === 0) {
+        this.groupedCollection.move(this.groupedCollection.getModels(groupNames.menu), groupNames.main);
+
+        const mainGroupModels = this.groupedCollection.getModels(groupNames.main);
+        if (mainGroupModels.length === 0) {
             return false;
         }
 
-        const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-        const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
-        const menuActionsWidth = this.getRegion('popupMenuRegion').$el.outerWidth();
-        const toolbarWidth = this.$el.width() - constItemsEl.outerWidth() - menuActionsWidth;
-
-        ungroupedModels.forEach(model => {
-            if (toolbarItemsRegion.$el.width() < toolbarWidth) {
-                this.groupedCollection.move(model, groupNames.main);
-            } else {
-                this.groupedCollection.move(model, groupNames.menu);
-            }
+        const menuElement = this.el.querySelector('.toolbar-menu-actions');
+        let widthAggregator = menuElement.style.visibility === 'visible' ? menuElement.offsetWidth : 0;
+        const notFitItemIndex = Array.from(container.children).findIndex(el => {
+            widthAggregator += el.offsetWidth;
+            return container.clientWidth <= widthAggregator;
         });
+
+        if (notFitItemIndex >= 0) {
+            this.groupedCollection.move(mainGroupModels.slice(notFitItemIndex), groupNames.menu);
+        }
 
         return true;
     },

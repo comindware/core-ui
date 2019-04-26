@@ -21,12 +21,12 @@ export default class GroupedCollection {
         });
     }
 
-    move(models, target) {
+    move(models, targetName) {
         if (models) {
             const modelsArray = this.__getArrayCopy(models);
             modelsArray.length && modelsArray[0].group?.remove(modelsArray);
 
-            const targetCollection = (target && this.groups[target]) || this.ungrouped;
+            const targetCollection = (targetName && this.groups[targetName]) || this.ungrouped;
             targetCollection.add(modelsArray);
             modelsArray.forEach(model => (model.group = targetCollection));
         }
