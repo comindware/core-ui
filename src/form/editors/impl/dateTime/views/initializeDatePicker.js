@@ -379,7 +379,7 @@ export default function($, dates) {
                 }
 
                 if (this.shortdays.includes(moment(prevMonth).format('LL'))) {
-                    classes.push('holiday');
+                    classes.push('shortday');
                 }
 
                 html.push(`<td class="${classes.join(' ')}">${prevMonth.getDate()}</td>`);

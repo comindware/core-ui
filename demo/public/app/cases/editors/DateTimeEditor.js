@@ -23,12 +23,12 @@ export default function() {
                     type: 'weekend'
                 },
                 {
-                    date: '2019-04-013T10:46:37.000Z',
+                    date: '2019-04-13T10:46:37.000Z',
                     type: 'holiday'
                 },
                 {
-                    date: '2019-04-09T10:46:37.000Z',
-                    type: 'shortDay',
+                    date: '2019-04-16T10:46:37.000Z',
+                    type: 'shortday',
                     hours: 6
                 }
             ],
