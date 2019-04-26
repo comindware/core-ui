@@ -1,9 +1,9 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-describe('Editors', () => {
-    describe('CodeEditorView', () => {
-        it('should initialize', function () {
+describe('Components', () => {
+    describe('Toolbar', () => {
+        it('should initialize', function() {
             const view = new core.components.Toolbar({
                 allItemsCollection: new Backbone.Collection([
                     {
@@ -63,7 +63,10 @@ describe('Editors', () => {
                 ])
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

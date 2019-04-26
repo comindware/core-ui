@@ -14,10 +14,10 @@ export default class ActionMenuView {
             },
             buttonViewOptions: {
                 model: options.model
-            }
+            },
+            model: options.model
         });
 
-        menu.model = options.model;
         menu.listenTo(menu, 'panel:click:item', this.__handleSeveritySelect);
         menu.listenTo(menu, 'button:keyup', this.__keyup);
 

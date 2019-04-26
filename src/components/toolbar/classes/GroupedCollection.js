@@ -3,50 +3,62 @@ export default class GroupedCollection {
         this.allItems = options.allItems;
         this.groups = {};
 
-        const listenChanges = group => {
-            group.listenTo(group, 'add reset', models => {
-                if (models) {
-                    if (models.length) {
-                        models.forEach(model => (model.group = group));
-                    } else {
-                        models.group = group;
-                    }
-                }
-            });
-        };
-
         options.groups.forEach(groupName => {
             const group = new options.class();
-            listenChanges(group);
             this.groups[groupName] = group;
         });
 
         this.ungrouped = new options.class();
-        listenChanges(this.ungrouped);
+
+        this.allItems.listenTo(this.allItems, 'remove', model => {
+            model.group.remove(model);
+            delete model.group;
+        });
+
+        this.allItems.listenTo(this.allItems, 'add', model => {
+            this.ungrouped.add(model);
+            model.group = this.ungrouped;
+        });
     }
 
     move(models, target) {
         if (models) {
-            const modelsArray = [...(Array.isArray(models) ? models : [models])];
-            modelsArray.length && modelsArray[0].group.remove(modelsArray);
+            const modelsArray = this.__getArrayCopy(models);
+            modelsArray.length && modelsArray[0].group?.remove(modelsArray);
 
             const targetCollection = (target && this.groups[target]) || this.ungrouped;
             targetCollection.add(modelsArray);
+            modelsArray.forEach(model => (model.group = targetCollection));
         }
     }
 
-    reset(models, target) {
-        if (target) {
-            const modelsArray = [...(Array.isArray(models) ? models : [models])];
-            this.groups[target].reset(modelsArray);
+    reset(models, targetGroupName) {
+        if (targetGroupName) {
+            const modelsArray = this.__getArrayCopy(models);
+            const targetGroup = this.groups[targetGroupName];
+            targetGroup.reset(modelsArray);
+            modelsArray.forEach(model => (model.group = targetGroup));
         }
     }
 
-    ungroup(models) {
-        this.move(models);
+    ungroup(...groupNameList) {
+        groupNameList.forEach(targetGroupName => {
+            const modelsArray = this.__getArrayCopy(this.groups[targetGroupName].models);
+            this.move(modelsArray);
+        });
+
+        return this.__getArrayCopy(this.ungrouped.models);
     }
 
-    getModels(target) {
-        return [...(target === 'all' ? this.allItems.models : ((target && this.groups[target]) || this.ungrouped).models)];
+    getModels(targetGroupNme) {
+        return this.__getArrayCopy(((targetGroupNme && this.groups[targetGroupNme]) || this.ungrouped).models);
+    }
+
+    getAllItemsModels() {
+        return this.__getArrayCopy(this.allItems.models);
+    }
+
+    __getArrayCopy(models) {
+        return models ? (Array.isArray(models) ? models : [models]).slice() : null;
     }
 }

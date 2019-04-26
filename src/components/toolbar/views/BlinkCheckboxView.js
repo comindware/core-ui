@@ -6,7 +6,6 @@ export default class BlinkCheckboxView {
     constructor(options = {}) {
         const view = this.__createView(options);
 
-        view.model = options.model;
         return view;
     }
 

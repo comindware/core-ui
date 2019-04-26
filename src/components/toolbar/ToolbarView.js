@@ -3,6 +3,7 @@ import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
+import VirtualCollection from '../../collections/VirtualCollection';
 import meta from './meta';
 import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
 import GroupedCollection from './classes/GroupedCollection';
@@ -15,6 +16,7 @@ const groupNames = {
 };
 const debounceInterval = {
     long: 300,
+    medium: 100,
     short: 5
 };
 
@@ -22,14 +24,18 @@ export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
-        const allItems = this.options.allItemsCollection;
-        this.groupedCollection = new GroupedCollection({ allItems, class: ToolbarItemsCollection, groups: Object.values(groupNames) });
+        let allItemsCollection = this.options.allItemsCollection;
+        allItemsCollection = allItemsCollection instanceof Backbone.Collection ? allItemsCollection.toJSON() : allItemsCollection;
+        this.groupedCollection = new GroupedCollection({
+            allItems: new VirtualCollection(new ToolbarItemsCollection(allItemsCollection)),
+            class: ToolbarItemsCollection,
+            groups: Object.values(groupNames)
+        });
         this.mainActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.main]);
         this.constActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.const]);
         this.popupMenuView = this.__createDropdownActionsView(this.groupedCollection.groups[groupNames.menu]);
 
-        this.debounceReset = _.debounce(this.__resetCollections, debounceInterval.short);
-        this.listenTo(this.groupedCollection.allItems, 'change reset update', this.debounceReset);
+        this.listenTo(this.groupedCollection.allItems, 'change reset update', _.debounce(this.__resetCollections, debounceInterval.short));
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -59,15 +65,19 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.debounceReset();
+        this.__resetCollections();
+        const debounceRebuildView = _.debounce(() => this.rebuildView(), debounceInterval.short);
         this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', () => {
             const interval = setInterval(() => {
-                if (document.readyState === 'complete') {
-                    clearTimeout(interval);
-                    _.debounce(this.rebuildView(), debounceInterval.long);
+                if (debounceRebuildView()) {
+                    clearInterval(interval);
                 }
-            }, 100);
+            }, debounceInterval.medium);
         });
+    },
+
+    getAllItemsCollection() {
+        return this.groupedCollection.allItems;
     },
 
     __createActionsGroupsView(collection) {
@@ -80,31 +90,22 @@ export default Marionette.View.extend({
     },
 
     __resetCollections() {
-        const mainItems = this.groupedCollection.getModels('all').filter(model => model.get('kind') !== meta.kinds.CONST);
-        this.groupedCollection.reset(mainItems, groupNames.main);
-
-        const constItems = this.groupedCollection.getModels('all').filter(model => model.get('kind') === meta.kinds.CONST);
-        this.groupedCollection.reset(constItems, groupNames.const);
-        if (document.readyState === 'complete') {
-            this.rebuildView();
-        }
+        this.groupedCollection.getAllItemsModels().forEach(model => {
+            this.groupedCollection.move(model, model.get('kind') === meta.kinds.CONST ? groupNames.const : groupNames.main);
+        });
+        this.rebuildView();
     },
 
     rebuildView() {
-        if (this.isDestroyed()) {
-            return;
+        if (this.isDestroyed() || document.readyState !== 'complete') {
+            return false;
         }
 
-        const mainItems = this.groupedCollection.getModels(groupNames.main);
-        const menuItems = this.groupedCollection.getModels(groupNames.menu);
+        const ungroupedModels = this.groupedCollection.ungroup(groupNames.main, groupNames.menu);
 
-        if (mainItems.length + menuItems.length === 0) {
-            return;
+        if (ungroupedModels.length === 0) {
+            return false;
         }
-
-        this.groupedCollection.ungroup(mainItems);
-        this.groupedCollection.ungroup(menuItems);
-        const ungroupedModels = this.groupedCollection.getModels();
 
         const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
         const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
@@ -118,6 +119,8 @@ export default Marionette.View.extend({
                 this.groupedCollection.move(model, groupNames.menu);
             }
         });
+
+        return true;
     },
 
     __createDropdownActionsView() {
