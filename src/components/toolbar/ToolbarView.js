@@ -24,10 +24,12 @@ export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
-        let allItemsCollection = this.options.allItemsCollection;
-        allItemsCollection = allItemsCollection instanceof Backbone.Collection ? allItemsCollection.toJSON() : allItemsCollection;
+        const allItemsCollection = this.options.allItemsCollection;
+        const allItemsArray = allItemsCollection instanceof Backbone.Collection ? allItemsCollection.toJSON() : allItemsCollection;
+        const allItems = new VirtualCollection(new ToolbarItemsCollection(allItemsArray));
+
         this.groupedCollection = new GroupedCollection({
-            allItems: new VirtualCollection(new ToolbarItemsCollection(allItemsCollection)),
+            allItems,
             class: ToolbarItemsCollection,
             groups: Object.values(groupNames)
         });
@@ -35,7 +37,7 @@ export default Marionette.View.extend({
         this.constActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.const]);
         this.popupMenuView = this.__createDropdownActionsView(this.groupedCollection.groups[groupNames.menu]);
 
-        this.listenTo(this.groupedCollection.allItems, 'change reset update', _.debounce(this.__resetCollections, debounceInterval.short));
+        this.listenTo(allItems, 'change reset update filter', _.debounce(this.__resetCollections, debounceInterval.short));
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -90,6 +92,8 @@ export default Marionette.View.extend({
     },
 
     __resetCollections() {
+        Object.values(this.groupedCollection.groups).forEach(group => group.reset());
+        this.groupedCollection.ungrouped.reset();
         this.groupedCollection.getAllItemsModels().forEach(model => {
             this.groupedCollection.move(model, model.get('kind') === meta.kinds.CONST ? groupNames.const : groupNames.main);
         });

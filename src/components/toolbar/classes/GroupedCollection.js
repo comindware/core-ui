@@ -32,15 +32,6 @@ export default class GroupedCollection {
         }
     }
 
-    reset(models, targetGroupName) {
-        if (targetGroupName) {
-            const modelsArray = this.__getArrayCopy(models);
-            const targetGroup = this.groups[targetGroupName];
-            targetGroup.reset(modelsArray);
-            modelsArray.forEach(model => (model.group = targetGroup));
-        }
-    }
-
     ungroup(...groupNameList) {
         groupNameList.forEach(targetGroupName => {
             const modelsArray = this.__getArrayCopy(this.groups[targetGroupName].models);
