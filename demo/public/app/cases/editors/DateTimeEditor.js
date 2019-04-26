@@ -11,12 +11,34 @@ export default function() {
     const view = new Core.form.editors.DateTimeEditor({
         model,
         autocommit: true,
-        key: 'dateTimeValue'
+        key: 'dateTimeValue',
+        calendar: {
+            dates: [
+                {
+                    date: '2019-04-05T10:46:37.000Z',
+                    type: 'weekend'
+                },
+                {
+                    date: '2019-04-06T10:46:37.000Z',
+                    type: 'weekend'
+                },
+                {
+                    date: '2019-04-013T10:46:37.000Z',
+                    type: 'holiday'
+                },
+                {
+                    date: '2019-04-09T10:46:37.000Z',
+                    type: 'shortDay',
+                    hours: 6
+                }
+            ],
+            additional: [[3, 3], [6, 12]]
+        }
     });
 
     return new CanvasView({
         view,
-        presentation: "{{dateTimeValue}}",
+        presentation: '{{dateTimeValue}}',
         isEditor: true,
         showFormat: true,
         formats: [

@@ -394,7 +394,8 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                 startDate: this.options.startDate,
                 endDate: this.options.endDate,
                 datesDisabled: this.options.datesDisabled,
-                daysOfWeekDisabled: this.options.daysOfWeekDisabled
+                daysOfWeekDisabled: this.options.daysOfWeekDisabled,
+                calendar: this.options.calendar
             },
             renderAfterClose: false,
             autoOpen: false,

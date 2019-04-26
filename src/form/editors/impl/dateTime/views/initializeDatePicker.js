@@ -102,10 +102,16 @@ export default function($, dates) {
         this.endDate = new Date(8639968443048000);
         this.datesDisabled = [];
         this.daysOfWeekDisabled = [];
+        this.weekends = [];
+        this.holidays = [];
+        this.shortdays = [];
         this.setStartDate(options.startDate);
         this.setEndDate(options.endDate);
         this.setDatesDisabled(options.datesDisabled);
         this.setDaysOfWeekDisabled(options.daysOfWeekDisabled);
+        if (options.calendar) {
+            this.setSpecialCalendarDays(options.calendar);
+        }
         this.fillDow();
         this.showMode();
 
@@ -223,6 +229,26 @@ export default function($, dates) {
                 this.daysOfWeekDisabled = this.daysOfWeekDisabled.split(/,\s*/);
             }
             this.daysOfWeekDisabled = this.daysOfWeekDisabled.map(d => parseInt(d, 10));
+        },
+
+        setSpecialCalendarDays(calendar) {
+            calendar.dates.forEach(date => {
+                const parsetDate = moment(date.date).format('LL');
+
+                switch (date.type) {
+                    case 'weekend':
+                        this.weekends.push(parsetDate);
+                        break;
+                    case 'holiday':
+                        this.holidays.push(parsetDate);
+                        break;
+                    case 'shortday':
+                        this.shortdays.push(parsetDate);
+                        break;
+                    default:
+                        break;
+                }
+            });
         },
 
         hour_minute: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
@@ -343,6 +369,19 @@ export default function($, dates) {
                 ) {
                     classes.push('disabled');
                 }
+
+                if (this.weekends.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('weekends');
+                }
+
+                if (this.holidays.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('holiday');
+                }
+
+                if (this.shortdays.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('holiday');
+                }
+
                 html.push(`<td class="${classes.join(' ')}">${prevMonth.getDate()}</td>`);
                 if (UTCDay === this.weekEnd) {
                     html.push('</tr>');
