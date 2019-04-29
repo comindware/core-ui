@@ -9,9 +9,9 @@ export default Marionette.View.extend({
     templateContext() {
         const attributes = this.model.toJSON();
         const data = {
+            ...attributes,
             url: this.options.createValueUrl && this.options.createValueUrl(attributes),
-            text: this.options.getDisplayText(attributes),
-            ...attributes
+            text: this.options.getDisplayText(attributes)
         };
         return {
             customTemplate: Handlebars.compile(this.options.customTemplate)(data),
