@@ -219,11 +219,11 @@ describe('Components', () => {
                     window.dispatchEvent(new Event('resize'));
 
                     wait({
-                        condition: () => document.querySelectorAll('.toolbar-menu-actions .popout__action-btn')[1],
+                        condition: () => document.querySelector('.toolbar-menu-actions .popout__action-btn'),
                         callback: () => {
-                            document.querySelectorAll('.toolbar-menu-actions .popout__action-btn')[1].click();
+                            document.querySelector('.toolbar-menu-actions .popout__action-btn').click();
                             wait({
-                                condition: () => document.querySelector('.popout-menu').children?.length,
+                                condition: () => document.querySelector('.popout-menu').children.length > 0,
                                 callback: () => {
                                     expect(document.querySelector('.popout-menu').children.length).toBe(3);
                                     done();

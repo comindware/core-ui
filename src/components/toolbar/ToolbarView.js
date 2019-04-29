@@ -19,6 +19,7 @@ const debounceInterval = {
     medium: 100,
     short: 5
 };
+const separatorSize = 20;
 
 export default Marionette.View.extend({
     initialize() {
@@ -74,6 +75,7 @@ export default Marionette.View.extend({
                 if (debounceRebuildView()) {
                     clearInterval(interval);
                 }
+                //TODO: move menu dropdown on resize
             }, debounceInterval.medium);
         });
     },
@@ -105,7 +107,6 @@ export default Marionette.View.extend({
         }
 
         const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-        const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
 
         this.groupedCollection.move(this.groupedCollection.getModels(groupNames.menu), groupNames.main);
 
@@ -114,11 +115,12 @@ export default Marionette.View.extend({
             return false;
         }
 
-        const menuElement = this.el.querySelector('.toolbar-menu-actions');
-        let widthAggregator = menuElement.style.visibility === 'visible' ? menuElement.offsetWidth : 0;
+        const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
+        let widthAggregator = separatorSize;
+        const containerOffsetWidth = container.offsetWidth;
         const notFitItemIndex = Array.from(container.children).findIndex(el => {
             widthAggregator += el.offsetWidth;
-            return container.clientWidth <= widthAggregator;
+            return containerOffsetWidth <= widthAggregator;
         });
 
         if (notFitItemIndex >= 0) {

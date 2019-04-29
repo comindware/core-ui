@@ -1033,6 +1033,8 @@ a:hover {
 
 .toolbar-menu-actions {
     margin-right: auto;
+    display: flex;
+    align-items: center;
 }
 
 .toolbar-menu-actions .popout__action-btn {

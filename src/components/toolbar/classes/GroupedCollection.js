@@ -19,6 +19,8 @@ export default class GroupedCollection {
             this.ungrouped.add(model);
             model.group = this.ungrouped;
         });
+
+        //TODO reset
     }
 
     move(models, targetName) {
@@ -30,15 +32,6 @@ export default class GroupedCollection {
             targetCollection.add(modelsArray);
             modelsArray.forEach(model => (model.group = targetCollection));
         }
-    }
-
-    ungroup(...groupNameList) {
-        groupNameList.forEach(targetGroupName => {
-            const modelsArray = this.__getArrayCopy(this.groups[targetGroupName].models);
-            this.move(modelsArray);
-        });
-
-        return this.__getArrayCopy(this.ungrouped.models);
     }
 
     getModels(targetGroupNme) {
