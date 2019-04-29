@@ -1,7 +1,22 @@
-
 const at = function(collection, index) {
     return collection.at ? collection.at(index) : collection[index];
 };
+
+export const wait = ({ action, condition, callback, checkInterval = 0, repeatAction = false } = {}) =>
+    new Promise(resolve => {
+        let isActionCalled = false;
+        const shouldCallAction = () => repeatAction || !isActionCalled;
+        const first = setInterval(() => {
+            if (typeof action === 'function' && shouldCallAction()) {
+                isActionCalled = true;
+                action();
+            }
+            if (typeof condition === 'function' ? condition() : true) {
+                clearTimeout(first);
+                resolve(typeof callback === 'function' && callback());
+            }
+        }, checkInterval);
+    });
 
 export function expectCollectionsToBeEqual(actualCollection, expectedCollection) {
     expect(actualCollection.length).toBe(expectedCollection.length);
