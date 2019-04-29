@@ -226,6 +226,7 @@ describe('Components', () => {
                                 condition: () => document.querySelector('.popout-menu').children.length > 0,
                                 callback: () => {
                                     expect(document.querySelector('.popout-menu').children.length).toBe(3);
+                                    Core.services.WindowService.closePopup();
                                     done();
                                 }
                             });

@@ -19,7 +19,6 @@ const debounceInterval = {
     medium: 100,
     short: 5
 };
-const separatorSize = 20;
 
 export default Marionette.View.extend({
     initialize() {
@@ -116,7 +115,8 @@ export default Marionette.View.extend({
         }
 
         const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
-        let widthAggregator = separatorSize;
+
+        let widthAggregator = 0;
         const containerOffsetWidth = container.offsetWidth;
         const notFitItemIndex = Array.from(container.children).findIndex(el => {
             widthAggregator += el.offsetWidth;
