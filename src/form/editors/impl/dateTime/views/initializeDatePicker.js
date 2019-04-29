@@ -105,11 +105,14 @@ export default function($, dates) {
         this.weekends = [];
         this.holidays = [];
         this.shortdays = [];
+        this.additional = null;
         this.setStartDate(options.startDate);
         this.setEndDate(options.endDate);
         this.setDatesDisabled(options.datesDisabled);
         this.setDaysOfWeekDisabled(options.daysOfWeekDisabled);
         if (options.calendar) {
+            this.additional = options.calendar.additional;
+
             this.setSpecialCalendarDays(options.calendar);
         }
         this.fillDow();
@@ -380,6 +383,12 @@ export default function($, dates) {
 
                 if (this.shortdays.includes(moment(prevMonth).format('LL'))) {
                     classes.push('shortday');
+                }
+
+                const isDateAvailable = this.__isDateAvailableByRule(moment(prevMonth).format('LL'));
+
+                if (!isDateAvailable) {
+                    classes.push('disabled');
                 }
 
                 html.push(`<td class="${classes.join(' ')}">${prevMonth.getDate()}</td>`);
@@ -658,6 +667,20 @@ export default function($, dates) {
                 date: this.date
             });
             if (date === null) this.date = this.viewDate;
+        },
+
+        __isDateAvailableByRule(date) {
+            if (this.additional === null) {
+                return true;
+            } else if (this.additional === []) {
+                return false;
+            }
+
+            return this.__isDateMentionedInAvailableDates(date);
+        },
+
+        __isDateMentionedInAvailableDates(date) {
+            return this.additional.some(availableDatesRange => moment(date).isSameOrAfter(availableDatesRange[0]) && moment(date).isSameOrBefore(availableDatesRange[1]));
         },
 
         moveDate(date, dir) {

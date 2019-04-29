@@ -5,7 +5,7 @@ const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
 
 export default function() {
     const model = new Backbone.Model({
-        dateTimeValue: '2015-07-20T10:46:37Z'
+        dateTimeValue: '2019-04-01T10:46:37Z'
     });
 
     const view = new Core.form.editors.DateTimeEditor({
@@ -32,7 +32,7 @@ export default function() {
                     hours: 6
                 }
             ],
-            additional: [[3, 3], [6, 12]]
+            additional: [['2019-04-03T00:00:00.000Z', '2019-04-03T23:00:00.000Z'], ['2019-04-05T00:00:00.000Z', '2019-04-20T00:00:00.000Z']]
         }
     });
 
