@@ -17,7 +17,10 @@ export default Marionette.Behavior.extend({
     setLoading(visible) {
         if (typeof visible === 'boolean') {
             if (visible) {
-                this.view.getRegion(this.options.region).show(new LoadingView(this.loadingViewOptions));
+                const view = new LoadingView(this.loadingViewOptions);
+                view.once('attach', view.el.classList.add('visible-loader'));
+
+                this.view.getRegion(this.options.region).show(view);
             } else {
                 this.view.getRegion(this.options.region).reset();
             }

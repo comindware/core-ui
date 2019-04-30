@@ -28,10 +28,6 @@ const sizeVisibleChunk = 50; //px;
 
 export default Marionette.View.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'header');
-        helpers.ensureOption(options, 'buttons');
-        helpers.ensureOption(options, 'content');
-
         this.content = options.content;
         this.onClose = options.onClose;
         this.__expanded = false;
