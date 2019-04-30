@@ -33,6 +33,6 @@ export default ListPanelView.extend({
 
     __execute(model) {
         this.options.parent.close();
-        this.options.parent.trigger('execute', model.id, model);
+        this.options.parent.button.trigger('execute', model.id, model);
     }
 });
