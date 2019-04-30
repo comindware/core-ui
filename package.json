@@ -43,13 +43,13 @@
         }
     ],
     "devDependencies": {
-        "@babel/core": "^7.4.3",
-        "@babel/plugin-proposal-class-properties": "^7.4.0",
-        "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+        "@babel/core": "^7.4.4",
+        "@babel/plugin-proposal-class-properties": "^7.4.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/plugin-proposal-optional-chaining": "^7.2.0",
-        "@babel/plugin-transform-parameters": "^7.4.3",
-        "@babel/polyfill": "^7.4.3",
-        "@babel/preset-env": "^7.4.3",
+        "@babel/plugin-transform-parameters": "^7.4.4",
+        "@babel/polyfill": "^7.4.4",
+        "@babel/preset-env": "^7.4.4",
         "@babel/preset-flow": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@types/autosize": "^3.0.6",
@@ -121,7 +121,7 @@
         "webpack": "^4.30.0"
     },
     "dependencies": {
-        "@babel/runtime-corejs3": "^7.4.3",
+        "@babel/runtime-corejs3": "^7.4.4",
         "@fortawesome/fontawesome-free": "^5.8.1",
         "autosize": "^4.0.2",
         "backbone": "^1.4.0",
