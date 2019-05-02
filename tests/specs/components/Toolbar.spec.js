@@ -213,7 +213,7 @@ describe('Components', () => {
             core.services.WindowService.showPopup(popupView);
 
             wait({
-                condition: () => popupView.el.querySelector('.toolbar-items-wrp').children.length,
+                condition: () => popupView.el.querySelector('.layout__popup-view-window .toolbar-items-wrp').children.length,
                 callback: () => {
                     popupView.el.style.width = '400px';
                     window.dispatchEvent(new Event('resize'));
@@ -221,11 +221,12 @@ describe('Components', () => {
                     wait({
                         condition: () => document.querySelector('.toolbar-menu-actions .popout__action-btn'),
                         callback: () => {
-                            document.querySelector('.toolbar-menu-actions .popout__action-btn').click();
+                            document.querySelector('.layout__popup-view-window .toolbar-menu-actions .popout__action-btn').click();
                             wait({
-                                condition: () => document.querySelector('.popout-menu').children.length > 0,
+                                condition: () => document.querySelector('.popout-menu').children.length === 3,
                                 callback: () => {
-                                    expect(document.querySelector('.popout-menu').children.length).toBe(3);
+                                    expect(document.querySelector('.layout__popup-view-window .js-toolbar-items .toolbar-items-wrp').children.length).toBe(3); //including btn-separator
+
                                     Core.services.WindowService.closePopup();
                                     done();
                                 }

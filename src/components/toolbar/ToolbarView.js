@@ -116,11 +116,19 @@ export default Marionette.View.extend({
 
         const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
 
+        const outerWidth = el => {
+            let width = el.offsetWidth;
+            const style = getComputedStyle(el);
+
+            width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+            return width;
+        };
+
         let widthAggregator = 0;
         const containerOffsetWidth = container.offsetWidth;
         const notFitItemIndex = Array.from(container.children).findIndex(el => {
-            widthAggregator += el.offsetWidth;
-            return containerOffsetWidth <= widthAggregator;
+            widthAggregator += outerWidth(el);
+            return containerOffsetWidth < widthAggregator;
         });
 
         if (notFitItemIndex >= 0) {
