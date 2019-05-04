@@ -8,17 +8,21 @@ import BaseEditorView from './base/BaseEditorView';
 import keyCode from '../../../src/utils/keyCode';
 import formRepository from '../formRepository';
 
-const defaultOptions = {
-    modelIconProperty: 'iconClass',
-    iconsMeta: icons,
-    iconsCategories: categories
+const defaultOptions = () => {
+    const iconService = window.application.options.iconService;
+    return {
+        modelIconProperty: 'iconClass',
+        iconsMeta: iconService?.iconsMeta || icons,
+        iconsCategories: iconService?.iconsCategories || categories
+    };
 };
 
 export default (formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
-        this.__applyOptions(options, defaultOptions);
+        const defaults = defaultOptions();
+        this.__applyOptions(options, defaults);
 
-        if (this.options.modelIconProperty !== defaultOptions.modelIconProperty) {
+        if (this.options.modelIconProperty !== defaults.modelIconProperty) {
             this.model.set('iconClass', this.model.get(this.options.modelIconProperty));
         }
     },
@@ -42,6 +46,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     onRender() {
+        //TODO split internal model from external, move 'color', 'iconClass', '#000000' to defaults
         !this.model.get('color') && this.model.set('color', '#000000');
 
         this.popupPanel = Core.dropdown.factory.createDropdown({
@@ -59,7 +64,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
         });
 
         this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
-        if (!this.model.get('iconClass')) {
+        if (this.isEmptyValue()) {
             this.ui.deleteIconButton[0].addAttribute('hidden', '');
         }
     },
@@ -100,7 +105,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     isEmptyValue() {
-        return !this.model.has('iconClass');
+        return !this.model.get('iconClass');
     },
 
     __getConfig() {
