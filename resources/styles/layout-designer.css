@@ -689,60 +689,6 @@
 
 
 /*-- style button --*/
-.ld-view-setting__field .fr-btn{
-    margin: 2px 0 0 0;
-    width: 180px;
-}
-.ld-view-setting__field .fr-btn_add{
-    display: inline-block !important;
-    width: auto;
-}
-
-.fr-btn_red{
-    background: #fbe2e2;
-    z-index: 2;
-}
-.fr-btn_red:hover{
-    border-color: #e06b6f;
-}
-
-.fr-btn_green{
-    background: #d7fdf4;
-    z-index: 2;
-}
-.fr-btn_green:hover{
-    border-color: #2fa25b;
-}
-
-.fr-btn_blue{
-    background: #d6f4fa;
-    z-index: 2;
-}
-.fr-btn_blue:hover{
-    border-color: #6092bb;
-}
-
-.fr-btn_yellow{
-    background: #f9f8c9;
-    z-index: 2;
-}
-.fr-btn_yellow:hover{
-    border-color: #c6b14d;
-}
-
-.fr-btn_dark{
-    background: #e1e1e1;
-    z-index: 2;
-}
-.fr-btn_dark:hover{
-    border-color: #9e9d9d;
-    box-shadow: inset 0 2px 3px #f3f3f3;
-}
-.fr-btn_dark:active {
-    box-shadow: inset 1px 1px 2px rgba(100,100,100,.3);
-}
-
-
 .ld-view-setting__h2 {
     font-size: 14px;
     font-weight: 600;
@@ -777,11 +723,6 @@
 
 .ld-setting-dd-panel_color{
     flex-direction: column;
-}
-
-.ld-setting-dd-panel_color .fr-btn{
-    margin: 2px;
-    width: 100%;
 }
 
 .ld-setting-dd-panel_icons {
@@ -859,10 +800,6 @@
     border-color: #e2000d;
 }
 
-.fr-btn_ld{
-    margin-bottom: 0;
-}
-
 .ld-module .input{
     position: relative;
     border-bottom-color: #b9bcbd;
@@ -883,11 +820,6 @@
     -moz-text-overflow: ellipsis;
 }
 
-.fr-btn_ld-document{
-    margin: 0 10px 0 0;
-    flex: none;
-}
-
 .svg-icons_reference{
     margin-top: -2px;
 }
@@ -904,12 +836,6 @@
 .ld-module_action.selected{
     background: transparent;
     box-shadow: none;
-}
-
-
-.ld-module_action.selected .fr-btn_ld{
-    border-color: #abaeb0;
-    box-shadow: inset 0 1px 5px rgba(180,180,180,.5);
 }
 
 
@@ -1022,19 +948,6 @@
 .ld-canvas-items__icons .fa{
     font-size: 14px;
     color: #333;
-}
-
-.fr-btn__ld{
-    height: 24px;
-    line-height: 24px;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.fr-btn__ld .fa{
-    font-size: 14px;
-    line-height: 24px;
-    color: #636262;
 }
 
 .ld-container-columns {
