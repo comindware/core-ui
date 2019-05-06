@@ -511,71 +511,6 @@ input[type="checkbox"].checkbox {
 
 
 /* reference-field */
-.editor_reference{
-
-}
-.dropdown-reference {
-    height: inherit;
-    width: 100%;
-    margin: 0;
-}
-
-.reference-field__txt {
-    max-width: 100%;
-    padding: 0 28px 0 0;
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.reference-field__txt-link {
-    cursor: pointer;
-    max-width: 100%;
-    padding: 0 8px 0 0;
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.editor_disabled .reference-field__txt-link{
-    color:#384650;
-}
-
-.reference-field__edit-btn {
-    display: inline-block;
-    cursor: pointer;
-    width: 22px;
-    height: 18px;
-    vertical-align: top;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    visibility: hidden;
-    transition: visibility .3s;
-    position: absolute;
-    right: 23px;
-    top: 2px;
-}
-
-.editor:hover .reference-field__edit-btn{
-    visibility: visible;
-}
-
-.reference-field__edit-btn:hover {
-    border-color: #dfe4e8;
-    background: #f7f6f6;
-}
-
-.reference-field__edit-btn:active {
-    border-color: #abaeb0;
-    box-shadow: inset 0 1px 5px hsla(0, 0%, 71%, .5);
-}
-
 
 .editor__common-empty-view {
     display: flex;
@@ -696,27 +631,6 @@ input[type="checkbox"].checkbox {
 .users-list .popout{
     width:100%;
 }
-
-.popout-field-user{
-    width:100%;
-    height: 20px;
-    line-height: 20px;
-    border-bottom:1px solid #edeff0;
-    transition: border-bottom-color .2s ease-in-out;
-}
-
-.popout-field-user:hover{
-    border-bottom-color: #b9bcbd;
-}
-
-.editor_disabled .popout-field-user,
-.editor_disabled .popout-field-user:hover,
-.editor_readonly .popout-field-user,
-.editor_readonly .popout-field-user:hover{
-    border-bottom-color:transparent;
-    background: transparent;
-}
-
 .member-text{
     display: inline-block;
     position: relative;

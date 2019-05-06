@@ -290,11 +290,6 @@
     display: flex;
 }
 
-.datalist-panel__formatted .bubbles__list > .bubbles__i > .datalist_user-bubble{
-    margin-right: 10px;
-    margin-top: -4px;
-}
-
 .datalist-panel__formatted .bubbles__list > .bubbles__i > a{
     max-width: 100%;
     overflow: hidden;
@@ -313,37 +308,6 @@
     padding-top:5px;
     height: 30px;
 }
-
-.datalist_user-bubble{
-    display: flex;
-}
-
-.user-bubble_img {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 20px;
-    background-color: white;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #0575bd;
-    margin-left: 1px;
-    margin-top: -1px;
-    margin-right: 5px;
-    color: #0575bd;
-    font-size: 10px;
-}
-
-.user-bubble_img img{
-    width: 22px;
-    height: 22px;
-    margin-top: -1px;
-    margin-left: -1px;
-}
-
-/* /dd-list */
-
-
 /* list search */
 .list-search {
     height: 0;
