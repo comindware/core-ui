@@ -1,5 +1,4 @@
 import DemoService from './app/DemoService';
-import NavBarView from './app/views/NavBarView';
 import IndexPageView from './app/views/IndexPageView';
 import ContentView from './app/views/ContentView';
 
@@ -19,12 +18,7 @@ export default {
 
         const groups = DemoService.getGroups(sectionId);
 
-        if (!this.navBarView || !this.DemoPageView) {
-            this.navBarView = new NavBarView({
-                collection: sections,
-                activeSectionId: sectionId
-            });
-
+        if (!this.DemoPageView) {
             this.demoPageView = new ContentView({
                 model: new Backbone.Model(DemoService.getCase(sectionId, groupId, caseId))
             });
@@ -36,7 +30,6 @@ export default {
                 title: 'Comindware Core-UI Demo'
             });
 
-            this.contentView.showChildView('headerRegion', this.navBarView);
             this.contentView.showChildView('contentRegion', this.demoPageView);
             this.contentView.showChildView('navigationDrawerRegion', this.drawer);
         } else {
@@ -47,7 +40,6 @@ export default {
             this.contentView.showChildView('contentRegion', this.demoPageView);
 
             this.drawer.collection.reset(groups);
-            this.navBarView.collection.reset(sections.models);
         }
     }
 };

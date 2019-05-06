@@ -20,7 +20,10 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        caseRepresentationRegion: '.js-case-representation-region',
+        caseRepresentationRegion: {
+            el: '.js-case-representation-region',
+            replaceElement: true
+        },
         attributesConfigurationRegion: '.js-attributes-configuration-region',
         toolbarRegion: '.js-toolbar-region',
         codeRegion: '.js-code'

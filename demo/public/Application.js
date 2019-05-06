@@ -4,13 +4,17 @@ import localizationMapRu from 'localizationMapRu';
 import ajaxMap from './ajaxMap.json';
 import dataProvider from 'demoPage/dataProvider';
 import ajaxStub from './ajaxStub/ajaxStub';
+import DemoService from './app/DemoService';
 
 const rootView = Marionette.View.extend({
     template: Handlebars.compile(`
         <div class="js-navigation-drawer-region"></div>
         <div class="wrapper">
-            <div class="js-header-region header-container"></div>
-            <div class="js-content-region content-container"></div>
+            <div class="js-header-region header-container demo-nav">
+                {{#each items}}
+                    <a href="{{url}}" class="demo-nav__i">{{displayName}}</a>
+                {{/each}}</div>
+            <div class="js-content-region"></div>
             <div class="js-toast-notification-region"></div>
 		</div>
     `),
@@ -19,9 +23,18 @@ const rootView = Marionette.View.extend({
 
     regions: {
         headerRegion: '.js-header-region',
-        contentRegion: '.js-content-region',
+        contentRegion: {
+            el: '.js-content-region',
+            replaceElement: true
+        },
         navigationDrawerRegion: '.js-navigation-drawer-region',
         toastNotificationRegion: '.js-toast-notification-region'
+    },
+
+    templateContext() {
+        return {
+            items: DemoService.getSections()
+        };
     }
 });
 

@@ -240,6 +240,7 @@ body {
     flex: 1 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 /*-------------------------*/
@@ -249,14 +250,13 @@ body {
     margin-top: 15px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     overflow: auto;
-    flex: 1 1 auto;
+    flex: 1;
     background-color: white;
     display: flex;
 }
 
 .demo-content_container {
-    height: 100%;
-    width: 100%;
+    flex: 1;
     display: flex;
     justify-content: space-between;
 }
@@ -560,11 +560,11 @@ body {
 /*-----//------*/
 
 .editor_container, .canvas-wrap {
-    height: 100%;
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    overflow: auto;
 }
 
 .editor-region-wrp{
