@@ -129,7 +129,7 @@
         "backbone.modelbinder": "^1.1.0",
         "backbone.radio": "^2.0.0",
         "codemirror": "^5.42.2",
-        "jquery": "^3.3.1",
+        "jquery": "^3.4.1",
         "jsencrypt": "^2.3.1",
         "jstorage": "^0.4.8",
         "moment": "^2.23.0",

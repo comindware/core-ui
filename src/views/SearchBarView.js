@@ -48,16 +48,42 @@ export default Marionette.View.extend({
         this.__updateInput(value);
     },
 
+    toggleInputActivity(inputEnabled) {
+        if (inputEnabled) {
+            this.setReadonly(inputEnabled);
+            this.focus();
+        } else {
+            this.setReadonly(inputEnabled);
+            this.blur();
+        }
+    },
+
     focus() {
         if (this.isRendered()) {
             this.ui.input.focus();
         }
     },
 
+    blur() {
+        if (this.isRendered()) {
+            this.ui.input.blur();
+        }
+    },
+
+    setReadonly(isEnabled) {
+        if (this.isRendered()) {
+            if (isEnabled) {
+                this.ui.input[0].removeAttribute('readonly');
+            } else {
+                this.ui.input[0].setAttribute('readonly', true);
+            }
+        }
+    },
+
     clearInput(isClearingSilent) {
         if (isClearingSilent) {
             this.ui.input.val('');
-            this.ui.input.blur();
+            this.blur();
             this.ui.clear.toggle();
             this.__updateInput();
         } else {
