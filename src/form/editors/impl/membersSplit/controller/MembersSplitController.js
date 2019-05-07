@@ -185,7 +185,11 @@ export default Marionette.Object.extend({
             this.listenTo(view.controller, 'click', model => this.__moveItems(view, model));
         });
         if (this.isMemberService) {
-            this.listenTo(availableGridView, 'members:update', filterState => this.__updateItems(filterState));
+            this.listenTo(availableGridView, 'members:update', async filterState => {
+                availableGridView.gridView.toggleSearchActivity(false);
+                await this.__updateItems(filterState);
+                availableGridView.gridView.toggleSearchActivity(true);
+            });
         }
 
         this.view.once('attach', () => availableGridView.gridView.searchView.focus());
