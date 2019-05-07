@@ -1,4 +1,3 @@
-//@flow
 import 'core-js/stable';
 import '../resources/styles/date-picker.css';
 import '../resources/styles/fonts.css';
@@ -11,7 +10,6 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
-import '../resources/styles/layout-designer.css';
 import '../resources/styles/notifications.css';
 import '../resources/styles/blink-checkbox.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
