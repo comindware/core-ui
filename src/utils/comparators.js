@@ -1,29 +1,14 @@
 /*eslint-disable*/
 
 import { objectPropertyTypes } from '../Meta';
+const stringNaturalComparator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
 
 export const stringComparator2Asc = function(a, b) {
-    if (a) {
-        if (b) {
-            return a.localeCompare(b);
-        }
-        return -1;
-    } else if (b) {
-        return 1;
-    }
-    return 0;
+    return stringNaturalComparator.compare(a, b);
 };
 
 export const stringComparator2Desc = function(a, b) {
-    if (a) {
-        if (b) {
-            return -a.localeCompare(b);
-        }
-        return 1;
-    } else if (b) {
-        return -1;
-    }
-    return 0;
+    return stringComparator2Asc(b, a);
 };
 
 export const numberComparator2Asc = function(a, b) {
@@ -41,7 +26,7 @@ export const durationComparator2Asc = function(a, b) {
     if (b) {
         b = moment.duration(b);
     }
-    return a ? (b ? a - b : 1) : (b ? -1 : 0);
+    return a ? (b ? a - b : 1) : b ? -1 : 0;
 };
 
 export const durationComparator2Desc = function(a, b) {
@@ -51,12 +36,12 @@ export const durationComparator2Desc = function(a, b) {
     if (b) {
         b = moment.duration(b);
     }
-    return b ? (a ? b - a : 1) : (a ? -1 : 0);
+    return b ? (a ? b - a : 1) : a ? -1 : 0;
 };
 
 export const booleanComparator2Asc = function(a, b) {
     // true goes first
-    return a ? (b ? 0 : -1) : (b ? 1 : 0);
+    return a ? (b ? 0 : -1) : b ? 1 : 0;
 };
 
 export const dateComparator2Asc = function(a, b) {
@@ -66,7 +51,7 @@ export const dateComparator2Asc = function(a, b) {
     if (b) {
         b = moment(b);
     }
-    return a ? (b ? a - b : 1) : (b ? -1 : 0);
+    return a ? (b ? a - b : 1) : b ? -1 : 0;
 };
 
 export const dateComparator2Desc = function(a, b) {
@@ -76,22 +61,22 @@ export const dateComparator2Desc = function(a, b) {
     if (b) {
         b = moment(b);
     }
-    return b ? (a ? b - a : 1) : (a ? -1 : 0);
+    return b ? (a ? b - a : 1) : a ? -1 : 0;
 };
 
 export const booleanComparator2Desc = function(a, b) {
-    return a ? (b ? 0 : 1) : (b ? -1 : 0);
+    return a ? (b ? 0 : 1) : b ? -1 : 0;
 };
 
 export const referenceComparator2Asc = function(a, b) {
-    const effectiveA = a ? a.name ? a.name : '' : '';
-    const effectiveB = b ? b.name ? b.name : '' : '';
+    const effectiveA = a ? (a.name ? a.name : '') : '';
+    const effectiveB = b ? (b.name ? b.name : '') : '';
     return stringComparator2Asc(effectiveA, effectiveB);
 };
 
 export const referenceComparator2Desc = function(a, b) {
-    const effectiveA = a ? a.name ? a.name : '' : '';
-    const effectiveB = b ? b.name ? b.name : '' : '';
+    const effectiveA = a ? (a.name ? a.name : '') : '';
+    const effectiveB = b ? (b.name ? b.name : '') : '';
     return stringComparator2Desc(effectiveA, effectiveB);
 };
 
