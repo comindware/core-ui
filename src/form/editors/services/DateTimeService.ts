@@ -1,4 +1,3 @@
-//@flow
 import { dateHelpers } from 'utils';
 
 export default {
@@ -18,10 +17,7 @@ export default {
     },
 
     getPrioritySortedFormats(format) {
-        const formatPriority = [
-            moment.ISO_8601,
-            dateHelpers.getFormat('dateISO')
-        ];
+        const formatPriority = [moment.ISO_8601, dateHelpers.getFormat('dateISO')];
         format && formatPriority.push(format);
         return formatPriority;
     },

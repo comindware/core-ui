@@ -1,5 +1,4 @@
-//@flow
-export default function () {
+export default function() {
     // Select this model, and tell our
     // collection that we're selected
     return {

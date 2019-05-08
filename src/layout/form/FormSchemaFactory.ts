@@ -1,4 +1,3 @@
-// @flow
 export default {
     getSchema(schema: Array<any>) {
         const schemaPlain = {};

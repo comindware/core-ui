@@ -1,4 +1,3 @@
-//@flow
 import template from '../templates/navigationText.html';
 
 export default Marionette.View.extend({

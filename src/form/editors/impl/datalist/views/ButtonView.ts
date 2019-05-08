@@ -1,4 +1,3 @@
-// @flow
 import template from '../templates/button.hbs';
 import TextEditorView from '../../../TextEditorView';
 import BubbleCollectionView from './BubbleCollectionView';

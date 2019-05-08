@@ -1,4 +1,3 @@
-// @flow
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 type optionsT = {

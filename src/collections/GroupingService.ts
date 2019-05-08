@@ -1,4 +1,3 @@
-//@flow
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
     return typeof it === 'string'

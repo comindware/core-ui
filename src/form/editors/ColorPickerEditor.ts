@@ -1,5 +1,4 @@
-﻿// @flow
-import BaseEditorView from './base/BaseEditorView';
+﻿import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
@@ -87,11 +86,7 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
     },
 
     __updateColorPickerEditable() {
-        this.ui.colorpicker.spectrum(
-            this.getEditable() ?
-                'enable':
-                'disable'
-        );
+        this.ui.colorpicker.spectrum(this.getEditable() ? 'enable' : 'disable');
     },
 
     __value(value: String, updateUi: Boolean, triggerChange: Boolean) {

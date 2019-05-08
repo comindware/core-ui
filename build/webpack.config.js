@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const pathResolver = require('./pathResolver');
-
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
@@ -50,7 +49,6 @@ module.exports = options => {
                     exclude: [pathResolver.node_modules()],
                     options: {
                         presets: [
-                            '@babel/preset-flow',
                             '@babel/typescript',
                             [
                                 '@babel/preset-env',
@@ -267,7 +265,7 @@ module.exports = options => {
     };
 
     if (!TEST) {
-        webpackConfig.entry = [pathResolver.source('coreApi.js')];
+        webpackConfig.entry = [pathResolver.source('coreApi.ts')];
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,
