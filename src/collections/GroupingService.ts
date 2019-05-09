@@ -1,7 +1,7 @@
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
     return typeof it === 'string'
-        ? function(model) {
+        ? function(model: Backbone.Model) {
               return model.get(it) || model[it];
           }
         : it;

@@ -4,6 +4,7 @@ import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper, helpers } from 'utils';
 import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
 import FixGroupingOptions from './GroupingService';
+import Backbone from 'backbone';
 
 const selectableBehavior = {
     none: null,

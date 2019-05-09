@@ -1,18 +1,19 @@
 // @flow
 import { helpers } from 'utils';
 import LayoutBehavior from './behaviors/LayoutBehavior';
+import Marionette from 'backbone.marionette';
 
 const classes = {
-    CLASS_NAME: 'layout__vertical-layout',
-    ITEM: 'layout__vertical-layout-item',
+    CLASS_NAME: 'layout__horizontal-layout',
+    ITEM: 'layout__horizontal-layout-list-item',
     HIDDEN: 'layout__hidden'
 };
 
 export default Marionette.View.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'rows');
+        helpers.ensureOption(options, 'columns');
 
-        this.rows = options.rows;
+        this.columns = options.columns;
     },
 
     tagName: 'div',
@@ -36,12 +37,12 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.__rowsCtx = [];
-        this.rows.forEach(view => {
+        this.__columnsCtx = [];
+        this.columns.forEach(view => {
             view.on('change:visible', (activeView, visible) => this.__handleChangeVisibility(activeView, visible));
 
             this.$el.append(view.render().$el);
-            this.__rowsCtx.push({
+            this.__columnsCtx.push({
                 view
             });
         });
@@ -49,7 +50,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        this.rows.forEach(view => {
+        this.columns.forEach(view => {
             view._isAttached = true;
             view.triggerMethod('before:attach');
             view.triggerMethod('attach');
@@ -57,7 +58,7 @@ export default Marionette.View.extend({
     },
 
     update() {
-        this.rows.forEach(view => {
+        this.columns.forEach(view => {
             if (view.update) {
                 view.update();
             }
@@ -67,7 +68,7 @@ export default Marionette.View.extend({
 
     validate() {
         let result;
-        this.rows.forEach(view => {
+        this.columns.forEach(view => {
             if (view.validate) {
                 const error = view.validate();
                 if (error) {
@@ -83,6 +84,6 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        this.rows.forEach(view => view.destroy());
+        this.columns.forEach(view => view.destroy());
     }
 });
