@@ -18,6 +18,7 @@
         "browser"
     ],
     "main": "dist/core.bundle.min.js",
+    "types": "dist/core.bundle.min.d.ts",
     "scripts": {
         "start": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js start",
         "develop": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js develop",
@@ -122,6 +123,8 @@
     "dependencies": {
         "@babel/runtime-corejs3": "^7.4.4",
         "@fortawesome/fontawesome-free": "^5.8.2",
+        "@typescript-eslint/eslint-plugin": "^1.7.0",
+        "@typescript-eslint/parser": "^1.7.0",
         "autosize": "^4.0.2",
         "backbone": "^1.4.0",
         "backbone-associations": "^0.6.2",
