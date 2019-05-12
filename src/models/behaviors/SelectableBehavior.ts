@@ -1,9 +1,11 @@
+import _ from 'underscore';
+
 /*eslint-disable*/
 
 /*
-* This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
-*
-* */
+ * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
+ *
+ * */
 
 const SelectableBehavior = {};
 
@@ -287,9 +289,7 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
 const calculateSelectedLength = _.debounce((collection, options) => {
-    collection.selectedLength = collection.parentCollection ?
-        collection.models.filter(model => model.selected).length :
-        collection.filter(model => model.selected).length ;
+    collection.selectedLength = collection.parentCollection ? collection.models.filter(model => model.selected).length : collection.filter(model => model.selected).length;
 
     const selectedLength = collection.selectedLength;
     const length = collection.length;

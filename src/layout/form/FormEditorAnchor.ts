@@ -1,5 +1,6 @@
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import Marionette from 'backbone.marionette';
+import _ from 'underscore';
 
 export default Marionette.View.extend({
     template: _.noop,

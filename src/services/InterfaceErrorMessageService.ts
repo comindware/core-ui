@@ -1,3 +1,5 @@
+import Backbone from 'backbone';
+
 export default class InterfaceErrorMessageService {
     static initialize() {
         Object.assign(this, Backbone.Events);

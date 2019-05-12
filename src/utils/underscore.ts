@@ -1,5 +1,5 @@
 import { Model } from 'backbone';
-declare var _: any;
+import _ from 'underscore';
 
 export default {
     cloneDeep(obj: Array<any> | object | Model): Array<any> | object {
@@ -45,11 +45,9 @@ export default {
     },
 
     cutOffTo(string: string, toStr: string, defaultString = string): string {
-        return string.includes(toStr) ?
-            string.slice(0, string.indexOf(toStr)) :
-            string;
+        return string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : string;
     },
-    
+
     capitalize(string: string): string {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },

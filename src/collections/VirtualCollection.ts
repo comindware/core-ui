@@ -5,6 +5,7 @@ import { diffHelper, helpers } from 'utils';
 import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
 import FixGroupingOptions from './GroupingService';
 import Backbone from 'backbone';
+import _ from 'underscore';
 
 const selectableBehavior = {
     none: null,

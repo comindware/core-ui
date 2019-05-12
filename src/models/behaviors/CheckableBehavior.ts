@@ -1,4 +1,4 @@
-/*eslint-disable*/
+import _ from 'underscore';
 
 //can't use Backbone.Collection for checked because VirtualCollection change prototype
 

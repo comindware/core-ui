@@ -2,6 +2,7 @@
 import { helpers } from 'utils';
 import LayoutBehavior from './behaviors/LayoutBehavior';
 import Marionette from 'backbone.marionette';
+import _ from 'underscore';
 
 const classes = {
     CLASS_NAME: 'layout__horizontal-layout',

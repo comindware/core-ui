@@ -3,6 +3,7 @@ import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';
 import RoutingService from '../services/RoutingService';
 import PresenterService from '../services/PresenterService';
+import Backbone from 'backbone';
 
 export default class Controller {
     constructor(options = {}) {
