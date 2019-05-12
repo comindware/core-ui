@@ -112,6 +112,11 @@ export const objectPropertyFormats = {
     HTML_TEXT: 'HtmlText'
 };
 
+export const virtualCollectionFilterActions = {
+    PUSH: 'push',
+    REMOVE: 'remove'
+};
+
 export default {
     objectPropertyTypes,
     contextIconType,
