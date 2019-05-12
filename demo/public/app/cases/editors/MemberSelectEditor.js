@@ -6,26 +6,27 @@ export default function() {
     });
 
     const view = new Core.form.editors.MembersSplitEditor({
-        mmodel,
-            key: 'selected',
-            autocommit: true,
-            // hideUsers: true,
-            filterFnParameters: {
-                users: 'users',
-                groups: 'groups',
-                all: 'all'
-            },
-            memberTypes: {
-                users: 'users',
-                groups: 'groups'
-            },        users: Core.services.UserService.listUsers(),
+        model,
+        key: 'selected',
+        autocommit: true,
+        // hideUsers: true,
+        filterFnParameters: {
+            users: 'users',
+            groups: 'groups',
+            all: 'all'
+        },
+        memberTypes: {
+            users: 'users',
+            groups: 'groups'
+        },
+        users: Core.services.UserService.listUsers(),
         groups: Core.services.UserService.listGroups(),
         showMode: 'button'
     });
 
     return new CanvasView({
         view,
-        presentation:  "'{{selected}}'",
+        presentation: "'{{selected}}'",
         isEditor: true
     });
 }

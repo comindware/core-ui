@@ -54,7 +54,7 @@ export default Marionette.View.extend({
 
     __getGridView(options) {
         const { collection, toolbarFlags, handleSearch, config } = options;
-        this.controller = new Core.list.controllers.GridController({
+        const gridView = new Core.list.GridView({
             collection,
             selectableBehavior: 'multi',
             showSearch: true,
@@ -71,19 +71,14 @@ export default Marionette.View.extend({
                     key: 'name'
                 }
             ],
-            listViewOptions: {
-                height: 'auto',
-                childView: MembersListItemView,
-                childHeight: config?.CHILD_HEIGHT,
-                emptyViewOptions: {
-                    text: this.model.get('emptyListText')
-                },
-                // maxRows: 10
-                childViewSelector: this.options.childViewSelector
-            }
+            height: 'auto',
+            childView: MembersListItemView,
+            emptyViewOptions: {
+                text: this.model.get('emptyListText')
+            },
+            // maxRows: 10
+            childViewSelector: this.options.childViewSelector
         });
-
-        const gridView = this.controller.view;
 
         return gridView;
     },
