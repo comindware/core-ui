@@ -161,16 +161,25 @@ export default Marionette.View.extend({
             }
         }
         /*
-        if (this.options.showCheckbox) {
-            const draggable = this.getOption('draggable');
+	 const draggable = this.getOption('draggable');
+        if (this.options.showCheckbox || draggable) {
+           
+            let checkboxColumnClass = '';
+            if (showRowIndex) {
+                this.on('update:top update:index', this.__setCheckBoxColummWidth);
+                checkboxColumnClass = `${this.uniqueId}-checkbox-column`;
+                this.columnClasses.push(checkboxColumnClass);
+            }
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
                 gridEventAggregator: this,
+                checkboxColumnClass,
                 showRowIndex: this.options.showRowIndex,
                 childViewOptions: {
                     draggable,
                     showRowIndex,
-                    bindSelection: this.getOption('bindSelection')
+                    bindSelection: this.getOption('bindSelection'),
+                    checkboxColumnClass
                 }
             });
 
@@ -178,6 +187,7 @@ export default Marionette.View.extend({
                 collection: this.collection,
                 selectionType: 'all',
                 gridEventAggregator: this,
+                checkboxColumnClass,
                 showRowIndex
             });
 
@@ -285,6 +295,10 @@ export default Marionette.View.extend({
         if (selectedModel) {
             selectedModel.trigger(triggerEvent, ...args);
         }
+    },
+
+    toggleSearchActivity(enableSearch) {
+        this.searchView.toggleInputActivity(enableSearch);
     },
 
     onColumnSort(column, comparator) {
@@ -619,8 +633,9 @@ export default Marionette.View.extend({
         return error;
     },
 
-    __handleDragLeave(e) {
-        if (!this.el.contains(e.relatedTarget)) {
+    __handleDragLeave(event) {
+        const element = document.elementFromPoint(event.pageX, event.pageY);
+        if (!this.el.contains(element)) {
             if (this.collection.dragoverModel) {
                 this.collection.dragoverModel.trigger('dragleave');
             } else {
@@ -630,7 +645,176 @@ export default Marionette.View.extend({
         }
     },
 
-    __initializeConfigurationPanel() {
+    __setCheckBoxColummWidth() {
+        const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
+        const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
+        const baseWidth = isMainTheme ? 37 : 42;
+        const numberWidth = isMainTheme ? 7.3 : 7.44;
+        this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
+    },
+
+    __setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
+        const style = this.styleSheet;
+        const columnClass = this.columnClasses[index];
+
+        const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+        let basis;
+
+        if (width > 0) {
+            if (width < 1) {
+                basis = `${width * 100}%`;
+            } else {
+                basis = `${width}px`;
+            }
+        } else {
+            const column = this.options.columns[index];
+
+            if (column.format === 'HTML') {
+                basis = '0%';
+            } else {
+                const defaultWidth = columnWidthByType[column.dataType];
+
+                if (defaultWidth) {
+                    basis = `${defaultWidth}px`;
+                } else {
+                    basis = '0%';
+                }
+            }
+        }
+
+        const grow = width > 0 ? 0 : 1;
+        const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+
+        if (regexp.test(style.innerHTML)) {
+            style.innerHTML = style.innerHTML.replace(regexp, newValue);
+        } else {
+            style.innerHTML += newValue;
+        }
+
+        this.__updateEmptyView(allColumnsWidth);
+    },
+
+    __executeAction(model, collection, ...rest) {
+        const selected = this.__getSelectedItems(collection);
+        switch (model.get('id')) {
+            case 'delete':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'archive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'unarchive':
+                this.__confirmUserAction(
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
+                ).then(result => {
+                    if (result) {
+                        this.__triggerAction(model, selected, ...rest);
+                    }
+                });
+                break;
+            case 'add':
+            default:
+                this.__triggerAction(model, selected, ...rest);
+                break;
+        }
+    },
+
+    __confirmUserAction(text, title, yesButtonText, noButtonText) {
+        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    },
+
+    __triggerAction(model, selected, ...rest) {
+        this.trigger('execute', model, selected, ...rest);
+    },
+
+    __onItemMoved(...args) {
+        this.trigger('move', ...args);
+    },
+
+    setError(errors: Array<any>): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+
+        this.el.classList.add(classes.ERROR);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.showChildView('errorTextRegion', errorPopout);
+            this.isErrorShown = true;
+        }
+    },
+
+    clearError(): void {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.el.classList.remove(classes.ERROR);
+        this.errorCollection && this.errorCollection.reset();
+    },
+
+    setRequired(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.required = required;
+        this.__updateEmpty();
+        if (required) {
+            this.listenTo(this.collection, 'add remove reset update', this.__updateEmpty);
+        } else {
+            this.stopListening(this.collection, 'add remove reset update', this.__updateEmpty);
+        }
+    },
+
+    __updateEmpty() {
+        if (this.required) {
+            this.__toggleRequiredClass(this.collection.length === 0);
+        } else {
+            this.__toggleRequiredClass(false);
+        }
+    },
+
+    __toggleRequiredClass(required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
+        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
+    },
+
+    __checkUiReady() {
+        return this.isRendered() && !this.isDestroyed();
+    },
+    
+     __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
     },
 
@@ -796,66 +980,4 @@ export default Marionette.View.extend({
     __onItemMoved(...args) {
         this.trigger('move', ...args);
     },
-
-    setError(errors: Array<any>): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-
-        this.el.classList.add(classes.ERROR);
-        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
-        if (!this.isErrorShown) {
-            const errorPopout = dropdown.factory.createPopout({
-                buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
-                panelViewOptions: {
-                    collection: this.errorCollection
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            this.showChildView('errorTextRegion', errorPopout);
-            this.isErrorShown = true;
-        }
-    },
-
-    clearError(): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.el.classList.remove(classes.ERROR);
-        this.errorCollection && this.errorCollection.reset();
-    },
-
-    setRequired(required) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.required = required;
-        this.__updateEmpty();
-        if (required) {
-            this.listenTo(this.collection, 'add remove reset update', this.__updateEmpty);
-        } else {
-            this.stopListening(this.collection, 'add remove reset update', this.__updateEmpty);
-        }
-    },
-
-    __updateEmpty() {
-        if (this.required) {
-            this.__toggleRequiredClass(this.collection.length === 0);
-        } else {
-            this.__toggleRequiredClass(false);
-        }
-    },
-
-    __toggleRequiredClass(required) {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-    },
-
-    __checkUiReady() {
-        return this.isRendered() && !this.isDestroyed();
-    }
 });

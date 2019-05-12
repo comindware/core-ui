@@ -6,7 +6,6 @@ import FocusTests from './FocusTests';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
-        /*
         FocusTests.runFocusTests({
             initialize: () => {
                 const model = new Backbone.Model({
@@ -22,16 +21,18 @@ describe('Editors', () => {
                 });
             }
         });
-*/
+
         const isAvailableListEmpty = view =>
             view
-                .$('.js-available-items-list-region .visible-collection')
+                .$('.member-split-wrp .member-split-grid .visible-collection')
+                .first()
                 .children()
                 .first()
                 .hasClass('empty-view');
         const isSelectedListEmpty = view =>
             view
-                .$('.js-selected-items-list-region .visible-collection')
+                .$('.member-split-wrp .member-split-grid .visible-collection')
+                .last()
                 .children()
                 .first()
                 .hasClass('empty-view');
@@ -46,7 +47,8 @@ describe('Editors', () => {
                 key: 'selected',
                 autocommit: true,
                 users: core.services.UserService.listUsers(),
-                groups: new Backbone.Collection()
+                groups: new Backbone.Collection(),
+                filterFnParameters: {}
             });
 
             window.app
@@ -78,7 +80,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual(['user.1']);
         });
 
-        it('should set value on double click in available container', () => {
+        it('should set value on click in available container', done => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -96,15 +98,16 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .visible-collection')
+                            view.$('.member-split-wrp .member-split-grid .visible-collection')
+                                .first()
                                 .children()
                                 .first()
-                                .click()
-                                .dblclick();
+                                .click();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
+                                    done();
                                 }
                             }, 100);
                         }
@@ -118,7 +121,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should remove value on double click in selected container', () => {
+        it('should remove value on click in selected container', done => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
@@ -133,25 +136,20 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
-                    const gridCollection = view.$('.js-selected-items-list-region .visible-collection');
+                    const gridCollection = view.$('.member-split-wrp .member-split-grid .visible-collection').last();
                     const first = setInterval(() => {
-                        if (gridCollection.children().length) {
+                        if (gridCollection.children().length && !gridCollection.hasClass('empty')) {
                             clearTimeout(first);
                             gridCollection
                                 .children()
                                 .first()
-                                .click()
-                                .dblclick();
+                                .click();
 
                             const second = setInterval(() => {
-                                if (
-                                    gridCollection
-                                        .children()
-                                        .first()
-                                        .hasClass('empty-view')
-                                ) {
+                                if (gridCollection.hasClass('empty')) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
+                                    done();
                                 }
                             }, 100);
                         }
@@ -165,7 +163,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item from available to selected container on move right button click', () => {
+        it('should move all items fron available to selected container on move right all button click', done => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -183,48 +181,9 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .grid-selection-panel')
-                                .children()
+                            view.$('.member-split-wrp .member-split-grid .move-all-btn')
                                 .first()
-                                .children()
                                 .click();
-                            view.$('.js-move-right-button').click();
-                            const second = setInterval(() => {
-                                if (!isSelectedListEmpty(view)) {
-                                    clearTimeout(second);
-                                    expect(view.getValue()).toEqual(['user.10']);
-                                }
-                            }, 100);
-                        }
-                    }, 10);
-                });
-            });
-
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-        });
-
-        it('should move all items fron available to selected container on move right all button click', () => {
-            const model = new Backbone.Model({
-                selected: []
-            });
-
-            const view = new core.form.editors.MembersSplitEditor({
-                model,
-                key: 'selected',
-                autocommit: true,
-                users: core.services.UserService.listUsers(),
-                groups: new Backbone.Collection()
-            });
-
-            view.on('render', () => {
-                view.controller.view.on('attach', () => {
-                    const first = setInterval(() => {
-                        if (!isAvailableListEmpty(view)) {
-                            clearTimeout(first);
-                            view.$('.js-move-right-all-button').click();
                             const second = setInterval(() => {
                                 if (!isSelectedListEmpty(view)) {
                                     clearTimeout(second);
@@ -233,6 +192,7 @@ describe('Editors', () => {
                                             .map(user => user.id)
                                             .sort()
                                     );
+                                    done();
                                 }
                             }, 100);
                         }
@@ -246,48 +206,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item from selected to available container on move left button click', () => {
-            const model = new Backbone.Model({
-                selected: ['user.1']
-            });
-
-            const view = new core.form.editors.MembersSplitEditor({
-                model,
-                key: 'selected',
-                autocommit: true,
-                users: core.services.UserService.listUsers(),
-                groups: new Backbone.Collection()
-            });
-
-            view.on('render', () => {
-                view.controller.view.on('attach', () => {
-                    const first = setInterval(() => {
-                        if (!isSelectedListEmpty(view)) {
-                            clearTimeout(first);
-                            view.$('.js-selected-items-list-region .grid-selection-panel')
-                                .children()
-                                .first()
-                                .children()
-                                .click();
-                            view.$('.js-move-left-button').click();
-                            const second = setInterval(() => {
-                                if (isSelectedListEmpty(view)) {
-                                    clearTimeout(second);
-                                    expect(view.getValue().length).toEqual(0);
-                                }
-                            }, 100);
-                        }
-                    }, 10);
-                });
-            });
-
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
-        });
-
-        it('should move all items from selected to available container on move left all button click', () => {
+        it('should move all items from selected to available container on move left all button click', done => {
             const model = new Backbone.Model({
                 selected: ['user.1', 'user.2', 'user.3', 'user.4', 'user.5']
             });
@@ -303,13 +222,21 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-selected-items-list-region .visible-collection').children().length === 5) {
+                        if (
+                            view
+                                .$('.member-split-wrp .member-split-grid .visible-collection')
+                                .last()
+                                .children().length === 5
+                        ) {
                             clearTimeout(first);
-                            view.$('.js-move-left-all-button').click();
+                            view.$('.member-split-wrp .member-split-grid .move-all-btn')
+                                .last()
+                                .click();
                             const second = setInterval(() => {
                                 if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
+                                    done();
                                 }
                             }, 100);
                         }
@@ -323,39 +250,115 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should correctly filter items by type on toolbar type select', () => {
+        it('should correctly filter items by type if filter checkbox was checked', done => {
             const model = new Backbone.Model({
                 selected: []
             });
 
+            const listGroups = core.services.UserService.listGroups();
+            const listUsers = core.services.UserService.listUsers();
             const view = new core.form.editors.MembersSplitEditor({
                 model,
-                key: 'selected',
+                key: 'selectes',
                 autocommit: true,
-                users: core.services.UserService.listUsers().slice(0, 3),
-                groups: core.services.UserService.listGroups().slice(0, 5)
+                users: listUsers,
+                groups: listGroups,
+                filterFnParameters: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                memberTypes: {
+                    users: 'users',
+                    groups: 'groups'
+                }
             });
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (view.$('.js-available-items-list-region .visible-collection').children().length === 8) {
+                        if (!isAvailableListEmpty(view)) {
                             clearTimeout(first);
-                            view.$('.js-users-button').click();
-
+                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                                .first()
+                                .click();
+                            let i = 0;
                             const second = setInterval(() => {
-                                if (view.$('.js-available-items-list-region .visible-collection').children().length === 3) {
+                                i++;
+                                if (
+                                    view
+                                        .$('.member-split-wrp .member-split-grid .visible-collection')
+                                        .first()
+                                        .children().length === listUsers.length
+                                ) {
                                     clearTimeout(second);
-                                    view.$('.js-groups-button').click();
-
-                                    const third = setInterval(() => {
-                                        if (view.$('.js-available-items-list-region .visible-collection').children().length === 5) {
-                                            clearTimeout(third);
-                                            expect(true).toEqual(true);
-                                        }
-                                    }, 10);
+                                    expect(i < 10).toEqual(true);
+                                    done();
                                 }
-                            }, 10);
+                            }, 100);
+                        }
+                    }, 10);
+                });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly filter items by type if memberService enabled', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const listGroups = core.services.UserService.listGroups();
+            const listUsers = core.services.UserService.listUsers();
+            const memberService = {
+                filterFnParameters: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                memberTypes: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                getMembers: options => {
+                    const list = options.filterType === 'groups' ? listGroups : options.filterType === 'users' ? listUsers : listUsers.concat(listGroups);
+                    return { available: list, selected: [] };
+                }
+            };
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selectes',
+                autocommit: true,
+                users: listUsers,
+                groups: listGroups,
+                memberService
+            });
+
+            view.on('render', () => {
+                view.controller.view.on('attach', () => {
+                    const first = setInterval(() => {
+                        if (!isAvailableListEmpty(view)) {
+                            clearTimeout(first);
+                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                                .first()
+                                .click();
+                            let i = 0;
+                            const second = setInterval(() => {
+                                i++;
+                                if (
+                                    view
+                                        .$('.member-split-wrp .member-split-grid .visible-collection')
+                                        .first()
+                                        .children().length === listUsers.length
+                                ) {
+                                    clearTimeout(second);
+                                    expect(i < 10).toEqual(true);
+                                    done();
+                                }
+                            }, 100);
                         }
                     }, 10);
                 });

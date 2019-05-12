@@ -75,6 +75,15 @@ export default function() {
                         key: 'title', //wrong key, expect [''] structure in title,
                         model,
                         autocommit: true,
+                        filterFnParameters: {
+                            users: 'users',
+                            groups: 'groups',
+                            all: 'all'
+                        },
+                        memberTypes: {
+                            users: 'users',
+                            groups: 'groups'
+                        },
                         users: Core.services.UserService.listUsers(),
                         groups: Core.services.UserService.listGroups(),
                         showMode: 'button'
@@ -94,18 +103,22 @@ export default function() {
                     error: 'Validation Error',
                     view: new Core.layout.Form({
                         model,
-                        schema: [{
-                            type: 'v-container',
-                            items: [{
-                                type: 'MembersSplit-field',
-                                key: 'title', //wrong key, expect [''] structure in title,
-                                model,
-                                autocommit: true,
-                                users: Core.services.UserService.listUsers(),
-                                groups: Core.services.UserService.listGroups(),
-                                showMode: 'button'
-                            }]
-                        }]
+                        schema: [
+                            {
+                                type: 'v-container',
+                                items: [
+                                    {
+                                        type: 'MembersSplit-field',
+                                        key: 'title', //wrong key, expect [''] structure in title,
+                                        model,
+                                        autocommit: true,
+                                        users: Core.services.UserService.listUsers(),
+                                        groups: Core.services.UserService.listGroups(),
+                                        showMode: 'button'
+                                    }
+                                ]
+                            }
+                        ]
                     })
                 }
             ],

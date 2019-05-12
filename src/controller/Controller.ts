@@ -186,11 +186,12 @@ export default class Controller {
                         break;
                     }
                     case 'GET':
-                        return data;
                     default:
                         break;
                 }
             }
+
+            return data;
         }
         return null; //todo handle error
     }

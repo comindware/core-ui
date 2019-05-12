@@ -204,21 +204,15 @@
 
 <http://comindware.com/text/core/form/editors/memberSelect#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбранные пользователи"; l10n:originalData "Selected users"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#all> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все"; l10n:originalData "All"].
-
 <http://comindware.com/text/core/form/editors/memberSplit#apply> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Применить"; l10n:originalData "apply"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отмена"; l10n:originalData "cancel"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди или группы не найдены"; l10n:originalData "No people or group found"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#emptyPeopleList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Пользователи не выбраны"; l10n:originalData "No people selected"].
-
 <http://comindware.com/text/core/form/editors/memberSplit#group> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Группы"; l10n:originalData "group"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#groups> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} группа, {0} группы, {0} групп"; l10n:originalData "{0} groups, {0} groups"].
-
-<http://comindware.com/text/core/form/editors/memberSplit#maxQuantity> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0}"; l10n:originalData "Maximum users allowed: {0},Maximum users allowed: {0}"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей или группы"; l10n:originalData "Select users or groups"].
 
@@ -228,11 +222,11 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#searchUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "Search by name"].
 
+<http://comindware.com/text/core/form/editors/memberSplit#selectAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрать все"; l10n:originalData "selectAll"].
+
 <http://comindware.com/text/core/form/editors/memberSplit#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, один из которых может стать исполнителем задачи"; l10n:originalData "Select users who may become task assignee"].
-
-<http://comindware.com/text/core/form/editors/memberSplit#update> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#users> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} человек,{0} человека,{0} человек"; l10n:originalData "{0} person,{0} people"].
 

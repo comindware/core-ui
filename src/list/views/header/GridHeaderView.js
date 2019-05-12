@@ -266,7 +266,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if ((!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== undefined) || event.relatedTarget.classList.contains('js-grid-content-view')) {
+        if (this.collection.dragoverModel !== undefined) {
             this.collection.trigger('dragleave:head', event);
         }
     },
@@ -276,6 +276,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDrop(event) {
+        event.preventDefault();
         if (this.__allowDrop()) {
             this.collection.trigger('drop:head', event);
         }

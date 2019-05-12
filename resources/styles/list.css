@@ -479,9 +479,19 @@ tr:hover .cell_selection {
     flex: 1 1 auto;
 }
 .dragover .cell,
-.dragover.cell,
-.dragover .grid-header-column{
+.dragover.cell_draggable,
+.dragover .grid-header-column,
+.dragover .cell_selection-index,
+.dragover .cell_selection {
     border-bottom: 1px solid #ff0000;
+}
+
+.dragover .cell *,
+.dragover.cell_draggable *,
+.dragover .grid-header-column *,
+.dragover .cell_selection-index *,
+.dragover .cell_selection * {
+    pointer-events: none;
 }
 
 .cell > .editor:after{

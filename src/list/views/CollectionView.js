@@ -140,7 +140,7 @@ export default Marionette.PartialCollectionView.extend({
             return;
         }
         const firstChild = this.el.children[0];
-        if (!firstChild) {
+        if (!(firstChild && firstChild.classList.contains('row'))) {
             return;
         }
 
@@ -421,6 +421,10 @@ export default Marionette.PartialCollectionView.extend({
         }
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE));
+        if (this.getOption('showRowIndex') && this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:index');
+        }
+
     },
 
     __toggleCollapseAll(collapsed) {

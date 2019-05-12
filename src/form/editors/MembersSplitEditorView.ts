@@ -3,15 +3,17 @@ import MembersSplitController from './impl/membersSplit/controller/MembersSplitC
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
+import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
+    filterFnParameters: { users: undefined, groups: undefined },
+    memberTypes: { users: undefined, groups: undefined },
     exclude: [],
     displayText: '',
     hideUsers: false,
     hideGroups: false,
     hideToolbar: false,
-    maxQuantitySelected: null,
     allowRemove: true,
     title: '',
     itemsToSelectText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
@@ -82,6 +84,12 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     __initializeController(options) {
+        if (options.memberService) {
+            Object.assign(this.options, {
+                filterFnParameters: options.memberService.filterFnParameters,
+                memberTypes: options.memberService.memberTypes
+            });
+        }
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitController(this.options);

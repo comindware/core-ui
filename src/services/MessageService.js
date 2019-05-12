@@ -73,7 +73,7 @@ export default {
                     id: button.id,
                     text: button.text,
                     customClass: button.customClass,
-                    handler() {
+                    handler: () => {
                         if (button.beforeLeaveFn) {
                             button.beforeLeaveFn().then(() => {
                                 WindowService.closePopup(this.openedPopupId);
@@ -96,7 +96,7 @@ export default {
             if (this.openedPopupId) {
                 WindowService.closePopup(this.openedPopupId);
             }
-            this.openedPopupId = WindowService.showPopup(view);
+            this.openedPopupId = WindowService.showTransientPopup(view, { fadeBackground: true });
         });
     },
 

@@ -1,11 +1,11 @@
-/*eslint-disable*/
-import SelectableBehavior from '../models/behaviors/SelectableBehavior';
-import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { diffHelper, helpers } from 'utils';
-import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
-import FixGroupingOptions from './GroupingService';
 import Backbone from 'backbone';
 import _ from 'underscore';
+import SelectableBehavior from '../models/behaviors/SelectableBehavior';
+import CheckableBehavior from '../models/behaviors/CheckableBehavior';
+import { diffHelper } from 'utils';
+import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
+import FixGroupingOptions from './GroupingService';
+import { virtualCollectionFilterActions } from 'Meta';
 
 const selectableBehavior = {
     none: null,
@@ -71,7 +71,7 @@ const VirtualCollection = Backbone.Collection.extend({
         }
 
         if (options.filter !== undefined) {
-            this.filterFn = options.filter;
+            this.filterFn = typeof options.filter === 'function' ? [options.filter] : options.filter || [];
         }
 
         this._reset();
@@ -151,7 +151,7 @@ const VirtualCollection = Backbone.Collection.extend({
 
     __rebuildIndex(options = {}, immediate) {
         let parentModels = this.parentCollection.models;
-        if (this.filterFn !== undefined && typeof this.filterFn === 'function') {
+        if (this.filterFn) {
             parentModels = this.__filterModels(this.parentCollection.models);
         }
 
@@ -297,8 +297,31 @@ const VirtualCollection = Backbone.Collection.extend({
         return Math.max(0, Math.min(maxPos, position));
     },
 
-    filter(filterFn) {
-        this.filterFn = filterFn;
+    filter(filterFn, { action } = {}) {
+        if (!this.filterFn) {
+            this.filterFn = [];
+        }
+        switch (action) {
+            case virtualCollectionFilterActions.PUSH: //adds to the array filter function (or an array of them) with the specified name
+                if (Array.isArray(filterFn)) {
+                    this.filterFn.concat(filterFn);
+                } else {
+                    this.filterFn.push(filterFn);
+                }
+                this.filterFn = [...new Set(this.filterFn)];
+                break;
+            case virtualCollectionFilterActions.REMOVE: //removes from the array the filter function with the specified name
+                const index = this.filterFn.findIndex(fn => fn.name === filterFn);
+                if (index > -1) {
+                    this.filterFn.splice(index, 1);
+                }
+                break;
+            default:
+                //'reset' - classic behavior. Replaces all filterFns with new one.
+                this.filterFn = filterFn ? (Array.isArray(filterFn) ? filterFn : [filterFn]) : [];
+                break;
+        }
+
         this.__rebuildIndex({}, true);
         this.trigger('filter');
     },
@@ -309,10 +332,12 @@ const VirtualCollection = Backbone.Collection.extend({
             if (model.children && model.children.length) {
                 model.filteredChildren = this.__filterModels(model.children.models);
             }
-            if (this.filterFn.call(models, model) || (model.filteredChildren && model.filteredChildren.length)) {
+
+            if (this.filterFn.every(fn => fn.call(models, model, fn.parameters)) || (model.filteredChildren && model.filteredChildren.length)) {
                 result.push(model);
             }
         });
+
         return result;
     },
 
