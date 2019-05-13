@@ -24,18 +24,19 @@ export default class GroupedCollection {
     }
 
     move(models, targetName) {
-        if (models) {
-            const modelsArray = this.__getArrayCopy(models);
-            modelsArray.length && modelsArray[0].group?.remove(modelsArray);
-
-            const targetCollection = (targetName && this.groups[targetName]) || this.ungrouped;
-            targetCollection.add(modelsArray);
-            modelsArray.forEach(model => (model.group = targetCollection));
+        if (!models) {
+            return;
         }
+        const modelsArray = this.__getArrayCopy(models);
+        modelsArray.length && modelsArray[0].group?.remove(modelsArray);
+
+        const targetCollection = (targetName && this.groups[targetName]) || this.ungrouped;
+        targetCollection.add(modelsArray);
+        modelsArray.forEach(model => (model.group = targetCollection));
     }
 
-    getModels(targetGroupNme) {
-        return this.__getArrayCopy(((targetGroupNme && this.groups[targetGroupNme]) || this.ungrouped).models);
+    getModels(targetName) {
+        return this.__getArrayCopy(((targetName && this.groups[targetName]) || this.ungrouped).models);
     }
 
     getAllItemsModels() {

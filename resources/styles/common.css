@@ -950,8 +950,7 @@ a:hover {
 }
 
 .toolbar-items-wrp > * {
-    overflow: hidden;
-    min-width: fit-content;
+    display: inline-block;
 }
 
 .toolbar-btn__text {

@@ -2,6 +2,7 @@ const at = function(collection, index) {
     return collection.at ? collection.at(index) : collection[index];
 };
 
+// TODO delete this on 2.0.
 export const wait = ({ action, condition, callback, checkInterval = 0, repeatAction = false } = {}) =>
     new Promise(resolve => {
         let isActionCalled = false;

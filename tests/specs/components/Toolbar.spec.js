@@ -1,6 +1,7 @@
 import core from 'coreApi';
 import { wait } from '../../utils/helpers';
 import 'jasmine-jquery';
+//TODO import wait from TestService on 2.0
 
 const toolbarItemType = {
     ACTION: 'Action',
@@ -182,7 +183,7 @@ describe('Components', () => {
             expect(document.querySelector('.js-toolbar-actions').children.length).toBe(3); // 3 groups: main, menu, const
         });
 
-        it('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
+        fit('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
             const popupView = new core.layout.Popup({
                 size: {
                     width: 1500,
@@ -237,14 +238,37 @@ describe('Components', () => {
             });
         });
 
-        it('shows each of the buttons', done => {
+        it('shows each of the buttons types', done => {
             expect(true).toBe(true); //TODO
             done();
         });
 
-        it('when the model of button was changed, it saves its status, even after update', done => {
-            expect(true).toBe(true); //TODO
-            done();
+        it('when the model of checkbox was changed, it saves its status, even after update', done => {
+            //TODO
+            const view = new core.components.Toolbar({
+                allItemsCollection: [
+                    {
+                        iconType: 'Undefined',
+                        type: 'Checkbox',
+                        id: '6',
+                        name: 'Check the checkbox',
+                        severity: 'Critical'
+                    }
+                ]
+            });
+
+            wait({
+                condition: () => document.querySelector('.toolbar-buttons_container').children,
+                callback: () => {
+                    expect(true).toBe(true);
+                    done();
+                }
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
         });
     });
 });
