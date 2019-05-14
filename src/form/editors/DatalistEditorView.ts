@@ -1,5 +1,6 @@
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
+import LocalizationService from '../../services/LocalizationService';
 import { helpers, keyCode } from '../../utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
@@ -42,7 +43,7 @@ const defaultOptions = () => ({
     idProperty: 'id',
     showSearch: true,
 
-    emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
 
     class: undefined,
     buttonBubbleTemplate: compositeReferenceCell,
@@ -58,7 +59,7 @@ const defaultOptions = () => ({
     createValueUrl: undefined,
     edit: undefined,
     addNewItem: undefined,
-    addNewItemText: Localizer.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
+    addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
 
     //deprecated options
     controller: null,
@@ -79,18 +80,18 @@ const presetsDefaults = {
         showSearch: false,
         addNewItem: datalistView => datalistView.boundEditor.openFileUploadWindow(),
         boundEditor: DocumentEditorView,
-        addNewItemText: Localizer.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT')
+        addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT')
     }),
     user: options => ({
-        listTitle: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
-        title: Localizer.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
+        listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
+        title: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeUserCell,
         panelBubbleTemplate: compositeUserCell
     })
 };
 
-const stop = event => {
+const stop = (event: KeyboardEvent) => {
     event.preventDefault();
     event.stopPropagation();
 };
@@ -168,7 +169,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 readonlyPlaceholder: this.__getReadonlyPlaceholder(),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly(),
-                getFocusElementReadonly: readonly => readonly || !this.options.showSearch
+                getFocusElementReadonly: (readonly: boolean) => readonly || !this.options.showSearch
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -243,7 +244,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(btn, 'click', () => this.__onButtonClick());
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
-        this.listenTo(btn, 'pointerdown', (button, e) => {
+        this.listenTo(btn, 'pointerdown', (button, e: PointerEvent) => {
             if (e.target.tagName === 'A') {
                 e.stopPropagation();
                 return;
@@ -322,7 +323,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __toggleSelectAddNewButton(state) {
+    __toggleSelectAddNewButton(state: boolean) {
         if (this.__isAddNewButtonSelect === state) {
             return;
         }
@@ -653,7 +654,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __tryToCreateAdjustedValue(primitive) {
         return {
             [this.options.idProperty]: primitive,
-            text: this.__isValueEqualNotSet(primitive) ? Localizer.get('CORE.COMMON.NOTSET') : undefined
+            text: this.__isValueEqualNotSet(primitive) ? LocalizationService.get('CORE.COMMON.NOTSET') : undefined
         };
     },
 
@@ -788,7 +789,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__fetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
     },
 
-    __onBubbleDelete(model: Backbone.Model): Backbone.Model {
+    __onBubbleDelete(model: Backbone.Model): void {
         if (!model || !this.getEditable()) {
             return;
         }
@@ -907,7 +908,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __panelKeydown(e) {
+    __panelKeydown(e: KeyboardEvent) {
         if (this.__checkExitFromPanelControlToBubble(e)) {
             stop(e);
             this.panelCollection.pointOff();

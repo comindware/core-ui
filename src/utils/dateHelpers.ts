@@ -1,7 +1,7 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
-import moment = require('moment');
+import moment from 'moment';
 import _ from 'underscore';
 
 const dateTimeFormats = {
@@ -103,7 +103,7 @@ const dateTimeFormats = {
         monthDay: { general: 'D MMMM' /* 3 декабря */ },
         yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */ },
         fullDateShortTime: {
-            general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
+            general: 'D MMMM, YYYY HH:mm' /* 3 декабря 2014 19:00 */,
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
@@ -220,9 +220,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getTimeEditFormat(hasSeconds) {
-        return hasSeconds
-            ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time
-            : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     dateToDateTimeString(date, formatName) {

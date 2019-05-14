@@ -1,25 +1,32 @@
 import _ from 'underscore';
 
-/*eslint-disable*/
+const SelectableBehavior = {
+    // SelectableBehavior.SingleSelect
+    // ------------------
+    // A single-select mixin for Backbone.Collection, allowing a single
+    // model to be selected within a collection. Selection of another
+    // model within the collection causes the previous model to be
+    // deselected.
+    // ToDo: should update this.selected on collection reset or remove selected.
+    SingleSelect: function(collection: Backbone.Collection) {
+        this.selected = {};
+        this.collection = collection;
+    },
+    // SelectableBehavior.MultiSelect
+    // -----------------
+    // A mult-select mixin for Backbone.Collection, allowing a collection to
+    // have multiple items selected, including `selectAll` and `selectNone`
+    // capabilities.
+    MultiSelect: function(collection: Backbone.Collection) {
+        this.collection = collection;
+        this.selected = {};
+    },
+    // SelectableBehavior.Selectable
+    // ----------------
+    // A selectable mixin for Backbone.Model, allowing a model to be selected,
+    // enabling it to work with SelectableBehavior.MultiSelect or on it's own
 
-/*
- * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
- *
- * */
-
-const SelectableBehavior = {};
-
-// SelectableBehavior.SingleSelect
-// ------------------
-// A single-select mixin for Backbone.Collection, allowing a single
-// model to be selected within a collection. Selection of another
-// model within the collection causes the previous model to be
-// deselected.
-// ToDo: should update this.selected on collection reset or remove selected.
-
-SelectableBehavior.SingleSelect = function(collection) {
-    this.selected = {};
-    this.collection = collection;
+    Selectable: function() {}
 };
 
 _.extend(SelectableBehavior.SingleSelect.prototype, {
@@ -73,17 +80,6 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
         return selectedModels[0];
     }
 });
-
-// SelectableBehavior.MultiSelect
-// -----------------
-// A mult-select mixin for Backbone.Collection, allowing a collection to
-// have multiple items selected, including `selectAll` and `selectNone`
-// capabilities.
-
-SelectableBehavior.MultiSelect = function(collection) {
-    this.collection = collection;
-    this.selected = {};
-};
 
 _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Select a specified model, make sure the
@@ -220,13 +216,6 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
         }, this);
     }
 });
-
-// SelectableBehavior.Selectable
-// ----------------
-// A selectable mixin for Backbone.Model, allowing a model to be selected,
-// enabling it to work with SelectableBehavior.MultiSelect or on it's own
-
-SelectableBehavior.Selectable = function() {};
 
 _.extend(SelectableBehavior.Selectable.prototype, {
     // Select this model, and tell our

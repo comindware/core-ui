@@ -6,7 +6,7 @@ export default function(options) {
         message: LocalizationService.get('CORE.FORM.VALIDATION.CODE')
     };
 
-    return function code(val) {
+    return function code(val: string) {
         const error = {
             type: options.type,
             message: options.message
@@ -20,7 +20,7 @@ export default function(options) {
         const result = val.match(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[^\r\n]*)|(\<![\-\-\s\w\>\/]*\>)/g);
         if (result) {
             result.forEach(el => {
-                let temp = 0;
+                let temp = '';
                 switch (el.slice(0, 2)) {
                     case '//':
                         temp = el.replace(/\s/g, '');
