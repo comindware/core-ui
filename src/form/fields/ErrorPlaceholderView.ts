@@ -1,5 +1,6 @@
-// @flow
 import ErrorPlaceholderView from './templates/ErrorPlaceholder.hbs';
+import Marionette from 'backbone.marionette';
+import _ from 'underscore';
 
 export default Marionette.View.extend({
     initialize() {

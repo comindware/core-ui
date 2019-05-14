@@ -5,6 +5,9 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import formRepository from '../formRepository';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import Marionette from 'backbone.marionette';
 
 const editorFieldExtention = {
     validate(...args) {

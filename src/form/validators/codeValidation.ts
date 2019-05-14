@@ -1,5 +1,3 @@
-/*eslint-disable*/
-
 import LocalizationService from '../../services/LocalizationService';
 
 export default function(options) {
@@ -11,12 +9,15 @@ export default function(options) {
     return function code(val) {
         const error = {
             type: options.type,
-            message:options.message
+            message: options.message
         };
         let totalCommentsChars = 0;
         const content = val;
-        const totalCharsWithoutComments = content.replace(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[^\r\n]*)|(\<![\-\-\s\w\>\/]*\>)/g,'').replace(/\s/g,'').replace(/\r\n/g,'').length;
-        const result = val.match (/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[^\r\n]*)|(\<![\-\-\s\w\>\/]*\>)/g);
+        const totalCharsWithoutComments = content
+            .replace(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[^\r\n]*)|(\<![\-\-\s\w\>\/]*\>)/g, '')
+            .replace(/\s/g, '')
+            .replace(/\r\n/g, '').length;
+        const result = val.match(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[^\r\n]*)|(\<![\-\-\s\w\>\/]*\>)/g);
         if (result) {
             result.forEach(el => {
                 let temp = 0;

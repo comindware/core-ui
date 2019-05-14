@@ -1,8 +1,11 @@
+import LocalizationService from '../../services/LocalizationService';
+import _ from 'underscore';
+
 export default config => {
     const options = _.extend(
         {
             type: 'email',
-            message: Localizer.get('CORE.FORM.VALIDATION.EMAIL')
+            message: LocalizationService.get('CORE.FORM.VALIDATION.EMAIL')
         },
         config
     );

@@ -1,4 +1,3 @@
-// @flow
 import DateTimeEditorView from './DateTimeEditorView';
 import formRepository from '../formRepository';
 

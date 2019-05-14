@@ -1,6 +1,6 @@
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
-import { helpers, keyCode } from 'utils';
+import { helpers, keyCode } from '../../utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import ButtonView from './impl/datalist/views/ButtonView';
@@ -13,6 +13,8 @@ import DocumentEditorView from './DocumentEditorView';
 import compositeReferenceCell from '../../list/templates/compositeReferenceCell.html';
 import compositeDocumentCell from '../../list/templates/compositeDocumentCell.html';
 import compositeUserCell from '../../list/templates/compositeUserCell.html';
+import Backbone from 'backbone';
+import _ from 'underscore';
 
 const defaultOptions = () => ({
     displayAttribute: 'name',
@@ -382,7 +384,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __togglePlaceholder(isEmpty) {
+    __togglePlaceholder(isEmpty: boolean) {
         this.dropdownView.options.readonlyPlaceholder = this.__getReadonlyPlaceholder(isEmpty);
         this.dropdownView.options.emptyPlaceholder = this.__getEmptyPlaceholder(isEmpty);
         this.dropdownView.updatePlaceholder();
@@ -401,7 +403,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__adjustValue(value);
     },
 
-    setPermissions(enabled, readonly) {
+    setPermissions(enabled: boolean, readonly: boolean) {
         BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.dropdownView.setPermissions(enabled, readonly);
         this.dropdownView.collectionView.updateEnabled(this.getEditable());
@@ -436,7 +438,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__startSearch('', { open: false });
     },
 
-    __startSearch(string, options) {
+    __startSearch(string: string, options) {
         this.__setInputValue(string);
         this.__fetchUpdateFilter(string, options);
     },
@@ -445,7 +447,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return this.dropdownView ? this.dropdownView.getInputValue() : '';
     },
 
-    __setInputValue(string) {
+    __setInputValue(string: string) {
         this.dropdownView.setInputValue(string);
     },
 
@@ -456,7 +458,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.debouncedFetchUpdateFilter(this.__getInputValue());
     },
 
-    __fetchUpdateFilter(text, { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
+    __fetchUpdateFilter(text: string, { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
