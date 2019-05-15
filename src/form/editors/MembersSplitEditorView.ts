@@ -3,7 +3,6 @@ import MembersSplitController from './impl/membersSplit/controller/MembersSplitC
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
-import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({

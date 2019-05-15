@@ -1,4 +1,3 @@
-// @flow
 import CodemirrorView from './impl/codeEditor/views/CodemirrorView';
 import template from './impl/codeEditor/templates/codeEditor.html';
 import BaseEditorView from './base/BaseEditorView';

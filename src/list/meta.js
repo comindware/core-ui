@@ -39,6 +39,8 @@ export const columnTypes = {
     id: 'id'
 };
 
+export const columnType = columnTypes;
+
 export const columnWidthByType = {
     [objectPropertyTypes.ACCOUNT]: 120,
     [objectPropertyTypes.BOOLEAN]: 120,

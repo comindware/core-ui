@@ -813,8 +813,8 @@ export default Marionette.View.extend({
     __checkUiReady() {
         return this.isRendered() && !this.isDestroyed();
     },
-    
-     __initializeConfigurationPanel() {
+
+    __initializeConfigurationPanel() {
         this.__configurationPanel = new ConfigurationPanel();
     },
 
@@ -979,5 +979,5 @@ export default Marionette.View.extend({
 
     __onItemMoved(...args) {
         this.trigger('move', ...args);
-    },
+    }
 });

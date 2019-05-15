@@ -2,6 +2,8 @@ import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
+import Marionette from 'backbone.marionette';
+import _ from 'underscore';
 
 /**
  * @name GridHeaderView

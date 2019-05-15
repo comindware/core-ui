@@ -5,6 +5,8 @@ import FilterState from '../classes/FilterState';
 import AvailableGridView from '../views/AvailableGridView';
 import SelectedGridView from '../views/SelectedGridView';
 import { virtualCollectionFilterActions } from 'Meta';
+import Backbone from 'backbone';
+import _ from 'underscore';
 
 const toolbarActions = {
     MOVE_ALL: 'Move-all'

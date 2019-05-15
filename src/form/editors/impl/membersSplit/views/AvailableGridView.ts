@@ -1,4 +1,5 @@
 import BaseMembersGridView from './BaseMembersGridView';
+import _ from 'underscore';
 
 export default BaseMembersGridView.extend({
     initialize(options) {

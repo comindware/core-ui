@@ -1,5 +1,6 @@
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
+import _ from 'underscore';
 
 export default function(options) {
     options = _.extend(

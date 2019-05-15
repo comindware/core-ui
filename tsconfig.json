@@ -4,20 +4,18 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",
+        "noEmit": true,
         "lib": [
             "es6",
             "dom",
             "es2017"
         ],
-        "target": "es6",
+        "target": "esnext",
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "strictNullChecks": true,
         "declaration": true,
     },
-    "include": [
-        "./src/**/*"
-    ],
     "exclude": [
         "node_modules",
         "dist"

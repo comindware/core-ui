@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable no-undef */
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
@@ -7,6 +9,7 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -245,7 +248,16 @@ module.exports = options => {
             new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
+            new TypedocWebpackPlugin({
+                out: './docs',
+                module: 'commonjs',
+                target: 'es6',
+                exclude: '**/node_modules/**/*.*',
+                tsconfig: '../tsconfig.json',
+                experimentalDecorators: true,
+                ignoreCompilerErrors: true
+            })
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

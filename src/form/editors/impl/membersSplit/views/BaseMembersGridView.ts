@@ -1,6 +1,7 @@
 import { objectPropertyTypes, iconsNames } from 'Meta';
 import MembersListItemView from './MembersListItemView';
 import template from '../templates/baseMembersGrid.hbs';
+import Marionette from 'backbone.marionette';
 
 const toolbarActions = {
     MOVE_ALL: 'Move-all'

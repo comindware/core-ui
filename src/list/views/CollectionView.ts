@@ -1,6 +1,7 @@
 //@flow
 import { keyCode, helpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
+import _ from 'underscore';
 
 /*
     Public interface:
@@ -389,7 +390,7 @@ export default Marionette.PartialCollectionView.extend({
 
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
-
+        //@ts-ignore
         const availableHeight = this.options.parentEl?.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
 
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
@@ -424,7 +425,6 @@ export default Marionette.PartialCollectionView.extend({
         if (this.getOption('showRowIndex') && this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:index');
         }
-
     },
 
     __toggleCollapseAll(collapsed) {

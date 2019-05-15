@@ -1,0 +1,23 @@
+{
+    "presets": [
+    "@babel/typescript",
+    [
+        "@babel/preset-env",
+        {
+            "targets": {
+                "ie": 11
+            },
+            "useBuiltIns": "usage",
+            "corejs": 3,
+            "modules": false
+        }
+    ]
+],
+"plugins": [
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-parameters",
+    "@babel/plugin-proposal-class-properties"
+],
+"cacheDirectory": true
+}
