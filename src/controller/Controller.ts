@@ -105,7 +105,7 @@ export default class Controller {
         this.onDestroy?.(...rest);
     }
 
-    __checkPromisesAndLeave(canLeave) {
+    __checkPromisesAndLeave(canLeave: boolean) {
         if (Core.services.PromiseService.checkBeforeLeave()) {
             return Core.services.MessageService.showSystemMessage({
                 type: Core.services.MessageService.systemMessagesTypes.unsavedChanges

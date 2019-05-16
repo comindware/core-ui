@@ -2,5 +2,5 @@ node_modules/
 .project
 .idea/
 localization/.backup/
-demo/public/assets/
+demo/assets/
 reports/
