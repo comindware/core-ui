@@ -307,7 +307,7 @@
 /*-----//------*/
 
 .dropdown__wrp_datepicker {
-    width: 220px !important;
+    /*width: 220px !important;*/
     height: auto;
 }
 
