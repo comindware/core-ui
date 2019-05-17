@@ -801,6 +801,7 @@ input[type="color"], .colorpicker{
 .documents {
     margin-top: 20px;
     margin-left: 2em;
+    max-width: calc(100% - 2em);
 }
 
 .cell.editor_document .documents {
