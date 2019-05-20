@@ -47,6 +47,7 @@
 
 .layout__tab-layout__panel-region > div {
     height: 100%;
+    overflow: auto;
 }
 
 .output-tabs-region .layout__tab-layout__panel-region > .grid-container {
