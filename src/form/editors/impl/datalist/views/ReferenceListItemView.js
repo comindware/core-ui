@@ -10,17 +10,21 @@ export default Marionette.View.extend({
         return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: [{
-        behaviorClass: list.views.behaviors.ListItemViewBehavior,
-        multiSelect: true,
-        selectOnCursor: false
-    }],
+    behaviors: [
+        {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior,
+            multiSelect: true,
+            selectOnCursor: false
+        }
+    ],
 
     template: Handlebars.compile(template),
 
     templateContext() {
+        const text = this.options.getDisplayText(this.model.toJSON());
+
         return {
-            text: this.options.getDisplayText(this.model.toJSON()),
+            textForTitle: this.__getEscapedTitle(text),
             showCheckboxes: this.options.showCheckboxes
         };
     },
@@ -46,5 +50,9 @@ export default Marionette.View.extend({
     __markDeselected() {
         this.$el.removeClass(classes.SELECTED);
         this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').removeClass(classes.SELECTED);
+    },
+
+    __getEscapedTitle(htmlText = '') {
+        return htmlText.replace(/<[^>]*>/g, '', '').replace(/"/g, '&quot;');
     }
 });
