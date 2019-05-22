@@ -1,5 +1,6 @@
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
+import { htmlHelpers } from '../../../../../utils';
 
 const classes = {
     SELECTED: 'editor_checked'
@@ -24,7 +25,7 @@ export default Marionette.View.extend({
         const text = this.options.getDisplayText(this.model.toJSON());
 
         return {
-            textForTitle: this.__getEscapedTitle(text),
+            textForTitle: htmlHelpers.getTextfromHTML(text),
             text,
             showCheckboxes: this.options.showCheckboxes
         };
@@ -51,11 +52,5 @@ export default Marionette.View.extend({
     __markDeselected() {
         this.$el.removeClass(classes.SELECTED);
         this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').removeClass(classes.SELECTED);
-    },
-
-    __getEscapedTitle(htmlText = '') {
-        return String(htmlText)
-            .replace(/<[^>]*>/g, '', '')
-            .replace(/"/g, '&quot;');
     }
 });
