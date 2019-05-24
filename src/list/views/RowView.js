@@ -142,7 +142,9 @@ export default Marionette.View.extend({
         const isTree = this.getOption('isTree');
         this.options.columns.forEach((gridColumn, index) => {
             if (gridColumn.hidden) {
-                gridColumn.columnClass += ` ${hiddenByUserClass}`;
+                if (!gridColumn.columnClass.match(new RegExp(hiddenByUserClass))) {
+                    gridColumn.columnClass += ` ${hiddenByUserClass}`;
+                }
             } else {
                 gridColumn.columnClass.replace(new RegExp(hiddenByUserClass), '');
             }

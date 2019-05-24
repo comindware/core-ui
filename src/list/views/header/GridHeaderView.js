@@ -80,7 +80,6 @@ const GridHeaderView = Marionette.View.extend({
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
                     eyeIconClass: column.hidden ? classes.eyeOpened : classes.eyeClosed,
-                    hiddenByUserClass: column.hidden ? 'hidden-by-user' : '',
                     isEditModeString
                 })
             )
