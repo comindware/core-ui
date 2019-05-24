@@ -711,7 +711,7 @@
 }
 
 .grid-header-column .edit-mode-control {
-    display: none
+    display: none;
 } 
 
 .grid-edit-mode .edit-mode-control {
@@ -722,16 +722,20 @@
     cursor: move;
 }
 
-.grid-edit-mode .grid-header-column-title.dragover {
+.grid-edit-mode .grid-header-column-title.header-dragover {
     background: rgba(255, 255, 255, 0.4);
 }
 
-.grid-edit-mode .hidden-by-user {
-    opacity: 0.5
+.grid-edit-mode .grid-content-view .hidden-by-user {
+    opacity: 0.5;
+}
+
+.grid-edit-mode .grid-header .hidden-by-user {
+    background-color: #82bade;
 }
 
 .grid-normal-mode .hidden-by-user {
-    display: none
+    display: none;
 }
 
 /*-- end grid edit mode --*/

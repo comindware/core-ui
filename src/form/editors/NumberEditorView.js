@@ -95,7 +95,7 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     ui: {
         input: '.js-input',
-        clearButton: '.js-clear-button',
+        clearButton: '.js-clear-button'
     },
 
     events: {
@@ -176,7 +176,11 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
     },
 
     __setActive(el, isActive) {
-        el.classList.toggle('ui-state-active', isActive);
+        if (isActive) {
+            el.classList.add('ui-state-active');
+        } else {
+            el.classList.remove('ui-state-active');
+        }
     },
 
     __setEnabled(enabled) {

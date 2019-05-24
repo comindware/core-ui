@@ -2,7 +2,6 @@ import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
-import { hiddenByUserClass } from '../../meta';
 
 /**
  * @name GridHeaderView
@@ -19,6 +18,7 @@ import { hiddenByUserClass } from '../../meta';
 const classes = {
     expanded: 'collapsible-btn_expanded',
     dragover: 'dragover',
+    headerDragover: 'header-dragover',
     moveColumnDragger: 'js-move-column-dragger',
     eyeOpened: 'eye',
     eyeClosed: 'eye-slash'
@@ -36,7 +36,6 @@ const GridHeaderView = Marionette.View.extend({
         this.gridEventAggregator = options.gridEventAggregator;
         this.collection = options.gridEventAggregator.collection;
 
-        this.styleSheet = options.styleSheet;
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
         this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
         this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
@@ -74,13 +73,15 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     templateContext() {
+        const isEditModeString = Boolean(this.options.model.get('editMode')).toString();
         return {
             columns: this.options.columns.map(column =>
                 Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
                     eyeIconClass: column.hidden ? classes.eyeOpened : classes.eyeClosed,
-                    hiddenByUserClass: column.hidden ? 'hidden-by-user' : ''
+                    hiddenByUserClass: column.hidden ? 'hidden-by-user' : '',
+                    isEditModeString
                 })
             )
         };
@@ -162,8 +163,12 @@ const GridHeaderView = Marionette.View.extend({
 
     __initDragContext(e) {
         const dragger = e.target;
-        const column = dragger.parentNode;
+        const isHeaderColumn = dragger.classList.contains('js-move-column-dragger');
+        if (isHeaderColumn && !this.options.model.get('editMode')) {
+            return;
+        }
 
+        const column = dragger.parentNode;
         const draggedColumn = {
             el: column,
             initialWidth: this.__getElementOuterWidth(column),
@@ -173,7 +178,8 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext = {
             pageOffsetX: e.pageX,
             dragger,
-            draggedColumn
+            draggedColumn,
+            isHeaderColumn
         };
     },
 
@@ -249,8 +255,6 @@ const GridHeaderView = Marionette.View.extend({
 
         this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
 
-        // this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
-
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
         this.options.columns[index].width = newColumnWidth;
     },
@@ -276,10 +280,10 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragEnter(event) {
-        const target = event.target;
         event.preventDefault();
-        if (target.classList.contains(classes.moveColumnDragger)) {
-            target.classList.add(classes.dragover);
+        if (this.dragContext && this.dragContext.isHeaderColumn) {
+            event.target.classList.add(classes.headerDragover);
+            return;
         }
 
         this.collection.dragoverModel = undefined;
@@ -294,8 +298,9 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleDragLeave(event) {
         const target = event.target;
-        if (target.classList.contains(classes.moveColumnDragger)) {
-            target.classList.remove(classes.dragover);
+        if (this.dragContext && this.dragContext.isHeaderColumn) {
+            target.classList.remove(classes.headerDragover);
+            return;
         }
         if (this.collection.dragoverModel !== undefined) {
             this.collection.trigger('dragleave:head', event);
@@ -306,11 +311,13 @@ const GridHeaderView = Marionette.View.extend({
         event.preventDefault();
         const target = event.target;
 
-        if (target.classList.contains(classes.moveColumnDragger)) {
-            target.classList.remove(classes.dragover);
+        if (this.dragContext && this.dragContext.isHeaderColumn) {
+            target.classList.remove(classes.headerDragover);
 
             const sourceColumn = this.dragContext.dragger.parentElement;
             this.trigger('column:move', { oldIndex: this.__getColumnIndex(sourceColumn), newIndex: this.__getColumnIndex(target.parentElement) });
+            delete this.dragContext;
+            return;
         }
         if (this.__allowDrop()) {
             this.collection.trigger('drop:head', event);

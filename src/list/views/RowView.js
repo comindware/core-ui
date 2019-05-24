@@ -1,6 +1,7 @@
 //@flow
 import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
+import { hiddenByUserClass } from '../meta';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -140,6 +141,11 @@ export default Marionette.View.extend({
 
         const isTree = this.getOption('isTree');
         this.options.columns.forEach((gridColumn, index) => {
+            if (gridColumn.hidden) {
+                gridColumn.columnClass += ` ${hiddenByUserClass}`;
+            } else {
+                gridColumn.columnClass.replace(new RegExp(hiddenByUserClass), '');
+            }
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {

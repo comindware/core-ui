@@ -324,7 +324,7 @@ export default Marionette.View.extend({
     },
 
     modelEvents: {
-        'change:editMode': '__toggleEditMode'
+        'change:editMode': '__handleChangeEditMode'
     },
 
     className() {
@@ -442,7 +442,6 @@ export default Marionette.View.extend({
             });
         }
 
-        this.__toggleEditMode();
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
     },
 
@@ -454,10 +453,22 @@ export default Marionette.View.extend({
         this.model.set('editMode', editMode);
     },
 
+    __handleChangeEditMode() {
+        Array.from(this.el.querySelectorAll('.grid-header-column .js-move-column-dragger')).forEach(element => {
+            element.setAttribute('draggable', Boolean(this.model.get('editMode')));
+        });
+        this.__toggleEditMode();
+    },
+
     __toggleEditMode() {
         const isEditMode = this.model.get('editMode');
-        this.el.classList.toggle(classes.EDIT_MODE, !!isEditMode); //"!!"" is necessary for the correct behaviour of the toggle function
-        this.el.classList.toggle(classes.NORMAL_MODE, !isEditMode);
+        if (isEditMode) {
+            this.el.classList.add(classes.EDIT_MODE);
+            this.el.classList.remove(classes.NORMAL_MODE);
+        } else {
+            this.el.classList.remove(classes.EDIT_MODE);
+            this.el.classList.add(classes.NORMAL_MODE);
+        }
     },
 
     __executeAction(...args) {
@@ -691,9 +702,15 @@ export default Marionette.View.extend({
 
     setColumnVisibility(config) {
         const { columnIndex, hidden } = config;
-        const isHidden = hidden == null ? false : hidden;
+        const isHidden = Boolean(hidden);
 
-        Array.from(this.el.querySelectorAll(`.${this.columnClasses[columnIndex]}`)).forEach(el => el.classList.toggle(hiddenByUserClass, isHidden));
+        Array.from(this.el.querySelectorAll(`.${this.columnClasses[columnIndex]}`)).forEach(el => {
+            if (isHidden) {
+                el.classList.add(hiddenByUserClass);
+            } else {
+                el.classList.remove(hiddenByUserClass);
+            }
+        });
 
         this.trigger('column:set:visibility', config);
     },

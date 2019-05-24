@@ -5,22 +5,14 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 import SimplifiedFieldView from '../form/fields/SimplifiedFieldView';
 import DateTimeService from '../form/editors/services/DateTimeService';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
-import { hiddenByUserClass } from './meta';
 
 let factory;
-
-type CellExtention = {
-    templateContext(): Object
-};
 
 type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
 export default (factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
-            if (column.hidden) {
-                column.columnClass += ` ${hiddenByUserClass}`;
-            }
             return column.simplified ? SimplifiedFieldView : EditableGridFieldView;
         }
 
@@ -29,10 +21,7 @@ export default (factory = {
 
     getCellHtml(column: Column, model: Backbone.Model) {
         const value = model.get(column.key);
-        let columnClass = column.columnClass;
-        if (column.hidden) {
-            columnClass += ` ${hiddenByUserClass}`;
-        }
+        const columnClass = column.columnClass;
 
         if (value === null || value === undefined) {
             return `<div class="cell ${columnClass}"></div>`;
@@ -44,7 +33,7 @@ export default (factory = {
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             case objectPropertyTypes.EXTENDED_STRING:
-                return this.__createContextString(model, value, column, columnClass);
+                return this.__createContextString(model, value, column);
             case objectPropertyTypes.INSTANCE:
                 if (Array.isArray(value)) {
                     adjustedValue = value.map(v => v && v.name).join(', ');
@@ -180,12 +169,12 @@ export default (factory = {
         }
     },
 
-    __createContextString(model, value, column, columnClass) {
+    __createContextString(model, value, column) {
         const adjustedValue = this.__adjustValue(value);
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">
+            <div class="js-extend_cell_content extend_cell_content ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">
             <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
             <div class="extend_cell_text">
                 <span class="extend_cell_header">${adjustedValue}</span>
