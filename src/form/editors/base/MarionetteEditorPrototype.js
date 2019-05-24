@@ -419,6 +419,8 @@ export default {
                     if (this.value !== this.model.get(this.key)) {
                         this.__triggerChange();
                     }
+                } else {
+                    this.__triggerChange();
                 }
             },
 
