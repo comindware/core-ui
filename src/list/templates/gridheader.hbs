@@ -1,10 +1,14 @@
 {{#each columns}}
-    <div class="grid-header-column {{columnClass}}" title="{{title}}">
-    {{#unless alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/unless}}
+<div class="grid-header-column {{columnClass}} {{hiddenByUserClass}}" title="{{title}}">
+    {{#unless alignRight}}<div class="js-move-column-dragger grid-header-column-title" draggable="true">{{title}}</div>
+    {{/unless}}
     {{#if sortingAsc}}<span class="sort_down"></span>{{/if}}
     {{#if sortingDesc}}<span class="sort_up"></span>{{/if}}
-        <span class="js-help-text-region collection-grid-header__help"></span>
-    {{#if alignRight}}<div class="grid-header-column-title">{{title}}</div>{{/if}}
-        <div class="grid-header-dragger"></div>
+    <span class="js-help-text-region collection-grid-header__help"></span>
+    {{#if alignRight}}<div class="js-move-column-dragger grid-header-column-title" draggable="true">{{title}}</div>
+    {{/if}}
+    <div class="js-resize-column-dragger grid-column-resize-dragger"></div>
+    <div class="js-visibility-btn grid-column-toggle-visibility-btn {{iconPrefixer eyeIconClass}} edit-mode-control">
     </div>
+</div>
 {{/each}}

@@ -106,6 +106,8 @@ export const booleanDropdown = {
     null: null
 };
 
+export const hiddenByUserClass = 'hidden-by-user';
+
 export default {
     contextTypes,
     columnTypes,

@@ -32,7 +32,8 @@ export default function() {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
-            title: 'DateTime Cell'
+            title: 'DateTime Cell',
+            hidden: true
         },
         {
             key: 'durationCell',
@@ -47,7 +48,8 @@ export default function() {
         {
             key: 'referenceCell',
             type: 'Instance',
-            title: 'Reference Cell'
+            title: 'Reference Cell',
+            hidden: true
         },
         {
             key: 'documentCell',
@@ -61,6 +63,7 @@ export default function() {
         columns,
         selectableBehavior: 'multi',
         // disableMultiSelection: true, //another case of API
+        editMode: true,
         showSearch: true,
         showCheckbox: true,
         showToolbar: true,
@@ -70,8 +73,8 @@ export default function() {
         excludeActions: ['delete'],
         additionalActions: [
             {
-                id: 'showArchived',
-                name: 'showArchived',
+                id: 'editMode',
+                name: 'edit mode',
                 type: 'Checkbox',
                 isChecked: true,
                 severity: 'Critical',
@@ -129,13 +132,14 @@ export default function() {
             case 'unarchive':
                 //some code here
                 break;
-            case 'showArchived':
-                console.log(model.get('isChecked'));
+            case 'editMode':
+                console.log(model.get('isChecked') ? 'edit mode' : 'normal mode');
+                gridController.view.setEditMode(model.get('isChecked'));
                 break;
             default:
                 break;
-        };
-    }
+        }
+    };
 
     canvasView.listenTo(gridController, 'execute', canvasView.__executeAction);
 

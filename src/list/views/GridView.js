@@ -24,10 +24,13 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
+import { hiddenByUserClass } from '../meta';
 
 const classes = {
     REQUIRED: 'required',
-    ERROR: 'error'
+    ERROR: 'error',
+    EDIT_MODE: 'grid-edit-mode',
+    NORMAL_MODE: 'grid-normal-mode'
 };
 
 /*
@@ -108,6 +111,7 @@ export default Marionette.View.extend({
             this.options.showHeader = true;
         }
 
+        this.model = new Backbone.Model({ editMode: options.editMode });
         if (this.options.showHeader) {
             this.headerView = new HeaderView(
                 _.defaultsPure(
@@ -117,15 +121,18 @@ export default Marionette.View.extend({
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
                         isTree: this.options.isTree,
-                        expandOnShow: options.expandOnShow
+                        expandOnShow: options.expandOnShow,
+                        model: this.model
                     },
                     this.options
                 )
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
+            this.listenTo(this.headerView, 'update:width', this.setColumnWidth);
             this.listenTo(this.headerView, 'set:emptyView:width', this.__updateEmptyView);
+            this.listenTo(this.headerView, 'column:set:visibility', this.setColumnVisibility, this);
+            this.listenTo(this.headerView, 'column:move', this.moveColumn, this);
         }
 
         const childView = options.childView || RowView;
@@ -316,6 +323,10 @@ export default Marionette.View.extend({
         dragleave: '__handleDragLeave'
     },
 
+    modelEvents: {
+        'change:editMode': '__toggleEditMode'
+    },
+
     className() {
         return `${this.options.class || ''} grid-container`;
     },
@@ -384,12 +395,12 @@ export default Marionette.View.extend({
         }
         this.setRequired(this.options.required);
         this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
-        this.__updateState();
+        this.__toggleEditMode();
     },
 
     onAttach() {
         this.options.columns.forEach((column, i) => {
-            this.__setColumnWidth(i, column.width);
+            this.setColumnWidth(i, column.width);
         });
         document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
@@ -431,6 +442,7 @@ export default Marionette.View.extend({
             });
         }
 
+        this.__toggleEditMode();
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
     },
 
@@ -438,8 +450,14 @@ export default Marionette.View.extend({
         return this.listView.children;
     },
 
-    update() {
-        this.__updateState();
+    setEditMode(editMode = true) {
+        this.model.set('editMode', editMode);
+    },
+
+    __toggleEditMode() {
+        const isEditMode = this.model.get('editMode');
+        this.el.classList.toggle(classes.EDIT_MODE, !!isEditMode); //"!!"" is necessary for the correct behaviour of the toggle function
+        this.el.classList.toggle(classes.NORMAL_MODE, !isEditMode);
     },
 
     __executeAction(...args) {
@@ -613,10 +631,10 @@ export default Marionette.View.extend({
         const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
         const baseWidth = isMainTheme ? 37 : 42;
         const numberWidth = isMainTheme ? 7.3 : 7.44;
-        this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
+        this.setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
     },
 
-    __setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
+    setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
         const style = this.styleSheet;
         const columnClass = this.columnClasses[index];
 
@@ -655,6 +673,60 @@ export default Marionette.View.extend({
         }
 
         this.__updateEmptyView(allColumnsWidth);
+
+        if (isCheckBoxCell) {
+            return;
+        }
+
+        if (width) {
+            this.options.columns[index].width = width;
+        } else {
+            delete this.options.columns[index].width;
+        }
+
+        if (!isCheckBoxCell) {
+            this.trigger('column:set:width', { columnIndex: index, width });
+        }
+    },
+
+    setColumnVisibility(config) {
+        const { columnIndex, hidden } = config;
+        const isHidden = hidden == null ? false : hidden;
+
+        Array.from(this.el.querySelectorAll(`.${this.columnClasses[columnIndex]}`)).forEach(el => el.classList.toggle(hiddenByUserClass, isHidden));
+
+        this.trigger('column:set:visibility', config);
+    },
+
+    moveColumn(config) {
+        const { oldIndex, newIndex } = config;
+        const headerElementsCollection = this.el.querySelector('.grid-header').children;
+        if (newIndex === oldIndex) {
+            return;
+        }
+        if (newIndex < 0 || newIndex >= headerElementsCollection.length) {
+            return;
+        }
+        const moveElement = el => {
+            const parentElement = el.parentElement;
+            parentElement.removeChild(el);
+            parentElement.insertBefore(el, parentElement.children[newIndex]);
+        };
+        const element = headerElementsCollection[oldIndex];
+
+        moveElement(element);
+
+        const cells = Array.from(this.el.querySelectorAll(`.row > *:nth-child(${oldIndex + 1})`));
+        cells.forEach(row => moveElement(row));
+
+        this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+        this.__moveArrayElement(this.columnClasses, oldIndex, newIndex);
+
+        this.trigger('column:move', config);
+    },
+
+    __moveArrayElement(array, oldIndex, newIndex) {
+        array.splice(newIndex < 0 ? array.length + newIndex : newIndex, 0, array.splice(oldIndex, 1)[0]);
     },
 
     __updateEmptyView(allColumnsWidth) {

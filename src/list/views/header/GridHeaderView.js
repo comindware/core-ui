@@ -2,6 +2,7 @@ import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
+import { hiddenByUserClass } from '../../meta';
 
 /**
  * @name GridHeaderView
@@ -17,7 +18,10 @@ import InfoMessageView from './InfoMessageView';
 
 const classes = {
     expanded: 'collapsible-btn_expanded',
-    dragover: 'dragover'
+    dragover: 'dragover',
+    moveColumnDragger: 'js-move-column-dragger',
+    eyeOpened: 'eye',
+    eyeClosed: 'eye-slash'
 };
 
 const GridHeaderView = Marionette.View.extend({
@@ -45,12 +49,15 @@ const GridHeaderView = Marionette.View.extend({
     className: 'grid-header',
 
     ui: {
-        gridHeaderColumn: '.grid-header-column'
+        gridHeaderColumn: '.grid-header-column',
+        columnMoveDragger: `.${classes.moveColumnDragger}`
     },
 
     events: {
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
+        'mousedown .js-resize-column-dragger': '__handleDraggerMousedown',
+        'mousedown @ui.columnMoveDragger': '__initDragContext',
         'click .js-collapsible-button': '__toggleCollapseAll',
+        'click .js-visibility-btn': '__toggleColumnVisibility',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
@@ -71,7 +78,9 @@ const GridHeaderView = Marionette.View.extend({
             columns: this.options.columns.map(column =>
                 Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
-                    sortingDesc: column.sorting === 'desc'
+                    sortingDesc: column.sorting === 'desc',
+                    eyeIconClass: column.hidden ? classes.eyeOpened : classes.eyeClosed,
+                    hiddenByUserClass: column.hidden ? 'hidden-by-user' : ''
                 })
             )
         };
@@ -113,7 +122,24 @@ const GridHeaderView = Marionette.View.extend({
         this.render();
     },
 
+    __toggleColumnVisibility(event) {
+        const element = event.target.parentElement;
+        const columnIndex = this.__getColumnIndex(element);
+        const column = this.options.columns[columnIndex];
+
+        column.hidden = !column.hidden;
+        this.render();
+        this.trigger('column:set:visibility', { columnIndex, hidden: column.hidden });
+    },
+
+    __getColumnIndex(element) {
+        return Array.from(element.parentElement.children).indexOf(element);
+    },
+
     __handleColumnSort(event) {
+        if (this.options.model && this.options.model.get('editMode')) {
+            return;
+        }
         if (this.options.columnSort === false) {
             return;
         }
@@ -134,18 +160,7 @@ const GridHeaderView = Marionette.View.extend({
         }
     },
 
-    __handleDraggerMousedown(e) {
-        this.__stopDrag();
-        this.__startDrag(e);
-        this.trigger('header:columnResizeStarted');
-        return false;
-    },
-
-    __getElementOuterWidth(el) {
-        return el.getBoundingClientRect().width;
-    },
-
-    __startDrag(e) {
+    __initDragContext(e) {
         const dragger = e.target;
         const column = dragger.parentNode;
 
@@ -160,8 +175,23 @@ const GridHeaderView = Marionette.View.extend({
             dragger,
             draggedColumn
         };
+    },
 
-        dragger.classList.add('active');
+    __handleDraggerMousedown(e) {
+        this.__stopDrag();
+        this.__startDrag(e);
+
+        return false;
+    },
+
+    __getElementOuterWidth(el) {
+        return el.getBoundingClientRect().width;
+    },
+
+    __startDrag(e) {
+        this.__initDragContext(e);
+
+        this.dragContext.dragger.classList.add('active');
 
         document.addEventListener('mousemove', this.__draggerMouseMove);
         document.addEventListener('mouseup', this.__draggerMouseUp);
@@ -198,7 +228,7 @@ const GridHeaderView = Marionette.View.extend({
 
     __draggerMouseUp() {
         this.__stopDrag();
-        this.trigger('header:columnResizeFinished');
+
         return false;
     },
 
@@ -219,7 +249,7 @@ const GridHeaderView = Marionette.View.extend({
 
         this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
 
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        // this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
         this.options.columns[index].width = newColumnWidth;
@@ -236,13 +266,22 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragOver(event) {
-        if (!this.collection.draggingModel) {
-            return;
+        if (this.collection.draggingModel || event.target.classList.contains(classes.moveColumnDragger)) {
+            event.preventDefault();
         }
-        event.preventDefault();
+    },
+
+    __handleModelDragLeave() {
+        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
     },
 
     __handleDragEnter(event) {
+        const target = event.target;
+        event.preventDefault();
+        if (target.classList.contains(classes.moveColumnDragger)) {
+            target.classList.add(classes.dragover);
+        }
+
         this.collection.dragoverModel = undefined;
         if (this.__allowDrop()) {
             this.collection.trigger('dragover:head', event);
@@ -254,17 +293,25 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
+        const target = event.target;
+        if (target.classList.contains(classes.moveColumnDragger)) {
+            target.classList.remove(classes.dragover);
+        }
         if (this.collection.dragoverModel !== undefined) {
             this.collection.trigger('dragleave:head', event);
         }
     },
 
-    __handleModelDragLeave() {
-        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
-    },
-
     __handleDrop(event) {
         event.preventDefault();
+        const target = event.target;
+
+        if (target.classList.contains(classes.moveColumnDragger)) {
+            target.classList.remove(classes.dragover);
+
+            const sourceColumn = this.dragContext.dragger.parentElement;
+            this.trigger('column:move', { oldIndex: this.__getColumnIndex(sourceColumn), newIndex: this.__getColumnIndex(target.parentElement) });
+        }
         if (this.__allowDrop()) {
             this.collection.trigger('drop:head', event);
         }
@@ -285,10 +332,14 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleColumnSelect(event) {
+        const parentElement = event.currentTarget.parentElement;
+        if (!parentElement) {
+            return;
+        }
         this.trigger('handleColumnSelect', {
             event,
             el: event.currentTarget,
-            model: this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
+            model: this.options.columns[Array.prototype.indexOf.call(parentElement.children, event.currentTarget)]
         });
     },
 
