@@ -126,7 +126,7 @@ export default Marionette.View.extend({
 
         let widthAggregator = 0;
         const containerOffsetWidth = container.offsetWidth;
-        const notFitItemIndex = Array.from(container.children).findIndex(el => {
+        const notFitItemIndex = Array.from(container.childNodes[0]).findIndex(el => {
             widthAggregator += outerWidth(el);
             return containerOffsetWidth < widthAggregator;
         });
