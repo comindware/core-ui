@@ -464,13 +464,9 @@ export default Marionette.View.extend({
     __toggleEditMode() {
         const isEditMode = this.model.get('editMode');
         if (isEditMode) {
-            this.el.querySelector('.grid-content-wrp').classList.add('hidden');
-            this.el.querySelector('.cell_selection-index')?.classList.add('no-pointer-events');
             this.el.classList.add(classes.EDIT_MODE);
             this.el.classList.remove(classes.NORMAL_MODE);
         } else {
-            this.el.querySelector('.grid-content-wrp').classList.remove('hidden');
-            this.el.querySelector('.cell_selection-index')?.classList.remove('no-pointer-events');
             this.el.classList.remove(classes.EDIT_MODE);
             this.el.classList.add(classes.NORMAL_MODE);
         }

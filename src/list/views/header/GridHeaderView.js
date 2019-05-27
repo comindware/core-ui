@@ -15,6 +15,8 @@ import InfoMessageView from './InfoMessageView';
  * @param {Object} options.gridEventAggregator ?
  * */
 
+const THROTTLE_DELAY = 100;
+
 const classes = {
     expanded: 'collapsible-btn_expanded',
     dragover: 'dragover',
@@ -39,8 +41,10 @@ const GridHeaderView = Marionette.View.extend({
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
         this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
         this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
+        _.bindAll(this, '__draggerMouseUp', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
+
+        this.__handleThrottledMouseMove = _.throttle(this.__draggerMouseMove.bind(this), THROTTLE_DELAY);
     },
 
     template: Handlebars.compile(template),
@@ -198,7 +202,7 @@ const GridHeaderView = Marionette.View.extend({
 
         this.dragContext.dragger.classList.add('active');
 
-        document.addEventListener('mousemove', this.__draggerMouseMove);
+        document.addEventListener('mousemove', this.__handleThrottledMouseMove);
         document.addEventListener('mouseup', this.__draggerMouseUp);
     },
 
@@ -210,7 +214,7 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
 
-        document.removeEventListener('mousemove', this.__draggerMouseMove);
+        document.removeEventListener('mousemove', this.__handleThrottledMouseMove);
         document.removeEventListener('mouseup', this.__draggerMouseUp);
     },
 
