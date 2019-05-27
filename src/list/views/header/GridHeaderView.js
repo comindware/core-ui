@@ -2,6 +2,7 @@ import { comparators, helpers } from 'utils/index';
 import template from '../../templates/gridheader.hbs';
 import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
+import { hiddenByUserClass } from '../../meta';
 
 /**
  * @name GridHeaderView
@@ -79,14 +80,24 @@ const GridHeaderView = Marionette.View.extend({
     templateContext() {
         const isEditModeString = Boolean(this.options.model.get('editMode')).toString();
         return {
-            columns: this.options.columns.map(column =>
-                Object.assign({}, column, {
+            columns: this.options.columns.map(column => {
+                let headerColumnClass = column.columnClass;
+                if (column.hidden) {
+                    if (!headerColumnClass.match(new RegExp(hiddenByUserClass))) {
+                        headerColumnClass += ` ${hiddenByUserClass}`;
+                    }
+                } else {
+                    headerColumnClass = headerColumnClass.replace(new RegExp(hiddenByUserClass));
+                }
+
+                return Object.assign({}, column, {
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
                     eyeIconClass: column.hidden ? classes.eyeOpened : classes.eyeClosed,
-                    isEditModeString
-                })
-            )
+                    isEditModeString,
+                    headerColumnClass
+                });
+            })
         };
     },
 

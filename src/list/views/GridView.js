@@ -705,9 +705,11 @@ export default Marionette.View.extend({
         const { columnIndex, hidden } = config;
         const isHidden = Boolean(hidden);
 
-        Array.from(this.el.querySelectorAll(`.${this.columnClasses[columnIndex]}`)).forEach(el => {
+        Array.from(this.el.querySelectorAll(`.${this.columnClasses[columnIndex]}:not(.grid-header-column)`)).forEach(el => {
             if (isHidden) {
-                el.classList.add(hiddenByUserClass);
+                if (!el.classList.contains(hiddenByUserClass)) {
+                    el.classList.add(hiddenByUserClass);
+                }
             } else {
                 el.classList.remove(hiddenByUserClass);
             }
