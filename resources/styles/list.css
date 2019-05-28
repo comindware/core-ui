@@ -722,8 +722,8 @@
     cursor: move;
 }
 
-.grid-edit-mode .grid-header-column-title.header-dragover {
-    background: rgba(255, 255, 255, 0.4);
+.grid-edit-mode .grid-header-column.header-dragover {
+    background-color: greenyellow !important;
 }
 
 .grid-edit-mode .grid-content-view .hidden-by-user {

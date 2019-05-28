@@ -66,6 +66,7 @@ const GridHeaderView = Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
+        dragend: '__handleDragEnd',
         'mouseover .grid-header-column': '__handleColumnSelect',
         'click .grid-header-column': '__handleColumnSelect',
         'click .grid-header-column-title': '__handleColumnSort',
@@ -177,7 +178,7 @@ const GridHeaderView = Marionette.View.extend({
 
     __initDragContext(e) {
         const dragger = e.target;
-        const isHeaderColumn = dragger.classList.contains('js-move-column-dragger');
+        const isHeaderColumn = dragger.classList.contains('js-dropable');
         if (isHeaderColumn && !this.options.model.get('editMode')) {
             return;
         }
@@ -283,20 +284,29 @@ const GridHeaderView = Marionette.View.extend({
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
 
-    __handleDragOver(event) {
-        if (this.collection.draggingModel || event.target.classList.contains(classes.moveColumnDragger)) {
-            event.preventDefault();
-        }
-    },
-
     __handleModelDragLeave() {
         this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
     },
 
+    __handleModelDragOver() {
+        this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
+    },
+
+    __handleDragOver(event) {
+        if (this.collection.draggingModel || event.target.classList.contains('js-dropable')) {
+            event.preventDefault();
+        }
+    },
+
     __handleDragEnter(event) {
+        const target = this.__getTargetColumn(event.target);
+        if (target === this.__getTargetColumn(this.dragContext.draggedColumn.el)) {
+            return;
+        }
         event.preventDefault();
+        this.dragContext.previousDragOver = target;
         if (this.dragContext && this.dragContext.isHeaderColumn) {
-            event.target.classList.add(classes.headerDragover);
+            target.classList.add(classes.headerDragover);
             return;
         }
 
@@ -306,12 +316,12 @@ const GridHeaderView = Marionette.View.extend({
         }
     },
 
-    __handleModelDragOver() {
-        this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
-    },
-
     __handleDragLeave(event) {
-        const target = event.target;
+        const target = this.__getTargetColumn(event.target);
+
+        if (this.dragContext.previousDragOver === target) {
+            return;
+        }
         if (this.dragContext && this.dragContext.isHeaderColumn) {
             target.classList.remove(classes.headerDragover);
             return;
@@ -323,19 +333,36 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleDrop(event) {
         event.preventDefault();
-        const target = event.target;
-
+        const target = this.__getTargetColumn(event.target);
         if (this.dragContext && this.dragContext.isHeaderColumn) {
             target.classList.remove(classes.headerDragover);
 
-            const sourceColumn = this.dragContext.dragger.parentElement;
-            this.trigger('column:move', { oldIndex: this.__getColumnIndex(sourceColumn), newIndex: this.__getColumnIndex(target.parentElement) });
-            delete this.dragContext;
+            const sourceColumn = this.__getTargetColumn(this.dragContext.dragger);
+            this.trigger('column:move', { oldIndex: this.__getColumnIndex(sourceColumn), newIndex: this.__getColumnIndex(target) });
+
             return;
         }
         if (this.__allowDrop()) {
             this.collection.trigger('drop:head', event);
         }
+    },
+
+    __handleDragEnd(event) {
+        if (!this.dragContext.previousDragOver) {
+            return;
+        }
+        this.__getTargetColumn(this.dragContext.previousDragOver).classList.remove(classes.headerDragover);
+        delete this.dragContext;
+    },
+
+    __getTargetColumn(target) {
+        if (target.classList.contains('grid-header')) {
+            return target.childNodes[0];
+        }
+        if (target.classList.contains('grid-header-column')) {
+            return target;
+        }
+        return target.parentElement;
     },
 
     __allowDrop() {
