@@ -46,6 +46,7 @@ const onRender = function() {
 };
 
 const onChange = function() {
+    this.__previousValue = this.value;
     if (this.model && this.schema.autocommit) {
         this.commit();
     }
@@ -123,6 +124,8 @@ export default {
                     this.value = null;
                 }
 
+                this.__previousValue = this.value;
+
                 this.key = options.key;
                 this.form = options.form;
                 this.field = options.field;
@@ -139,6 +142,7 @@ export default {
                     if (this.$el) {
                         this.__updateEmpty();
                     }
+                    this.__previousValue = this.value;
                 });
 
                 // ToDo fix: if schema autocommit false take undefined value from options.autocommit
@@ -415,10 +419,8 @@ export default {
             },
 
             checkChange() {
-                if (this.model) {
-                    if (this.value !== this.model.get(this.key)) {
-                        this.__triggerChange();
-                    }
+                if (this.__previousValue !== this.value) {
+                    this.__triggerChange();
                 }
             },
 
@@ -433,8 +435,8 @@ export default {
                 this.trigger('focus', this);
             },
 
-            onBlur(options = {}) {
-                if (options.triggerChange === undefined || options.triggerChange === true) {
+            onBlur({ triggerChange = true } = {}) {
+                if (triggerChange) {
                     this.checkChange();
                 }
                 this.$el.removeClass(classes.FOCUSED);
