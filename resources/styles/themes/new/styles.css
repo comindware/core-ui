@@ -231,7 +231,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .layout__horizontal-layout > div:not(:last-child),
 .layout__horizontal-layout-list-item:not(:last-child) {
-  margin-right: 10px;
+  padding-right: 10px;
 }
 
 .layout__vertical-layout > div,

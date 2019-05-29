@@ -5,11 +5,13 @@
     justify-content: stretch;
     align-items: stretch;
     flex-shrink: 0;
+    flex-wrap: wrap;
 }
 
 .layout__horizontal-layout > * {
-    flex: 1 1 0%;
+    flex: 1 1 200px;
     overflow-x: auto;
+    min-width: 200px;
 }
 
 .layout__horizontal-layout-list {
