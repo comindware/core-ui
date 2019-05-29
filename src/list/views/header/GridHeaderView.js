@@ -292,6 +292,10 @@ const GridHeaderView = Marionette.View.extend({
         this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
     },
 
+    __clearDragOverStatus() {
+        this.el.childNodes.forEach(el => el.classList && el.classList.remove(classes.headerDragover));
+    },
+
     __handleDragOver(event) {
         if (this.collection.draggingModel || event.target.classList.contains('js-dropable')) {
             event.preventDefault();
@@ -300,13 +304,16 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleDragEnter(event) {
         const target = this.__getTargetColumn(event.target);
-        if (target === this.__getTargetColumn(this.dragContext.draggedColumn.el)) {
-            return;
-        }
-        event.preventDefault();
-        this.dragContext.previousDragOver = target;
+
+        this.__clearDragOverStatus();
+
         if (this.dragContext && this.dragContext.isHeaderColumn) {
-            target.classList.add(classes.headerDragover);
+            if (target === this.__getTargetColumn(this.dragContext.draggedColumn.el)) {
+                return;
+            }
+            event.preventDefault();
+            target?.classList.add(classes.headerDragover);
+
             return;
         }
 
@@ -317,15 +324,6 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        const target = this.__getTargetColumn(event.target);
-
-        if (this.dragContext.previousDragOver === target) {
-            return;
-        }
-        if (this.dragContext && this.dragContext.isHeaderColumn) {
-            target.classList.remove(classes.headerDragover);
-            return;
-        }
         if (this.collection.dragoverModel !== undefined) {
             this.collection.trigger('dragleave:head', event);
         }
@@ -348,6 +346,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragEnd(event) {
+        this.__clearDragOverStatus();
         if (!this.dragContext.previousDragOver) {
             return;
         }
@@ -362,7 +361,9 @@ const GridHeaderView = Marionette.View.extend({
         if (target.classList.contains('grid-header-column')) {
             return target;
         }
-        return target.parentElement;
+        if (target.parentElement.classList.contains('grid-header-column')) {
+            return target.parentElement;
+        }
     },
 
     __allowDrop() {
