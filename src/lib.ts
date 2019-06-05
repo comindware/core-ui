@@ -1,5 +1,6 @@
 /* Data & Datatime utils*/
-
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // @ts-ignore
 import moment_ from 'moment-timezone';
 import '../node_modules/moment-timezone/moment-timezone-utils';

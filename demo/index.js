@@ -1,6 +1,8 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import 'styles/defaultFontawesome.css';
 import 'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
-import 'node_modules/@fortawesome/fontawesome-free/css/solid.css';
+//import 'node_modules/@fortawesome/fontawesome-free/css/solid.css';
 import '../dist/core.css';
 import 'styles/demo.css';
 import core from 'comindware/core';
