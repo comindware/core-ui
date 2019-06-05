@@ -13,7 +13,8 @@ export default Marionette.CollectionView.extend({
 
     templateContext() {
         return {
-            text: this.model.get('name')
+            text: this.model.get('name'),
+            eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass
         };
     },
 
@@ -25,6 +26,10 @@ export default Marionette.CollectionView.extend({
 
     childView(childModel) {
         return NodeViewFactory.getNodeView(childModel);
+    },
+
+    childViewOptions() {
+        return _.omit(this.options, 'parent', 'model');
     },
 
     childViewContainer: '.js-branch-collection'

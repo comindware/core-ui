@@ -101,5 +101,5 @@ const createTreeModel = treeObj => {
 };
 
 export default function() {
-    return new Core.components.TreeEditor({ model: createTreeModel(tree) });
+    return new Core.components.TreeEditor({ model: createTreeModel(tree), eyeIconClass: 'cat', closedEyeIconClass: 'plus' });
 }

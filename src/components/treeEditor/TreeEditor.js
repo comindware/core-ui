@@ -2,7 +2,8 @@ import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
 
 const defaultOptions = {
-    eyeIconClass: 'eye'
+    eyeIconClass: 'eye',
+    closedEyeIconClass: 'eye-slash'
 };
 
 export default class treeVisualEditor {
@@ -14,9 +15,13 @@ export default class treeVisualEditor {
             buttonViewOptions: {
                 iconClass: options.eyeIconClass
             },
+
             panelView: NodeViewFactory.getNodeView(options.model),
             panelViewOptions: {
-                model: options.model
+                model: options.model,
+                eyeIconClass: options.eyeIconClass,
+                closedEyeIconClass: options.closedEyeIconClass,
+                maxWidth: 300
             }
         });
     }
