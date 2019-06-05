@@ -28,9 +28,7 @@ const themeTask = name => {
                 apply({
                     sets: theme.apply
                 }),
-                autoprefixer({
-                    browsers: ['ie 11', '> 0.25%', 'not chrome 29']
-                }),
+                autoprefixer(),
                 cssnano({
                     preset: [
                         'default',

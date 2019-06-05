@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const pathResolver = require('./pathResolver');
 const jsFileName = 'core.js';
@@ -84,11 +83,7 @@ module.exports = options => {
                             options: {
                                 sourceMap: true,
                                 plugins: () => {
-                                    const plugins = [
-                                        autoprefixer({
-                                            browsers: ['ie 11', '> 0.25%', 'not chrome 29']
-                                        })
-                                    ];
+                                    const plugins = [require('postcss-preset-env')()];
                                     if (UGLIFY) {
                                         plugins.push(
                                             cssnano({
@@ -128,26 +123,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /\.eot(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-eot'
-                    }
-                },
-                {
-                    test: /\.ttf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-ttf'
-                    }
-                },
-                {
                     test: /\.woff2(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -155,16 +130,6 @@ module.exports = options => {
                         name: '[path][name].[ext]',
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff2'
-                    }
-                },
-                {
-                    test: /\.otf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'font/opentype'
                     }
                 },
                 {
