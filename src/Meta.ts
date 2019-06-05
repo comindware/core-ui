@@ -73,7 +73,9 @@ export const iconsNames = {
     delete: 'trash-alt',
     download: 'download',
     previous: 'chevron-left',
-    next: 'chevron-right'
+    next: 'chevron-right',
+    user: 'address-card',
+    users: 'users'
 };
 
 export const objectPropertyFormats = {

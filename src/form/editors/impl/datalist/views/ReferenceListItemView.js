@@ -1,5 +1,6 @@
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
+import { htmlHelpers } from '../../../../../utils';
 
 const classes = {
     SELECTED: 'editor_checked'
@@ -23,8 +24,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const text = this.options.getDisplayText(this.model.toJSON());
+
         return {
-            text: this.options.getDisplayText(this.model.toJSON()),
+            textForTitle: htmlHelpers.getTextfromHTML(text),
+            text,
             showCheckboxes: this.options.showCheckboxes
         };
     },

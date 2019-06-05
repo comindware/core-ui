@@ -1,6 +1,9 @@
 .layout__button {
     flex: none;
 }
+.layout__horizontal-layout > .layout__button {
+    align-self: baseline;
+}
 .btn {
     display: inline-block;
     cursor: pointer;

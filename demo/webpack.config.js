@@ -81,32 +81,12 @@ module.exports = () => {
                                         ie: 11
                                     },
                                     useBuiltIns: 'usage',
-                                    corejs: 3,
+                                    corejs: '3.1',
                                     modules: false
                                 }
                             ]
                         ],
                         plugins: [require('@babel/plugin-syntax-dynamic-import')]
-                    }
-                },
-                {
-                    test: /\.eot(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-eot'
-                    }
-                },
-                {
-                    test: /\.ttf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-ttf'
                     }
                 },
                 {

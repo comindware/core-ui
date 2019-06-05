@@ -3,6 +3,7 @@ import MembersSplitController from './impl/membersSplit/controller/MembersSplitC
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
+import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
@@ -89,6 +90,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
                 memberTypes: options.memberService.memberTypes
             });
         }
+
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitController(this.options);

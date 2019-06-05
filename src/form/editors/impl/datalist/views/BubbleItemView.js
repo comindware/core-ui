@@ -2,6 +2,7 @@
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import meta from '../meta';
+import { htmlHelpers } from '../../../../../utils';
 
 export default Marionette.View.extend({
     template: Handlebars.compile('{{{customTemplate}}}'),
@@ -22,7 +23,7 @@ export default Marionette.View.extend({
     attributes() {
         return {
             draggable: true,
-            title: this.options.getDisplayText(this.options.model.attributes),
+            title: htmlHelpers.getTextfromHTML(this.options.getDisplayText(this.options.model.attributes)),
             tabindex: '-1'
         };
     },

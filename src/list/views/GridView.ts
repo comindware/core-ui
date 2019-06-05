@@ -301,6 +301,10 @@ export default Marionette.View.extend({
         this.searchView.toggleInputActivity(enableSearch);
     },
 
+    toggleSearchActivity(enableSearch) {
+        this.searchView.toggleInputActivity(enableSearch);
+    },
+
     onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();

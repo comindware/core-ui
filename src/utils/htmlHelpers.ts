@@ -86,5 +86,16 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
         const regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
         return text.replace(regex, url => `<a href="${url}">${url}</a>`);
+    },
+
+    /**
+     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt;.
+     * @param {String} htmlText HTML to escape all tags info.
+     * @return {String} Escaped text
+     * */
+    getTextfromHTML(htmlText = '') {
+        return String(htmlText)
+            .replace(/<[^>]*>/g, '', '')
+            .replace(/"/g, '&quot;');
     }
 };
