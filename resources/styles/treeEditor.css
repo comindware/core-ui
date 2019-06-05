@@ -1,0 +1,56 @@
+.branch-collection,
+.branch-item {
+    margin: 5px 5px;
+}
+
+.leaf-item {
+    margin: 0;
+    padding: 5px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.leaf-name {
+    padding-left: 10px;
+}
+
+.leaf-item:hover, .branch-header:hover {
+    background: #d6e7f2;
+    color: #0575bd;
+}
+
+.leaf-item, .branch-header {
+    cursor: move;
+}
+
+.eye-btn {
+    cursor: pointer;
+}
+
+.branch-header {
+    border-bottom: 1px solid grey;
+    margin: 0;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.branch-header-name {
+    font-weight: 800;
+    font-size: 1.1em;
+}
+
+.branch-collection {
+    
+}
+
+.branch-item {
+    border: 1px solid grey;
+    margin-bottom: 10px;
+}
+
+
+

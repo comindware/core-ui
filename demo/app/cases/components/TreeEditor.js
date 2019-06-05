@@ -1,40 +1,40 @@
 const tree = {
     id: '1',
-    name: '--root--',
+    name: 'Root',
     isContainer: true,
     childrenAttribute: 'rows',
     childrens: [
         {
             id: '2.1',
-            name: '--text--'
+            name: 'Single item'
         },
         {
             id: '2.2',
-            name: '--tabs--',
+            name: 'Tabs',
             isContainer: true,
             childrenAttribute: 'tabs',
             childrens: [
                 {
                     id: '3.1',
-                    name: 'item1'
+                    name: 'tab1'
                 },
                 {
                     id: '3.2',
-                    name: 'item2'
+                    name: 'tab2'
                 },
                 {
                     id: '3.5',
-                    name: '--rows--',
+                    name: 'tab3',
                     isContainer: true,
                     childrenAttribute: 'rows',
                     childrens: [
                         {
                             id: '4.1',
-                            name: 'lebel4_1'
+                            name: 'item1'
                         },
                         {
                             id: '4.2',
-                            name: 'lebel4_2'
+                            name: 'item2'
                         }
                     ]
                 }
@@ -42,17 +42,33 @@ const tree = {
         },
         {
             id: '2.3',
-            name: '--columns--',
+            name: 'Genious',
             isContainer: true,
             childrenAttribute: 'columns',
             childrens: [
                 {
                     id: '3.3',
-                    name: 'hello1'
+                    name: 'Pasha'
                 },
                 {
                     id: '3.4',
-                    name: 'hello2'
+                    name: 'Tony'
+                }
+            ]
+        },
+        {
+            id: '2.4',
+            name: 'Average',
+            isContainer: true,
+            childrenAttribute: 'columns',
+            childrens: [
+                {
+                    id: '3.5',
+                    name: 'Stas'
+                },
+                {
+                    id: '3.6',
+                    name: 'Vlad'
                 }
             ]
         }

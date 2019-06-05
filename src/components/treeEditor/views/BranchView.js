@@ -1,5 +1,6 @@
 import NodeViewFactory from '../services/NodeViewFactory';
 import template from '../templates/branch.hbs';
+import eyeBehavior from '../behaviors/eyeBehavior';
 
 export default Marionette.CollectionView.extend({
     initialize(options) {
@@ -8,13 +9,23 @@ export default Marionette.CollectionView.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'branch-item',
+
     templateContext() {
         return {
             text: this.model.get('name')
         };
     },
 
+    behaviors: {
+        eyeBehavior: {
+            behaviorClass: eyeBehavior
+        }
+    },
+
     childView(childModel) {
         return NodeViewFactory.getNodeView(childModel);
-    }
+    },
+
+    childViewContainer: '.js-branch-collection'
 });
