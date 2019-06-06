@@ -20,12 +20,12 @@
     color: #0575bd;
 }
 
-.tree-item {
+.tree-item[draggable="true"] {
     cursor: move;
 }
 
 .tree-item.dragover {
-    border: 2px solid red;
+    /* border: 2px solid red; TODO enable this after fix drag handling */
 }
 
 .eye-btn {

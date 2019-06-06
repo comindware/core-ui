@@ -113,7 +113,7 @@ export default function() {
         return model.get('name');
     };
 
-    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), eyeIconClass: 'cat', closedEyeIconClass: 'plus', getNodeName });
+    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName });
     view.listenTo(view, 'save', config => console.log(config));
 
     return view;

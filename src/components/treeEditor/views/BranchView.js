@@ -1,41 +1,26 @@
 import NodeViewFactory from '../services/NodeViewFactory';
 import template from '../templates/branch.hbs';
-import eyeBehavior from '../behaviors/eyeBehavior';
+import NodeViewConfig from '../services/NodeViewConfig';
 
-export default Marionette.CollectionView.extend({
-    initialize(options) {
-        this.collection = options.model.get(options.model.childrenAttribute);
-    },
+export default Marionette.CollectionView.extend(
+    Object.assign(
+        {
+            initialize(options) {
+                this.collection = options.model.get(options.model.childrenAttribute);
+            },
 
-    template: Handlebars.compile(template),
+            className: 'branch-item',
 
-    templateContext() {
-        return {
-            text: this.options.getNodeName && typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
-            eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass,
-            elementId: _.uniqueId('treeEditor_')
-        };
-    },
+            childView(childModel) {
+                return NodeViewFactory.getNodeView(childModel);
+            },
 
-    id() {
-        return _.uniqueId('treeEditor_');
-    },
+            childViewOptions() {
+                return _.omit(this.options, 'parent', 'model');
+            },
 
-    behaviors: {
-        eyeBehavior: {
-            behaviorClass: eyeBehavior
-        }
-    },
-
-    className: 'branch-item',
-
-    childView(childModel) {
-        return NodeViewFactory.getNodeView(childModel);
-    },
-
-    childViewOptions() {
-        return _.omit(this.options, 'parent', 'model');
-    },
-
-    childViewContainer: '.js-branch-collection'
-});
+            childViewContainer: '.js-branch-collection'
+        },
+        NodeViewConfig(template)
+    )
+);
