@@ -2,7 +2,8 @@ const classes = {
     hiddenClass: 'hidden-node',
     dragover: 'dragover'
 };
-const dataTransferKey = 'tree-editor-drag-source';
+const dataTransferKey = 'source-datatransfer-key';
+const isHiddenPropName = 'isHidden';
 
 export default Marionette.Behavior.extend({
     initialize() {
@@ -34,31 +35,31 @@ export default Marionette.Behavior.extend({
             return;
         }
 
-        const isHidden = model.get('isHidden');
+        const isHidden = model.get(isHiddenPropName);
 
-        model.set('isHidden', !isHidden);
+        model.set(isHiddenPropName, !isHidden);
     },
 
     __handleHiddenChange() {
-        // this.view.options.reqres.request('personalFormConfiguration:setWidgetConfig', this.view.model.get('id'), { isHidden: this.view.model.get('isHidden') });
+        this.view.options.reqres.request('personalFormConfiguration:setWidgetConfig', this.view.model.id, { isHidden: this.view.model.get('isHidden') });
         this.view.render();
         this.__toggleHiddenClass();
     },
 
     __toggleHiddenClass() {
-        const isHidden = !!this.view.model.get('isHidden');
+        const isHidden = !!this.view.model.get(isHiddenPropName);
 
         this.el.classList.toggle(classes.hiddenClass, isHidden);
     },
 
     __handleDragStart(event) {
         event.stopPropagation();
+        this.view.model.collection.draggingModel = this.view.model;
         event.originalEvent.dataTransfer.setData(dataTransferKey, this.__isBranch(event.target) ? event.target.parentNode.id : event.target.id);
     },
 
     __handleDragEnter(event) {
         event.preventDefault();
-        // const element = this.__getDragoverParent(event.target);
         const element = event.target;
         // if (this.__IsInvalidDropTarget(trueTarget, sourceElement)) {
         //     return false;
@@ -87,16 +88,29 @@ export default Marionette.Behavior.extend({
         event.stopPropagation();
         const targetElement = this.__getDragoverParent(event.target);
         const sourceElement = document.getElementById(event.originalEvent.dataTransfer.getData(dataTransferKey));
-        targetElement.classList.remove(classes.dragover);
 
         const trueTarget = this.__isBranch(targetElement) ? targetElement.parentNode : targetElement;
+        trueTarget.classList.remove(classes.dragover);
 
         if (this.__IsInvalidDropTarget(trueTarget, sourceElement)) {
             return false;
         }
 
-        sourceElement.remove();
-        trueTarget.parentNode.insertBefore(sourceElement, trueTarget.nextSibling);
+        const collection = this.view.model.collection;
+        const draggingModel = collection.draggingModel;
+        const oldIndex = collection.indexOf(draggingModel);
+        const newIndex = Array.from(trueTarget.parentElement.childNodes).indexOf(trueTarget);
+
+        collection.remove(draggingModel);
+        collection.add(draggingModel, { at: newIndex });
+
+        const startIndex = oldIndex > newIndex ? newIndex : oldIndex;
+        const endIndex = oldIndex > newIndex ? oldIndex : newIndex;
+        const reqres = this.view.options.reqres;
+
+        for (let i = startIndex; i <= endIndex; i++) {
+            reqres.request('personalFormConfiguration:setWidgetConfig', collection.at(i).id, { index: i });
+        }
     },
 
     __getDragoverParent(elem) {
