@@ -14,8 +14,13 @@ export default Marionette.CollectionView.extend({
     templateContext() {
         return {
             text: this.model.get('name'),
-            eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass
+            eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass,
+            elementId: _.uniqueId('treeEditor_')
         };
+    },
+
+    id() {
+        return _.uniqueId('treeEditor_');
     },
 
     behaviors: {

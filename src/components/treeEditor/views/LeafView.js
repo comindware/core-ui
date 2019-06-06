@@ -15,7 +15,11 @@ export default Marionette.View.extend({
         draggable: 'true'
     },
 
-    className: 'leaf-item',
+    id() {
+        return _.uniqueId('treeEditor_');
+    },
+
+    className: 'leaf-item tree-item',
 
     behaviors: {
         eyeBehavior: {

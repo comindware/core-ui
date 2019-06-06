@@ -15,13 +15,30 @@
     padding-left: 10px;
 }
 
-.leaf-item:hover, .branch-header:hover {
+/* .leaf-item:hover, .branch-header:hover {
+    background: #d6e7f2;
+    color: #0575bd;
+} */
+
+/* .leaf-item.dragover, .branch-header.dragover {
+    border-bottom: 2px solid red;
+} */
+
+/* .leaf-item, .branch-header {
+    cursor: move;
+} */
+
+.tree-item:hover {
     background: #d6e7f2;
     color: #0575bd;
 }
 
-.leaf-item, .branch-header {
+.tree-item {
     cursor: move;
+}
+
+.tree-item.dragover {
+    border-bottom: 2px solid red;
 }
 
 .eye-btn {
