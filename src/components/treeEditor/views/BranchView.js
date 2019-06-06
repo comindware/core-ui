@@ -9,11 +9,9 @@ export default Marionette.CollectionView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'branch-item',
-
     templateContext() {
         return {
-            text: this.model.get('name'),
+            text: this.options.getNodeName && typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
             eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass,
             elementId: _.uniqueId('treeEditor_')
         };
@@ -28,6 +26,8 @@ export default Marionette.CollectionView.extend({
             behaviorClass: eyeBehavior
         }
     },
+
+    className: 'branch-item',
 
     childView(childModel) {
         return NodeViewFactory.getNodeView(childModel);

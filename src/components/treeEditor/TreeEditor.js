@@ -4,7 +4,8 @@ import NodeViewFactory from './services/NodeViewFactory';
 const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
-    configDiff: {}
+    configDiff: {},
+    getNodeName: undefined
 };
 
 export default class treeVisualEditor {
@@ -22,13 +23,10 @@ export default class treeVisualEditor {
             },
 
             panelView: NodeViewFactory.getNodeView(options.model),
-            panelViewOptions: {
-                model: options.model,
-                eyeIconClass: options.eyeIconClass,
-                closedEyeIconClass: options.closedEyeIconClass,
+            panelViewOptions: Object.assign({}, options, {
                 reqres,
                 maxWidth: 300
-            }
+            })
         });
 
         reqres.reply('personalFormConfiguration:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));

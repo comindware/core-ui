@@ -6,24 +6,24 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            text: this.model.get('name'),
+            text: this.options.getNodeName && typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
             eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass
         };
-    },
-
-    attributes: {
-        draggable: 'true'
     },
 
     id() {
         return _.uniqueId('treeEditor_');
     },
 
-    className: 'leaf-item tree-item',
-
     behaviors: {
         eyeBehavior: {
             behaviorClass: eyeBehavior
         }
-    }
+    },
+
+    attributes: {
+        draggable: 'true'
+    },
+
+    className: 'leaf-item tree-item'
 });

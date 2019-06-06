@@ -109,8 +109,12 @@ export default function() {
         return new TreeNode(treeObj);
     };
 
-    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), eyeIconClass: 'cat', closedEyeIconClass: 'plus' });
-    view.on('save', config => console.log(config));
+    const getNodeName = model => {
+        return model.get('name');
+    };
+
+    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), eyeIconClass: 'cat', closedEyeIconClass: 'plus', getNodeName });
+    view.listenTo(view, 'save', config => console.log(config));
 
     return view;
 }
