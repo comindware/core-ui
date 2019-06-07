@@ -61,5 +61,20 @@
     color: #d4d4d4;
 }
 
+.hidden-by-tree-editor {
+    display: none;
+}
+
+.js-no-columns-message {
+    height: 100px;
+    width: 100%;
+}
+
+.grid-container .dropdown__wrp_down {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
 
 

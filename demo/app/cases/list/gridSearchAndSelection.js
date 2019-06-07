@@ -75,6 +75,7 @@ export default function() {
         collection: new Backbone.Collection(dataArray),
         draggable: true,
         showRowIndex: true,
+        showTreeEditor: true,
         excludeActions: ['delete'],
         additionalActions: [
             {

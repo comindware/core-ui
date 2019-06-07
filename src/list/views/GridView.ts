@@ -52,7 +52,8 @@ const defaultOptions = options => ({
     showHeader: true,
     handleSearch: true,
     updateToolbarEvents: '',
-    childHeight: 35
+    childHeight: 35,
+    showTreeEditor: false
 });
 
 const config = {
@@ -211,6 +212,9 @@ export default Marionette.View.extend({
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
+        if (this.options.showTreeEditor) {
+            this.__initTreeEditor();
+        }
     },
 
     updatePosition(position, shouldScrollElement = false) {
@@ -311,6 +315,7 @@ export default Marionette.View.extend({
     },
 
     regions: {
+        treeEditorRegion: '.js-grid-tree-editor-region',
         headerRegion: '.js-grid-header-view',
         contentRegion: {
             el: '.js-grid-content-view',
@@ -364,6 +369,10 @@ export default Marionette.View.extend({
             this.showChildView('headerRegion', this.headerView);
         } else {
             this.el.classList.add('grid__headless');
+        }
+
+        if (this.options.showTreeEditor) {
+            this.showChildView('treeEditorRegion', this.treeEditorView);
         }
 
         if (this.options.showToolbar) {
@@ -983,5 +992,76 @@ export default Marionette.View.extend({
 
     __onItemMoved(...args) {
         this.trigger('move', ...args);
+    },
+
+    __initTreeEditor() {
+        const columnsCollection = new Backbone.Collection(this.options.columns);
+        columnsCollection.map(model => {
+            model.id = model.get('key');
+            this.listenTo(model, 'change:isHidden', model => this.__toggleColumnVisibility(model.id, model.get('isHidden')));
+
+            return model;
+        });
+        this.treeModel = new Backbone.Model({
+            title: 'LabelName ( TODO )', //TODO Localize, getNodeName
+            columnsCollection
+        });
+
+        this.treeModel.id = _.uniqueId('treeModelRoot');
+        this.treeModel.isContainer = !!this.options.columns.length;
+        this.treeModel.childrenAttribute = 'columnsCollection';
+        this.treeEditorView = new Core.components.TreeEditor({
+            model: this.treeModel,
+            getNodeName(model) {
+                return model.get('title');
+            }
+        });
+    },
+
+    __toggleColumnVisibility(key: string, isHidden: boolean) {
+        const columns = this.options.columns;
+        const index = columns.findIndex(item => item.key === key);
+        const columnToBeHidden = columns[index];
+
+        if (isHidden) {
+            columnToBeHidden.hidden = isHidden;
+        } else {
+            delete columnToBeHidden.hidden;
+        }
+
+        let elementIndex = index + 1;
+        if (this.el.querySelector('.cell_selection-index')) {
+            elementIndex += 1;
+        }
+
+        const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
+        this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+
+        const cellSelector = `.visible-collection tr > *:nth-child(${elementIndex})`;
+        Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
+            element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+        });
+
+        this.__toggleNoColumnsMessage(columns);
+    },
+
+    __toggleNoColumnsMessage(columns: Array<object>) {
+        let hiddenColumnsCounter = 0;
+        columns.forEach(col => {
+            if (col.hidden) {
+                hiddenColumnsCounter++;
+            }
+        });
+        if (hiddenColumnsCounter === columns.length) {
+            const noColumnsMessage = document.createElement('div');
+            noColumnsMessage.innerText = 'All columns are hidden';
+            noColumnsMessage.classList.add('js-no-columns-message', 'empty-view', 'empty-view_text');
+
+            this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
+            this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+        } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.js-no-columns-message')) {
+            this.el.querySelector('.js-no-columns-message').remove();
+            this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
+        }
     }
 });

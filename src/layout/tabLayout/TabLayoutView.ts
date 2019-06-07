@@ -47,21 +47,7 @@ export default Marionette.View.extend({
             return s;
         }, {});
 
-        this.treeModel = new Backbone.Model({
-            name: 'Vkladki ( TODO )', //TODO Localize, getNodeName
-            rows: this.__tabsCollection
-        });
-        this.__tabsCollection.forEach(tabModel => {
-            tabModel.isContainer = true;
-            tabModel.childrenAttribute = 'tabComponents';
-            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: tabModel.get('view').el.className }])); //TODO generate childrens
-        });
-        this.treeModel.id = _.uniqueId('treeModelRoot');
-        this.treeModel.isContainer = !!this.__tabsCollection.length;
-        this.treeModel.childrenAttribute = 'rows';
-        this.treeEditorView = new Core.components.TreeEditor({
-            model: this.treeModel
-        });
+        this.__initTreeEditor();
     },
 
     template: Handlebars.compile(template),
@@ -343,5 +329,23 @@ export default Marionette.View.extend({
 
     __handleStepperSelect(model: Backbone.Model): void {
         this.__handleSelect(model);
+    },
+
+    __initTreeEditor() {
+        this.treeModel = new Backbone.Model({
+            name: 'Vkladki ( TODO )', //TODO Localize, getNodeName
+            rows: this.__tabsCollection
+        });
+        this.__tabsCollection.forEach(tabModel => {
+            tabModel.isContainer = true;
+            tabModel.childrenAttribute = 'tabComponents';
+            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: tabModel.get('view').el.className }])); //TODO generate childrens
+        });
+        this.treeModel.id = _.uniqueId('treeModelRoot');
+        this.treeModel.isContainer = !!this.__tabsCollection.length;
+        this.treeModel.childrenAttribute = 'rows';
+        this.treeEditorView = new Core.components.TreeEditor({
+            model: this.treeModel
+        });
     }
 });
