@@ -48,7 +48,6 @@ Marionette_.setDomApi(domapi);
 
 (<any>window).Marionette = Marionette_;
 
-
 const api = {
     moment: moment_,
     Handlebars: Handlebars_,

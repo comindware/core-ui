@@ -15,10 +15,6 @@
 
 <http://comindware.com/text#core> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:exportToJs true; l10n:category "Common"; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:46:53.3006130Z"; l10n:modificationDate "2015-07-30T12:59:21.9697510Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "core"].
 
-<http://comindware.com/text/core#bootstrapper> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-10T12:44:49.5992342Z"; l10n:modificationDate "2015-08-10T12:44:49.5992342Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
-
-<http://comindware.com/text/core#common> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:18:14.2812483Z"; l10n:modificationDate "2018-10-31T15:18:14.2812483Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "common"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
 <http://comindware.com/text/core#demo> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-11-13T12:29:16.6409755Z"; l10n:modificationDate "2015-11-13T12:29:16.6409755Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "demo"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core#form> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:47:40.1382897Z"; l10n:modificationDate "2015-07-30T12:59:25.0490589Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "form"].
@@ -32,24 +28,6 @@
 <http://comindware.com/text/core#services> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-04T18:25:00.7005697Z"; l10n:modificationDate "2015-08-04T18:25:00.6995697Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
 <http://comindware.com/text/core#views> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-17T19:48:25.8759207Z"; l10n:modificationDate "2015-08-17T19:48:25.8759207Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
-
-<http://comindware.com/text/core/bootstrapper#errors> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-10T12:45:46.3662342Z"; l10n:modificationDate "2015-08-10T12:45:46.3662342Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
-
-<http://comindware.com/text/core/bootstrapper/errors#default> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-10T12:46:42.1472342Z"; l10n:modificationDate "2015-08-10T12:46:42.1472342Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
-
-<http://comindware.com/text/core/bootstrapper/errors/default#description> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:modifiedBy "Stepan Burguchev"; l10n:modificationDate "2015-08-10T12:47:32.8182342Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "The requested action failed due to server error. Please contact your system administrator or view the Event Log on the server."; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/bootstrapper/errors/default#title> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-10T12:47:03.0362342Z"; l10n:modificationDate "2015-08-10T12:47:03.0362342Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Internal Server Error"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/common#dragMe> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:24:32.5074407Z"; l10n:modificationDate "2018-10-31T15:24:34.9813828Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Drag and drop"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/common#hideAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:28:52.4734783Z"; l10n:modificationDate "2018-10-31T15:28:55.4544571Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/common#notset> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-09-11T11:42:04.3444162Z"; l10n:modificationDate "2018-11-15T14:43:25.7952562Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
-
-<http://comindware.com/text/core/common#save> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:18:21.4296605Z"; l10n:modificationDate "2018-10-31T15:18:36.4964440Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Save"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/common#showAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-10-31T15:29:17.7047675Z"; l10n:modificationDate "2018-10-31T15:29:27.9648631Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Show all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/demo#cases> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-11-13T12:29:29.6069755Z"; l10n:modificationDate "2015-11-13T12:29:29.6069755Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "cases"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
@@ -72,8 +50,6 @@
 <http://comindware.com/text/core/form/editors#bubbleSelect> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-05-06T14:59:54.3493379Z"; l10n:modificationDate "2016-01-13T11:30:51.4448623Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "bubbleSelect"].
 
 <http://comindware.com/text/core/form/editors#code> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2017-10-04T08:50:28.9558521Z"; l10n:modificationDate "2017-10-04T08:50:28.9558521Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "code"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/form/editors#collection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-30T07:50:52.9669462Z"; l10n:modificationDate "2015-09-03T15:21:01.3350996Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "collection"].
 
 <http://comindware.com/text/core/form/editors#color> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:03:49.4989665Z"; l10n:modificationDate "2019-03-13T08:03:49.4989665Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "color"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
@@ -186,10 +162,6 @@
 <http://comindware.com/text/core/form/editors/code/output/warnings#messcode> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:29:19.8110745Z"; l10n:modificationDate "2018-07-17T08:29:24.8210635Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Messcode"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/code/output/warnings#warninglevel> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:30:27.5421099Z"; l10n:modificationDate "2018-07-17T08:30:29.3778792Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Warning level"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/form/editors/collection#addNewItem> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-30T07:51:04.4739462Z"; l10n:modificationDate "2015-09-03T15:20:57.2256887Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Add a new item"].
-
-<http://comindware.com/text/core/form/editors/collection#emptyCollection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Alexandra Sindyaeva"; l10n:creationDate "2015-10-14T12:56:19.9281709Z"; l10n:modificationDate "2015-10-16T13:47:49.7744889Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "You need to create record before adding values to the table"].
 
 <http://comindware.com/text/core/form/editors/color#emptyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:04:10.0810940Z"; l10n:modificationDate "2019-03-13T08:09:06.8051126Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter color here"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
@@ -314,6 +286,8 @@
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:exportToJs true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-04-03T08:30:22.5126374Z"; l10n:modificationDate "2016-01-13T11:27:49.3334398Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-06-01T08:03:27.5732864Z"; l10n:modificationDate "2016-01-13T11:27:49.3344386Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Search..."].
+
+<http://comindware.com/text/core/form/editors/memberSelect#selectedUsers> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:modifiedBy "Vladislav Smirnov"; l10n:modificationDate "2019-06-07T11:45:01.4604022Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
 <http://comindware.com/text/core/form/editors/memberSplit#apply> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2017-10-04T05:46:33.9155558Z"; l10n:modificationDate "2017-10-04T05:47:52.4996093Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Apply"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
