@@ -60,6 +60,7 @@ export default Marionette.View.extend({
 
     regions: {
         headerRegion: '.js-header-region',
+        treeEditorRegion: '.js-tree-editor-region',
         stepperRegion: '.js-stepper-region',
         loadingRegion: '.js-loading-region'
     },
@@ -90,8 +91,19 @@ export default Marionette.View.extend({
             collection: this.__tabsCollection,
             headerClass: this.getOption('headerClass')
         });
+        const treeModel = new Backbone.Model({
+            name: 'Vkladki', //TODO Localize, getNodeName
+            rows: this.__tabsCollection
+        });
+        treeModel.id = '1';
+        treeModel.isContainer = !!this.__tabsCollection.length;
+        treeModel.childrenAttribute = 'rows';
+        const treeEditorView = new Core.components.TreeEditor({
+            model: treeModel
+        });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
+        this.showChildView('treeEditorRegion', treeEditorView);
 
         if (this.getOption('deferRender')) {
             const selectedTab = this.__findSelectedTab();
