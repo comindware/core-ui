@@ -367,7 +367,8 @@ export default Marionette.View.extend({
             });
             if (this.gridEventAggregator.isEditable) {
                 const cellIndex = this.__getFocusedCellIndex(e);
-                if (cellIndex > -1 && this.getOption('columns')[cellIndex].editable) {
+
+                if (this.__isCellEditable(cellIndex)) {
                     this.gridEventAggregator.pointedCell = cellIndex;
 
                     // todo: find more clear way to handle this case
@@ -380,6 +381,15 @@ export default Marionette.View.extend({
             }
         }
         this.gridEventAggregator.trigger('click', this.model);
+    },
+
+    __isCellEditable(cellIndex) {
+        let optionsColumnsIndex = cellIndex;
+        if (this.el.querySelector('.cell_selection-index')) {
+            optionsColumnsIndex -= 1;
+        }
+
+        return cellIndex > -1 && this.getOption('columns')[optionsColumnsIndex].editable;
     },
 
     __handleDblClick() {
