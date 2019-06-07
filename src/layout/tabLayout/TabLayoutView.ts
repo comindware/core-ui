@@ -46,6 +46,22 @@ export default Marionette.View.extend({
             s[a.id] = a.view;
             return s;
         }, {});
+
+        this.treeModel = new Backbone.Model({
+            name: 'Vkladki ( TODO )', //TODO Localize, getNodeName
+            rows: this.__tabsCollection
+        });
+        this.__tabsCollection.forEach(tabModel => {
+            tabModel.isContainer = true;
+            tabModel.childrenAttribute = 'tabComponents';
+            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: tabModel.get('view').el.className }])); //TODO generate childrens
+        });
+        this.treeModel.id = _.uniqueId('treeModelRoot');
+        this.treeModel.isContainer = !!this.__tabsCollection.length;
+        this.treeModel.childrenAttribute = 'rows';
+        this.treeEditorView = new Core.components.TreeEditor({
+            model: this.treeModel
+        });
     },
 
     template: Handlebars.compile(template),
@@ -91,19 +107,9 @@ export default Marionette.View.extend({
             collection: this.__tabsCollection,
             headerClass: this.getOption('headerClass')
         });
-        const treeModel = new Backbone.Model({
-            name: 'Vkladki', //TODO Localize, getNodeName
-            rows: this.__tabsCollection
-        });
-        treeModel.id = '1';
-        treeModel.isContainer = !!this.__tabsCollection.length;
-        treeModel.childrenAttribute = 'rows';
-        const treeEditorView = new Core.components.TreeEditor({
-            model: treeModel
-        });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
-        this.showChildView('treeEditorRegion', treeEditorView);
+        this.showChildView('treeEditorRegion', this.treeEditorView);
 
         if (this.getOption('deferRender')) {
             const selectedTab = this.__findSelectedTab();
