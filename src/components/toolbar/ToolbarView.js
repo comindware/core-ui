@@ -3,29 +3,41 @@ import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
+import VirtualCollection from '../../collections/VirtualCollection';
 import meta from './meta';
 import MenuPanelViewWithSplitter from './views/MenuPanelViewWithSplitter';
+import GroupedCollection from './classes/GroupedCollection';
 
 const actionsMenuLabel = '⋮';
+const groupNames = {
+    main: 'main',
+    menu: 'menu',
+    const: 'const'
+};
+const debounceInterval = {
+    long: 300,
+    medium: 100,
+    short: 5
+};
 
 export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
-        this.allItemsCollection = this.options.allItemsCollection;
-        this.toolbarItemsCollection = new ToolbarItemsCollection();
-        this.menuItemsCollection = new ToolbarItemsCollection();
-        this.toolbarConstItemsCollection = new ToolbarItemsCollection();
-        this.__resetCollections();
+        const allItemsCollection = this.options.allItemsCollection;
+        const allItemsArray = allItemsCollection instanceof Backbone.Collection ? allItemsCollection.toJSON() : allItemsCollection;
+        const allItems = new VirtualCollection(new ToolbarItemsCollection(allItemsArray));
 
-        this.toolbarActions = this.__createActionsGroupsView(this.toolbarItemsCollection);
-        this.constToolbarActions = this.__createActionsGroupsView(this.toolbarConstItemsCollection);
-        this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
+        this.groupedCollection = new GroupedCollection({
+            allItems,
+            class: ToolbarItemsCollection,
+            groups: Object.values(groupNames)
+        });
+        this.mainActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.main]);
+        this.constActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.const]);
+        this.popupMenuView = this.__createDropdownActionsView(this.groupedCollection.groups[groupNames.menu]);
 
-        this.debounceRebuildLong = _.debounce(this.rebuildView, 300);
-        this.debounceRebuildShort = _.debounce(this.rebuildView, 5);
-        this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuildLong);
-        this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
+        this.listenTo(allItems, 'change reset update filter', _.debounce(this.__resetCollections, debounceInterval.short));
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -38,15 +50,37 @@ export default Marionette.View.extend({
         toolbarConstItemsRegion: '.js-toolbar-const-items'
     },
 
-    onAttach() {
-        this.debounceRebuildShort();
+    onRender() {
+        this.showChildView('toolbarItemsRegion', this.mainActionsView);
+        this.showChildView('popupMenuRegion', this.popupMenuView);
+        this.showChildView('toolbarConstItemsRegion', this.constActionsView);
+        const popupMenuRegionElementStyle = this.getRegion('popupMenuRegion').el.style;
+        popupMenuRegionElementStyle.visibility = 'hidden';
+        const menuItems = this.groupedCollection.groups[groupNames.menu];
+        this.listenTo(menuItems, 'reset update', () => {
+            if (menuItems.length) {
+                popupMenuRegionElementStyle.visibility = 'visible';
+            } else {
+                popupMenuRegionElementStyle.visibility = 'hidden';
+            }
+        });
     },
 
-    onRender() {
-        this.showChildView('toolbarItemsRegion', this.toolbarActions);
-        this.showChildView('popupMenuRegion', this.popupMenu);
-        this.showChildView('toolbarConstItemsRegion', this.constToolbarActions);
-        this.getRegion('popupMenuRegion').$el.hide();
+    onAttach() {
+        this.__resetCollections();
+        const debounceRebuildView = _.debounce(() => this.rebuildView(), debounceInterval.short);
+        this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', () => {
+            const interval = setInterval(() => {
+                if (debounceRebuildView()) {
+                    clearInterval(interval);
+                }
+                //TODO: move menu dropdown on resize
+            }, debounceInterval.medium);
+        });
+    },
+
+    getAllItemsCollection() {
+        return this.groupedCollection.allItems;
     },
 
     __createActionsGroupsView(collection) {
@@ -58,71 +92,56 @@ export default Marionette.View.extend({
         return view;
     },
 
+    __resetCollections() {
+        Object.values(this.groupedCollection.groups).forEach(group => group.reset());
+        this.groupedCollection.getAllItemsModels().forEach(model => {
+            this.groupedCollection.move(model, model.get('kind') === meta.kinds.CONST ? groupNames.const : groupNames.main);
+        });
+        this.rebuildView();
+    },
+
     rebuildView() {
-        if (this.isDestroyed()) {
+        if (this.isDestroyed() || document.readyState !== 'complete') {
             return false;
         }
 
-        this.__resetCollections();
-        const toolbarActions = this.getRegion('toolbarItemsRegion')
-            .$el.children()
-            .children();
-        if (toolbarActions.length === 0) {
-            return;
-        }
-        let toolbarWidth = this.$el.width();
-        const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
-        constItemsEl.length && (toolbarWidth -= constItemsEl.outerWidth());
-        const menuActionsWidth = this.getRegion('popupMenuRegion').$el.outerWidth();
+        const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
 
-        let childWidth = 0;
-        let notFitItem = -1;
-        toolbarActions.each((i, val) => {
-            childWidth += val.offsetWidth;
-            if (childWidth + menuActionsWidth > toolbarWidth) {
-                if (i === toolbarActions.length - 1) {
-                    if (childWidth < toolbarWidth) {
-                        return;
-                    }
-                }
-                notFitItem = i;
-                return false;
-            }
+        this.groupedCollection.move(this.groupedCollection.getModels(groupNames.menu), groupNames.main);
+
+        const mainGroupModels = this.groupedCollection.getModels(groupNames.main);
+        if (mainGroupModels.length === 0) {
+            return false;
+        }
+
+        const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
+
+        const outerWidth = el => {
+            let width = el.offsetWidth;
+            const style = getComputedStyle(el);
+
+            width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+            return width;
+        };
+
+        let widthAggregator = 0;
+        const containerOffsetWidth = container.offsetWidth;
+        const notFitItemIndex = Array.from(container.childNodes).findIndex(el => {
+            widthAggregator += outerWidth(el);
+            return containerOffsetWidth < widthAggregator;
         });
 
-        if (notFitItem >= 0) {
-            this.getRegion('popupMenuRegion').$el.show();
-
-            //Ungroup grouped items
-            const ungroupedCollection = new Backbone.Collection();
-            this.toolbarItemsCollection?.forEach(m => {
-                if (m.get('type') === meta.toolbarItemType.GROUP) {
-                    if (m.get('items').models) {
-                        ungroupedCollection.add(m.get('items').models);
-                    }
-                } else {
-                    ungroupedCollection.add(m);
-                }
-            });
-
-            this.menuItemsCollection.reset(ungroupedCollection.models.slice(notFitItem));
-            this.toolbarItemsCollection.reset(this.toolbarItemsCollection.models.slice(0, notFitItem));
-        } else {
-            this.getRegion('popupMenuRegion').$el.hide();
+        if (notFitItemIndex >= 0) {
+            this.groupedCollection.move(mainGroupModels.slice(notFitItemIndex), groupNames.menu);
         }
-    },
 
-    __resetCollections() {
-        const rawCollection = this.allItemsCollection.toJSON();
-        this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== meta.kinds.CONST));
-        this.menuItemsCollection.reset();
-        this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === meta.kinds.CONST));
+        return true;
     },
 
     __createDropdownActionsView() {
         const view = Core.dropdown.factory.createMenu({
             text: actionsMenuLabel,
-            items: this.menuItemsCollection,
+            items: this.groupedCollection.groups[groupNames.menu],
             popoutFlow: 'right',
             customAnchor: true,
             panelView: MenuPanelViewWithSplitter

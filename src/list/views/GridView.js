@@ -730,6 +730,10 @@ export default Marionette.View.extend({
         }
     },
 
+    getToolbarCollection() {
+        return this.toolbarView?.getAllItemsCollection();
+    },
+
     __updateEmpty() {
         if (this.required) {
             this.__toggleRequiredClass(this.collection.length === 0);
