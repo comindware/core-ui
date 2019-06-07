@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import form from 'form';
 import dropdown from 'dropdown';
-import { stickybits, transliterator } from 'utils';
+import { transliterator } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './CollectionView';
 import RowView from './RowView';
@@ -47,7 +47,6 @@ const defaultOptions = options => ({
         text: () => (options.columns?.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
         colspan: options.columns ? options.columns.length + !!options.showCheckbox : 0
     },
-    stickyToolbarOffset: 0,
     isSliding: true,
     showHeader: true,
     handleSearch: true,
@@ -454,38 +453,6 @@ export default Marionette.View.extend({
         }
         const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
-        this.stickyHeaderInstance = stickybits(this.el.querySelector('.grid-header-view'), {
-            stickyBitStickyOffset: toolbarShowed ? 0 : this.options.stickyToolbarOffset,
-            scrollEl: this.options.scrollEl,
-            customStickyChangeNumber: this.options.customStickyChangeNumber,
-            stateChangeCb: currentState => {
-                //hack for IE11
-                switch (currentState) {
-                    case 'sticky': {
-                        // fixed header fall of layout
-                        this.ui.content[0].style.marginTop = '35px'; // header height + default margin
-                        break;
-                    }
-                    default:
-                        // static header
-                        this.ui.content[0].style.marginTop = ''; // default margin
-                        break;
-                }
-            }
-        });
-        if (toolbarShowed) {
-            this.stickyToolbarInstance = stickybits(this.el.querySelector('.js-grid-tools'), { scrollEl: this.options.scrollEl });
-        }
-        //hack for IE11
-        if (Core.services.MobileService.isIE) {
-            this.on('update:height', () => {
-                this.stickyHeaderInstance.update();
-                if (toolbarShowed) {
-                    this.stickyToolbarInstance.update();
-                }
-            });
-        }
-
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
     },
@@ -503,12 +470,6 @@ export default Marionette.View.extend({
             this.ui.content.css('maxHeight', options.newMaxHeight);
         }
         this.listView.handleResize(options.shouldUpdateScroll);
-        if (this.stickyHeaderInstance) {
-            this.stickyHeaderInstance.update();
-        }
-        if (this.stickyToolbarInstance) {
-            this.stickyToolbarInstance.update();
-        }
     },
 
     onBeforeDestroy() {
