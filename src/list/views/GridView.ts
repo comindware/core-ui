@@ -753,7 +753,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __confirmUserAction(text, title, yesButtonText, noButtonText) {
+    __confirmUserAction(text: string, title: string, yesButtonText: string, noButtonText: string) {
         return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
     },
 
@@ -795,7 +795,7 @@ export default Marionette.View.extend({
         this.errorCollection && this.errorCollection.reset();
     },
 
-    setRequired(required) {
+    setRequired(required: boolean) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -934,64 +934,6 @@ export default Marionette.View.extend({
             return [selected];
         }
         return Object.values(selected);
-    },
-
-    __executeAction(model, collection, ...rest) {
-        const selected = this.__getSelectedItems(collection);
-        switch (model.get('id')) {
-            case 'delete':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'archive':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'unarchive':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'add':
-            default:
-                this.__triggerAction(model, selected, ...rest);
-                break;
-        }
-    },
-
-    __confirmUserAction(text, title, yesButtonText, noButtonText) {
-        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
-    },
-
-    __triggerAction(model, selected, ...rest) {
-        this.trigger('execute', model, selected, ...rest);
-    },
-
-    __onItemMoved(...args) {
-        this.trigger('move', ...args);
     },
 
     __initTreeEditor() {
