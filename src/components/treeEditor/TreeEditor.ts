@@ -8,8 +8,17 @@ const defaultOptions = {
     getNodeName: undefined
 };
 
-export default class treeVisualEditor {
-    constructor(options) {
+interface TConfigDiff {
+    [key: string]: {
+        index?: number,
+        isHidden?: boolean
+    };
+}
+
+export default class TreeVEditor {
+    configDiff: TConfigDiff;
+    model: any;
+    constructor(options: { model: any, eyeIconClass?: string, closedEyeIconClass: string, configDiff: TConfigDiff, getNodeName?: (model: any) => string }) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
         this.model = options.model;
@@ -22,7 +31,7 @@ export default class treeVisualEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView(options.model),
+            panelView: NodeViewFactory.getNodeView(this.model),
             panelViewOptions: Object.assign({}, options, {
                 reqres,
                 maxWidth: 300
@@ -35,7 +44,7 @@ export default class treeVisualEditor {
         return popoutView;
     }
 
-    applyConfigDiff(id, config) {
+    applyConfigDiff(id: string, config: TConfigDiff) {
         if (this.configDiff[id]) {
             Object.assign(this.configDiff[id], config);
         } else {

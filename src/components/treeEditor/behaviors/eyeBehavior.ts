@@ -28,7 +28,7 @@ export default Marionette.Behavior.extend({
         this.__toggleHiddenClass();
     },
 
-    __handleEyeClick() {
+    __handleEyeClick(event) {
         event.stopPropagation();
         const model = this.view.options.model;
         if (model.get('required')) {
@@ -72,7 +72,7 @@ export default Marionette.Behavior.extend({
         event.preventDefault();
     },
 
-    __handleDragLeave() {
+    __handleDragLeave(event) {
         if (event.target === this.__getDragoverParent(event.fromElement)) {
             return false;
         }

@@ -10,6 +10,13 @@ export default function() {
                 name: 'Single item'
             },
             {
+                id: '2.q',
+                name: '*VerticalLayout*',
+                isContainer: true,
+                childrenAttribute: 'rows',
+                childrens: []
+            },
+            {
                 id: '2.2',
                 name: 'Tabs',
                 isContainer: true,
