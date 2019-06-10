@@ -76,5 +76,8 @@
     margin-bottom: 5px;
 }
 
+.branch-item.dropdown__wrp {
+    overflow: scroll;
+}
 
 

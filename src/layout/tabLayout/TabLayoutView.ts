@@ -16,38 +16,16 @@ const classes = {
 };
 
 export default Marionette.View.extend({
-    initialize(options: { tabs: TabsList }) {
+    initialize(options: { tabs: TabsList, showTreeEditor?: boolean }) {
         helpers.ensureOption(options, 'tabs');
 
+        this.showTreeEditor = options.showTreeEditor;
         this.__tabsCollection = options.tabs;
-        if (!(this.__tabsCollection instanceof Backbone.Collection)) {
-            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection);
-        }
-        this.__tabsCollection.each(model => {
-            if (model.get('enabled') === undefined) {
-                model.set('enabled', true);
-            }
-            if (model.get('visible') === undefined) {
-                model.set('visible', true);
-            }
-        });
-        const selectedTab = this.__findSelectedTab();
-        if (!selectedTab) {
-            this.selectTab(this.__tabsCollection.at(0).id);
-            this.selectTabIndex = 0;
-        } else {
-            this.__getSelectedTabIndex(selectedTab);
-        }
-
-        this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
-        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
-
+        this.__initializeTabCollection();
         this.tabs = options.tabs.reduce((s, a) => {
             s[a.id] = a.view;
             return s;
         }, {});
-
-        this.__initTreeEditor();
     },
 
     template: Handlebars.compile(template),
@@ -95,7 +73,9 @@ export default Marionette.View.extend({
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
-        this.showChildView('treeEditorRegion', this.treeEditorView);
+        if (this.showTreeEditor) {
+            this.showChildView('treeEditorRegion', this.treeEditorView);
+        }
 
         if (this.getOption('deferRender')) {
             const selectedTab = this.__findSelectedTab();
@@ -243,6 +223,34 @@ export default Marionette.View.extend({
         this.loading.setLoading(state);
     },
 
+    __initializeTabCollection() {
+        if (!(this.__tabsCollection instanceof Backbone.Collection)) {
+            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection);
+        }
+        this.__tabsCollection.each(model => {
+            if (model.get('enabled') === undefined) {
+                model.set('enabled', true);
+            }
+            if (model.get('visible') === undefined) {
+                model.set('visible', true);
+            }
+        });
+        const selectedTab = this.__findSelectedTab();
+        if (!selectedTab) {
+            this.selectTab(this.__tabsCollection.at(0).id);
+            this.selectTabIndex = 0;
+        } else {
+            this.__getSelectedTabIndex(selectedTab);
+        }
+
+        if (this.showTreeEditor) {
+            this.__initTreeEditor();
+        }
+
+        this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
+        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
+    },
+
     __renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean) {
         const regionEl = document.createElement('div');
         regionEl.className = classes.PANEL_REGION;
@@ -339,7 +347,7 @@ export default Marionette.View.extend({
         this.__tabsCollection.forEach(tabModel => {
             tabModel.isContainer = true;
             tabModel.childrenAttribute = 'tabComponents';
-            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: tabModel.get('view').el.className }])); //TODO generate childrens
+            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: "tabModel.get('view').el.className" }])); //TODO generate childrens
         });
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.__tabsCollection.length;
