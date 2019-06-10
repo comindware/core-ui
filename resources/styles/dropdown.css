@@ -6,6 +6,7 @@
     position: fixed;
     z-index: 600;
     border-radius: 2px;
+    overflow: scroll;
 }
 
 .dropdown__button {
@@ -17,6 +18,7 @@
     background-color: #fff;
     position: fixed;
     z-index: 600;
+    overflow: scroll;
 }
 .dropdown__wrp .dropdown__wrp_list {
     max-height: 400px;
