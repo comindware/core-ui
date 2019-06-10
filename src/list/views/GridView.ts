@@ -906,7 +906,7 @@ export default Marionette.View.extend({
             return model;
         });
         this.treeModel = new Backbone.Model({
-            title: 'LabelName ( TODO )', //TODO Localize, getNodeName
+            title: this.options.title,
             columnsCollection
         });
 

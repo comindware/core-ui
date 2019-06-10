@@ -66,6 +66,7 @@ export default function() {
 
     // 3. Create grid
     const gridController = new Core.list.GridView({
+        title: 'Beautiful Grid',
         columns,
         selectableBehavior: 'multi',
         // disableMultiSelection: true, //another case of API
