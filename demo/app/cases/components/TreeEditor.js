@@ -57,6 +57,137 @@ export default function() {
                 ]
             },
             {
+                id: '2.hh',
+                name: 'HorizontalLayout',
+                isContainer: true,
+                childrenAttribute: 'columns',
+                childrens: [
+                    {
+                        id: '2.7x',
+                        name: 'VerticalLayout',
+                        isContainer: true,
+                        childrenAttribute: 'columns',
+                        type: 'unNamed',
+                        childrens: [
+                            {
+                                id: '3.7g',
+                                name: '7Dog'
+                            },
+                            {
+                                id: '3.7h',
+                                name: '7Cat'
+                            },
+                            {
+                                id: '3.7n',
+                                name: '7Cow'
+                            }
+                        ]
+                    },
+                    {
+                        id: '2.x',
+                        name: 'VerticalLayout',
+                        isContainer: true,
+                        childrenAttribute: 'columns',
+                        type: 'unNamed',
+                        childrens: [
+                            {
+                                id: '3.6',
+                                name: 'tab9',
+                                isContainer: true,
+                                childrenAttribute: 'rows',
+                                childrens: [
+                                    {
+                                        id: '4.11',
+                                        name: 'xxx'
+                                    },
+                                    {
+                                        id: '4.12',
+                                        name: 'vvv'
+                                    },
+                                    {
+                                        id: '4.13',
+                                        name: 'sss'
+                                    },
+                                    {
+                                        id: '4.14',
+                                        name: 'iii'
+                                    }
+                                ]
+                            },
+                            {
+                                id: '3.7',
+                                name: 'tab10',
+                                isContainer: true,
+                                childrenAttribute: 'rows',
+                                childrens: [
+                                    {
+                                        id: '4.21',
+                                        name: 'uuu'
+                                    },
+                                    {
+                                        id: '4.22',
+                                        name: 'zzz'
+                                    },
+                                    {
+                                        id: '4.23',
+                                        name: 'lll'
+                                    },
+                                    {
+                                        id: '4.24',
+                                        name: 'ttt'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: '2.zzz',
+                        name: 'VerticalLayout',
+                        isContainer: true,
+                        childrenAttribute: 'columns',
+                        type: 'unNamed',
+                        childrens: [
+                            {
+                                id: '3.1g',
+                                name: 'Dog'
+                            },
+                            {
+                                id: '3.1h',
+                                name: 'Cat'
+                            },
+                            {
+                                id: '3.1n',
+                                name: 'Cow'
+                            },
+                            {
+                                id: '3.16',
+                                name: 'tab19',
+                                isContainer: true,
+                                childrenAttribute: 'rows',
+                                childrens: [
+                                    {
+                                        id: '4.211',
+                                        name: '111'
+                                    },
+                                    {
+                                        id: '4.212',
+                                        name: '222'
+                                    },
+                                    {
+                                        id: '4.213',
+                                        name: '333'
+                                    },
+                                    {
+                                        id: '4.214',
+                                        name: '444'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 id: '2.3',
                 name: 'Genious',
                 isContainer: true,
@@ -93,7 +224,7 @@ export default function() {
 
     class TreeNode {
         constructor(options) {
-            const { id, name, isContainer, childrenAttribute, childrens } = options;
+            const { id, name, isContainer, childrenAttribute, childrens, type } = options;
             const model = new Backbone.Model({
                 name
             });
@@ -101,6 +232,7 @@ export default function() {
                 model.childrenAttribute = childrenAttribute;
                 model.set(childrenAttribute, new Backbone.Collection(childrens));
             }
+            type && model.set({ type });
             isContainer && (model.isContainer = isContainer);
             model.id = id;
 
@@ -120,7 +252,7 @@ export default function() {
         return model.get('name');
     };
 
-    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName });
+    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName, unNamedType: 'unNamed' });
     view.listenTo(view, 'save', config => console.log(config));
 
     return view;

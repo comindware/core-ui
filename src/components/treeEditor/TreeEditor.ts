@@ -18,7 +18,7 @@ interface TConfigDiff {
 export default class TreeVEditor {
     configDiff: TConfigDiff;
     model: any;
-    constructor(options: { model: any, eyeIconClass?: string, closedEyeIconClass: string, configDiff: TConfigDiff, getNodeName?: (model: any) => string }) {
+    constructor(options: { model: any, eyeIconClass?: string, closedEyeIconClass: string, configDiff: TConfigDiff, unNamedType?: string, getNodeName?: (model: any) => string }) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
         this.model = options.model;
@@ -31,7 +31,7 @@ export default class TreeVEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView(this.model),
+            panelView: NodeViewFactory.getNodeView(this.model, options.unNamedType),
             panelViewOptions: Object.assign({}, options, {
                 reqres,
                 maxWidth: 300

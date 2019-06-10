@@ -1,6 +1,6 @@
 import eyeBehavior from '../behaviors/eyeBehavior';
 
-const getConfig = template => ({
+const getConfig = (template: string) => ({
     template: Handlebars.compile(template),
 
     templateContext() {

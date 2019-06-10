@@ -56,6 +56,10 @@
     margin-bottom: 10px;
 }
 
+.unnamed-branch-item:not(:last-child) {
+    border-bottom: 1px solid #e9e9e9;
+}
+
 .hidden-node {
     background-color: #f5f5f5;
     color: #d4d4d4;
