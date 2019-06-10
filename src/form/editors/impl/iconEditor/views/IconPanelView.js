@@ -2,6 +2,8 @@ import template from '../templates/iconPanel.html';
 import IconCollectionView from './IconCollectionView';
 import IconItemCategoryView from './IconItemCategoryView';
 
+const typingDelay = 300;
+
 export default Marionette.View.extend({
     initialize() {
         this.iconGroupsCollection = this.options.collection;
@@ -18,8 +20,14 @@ export default Marionette.View.extend({
         colorPickerRegion: '.js-color-picker-region'
     },
 
-    modelEvents: {
-        'change:searchKey': '__changeSearchKey'
+    ui: {
+        colorPickerTitle: '.js-color-picker-title'
+    },
+
+    modelEvents() {
+        return {
+            'change:searchKey': _.debounce(this.__changeSearchKey, typingDelay)
+        };
     },
 
     onRender() {
@@ -31,8 +39,7 @@ export default Marionette.View.extend({
         });
 
         if (this.options.showColorPicker) {
-            this.getRegion('colorPickerRegion').el.removeAttribute('hidden');
-            this.$('.icons-panel-head__title').show();
+            this.ui.colorPickerTitle[0].removeAttribute('hidden');
 
             this.colorPicker = new Core.form.editors.ColorPickerEditor({
                 model: this.model,
@@ -41,10 +48,11 @@ export default Marionette.View.extend({
                 autocommit: true
             });
 
+            this.listenTo(this.colorPicker, 'attach', () => {
+                this.getRegion('colorPickerRegion').el.removeAttribute('hidden');
+            });
+
             this.showChildView('colorPickerRegion', this.colorPicker);
-        } else {
-            this.getRegion('colorPickerRegion').el.setAttribute('hidden', true);
-            this.$('.icons-panel-head__title:eq(0)').hide();
         }
 
         this.showChildView('searchInputRegion', this.search);
@@ -62,10 +70,9 @@ export default Marionette.View.extend({
         this.trigger('change:color', this.model.get('color'));
     },
 
-    __changeSearchKey(model) {
-        const value = model.get('searchKey');
-        if (value && value.length) {
-            const matchesItems = this.__searchItem(value);
+    __changeSearchKey(model, searchKey) {
+        if (searchKey) {
+            const matchesItems = this.__searchItem(searchKey);
             this.__showSearchResult(matchesItems);
         } else {
             this.getRegion('collectionAreaRegion').el.removeAttribute('hidden');

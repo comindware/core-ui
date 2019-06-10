@@ -35,7 +35,6 @@ import jquery from 'jquery';
 import autosize from 'autosize';
 
 import CodeMirror from 'codemirror';
-import 'innersvg-polyfill';
 
 import domapi from './utils/DOMApi';
 
@@ -48,7 +47,6 @@ Marionette_.PartialCollectionView = OldCollectionView.setDomApi(domapi);
 Marionette_.setDomApi(domapi);
 
 (<any>window).Marionette = Marionette_;
-
 
 const api = {
     moment: moment_,
