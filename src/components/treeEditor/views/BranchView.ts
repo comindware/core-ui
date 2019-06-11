@@ -12,7 +12,12 @@ export default Marionette.CollectionView.extend(
             className: 'branch-item',
 
             childView(childModel) {
-                return NodeViewFactory.getNodeView({ model: childModel, unNamedType: this.options.unNamedType, stopNestingType: this.options.stopNestingType });
+                return NodeViewFactory.getNodeView({
+                    model: childModel,
+                    unNamedType: this.options.unNamedType,
+                    stopNestingType: this.options.stopNestingType,
+                    forceBranchType: this.options.forceBranchType
+                });
             },
 
             childViewOptions() {

@@ -22,6 +22,7 @@ type TTreeEditorOptions = {
     configDiff: TConfigDiff,
     unNamedType?: string,
     stopNestingType?: string,
+    forceBranchType?: string,
     getNodeName?: (model: any) => string
 };
 
@@ -41,7 +42,12 @@ export default class TreeEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView({ model: this.model, unNamedType: options.unNamedType, stopNestingType: options.stopNestingType }),
+            panelView: NodeViewFactory.getNodeView({
+                model: this.model,
+                unNamedType: options.unNamedType,
+                stopNestingType: options.stopNestingType,
+                forceBranchType: options.forceBranchType
+            }),
             panelViewOptions: Object.assign({}, options, {
                 reqres,
                 maxWidth: 300
