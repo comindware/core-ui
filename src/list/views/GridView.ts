@@ -627,9 +627,9 @@ export default Marionette.View.extend({
         this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
     },
 
-    __setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
+    __setColumnWidth(index: number, width = 0, allColumnsWidth, isCheckBoxCell: boolean) {
         const style = this.styleSheet;
-        const columnClass = this.columnClasses[index];
+        const columnClass = ''; //this.columnClasses[index];
 
         const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
         let basis;
@@ -646,7 +646,7 @@ export default Marionette.View.extend({
             if (column.format === 'HTML') {
                 basis = '0%';
             } else {
-                const defaultWidth = columnWidthByType[column.dataType];
+                const defaultWidth = columnWidthByType[column.dataType]; //what is it?
 
                 if (defaultWidth) {
                     basis = `${defaultWidth}px`;
@@ -919,6 +919,47 @@ export default Marionette.View.extend({
                 return model.get('title');
             }
         });
+
+        this.listenTo(columnsCollection, 'add', model => {
+            const config = {
+                oldIndex: this.options.columns.findIndex(col => col.key === model.id),
+                newIndex: columnsCollection.indexOf(model)
+            };
+            this.__moveColumn(config);
+        });
+    },
+
+    __moveColumn(config) {
+        const { oldIndex, newIndex } = config;
+
+        console.log(config);
+        const one = Number(!!this.el.querySelector('.cell_selection-index'));
+        const headerElementsCollection = this.el.querySelectorAll('.grid-header-column'); //this.el.querySelector('.grid-header').children;
+        if (newIndex === oldIndex) {
+            return;
+        }
+        if (newIndex < 0 || newIndex >= headerElementsCollection.length) {
+            return;
+        }
+        const moveElement = el => {
+            const parentElement = el.parentElement;
+            parentElement.removeChild(el);
+            parentElement.insertBefore(el, parentElement.children[newIndex + one]);
+        };
+        const element = headerElementsCollection[oldIndex];
+
+        moveElement(element);
+
+        const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
+        cells.forEach(row => moveElement(row));
+
+        this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+
+        this.trigger('column:move', config);
+    },
+
+    __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
+        array.splice(newIndex < 0 ? array.length + newIndex : newIndex, 0, array.splice(oldIndex, 1)[0]);
     },
 
     __toggleColumnVisibility(key: string, isHidden: boolean) {
