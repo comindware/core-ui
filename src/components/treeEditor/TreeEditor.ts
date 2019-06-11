@@ -15,10 +15,20 @@ interface TConfigDiff {
     };
 }
 
-export default class TreeVEditor {
+type TTreeEditorOptions = {
+    model: any,
+    eyeIconClass?: string,
+    closedEyeIconClass: string,
+    configDiff: TConfigDiff,
+    unNamedType?: string,
+    stopNestingType?: string,
+    getNodeName?: (model: any) => string
+};
+
+export default class TreeEditor {
     configDiff: TConfigDiff;
     model: any;
-    constructor(options: { model: any, eyeIconClass?: string, closedEyeIconClass: string, configDiff: TConfigDiff, unNamedType?: string, getNodeName?: (model: any) => string }) {
+    constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
         this.model = options.model;
@@ -31,7 +41,7 @@ export default class TreeVEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView(this.model, options.unNamedType),
+            panelView: NodeViewFactory.getNodeView({ model: this.model, unNamedType: options.unNamedType, stopNestingType: options.stopNestingType }),
             panelViewOptions: Object.assign({}, options, {
                 reqres,
                 maxWidth: 300

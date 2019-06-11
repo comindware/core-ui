@@ -341,13 +341,13 @@ export default Marionette.View.extend({
 
     __initTreeEditor() {
         this.treeModel = new Backbone.Model({
-            name: 'Vkladki ( TODO )', //TODO Localize, getNodeName
+            name: 'Tabs', //TODO Localize, getNodeName
             rows: this.__tabsCollection
         });
         this.__tabsCollection.forEach(tabModel => {
             tabModel.isContainer = true;
             tabModel.childrenAttribute = 'tabComponents';
-            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: "tabModel.get('view').el.className" }])); //TODO generate childrens
+            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: 'tab content' }])); //TODO generate proper childrens
         });
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.__tabsCollection.length;

@@ -4,7 +4,10 @@ import EmptyView from '../views/EmptyView';
 import UnNamedBranchView from '../views/UnNamedBranchView';
 
 export default {
-    getNodeView(model: any, unNamedType?: string) {
+    getNodeView(config: { model: any, unNamedType?: string, stopNestingType?: string }) {
+        const { model, unNamedType, stopNestingType } = config;
+        const isBranchView = cfg => !cfg.stopNestingType || cfg.model.getParent()?.get('type') !== cfg.stopNestingType;
+
         if (model.isContainer) {
             const collection = model.get(model.childrenAttribute);
             if (!collection.length) {
@@ -15,7 +18,9 @@ export default {
                 return UnNamedBranchView;
             }
 
-            return BranchView;
+            if (isBranchView(config)) {
+                return BranchView;
+            }
         }
 
         return LeafView;

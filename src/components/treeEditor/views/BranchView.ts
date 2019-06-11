@@ -5,14 +5,14 @@ import NodeViewConfig from '../services/NodeViewConfig';
 export default Marionette.CollectionView.extend(
     Object.assign(
         {
-            initialize(options: { model: any, unNamedType?: string }) {
+            initialize(options: { model: any, unNamedType?: string, stopNestingType?: string }) {
                 this.collection = options.model.get(options.model.childrenAttribute);
             },
 
             className: 'branch-item',
 
             childView(childModel) {
-                return NodeViewFactory.getNodeView(childModel, this.options.unNamedType);
+                return NodeViewFactory.getNodeView({ model: childModel, unNamedType: this.options.unNamedType, stopNestingType: this.options.stopNestingType });
             },
 
             childViewOptions() {
