@@ -24,8 +24,8 @@
     cursor: move;
 }
 
-.tree-item.dragover {
-    /* border: 2px solid red; TODO enable this after fix drag handling */
+.tree-item.dragover, .branch-item.dragover {
+    border: 2px solid #0575bd;
 }
 
 .eye-btn {

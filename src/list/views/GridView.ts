@@ -927,20 +927,22 @@ export default Marionette.View.extend({
             };
             this.__moveColumn(config);
         });
+
+        this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
     },
 
-    __moveColumn(config) {
-        const { oldIndex, newIndex } = config;
-
-        console.log(config);
+    __moveColumn(options: { oldIndex: number, newIndex: number }) {
+        const { oldIndex, newIndex } = options;
         const one = Number(!!this.el.querySelector('.cell_selection-index'));
-        const headerElementsCollection = this.el.querySelectorAll('.grid-header-column'); //this.el.querySelector('.grid-header').children;
+        const headerElementsCollection = this.el.querySelectorAll('.grid-header-column');
+
         if (newIndex === oldIndex) {
             return;
         }
         if (newIndex < 0 || newIndex >= headerElementsCollection.length) {
             return;
         }
+
         const moveElement = el => {
             const parentElement = el.parentElement;
             parentElement.removeChild(el);
@@ -998,7 +1000,7 @@ export default Marionette.View.extend({
         });
         if (hiddenColumnsCounter === columns.length) {
             const noColumnsMessage = document.createElement('div');
-            noColumnsMessage.innerText = 'All columns are hidden';
+            noColumnsMessage.innerText = 'All columns are hidden'; //TODO localize
             noColumnsMessage.classList.add('js-no-columns-message', 'empty-view', 'empty-view_text');
 
             this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);

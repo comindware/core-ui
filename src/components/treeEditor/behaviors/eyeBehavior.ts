@@ -41,7 +41,7 @@ export default Marionette.Behavior.extend({
     },
 
     __handleHiddenChange() {
-        this.view.options.reqres.request('personalFormConfiguration:setWidgetConfig', this.view.model.id, { isHidden: this.view.model.get('isHidden') });
+        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.view.model.id, { isHidden: this.view.model.get('isHidden') });
         this.view.render();
         this.__toggleHiddenClass();
     },
@@ -59,29 +59,33 @@ export default Marionette.Behavior.extend({
     },
 
     __handleDragEnter(event) {
+        event.stopPropagation();
+        if (this.__isInValidDropTarget()) {
+            return;
+        }
         event.preventDefault();
         const element = event.target;
-        // if (this.__IsInvalidDropTarget(trueTarget, sourceElement)) {
-        //     return false;
-        // } //TODO validate dropZones
+
         (this.__isBranch(element) ? element.parentNode : element).classList.add(classes.dragover);
     },
 
     __handleDragOver(event) {
         event.stopPropagation();
+        if (this.__isInValidDropTarget()) {
+            return;
+        }
+
         event.preventDefault();
     },
 
     __handleDragLeave(event) {
-        if (event.target === this.__getDragoverParent(event.fromElement)) {
-            return false;
-        }
         const element = this.__getDragoverParent(event.target);
+
         (this.__isBranch(element) ? element.parentNode : element).classList.remove(classes.dragover);
     },
 
     __handleDragEnd(event) {
-        // event.target.classList.remove('dragover');
+        delete this.view.model.collection?.draggingModel;
     },
 
     __handleDrop(event) {
@@ -92,7 +96,7 @@ export default Marionette.Behavior.extend({
         const trueTarget = this.__isBranch(targetElement) ? targetElement.parentNode : targetElement;
         trueTarget.classList.remove(classes.dragover);
 
-        if (this.__IsInvalidDropTarget(trueTarget, sourceElement)) {
+        if (this.__isInValidDropTarget(trueTarget, sourceElement)) {
             return false;
         }
 
@@ -103,13 +107,14 @@ export default Marionette.Behavior.extend({
 
         collection.remove(draggingModel);
         collection.add(draggingModel, { at: newIndex });
+        delete collection.draggingModel;
 
         const startIndex = oldIndex > newIndex ? newIndex : oldIndex;
         const endIndex = oldIndex > newIndex ? oldIndex : newIndex;
         const reqres = this.view.options.reqres;
 
         for (let i = startIndex; i <= endIndex; i++) {
-            reqres.request('personalFormConfiguration:setWidgetConfig', collection.at(i).id, { index: i });
+            reqres.request('treeEditor:setWidgetConfig', collection.at(i).id, { index: i });
         }
     },
 
@@ -122,16 +127,30 @@ export default Marionette.Behavior.extend({
             }
             element = element.parentElement;
             i++;
+            if (i === 3) {
+                console.log('❌Error: too much iterations');
+            }
         }
         return element;
     },
 
-    __IsInvalidDropTarget(targetElement, sourceElement) {
-        if (!sourceElement || targetElement === sourceElement) {
+    __isInValidDropTarget() {
+        const collection = this.view.model.collection;
+        if (!collection) {
             return true;
         }
-        if (targetElement.parentElement !== sourceElement.parentElement) {
-            //if moving out of collection
+
+        if (!collection.draggingModel) {
+            return true;
+        }
+
+        const draggingModel = collection.draggingModel;
+
+        if (!collection.contains(draggingModel)) {
+            return true;
+        }
+
+        if (this.view.model === draggingModel) {
             return true;
         }
     },

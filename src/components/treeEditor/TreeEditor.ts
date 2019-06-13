@@ -28,10 +28,12 @@ type TTreeEditorOptions = {
 
 export default class TreeEditor {
     configDiff: TConfigDiff;
+    oldConfigDiff: TConfigDiff;
     model: any;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
+        this.oldConfigDiff = options.configDiff;
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
@@ -54,8 +56,8 @@ export default class TreeEditor {
             })
         });
 
-        reqres.reply('personalFormConfiguration:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
-        popoutView.listenTo(popoutView, 'close', () => popoutView.trigger('save', this.configDiff));
+        reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
+        popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
 
         return popoutView;
     }
@@ -66,5 +68,9 @@ export default class TreeEditor {
         } else {
             this.configDiff[id] = config;
         }
+    }
+
+    __onSave(popoutView) {
+        popoutView.trigger('save', this.configDiff);
     }
 }
