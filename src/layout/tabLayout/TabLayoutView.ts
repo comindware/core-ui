@@ -142,7 +142,7 @@ export default Marionette.View.extend({
                 }
             }
             selectedTab.set('selected', false);
-            this.selectTabIndex = this.__getSelectedTabIndex(tab);
+            this.selectTabIndex = this.__getTabIndex(tab);
         }
         if (tab.get('enabled')) {
             if (!tab.get('isRendered') && this.isRendered()) {
@@ -225,11 +225,25 @@ export default Marionette.View.extend({
     },
 
     __initializeTabCollection() {
-        if (!(this.__tabsCollection instanceof Backbone.Collection)) {
+        if (this.__tabsCollection instanceof Backbone.Collection) {
+            this.__tabsCollection.each(model => {
+                if (model.get('enabled') === undefined) {
+                    model.set('enabled', true);
+                }
+                if (model.get('visible') === undefined) {
+                    model.set('visible', true);
+                }
+            });
+        } else {
             this.__tabsCollection = new Backbone.Collection(this.__tabsCollection, { model: TabModel });
         }
 
-        this.__getSelectedTab();
+        const selectedTab = this.__findSelectedTab();
+        if (!selectedTab) {
+            this.selectTab(this.__tabsCollection.at(0).id);
+            this.selectTabIndex = 0;
+        }
+        this.selectTabIndex = this.__getTabIndex(selectedTab);
 
         if (this.showTreeEditor) {
             this.__initTreeEditor();
@@ -274,20 +288,12 @@ export default Marionette.View.extend({
     },
 
     __findSelectedTab() {
-        return this.__tabsCollection.find(x => x.get('selected'));
+        const selectedTab = this.__tabsCollection.find(x => x.get('selected'));
+
+        return selectedTab;
     },
 
-    __getSelectedTab() {
-        const selectedTab = this.__findSelectedTab();
-        if (!selectedTab) {
-            this.selectTab(this.__tabsCollection.at(0).id);
-            this.selectTabIndex = 0;
-        } else {
-            this.__getSelectedTabIndex(selectedTab);
-        }
-    },
-
-    __getSelectedTabIndex(model) {
+    __getTabIndex(model) {
         return this.__tabsCollection.indexOf(model);
     },
 
@@ -320,14 +326,9 @@ export default Marionette.View.extend({
         }
         const selected = model.get('selected');
 
-        if (selected) {
-            regionEl.classList.remove(classes.HIDDEN);
-        } else {
-            regionEl.classList.add(classes.HIDDEN);
-        }
+        regionEl.classList.toggle(classes.HIDDEN, !selected);
 
         this.trigger('changed:selectedTab', model);
-        // model.get('regionEl').classList.toggle(classes.HIDDEN, !selected); //second argument don't work in IE 11;
 
         // todo: find bettter way to initiate child resize
         Core.services.GlobalEventService.trigger('window:resize', false);
