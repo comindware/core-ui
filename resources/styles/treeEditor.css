@@ -45,7 +45,15 @@
 
 .branch-header-name {
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+}
+
+.branch-header-name,
+.leaf-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 10px;
 }
 
 .branch-item {
@@ -81,4 +89,11 @@
     overflow: scroll;
 }
 
+.tree-editor-btn {
+    height: 32px;
+}
 
+.tree-editor-btn >.toolbar-btn {
+    height: 100%;
+    line-height: 1.6;
+}
