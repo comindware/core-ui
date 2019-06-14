@@ -184,7 +184,7 @@ export default Marionette.MnObject.extend({
 
         [availableGridView, selectedGridView].forEach(view => {
             this.listenTo(view.gridView, 'execute:action', act => this.__executeAction(view, act));
-            this.listenTo(view.controller, 'click', model => this.__moveItems(view, model));
+            this.listenTo(view.gridView, 'click', model => this.__moveItems(view, model));
         });
         if (this.isMemberService) {
             this.listenTo(availableGridView, 'members:update', async filterState => {
