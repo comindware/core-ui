@@ -714,8 +714,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __confirmUserAction(text: string, title: string, yesButtonText: string, noButtonText: string) {
-        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    __confirmUserAction(text: string = '', title: string = '', yesButtonText: string = 'Yes', noButtonText: string = 'No') {
+        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, text: noButtonText }, { id: true, text: yesButtonText }]);
     },
 
     __triggerAction(model, selected, ...rest) {
@@ -961,7 +961,10 @@ export default Marionette.View.extend({
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
-        array.splice(newIndex < 0 ? array.length + newIndex : newIndex, 0, array.splice(oldIndex, 1)[0]);
+        const start = newIndex < 0 ? array.length + newIndex : newIndex;
+        const deleteCount = 0;
+        const item = array.splice(oldIndex, 1)[0];
+        array.splice(start, deleteCount, item);
     },
 
     __toggleColumnVisibility(key: string, isHidden: boolean) {
@@ -1001,12 +1004,12 @@ export default Marionette.View.extend({
         if (hiddenColumnsCounter === columns.length) {
             const noColumnsMessage = document.createElement('div');
             noColumnsMessage.innerText = 'All columns are hidden'; //TODO localize
-            noColumnsMessage.classList.add('js-no-columns-message', 'empty-view', 'empty-view_text');
+            noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
 
-            this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
+            this.ui.content.appendChild(noColumnsMessage);
             this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
-        } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.js-no-columns-message')) {
-            this.el.querySelector('.js-no-columns-message').remove();
+        } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
+            this.el.querySelector('.tree-editor-no-columns-message').remove();
             this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
         }
     }

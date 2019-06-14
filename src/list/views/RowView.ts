@@ -134,6 +134,18 @@ export default Marionette.View.extend({
         }
     },
 
+    __setCustomClassToColumn(gridColumn) {
+        if (gridColumn.hidden) {
+            if (!gridColumn.customClass) {
+                gridColumn.customClass = hiddenByTreeEditorClass;
+            } else if (!gridColumn.customClass.match(new RegExp(hiddenByTreeEditorClass))) {
+                gridColumn.customClass += ` ${hiddenByTreeEditorClass}`;
+            }
+        } else if (gridColumn.customClass) {
+            gridColumn.customClass = gridColumn.customClass.replace(new RegExp(hiddenByTreeEditorClass), '');
+        }
+    },
+
     _renderTemplate() {
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.initializeTransliteration({
@@ -153,16 +165,7 @@ export default Marionette.View.extend({
         }
 
         this.options.columns.forEach(gridColumn => {
-            if (gridColumn.hidden) {
-                if (!gridColumn.customClass) {
-                    gridColumn.customClass = hiddenByTreeEditorClass;
-                } else if (!gridColumn.customClass.match(new RegExp(hiddenByTreeEditorClass))) {
-                    gridColumn.customClass += ` ${hiddenByTreeEditorClass}`;
-                }
-            } else {
-                gridColumn.customClass && (gridColumn.customClass = gridColumn.customClass.replace(new RegExp(hiddenByTreeEditorClass), ''));
-            }
-
+            this.__setCustomClassToColumn(gridColumn);
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {

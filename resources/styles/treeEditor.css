@@ -24,7 +24,8 @@
     cursor: move;
 }
 
-.tree-item.dragover, .branch-item.dragover {
+.tree-item.dragover,
+.branch-item.dragover {
     border: 2px solid #0575bd;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .branch-header {
-    border-bottom: 1px solid#e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
     margin: 0;
     padding: 5px 10px;
     display: flex;
@@ -44,11 +45,7 @@
 
 .branch-header-name {
     font-weight: 800;
-    font-size: 1.1em;
-}
-
-.branch-collection {
-    /* TODO add some styles */
+    font-size: 1.1rem;
 }
 
 .branch-item {
@@ -69,7 +66,7 @@
     display: none;
 }
 
-.js-no-columns-message {
+.tree-editor-no-columns-message {
     height: 100px;
     width: 100%;
 }

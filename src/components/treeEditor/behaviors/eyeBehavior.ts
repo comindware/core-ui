@@ -24,7 +24,7 @@ export default Marionette.Behavior.extend({
         dragstart: '__handleDragStart'
     },
 
-    onAttach() {
+    onRender() {
         this.__toggleHiddenClass();
     },
 
@@ -59,14 +59,21 @@ export default Marionette.Behavior.extend({
     },
 
     __handleDragEnter(event) {
+        if (this.__isUiElement(event.target)) {
+            return;
+        }
+
         event.stopPropagation();
+
         if (this.__isInValidDropTarget()) {
             return;
         }
+
         event.preventDefault();
         const element = event.target;
+        const targetElement = this.__isBranch(element) ? element.parentNode : element;
 
-        (this.__isBranch(element) ? element.parentNode : element).classList.add(classes.dragover);
+        targetElement.classList.add(classes.dragover);
     },
 
     __handleDragOver(event) {
@@ -79,9 +86,18 @@ export default Marionette.Behavior.extend({
     },
 
     __handleDragLeave(event) {
-        const element = this.__getDragoverParent(event.target);
+        if (this.__isUiElement(event.target)) {
+            return;
+        }
 
-        (this.__isBranch(element) ? element.parentNode : element).classList.remove(classes.dragover);
+        event.stopPropagation();
+        event.target.classList.remove(classes.dragover);
+        // const targetElement = event.target;
+        // // const element = this.__getDragoverParent(targetElement);
+        // if (!element || targetElement === this.__isUiElement(targetElement)) {
+        //     return false;
+        // }
+        // (this.__isBranch(element) ? element.parentNode : element).classList.remove(classes.dragover);
     },
 
     __handleDragEnd(event) {
@@ -91,6 +107,9 @@ export default Marionette.Behavior.extend({
     __handleDrop(event) {
         event.stopPropagation();
         const targetElement = this.__getDragoverParent(event.target);
+        if (!targetElement) {
+            return false;
+        }
         const sourceElement = document.getElementById(event.originalEvent.dataTransfer.getData(dataTransferKey));
 
         const trueTarget = this.__isBranch(targetElement) ? targetElement.parentNode : targetElement;
@@ -119,19 +138,17 @@ export default Marionette.Behavior.extend({
     },
 
     __getDragoverParent(elem) {
-        let element = elem;
-        let i = 0;
-        while (!element.classList.contains('tree-item') && i < 5) {
-            if (!element.parentElement) {
-                break;
-            }
-            element = element.parentElement;
-            i++;
-            if (i === 3) {
-                console.log('❌Error: too much iterations');
-            }
+        if (this.__isUiElement(elem)) {
+            return elem.parentElement;
         }
-        return element;
+
+        if (elem.classList.contains('tree-item')) {
+            return elem;
+        }
+    },
+
+    __isUiElement(elem) {
+        return ['branch-header-name', 'leaf-name', 'eye-btn'].reduce((acc, cur) => acc || elem.classList.contains(cur), false);
     },
 
     __isInValidDropTarget() {

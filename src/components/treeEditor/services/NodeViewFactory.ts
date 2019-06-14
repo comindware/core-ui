@@ -6,7 +6,9 @@ import UnNamedBranchView from '../views/UnNamedBranchView';
 export default {
     getNodeView(config: { model: any, unNamedType?: string, stopNestingType?: string, forceBranchType?: string }) {
         const { model, unNamedType, stopNestingType, forceBranchType } = config;
-        const isBranchView = (forceBranchType && model.get('type') === forceBranchType) || (!stopNestingType || model.getParent()?.get('type') !== stopNestingType);
+        const isForcedBranch = forceBranchType && model.get('type') === forceBranchType;
+        const isStopNestingType = !stopNestingType || model.getParent()?.get('type') !== stopNestingType;
+        const isBranchView = isForcedBranch || isStopNestingType;
 
         if (model.isContainer) {
             const collection = model.get(model.childrenAttribute);

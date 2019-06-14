@@ -5,7 +5,7 @@ const getConfig = (template: string) => ({
 
     templateContext() {
         return {
-            text: this.options.getNodeName && typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
+            text: typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
             eyeIconClass: this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass,
             elementId: _.uniqueId('treeEditor_'),
             isDraggable: !!this.model.collection

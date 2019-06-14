@@ -4,6 +4,7 @@ import HeaderView from './HeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
+import TabModel from './models/TabModel';
 
 type Tab = { view: any, id: string };
 
@@ -225,23 +226,10 @@ export default Marionette.View.extend({
 
     __initializeTabCollection() {
         if (!(this.__tabsCollection instanceof Backbone.Collection)) {
-            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection);
+            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection, { model: TabModel });
         }
-        this.__tabsCollection.each(model => {
-            if (model.get('enabled') === undefined) {
-                model.set('enabled', true);
-            }
-            if (model.get('visible') === undefined) {
-                model.set('visible', true);
-            }
-        });
-        const selectedTab = this.__findSelectedTab();
-        if (!selectedTab) {
-            this.selectTab(this.__tabsCollection.at(0).id);
-            this.selectTabIndex = 0;
-        } else {
-            this.__getSelectedTabIndex(selectedTab);
-        }
+
+        this.__getSelectedTab();
 
         if (this.showTreeEditor) {
             this.__initTreeEditor();
@@ -287,6 +275,16 @@ export default Marionette.View.extend({
 
     __findSelectedTab() {
         return this.__tabsCollection.find(x => x.get('selected'));
+    },
+
+    __getSelectedTab() {
+        const selectedTab = this.__findSelectedTab();
+        if (!selectedTab) {
+            this.selectTab(this.__tabsCollection.at(0).id);
+            this.selectTabIndex = 0;
+        } else {
+            this.__getSelectedTabIndex(selectedTab);
+        }
     },
 
     __getSelectedTabIndex(model) {
