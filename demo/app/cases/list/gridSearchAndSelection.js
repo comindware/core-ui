@@ -65,7 +65,8 @@ export default function() {
     ];
 
     // 3. Create grid
-    const gridController = new Core.list.GridView({
+    const gridView = new Core.list.GridView({
+        title: 'Beautiful Grid',
         columns,
         selectableBehavior: 'multi',
         // disableMultiSelection: true, //another case of API
@@ -75,6 +76,7 @@ export default function() {
         collection: new Backbone.Collection(dataArray),
         draggable: true,
         showRowIndex: true,
+        showTreeEditor: true,
         excludeActions: ['delete'],
         additionalActions: [
             {
@@ -172,7 +174,7 @@ export default function() {
 
     // 4. Show created views
     const canvasView = new CanvasView({
-        view: gridController,
+        view: gridView,
         canvas: {
             height: '250px',
             width: '400px'
@@ -214,7 +216,8 @@ export default function() {
         }
     };
 
-    canvasView.listenTo(gridController, 'execute', canvasView.__executeAction);
+    canvasView.listenTo(gridView, 'execute', canvasView.__executeAction);
+    canvasView.listenTo(gridView, 'treeEditor:save', config => console.log(config));
 
     return canvasView;
 }

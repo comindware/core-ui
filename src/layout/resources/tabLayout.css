@@ -11,6 +11,12 @@
     flex: 0 0 auto;
 }
 
+.layout__tab-layout__tree-editor {
+    position: absolute;
+    right: 21px;
+    top: -2px;
+}
+
 .layout__tab-layout__header-view {
     display: flex;
     align-items: flex-end;

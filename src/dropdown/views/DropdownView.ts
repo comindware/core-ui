@@ -14,7 +14,7 @@ const classes = {
 };
 
 const WINDOW_BORDER_OFFSET = 10;
-const MAX_DROPDOWN_PANEL_WIDTH = 200;
+const MAX_DROPDOWN_PANEL_WIDTH = 300;
 
 const popoutFlow = {
     LEFT: 'left',

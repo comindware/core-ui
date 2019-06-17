@@ -11,9 +11,9 @@ import compositeReferenceCell from './templates/compositeReferenceCell.html';
 
 let factory;
 
-type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
+type Column = { key: string, customClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
-type MultivalueCellOptions = { childTemplate: string, value: Array, title: string };
+type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
 
 const CellFieldView = class CellFieldViewClass extends FieldView {
     constructor(options) {
@@ -35,7 +35,7 @@ export default (factory = {
         const value = model.get(column.key);
 
         if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-            return '<td class="cell "></td>';
+            return `<td class="${this.__getCellClass(column)}"></td>`;
         }
 
         let values = Array.isArray(value) ? value : [value];
@@ -49,7 +49,7 @@ export default (factory = {
                 return this.__getUserCell({ values, column, model });
             case objectPropertyTypes.ENUM:
                 values = value ? value.valueExplained : '';
-                return `<td class="cell " title="${this.__getTitle({ values, column, model })}">${values}</td>`;
+                return `<td class="${this.__getCellClass(column)}" title="${this.__getTitle({ values, column, model })}">${values}</td>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
@@ -57,7 +57,7 @@ export default (factory = {
             case objectPropertyTypes.DURATION:
                 return this.__getDurationCell({ values, column, model });
             case objectPropertyTypes.BOOLEAN:
-                return this.__getBooleanCell(values);
+                return this.__getBooleanCell(values, column);
             case objectPropertyTypes.DATETIME:
                 return this.__getDateTimeCell({ values, column, model });
             case objectPropertyTypes.DOCUMENT:
@@ -70,13 +70,14 @@ export default (factory = {
 
     __getStringCell({ values, column, model }) {
         if (values.length === 1) {
-            return `<td class="cell " title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
+            return `<td class="${this.__getCellClass(column)}" title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
         }
 
         return this.__getMultivalueCellView({
             values: values.map(v => ({ value: v })),
             childTemplate: '{{value}}',
-            title: this.__getTitle({ values, column, model })
+            title: this.__getTitle({ values, column, model }),
+            column
         });
     },
 
@@ -99,13 +100,14 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: mappedValues });
 
         if (values.length === 1) {
-            return `<td class="cell " title="${title}">${mappedValues[0]}</td>`;
+            return `<td class="${this.__getCellClass(column)} " title="${title}">${mappedValues[0]}</td>`;
         }
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: '{{value}}',
-            title
+            title,
+            column
         });
     },
 
@@ -122,13 +124,14 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: mappedValues });
 
         if (values.length === 1) {
-            return `<td class="cell " title="${title}">${mappedValues[0]}</td>`;
+            return `<td class="${this.__getCellClass(column)} " title="${title}">${mappedValues[0]}</td>`;
         }
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: '{{value}}',
-            title
+            title,
+            column
         });
     },
 
@@ -172,17 +175,18 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: mappedValues });
 
         if (values.length === 1) {
-            return `<td class="cell " title="${title}">${mappedValues[0]}</td>`;
+            return `<td class="${this.__getCellClass(column)}" title="${title}">${mappedValues[0]}</td>`;
         }
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: '{{value}}',
-            title
+            title,
+            column
         });
     },
 
-    __getBooleanCell(values) {
+    __getBooleanCell(values, column: Column) {
         const mappedValues = values
             .map(v => {
                 let result = '';
@@ -194,7 +198,7 @@ export default (factory = {
                 return result;
             })
             .join('');
-        return `<td class="cell">${mappedValues}</td>`;
+        return `<td class="${this.__getCellClass(column)}">${mappedValues}</td>`;
     },
 
     __getReferenceCell({ values, column, model }) {
@@ -207,9 +211,9 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.text) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="cell" title="${title}">${compositeReferenceCell}</td>`)(values[0]);
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeReferenceCell}</td>`)(values[0]);
         }
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell });
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell, column });
     },
 
     __getDocumentCell({ values, column, model }) {
@@ -221,9 +225,9 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="cell" title="${title}">${compositeDocumentCell}</td>`)(values[0]);
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeDocumentCell}</td>`)(values[0]);
         }
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell });
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell, column });
     },
 
     __getUserCell({ values, column, model }) {
@@ -236,13 +240,13 @@ export default (factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="cell" title="${title}"><div class="composite-cell__wrp">${compositeUserCell}</div></td>`)(values[0]);
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}"><div class="composite-cell__wrp">${compositeUserCell}</div></td>`)(values[0]);
         }
 
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell });
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell, column });
     },
 
-    __getMultivalueCellView({ childTemplate, values = [], title }: MultivalueCellOptions = {}): Node {
+    __getMultivalueCellView({ childTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
         const panelViewOptions = {
             collection: new Backbone.Collection(values.slice(1)),
             className: 'grid-composite_panel',
@@ -266,7 +270,7 @@ export default (factory = {
         const buttonViewOptions = {
             model: new Backbone.Model(buttonViewData),
             tagName: 'td',
-            className: 'cell',
+            className: `${this.__getCellClass(column)}`,
             attributes: {
                 title
             }
@@ -310,6 +314,10 @@ export default (factory = {
         }
         title = title !== null && title !== undefined ? title.toString().replace(/"/g, '&quot;') : '';
         return title;
+    },
+
+    __getCellClass(gridColumn: Column) {
+        return `cell ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`;
     },
 
     __getWrappedTemplate(template) {

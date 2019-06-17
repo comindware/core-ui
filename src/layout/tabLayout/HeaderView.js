@@ -2,9 +2,14 @@
 import { helpers } from 'utils';
 import HeaderView from './HeaderItemView';
 
+const defaultOptions = {
+    headerClass: ''
+};
+
 export default Marionette.CollectionView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'collection');
+        Object.assign(options, defaultOptions);
     },
 
     tagName: 'ul',

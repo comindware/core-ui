@@ -113,6 +113,11 @@ export default {
                     id: 'VideoChat',
                     displayName: 'VideoChat',
                     description: ''
+                },
+                {
+                    id: 'TreeEditor',
+                    displayName: 'TreeEditor',
+                    description: ''
                 }
             ]
         },

@@ -13,9 +13,9 @@ export default Marionette.CollectionView.extend({
         'step:selected': '__handleStepSelect'
     },
 
-    __handleStepSelect(model) {
-        if (model.get('enabled')) {
-            this.trigger('stepper:item:selected', model);
+    __handleStepSelect(view) {
+        if (view.model.get('enabled')) {
+            this.trigger('stepper:item:selected', view.model);
         }
     }
 });

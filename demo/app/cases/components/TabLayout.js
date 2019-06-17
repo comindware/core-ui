@@ -62,6 +62,7 @@ export default function() {
 
     return new CanvasView({
         view: new Core.layout.TabLayout({
+            showTreeEditor: true,
             tabs: [
                 {
                     id: 'tab1',

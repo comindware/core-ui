@@ -12,6 +12,7 @@ import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
 import '../resources/styles/notifications.css';
 import '../resources/styles/blink-checkbox.css';
+import '../resources/styles/treeEditor.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
@@ -53,6 +54,7 @@ import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
 import Toolbar from './components/toolbar/ToolbarView';
 import VideoChat from './components/videoChat/VideoChat';
+import TreeEditor from './components/treeEditor/TreeEditor';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -156,7 +158,8 @@ const core = {
         NavigationDrawer,
         Toolbar,
         BreadCrumbs,
-        VideoChat
+        VideoChat,
+        TreeEditor
     }
 };
 

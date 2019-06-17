@@ -4,6 +4,7 @@ import HeaderView from './HeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
+import TabModel from './models/TabModel';
 
 type Tab = { view: any, id: string };
 
@@ -16,32 +17,12 @@ const classes = {
 };
 
 export default Marionette.View.extend({
-    initialize(options: { tabs: TabsList }) {
+    initialize(options: { tabs: TabsList, showTreeEditor?: boolean }) {
         helpers.ensureOption(options, 'tabs');
 
+        this.showTreeEditor = options.showTreeEditor;
         this.__tabsCollection = options.tabs;
-        if (!(this.__tabsCollection instanceof Backbone.Collection)) {
-            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection);
-        }
-        this.__tabsCollection.each(model => {
-            if (model.get('enabled') === undefined) {
-                model.set('enabled', true);
-            }
-            if (model.get('visible') === undefined) {
-                model.set('visible', true);
-            }
-        });
-        const selectedTab = this.__findSelectedTab();
-        if (!selectedTab) {
-            this.selectTab(this.__tabsCollection.at(0).id);
-            this.selectTabIndex = 0;
-        } else {
-            this.__getSelectedTabIndex(selectedTab);
-        }
-
-        this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
-        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
-
+        this.__initializeTabCollection();
         this.tabs = options.tabs.reduce((s, a) => {
             s[a.id] = a.view;
             return s;
@@ -60,6 +41,7 @@ export default Marionette.View.extend({
 
     regions: {
         headerRegion: '.js-header-region',
+        treeEditorRegion: '.js-tree-editor-region',
         stepperRegion: '.js-stepper-region',
         loadingRegion: '.js-loading-region'
     },
@@ -92,6 +74,9 @@ export default Marionette.View.extend({
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
+        if (this.showTreeEditor) {
+            this.showChildView('treeEditorRegion', this.treeEditorView);
+        }
 
         if (this.getOption('deferRender')) {
             const selectedTab = this.__findSelectedTab();
@@ -157,13 +142,13 @@ export default Marionette.View.extend({
                 }
             }
             selectedTab.set('selected', false);
-            this.selectTabIndex = this.__getSelectedTabIndex(tab);
+            this.selectTabIndex = this.__getTabIndex(tab);
         }
         if (tab.get('enabled')) {
+            tab.set('selected', true);
             if (!tab.get('isRendered') && this.isRendered()) {
                 this.__renderTab(tab, Boolean(this.getOption('deferRender')));
             }
-            tab.set('selected', true);
         }
     },
 
@@ -239,6 +224,35 @@ export default Marionette.View.extend({
         this.loading.setLoading(state);
     },
 
+    __initializeTabCollection() {
+        if (this.__tabsCollection instanceof Backbone.Collection) {
+            this.__tabsCollection.each(model => {
+                if (model.get('enabled') === undefined) {
+                    model.set('enabled', true);
+                }
+                if (model.get('visible') === undefined) {
+                    model.set('visible', true);
+                }
+            });
+        } else {
+            this.__tabsCollection = new Backbone.Collection(this.__tabsCollection, { model: TabModel });
+        }
+
+        const selectedTab = this.__findSelectedTab();
+        if (!selectedTab) {
+            this.selectTab(this.__tabsCollection.at(0).id);
+            this.selectTabIndex = 0;
+        }
+        this.selectTabIndex = this.__getTabIndex(selectedTab);
+
+        if (this.showTreeEditor) {
+            this.__initTreeEditor();
+        }
+
+        this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
+        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
+    },
+
     __renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean) {
         const regionEl = document.createElement('div');
         regionEl.className = classes.PANEL_REGION;
@@ -274,10 +288,12 @@ export default Marionette.View.extend({
     },
 
     __findSelectedTab() {
-        return this.__tabsCollection.find(x => x.get('selected'));
+        const selectedTab = this.__tabsCollection.find(tabModel => tabModel.get('selected'));
+
+        return selectedTab;
     },
 
-    __getSelectedTabIndex(model) {
+    __getTabIndex(model) {
         return this.__tabsCollection.indexOf(model);
     },
 
@@ -310,14 +326,9 @@ export default Marionette.View.extend({
         }
         const selected = model.get('selected');
 
-        if (selected) {
-            regionEl.classList.remove(classes.HIDDEN);
-        } else {
-            regionEl.classList.add(classes.HIDDEN);
-        }
+        regionEl.classList.toggle(classes.HIDDEN, !selected);
 
         this.trigger('changed:selectedTab', model);
-        // model.get('regionEl').classList.toggle(classes.HIDDEN, !selected); //second argument don't work in IE 11;
 
         // todo: find bettter way to initiate child resize
         Core.services.GlobalEventService.trigger('window:resize', false);
@@ -325,5 +336,23 @@ export default Marionette.View.extend({
 
     __handleStepperSelect(model: Backbone.Model): void {
         this.__handleSelect(model);
+    },
+
+    __initTreeEditor() {
+        this.treeModel = new Backbone.Model({
+            name: 'Tabs', //TODO Localize, getNodeName
+            rows: this.__tabsCollection
+        });
+        this.__tabsCollection.forEach(tabModel => {
+            tabModel.isContainer = true;
+            tabModel.childrenAttribute = 'tabComponents';
+            tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: 'tab content' }])); //TODO generate proper childrens
+        });
+        this.treeModel.id = _.uniqueId('treeModelRoot');
+        this.treeModel.isContainer = !!this.__tabsCollection.length;
+        this.treeModel.childrenAttribute = 'rows';
+        this.treeEditorView = new Core.components.TreeEditor({
+            model: this.treeModel
+        });
     }
 });

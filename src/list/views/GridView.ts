@@ -51,7 +51,8 @@ const defaultOptions = options => ({
     showHeader: true,
     handleSearch: true,
     updateToolbarEvents: '',
-    childHeight: 35
+    childHeight: 35,
+    showTreeEditor: false
 });
 
 const config = {
@@ -131,6 +132,7 @@ export default Marionette.View.extend({
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+            this.listenTo(this.headerView, 'update:width', (config: { index: Number, newColumnWidth: Number }) => this.__handleColumnWidthChange(config));
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -209,6 +211,17 @@ export default Marionette.View.extend({
         if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
+        }
+        if (this.options.showTreeEditor) {
+            this.__initTreeEditor();
+        }
+    },
+
+    __handleColumnWidthChange(config: { index: Number, newColumnWidth: Number }) {
+        const { index, newColumnWidth } = config;
+        const columnModel = this.options.columns[index].columnModel;
+        if (columnModel) {
+            this.trigger('treeEditor:save', { [this.options.columns[index].columnModel.id]: { width: newColumnWidth } });
         }
     },
 
@@ -310,6 +323,7 @@ export default Marionette.View.extend({
     },
 
     regions: {
+        treeEditorRegion: '.js-grid-tree-editor-region',
         headerRegion: '.js-grid-header-view',
         contentRegion: {
             el: '.js-grid-content-view',
@@ -363,6 +377,10 @@ export default Marionette.View.extend({
             this.showChildView('headerRegion', this.headerView);
         } else {
             this.el.classList.add('grid__headless');
+        }
+
+        if (this.options.showTreeEditor) {
+            this.showChildView('treeEditorRegion', this.treeEditorView);
         }
 
         if (this.options.showToolbar) {
@@ -610,54 +628,54 @@ export default Marionette.View.extend({
         }
     },
 
-    __setCheckBoxColummWidth() {
-        const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
-        const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
-        const baseWidth = isMainTheme ? 37 : 42;
-        const numberWidth = isMainTheme ? 7.3 : 7.44;
-        this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
-    },
+    // __setCheckBoxColummWidth() {
+    //     const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
+    //     const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
+    //     const baseWidth = isMainTheme ? 37 : 42;
+    //     const numberWidth = isMainTheme ? 7.3 : 7.44;
+    //     this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
+    // },
 
-    __setColumnWidth(index, width = 0, allColumnsWidth, isCheckBoxCell) {
-        const style = this.styleSheet;
-        const columnClass = this.columnClasses[index];
+    // __setColumnWidth(index: number, width = 0, allColumnsWidth, isCheckBoxCell: boolean) {
+    //     const style = this.styleSheet;
+    //     const columnClass = ''; //this.columnClasses[index];
 
-        const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
+    //     const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+    //     let basis;
 
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-            }
-        } else {
-            const column = this.options.columns[index];
+    //     if (width > 0) {
+    //         if (width < 1) {
+    //             basis = `${width * 100}%`;
+    //         } else {
+    //             basis = `${width}px`;
+    //         }
+    //     } else {
+    //         const column = this.options.columns[index];
 
-            if (column.format === 'HTML') {
-                basis = '0%';
-            } else {
-                const defaultWidth = columnWidthByType[column.dataType];
+    //         if (column.format === 'HTML') {
+    //             basis = '0%';
+    //         } else {
+    //             const defaultWidth = columnWidthByType[column.dataType]; //what is it?
 
-                if (defaultWidth) {
-                    basis = `${defaultWidth}px`;
-                } else {
-                    basis = '0%';
-                }
-            }
-        }
+    //             if (defaultWidth) {
+    //                 basis = `${defaultWidth}px`;
+    //             } else {
+    //                 basis = '0%';
+    //             }
+    //         }
+    //     }
 
-        const grow = width > 0 ? 0 : 1;
-        const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+    //     const grow = width > 0 ? 0 : 1;
+    //     const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
 
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
-        }
+    //     if (regexp.test(style.innerHTML)) {
+    //         style.innerHTML = style.innerHTML.replace(regexp, newValue);
+    //     } else {
+    //         style.innerHTML += newValue;
+    //     }
 
-        this.__updateEmptyView(allColumnsWidth);
-    },
+    //     this.__updateEmptyView(allColumnsWidth);
+    // },
 
     __executeAction(model, collection, ...rest) {
         const selected = this.__getSelectedItems(collection);
@@ -705,8 +723,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __confirmUserAction(text, title, yesButtonText, noButtonText) {
-        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    __confirmUserAction(text: string = '', title: string = '', yesButtonText: string = 'Yes', noButtonText: string = 'No') {
+        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, text: noButtonText }, { id: true, text: yesButtonText }]);
     },
 
     __triggerAction(model, selected, ...rest) {
@@ -747,7 +765,7 @@ export default Marionette.View.extend({
         this.errorCollection && this.errorCollection.reset();
     },
 
-    setRequired(required) {
+    setRequired(required: boolean) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -888,61 +906,120 @@ export default Marionette.View.extend({
         return Object.values(selected);
     },
 
-    __executeAction(model, collection, ...rest) {
-        const selected = this.__getSelectedItems(collection);
-        switch (model.get('id')) {
-            case 'delete':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'archive':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'unarchive':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
-                break;
-            case 'add':
-            default:
-                this.__triggerAction(model, selected, ...rest);
-                break;
+    __initTreeEditor() {
+        const columnsCollection = new Backbone.Collection(this.options.columns);
+        columnsCollection.map(model => {
+            model.id = model.get('key');
+            this.listenTo(model, 'change:isHidden', model => this.__toggleColumnVisibility(model.id, model.get('isHidden')));
+
+            return model;
+        });
+        this.treeModel = new Backbone.Model({
+            title: this.options.title,
+            columnsCollection
+        });
+
+        this.treeModel.id = _.uniqueId('treeModelRoot');
+        this.treeModel.isContainer = !!this.options.columns.length;
+        this.treeModel.childrenAttribute = 'columnsCollection';
+        this.treeEditorView = new Core.components.TreeEditor({
+            model: this.treeModel,
+            getNodeName(model) {
+                return model.get('title');
+            }
+        });
+
+        this.listenTo(columnsCollection, 'add', model => {
+            const config = {
+                oldIndex: this.options.columns.findIndex(col => col.key === model.id),
+                newIndex: columnsCollection.indexOf(model)
+            };
+            this.__moveColumn(config);
+        });
+
+        this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
+    },
+
+    __moveColumn(options: { oldIndex: number, newIndex: number }) {
+        const { oldIndex, newIndex } = options;
+        const one = Number(!!this.el.querySelector('.cell_selection-index'));
+        const headerElementsCollection = this.el.querySelectorAll('.grid-header-column');
+
+        if (newIndex === oldIndex) {
+            return;
         }
+        if (newIndex < 0 || newIndex >= headerElementsCollection.length) {
+            return;
+        }
+
+        const moveElement = el => {
+            const parentElement = el.parentElement;
+            parentElement.removeChild(el);
+            parentElement.insertBefore(el, parentElement.children[newIndex + one]);
+        };
+        const element = headerElementsCollection[oldIndex];
+
+        moveElement(element);
+
+        const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
+        cells.forEach(row => moveElement(row));
+
+        this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+
+        this.trigger('column:move', config);
     },
 
-    __confirmUserAction(text, title, yesButtonText, noButtonText) {
-        return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: false, text: noButtonText || 'No' }, { id: true, text: yesButtonText || 'Yes' }]);
+    __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
+        const start = newIndex < 0 ? array.length + newIndex : newIndex;
+        const deleteCount = 0;
+        const item = array.splice(oldIndex, 1)[0];
+        array.splice(start, deleteCount, item);
     },
 
-    __triggerAction(model, selected, ...rest) {
-        this.trigger('execute', model, selected, ...rest);
+    __toggleColumnVisibility(key: string, isHidden: boolean) {
+        const columns = this.options.columns;
+        const index = columns.findIndex(item => item.key === key);
+        const columnToBeHidden = columns[index];
+
+        if (isHidden) {
+            columnToBeHidden.hidden = isHidden;
+        } else {
+            delete columnToBeHidden.hidden;
+        }
+
+        let elementIndex = index + 1;
+        if (this.el.querySelector('.cell_selection-index')) {
+            elementIndex += 1;
+        }
+
+        const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
+        this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+
+        const cellSelector = `.visible-collection tr > *:nth-child(${elementIndex})`;
+        Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
+            element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+        });
+
+        this.__toggleNoColumnsMessage(columns);
     },
 
-    __onItemMoved(...args) {
-        this.trigger('move', ...args);
+    __toggleNoColumnsMessage(columns: Array<object>) {
+        let hiddenColumnsCounter = 0;
+        columns.forEach(col => {
+            if (col.hidden) {
+                hiddenColumnsCounter++;
+            }
+        });
+        if (hiddenColumnsCounter === columns.length) {
+            const noColumnsMessage = document.createElement('div');
+            noColumnsMessage.innerText = 'All columns are hidden'; //TODO localize
+            noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
+
+            this.ui.content.appendChild(noColumnsMessage);
+            this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+        } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
+            this.el.querySelector('.tree-editor-no-columns-message').remove();
+            this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
+        }
     }
 });

@@ -132,9 +132,12 @@ export const pagingControlsTypes = {
     lastPage: 'lp'
 };
 
+export const hiddenByTreeEditorClass = 'hidden-by-tree-editor';
+
 export default {
     pageSize,
     contextTypes,
     columnTypes,
-    getDefaultActions
+    getDefaultActions,
+    hiddenByTreeEditorClass
 };
