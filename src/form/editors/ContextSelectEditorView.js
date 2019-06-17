@@ -129,7 +129,9 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
     },
 
     __getButtonText(selectedItem) {
-        if (!selectedItem || selectedItem === 'False') return '';
+        if (!selectedItem || selectedItem === 'False') {
+            return '';
+        }
         let instanceTypeId = this.viewModel.get('panel').get('instanceTypeId');
         let text = '';
 

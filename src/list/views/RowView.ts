@@ -61,6 +61,7 @@ export default Marionette.View.extend({
         click: '__handleClick',
         dblclick: '__handleDblClick',
         'pointerdown @ui.collapsibleButton': '__toggleCollapse',
+        'click @ui.collapsibleButton': (event: MouseEvent) => event.stopPropagation(),
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
