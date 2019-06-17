@@ -79,7 +79,7 @@
     width: 100%;
 }
 
-.grid-container .dropdown__wrp_down {
+.grid-container .tree-editor-btn {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 5px;

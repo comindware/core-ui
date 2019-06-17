@@ -145,10 +145,10 @@ export default Marionette.View.extend({
             this.selectTabIndex = this.__getTabIndex(tab);
         }
         if (tab.get('enabled')) {
+            tab.set('selected', true);
             if (!tab.get('isRendered') && this.isRendered()) {
                 this.__renderTab(tab, Boolean(this.getOption('deferRender')));
             }
-            tab.set('selected', true);
         }
     },
 
@@ -288,7 +288,7 @@ export default Marionette.View.extend({
     },
 
     __findSelectedTab() {
-        const selectedTab = this.__tabsCollection.find(x => x.get('selected'));
+        const selectedTab = this.__tabsCollection.find(tabModel => tabModel.get('selected'));
 
         return selectedTab;
     },
