@@ -185,7 +185,10 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.dragContext.dragger.classList.remove('active');
+        const draggerElement = this.dragContext.dragger;
+        this.__triggerUpdateWidth(draggerElement);
+
+        draggerElement.classList.remove('active');
         this.dragContext = null;
 
         document.removeEventListener('pointermove', this.__draggerMouseMove);
@@ -211,12 +214,16 @@ const GridHeaderView = Marionette.View.extend({
 
     __draggerMouseUp() {
         this.__stopDrag();
+
         this.trigger('header:columnResizeFinished');
         return false;
     },
 
-    __getFullWidth() {
-        return this.el.clientWidth;
+    __triggerUpdateWidth(element) {
+        const index = Array.from(this.el.querySelectorAll('.grid-header-dragger')).indexOf(element);
+        const columnElement = this.el.querySelectorAll('.grid-header-column').item(index);
+
+        this.trigger('update:width', { index, newColumnWidth: this.__getElementOuterWidth(columnElement) });
     },
 
     onAttach() {
@@ -236,7 +243,7 @@ const GridHeaderView = Marionette.View.extend({
         this.dragContext.resizingElement.style.width = `${newColumnWidth}px`;
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
-        //this.options.columns[index].width = newColumnWidth;
+        this.options.columns[index].width = newColumnWidth;
     },
 
     __toggleCollapseAll() {

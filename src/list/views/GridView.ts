@@ -132,6 +132,7 @@ export default Marionette.View.extend({
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+            this.listenTo(this.headerView, 'update:width', (config: { index: Number, newColumnWidth: Number }) => this.__handleColumnWidthChange(config));
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -214,6 +215,11 @@ export default Marionette.View.extend({
         if (this.options.showTreeEditor) {
             this.__initTreeEditor();
         }
+    },
+
+    __handleColumnWidthChange(config: { index: Number, newColumnWidth: Number }) {
+        const { index, newColumnWidth } = config;
+        this.trigger('treeEditor:save', { [this.options.columns[index].id]: { width: newColumnWidth } });
     },
 
     updatePosition(position, shouldScrollElement = false) {
@@ -619,54 +625,54 @@ export default Marionette.View.extend({
         }
     },
 
-    __setCheckBoxColummWidth() {
-        const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
-        const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
-        const baseWidth = isMainTheme ? 37 : 42;
-        const numberWidth = isMainTheme ? 7.3 : 7.44;
-        this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
-    },
+    // __setCheckBoxColummWidth() {
+    //     const lastVisibleModelIndex = this.collection.indexOf(this.collection.visibleModels[this.collection.visibleModels.length - 1]) + 1;
+    //     const isMainTheme = Core.services.ThemeService.getTheme() === 'main';
+    //     const baseWidth = isMainTheme ? 37 : 42;
+    //     const numberWidth = isMainTheme ? 7.3 : 7.44;
+    //     this.__setColumnWidth(this.options.columns.length, baseWidth + lastVisibleModelIndex.toString().length * numberWidth, undefined, true);
+    // },
 
-    __setColumnWidth(index: number, width = 0, allColumnsWidth, isCheckBoxCell: boolean) {
-        const style = this.styleSheet;
-        const columnClass = ''; //this.columnClasses[index];
+    // __setColumnWidth(index: number, width = 0, allColumnsWidth, isCheckBoxCell: boolean) {
+    //     const style = this.styleSheet;
+    //     const columnClass = ''; //this.columnClasses[index];
 
-        const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
+    //     const regexp = isCheckBoxCell ? new RegExp(`.${columnClass} { width: \\d+\\.?\\d*px; } `) : new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+    //     let basis;
 
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-            }
-        } else {
-            const column = this.options.columns[index];
+    //     if (width > 0) {
+    //         if (width < 1) {
+    //             basis = `${width * 100}%`;
+    //         } else {
+    //             basis = `${width}px`;
+    //         }
+    //     } else {
+    //         const column = this.options.columns[index];
 
-            if (column.format === 'HTML') {
-                basis = '0%';
-            } else {
-                const defaultWidth = columnWidthByType[column.dataType]; //what is it?
+    //         if (column.format === 'HTML') {
+    //             basis = '0%';
+    //         } else {
+    //             const defaultWidth = columnWidthByType[column.dataType]; //what is it?
 
-                if (defaultWidth) {
-                    basis = `${defaultWidth}px`;
-                } else {
-                    basis = '0%';
-                }
-            }
-        }
+    //             if (defaultWidth) {
+    //                 basis = `${defaultWidth}px`;
+    //             } else {
+    //                 basis = '0%';
+    //             }
+    //         }
+    //     }
 
-        const grow = width > 0 ? 0 : 1;
-        const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+    //     const grow = width > 0 ? 0 : 1;
+    //     const newValue = isCheckBoxCell ? `.${columnClass} { width: ${width}px; } ` : `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
 
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
-        }
+    //     if (regexp.test(style.innerHTML)) {
+    //         style.innerHTML = style.innerHTML.replace(regexp, newValue);
+    //     } else {
+    //         style.innerHTML += newValue;
+    //     }
 
-        this.__updateEmptyView(allColumnsWidth);
-    },
+    //     this.__updateEmptyView(allColumnsWidth);
+    // },
 
     __executeAction(model, collection, ...rest) {
         const selected = this.__getSelectedItems(collection);
