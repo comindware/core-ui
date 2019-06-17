@@ -59,21 +59,19 @@ export default Marionette.Behavior.extend({
     },
 
     __handleDragEnter(event) {
-        if (this.__isUiElement(event.target)) {
-            return;
-        }
-
         event.stopPropagation();
 
         if (this.__isInValidDropTarget()) {
             return;
         }
 
+        if (event.target.classList.contains('branch-item')) {
+            return;
+        }
+
         event.preventDefault();
         const element = event.target;
-        const targetElement = this.__isBranch(element) ? element.parentNode : element;
-
-        targetElement.classList.add(classes.dragover);
+        element.classList.add(classes.dragover);
     },
 
     __handleDragOver(event) {
@@ -86,18 +84,12 @@ export default Marionette.Behavior.extend({
     },
 
     __handleDragLeave(event) {
-        if (this.__isUiElement(event.target)) {
+        if (this.__isUiElement(event.originalEvent.fromElement)) {
             return;
         }
 
         event.stopPropagation();
         event.target.classList.remove(classes.dragover);
-        // const targetElement = event.target;
-        // // const element = this.__getDragoverParent(targetElement);
-        // if (!element || targetElement === this.__isUiElement(targetElement)) {
-        //     return false;
-        // }
-        // (this.__isBranch(element) ? element.parentNode : element).classList.remove(classes.dragover);
     },
 
     __handleDragEnd(event) {
@@ -148,6 +140,9 @@ export default Marionette.Behavior.extend({
     },
 
     __isUiElement(elem) {
+        if (!elem) {
+            return false;
+        }
         return ['branch-header-name', 'leaf-name', 'eye-btn'].reduce((acc, cur) => acc || elem.classList.contains(cur), false);
     },
 

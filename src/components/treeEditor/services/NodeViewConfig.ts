@@ -1,4 +1,4 @@
-import eyeBehavior from '../behaviors/eyeBehavior';
+import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
 
 const getConfig = (template: string) => ({
     template: Handlebars.compile(template),
@@ -17,8 +17,8 @@ const getConfig = (template: string) => ({
     },
 
     behaviors: {
-        eyeBehavior: {
-            behaviorClass: eyeBehavior
+        TreeEditorBehavior: {
+            behaviorClass: TreeEditorBehavior
         }
     }
 });
