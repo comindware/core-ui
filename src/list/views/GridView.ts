@@ -219,7 +219,10 @@ export default Marionette.View.extend({
 
     __handleColumnWidthChange(config: { index: Number, newColumnWidth: Number }) {
         const { index, newColumnWidth } = config;
-        this.trigger('treeEditor:save', { [this.options.columns[index].id]: { width: newColumnWidth } });
+        const columnModel = this.options.columns[index].columnModel;
+        if (columnModel) {
+            this.trigger('treeEditor:save', { [this.options.columns[index].columnModel.id]: { width: newColumnWidth } });
+        }
     },
 
     updatePosition(position, shouldScrollElement = false) {
