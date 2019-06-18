@@ -49,6 +49,6 @@ export default Marionette.View.extend({
 
         this.showChildView('popoutWrapper', listView);
 
-        listView.on('childview:click', model => this.trigger('context:selected', model));
+        listView.on('click', model => this.trigger('context:selected', model));
     }
 });
