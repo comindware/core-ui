@@ -7,8 +7,6 @@ export default Marionette.CollectionView.extend({
         this.collection = options.model.get(options.model.childrenAttribute);
     },
 
-    className: 'branch-item',
-
     childView(childModel) {
         return NodeViewFactory.getNodeView({
             model: childModel,
@@ -25,5 +23,5 @@ export default Marionette.CollectionView.extend({
 
     childViewContainer: '.js-branch-collection',
 
-    ...NodeViewConfig(template)
+    ...NodeViewConfig(template, 'branch-item')
 });

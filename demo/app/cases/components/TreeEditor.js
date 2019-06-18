@@ -42,11 +42,13 @@ export default function() {
                             },
                             {
                                 id: '4.2',
-                                name: 'item2'
+                                name: 'item2',
+                                required: true
                             },
                             {
                                 id: '4.3',
-                                name: 'item3'
+                                name: 'item3',
+                                isHidden: true
                             },
                             {
                                 id: '4.4',
@@ -224,13 +226,19 @@ export default function() {
 
     class TreeNode {
         constructor(options) {
-            const { id, name, isContainer, childrenAttribute, childrens, type } = options;
+            const { id, name, isContainer, childrenAttribute, childrens, type, required, isHidden } = options;
             const model = new Backbone.Model({
                 name
             });
             if (childrenAttribute) {
                 model.childrenAttribute = childrenAttribute;
                 model.set(childrenAttribute, new Backbone.Collection(childrens));
+            }
+            if (required != null) {
+                model.set({ required });
+            }
+            if (isHidden != null) {
+                model.set({ isHidden });
             }
             type && model.set({ type });
             isContainer && (model.isContainer = isContainer);

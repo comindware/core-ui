@@ -15,7 +15,7 @@ export default Marionette.Behavior.extend({
     },
 
     events: {
-        'click @ui.eyeBtn': '__handleEyeClick',
+        click: '__handleEyeClick',
         dragenter: '__handleDragEnter',
         dragover: '__handleDragOver',
         dragleave: '__handleDragLeave',
