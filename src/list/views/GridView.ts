@@ -1012,7 +1012,7 @@ export default Marionette.View.extend({
             noColumnsMessage.innerText = 'All columns are hidden'; //TODO localize
             noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
 
-            this.ui.content.appendChild(noColumnsMessage);
+            this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
             this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
         } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
             this.el.querySelector('.tree-editor-no-columns-message').remove();
