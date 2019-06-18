@@ -713,6 +713,10 @@ tr:hover .cell_selection {
     flex: 1;
 }
 
+.grid-label_tree-editor {
+    margin-left: auto;
+}
+
 .composite-user-abr__container{
     height: 23px;
     width: 23px;
