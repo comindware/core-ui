@@ -82,7 +82,6 @@
 .grid-container .tree-editor-btn {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 5px;
 }
 
 .branch-item.dropdown__wrp {
