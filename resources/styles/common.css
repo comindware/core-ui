@@ -1130,11 +1130,6 @@ a:hover {
     overflow-x: unset;
 }
 
-.member-split-wrp .grid-container, .member-split-wrp .grid-content-wrp {
-    height: calc(100% - 60px);
-    margin-bottom: 0;
-}
-
 .member-split-quantity-warning {
     text-align: center;
     font-size: 12px;

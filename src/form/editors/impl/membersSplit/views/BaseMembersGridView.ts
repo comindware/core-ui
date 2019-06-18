@@ -73,7 +73,6 @@ export default Marionette.View.extend({
                 }
             ],
             height: 'auto',
-            childView: MembersListItemView,
             emptyViewOptions: {
                 text: this.model.get('emptyListText')
             },
