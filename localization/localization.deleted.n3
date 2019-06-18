@@ -10,8 +10,6 @@
 
 <http://comindware.com/text/core#bootstrapper> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
-<http://comindware.com/text/core#common> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "common"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
 <http://comindware.com/text/core#components> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "components"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/bootstrapper#errors> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
@@ -25,8 +23,6 @@
 <http://comindware.com/text/core/common#dragMe> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Drag and drop"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/common#hideAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/common#notset> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
 
 <http://comindware.com/text/core/common#save> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Save"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
