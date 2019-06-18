@@ -6,7 +6,5 @@ export default Marionette.View.extend({
         draggable: 'true'
     },
 
-    className: 'leaf-item tree-item',
-
-    ...NodeViewConfig(template)
+    ...NodeViewConfig(template, 'leaf-item tree-item')
 });

@@ -1,8 +1,8 @@
 import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
 
-const requiredClass = 'star-of-life';
+const requiredIconClass = 'star-of-life';
 
-const getConfig = (template: string) => ({
+const getConfig = (template: string, className: string) => ({
     template: Handlebars.compile(template),
 
     templateContext() {
@@ -14,12 +14,16 @@ const getConfig = (template: string) => ({
         };
     },
 
+    className() {
+        return `${className} ${this.model.get('required') ? 'required' : ''}`;
+    },
+
     id() {
         return _.uniqueId('treeEditor_');
     },
 
     __getIconClass() {
-        return this.model.get('required') ? requiredClass : this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass;
+        return this.model.get('required') ? requiredIconClass : this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass;
     },
 
     behaviors: {
