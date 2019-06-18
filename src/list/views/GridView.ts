@@ -313,10 +313,6 @@ export default Marionette.View.extend({
         this.searchView.toggleInputActivity(enableSearch);
     },
 
-    toggleSearchActivity(enableSearch) {
-        this.searchView.toggleInputActivity(enableSearch);
-    },
-
     onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();
@@ -375,6 +371,7 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
+            this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -976,15 +973,15 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __toggleColumnVisibility(key: string, isHidden: boolean) {
+    __toggleColumnVisibility(key: string, isHidden = false) {
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.key === key);
         const columnToBeHidden = columns[index];
 
         if (isHidden) {
-            columnToBeHidden.hidden = isHidden;
+            columnToBeHidden.isHidden = isHidden;
         } else {
-            delete columnToBeHidden.hidden;
+            delete columnToBeHidden.isHidden;
         }
 
         let elementIndex = index + 1;
@@ -1006,7 +1003,7 @@ export default Marionette.View.extend({
     __toggleNoColumnsMessage(columns: Array<object>) {
         let hiddenColumnsCounter = 0;
         columns.forEach(col => {
-            if (col.hidden) {
+            if (col.isHidden) {
                 hiddenColumnsCounter++;
             }
         });

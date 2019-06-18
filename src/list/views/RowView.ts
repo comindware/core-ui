@@ -136,7 +136,7 @@ export default Marionette.View.extend({
     },
 
     __setCustomClassToColumn(gridColumn) {
-        if (gridColumn.hidden) {
+        if (gridColumn.isHidden) {
             if (!gridColumn.customClass) {
                 gridColumn.customClass = hiddenByTreeEditorClass;
             } else if (!gridColumn.customClass.match(new RegExp(hiddenByTreeEditorClass))) {
