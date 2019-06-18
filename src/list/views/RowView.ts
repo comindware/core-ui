@@ -389,7 +389,7 @@ export default Marionette.View.extend({
             optionsColumnsIndex -= 1;
         }
 
-        return cellIndex > -1 && this.getOption('columns')[optionsColumnsIndex].editable;
+        return optionsColumnsIndex > -1 && this.getOption('columns')[optionsColumnsIndex].editable;
     },
 
     __handleDblClick() {
