@@ -40,8 +40,12 @@ export default Marionette.Behavior.extend({
         model.set(isHiddenPropName, !isHidden);
     },
 
+    getWidgetId() {
+        return this.view.model.get('columnModel')?.cleanWidgetId || this.view.model.id;
+    },
+
     __handleHiddenChange() {
-        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.view.model.id, { isHidden: this.view.model.get('isHidden') });
+        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.getWidgetId(), { isHidden: this.view.model.get('isHidden') });
         this.view.render();
         this.__toggleHiddenClass();
     },
