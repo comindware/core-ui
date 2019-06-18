@@ -419,6 +419,8 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    flex: 0 1 auto;
+    overflow: hidden;
 }
 .cell.editor_bubble .bubbles__list {
     flex-wrap: nowrap;

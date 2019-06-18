@@ -5,7 +5,7 @@
 .editor_date-time.editor_focused:not(.editor_readonly):not(.editor_disabled){
   border-color: var(--input-active-border-color);
 }
-.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.editor_focused{
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.open.editor_focused{
   border-bottom-color: transparent;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
   border-radius: 4px 4px 0 0;

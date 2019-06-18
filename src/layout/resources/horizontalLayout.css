@@ -13,6 +13,9 @@
     overflow-x: auto;
     min-width: 200px;
 }
+.layout__horizontal-layout > .layout__button {
+    min-width: auto;
+}
 
 .layout__horizontal-layout-list {
     height: 100%;

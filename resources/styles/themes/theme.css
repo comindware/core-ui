@@ -384,6 +384,9 @@ svg.svg-grid-icons {
 }
 
 
+.grid-header .cell_selection,
+.grid-header .cell_selection:hover,
+.grid-header:hover .cell_selection,
 .grid-header .cell_selection-index,
 .grid-header .cell_selection-index:hover,
 .grid-header:hover .cell_selection-index{
@@ -541,7 +544,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background-color: var(--grid-header-selection-bg);
 }
 
-.cell_selection-index {
+.cell_selection, .cell_selection-index {
   padding: 0 var(--grid-selection-index-padding-checkbox) 0 var(--grid-selection-index-padding-x);
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
@@ -550,6 +553,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   position: sticky;
   left: 0;
   z-index: 10;
+  width: 47px;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -728,10 +732,11 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  flex: 0 1 auto;
 }
 .bubble__pencil-edit:hover a,
 .bubble__pencil-edit:hover span {
-  width: calc(100% - 20px);
+
   
 }
 .editor_readonly .bubble__pencil-edit:hover a,

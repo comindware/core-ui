@@ -336,8 +336,13 @@
 
 .bubbles__list .bubbles__i {
     height: 100%;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.bubbles__list .bubbles__i .editor__icons{
+    position: static;
+    flex: none;
 }
 
 .bubbles__list .bubbles-subtext {
