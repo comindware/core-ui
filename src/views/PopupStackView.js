@@ -301,7 +301,7 @@ export default Marionette.View.extend({
             );
         }
 
-        popupDef.view.el.classList.remove('presented-modal-window');
+        popupDef.view.el?.classList.remove('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
     },
 
