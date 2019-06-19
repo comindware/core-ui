@@ -129,8 +129,8 @@ export default {
         return activeUrl?.startsWith('#custom');
     },
 
-    setModuleLoading(show, useForce) {
-        show ? this.__showViewPlaceholder() : this.__hideViewPlaceholder(useForce);
+    setModuleLoading(show, { message, useForce = false } = {}) {
+        show ? this.__showViewPlaceholder(message) : this.__hideViewPlaceholder(useForce);
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
@@ -223,7 +223,7 @@ export default {
                     this.__callRoutingActionForActiveModule(callbackName, routingArgs);
                 }
             } catch (e) {
-                this.setModuleLoading(false, true);
+                this.setModuleLoading(false, { useForce: true });
                 Core.utils.helpers.throwError(e);
             }
         } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
@@ -236,9 +236,10 @@ export default {
         this.setModuleLoading(false);
     },
 
-    __showViewPlaceholder() {
+    __showViewPlaceholder(message) {
         this.loadersCount++;
         window.contentLoadingRegion.el.classList.add('visible-loader');
+        window.contentLoadingRegion.currentView.setLoadingMessage(message);
     },
 
     __hideViewPlaceholder(useForce) {
