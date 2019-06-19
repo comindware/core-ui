@@ -287,9 +287,12 @@ const VirtualCollection = Backbone.Collection.extend({
 
         //diffObject.common.forEach(e => this.trigger('update:child', e)); why we need to trigger useless updates??
 
+        const sorted = diffObject.add.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b));
+        options.added = sorted;
+
         // it's important remove items before add
         this.__removeModels(diffObject.remove, options);
-        diffObject.add.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
+        sorted.forEach(model => this.__addModel(model, options));
     },
 
     __normalizePosition(position) {
