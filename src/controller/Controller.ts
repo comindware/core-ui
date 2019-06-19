@@ -37,8 +37,8 @@ export default class Controller {
         return this.__checkPromisesAndLeave(true);
     }
 
-    static setLoading(isLoading) {
-        RoutingService.setModuleLoading(isLoading);
+    static setLoading(isLoading: boolean, message: string | undefined): void {
+        RoutingService.setModuleLoading(isLoading, { message });
         if (isLoading === false) {
             this.__onModuleReady();
         }

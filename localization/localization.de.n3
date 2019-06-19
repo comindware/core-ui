@@ -8,6 +8,8 @@
 
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 
+<http://comindware.com/text/core/common#loading> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Wird geladen..."; l10n:originalData "Loading..."].
+
 <http://comindware.com/text/core/demo/cases/other#localizationService> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Demo Text"; l10n:originalData "Demo text"].
 
 <http://comindware.com/text/core/demo/cases/other/localizationService#daysPlural> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Tag,Tage"; l10n:originalData "day,days"].
