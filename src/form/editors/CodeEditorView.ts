@@ -33,7 +33,7 @@ const defaultOptions = {
  * @param {Number} [options.height=150] Высота редактора в пикселях.
  * */
 
-export default (formRepository.editors.Code = BaseEditorView.extend({
+export default formRepository.editors.Code = BaseEditorView.extend({
     className: 'code-editor editor',
 
     regions: {
@@ -77,12 +77,11 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
         this.ui.fadingPanel.hide();
+
         if (this.options.showMode === showModes.button) {
-            this.ui.editor.hide();
             this.el.classList.add(classes.buttonMode);
         } else {
-            this.ui.editBtn.hide();
-            this.ui.clearBtn.hide();
+            this.el.classList.remove(classes.buttonMode);
         }
         this.__setEditBtnText();
     },
@@ -152,4 +151,4 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.editor.setReadonly(readonly);
     }
-}));
+});

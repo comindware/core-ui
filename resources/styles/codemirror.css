@@ -546,6 +546,15 @@ li.CodeMirror-hint-active {
     line-height: initial;
 }
 
+.dev-code-editor-button-mode > .dev-codemirror {
+    display: none;
+}
+  
+.code-editor:not(.dev-code-editor-button-mode)  > .dev-code-button-edit,
+.code-editor:not(.dev-code-editor-button-mode)  > .icon-remove {
+    display: none;
+}
+
 .code-editor:hover .editor__icons.icon-remove {
     visibility: visible;
 }
