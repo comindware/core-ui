@@ -218,6 +218,9 @@ input[type="checkbox"].checkbox {
     display: inline-flex;
     flex-shrink: 0;
 }
+.editor_checkbox.cell {
+    display: table-cell;
+}
 
 .checkbox {
     position: relative;
@@ -893,4 +896,15 @@ input[type="color"], .colorpicker{
 .fr-dropdown-message {
     min-width: 200px;
     padding: 10px;
+}
+
+
+.cell .bubbles .bubbles__list{
+    flex: 0 1 auto
+}
+.cell .bubbles__i.bubble__pencil-edit .bubble-doc_text{
+
+}
+.cell .bubbles .bubbles__list .bubbles__i{
+    flex: 0 1 auto
 }

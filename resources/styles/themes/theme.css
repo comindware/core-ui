@@ -759,6 +759,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 .bubbles .bubble-doc_text{
   height: 100%;
   line-height: 100%;
+  flex: 0 1 auto;
 }
 .bubbles .spinner {
   line-height: 1;
@@ -772,10 +773,13 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background: transparent;
   flex-wrap: nowrap;
   align-items: center;
+  box-shadow: none !important;
+  flex: none;
 }
 .cell .editor_disabled .bubbles,
 .cell .editor_readonly .bubbles {
   background: transparent;
+  box-shadow: none;
 }
 
 .datalist-panel_list.disable-select .dd-list__i:not(.editor_checked){
