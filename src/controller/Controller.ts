@@ -204,7 +204,7 @@ export default class Controller {
 
     __applyCallParamsFilter(callParams, urlParams, routingAction) {
         if (routingAction && urlParams) {
-            const queryString = this.getOption('config').navigationUrl[routingAction];
+            const queryString = this.options.config.navigationUrl[routingAction];
             const params = queryString.split('/');
             const filteredParams = [];
 
