@@ -505,6 +505,10 @@ li.CodeMirror-hint-active {
 .dev-codemirror {
     font-size: 12px;
     background-color: white;
+    height: 100%;
+}
+.dev-codemirror >.js-code-editor-container{
+    height: calc(100% - 31px);
 }
 
 .dev-code-editor-toolbar {
