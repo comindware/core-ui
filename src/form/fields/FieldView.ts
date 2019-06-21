@@ -26,10 +26,7 @@ const editorFieldExtention = {
             return;
         }
 
-        this.$el
-            .parent()
-            .parent()
-            .addClass(this.classes.ERROR);
+        this.el.classList.add(...this.classes.ERROR.split(' '));
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
 
         if (!this.isErrorShown) {
@@ -42,6 +39,10 @@ const editorFieldExtention = {
                 popoutFlow: 'right',
                 customAnchor: true
             });
+
+            const el = this.el.querySelector('.js-error-text-region');
+            this.errorsRegion = new Marionette.Region({ el });
+
             this.errorsRegion.show(errorPopout);
 
             this.isErrorShown = true;
@@ -52,10 +53,7 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el
-            .parent()
-            .parent()
-            .removeClass(this.classes.ERROR);
+        this.el.classList.remove(...this.classes.ERROR.split(' '));
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -101,9 +99,8 @@ export default class {
         const schema = Object.assign({}, options.schema, schemaExtension);
 
         const EditorConstructor = formRepository.editors[schema.type];
-        const FieldConstructor = EditorConstructor.extend(editorFieldExtention);
 
-        this.editor = new FieldConstructor({
+        const editorOptions = {
             ...schema,
             form: options.form,
             class: options.class,
@@ -113,21 +110,25 @@ export default class {
             value: options.value,
             fieldId,
             tagName: options.tagName || 'div'
+        };
+
+        const templateContext = EditorConstructor.prototype.templateContext;
+        const editorHTML = templateContext ? EditorConstructor.prototype.template(editorOptions) : EditorConstructor.prototype.template();
+        const FieldConstructor = EditorConstructor.extend({
+            template: Handlebars.compile(options.template),
+
+            templateContext() {
+                return { ...schema, editorHTML };
+            }
         });
+
+        const ExtendedFieldEditorClass = FieldConstructor.extend(editorFieldExtention);
+
+        this.editor = new ExtendedFieldEditorClass(editorOptions);
 
         this.key = options.key;
 
         this.editor.on('before:attach', () => {
-            const fieldTempParts = Handlebars.compile(options.template)(schema);
-
-            if (schema.isCell) {
-                this.editor.el.insertAdjacentHTML('beforeend', fieldTempParts);
-            } else {
-                this.editor.el.insertAdjacentHTML('beforebegin', fieldTempParts);
-
-                this.editor.el.previousSibling.querySelector('.js-editor-region').insertAdjacentElement('afterbegin', this.editor.el);
-            }
-
             if (schema.helpText && !schema.isCell) {
                 const viewModel = new Backbone.Model({
                     helpText: schema.helpText,
@@ -146,30 +147,19 @@ export default class {
                 });
 
                 this.editor.helpTextRegion = new Marionette.Region({
-                    el: this.editor.$el
-                        .parent()
-                        .parent()
-                        .find('.js-help-text-region')
+                    el: this.editor.el.querySelector('.js-help-text-region')
                 });
                 this.editor.helpTextRegion.show(infoPopout);
 
                 this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
             }
-            this.editor.errorsRegion = new Marionette.Region({
-                el: schema.isCell
-                    ? this.editor.$el.parent().find('.js-error-text-region')
-                    : this.editor.$el
-                          .parent()
-                          .parent()
-                          .find('.js-error-text-region')
-            });
+
             this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
         });
     }
 
     __updateEditor() {
         this.__createEditor(this.options, this.fieldId);
-        this.showChildView('editorRegion', this.editor);
     }
 
     __createEditorId(key) {
