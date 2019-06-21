@@ -45,7 +45,7 @@ export default {
     },
 
     cutOffTo(string: string, toStr: string, defaultString = string): string {
-        return string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : string;
+        return string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : defaultString;
     },
 
     capitalize(string: string): string {

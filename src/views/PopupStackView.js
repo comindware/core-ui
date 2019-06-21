@@ -30,6 +30,7 @@ export default Marionette.View.extend({
         const regionEl = document.createElement('div');
         regionEl.setAttribute('data-popup-id', popupId);
         regionEl.classList.add('js-core-ui__global-popup-region');
+        regionEl.classList.add('core-ui__global-popup-region');
 
         let parentPopup;
         let parentPopupId = null;
