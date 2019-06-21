@@ -50,6 +50,8 @@
     flex-direction: column;
     overflow-y: hidden;
     position: relative;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .layout__popup-view-window_expand {
