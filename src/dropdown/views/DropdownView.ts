@@ -1,4 +1,3 @@
-import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -14,7 +13,7 @@ const classes = {
 };
 
 const WINDOW_BORDER_OFFSET = 10;
-const MAX_DROPDOWN_PANEL_WIDTH = 300;
+const MIN_DROPDOWN_PANEL_WIDTH = 300;
 
 const popoutFlow = {
     LEFT: 'left',
@@ -26,17 +25,12 @@ const panelPosition = {
     UP: 'up'
 };
 
-const panelMinWidth = {
-    NONE: 'none',
-    BUTTON_WIDTH: 'button-width'
-};
-
 const defaultOptions = {
     popoutFlow: popoutFlow.LEFT,
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
-    panelMinWidth: panelMinWidth.BUTTON_WIDTH,
+    panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
     externalBlurHandler: () => false
 };
@@ -154,12 +148,13 @@ export default class DropdownView {
         const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
         const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
-        const computedWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
-        const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
 
-        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            this.panelEl.style.width = `${panelWidth}px`;
+        if (this.maxWidth) {
+            this.panelEl.style.maxWidth = `${maxWidth}px`;
         }
+
+        const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+        this.panelEl.style.minWidth = `${minWidth}px`;
 
         let offsetHeight = this.panelEl.offsetHeight;
 
