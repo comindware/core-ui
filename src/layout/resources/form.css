@@ -2,3 +2,8 @@
     width: 100%;
     height: auto;
 }
+
+.layout__popup-view-content > .layout__vertical-layout > .layout__form-view{
+    display: flex;
+    height: 100%;
+}
