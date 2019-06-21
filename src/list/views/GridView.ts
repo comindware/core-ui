@@ -997,7 +997,16 @@ export default Marionette.View.extend({
             element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
         });
 
-        this.__toggleNoColumnsMessage(columns);
+        if (this._isAttached) {
+            this.__toggleNoColumnsMessage(columns);
+        } else {
+            const interval = setInterval(() => {
+                if (this._isAttached) {
+                    clearInterval(interval);
+                    this.__toggleNoColumnsMessage(columns);
+                }
+            }, 0);
+        }
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {
