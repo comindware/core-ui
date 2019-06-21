@@ -38,7 +38,8 @@ export default function() {
                         validators: ['required'],
                         required: true,
                         key: 0,
-                        autocommit: true
+                        autocommit: true,
+                        helpText: 'privet'
                     },
                     {
                         type: 'Text-editor',
@@ -48,7 +49,8 @@ export default function() {
                         validators: ['required'],
                         required: true,
                         key: 1,
-                        autocommit: true
+                        autocommit: true,
+                        helpText: 'privet'
                     },
                     {
                         type: 'TextArea-editor',
