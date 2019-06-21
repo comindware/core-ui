@@ -75,7 +75,7 @@ export default (factory = {
 
         return this.__getMultivalueCellView({
             values: values.map(v => ({ value: v })),
-            childTemplate: '{{value}}',
+            childTemplate: '{{{value}}}',
             title: this.__getTitle({ values, column, model }),
             column
         });
