@@ -154,7 +154,7 @@ export default class {
                 this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
             }
 
-            this.editor.once('destroy', () => this.editor.errorsRegion.destroy());
+            this.editor.once('destroy', () => this.editor.errorsRegion?.destroy());
         });
     }
 
