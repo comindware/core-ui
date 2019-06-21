@@ -1127,6 +1127,10 @@ a:hover {
 }
 
 .member-split-wrp .member-split-grid {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     overflow-x: unset;
 }
 
@@ -1147,6 +1151,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    flex: none;
 }
 
 /* end member-split custom styles*/
