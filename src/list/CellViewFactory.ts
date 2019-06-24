@@ -8,7 +8,6 @@ import editableCellField from './templates/editableCellField.hbs';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
-import { Arr } from 'tern';
 
 let factory: {
     getCellViewForColumn: Function,
