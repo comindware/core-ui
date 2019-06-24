@@ -8,15 +8,49 @@ import editableCellField from './templates/editableCellField.hbs';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
+import { Arr } from 'tern';
 
-let factory;
+let factory: {
+    getCellViewForColumn: Function,
+    getCell: Function,
+    __getStringCell: Function,
+    __getNumberCell: Function,
+    __getDateTimeCell: Function,
+    __getDurationCell: Function,
+    __getBooleanCell: Function,
+    __getReferenceCell: Function,
+    __getDocumentCell: Function,
+    __getUserCell: Function,
+    __getMultivalueCellView: Function,
+    __createContextString: Function,
+    __getTitle: Function,
+    __getCellClass: Function,
+    __getWrappedTemplate: Function
+};
 
-type Column = { key: string, customClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
+type Column = {
+    key: string,
+    customClass: string,
+    editable: boolean,
+    type: string,
+    dataType: string,
+    format: string,
+    formatOptions?: {
+        intlOptions?: {
+            useGrouping: boolean,
+            maximumFractionDigits: number
+        },
+        allowFloat?: boolean,
+        dateDisplayFormat: string,
+        timeDisplayFormat: string
+    },
+    titleAttribute?: string
+}; //todo wtf datatype
 
-type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
+type MultivalueCellOptions = { childTemplate?: string, values?: Array<any>, title?: string, column?: Column };
 
 const CellFieldView = class CellFieldViewClass extends FieldView {
-    constructor(options) {
+    constructor(options: { template: string }) {
         options.template = editableCellField;
         super(options);
     }
@@ -68,7 +102,7 @@ export default (factory = {
         }
     },
 
-    __getStringCell({ values, column, model }) {
+    __getStringCell({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
         if (values.length === 1) {
             return `<td class="${this.__getCellClass(column)}" title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
         }
@@ -81,7 +115,7 @@ export default (factory = {
         });
     },
 
-    __getNumberCell({ values, column, model }) {
+    __getNumberCell({ values, column, model }: { values: Array<number>, column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             if (value == null) {
                 return '';
@@ -111,7 +145,7 @@ export default (factory = {
         });
     },
 
-    __getDateTimeCell({ values, column, model }) {
+    __getDateTimeCell({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             if (column.formatOptions) {
                 const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(value, column.formatOptions.dateDisplayFormat) : '';
@@ -135,7 +169,7 @@ export default (factory = {
         });
     },
 
-    __getDurationCell({ values, column, model }) {
+    __getDurationCell({ values, column, model }: { values: Array<number>, column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             const defaultOptions = {
                 allowDays: true,
@@ -186,7 +220,7 @@ export default (factory = {
         });
     },
 
-    __getBooleanCell(values, column: Column) {
+    __getBooleanCell(values: Array<boolean>, column: Column) {
         const mappedValues = values
             .map(v => {
                 let result = '';
@@ -201,7 +235,7 @@ export default (factory = {
         return `<td class="${this.__getCellClass(column)}">${mappedValues}</td>`;
     },
 
-    __getReferenceCell({ values, column, model }) {
+    __getReferenceCell({ values, column, model }: { values: Array<{ text: string, name: string }>, column: Column, model: Backbone.Model }) {
         values.forEach(value => {
             if (!value.text) {
                 value.text = value.name;
@@ -216,7 +250,15 @@ export default (factory = {
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell, column });
     },
 
-    __getDocumentCell({ values, column, model }) {
+    __getDocumentCell({
+        values,
+        column,
+        model
+    }: {
+        values: Array<{ icon: string, name: string, text: string, isLoading: boolean, extension: string }>,
+        column: Column,
+        model: Backbone.Model
+    }) {
         values.forEach(value => {
             value.icon = ExtensionIconService.getIconForDocument(value.isLoading, value.extension);
             value.name = value.name || value.text;
@@ -230,7 +272,7 @@ export default (factory = {
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell, column });
     },
 
-    __getUserCell({ values, column, model }) {
+    __getUserCell({ values, column, model }: { values: Array<{ abbreviation: string, name: string }>, column: Column, model: Backbone.Model }) {
         values.forEach(value => {
             if (!value.abbreviation) {
                 value.abbreviation = userHelpers.getAbbreviation(value.name);
@@ -257,7 +299,7 @@ export default (factory = {
             }
         };
 
-        const buttonViewData = {
+        const buttonViewData: { value?: any, count: number } = {
             count: values.length - 1
         };
 
@@ -290,7 +332,7 @@ export default (factory = {
         return menuEl;
     },
 
-    __createContextString({ values, column, model }) {
+    __createContextString({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
@@ -303,7 +345,7 @@ export default (factory = {
             </td>`;
     },
 
-    __getTitle({ values, column, model }) {
+    __getTitle({ values, column, model }: { values: Array<string> | string, column: Column, model: Backbone.Model }) {
         let title;
         if (column.format === 'HTML') {
             title = '';
@@ -320,7 +362,7 @@ export default (factory = {
         return `cell ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`;
     },
 
-    __getWrappedTemplate(template) {
+    __getWrappedTemplate(template: string) {
         return `<div class="composite-cell__wrp">
             ${template}
             {{#if count}}
