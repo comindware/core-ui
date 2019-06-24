@@ -554,8 +554,8 @@ li.CodeMirror-hint-active {
     display: none;
 }
   
-.code-editor:not(.dev-code-editor-button-mode)  > .dev-code-button-edit,
-.code-editor:not(.dev-code-editor-button-mode)  > .icon-remove {
+.code-editor:not(.dev-code-editor-button-mode) .dev-code-button-edit,
+.code-editor:not(.dev-code-editor-button-mode) .icon-remove {
     display: none;
 }
 
