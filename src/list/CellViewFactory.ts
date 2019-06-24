@@ -40,13 +40,13 @@ type Column = {
             maximumFractionDigits: number
         },
         allowFloat?: boolean,
-        dateDisplayFormat: string,
-        timeDisplayFormat: string
+        dateDisplayFormat?: string,
+        timeDisplayFormat?: string
     },
     titleAttribute?: string
 }; //todo wtf datatype
 
-type MultivalueCellOptions = { childTemplate?: string, values?: Array<any>, title?: string, column?: Column };
+type MultivalueCellOptions = { childTemplate?: string, values?: any[], title?: string, column?: Column };
 
 const CellFieldView = class CellFieldViewClass extends FieldView {
     constructor(options: { template: string }) {
@@ -101,7 +101,7 @@ export default (factory = {
         }
     },
 
-    __getStringCell({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
+    __getStringCell({ values, column, model }: { values: string[], column: Column, model: Backbone.Model }) {
         if (values.length === 1) {
             return `<td class="${this.__getCellClass(column)}" title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
         }
@@ -114,7 +114,7 @@ export default (factory = {
         });
     },
 
-    __getNumberCell({ values, column, model }: { values: Array<number>, column: Column, model: Backbone.Model }) {
+    __getNumberCell({ values, column, model }: { values: number[], column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             if (value == null) {
                 return '';
@@ -144,7 +144,7 @@ export default (factory = {
         });
     },
 
-    __getDateTimeCell({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
+    __getDateTimeCell({ values, column, model }: { values: string[], column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             if (column.formatOptions) {
                 const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(value, column.formatOptions.dateDisplayFormat) : '';
@@ -168,7 +168,7 @@ export default (factory = {
         });
     },
 
-    __getDurationCell({ values, column, model }: { values: Array<number>, column: Column, model: Backbone.Model }) {
+    __getDurationCell({ values, column, model }: { values: number[], column: Column, model: Backbone.Model }) {
         const mappedValues = values.map(value => {
             const defaultOptions = {
                 allowDays: true,
@@ -219,7 +219,7 @@ export default (factory = {
         });
     },
 
-    __getBooleanCell(values: Array<boolean>, column: Column) {
+    __getBooleanCell(values: boolean[], column: Column) {
         const mappedValues = values
             .map(v => {
                 let result = '';
@@ -331,7 +331,7 @@ export default (factory = {
         return menuEl;
     },
 
-    __createContextString({ values, column, model }: { values: Array<string>, column: Column, model: Backbone.Model }) {
+    __createContextString({ values, column, model }: { values: string[], column: Column, model: Backbone.Model }) {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
@@ -344,7 +344,7 @@ export default (factory = {
             </td>`;
     },
 
-    __getTitle({ values, column, model }: { values: Array<string> | string, column: Column, model: Backbone.Model }) {
+    __getTitle({ values, column, model }: { values: string[] | string, column: Column, model: Backbone.Model }) {
         let title;
         if (column.format === 'HTML') {
             title = '';
