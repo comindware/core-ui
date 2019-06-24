@@ -235,7 +235,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .layout__vertical-layout > div,
-.layout__vertical-layout-item {
+.layout__vertical-layout-item,
+.new-expression-editor-field .dev-new-expression-padding,
+.new-expression-editor-field .dev-new-expression-editor-item{
   margin-bottom: 20px;
 }
 
