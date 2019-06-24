@@ -243,14 +243,14 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             return this.$el;
         },
 
-        __setEnabledFocusElement(enabled) {
+        __setEnabledFocusElement(enabled: boolean): void {
             if (this.focusElement === null) {
                 return;
             }
             this.__getFocusElement().prop('disabled', !enabled);
         },
 
-        __setReadonlyFocusElement(readonly) {
+        __setReadonlyFocusElement(readonly: boolean): void {
             if (this.focusElement === null) {
                 return;
             }

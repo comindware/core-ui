@@ -83,6 +83,7 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
         }
         _.defaults(this.options.valueEditorOptions, {
             enabled: this.options.enabled,
+            readonly: this.options.readonly,
             key: this.key
         });
     },
@@ -135,7 +136,7 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
     },
 
     onRender() {
-        this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
+        this.valueTypeCollection = new Backbone.Collection(undefined, { comparator: false });
         this.__showValueEditor();
         this.__showContextEditor();
         this.__showExpressionEditor();
@@ -157,6 +158,8 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
         }
         this.typeEditor = new DatalistEditorView({
             collection: this.valueTypeCollection,
+            readonly: this.options.readonly,
+            enabled: this.options.enabled,
             allowEmptyValue: false,
             valueType: 'id'
         });
@@ -183,11 +186,10 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
 
         const value = this.value.value;
 
-        this.valueEditor = new this.options.valueEditor(
-            _.extend(this.options.valueEditorOptions, {
-                value: this.value.type === valueTypes.value ? value : null
-            })
-        );
+        this.valueEditor = new this.options.valueEditor({
+            ...this.options.valueEditorOptions,
+            value: this.value.type === valueTypes.value ? value : null
+        });
 
         this.valueEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('valueContainer', this.valueEditor);
@@ -207,14 +209,15 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             'usePropertyTypes',
             'popoutFlow',
             'allowBlank',
-            'isInstanceExpandable'
+            'isInstanceExpandable',
+            'readonly',
+            'enabled'
         );
 
-        _.extend(contextOptions, {
+        this.contextEditor = new formRepository.editors.ContextSelect({
+            ...contextOptions,
             value: this.value.type === valueTypes.context ? this.value.value : null
         });
-
-        this.contextEditor = new formRepository.editors.ContextSelect(contextOptions);
         this.contextEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('contextContainer', this.contextEditor);
 
@@ -238,7 +241,9 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             mode: 'expression',
             height: this.options.expressionEditorHeight,
             showMode: this.options.codeEditorMode,
-            ontologyService: this.options.ontologyService
+            ontologyService: this.options.ontologyService,
+            readonly: this.options.readonly,
+            enabled: this.options.enabled
         };
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
@@ -260,7 +265,9 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             mode: 'script',
             height: this.options.scriptEditorHeight,
             showMode: this.options.codeEditorMode,
-            ontologyService: this.options.ontologyService
+            ontologyService: this.options.ontologyService,
+            readonly: this.options.readonly,
+            enabled: this.options.enabled
         };
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
@@ -279,11 +286,12 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
 
         const value = this.value.value;
 
-        this.templateEditor = new this.options.templateEditor(
-            _.extend(this.options.templateEditorOptions, {
-                value: this.value.type === valueTypes.template ? value : null
-            })
-        );
+        this.templateEditor = new this.options.templateEditor({
+            ...this.options.templateEditorOptions,
+            value: this.value.type === valueTypes.template ? value : null,
+            readonly: this.options.readonly,
+            enabled: this.options.enabled
+        });
 
         this.templateEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('templateContainer', this.templateEditor);
@@ -323,7 +331,7 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
         this.__triggerChange();
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
 
         this.typeEditor.setReadonly(readonly);
