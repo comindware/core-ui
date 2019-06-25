@@ -88,10 +88,6 @@
     overflow: scroll;
 }
 
-.tree-editor-btn {
-    height: 32px;
-}
-
 .tree-editor-btn >.toolbar-btn {
     height: 100%;
     line-height: 1.6;
