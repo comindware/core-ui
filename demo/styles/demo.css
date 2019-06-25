@@ -259,6 +259,7 @@ body {
     flex: 1;
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 }
 .demo-content__function {
     width: 100%;

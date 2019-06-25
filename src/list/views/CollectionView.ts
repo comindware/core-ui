@@ -33,7 +33,8 @@ const defaultOptions = {
     useSlidingWindow: true,
     disableKeydownHandler: false,
     customHeight: false,
-    childHeight: 35
+    childHeight: 35,
+    headerHeight: 35
 };
 
 /**
@@ -395,7 +396,7 @@ export default Marionette.PartialCollectionView.extend({
 
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
-        this.state.allItemsHeight = this.childHeight * this.collection.length;
+        this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight;
 
         if (!this.options.customHeight && this.state.allItemsHeight !== oldAllItemsHeight) {
             this.options.table$el.parent().css({ height: this.state.allItemsHeight || '' }); //todo optimizae it
