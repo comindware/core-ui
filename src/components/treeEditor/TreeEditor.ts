@@ -18,8 +18,8 @@ interface TConfigDiff {
 type TTreeEditorOptions = {
     model: any,
     eyeIconClass?: string,
-    closedEyeIconClass: string,
-    configDiff: TConfigDiff,
+    closedEyeIconClass?: string,
+    configDiff?: TConfigDiff,
     unNamedType?: string,
     stopNestingType?: string,
     forceBranchType?: string,

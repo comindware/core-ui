@@ -112,13 +112,15 @@ export default class {
             tagName: options.tagName || 'div'
         };
 
-        const templateContext = EditorConstructor.prototype.templateContext;
-        const editorHTML = templateContext ? EditorConstructor.prototype.template(editorOptions) : EditorConstructor.prototype.template();
+        const editorTemplateContext = EditorConstructor.prototype.templateContext;
+        const editorHTML = function(opt) {
+            return EditorConstructor.prototype.template(editorTemplateContext ? editorTemplateContext.call(this, opt) : opt);
+        };
         const FieldConstructor = EditorConstructor.extend({
             template: Handlebars.compile(options.template),
 
             templateContext() {
-                return { ...schema, editorHTML };
+                return { ...schema, editorHTML: editorHTML.call(this, editorOptions) };
             }
         });
 
