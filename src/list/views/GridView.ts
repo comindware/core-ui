@@ -132,7 +132,7 @@ export default Marionette.View.extend({
             );
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            this.listenTo(this.headerView, 'update:width', (config: { index: Number, newColumnWidth: Number }) => this.__handleColumnWidthChange(config));
+            this.listenTo(this.headerView, 'update:width', (config: { index: number, newColumnWidth: number }) => this.__handleColumnWidthChange(config));
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -217,7 +217,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleColumnWidthChange(config: { index: Number, newColumnWidth: Number }) {
+    __handleColumnWidthChange(config: { index: number, newColumnWidth: number }) {
         const { index, newColumnWidth } = config;
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
@@ -466,7 +466,6 @@ export default Marionette.View.extend({
         if (this.options.showSearch && this.options.focusSearchOnAttach) {
             this.searchView.focus();
         }
-        const toolbarShowed = this.options.showToolbar || this.options.showSearch;
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
