@@ -17,6 +17,7 @@ interface TConfigDiff {
 
 type TTreeEditorOptions = {
     model: any,
+    hidden?: boolean,
     eyeIconClass?: string,
     closedEyeIconClass?: string,
     configDiff?: TConfigDiff,
@@ -58,6 +59,10 @@ export default class TreeEditor {
 
         reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
         popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
+
+        if (options.hidden) {
+            popoutView.el.setAttribute('hidden', true);
+        }
 
         return popoutView;
     }

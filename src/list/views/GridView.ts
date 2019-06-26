@@ -52,7 +52,8 @@ const defaultOptions = options => ({
     handleSearch: true,
     updateToolbarEvents: '',
     childHeight: 35,
-    showTreeEditor: false
+    showTreeEditor: false,
+    treeEditorIsHidden: false
 });
 
 const config = {
@@ -923,6 +924,7 @@ export default Marionette.View.extend({
         this.treeModel.isContainer = !!this.options.columns.length;
         this.treeModel.childrenAttribute = 'columnsCollection';
         this.treeEditorView = new Core.components.TreeEditor({
+            hidden: this.options.treeEditorIsHidden,
             model: this.treeModel,
             getNodeName(model) {
                 return model.get('title');
