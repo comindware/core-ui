@@ -25,7 +25,7 @@ const defaultOptions = options => ({
     readonly: false,
     allowDelete: true,
     multiple: true,
-    fileFormat: undefined,
+    fileFormat: '',
     showRevision: true,
     showAll: Boolean(options.isCell),
     createDocument: null,
@@ -34,7 +34,7 @@ const defaultOptions = options => ({
     isCell: false
 });
 
-export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
+export default formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
@@ -538,4 +538,4 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
                 break;
         }
     }
-}));
+});
