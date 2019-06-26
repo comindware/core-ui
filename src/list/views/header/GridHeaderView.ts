@@ -35,9 +35,6 @@ const GridHeaderView = Marionette.View.extend({
         this.collection = options.gridEventAggregator.collection;
 
         this.styleSheet = options.styleSheet;
-        this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
-        this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
-        this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
@@ -256,38 +253,26 @@ const GridHeaderView = Marionette.View.extend({
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
 
-    __handleDragOver(event) {
+    __handleDragOver(event: MouseEvent) {
         if (!this.collection.draggingModel) {
             return;
         }
+        // prevent default to allow drop
         event.preventDefault();
     },
 
-    __handleDragEnter(event) {
-        this.collection.dragoverModel = undefined;
-        if (this.__allowDrop()) {
-            this.collection.trigger('dragover:head', event);
-        }
+    __handleDragEnter(event: MouseEvent) {
+        this.el.classList.add(classes.dragover);
     },
 
-    __handleModelDragOver() {
-        this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
+    __handleDragLeave(event: MouseEvent) {
+        this.el.classList.remove(classes.dragover);
     },
 
-    __handleDragLeave(event) {
-        if (this.collection.dragoverModel !== undefined) {
-            this.collection.trigger('dragleave:head', event);
-        }
-    },
-
-    __handleModelDragLeave() {
-        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
-    },
-
-    __handleDrop(event) {
+    __handleDrop(event: MouseEvent) {
         event.preventDefault();
         if (this.__allowDrop()) {
-            this.collection.trigger('drop:head', event);
+            this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModel);
         }
     },
 
@@ -296,13 +281,6 @@ const GridHeaderView = Marionette.View.extend({
             return false;
         }
         return true;
-    },
-
-    __handleModelDrop() {
-        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
-        if (this.collection.draggingModel) {
-            this.trigger('drag:drop', this.collection.draggingModel, this.model);
-        }
     },
 
     __handleColumnSelect(event) {
