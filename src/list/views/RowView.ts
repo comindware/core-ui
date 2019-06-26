@@ -28,7 +28,8 @@ const classes = {
 const defaultOptions = {
     levelMargin: 10,
     contextLevelMargin: 30,
-    subGroupMargin: 20
+    subGroupMargin: 20,
+    draggable: false
 };
 
 /**
@@ -62,6 +63,8 @@ export default Marionette.View.extend({
         dblclick: '__handleDblClick',
         'pointerdown @ui.collapsibleButton': '__toggleCollapse',
         'click @ui.collapsibleButton': (event: MouseEvent) => event.stopPropagation(),
+        dragstart: '__handleDragStart',
+        dragend: '__handleDragEnd',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
@@ -225,11 +228,14 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleDragEnter(event) {
-        this.model.collection.dragoverModel = this.model;
-        if (this.__allowDrop()) {
-            this.model.trigger('dragover', event);
-        }
+    __handleDragStart(event) {
+        this.collection.draggingModel = this.model;
+        event.originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
+    },
+
+    __handleDragEnd() {
+        this.__handleDragLeave();
+        delete this.collection.draggingModel;
     },
 
     __allowDrop() {
@@ -243,7 +249,7 @@ export default Marionette.View.extend({
         return !this.__findInParents(draggingModel, this.model);
     },
 
-    __findInParents(draggingModel, model) {
+    __findInParents(draggingModel, model): boolean {
         if (model === draggingModel) {
             return true;
         }
@@ -253,27 +259,29 @@ export default Marionette.View.extend({
         return false;
     },
 
-    __handleDragOver(event) {
-        this.el.classList.add(classes.dragover);
+    __handleDragOver(event: MouseEvent) {
+        // prevent default to allow drop
         event.preventDefault();
     },
 
-    __handleDragLeave(event) {
-        if (this.model.collection.dragoverModel !== this.model) {
-            this.el.classList.remove(classes.dragover);
-            this.model.trigger('dragleave', event);
-            delete this.model.dragover;
-        }
+    __handleDragEnter(event: MouseEvent) {
+        this.el.classList.add(classes.dragover);
     },
 
-    __handleDrop() {
+    __handleDragLeave(event: MouseEvent) {
+        this.el.classList.remove(classes.dragover);
+    },
+
+    __handleDrop(event: MouseEvent) {
         event.preventDefault();
         if (this.__allowDrop()) {
             this.el.classList.remove(classes.dragover);
+
+            this.gridEventAggregator.trigger('drag:drop', this.model.collection.draggingModel, this.model);
         }
     },
 
-    __handleContextMenu(event) {
+    __handleContextMenu(event: MouseEvent) {
         this.model.trigger('contextmenu', event);
     },
 
@@ -289,7 +297,7 @@ export default Marionette.View.extend({
         });
     },
 
-    insertFirstCellHtml(force) {
+    insertFirstCellHtml(force: boolean) {
         const elements = this.el.getElementsByTagName('td');
         if (elements.length) {
             const el = elements[0];
@@ -336,7 +344,7 @@ export default Marionette.View.extend({
         this.el.insertAdjacentHTML(
             'afterBegin',
             `
-            <td class="${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}">
+            <td class="${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}" draggable="${this.options.draggable}">
         ${
             this.options.draggable
                 ? `
