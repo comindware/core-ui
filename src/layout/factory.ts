@@ -1,11 +1,11 @@
 import FormFieldAnchor from './form/FormFieldAnchor';
-import FormEditorAnchor from './form/FormEditorAnchor';
 
 export function createEditorAnchor(key: string, options: {} = {}) {
-    return new FormEditorAnchor(
+    return new FormFieldAnchor(
         Object.assign(
             {
-                key
+                key,
+                kind: 'editor'
             },
             options
         )
@@ -16,7 +16,8 @@ export function createFieldAnchor(key: string, options: {} = {}) {
     return new FormFieldAnchor(
         Object.assign(
             {
-                key
+                key,
+                kind: 'field'
             },
             options
         )

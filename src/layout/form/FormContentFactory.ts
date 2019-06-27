@@ -8,6 +8,7 @@ import Popup from '../popup/PopupView';
 import PlainText from '../plainText/PlainTextView';
 import GridView from '../../list/views/GridView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
+import FormFieldAnchor from './FormFieldAnchor';
 
 export default {
     __uniqueFormId: '',
@@ -78,21 +79,15 @@ export default {
                 case 'custom':
                 default: {
                     if (child.type) {
-                        if (child.type.includes('field')) {
-                            return elementsFactory.createFieldAnchor(
-                                child.key,
-                                Object.assign({ uniqueFormId: this.__uniqueFormId }, child, {
-                                    type: child.type.replace('-field', '')
-                                })
-                            );
-                        } else if (child.type.includes('editor')) {
-                            return elementsFactory.createEditorAnchor(
-                                child.key,
-                                Object.assign({ uniqueFormId: this.__uniqueFormId }, child, {
-                                    type: child.type.replace('-editor', '')
-                                })
-                            );
-                        }
+                        const kind = child.type.match(/editor|field/)[0];
+
+                        return new FormFieldAnchor({
+                            key: child.key,
+                            uniqueFormId: this.__uniqueFormId,
+                            child,
+                            type: child.type.replace(`-${kind}`, ''),
+                            kind
+                        });
                     }
                     const childContructor = new child.view(_.omit(child, 'view'));
 
