@@ -67,6 +67,10 @@ export default {
         });
     },
 
+    changeSplitViewLayout(newLayoutType) {
+        this.activeModule?.currentView?.toggleOrientation?.(newLayoutType);
+    },
+
     canNavigateBack() {
         return previousUrl !== undefined;
     },
