@@ -7,7 +7,7 @@ import Backbone from 'backbone';
 
 export default class Controller {
     constructor(options = {}) {
-        this.moduleRegion = window.contentRegion;
+        this.moduleRegion = options.region || window.contentRegion;
         this.options = options;
         /*
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
