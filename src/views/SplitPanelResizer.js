@@ -34,6 +34,7 @@ export default Marionette.View.extend({
         } else {
             const originalPanel1Width = this.firstPanel.el.getBoundingClientRect().width;
 
+            this.leftOffset = this.firstPanel.el.offsetLeft;
             this.$el.css('top', '');
             this.$el.css('left', `${originalPanel1Width + this.firstPanel.el.offsetLeft}px`);
             this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
@@ -59,7 +60,7 @@ export default Marionette.View.extend({
 
     __onResizerDragVertical(ui) {
         const totalWidth = this.originalParentWidth;
-        let width = ui.position.left;
+        let width = ui.position.left - this.leftOffset;
 
         if (width < constants.MIN_WIDTH) {
             width = constants.MIN_WIDTH;
