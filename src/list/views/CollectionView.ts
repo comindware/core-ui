@@ -73,11 +73,13 @@ export default Marionette.PartialCollectionView.extend({
         options.childView && (this.childView = options.childView);
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
+
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
 
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
+        options.headerHeight = options.headerHeight || defaultOptions.headerHeight;
         this.height = options.height;
         this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
 
