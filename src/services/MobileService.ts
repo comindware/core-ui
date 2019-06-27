@@ -1,3 +1,5 @@
+import IEService from './IEService';
+
 export default class MobileService {
     static isMobile: boolean;
     static isIE: boolean;
@@ -21,6 +23,7 @@ export default class MobileService {
             (typeof $.browser !== 'undefined' && $.browser.msie === 1)
         ) {
             this.isIE = true;
+            IEService.initialize();
         } else {
             this.isIE = false;
         }
