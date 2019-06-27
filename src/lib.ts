@@ -35,6 +35,7 @@ import jquery from 'jquery';
 import autosize from 'autosize';
 
 import CodeMirror from 'codemirror';
+import 'innersvg-polyfill';
 
 import domapi from './utils/DOMApi';
 
