@@ -16,7 +16,10 @@ export default Marionette.View.extend({
     regions: {
         searchInputRegion: '.js-search-input-region',
         searchAreaRegion: '.js-search-area',
-        collectionAreaRegion: '.js-collection-area',
+        collectionAreaRegion: {
+            el: '.js-collection-area',
+            replaceElement: true
+        },
         colorPickerRegion: '.js-color-picker-region'
     },
 
