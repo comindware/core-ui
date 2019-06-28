@@ -31,3 +31,49 @@
     text-overflow: ellipsis;
     text-transform: capitalize;
 }
+
+
+.ld-setting-dd-panel{
+    padding: 5px;
+    min-width: 200px;
+    max-width: 400px;
+    display: flex;
+}
+
+.ld-setting-dd-panel_color{
+    flex-direction: column;
+}
+
+.ld-setting-dd-panel_color .fr-btn{
+    margin: 2px;
+    width: 100%;
+}
+
+.ld-setting-dd-panel_icons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.ld-setting-dd-panel__i{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    height: 24px;
+    width: 24px;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.ld-setting-dd-panel__i:hover{
+    background: #edf3fb;
+}
+
+.ld-setting-dd-panel__i:empty {
+    display: none;
+}
