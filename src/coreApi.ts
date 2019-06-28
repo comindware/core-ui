@@ -13,6 +13,7 @@ import '../resources/styles/codemirror.css';
 import '../resources/styles/notifications.css';
 import '../resources/styles/blink-checkbox.css';
 import '../resources/styles/treeEditor.css';
+import '../resources/styles/icon-editor.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';

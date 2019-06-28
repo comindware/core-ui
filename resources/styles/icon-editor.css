@@ -1,0 +1,33 @@
+
+.icons-panel-i{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
+    width: 33%;
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.icons-panel-i:hover{
+    background: #edf3fb;
+}
+
+.icons-panel-i__img{
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.icons-panel-i__text{
+    display: inline-block;
+    white-space: nowrap;
+    color:#70787f;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
