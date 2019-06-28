@@ -1,14 +1,13 @@
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import Marionette from 'backbone.marionette';
-import _ from 'underscore';
 
 export default Marionette.View.extend({
     template: _.noop,
 
     attributes() {
         return {
-            'data-fields': this.options.key,
-            'field-for': this.options.uniqueFormId
+            [`data-${this.options.kind}s`]: this.options.key,
+            [`${this.options.kind}-for`]: this.options.uniqueFormId
         };
     },
 

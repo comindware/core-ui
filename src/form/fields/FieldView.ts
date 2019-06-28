@@ -26,7 +26,7 @@ const editorFieldExtention = {
             return;
         }
 
-        this.el.classList.add(...this.classes.ERROR.split(' '));
+        this.el.parentElement.classList.add(...this.classes.ERROR.split(' '));
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
 
         if (!this.isErrorShown) {
@@ -40,7 +40,7 @@ const editorFieldExtention = {
                 customAnchor: true
             });
 
-            const el = this.el.querySelector('.js-error-text-region');
+            const el = this.el.parentElement.querySelector('.js-error-text-region');
             this.errorsRegion = new Marionette.Region({ el });
 
             this.errorsRegion.show(errorPopout);
@@ -53,7 +53,7 @@ const editorFieldExtention = {
         if (!this.__checkUiReady()) {
             return;
         }
-        this.el.classList.remove(...this.classes.ERROR.split(' '));
+        this.el.parentElement.classList.remove(...this.classes.ERROR.split(' '));
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -64,10 +64,9 @@ const editorFieldExtention = {
 
 export default class {
     constructor(options = {}) {
-        this.fieldId = _.uniqueId('field-');
         this.model = options.model;
         options.template = options.template || template;
-        this.__createEditor(options, this.fieldId);
+        this.__createEditor(options);
 
         if (options.schema.getReadonly || options.schema.getHidden) {
             this.model.on('change', this.__updateExternalChange);
@@ -89,7 +88,11 @@ export default class {
         }
     }
 
-    __createEditor(options, fieldId) {
+    getEditorConstructor(options) {
+        return formRepository.editors[options.schema.type];
+    }
+
+    __createEditor(options) {
         let schemaExtension = {};
 
         if (_.isFunction(options.schema.schemaExtension)) {
@@ -97,9 +100,6 @@ export default class {
         }
 
         const schema = Object.assign({}, options.schema, schemaExtension);
-
-        const EditorConstructor = formRepository.editors[schema.type];
-
         const editorOptions = {
             ...schema,
             form: options.form,
@@ -108,23 +108,12 @@ export default class {
             model: this.model,
             id: this.__createEditorId(options.key),
             value: options.value,
-            fieldId,
             tagName: options.tagName || 'div'
         };
 
-        const editorTemplateContext = EditorConstructor.prototype.templateContext;
-        const editorHTML = function(opt) {
-            return EditorConstructor.prototype.template(editorTemplateContext ? editorTemplateContext.call(this, opt) : opt);
-        };
-        const FieldConstructor = EditorConstructor.extend({
-            template: Handlebars.compile(options.template),
+        const EditorConstructor = this.getEditorConstructor(options, editorOptions);
 
-            templateContext() {
-                return { ...schema, editorHTML: editorHTML.call(this, editorOptions) };
-            }
-        });
-
-        const ExtendedFieldEditorClass = FieldConstructor.extend(editorFieldExtention);
+        const ExtendedFieldEditorClass = EditorConstructor.extend(editorFieldExtention);
 
         this.editor = new ExtendedFieldEditorClass(editorOptions);
 
@@ -161,7 +150,7 @@ export default class {
     }
 
     __updateEditor() {
-        this.__createEditor(this.options, this.fieldId);
+        this.__createEditor(this.options);
     }
 
     __createEditorId(key) {

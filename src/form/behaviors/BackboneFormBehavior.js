@@ -1,4 +1,4 @@
-import FieldView from '../fields/FieldView';
+import WrappedFieldView from '../fields/WrappedFieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 import transliterator from '../../utils/transliterator';
 
@@ -36,7 +36,7 @@ const Form = Marionette.MnObject.extend({
 
         Object.entries(this.schema).forEach(entry => {
             const fieldScema = entry[1];
-            const FieldType = fieldScema.field || options.field || FieldView; //TODO fix api
+            const FieldType = fieldScema.field || options.field || WrappedFieldView; //TODO fix api
             let field;
             try {
                 field = new FieldType({
@@ -277,10 +277,10 @@ const Form = Marionette.MnObject.extend({
     },
 
     __renderComponents(componentType) {
-        const $target = this.options.$target;
+        const target = this.options.target;
         const view = this.options.view;
 
-        $target.find(`[data-${componentType}s]`).each((i, el) => {
+        target.querySelectorAll(`[data-${componentType}s]`).forEach(el => {
             if ((!this.model.uniqueFormId && !el.hasAttribute(`${componentType}-for`)) || this.model.uniqueFormId.has(el.getAttribute(`${componentType}-for`))) {
                 const key = el.getAttribute(`data-${componentType}s`);
                 const regionName = `${key}Region`;
@@ -361,7 +361,7 @@ export default Marionette.Behavior.extend({
                 {
                     model,
                     schema,
-                    $target: this.$el,
+                    target: this.el,
                     view: this.view
                 },
                 this.options,
