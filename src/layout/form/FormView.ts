@@ -1,4 +1,3 @@
-import { helpers } from 'utils';
 import form from 'form';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import FormContentFactory from './FormContentFactory';

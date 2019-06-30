@@ -550,7 +550,7 @@ li.CodeMirror-hint-active {
     line-height: initial;
 }
 
-.dev-code-editor-button-mode > .dev-codemirror {
+.dev-code-editor-button-mode .dev-codemirror {
     display: none;
 }
   
