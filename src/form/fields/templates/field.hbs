@@ -1,8 +1,8 @@
-﻿<div class="form-group">
-    <div class="form-label {{#unless title}}form-label--empty{{/unless}}">
-        <label class="form-label__txt" for="{{fieldId}}">{{title}}</label>
-        <div class="js-help-text-region form-label__info"></div>
-        <div class="js-error-text-region form-label__error"></div>
-    </div>
+﻿<div class="form-label {{#unless title}}form-label--empty{{/unless}}">
+    <label class="form-label__txt" for="{{fieldId}}">{{title}}</label>
+    <div class="js-help-text-region form-label__info"></div>
+    <div class="js-error-text-region form-label__error"></div>
+</div>
+<div class="{{editorClasses}}">
     {{{editorHTML}}}
 </div>

@@ -108,7 +108,8 @@ export default class {
             model: this.model,
             id: this.__createEditorId(options.key),
             value: options.value,
-            tagName: options.tagName || 'div'
+            tagName: options.tagName || 'div',
+            className: 'form-group'
         };
 
         const EditorConstructor = this.getEditorConstructor(options, editorOptions);
