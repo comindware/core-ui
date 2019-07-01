@@ -89,14 +89,12 @@ const Form = Marionette.MnObject.extend({
 
         // Commit
         let modelError = null;
-        const setOptions = Object.assign(
-            {
-                error(model, e) {
-                    modelError = e;
-                }
+        const setOptions = {
+            error(model, e) {
+                modelError = e;
             },
-            options
-        );
+            ...options
+        };
 
         this.model.set(this.getValue(), setOptions);
         return modelError;

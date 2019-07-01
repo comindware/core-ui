@@ -709,6 +709,7 @@ module.exports = {
         // http://eslint.org/docs/rules/unicode-bom
         'unicode-bom': ['error', 'never'],
         // require regex literals to be wrapped in parentheses
-        'wrap-regex': 'off'
+        'wrap-regex': 'off',
+        'prefer-object-spread': 'error'
     }
 };
