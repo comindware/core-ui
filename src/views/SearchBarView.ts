@@ -4,7 +4,8 @@ import keyCode from '../utils/keyCode';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
-    delay: 200
+    delay: 200,
+    searchOnEnter: false
 });
 
 export default Marionette.View.extend({
@@ -34,7 +35,8 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'keyup @ui.input': '__trySearching',
+        'keyup @ui.input': '__keyup',
+        'input @ui.input': '__input',
         'pointerdown @ui.clear': '__clear',
         'focus @ui.input': 'onFocus',
         'blur @ui.input': 'onBlur'
@@ -100,12 +102,27 @@ export default Marionette.View.extend({
         }
     },
 
-    __trySearching(event) {
-        if (this.options.searchOnEnter === true) {
-            if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
-                this.__search();
-            }
-        } else {
+    __input(event: Event) {
+        this.__hackForPreventChromeAutofill();
+        if (this.options.searchOnEnter) {
+            return;
+        }
+        this.__search();
+    },
+
+    __hackForPreventChromeAutofill() {
+        const input = this.ui.input.get(0);
+        if (document.activeElement === input) {
+            return;
+        }
+        input.value = this.value || '';
+    },
+
+    __keyup(event: KeyboardEvent) {
+        if (!this.options.searchOnEnter) {
+            return;
+        }
+        if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
             this.__search();
         }
     },
@@ -117,7 +134,7 @@ export default Marionette.View.extend({
         this.__updateInput(value);
     },
 
-    __triggerSearch(value) {
+    __triggerSearch(value: string) {
         this.trigger('search', value, { model: this.model });
     },
 
@@ -127,7 +144,8 @@ export default Marionette.View.extend({
         this.ui.input.focus();
     },
 
-    __updateInput(value) {
+    __updateInput(value = '') {
+        this.value = value;
         this.ui.input.css('background', value ? 'none' : '');
     }
 });
