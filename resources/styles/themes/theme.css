@@ -410,6 +410,7 @@ svg.svg-grid-icons {
   font-size: 13px;
   padding: var(--grid-cell-padding);
   border: 1px solid #e2e2e2;
+  position: relative;
 }
 
 .cell.editor {
