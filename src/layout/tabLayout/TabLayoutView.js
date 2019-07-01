@@ -154,6 +154,7 @@ export default Marionette.View.extend({
             return;
         }
         const selectedTab = this.__findSelectedTab();
+
         if (selectedTab) {
             if (this.getOption('validateBeforeMove')) {
                 const errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
@@ -179,15 +180,69 @@ export default Marionette.View.extend({
     setVisible(tabId: string, visible: boolean) {
         const tab = this.__findTab(tabId);
         tab.set({ visible });
-        const selectedtab = this.__findSelectedTab();
-        if (tabId === selectedtab.id) {
+
+        let selectedtab = this.__findSelectedTab();
+        const visibleCollection = this.__tabsCollection.filter('visible');
+
+        // all tabs hidden: show message instead of tab panel
+        if (!visibleCollection.length) {
+            this.__setNoTabsState(true);
+            selectedtab.set('selected', false);
             return;
         }
-        let newTabIndex = this.__tabsCollection.indexOf(tab) + 1;
-        if (newTabIndex === this.__tabsCollection.length) {
-            newTabIndex -= 2;
+
+        // show first tab, other tabs was hidden before
+        if (visible && this.hasNoVisibleTabs) {
+            tab.set('selected', true);
+            selectedtab = tab;
+            this.__setNoTabsState(false);
+
+            return;
         }
+        this.__setNoTabsState(false);
+
+        // if we hide or show another tab, then nothing needs to be done
+        if (tabId !== selectedtab.id) {
+            return;
+        }
+
+        // if we hide selected tab, then another tab must be selected. The closest visible tab should be selected.
+        const indexesOfVisibleCollection = visibleCollection.map(tabModel => this.__tabsCollection.indexOf(tabModel));
+        const tabIndex = this.__tabsCollection.indexOf(tab);
+        const newTabIndex = this.__getClosestVisibleTab(indexesOfVisibleCollection, tabIndex);
+
         this.selectTab(this.__tabsCollection.at(newTabIndex).id);
+    },
+
+    __getClosestVisibleTab(indexes, tabIndex) {
+        let min = this.__tabsCollection.length;
+        let newTabIndex = 0;
+
+        // find the closest index to given one
+        indexes.forEach(index => {
+            const newMin = Math.abs(index - tabIndex);
+            if (newMin < min) {
+                min = newMin;
+                newTabIndex = index;
+            }
+        });
+
+        return newTabIndex;
+    },
+
+    __setNoTabsState(hasNoTabs) {
+        this.hasNoVisibleTabs = hasNoTabs;
+        this.__toggleHiddenAttribute(this.el.querySelector('.js-panel-container'), hasNoTabs);
+        this.__toggleHiddenAttribute(this.el.querySelector('.js-no-tabs-message'), !hasNoTabs);
+    },
+
+    __toggleHiddenAttribute(element, flag) {
+        if (flag) {
+            element.setAttribute('hidden', '');
+
+            return;
+        }
+        element.removeAttribute('hidden');
     },
 
     setTabError(tabId: string, error) {
