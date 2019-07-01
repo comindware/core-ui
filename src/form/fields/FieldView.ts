@@ -103,14 +103,14 @@ export default class {
         const editorOptions = {
             ...schema,
             form: options.form,
-            class: options.class,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
             value: options.value,
-            tagName: options.tagName || 'div',
-            className: 'form-group'
+            tagName: options.tagName || 'div'
         };
+
+        options.class ? (editorOptions.class = options.class) : (editorOptions.className = 'form-group');
 
         const EditorConstructor = this.getEditorConstructor(options, editorOptions);
 
