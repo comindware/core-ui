@@ -88,8 +88,29 @@ export default class {
         }
     }
 
-    getEditorConstructor(options) {
-        return formRepository.editors[options.schema.type];
+    __getEditorConstructor(options, editorOptions) {
+        const { template, schema } = options;
+        const EditorConstructor = formRepository.editors[schema.type];
+        const editorTemplateContext = EditorConstructor.prototype.templateContext;
+
+        const editorHTML = function(opt) {
+            return EditorConstructor.prototype.template(editorTemplateContext ? editorTemplateContext.call(this, opt) : opt);
+        };
+        const editorsClassName = EditorConstructor.prototype.className;
+
+        const WrappedEditorConstructor = EditorConstructor.extend({
+            template: Handlebars.compile(template),
+
+            templateContext() {
+                return {
+                    editorHTML: editorHTML.call(this, editorOptions),
+                    ...schema,
+                    editorClasses: typeof editorsClassName === 'function' ? editorsClassName.bind(this) : editorsClassName
+                };
+            }
+        });
+
+        return WrappedEditorConstructor;
     }
 
     __createEditor(options) {
@@ -112,7 +133,7 @@ export default class {
 
         options.class ? (editorOptions.class = options.class) : (editorOptions.className = 'form-group');
 
-        const EditorConstructor = this.getEditorConstructor(options, editorOptions);
+        const EditorConstructor = this.__getEditorConstructor(options, editorOptions);
 
         const ExtendedFieldEditorClass = EditorConstructor.extend(editorFieldExtention);
 

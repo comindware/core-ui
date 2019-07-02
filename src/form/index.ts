@@ -1,5 +1,5 @@
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
-import WrappedFieldView from './fields/WrappedFieldView';
+import FieldView from './fields/FieldView';
 import BaseEditorView from './editors/base/BaseEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BooleanEditorView from './editors/BooleanEditorView';
@@ -58,7 +58,7 @@ const api = /** @lends module:core.form */ {
      * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
      * @namespace
      * */
-    Field: WrappedFieldView,
+    Field: FieldView,
     /**
      * A lot of editors
      * @namespace
