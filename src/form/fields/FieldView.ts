@@ -90,7 +90,7 @@ export default class {
 
     __getEditorConstructor(options, editorOptions) {
         const { template, schema } = options;
-        const EditorConstructor = formRepository.editors[options.schema.type];
+        const EditorConstructor = formRepository.editors[schema.type];
         const editorTemplateContext = EditorConstructor.prototype.templateContext;
 
         const editorHTML = function(opt) {
