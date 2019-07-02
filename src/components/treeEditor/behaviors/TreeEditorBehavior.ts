@@ -129,8 +129,13 @@ export default Marionette.Behavior.extend({
         const reqres = this.view.options.reqres;
 
         for (let i = startIndex; i <= endIndex; i++) {
-            reqres.request('treeEditor:setWidgetConfig', collection.at(i).id, { index: i });
+            reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(collection.at(i)), { index: i });
         }
+    },
+
+    __getWidgetId(model) {
+        const columnModel = model.get('columnModel');
+        return columnModel?.id || model.id;
     },
 
     __getDragoverParent(elem) {

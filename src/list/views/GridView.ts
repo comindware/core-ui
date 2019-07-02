@@ -944,7 +944,7 @@ export default Marionette.View.extend({
 
     __moveColumn(options: { oldIndex: number, newIndex: number }) {
         const { oldIndex, newIndex } = options;
-        const one = Number(!!this.el.querySelector('.cell_selection-index'));
+        const one = Number(!!this.el.querySelector('.js-cell_selection'));
         const headerElementsCollection = this.el.querySelectorAll('.grid-header-column');
 
         if (newIndex === oldIndex) {
@@ -990,14 +990,14 @@ export default Marionette.View.extend({
         }
 
         let elementIndex = index + 1;
-        if (this.el.querySelector('.cell_selection-index')) {
+        if (this.el.querySelector('js-cell_selection')) {
             elementIndex += 1;
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
         this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
 
-        const cellSelector = `.visible-collection tr > *:nth-child(${elementIndex})`;
+        const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
             element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
         });
