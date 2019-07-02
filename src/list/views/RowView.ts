@@ -344,7 +344,7 @@ export default Marionette.View.extend({
         this.el.insertAdjacentHTML(
             'afterBegin',
             `
-            <td class="${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}" draggable="${this.options.draggable}">
+            <td class="js-cell_selection ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}" draggable="${this.options.draggable}">
         ${
             this.options.draggable
                 ? `
@@ -408,7 +408,7 @@ export default Marionette.View.extend({
 
     __isCellEditable(cellIndex) {
         let optionsColumnsIndex = cellIndex;
-        if (this.el.querySelector('.cell_selection-index')) {
+        if (this.el.querySelector('.js-cell_selection')) {
             optionsColumnsIndex -= 1;
         }
 

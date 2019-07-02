@@ -128,7 +128,7 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     className() {
-        return `visible-collection ${this.options.class || ''}`;
+        return `js-visible-collection visible-collection ${this.options.class || ''}`;
     },
 
     tagName: 'tbody',
