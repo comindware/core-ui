@@ -13,7 +13,9 @@
     height: 45px;
     line-height: 40px;
     border-bottom: 1px solid #dee3e8;
+    display: flex;
 }
+
 .filter-icon-lists-all-txt{
     display: inline-block;
     max-width: 100%;
