@@ -21,7 +21,5 @@ export default function({ type = 'required', message = LocalizationService.get('
         return enabled() ? requiredValidator(value) : undefined;
     };
 
-    required.name || (required.name = 'required'); //IE has no default name.
-
     return required;
 }
