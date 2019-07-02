@@ -990,7 +990,7 @@ export default Marionette.View.extend({
         }
 
         let elementIndex = index + 1;
-        if (this.el.querySelector('js-cell_selection')) {
+        if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
         }
 

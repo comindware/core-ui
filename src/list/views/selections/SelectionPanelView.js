@@ -8,7 +8,7 @@ export default Marionette.CollectionView.extend({
     },
 
     className() {
-        return `grid-selection-panel${this.options.showRowIndex ? ' js-cell_selection cell_selection-index' : ''} ${this.options.checkboxColumnClass}`;
+        return `grid-selection-panel${this.options.showRowIndex ? 'cell_selection-index' : ''} ${this.options.checkboxColumnClass}`;
     },
 
     childView: SelectionCellView,
