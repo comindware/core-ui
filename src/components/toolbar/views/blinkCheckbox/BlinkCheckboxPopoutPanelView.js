@@ -43,16 +43,11 @@ export default Marionette.CollectionView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        let hideAll = true;
-
-        this.collection.models.forEach(value => {
-            hideAll = hideAll && value.get('isHidden') === true;
-        });
-
+        const isSomeHidden = this.collection.some(model => model.get('isHidden'));
         return {
-            text: hideAll ? Localizer.get('CORE.COMMON.HIDEALL') : Localizer.get('CORE.COMMON.SHOWALL'),
+            text: isSomeHidden ? Localizer.get('CORE.TOOLBAR.BLINKCHECKBOX.SHOWALL') : Localizer.get('CORE.TOOLBAR.BLINKCHECKBOX.HIDEALL'),
             iconClass: constants.iconClassConst,
-            iconColor: hideAll ? constants.colorIconDisabled : constants.colorIconEnabled
+            iconColor: isSomeHidden ? constants.colorIconDisabled : constants.colorIconEnabled
         };
     },
 
@@ -117,16 +112,8 @@ export default Marionette.CollectionView.extend({
     },
 
     __onShowAllColumnClick() {
-        let hideAll = true;
-        this.collection.each(value => {
-            hideAll = hideAll && value.get('isHidden') === true;
-        });
-
-        hideAll = !hideAll;
-        this.collection.each(value => {
-            value.set('isHidden', hideAll);
-        });
-
+        const isSomeHidden = this.collection.some(model => model.get('isHidden'));
+        this.collection.forEach(value => value.set('isHidden', !isSomeHidden));
         this.render();
     },
 

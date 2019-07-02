@@ -394,6 +394,10 @@
 
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
 
+<http://comindware.com/text/core/toolbar/blinkCheckbox#hideAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть все"; l10n:originalData "Hide all"].
+
+<http://comindware.com/text/core/toolbar/blinkCheckbox#showAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать все"; l10n:originalData "Show all"].
+
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 
 <http://comindware.com/text/core/views/searchBar#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "Search..."].

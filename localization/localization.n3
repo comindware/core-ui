@@ -29,6 +29,8 @@
 
 <http://comindware.com/text/core#services> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-04T18:25:00.7005697Z"; l10n:modificationDate "2015-08-04T18:25:00.6995697Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
+<http://comindware.com/text/core#toolbar> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-07-02T13:29:35.1394647Z"; l10n:modificationDate "2019-07-02T13:29:35.1394647Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "toolbar"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core#views> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-17T19:48:25.8759207Z"; l10n:modificationDate "2015-08-17T19:48:25.8759207Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
 <http://comindware.com/text/core/common#loading> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-06-19T10:26:11.8213094Z"; l10n:modificationDate "2019-06-19T10:26:16.0462905Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Loading..."; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
@@ -562,6 +564,12 @@
 <http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Ivan Zaycev"; l10n:modifiedBy "Ivan Zaycev"; l10n:creationDate "2018-08-07T14:58:42.0086750Z"; l10n:modificationDate "2018-08-07T14:58:45.0498445Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Save and leave"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2018-05-21T07:32:45.9403509Z"; l10n:modificationDate "2018-05-21T07:34:33.5028108Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Stay"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/toolbar#blinkCheckbox> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-07-02T13:29:46.8623738Z"; l10n:modificationDate "2019-07-02T13:29:46.8623738Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "blinkCheckbox"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/toolbar/blinkCheckbox#hideAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-07-02T13:30:08.6950663Z"; l10n:modificationDate "2019-07-02T13:30:10.2651884Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Hide all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/toolbar/blinkCheckbox#showAll> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2019-07-02T13:30:25.7283873Z"; l10n:modificationDate "2019-07-02T13:30:27.0244871Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Show all"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/views#behaviors> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-25T12:42:37.1284525Z"; l10n:modificationDate "2015-08-25T12:42:37.1284525Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
