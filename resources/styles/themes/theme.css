@@ -597,7 +597,8 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background-position: center;
   background-repeat: no-repeat;
   background-image: var(--collapse-icon);
-  vertical-align: middle
+  vertical-align: middle;
+  z-index: 1;
 }
 
 .context-collapsible-btn {

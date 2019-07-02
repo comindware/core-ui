@@ -82,9 +82,8 @@ export default {
                         const kind = child.type.match(/editor|field/)[0];
 
                         return new FormFieldAnchor({
-                            key: child.key,
+                            ...child,
                             uniqueFormId: this.__uniqueFormId,
-                            child,
                             type: child.type.replace(`-${kind}`, ''),
                             kind
                         });
