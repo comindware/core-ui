@@ -9,8 +9,14 @@ const classes = {
 
 const anchors = ['field', 'editor'];
 
+const defaultOptions = {
+    model: new Backbone.Model()
+};
+
 export default Marionette.View.extend({
-    initialize(options) {
+    initialize() {
+        const options = this.options;
+        _.defaults(options, defaultOptions);
         this.uniqueFormId = _.uniqueId('form-');
         if (!('content' in options)) {
             this.content = FormContentFactory.getContentFromSchema(options.schema, this.uniqueFormId);
