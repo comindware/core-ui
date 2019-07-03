@@ -371,6 +371,6 @@ export default Marionette.Behavior.extend({
             this.view.initForm();
         }
         this.view.trigger('form:render', form);
-        this.view.onFormRender?.apply(this.view, form);
+        this.view.onFormRender?.call(this.view, form);
     }
 });
