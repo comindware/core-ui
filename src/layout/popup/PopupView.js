@@ -38,12 +38,10 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return Object.assign(
-            {
-                headerText: this.options.header
-            },
-            iconsNames
-        );
+        return {
+            headerText: this.options.header,
+            ...iconsNames
+        };
     },
 
     className() {
@@ -172,7 +170,7 @@ export default Marionette.View.extend({
     },
 
     __createButtonsView() {
-        const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        const buttons = this.options.buttons.map(item => new ButtonView({ context: this, ...item }));
 
         return new Core.layout.HorizontalLayout({
             columns: buttons
