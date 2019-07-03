@@ -1,7 +1,6 @@
 //@flow
 import GridView from '../views/GridView';
 import meta from '../meta';
-import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 import { virtualCollectionFilterActions } from 'Meta';
 
@@ -38,12 +37,21 @@ export default Marionette.Object.extend({
     },
 
     __createView(options) {
-        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const comparator = factory.getDefaultComparator(options.columns);
         const collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
 
-        this.__updateActions(allToolbarActions, collection);
+        this.view = new GridView(
+            Object.assign(this.options, {
+                actions: this.__getToolbarActions(),
+                collection,
+                columns: options.columns
+            })
+        );
+
         if (this.options.showToolbar) {
+            const allToolbarActions = this.view.getToolbarCollection();
+
+            this.__updateActions(allToolbarActions, collection);
             const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
 
             if (this.options.showCheckbox) {
@@ -55,14 +63,6 @@ export default Marionette.Object.extend({
                 this.listenTo(collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
             }
         }
-
-        this.view = new GridView(
-            Object.assign(this.options, {
-                actions: allToolbarActions,
-                collection,
-                columns: options.columns
-            })
-        );
 
         this.listenTo(this.view, 'search', text => this.__onSearch(text, options.columns, collection));
         this.listenTo(this.view, 'execute:action', (model, ...rest) => this.__executeAction(model, collection, ...rest));
