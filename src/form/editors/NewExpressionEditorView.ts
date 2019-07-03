@@ -4,6 +4,7 @@ import BaseEditorView from './base/BaseEditorView';
 import DatalistEditorView from './DatalistEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
+import _ from 'underscore';
 
 const valueTypes = {
     value: 'value',
@@ -34,8 +35,10 @@ const defaultOptions = {
     ontologyService: null
 };
 
-export default (formRepository.editors.NewExpression = BaseEditorView.extend({
-    className: 'new-expression-editor-field layout__vertical-layout',
+export default formRepository.editors.NewExpression = BaseEditorView.extend({
+    className() {
+        return this.options.isCell ? 'new-expression-editor-field' : 'new-expression-editor-field layout__vertical-layout';
+    },
 
     regions: {
         typeContainer: '.js-new-expression-type-container',
@@ -355,4 +358,4 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
                 break;
         }
     }
-}));
+});

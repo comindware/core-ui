@@ -1,4 +1,4 @@
-import WrappedFieldView from '../fields/WrappedFieldView';
+import FieldView from '../fields/FieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 import transliterator from '../../utils/transliterator';
 
@@ -36,7 +36,7 @@ const Form = Marionette.MnObject.extend({
 
         Object.entries(this.schema).forEach(entry => {
             const fieldScema = entry[1];
-            const FieldType = fieldScema.field || options.field || WrappedFieldView; //TODO fix api
+            const FieldType = fieldScema.field || options.field || FieldView; //TODO fix api
             let field;
             try {
                 field = new FieldType({
@@ -371,6 +371,6 @@ export default Marionette.Behavior.extend({
             this.view.initForm();
         }
         this.view.trigger('form:render', form);
-        this.view.onFormRender?.apply(this.view, form);
+        this.view.onFormRender?.call(this.view, form);
     }
 });

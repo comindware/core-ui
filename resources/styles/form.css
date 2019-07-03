@@ -893,6 +893,10 @@ input[type="color"], .colorpicker{
     position: relative!important;
 }
 
+.new-expression-editor-field {
+    display: flex;
+}
+
 .fr-dropdown-message {
     min-width: 200px;
     padding: 10px;

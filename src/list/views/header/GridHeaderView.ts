@@ -82,7 +82,7 @@ const GridHeaderView = Marionette.View.extend({
                 })
             ),
             showCheckbox: this.options.showCheckbox && !!this.options.columns.length,
-            cellClass: this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'
+            cellClass: `js-cell_selection ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`
         };
     },
 

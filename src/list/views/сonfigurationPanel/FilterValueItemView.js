@@ -22,11 +22,9 @@ export default Marionette.CollectionView.extend({
     childViewOptions(model) {
         const filtersConfigurationModel = this.getOption('filtersConfigurationModel');
         const editorOptions = FilterEditorsFactory.getFilterEditorOptions(filtersConfigurationModel, model, this.options.parentModel);
-        return Object.assign(
-            {
-                schema: editorOptions
-            },
-            editorOptions
-        );
+        return {
+            schema: editorOptions,
+            ...editorOptions
+        };
     }
 });

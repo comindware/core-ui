@@ -56,10 +56,10 @@ const defaultOptions = options => ({
     treeEditorIsHidden: false
 });
 
-const config = {
-    VISIBLE_COLLECTION_RESERVE: 20,
-    VISIBLE_COLLECTION_RESERVE_HALF: 10,
-    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+const configConstants = {
+    // VISIBLE_COLLECTION_RESERVE: 20,
+    VISIBLE_COLLECTION_RESERVE_HALF: 10
+    // VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
 };
 
 /**
@@ -232,7 +232,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.collection.updatePosition(Math.max(0, newPosition - configConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.__updateTop();
 
         this.listView.state.position = newPosition;
@@ -932,11 +932,11 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(columnsCollection, 'add', model => {
-            const config = {
+            const treeEditorConfig = {
                 oldIndex: this.options.columns.findIndex(col => col.key === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
-            this.__moveColumn(config);
+            this.__moveColumn(treeEditorConfig);
         });
 
         this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
@@ -944,7 +944,7 @@ export default Marionette.View.extend({
 
     __moveColumn(options: { oldIndex: number, newIndex: number }) {
         const { oldIndex, newIndex } = options;
-        const one = Number(!!this.el.querySelector('.cell_selection-index'));
+        const one = Number(!!this.el.querySelector('.js-cell_selection'));
         const headerElementsCollection = this.el.querySelectorAll('.grid-header-column');
 
         if (newIndex === oldIndex) {
@@ -968,7 +968,7 @@ export default Marionette.View.extend({
 
         this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
 
-        this.trigger('column:move', config);
+        this.trigger('column:move', options);
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
@@ -990,14 +990,14 @@ export default Marionette.View.extend({
         }
 
         let elementIndex = index + 1;
-        if (this.el.querySelector('.cell_selection-index')) {
+        if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
         this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
 
-        const cellSelector = `.visible-collection tr > *:nth-child(${elementIndex})`;
+        const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
             element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
         });
@@ -1005,6 +1005,8 @@ export default Marionette.View.extend({
         if (this.isAttached()) {
             this.__toggleNoColumnsMessage(columns);
         }
+
+        this.trigger('column:set:isHidden', { key, isHidden });
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {
