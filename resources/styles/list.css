@@ -195,6 +195,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
+    background-clip: padding-box;
 }
 
 .header-column-wrp{
@@ -424,6 +425,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    background-clip: padding-box;
 }
 .cell_editable {
     display: flex;
@@ -441,6 +443,7 @@
     left: 0;
     z-index: 1;
     background-color: #fff;
+    background-clip: padding-box;
 }
 tr.row-checked .cell_selection{
     background-color: #c2d7e5;
@@ -551,6 +554,7 @@ tr.dragover td{
     text-overflow: ellipsis;
     font-size: 13px;
     margin: 0 3px 0 -3px;
+    background-clip: padding-box;
 }
 
 .cell .checkbox {
