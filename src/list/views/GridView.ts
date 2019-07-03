@@ -440,7 +440,7 @@ export default Marionette.View.extend({
         });
 
         this.listView = new ListView({
-            collection: this.collection,
+            collection: this.options.columns.length ? this.collection : new VirtualCollection(),
             gridEventAggregator: this,
             childView,
             childViewSelector: this.options.childViewSelector,

@@ -195,6 +195,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
+    max-width: 0px; /*hack to set width less than cells content */
 }
 
 .header-column-wrp{
@@ -424,6 +425,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    max-width: 0px; /*hack to set width less than cells content */
 }
 .cell_editable {
     display: flex;
