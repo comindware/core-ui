@@ -302,8 +302,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             });
         }
 
-        this.listenTo(this.panelCollection, 'selected', _.debounce(this.__onValueSet, 0));
-        this.listenTo(this.panelCollection, 'deselected', _.debounce(this.__onValueUnset, 0));
+        this.__onPanelSelected = _.debounce(this.__onPanelSelected, 0);
+        this.__onPanelDeselected = _.debounce(this.__onPanelDeselected, 0);
     },
 
     __createSelectedCollections() {
@@ -695,7 +695,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __onValueSet(model: Backbone.Model, options = {}): void {
+    __onPanelSelected(model: Backbone.Model, options = {}): void {
         if (options.isSilent) {
             return;
         }
@@ -728,7 +728,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __onValueUnset(model: Backbone.Model, options = {}): void {
+    __onPanelDeselected(model: Backbone.Model, options = {}): void {
         if (options.isSilent) {
             return;
         }
@@ -1094,11 +1094,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onDropdownOpen(): void {
+        this.listenTo(this.panelCollection, 'selected', this.__onPanelSelected);
+        this.listenTo(this.panelCollection, 'deselected', this.__onPanelDeselected);
         this.focus();
         this.trigger('dropdown:open');
     },
 
     __onDropdownClose() {
+        this.stopListening(this.panelCollection, 'selected', this.__onPanelSelected);
+        this.stopListening(this.panelCollection, 'deselected', this.__onPanelDeselected);
         this.blur();
         this.trigger('dropdown:close');
     }
