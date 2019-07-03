@@ -412,6 +412,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
                     fillZero: true,
                     normalTime: true,
                     showTitle: false,
+                    autocommit: true,
                     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.TIMEEMPTYPLACEHOLDER'),
                     model
                 },

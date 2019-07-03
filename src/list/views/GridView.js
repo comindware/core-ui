@@ -272,6 +272,10 @@ export default Marionette.View.extend({
         }
     },
 
+    toggleSearchActivity(enableSearch) {
+        this.searchView.toggleInputActivity(enableSearch);
+    },
+
     onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();

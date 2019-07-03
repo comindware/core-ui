@@ -2,6 +2,7 @@
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import template from '../templates/bubbleItem.hbs';
+import { htmlHelpers } from '../../../../../utils';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -24,7 +25,7 @@ export default Marionette.View.extend({
     attributes() {
         return {
             draggable: true,
-            title: this.options.getDisplayText(this.options.model.attributes),
+            title: htmlHelpers.getTextfromHTML(this.options.getDisplayText(this.options.model.attributes)),
             tabindex: '-1'
         };
     },
