@@ -1,6 +1,7 @@
 export default class GroupedCollection {
     constructor(options) {
         this.allItems = options.allItems;
+        this.groupsSortOptions = options.groupsSortOptions;
         this.groups = {};
 
         options.groups.forEach(groupName => {
@@ -17,10 +18,10 @@ export default class GroupedCollection {
 
         this.allItems.listenTo(this.allItems, 'add', model => {
             this.ungrouped.add(model);
-            model.group = this.ungrouped;
+            this.__moveToGroupByKind(model);
         });
 
-        //TODO reset
+        this.reset();
     }
 
     move(models, targetName) {
@@ -41,6 +42,18 @@ export default class GroupedCollection {
 
     getAllItemsModels() {
         return this.__getArrayCopy(this.allItems.models);
+    }
+
+    reset() {
+        Object.values(this.groups).forEach(group => group.reset());
+        this.getAllItemsModels().forEach(model => {
+            this.__moveToGroupByKind(model);
+        });
+    }
+
+    __moveToGroupByKind(model) {
+        const { kindConst, constGroupName, mainGroupName } = this.groupsSortOptions;
+        this.move(model, model.get('kind') === kindConst ? constGroupName : mainGroupName);
     }
 
     __getArrayCopy(models) {

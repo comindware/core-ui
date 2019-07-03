@@ -24,14 +24,16 @@ export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
-        const allItemsCollection = this.options.allItemsCollection;
-        const allItemsArray = allItemsCollection instanceof Backbone.Collection ? allItemsCollection.toJSON() : allItemsCollection;
-        const allItems = new VirtualCollection(new ToolbarItemsCollection(allItemsArray));
+        const optionsAllItemsCollection = this.options.allItemsCollection;
+        const allItemsCollection = optionsAllItemsCollection instanceof Backbone.Collection ? optionsAllItemsCollection : new ToolbarItemsCollection(optionsAllItemsCollection);
+        const allItems = (this.allItemsCollection = new VirtualCollection(allItemsCollection));
 
+        const groupsSortOptions = { kindConst: meta.kinds.CONST, constGroupName: groupNames.const, mainGroupName: groupNames.main };
         this.groupedCollection = new GroupedCollection({
             allItems,
             class: ToolbarItemsCollection,
-            groups: Object.values(groupNames)
+            groups: Object.values(groupNames),
+            groupsSortOptions
         });
         this.mainActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.main]);
         this.constActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.const]);
@@ -93,10 +95,7 @@ export default Marionette.View.extend({
     },
 
     __resetCollections() {
-        Object.values(this.groupedCollection.groups).forEach(group => group.reset());
-        this.groupedCollection.getAllItemsModels().forEach(model => {
-            this.groupedCollection.move(model, model.get('kind') === meta.kinds.CONST ? groupNames.const : groupNames.main);
-        });
+        this.groupedCollection.reset();
         this.rebuildView();
     },
 
