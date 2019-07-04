@@ -153,7 +153,10 @@ export default class DropdownView {
             this.panelEl.style.maxWidth = `${this.maxWidth}px`;
         }
 
-        const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+        let minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+        if (minWidth > this.maxWidth) {
+            minWidth = this.maxWidth;
+        }
         this.panelEl.style.minWidth = `${minWidth}px`;
 
         let offsetHeight = this.panelEl.offsetHeight;
