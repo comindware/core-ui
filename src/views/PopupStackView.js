@@ -290,9 +290,20 @@ export default Marionette.View.extend({
             this.el.removeChild(popupDef.regionEl);
             this.trigger('popup:close', popupDef.popupId);
         };
+        
         if (immediate) {
             popRemove();
         } else {
+            let transitionStarted = false;
+
+            popupDef.view.el.addEventListener(
+                'transitionstart',
+                () => {
+                    transitionStarted = true;
+                },
+                { once: true }
+            );
+
             popupDef.view.el.addEventListener(
                 'transitionend',
                 () => {
@@ -300,6 +311,12 @@ export default Marionette.View.extend({
                 },
                 { once: true }
             );
+
+            setTimeout(() => {
+                if (!transitionStarted) {
+                    popRemove();
+                }
+            }, 100);
         }
 
         popupDef.view.el?.classList.remove('presented-modal-window');
