@@ -162,7 +162,8 @@ export default Marionette.Object.extend({
                       memberService: this.options.memberService,
                       filterFns: this.filterFns,
                       filterState: this.filterState,
-                      title: availableText
+                      title: availableText,
+                      textFilterDelay: this.options.textFilterDelay
                   })
               )
             : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
