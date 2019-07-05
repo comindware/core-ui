@@ -26,7 +26,7 @@ const defaultOptions = () => ({
     showMode: null,
     memberService: undefined,
     getDisplayText: null,
-    textFilterDelay: 300
+    textFilterDelay: 500
 });
 
 export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
