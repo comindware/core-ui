@@ -38,7 +38,7 @@ export default Marionette.CollectionView.extend({
         return res;
     },
 
-    childViewContainer: '.js-branch-collection-container',
+    childViewContainer: '.js-branch-collection',
 
     __getExpandIconClass() {
         return this.model.collapsed ? iconNames.collapsed : iconNames.expanded;

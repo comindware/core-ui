@@ -6,14 +6,8 @@ const classes = {
 
 const isHiddenPropName = 'isHidden';
 
-const getSiblings = (element: ChildNode | null, filter?: any) => {
-    var siblings = [];
-    let el = element;
-    el = el.parentNode.firstChild;
-    do {
-        if (!filter || filter(el)) siblings.push(el);
-    } while ((el = el.nextSibling));
-    return siblings;
+const getSiblings = (element: HTMLElement) => {
+    return Array.from(element.parentElement?.childNodes || []);
 };
 
 export default Marionette.Behavior.extend({
@@ -39,7 +33,7 @@ export default Marionette.Behavior.extend({
         this.__toggleHiddenClass();
     },
 
-    __handleEyeClick(event: Event) {
+    __handleEyeClick(event: MouseEvent) {
         event.stopPropagation();
         const model = this.view.options.model;
         if (model.get('required')) {
@@ -212,7 +206,7 @@ export default Marionette.Behavior.extend({
     __validateEnterLeaveElements(targetElement: HTMLElement, fromElement: HTMLElement) {
         return (
             this.__classListContainsSome(targetElement, ['js-tree-item', 'js-unnamed-tree-item']) &&
-            this.__classListContainsSome(fromElement, ['js-branch-item', 'js-branch-collection-container', 'js-leaf-item'])
+            this.__classListContainsSome(fromElement, ['js-branch-item', 'js-branch-collection', 'js-leaf-item'])
         );
     },
 
