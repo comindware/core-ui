@@ -11,6 +11,14 @@ export default class ThemeService {
         this.setTheme(this.options.theme);
     }
 
+    static isThemeDark() {
+        return this.__isDarkTheme;
+    }
+
+    static setIsThemeShadeIsDark(isThemeShadeIsDark: boolean) {
+        this.__isDarkTheme = isThemeShadeIsDark;
+    }
+
     static setTheme(name) {
         this.options.theme = name || this.options.theme;
         if (name === this.currentTheme) return;

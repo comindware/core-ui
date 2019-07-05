@@ -10,6 +10,7 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../resources/styles/pastel-on-dark.css';
 import '../resources/styles/notifications.css';
 import '../resources/styles/blink-checkbox.css';
 import '../resources/styles/treeEditor.css';
