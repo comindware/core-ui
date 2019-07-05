@@ -1,9 +1,20 @@
 const classes = {
     hiddenClass: 'hidden-node',
-    dragover: 'dragover'
+    dragover: 'dragover',
+    dragoverContainer: 'dragover-container'
 };
-const dataTransferKey = 'source-datatransfer-key';
+
 const isHiddenPropName = 'isHidden';
+
+const getSiblings = (element: ChildNode | null, filter?: any) => {
+    var siblings = [];
+    let el = element;
+    el = el.parentNode.firstChild;
+    do {
+        if (!filter || filter(el)) siblings.push(el);
+    } while ((el = el.nextSibling));
+    return siblings;
+};
 
 export default Marionette.Behavior.extend({
     initialize() {
@@ -15,7 +26,7 @@ export default Marionette.Behavior.extend({
     },
 
     events: {
-        click: '__handleEyeClick',
+        'click @ui.eyeBtn': '__handleEyeClick',
         dragenter: '__handleDragEnter',
         dragover: '__handleDragOver',
         dragleave: '__handleDragLeave',
@@ -28,7 +39,7 @@ export default Marionette.Behavior.extend({
         this.__toggleHiddenClass();
     },
 
-    __handleEyeClick(event) {
+    __handleEyeClick(event: Event) {
         event.stopPropagation();
         const model = this.view.options.model;
         if (model.get('required')) {
@@ -56,73 +67,83 @@ export default Marionette.Behavior.extend({
         this.el.classList.toggle(classes.hiddenClass, isHidden);
     },
 
-    __handleDragStart(event) {
+    __handleDragStart(event: Event) {
         event.stopPropagation();
         this.view.model.collection.draggingModel = this.view.model;
-        event.originalEvent.dataTransfer.setData(dataTransferKey, this.__isBranch(event.target) ? event.target.parentNode.id : event.target.id);
+        this.__getRealTargetElement(event.target).parentElement.classList.add(classes.dragoverContainer);
     },
 
-    __handleDragEnter(event) {
-        event.stopPropagation();
+    __handleDragEnter(event: Event) {
+        const fromElement = event.originalEvent.fromElement;
+        const targetElement = event.target;
 
+        if (this.__isUiElement(fromElement) || this.__isUiElement(targetElement)) {
+            return;
+        }
+
+        const realTarget = this.__getRealTargetElement(targetElement);
+
+        if (this.__isInValidDropTarget(realTarget)) {
+            return;
+        }
+
+        if (this.__validateEnterLeaveElements(targetElement, fromElement)) {
+            realTarget.classList.add(classes.dragover);
+        }
+    },
+
+    __handleDragLeave(event: Event) {
+        const fromElement = event.originalEvent.fromElement;
+        const targetElement = event.target;
+
+        if (this.__isUiElement(fromElement) || this.__isUiElement(targetElement)) {
+            return;
+        }
+
+        if (this.__validateEnterLeaveElements(targetElement, fromElement)) {
+            const realTarget = this.__getRealTargetElement(targetElement);
+            realTarget.classList.remove(classes.dragover);
+        }
+    },
+
+    __handleDragOver(event: Event) {
         if (this.__isInValidDropTarget()) {
             return;
         }
 
-        if (event.target.classList.contains('branch-item')) {
-            return;
-        }
-
         event.preventDefault();
-        const element = event.target;
-        element.classList.add(classes.dragover);
-    },
-
-    __handleDragOver(event) {
         event.stopPropagation();
-        if (this.__isInValidDropTarget()) {
-            return;
-        }
-
-        event.preventDefault();
     },
 
-    __handleDragLeave(event) {
-        if (this.__isUiElement(event.originalEvent.fromElement)) {
-            return;
-        }
-
-        event.stopPropagation();
-        event.target.classList.remove(classes.dragover);
-    },
-
-    __handleDragEnd(event) {
+    __handleDragEnd(event: Event) {
         delete this.view.model.collection?.draggingModel;
+        this.__removeContainerDragoverClass();
     },
 
-    __handleDrop(event) {
+    __handleDrop(event: Event) {
         event.stopPropagation();
         const targetElement = this.__getDragoverParent(event.target);
         if (!targetElement) {
             return false;
         }
-        const sourceElement = document.getElementById(event.originalEvent.dataTransfer.getData(dataTransferKey));
 
-        const trueTarget = this.__isBranch(targetElement) ? targetElement.parentNode : targetElement;
-        trueTarget.classList.remove(classes.dragover);
+        const realTarget = this.__getRealTargetElement(targetElement);
+        realTarget.classList.remove(classes.dragover);
 
-        if (this.__isInValidDropTarget(trueTarget, sourceElement)) {
+        if (this.__isInValidDropTarget(realTarget)) {
             return false;
         }
 
         const collection = this.view.model.collection;
         const draggingModel = collection.draggingModel;
         const oldIndex = collection.indexOf(draggingModel);
-        const newIndex = Array.from(trueTarget.parentElement.childNodes).indexOf(trueTarget);
+        const newIndex = Array.from(realTarget.parentElement.childNodes).indexOf(realTarget);
 
         collection.remove(draggingModel);
         collection.add(draggingModel, { at: newIndex });
         delete collection.draggingModel;
+
+        this.__removeContainerDragoverClass();
 
         const startIndex = oldIndex > newIndex ? newIndex : oldIndex;
         const endIndex = oldIndex > newIndex ? oldIndex : newIndex;
@@ -133,29 +154,31 @@ export default Marionette.Behavior.extend({
         }
     },
 
+    __removeContainerDragoverClass() {
+        this.el.parentElement.classList.remove(classes.dragoverContainer);
+    },
+
     __getWidgetId(model) {
         const columnModel = model.get('columnModel');
+
         return columnModel?.id || model.id;
     },
 
-    __getDragoverParent(elem) {
+    __getDragoverParent(elem: HTMLElement) {
         if (this.__isUiElement(elem)) {
             return elem.parentElement;
         }
 
-        if (elem.classList.contains('tree-item')) {
+        if (this.__classListContainsSome(elem, ['js-tree-item', 'js-unnamed-tree-item'])) {
             return elem;
         }
     },
 
-    __isUiElement(elem) {
-        if (!elem) {
-            return false;
-        }
-        return ['branch-header-name', 'leaf-name', 'eye-btn'].reduce((acc, cur) => acc || elem.classList.contains(cur), false);
+    __isUiElement(elem: HTMLElement) {
+        return this.__classListContainsSome(elem, ['branch-header-name', 'leaf-name', 'eye-btn']);
     },
 
-    __isInValidDropTarget() {
+    __isInValidDropTarget(element?: ChildNode | null) {
         const collection = this.view.model.collection;
         if (!collection) {
             return true;
@@ -167,16 +190,36 @@ export default Marionette.Behavior.extend({
 
         const draggingModel = collection.draggingModel;
 
+        if (this.view.model === draggingModel) {
+            return true;
+        }
+
         if (!collection.contains(draggingModel)) {
             return true;
         }
 
-        if (this.view.model === draggingModel) {
+        if (element && !getSiblings(element).includes(this.view.el)) {
             return true;
         }
     },
 
-    __isBranch(element) {
-        return element.classList.contains('branch-header');
+    __getRealTargetElement(element: HTMLElement) {
+        const isBranch = element.classList.contains('branch-header');
+
+        return isBranch ? element.parentElement : element;
+    },
+
+    __validateEnterLeaveElements(targetElement: HTMLElement, fromElement: HTMLElement) {
+        return (
+            this.__classListContainsSome(targetElement, ['js-tree-item', 'js-unnamed-tree-item']) &&
+            this.__classListContainsSome(fromElement, ['js-branch-item', 'js-branch-collection-container', 'js-leaf-item'])
+        );
+    },
+
+    __classListContainsSome(element: HTMLElement, classArray: string[]) {
+        if (!element) {
+            return;
+        }
+        return classArray.some(className => element.classList.contains(className));
     }
 });
