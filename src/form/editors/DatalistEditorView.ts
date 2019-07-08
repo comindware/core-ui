@@ -17,7 +17,63 @@ import compositeUserCell from '../../list/templates/compositeUserCell.html';
 import Backbone from 'backbone';
 import _ from 'underscore';
 
-const defaultOptions = () => ({
+type options = {
+    collection?: Backbone.Collection | Array<object>,
+
+    fetchFiltered?: boolean,
+    showCollection?: boolean,
+
+    displayAttribute?: string,
+    buttonView?: object,
+
+    showAdditionalList?: boolean,
+    subtextProperty?: string,
+    iconProperty?: string,
+
+    listItemView?: Marionette.View<Backbone.Model>,
+    listItemViewWithText?: Marionette.View<Backbone.Model>,
+    showCheckboxes?: boolean,
+    textFilterDelay?: number,
+
+    selectedTitle?: string,
+    showSelectedTitle?: boolean,
+
+    maxQuantitySelected?: number,
+    isButtonLimitMode?: boolean,
+    maxButtonItems?: number,
+    allowEmptyValue?: boolean,
+    canDeleteItem?: boolean,
+
+    valueType?: 'normal' | 'id',
+    idProperty?: string,
+    showSearch?: boolean,
+
+    emptyPlaceholder?: string,
+
+    class?: string,
+    buttonBubbleTemplate?: string,
+    panelBubbleTemplate?: string,
+
+    format?: 'user' | 'document' //name of preset for editor
+
+    boundEditor?: Marionette.View<Backbone.Model>,
+
+    //dropdown options
+    externalBlurHandler?: any,
+    minAvailableHeight?: any,
+
+    //controller's methods
+    createValueUrl?: Function,
+    edit?: Function,
+    addNewItem?: Function,
+    addNewItemText?: string,
+
+    //deprecated options
+    controller?: Marionette.Object,
+    storeArray?: boolean
+};
+
+const defaultOptions = (options: options): options => ({
     displayAttribute: 'name',
     buttonView: ButtonView,
 
@@ -31,9 +87,12 @@ const defaultOptions = () => ({
     textFilterDelay: 300,
 
     fetchFiltered: false,
-    collection: null,
+    collection: [],
     showCollection: true,
+    selectedTitle: options.title,
+    showSelectedTitle: true,
 
+    isButtonLimitMode: Boolean(options.maxButtonItems) && options.maxButtonItems !== Infinity,
     maxQuantitySelected: 1,
     maxButtonItems: Infinity,
     allowEmptyValue: true,
@@ -62,14 +121,14 @@ const defaultOptions = () => ({
     addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
 
     //deprecated options
-    controller: null,
+    controller: undefined,
     storeArray: false,
 
     format: undefined //name of preset for editor
 });
 
 const presetsDefaults = {
-    document: options => ({
+    document: (options: options) => ({
         listTitle: options.title,
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeDocumentCell,
@@ -82,7 +141,7 @@ const presetsDefaults = {
         boundEditor: DocumentEditorView,
         addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT')
     }),
-    user: options => ({
+    user: (options: options) => ({
         listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         title: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
@@ -106,7 +165,7 @@ const stop = (event: KeyboardEvent) => {
     2.Fix focus logic (make as dateTime).
     3.defaultOptions:displayAttribute should be text.
     4.getDisplayText should return string always. (String(returnedValue)).
-    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked.
+    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked. Is checkbox needed?
 */
 /**
  * @name DatalistView
@@ -129,7 +188,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     initialize(options = {}) {
         this.__mapDatalistOptions(options);
         this.valueTypeId = this.options.valueType === 'id';
-        this.isButtonLimitMode = this.options.maxButtonItems !== Infinity;
+
+        if (this.options.maxQuantitySelected === 1) {
+            this.isButtonLimitMode = false;
+        } else {
+            this.isButtonLimitMode = this.options.isButtonLimitMode;
+        }
 
         this.__createBoundEditor();
 
@@ -194,7 +258,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                     iconProperty: this.options.iconProperty
                 },
                 listTitle: this.options.listTitle,
-                selectedTitle: this.options.title,
+                selectedTitle: this.options.selectedTitle,
+                showSelectedTitle: this.options.showSelectedTitle,
                 textFilterDelay: this.options.textFilterDelay
             },
             autoOpen: false,
@@ -214,12 +279,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return isEmpty ? this.options.readonlyPlaceholder : '';
     },
 
-    __mapDatalistOptions(options) {
-        let defaults = defaultOptions();
+    __mapDatalistOptions(options: options) {
+        let defaults = defaultOptions(options);
         if (typeof options.format === 'string') {
             const presetFn = presetsDefaults[options.format];
-            const preset = presetFn && presetFn(options);
-            defaults = _.defaults(preset, defaults);
+            const preset = presetFn ? presetFn(options) : {};
+            defaults = _.defaults(options, preset, defaults);
         }
         this.__applyOptions(options, defaults);
         if (this.options.controller) {
@@ -645,7 +710,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                     (model instanceof Backbone.Model
                         ? model.get(this.options.idProperty)
                         : // eslint-disable-next-line eqeqeq
-                          model[this.options.idProperty]) == primitive
+                        model[this.options.idProperty]) == primitive
             ) || this.__tryToCreateAdjustedValue(primitive)
         );
     },
