@@ -259,8 +259,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __hideHintOnClick(event) {
-        if (this.hintIsShown && !event.target.contains('.js-code-editor-container')) {
+    __hideHintOnClick(target) {
+        if (this.hintIsShown && !this.ui.editor.get(0).contains(target)) {
             this.__hideHint();
         }
     },
