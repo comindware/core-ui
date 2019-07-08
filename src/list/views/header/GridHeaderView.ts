@@ -87,6 +87,9 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     onRender() {
+        if (!this.options.columns.length) {
+            return;
+        }
         if (this.options.isTree) {
             this.$el
                 .find('.header-column-wrp')[0]

@@ -428,6 +428,7 @@
     overflow: hidden;
     background-clip: padding-box;    
     max-width: 0px; /*hack to set width less than cells content */
+    width: auto;
 }
 .cell_editable {
     display: flex;
