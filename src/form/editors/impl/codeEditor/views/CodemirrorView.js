@@ -638,9 +638,9 @@ export default Marionette.View.extend({
 
         const tooltipMargin = 10;
         const hintPanel = hintEl.parentNode;
-        const hintPanelPosition = hintPanel.position();
-        const hintPanelWidth = hintPanel.width();
-        const tooltipWidth = this.tooltip.$el.width();
+        const hintPanelPosition = hintPanel.getBoundingClientRect();
+        const hintPanelWidth = hintPanelPosition.width;
+        const tooltipWidth = this.tooltip.$el.width;
 
         let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
         if (left + tooltipWidth > window.innerWidth) {
