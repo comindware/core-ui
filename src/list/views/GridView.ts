@@ -162,47 +162,7 @@ export default Marionette.View.extend({
                 this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
             }
         }
-        /*
-	 const draggable = this.getOption('draggable');
-        if (this.options.showCheckbox || draggable) {
-           
-            let checkboxColumnClass = '';
-            if (showRowIndex) {
-                this.on('update:top update:index', this.__setCheckBoxColummWidth);
-                checkboxColumnClass = `${this.uniqueId}-checkbox-column`;
-                this.columnClasses.push(checkboxColumnClass);
-            }
-            this.selectionPanelView = new SelectionPanelView({
-                collection: this.listView.collection,
-                gridEventAggregator: this,
-                checkboxColumnClass,
-                showRowIndex: this.options.showRowIndex,
-                childViewOptions: {
-                    draggable,
-                    showRowIndex,
-                    bindSelection: this.getOption('bindSelection'),
-                    checkboxColumnClass
-                }
-            });
 
-            this.selectionHeaderView = new SelectionCellView({
-                collection: this.collection,
-                selectionType: 'all',
-                gridEventAggregator: this,
-                checkboxColumnClass,
-                showRowIndex
-            });
-
-            if (draggable) {
-                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
-                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
-            }
-
-            if (this.options.showConfigurationPanel) {
-                this.__initializeConfigurationPanel();
-            }
-        }
-        */
         if (this.options.showToolbar) {
             this.toolbarView = new ToolbarView({
                 allItemsCollection: allToolbarActions || new Backbone.Collection()
