@@ -81,7 +81,10 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
                 return;
             }
             this.value = value;
-            this.collection.findWhere({ id: value }).select();
+            const model = this.collection.findWhere({ id: value });
+            if (model) {
+                model.select();
+            }
             if (triggerChange) {
                 this.__triggerChange();
             }

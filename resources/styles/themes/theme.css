@@ -552,6 +552,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   left: 0;
   z-index: 10;
   width: 47px;
+  min-width: 47px;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
