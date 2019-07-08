@@ -300,14 +300,16 @@ export default Marionette.View.extend({
     insertFirstCellHtml(force: boolean) {
         const elements = this.el.getElementsByTagName('td');
         if (elements.length) {
-            const el = elements[0];
             const level = this.model.level || 0;
             let margin = level * this.options.levelMargin;
             const hasChildren = this.model.children && this.model.children.length;
-            const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
             if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
                 return;
             }
+
+            const index = this.getOption('showCheckbox') ? 1 : 0;
+            const el = elements[index];
+            const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
 
             if (treeFirstCell) {
                 el.removeChild(treeFirstCell);

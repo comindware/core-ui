@@ -120,16 +120,9 @@ export default class DropdownView {
             }
         });
 
-        return this.button;
-    }
+        this.button.on('destroy', this.__onDestroy());
 
-    onDestroy() {
-        if (this.button) {
-            this.button.destroy();
-        }
-        if (this.button.isOpen) {
-            WindowService.closePopup(this.popupId);
-        }
+        return this.button;
     }
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
@@ -427,6 +420,12 @@ export default class DropdownView {
         });
         if (document.activeElement) {
             document.activeElement.removeEventListener('blur', this.__onBlur.bind(this));
+        }
+    }
+
+    __onDestroy() {
+        if (this.button.isOpen) {
+            WindowService.closePopup(this.popupId);
         }
     }
 
