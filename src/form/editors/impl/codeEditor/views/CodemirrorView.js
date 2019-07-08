@@ -148,7 +148,7 @@ export default Marionette.View.extend({
             lint: true,
             indentUnit: 4,
             foldGutter: true,
-            theme: Core.services.ThemeService.isDark ? 'pastel-on-dark' : 'default',
+            theme: Core.services.ThemeService.isThemeShadeIsDark() ? 'pastel-on-dark' : 'default',
             selectionPointer: true,
             showTrailingSpace: true,
             fixedGutter: true,
