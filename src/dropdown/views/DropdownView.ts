@@ -120,7 +120,7 @@ export default class DropdownView {
             }
         });
 
-        this.button.on('destroy', this.__onDestroy());
+        this.button.on('destroy', this.__onDestroy, this);
 
         return this.button;
     }
