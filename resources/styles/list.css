@@ -73,6 +73,11 @@
     z-index: 2;
     padding: 9px 0 0 17px;
 }
+
+.grid-header > .cell_selection > .checkbox {
+    z-index: 1
+}
+
 .grid-header:hover > .cell_selection {
     background-color: #0575bd;
 }
