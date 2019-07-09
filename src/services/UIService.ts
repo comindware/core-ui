@@ -49,7 +49,8 @@ export default class UIService {
                 || e.clientY < 0;
         };
 
-        const onResize = function (e: MouseEvent) {
+        const onMove = function (e: MouseEvent) {
+            e.preventDefault();
             if (eventOutOfClient(e)) {
                 return;
             }
@@ -89,7 +90,7 @@ export default class UIService {
 
         const onStop = (event: MouseEvent) => {
             document.removeEventListener('pointerup', onStop, true);
-            document.removeEventListener('pointermove', onResize, true);
+            document.removeEventListener('pointermove', onMove, true);
             typeof stop === 'function' && stop(event, el);
         };
         const onStart = (event: MouseEvent) => {
@@ -108,7 +109,7 @@ export default class UIService {
                 startClientY: event.clientY
             };
             document.addEventListener('pointerup', onStop, true);
-            document.addEventListener('pointermove', onResize, true);
+            document.addEventListener('pointermove', onMove, true);
             typeof start === 'function' && start(event, el);
         };
         el.addEventListener('pointerdown', onStart);

@@ -36,8 +36,13 @@ export default class {
     }
 
     __getEditorConstructor(options, editorOptions) {
+        if (typeof editorOptions.type === 'function') {
+            return editorOptions.type;
+        }
+
         const { template } = options;
         const EditorConstructor = formRepository.editors[editorOptions.type];
+ 
         const editorTemplateContext = EditorConstructor.prototype.templateContext;
 
         const editorHTML = function(opt) {
