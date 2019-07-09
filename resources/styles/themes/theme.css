@@ -60,7 +60,8 @@ body {
   margin: 0;
   position: absolute;
   left: 0;
-  top: -13px;
+  top: -4px;
+  z-index: 1;
 }
 
 .cell.error .form-label__error-button{

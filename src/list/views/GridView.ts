@@ -955,11 +955,11 @@ export default Marionette.View.extend({
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
-        this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+        this.el.querySelector(headerSelector).classList.toggle(meta.classes.hiddenByTreeEditorClass, isHidden);
 
         const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
-            element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+            element.classList.toggle(meta.classes.hiddenByTreeEditorClass, isHidden);
         });
 
         if (this.isAttached()) {

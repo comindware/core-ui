@@ -3,26 +3,10 @@ import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
-import { hiddenByTreeEditorClass } from '../meta';
+import { classes } from '../meta';
 
 const config = {
     TRANSITION_DELAY: 400
-};
-
-const classes = {
-    checked: 'editor_checked',
-    checked_some: 'editor_checked_some',
-    selected: 'selected',
-    dragover: 'dragover',
-    hover: 'hover',
-    hover__transition: 'hover__transition',
-    rowChecked: 'row-checked',
-    expanded: 'collapsible-btn_expanded',
-    collapsible: 'js-collapsible-button',
-    collapsibleIcon: 'js-tree-first-cell',
-    cellFocused: 'cell-focused',
-    cellEditable: 'cell_editable',
-    cell: 'cell'
 };
 
 const defaultOptions = {
@@ -141,12 +125,12 @@ export default Marionette.View.extend({
     __setCustomClassToColumn(gridColumn) {
         if (gridColumn.isHidden) {
             if (!gridColumn.customClass) {
-                gridColumn.customClass = hiddenByTreeEditorClass;
-            } else if (!gridColumn.customClass.match(new RegExp(hiddenByTreeEditorClass))) {
-                gridColumn.customClass += ` ${hiddenByTreeEditorClass}`;
+                gridColumn.customClass = classes.hiddenByTreeEditorClass;
+            } else if (!gridColumn.customClass.match(new RegExp(classes.hiddenByTreeEditorClass))) {
+                gridColumn.customClass += ` ${classes.hiddenByTreeEditorClass}`;
             }
         } else if (gridColumn.customClass) {
-            gridColumn.customClass = gridColumn.customClass.replace(new RegExp(hiddenByTreeEditorClass), '');
+            gridColumn.customClass = gridColumn.customClass.replace(new RegExp(classes.hiddenByTreeEditorClass), '');
         }
     },
 

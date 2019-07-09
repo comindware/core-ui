@@ -19,6 +19,8 @@ const CHECK_VISIBILITY_DELAY = 200;
 const classes = constants.classes;
 const types = constants.types;
 
+const lineSeparator = '\r\n';
+
 export default Marionette.View.extend({
     initialize(options = {}) {
         this.tt = new Backbone.Model();
@@ -139,7 +141,7 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            lineSeparator: this.options.lineSeparator || '\r\n',
+            lineSeparator,
             mode: modes[this.options.mode],
             ontologyObjects: this.autoCompleteArray,
             matchBrackets: true,
@@ -218,7 +220,7 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.codemirror.setValue(value || '');
+        this.codemirror.setValue(value?.replace(/\n/g, lineSeparator) || '');
         this.refresh();
     },
 
