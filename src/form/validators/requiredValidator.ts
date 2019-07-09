@@ -1,13 +1,13 @@
 import LocalizationService from '../../services/LocalizationService';
 import _ from 'underscore';
 
-export default function({ type = 'required', message = LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED'), enabled = () => true } = {}) {
-    const requiredValidator = function(value) {
+export default function ({ type = 'required', message = LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED'), enabled = () => true } = {}) {
+    const requiredValidator = function (value) {
         const val = _.isObject(value) && 'value' in value ? value.value : value;
 
         const err = {
             type,
-            message: typeof message === 'function' ? message({ type, message }) : message
+            message: _.getResult(message, this, { type, message })
         };
         if (val === null || val === undefined || val === '') {
             return err;
@@ -17,8 +17,8 @@ export default function({ type = 'required', message = LocalizationService.get('
         }
     };
 
-    const required = function required(value) {
-        return enabled() ? requiredValidator(value) : undefined;
+    const required = function required(value: any) {
+        return _.getResult(enabled) ? requiredValidator(value) : undefined;
     };
 
     return required;
