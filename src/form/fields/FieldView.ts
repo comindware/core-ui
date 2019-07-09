@@ -9,59 +9,6 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
-const editorFieldExtention = {
-    validate(...args) {
-        const error = Object.getPrototypeOf(Object.getPrototypeOf(this)).validate.call(this, ...args);
-
-        if (error) {
-            this.setError([error]);
-        } else {
-            this.clearError();
-        }
-        return error;
-    },
-
-    setError(errors: Array<any>): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-
-        this.el.parentElement.classList.add(...this.classes.ERROR.split(' '));
-        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
-
-        if (!this.isErrorShown) {
-            const errorPopout = dropdown.factory.createPopout({
-                buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
-                panelViewOptions: {
-                    collection: this.errorCollection
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-
-            const el = this.el.parentElement.querySelector('.js-error-text-region');
-            this.errorsRegion = new Marionette.Region({ el });
-
-            this.errorsRegion.show(errorPopout);
-
-            this.isErrorShown = true;
-        }
-    },
-
-    clearError(): void {
-        if (!this.__checkUiReady()) {
-            return;
-        }
-        this.el.parentElement.classList.remove(...this.classes.ERROR.split(' '));
-        this.errorCollection && this.errorCollection.reset();
-    },
-
-    __checkUiReady() {
-        return this.isRendered() && !this.isDestroyed();
-    }
-};
-
 export default class {
     constructor(options = {}) {
         this.model = options.model;
@@ -69,7 +16,7 @@ export default class {
         this.__createEditor(options);
 
         if (options.schema.getReadonly || options.schema.getHidden) {
-            this.model.on('change', this.__updateExternalChange);
+            this.model.on('change', () => this.__updateExternalChange(options));
         }
 
         if (options.schema.updateEditorEvents) {
@@ -79,18 +26,18 @@ export default class {
         return this.editor;
     }
 
-    __updateExternalChange() {
-        if (typeof this.options.getReadonly === 'function') {
-            this.setReadonly(Boolean(this.options.getReadonly(this.model)));
+    __updateExternalChange(options) {
+        if (typeof options.getReadonly === 'function') {
+            this.setReadonly(Boolean(options.getReadonly(options.model)));
         }
-        if (typeof this.options.getHidden === 'function') {
-            this.setHidden(Boolean(this.options.getHidden(this.model)));
+        if (typeof options.getHidden === 'function') {
+            this.setHidden(Boolean(options.getHidden(options.model)));
         }
     }
 
     __getEditorConstructor(options, editorOptions) {
-        const { template, schema } = options;
-        const EditorConstructor = formRepository.editors[schema.type];
+        const { template } = options;
+        const EditorConstructor = formRepository.editors[editorOptions.type];
         const editorTemplateContext = EditorConstructor.prototype.templateContext;
 
         const editorHTML = function(opt) {
@@ -104,9 +51,110 @@ export default class {
             templateContext() {
                 return {
                     editorHTML: editorHTML.call(this, editorOptions),
-                    ...schema,
+                    ...editorOptions,
                     editorClasses: typeof editorsClassName === 'function' ? editorsClassName.bind(this) : editorsClassName
                 };
+            },
+
+            onRender() {
+                this.domEl = this.el;
+                this.$domEl = this.$el;
+                this.realEl = this.el = this.el.querySelector('.js-editor-region');
+                this.$realEl = this.$el = Backbone.$(this.el);
+                EditorConstructor.prototype.onRender?.apply(this, arguments);
+                this.once('render', () => {
+                    this.el = this.domEl;
+                    this.$el = this.$domEl;
+                });
+                this.once('attach', () => {
+                    this.el = this.realEl;
+                    this.$el = this.$realEl;
+                });
+                this.once('before:attach', () => this.__onBeforeAttach());
+            },
+
+            __onBeforeAttach() {
+                this.el = this.domEl;
+                this.$el = this.$domEl;
+                if (editorOptions.helpText && !editorOptions.isCell) {
+                    const viewModel = new Backbone.Model({
+                        helpText: editorOptions.helpText,
+                        errorText: null
+                    });
+
+                    const infoPopout = dropdown.factory.createPopout({
+                        buttonView: InfoButtonView,
+                        panelView: TooltipPanelView,
+                        panelViewOptions: {
+                            model: viewModel,
+                            textAttribute: 'helpText'
+                        },
+                        popoutFlow: 'right',
+                        customAnchor: true
+                    });
+
+                    this.helpTextRegion = new Marionette.Region({
+                        el: this.el.querySelector('.js-help-text-region')
+                    });
+                    this.helpTextRegion.show(infoPopout);
+                }
+            },
+
+            onDestroy() {
+                EditorConstructor.prototype.onDestroy?.apply(this, arguments);
+                this.helpTextRegion?.destroy();
+                this.errorsRegion?.destroy();
+            },
+
+            validate(...args) {
+                const error = Object.getPrototypeOf(Object.getPrototypeOf(this)).validate.call(this, ...args);
+
+                if (error) {
+                    this.setError([error]);
+                } else {
+                    this.clearError();
+                }
+                return error;
+            },
+
+            setError(errors: Array<any>): void {
+                if (!this.__checkUiReady()) {
+                    return;
+                }
+
+                this.el.parentElement.classList.add(...this.classes.ERROR.split(' '));
+                this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+
+                if (!this.isErrorShown) {
+                    const errorPopout = dropdown.factory.createPopout({
+                        buttonView: ErrorButtonView,
+                        panelView: ErrosPanelView,
+                        panelViewOptions: {
+                            collection: this.errorCollection
+                        },
+                        popoutFlow: 'right',
+                        customAnchor: true
+                    });
+
+                    const el = this.el.parentElement.querySelector('.js-error-text-region');
+                    this.errorsRegion = new Marionette.Region({ el });
+
+                    this.errorsRegion.show(errorPopout);
+
+                    this.isErrorShown = true;
+                }
+            },
+
+            clearError(): void {
+                if (!this.__checkUiReady()) {
+                    return;
+                }
+                this.el.parentElement.classList.remove(...this.classes.ERROR.split(' '));
+                this.errorCollection && this.errorCollection.reset();
+            },
+
+            __checkUiReady() {
+                return this.isRendered() && !this.isDestroyed();
             }
         });
 
@@ -135,40 +183,9 @@ export default class {
 
         const EditorConstructor = this.__getEditorConstructor(options, editorOptions);
 
-        const ExtendedFieldEditorClass = EditorConstructor.extend(editorFieldExtention);
-
-        this.editor = new ExtendedFieldEditorClass(editorOptions);
+        this.editor = new EditorConstructor(editorOptions);
 
         this.key = options.key;
-
-        this.editor.on('before:attach', () => {
-            if (schema.helpText && !schema.isCell) {
-                const viewModel = new Backbone.Model({
-                    helpText: schema.helpText,
-                    errorText: null
-                });
-
-                const infoPopout = dropdown.factory.createPopout({
-                    buttonView: InfoButtonView,
-                    panelView: TooltipPanelView,
-                    panelViewOptions: {
-                        model: viewModel,
-                        textAttribute: 'helpText'
-                    },
-                    popoutFlow: 'right',
-                    customAnchor: true
-                });
-
-                this.editor.helpTextRegion = new Marionette.Region({
-                    el: this.editor.el.querySelector('.js-help-text-region')
-                });
-                this.editor.helpTextRegion.show(infoPopout);
-
-                this.editor.once('destroy', () => this.editor.helpTextRegion.destroy());
-            }
-
-            this.editor.once('destroy', () => this.editor.errorsRegion?.destroy());
-        });
     }
 
     __updateEditor() {

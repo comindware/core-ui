@@ -4,6 +4,7 @@ import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
+import { classes } from '../../meta';
 
 /**
  * @name GridHeaderView
@@ -16,11 +17,6 @@ import _ from 'underscore';
  * @param {Array} options.columns массив колонок
  * @param {Object} options.gridEventAggregator ?
  * */
-
-const classes = {
-    expanded: 'collapsible-btn_expanded',
-    dragover: 'dragover'
-};
 
 const GridHeaderView = Marionette.View.extend({
     initialize(options) {
@@ -38,6 +34,7 @@ const GridHeaderView = Marionette.View.extend({
         this.columnIndexOffset = options.showCheckbox ? 1 : 0;
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
+        this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
     },
 
     template: Handlebars.compile(template),
@@ -312,6 +309,24 @@ const GridHeaderView = Marionette.View.extend({
 
     __onMouseLeaveHeader(event) {
         this.trigger('handleLeave', event);
+    },
+
+    __updateState(collection, checkedState) {
+        switch (checkedState) {
+            case 'checked':
+                this.ui.checkbox.addClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+            case 'checkedSome':
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.addClass(classes.checked_some);
+                break;
+            case 'unchecked':
+            default:
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+                break;
+        }
     }
 });
 
