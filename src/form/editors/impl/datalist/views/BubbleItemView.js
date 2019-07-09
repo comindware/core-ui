@@ -11,7 +11,7 @@ export default Marionette.View.extend({
         const attributes = this.model.toJSON();
         const data = {
             ...attributes,
-            url: this.options.createValueUrl && this.options.createValueUrl(attributes),
+            url: attributes.url || (this.options.createValueUrl && this.options.createValueUrl(attributes)),
             text: this.options.getDisplayText(attributes)
         };
         return {

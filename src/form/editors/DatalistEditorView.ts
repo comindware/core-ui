@@ -57,6 +57,7 @@ type options = {
     format?: 'user' | 'document' //name of preset for editor
 
     boundEditor?: Marionette.View<Backbone.Model>,
+    boundEditorOptions?: object,
 
     //dropdown options
     externalBlurHandler?: any,
@@ -90,7 +91,7 @@ const defaultOptions = (options: options): options => ({
     collection: [],
     showCollection: true,
     selectedTitle: options.title,
-    showSelectedTitle: true,
+    showSelectedTitle: false,
 
     isButtonLimitMode: Boolean(options.maxButtonItems) && options.maxButtonItems !== Infinity,
     maxQuantitySelected: 1,
@@ -109,6 +110,7 @@ const defaultOptions = (options: options): options => ({
     panelBubbleTemplate: compositeReferenceCell,
 
     boundEditor: undefined,
+    boundEditorOptions: {},
 
     //dropdown options
     externalBlurHandler: undefined,
@@ -139,11 +141,16 @@ const presetsDefaults = {
         showSearch: false,
         addNewItem: datalistView => datalistView.boundEditor.openFileUploadWindow(),
         boundEditor: DocumentEditorView,
-        addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT')
+        boundEditorOptions: {
+            multiple: options.maxQuantitySelected !== 1
+        },
+        addNewItemText: LocalizationService.get(
+            options.maxQuantitySelected !== 1 ? 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT' : 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT'
+        )
     }),
     user: (options: options) => ({
         listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
-        title: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
+        selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeUserCell,
         panelBubbleTemplate: compositeUserCell
@@ -323,7 +330,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
         this.boundEditor = new this.options.boundEditor({
-            value: this.value
+            value: this.value,
+            ...this.options.boundEditorOptions
         });
         this.setValue(this.boundEditor.getValue());
         this.__bindEditorsState();
@@ -331,7 +339,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __bindEditorsState() {
         this.listenTo(this.boundEditor, 'set:loading', this.setLoading);
-        this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue()));
+        this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue(), { triggerChange: true }));
         this.listenTo(this, 'change', () => this.boundEditor.setValue(this.getValue()));
     },
 
@@ -422,8 +430,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    setValue(value): void {
-        this.__value(value, { triggerChange: false, isLoadIfNeeded: true });
+    setValue(value, { triggerChange = false, isLoadIfNeeded = true } = {}): void {
+        this.__value(value, { triggerChange, isLoadIfNeeded });
     },
 
     onRender(): void {
