@@ -55,7 +55,7 @@ const editorTypes = {
  * @param {Object} [days, minutes, hours, seconds] Params for time editor's part. Like Duration Editor Options.
  * */
 
-export default (formRepository.editors.DateTime = BaseEditorView.extend({
+export default formRepository.editors.DateTime = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
         this.value = this.__adjustValue(this.value);
@@ -635,7 +635,7 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$realEl.off('mouseenter');
 
         if (!MobileService.isMobile && !this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
@@ -665,4 +665,4 @@ export default (formRepository.editors.DateTime = BaseEditorView.extend({
             this.options.timeDisplayFormat
         ] || ''}`;
     }
-}));
+});

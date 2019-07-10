@@ -640,7 +640,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$realEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);
