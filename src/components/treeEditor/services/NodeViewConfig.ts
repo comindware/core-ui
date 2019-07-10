@@ -1,5 +1,3 @@
-import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
-
 const requiredIconClass = 'lock';
 const requiredClassName = 'required';
 
@@ -24,12 +22,6 @@ const getConfig = (template: string, className: string) => ({
 
     __getIconClass() {
         return this.model.get('required') ? requiredIconClass : this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass;
-    },
-
-    behaviors: {
-        TreeEditorBehavior: {
-            behaviorClass: TreeEditorBehavior
-        }
     }
 });
 

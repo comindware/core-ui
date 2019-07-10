@@ -1,10 +1,12 @@
 import NodeViewFactory from '../services/NodeViewFactory';
 import template from '../templates/branch.hbs';
 import NodeViewConfig from '../services/NodeViewConfig';
+import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
+import ExpandBehavior from '../behaviors/ExpandBehavior';
 
 const iconNames = {
-    collapsed: 'chevron-right',
-    expanded: 'chevron-down'
+    collapse: 'chevron-right',
+    expand: 'chevron-down'
 };
 
 export default Marionette.CollectionView.extend({
@@ -19,7 +21,7 @@ export default Marionette.CollectionView.extend({
         return {
             text: this.__getNodeName(),
             eyeIconClass: this.__getIconClass(),
-            expandIconClass: this.__getExpandIconClass(),
+            expandIconClass: this.model.collapsed ? iconNames.expand : iconNames.collapse,
             collapsed: this.model.collapsed
         };
     },
@@ -40,24 +42,13 @@ export default Marionette.CollectionView.extend({
 
     childViewContainer: '.js-branch-collection',
 
-    __getExpandIconClass() {
-        return this.model.collapsed ? iconNames.collapsed : iconNames.expanded;
-    },
-
-    ui: {
-        expandBtn: '.js-expand-btn'
-    },
-
-    events: {
-        'click @ui.expandBtn': '__handleExpandClick'
-    },
-
-    __handleExpandClick(event) {
-        event.stopPropagation();
-
-        this.model.collapsed = !this.model.collapsed;
-        this.render();
-        this.options.reqres.request('treeEditor:resize');
+    behaviors: {
+        TreeEditorBehavior: {
+            behaviorClass: TreeEditorBehavior
+        },
+        ExpandBehavior: {
+            behaviorClass: ExpandBehavior
+        }
     },
 
     ...NodeViewConfig(template, 'js-branch-item branch-item')

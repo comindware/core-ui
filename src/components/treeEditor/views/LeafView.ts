@@ -1,5 +1,6 @@
 import template from '../templates/leaf.hbs';
 import NodeViewConfig from '../services/NodeViewConfig';
+import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
 
 export default Marionette.View.extend({
     templateContext() {
@@ -11,6 +12,12 @@ export default Marionette.View.extend({
 
     attributes: {
         draggable: 'true'
+    },
+
+    behaviors: {
+        TreeEditorBehavior: {
+            behaviorClass: TreeEditorBehavior
+        }
     },
 
     ...NodeViewConfig(template, 'js-leaf-item js-tree-item leaf-item tree-item')
