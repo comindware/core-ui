@@ -512,9 +512,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-toolbar {
-    background: white;
     height: 30px;
-    border: solid 1px #ced3d7;
     border-bottom: 0;
 }
 
@@ -523,7 +521,7 @@ li.CodeMirror-hint-active {
     display: inline-block;
     height: 100%;
     padding: 10px;
-    color: black !important;
+    color: black;
 }
 
 .dev-code-editor-fading-panel {
@@ -650,12 +648,17 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-toolbar_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin: 2px 7px;
     height: 25px;
     width: 25px;
-    background: transparent no-repeat url(../images/icons-code_editor.png);
+    /*background: transparent no-repeat url(../images/icons-code_editor.png);*/
+    font-size: 1.2em;
+    color: #636262;
 }
-
+/*
 .dev-code-editor-toolbar_button-compile {
     background-position: -100px -25px;
 }
@@ -707,7 +710,7 @@ li.CodeMirror-hint-active {
 .dev-code-editor-operator:before {
     background-position:  -100px -25px;
 }
-
+*/
 .dev-code-editor-error {
     color: #ffa5a0;
     background: #ffa5a0;

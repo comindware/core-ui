@@ -1123,6 +1123,7 @@ a:hover {
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
 }
 
 .member-split-wrp .member-split-grid {

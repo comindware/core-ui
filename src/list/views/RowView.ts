@@ -307,7 +307,7 @@ export default Marionette.View.extend({
                         'beforeend',
                         `<div class="${classes.collapsible} context-collapse-button"><span class="js-tree-first-cell context-collapsible-btn ${
                             this.model.collapsed === false ? classes.expanded : ''
-                        }"></span></div>`
+                        }"><svg viewBox="0 0 12 12"><polygon class="d-svg-icons d-svg-icons_arrow" points="8,2 4.5,5.5 1,2 0,2 0,3 4,7 5,7 9,3 9,2 "/></svg></span></div>`
                     );
                 }
                 isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
@@ -316,7 +316,7 @@ export default Marionette.View.extend({
                     'afterbegin',
                     `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
                         this.model.collapsed === false ? classes.expanded : ''
-                    }" style="margin-left:${margin}px;"></span>`
+                    }" style="margin-left:${margin}px;"><svg viewBox="0 0 12 12"><polygon class="d-svg-icons d-svg-icons_arrow" points="8,2 4.5,5.5 1,2 0,2 0,3 4,7 5,7 9,3 9,2 "/></svg></span>`
                 );
             } else {
                 el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);

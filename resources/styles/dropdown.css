@@ -142,6 +142,12 @@
     text-overflow: ellipsis;
 }
 
+.dd-list__btn.reference-btn{
+    margin: 5px;
+    width: calc(100% - 5px);
+    line-height: normal;
+}
+
 .subtext-list {
     height: 45px;
     display: flex;

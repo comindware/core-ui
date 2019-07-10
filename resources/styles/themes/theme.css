@@ -559,6 +559,23 @@ tr:hover .cell_selection-index {
   min-width: 47px;
 }
 
+/* for IE*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .cell_selection, .cell_selection-index, .grid-header-column {
+      position:relative;
+      background-clip: padding-box;
+  }
+  .cell_selection-index > .checkbox,
+  .cell_selection > .checkbox{
+      margin-top: 0
+  }
+  .grid-header .cell_selection-index > .checkbox,
+  .grid-header .cell_selection > .checkbox{
+      margin-top: 10px
+  }
+
+}
+
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
   width: calc(100% - var(--grid-selection-width));
 }
@@ -592,20 +609,24 @@ tr:hover .cell_selection-index {
 
 .collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: var(--collapse-icon);
+  /*background-image: var(--collapse-icon);*/
   vertical-align: middle;
   z-index: 1;
 }
 
 .context-collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -618,12 +639,32 @@ tr:hover .cell_selection-index {
   transform: rotate(90deg);
 }
 
+.collapsible-btn svg, .context-collapsible-btn svg{
+    width: 70%;
+    height: 70%;
+}
+
 .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(90deg);
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
   transform: rotate(-90deg);
+}
+
+.cell .collapsible-btn{
+  transform: rotate(-90deg);
+  background: none;
+  fill: #636262;
+}
+
+.cell .collapsible-btn svg{
+  transform: translate(3px, 2px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(0deg);
+  background: none;
 }
 
 .grid-header-column-content .collapsible-btn {
