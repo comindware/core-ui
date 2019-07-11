@@ -21,8 +21,8 @@ export default Marionette.CollectionView.extend({
         return {
             text: this.__getNodeName(),
             eyeIconClass: this.__getIconClass(),
-            expandIconClass: this.model.collapsed ? iconNames.expand : iconNames.collapse,
-            collapsed: this.model.collapsed
+            expandIconClass: iconNames.expand //this.model.collapsed ? iconNames.expand : iconNames.collapse,
+            // collapsed: this.model.collapsed
         };
     },
 

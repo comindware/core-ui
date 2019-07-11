@@ -1,4 +1,5 @@
 const collapsedClass = 'collapsed';
+const animationInterval = 200;
 
 export default Marionette.Behavior.extend({
     events: {
@@ -13,16 +14,16 @@ export default Marionette.Behavior.extend({
         event.stopPropagation();
 
         this.view.model.collapsed = !this.view.model.collapsed;
-        this.__toggleCollapseState();
+        this.__toggleCollapseState(animationInterval);
     },
 
-    __toggleCollapseState() {
+    __toggleCollapseState(interval = animationInterval) {
         this.view.el.querySelector('.js-tree-item').classList.toggle(collapsedClass, this.view.model.collapsed);
 
         if (this.view.model.collapsed) {
-            this.view.$el.children('.js-branch-collection').hide(200, null, () => console.log('xxx'));
+            this.view.$el.children('.js-branch-collection').hide(interval);
         } else {
-            this.view.$el.children('.js-branch-collection').show(200, null, () => console.log('ppp'));
+            this.view.$el.children('.js-branch-collection').show(interval);
         }
     }
 });
