@@ -16,7 +16,7 @@
 }
 
 .leaf-item {
-    margin: 0;
+    margin: 0 5px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -36,8 +36,11 @@
 
 .branch-header-name {
     font-weight: 600;
-    font-size: 1.05rem;
-    
+    font-size: 1.05rem;   
+}
+
+.root > .branch-header-name {
+    margin-left: 10px;
 }
 
 .branch-header-name,
