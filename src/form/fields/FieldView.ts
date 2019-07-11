@@ -61,6 +61,25 @@ export default class {
                 };
             },
 
+            events() {
+                const prototypeEvents = EditorConstructor.prototype.events;
+
+                if (!prototypeEvents) {
+                    return;
+                }
+
+                const events = typeof prototypeEvents === 'function' ? prototypeEvents.call(this) : prototypeEvents;
+
+                Object.keys(events).map(key => {
+                    if (key.split(' ').length === 1) {
+                        events[`${key} .js-editor-region`] = events[key];
+                        delete events[key];
+                    }
+                });
+
+                return events;
+            },
+
             onRender() {
                 this.domEl = this.el;
                 this.$domEl = this.$el;
