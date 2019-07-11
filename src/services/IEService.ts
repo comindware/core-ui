@@ -9,15 +9,15 @@ export default class IEService {
         const oldAdd = DOMTokenList.prototype.add;
         DOMTokenList.prototype.add = function(className) {
             return arguments.length > 1 
-            ? ([...arguments].map(name => oldAdd.call(this, name)), true) 
-            : (oldAdd.call(this, className), true);
+            ? ([...arguments].map(name => oldAdd.call(this, name))) 
+            : (oldAdd.call(this, className));
         };
 
-        const oldRemove = DOMTokenList.prototype.add;
+        const oldRemove = DOMTokenList.prototype.remove;
         DOMTokenList.prototype.remove = function(className) {
             return arguments.length > 1 
-            ? ([...arguments].map(name => oldRemove.call(this, name)), false) 
-            : (oldRemove.call(this, className), false);
+            ? ([...arguments].map(name => oldRemove.call(this, name))) 
+            : (oldRemove.call(this, className));
         };
     }
 }
