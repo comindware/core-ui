@@ -13,9 +13,9 @@
     "not dead"
   ],
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.0",
-    "autoprefixer": "^9.6.0",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.0.0",
@@ -37,7 +37,7 @@
     "style-loader": "^0.23.1",
     "text-loader": "^0.0.1",
     "url-loader": "^2.0.1",
-    "webpack": "^4.35.2",
+    "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
     "webpack-pwa-manifest": "^4.0.0",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/runtime-corejs3": "^7.5.0",
+    "@babel/runtime-corejs3": "^7.5.4",
     "@fortawesome/fontawesome-free": "^5.9.0",
     "core-js": "^3.1.4"
   }
