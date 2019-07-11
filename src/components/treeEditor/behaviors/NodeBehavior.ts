@@ -45,18 +45,26 @@ export default Marionette.Behavior.extend({
         model.set(isHiddenPropName, !isHidden);
     },
 
-    getWidgetId() {
-        return this.view.model.get('columnModel')?.cleanWidgetId || this.view.model.id;
-    },
-
     __handleHiddenChange() {
-        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.getWidgetId(), { isHidden: this.view.model.get('isHidden') });
-        this.view.render();
+        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(), { isHidden: this.view.model.get('isHidden') });
+
         this.__toggleHiddenClass();
     },
 
     __toggleHiddenClass() {
         const isHidden = !!this.view.model.get(isHiddenPropName);
+
+        const getIconClasses = (hidden: boolean) => {
+            const iconClass = Handlebars.helpers.iconPrefixer(this.view.__getIconClass(hidden));
+            return iconClass.split(' ').filter((className: string) => className);
+        };
+
+        const uiEyeElement = this.ui.eyeBtn[0];
+
+        if (uiEyeElement) {
+            uiEyeElement.classList.remove(...getIconClasses(!isHidden));
+            uiEyeElement.classList.add(...getIconClasses(isHidden));
+        }
 
         this.el.classList.toggle(classes.hiddenClass, isHidden);
     },
@@ -152,10 +160,14 @@ export default Marionette.Behavior.extend({
         this.el.parentElement.classList.remove(classes.dragoverContainer);
     },
 
-    __getWidgetId(model) {
+    __getWidgetId(model = this.view.model) {
         const columnModel = model.get('columnModel');
 
-        return columnModel?.id || model.id;
+        if (columnModel) {
+            return columnModel.id;
+        }
+
+        return model.id;
     },
 
     __getDragoverParent(elem: HTMLElement) {

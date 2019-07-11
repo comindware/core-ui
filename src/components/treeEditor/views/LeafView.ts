@@ -1,6 +1,6 @@
 import template from '../templates/leaf.hbs';
 import NodeViewConfig from '../services/NodeViewConfig';
-import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
+import NodeBehavior from '../behaviors/NodeBehavior';
 
 export default Marionette.View.extend({
     templateContext() {
@@ -15,8 +15,8 @@ export default Marionette.View.extend({
     },
 
     behaviors: {
-        TreeEditorBehavior: {
-            behaviorClass: TreeEditorBehavior
+        NodeBehavior: {
+            behaviorClass: NodeBehavior
         }
     },
 

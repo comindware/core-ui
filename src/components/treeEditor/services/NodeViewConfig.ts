@@ -20,8 +20,12 @@ const getConfig = (template: string, className: string) => ({
         return typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '';
     },
 
-    __getIconClass() {
-        return this.model.get('required') ? requiredIconClass : this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass;
+    __getIconClass(isHidden = this.model.get('isHidden')) {
+        if (this.model.get('required')) {
+            return requiredIconClass;
+        }
+
+        return isHidden ? this.options.closedEyeIconClass : this.options.eyeIconClass;
     }
 });
 

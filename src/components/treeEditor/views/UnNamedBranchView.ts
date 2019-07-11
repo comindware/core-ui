@@ -1,6 +1,6 @@
 import BranchView from './BranchView';
 import template from '../templates/unNamedBranch.hbs';
-import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
+import NodeBehavior from '../behaviors/NodeBehavior';
 
 export default BranchView.extend({
     template: Handlebars.compile(template),
@@ -8,8 +8,8 @@ export default BranchView.extend({
     className: 'unnamed-branch-item js-unnamed-tree-item',
 
     behaviors: {
-        TreeEditorBehavior: {
-            behaviorClass: TreeEditorBehavior
+        NodeBehavior: {
+            behaviorClass: NodeBehavior
         }
     }
 });

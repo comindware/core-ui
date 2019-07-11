@@ -1,7 +1,7 @@
 import NodeViewFactory from '../services/NodeViewFactory';
 import template from '../templates/branch.hbs';
 import NodeViewConfig from '../services/NodeViewConfig';
-import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
+import NodeBehavior from '../behaviors/NodeBehavior';
 import ExpandBehavior from '../behaviors/ExpandBehavior';
 
 const iconNames = {
@@ -21,8 +21,7 @@ export default Marionette.CollectionView.extend({
         return {
             text: this.__getNodeName(),
             eyeIconClass: this.__getIconClass(),
-            expandIconClass: iconNames.expand //this.model.collapsed ? iconNames.expand : iconNames.collapse,
-            // collapsed: this.model.collapsed
+            expandIconClass: iconNames.expand
         };
     },
 
@@ -43,8 +42,8 @@ export default Marionette.CollectionView.extend({
     childViewContainer: '.js-branch-collection',
 
     behaviors: {
-        TreeEditorBehavior: {
-            behaviorClass: TreeEditorBehavior
+        NodeBehavior: {
+            behaviorClass: NodeBehavior
         },
         ExpandBehavior: {
             behaviorClass: ExpandBehavior
