@@ -3,9 +3,20 @@
     margin: 5px 5px;
 }
 
+.branch-collection.dragover-container {
+    padding: 0px;
+}
+
+.branch-collection {
+    padding: 1px;
+}
+
+.dragover-container {
+    border: 1px solid #0575bd;
+}
+
 .leaf-item {
-    margin: 0;
-    padding: 5px 5px;
+    margin: 0 5px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -15,37 +26,21 @@
     padding-left: 10px;
 }
 
-.tree-item:hover {
-    background: #d6e7f2;
-    color: #0575bd;
-}
-
-.tree-item[draggable="true"] {
-    cursor: move;
-}
-
-.tree-item.dragover,
-.branch-item.dragover {
-    border: 2px solid #0575bd;
-}
-
-*:not(.required) > .eye-btn {
-    cursor: pointer;
-}
-
 .branch-header {
     border-bottom: 1px solid #e9e9e9;
     margin: 0;
-    padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-
 .branch-header-name {
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1.05rem;   
+}
+
+.root > .branch-header-name {
+    margin-left: 10px;
 }
 
 .branch-header-name,
@@ -53,16 +48,62 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    padding-right: 10px;
+    width: 100%;
+    margin: 2px auto 2px 0px;
 }
 
 .branch-item {
     border: 1px solid #e9e9e9;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+}
+
+.branch-item:hover,
+.unnamed-branch-item:hover,
+.root {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.branch-item:hover,
+.leaf-item:hover,
+.unnamed-branch-item:hover,
+.branch-item.dragover,
+.leaf-item.dragover,
+.unnamed-branch-item.dragover  {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.tree-item:hover {
+    background: #d6e7f2;
+    color: #0575bd;
+}
+
+.tree-item,
+.branch-item {
+    cursor: move;
+}
+
+.tree-item.dragover,
+.branch-item.dragover {
+    border-bottom: 2px solid #0575bd;
+    padding-bottom: -2px;
+}
+
+.unnamed-branch-item {
+    padding-right: 4px;
 }
 
 .unnamed-branch-item:not(:last-child) {
     border-bottom: 1px solid #e9e9e9;
+}
+
+.unnamed-branch-item:hover {
+    border-right: 4px solid #0575bd;
+    padding-right: 0;
+}
+
+.unnamed-branch-item {
+    cursor: move
 }
 
 .hidden-node {
@@ -92,3 +133,39 @@
     height: 100%;
     line-height: 1.6;
 }
+
+.expand-btn, .eye-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+}
+
+.expand-btn {
+    cursor: pointer;
+}
+
+*:not(.required) > .eye-btn {
+    cursor: pointer;
+}
+
+.collapsed .expand-btn {
+    transform: rotate(-90deg) translate(1px);
+}
+
+.branch-header .eye-btn {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.branch-header .expand-btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.header-name-wrp {
+    width: 100%;
+}
+
+

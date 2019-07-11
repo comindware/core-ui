@@ -45,19 +45,21 @@ export default class TreeEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView({
+            panelView: NodeViewFactory.getRootView({
                 model: this.model,
                 unNamedType: options.unNamedType,
                 stopNestingType: options.stopNestingType,
                 forceBranchType: options.forceBranchType
             }),
-            panelViewOptions: Object.assign({}, options, {
+            panelViewOptions: {
+                ...options,
                 reqres,
                 maxWidth: 300
-            })
+            }
         });
 
         reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
+        reqres.reply('treeEditor:resize', () => popoutView.adjustPosition());
         popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
 
         if (options.hidden) {
