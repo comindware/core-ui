@@ -654,63 +654,9 @@ li.CodeMirror-hint-active {
     margin: 2px 7px;
     height: 25px;
     width: 25px;
-    /*background: transparent no-repeat url(../images/icons-code_editor.png);*/
     font-size: 1.2em;
     color: #636262;
 }
-/*
-.dev-code-editor-toolbar_button-compile {
-    background-position: -100px -25px;
-}
-
-.dev-code-editor-toolbar_button-undo {
-    background-position: 0px 0px;
-}
-
-.dev-code-editor-toolbar_button-redo {
-    background-position: -25px 0px;
-}
-
-.dev-code-editor-toolbar_button-format{
-    background-position: -50px 0px;
-}
-
-.dev-code-editor-toolbar_button-hint {
-    background-position: -75px 0px;
-}
-
-.dev-code-editor-toolbar_button-find {
-    background-position: -100px 0px;
-}
-
-.dev-code-editor-toolbar_button-maximize {
-    background-position: -125px 0px;
-}
-
-.dev-code-editor-toolbar_button-minimize {
-    background-position: -150px 0px;
-}
-
-.dev-code-editor-function:before {
-    background-position: 0px -25px;
-}
-
-.dev-code-editor-literal:before {
-    background-position: -25px -25px;
-}
-
-.dev-code-editor-user:before {
-    background-position: -50px -25px;
-}
-
-.dev-code-editor-attribute:before {
-    background-position:  -75px -25px;
-}
-
-.dev-code-editor-operator:before {
-    background-position:  -100px -25px;
-}
-*/
 .dev-code-editor-error {
     color: #ffa5a0;
     background: #ffa5a0;
