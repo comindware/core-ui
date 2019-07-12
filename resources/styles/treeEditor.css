@@ -40,7 +40,9 @@
 }
 
 .root > .branch-header-name {
-    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .branch-header-name,
@@ -65,10 +67,8 @@
 }
 
 .branch-item:hover,
-.leaf-item:hover,
 .unnamed-branch-item:hover,
 .branch-item.dragover,
-.leaf-item.dragover,
 .unnamed-branch-item.dragover  {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
@@ -81,6 +81,7 @@
 .tree-item,
 .branch-item {
     cursor: move;
+    transition: background-color 0.2s ease;
 }
 
 .tree-item.dragover,
@@ -134,7 +135,7 @@
     line-height: 1.6;
 }
 
-.expand-btn, .eye-btn {
+.tree-item .collapse-btn, .tree-item .eye-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,26 +143,22 @@
     width: 22px;
 }
 
-.expand-btn {
-    cursor: pointer;
-}
-
 *:not(.required) > .eye-btn {
     cursor: pointer;
 }
 
-.collapsed .expand-btn {
-    transform: rotate(-90deg) translate(1px);
+.collapse-btn {
+    cursor: pointer;
 }
 
-.branch-header .eye-btn {
-    margin-right: 5px;
-    margin-left: 5px;
+.collapsed .collapse-btn {
+    transform: rotate(-90deg);
 }
 
-.branch-header .expand-btn {
-    margin-left: 5px;
+.branch-header .eye-btn,
+.branch-header .collapse-btn {
     margin-right: 5px;
+    margin-left: 5px;
 }
 
 .header-name-wrp {

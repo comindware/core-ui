@@ -2,26 +2,24 @@ import NodeViewFactory from '../services/NodeViewFactory';
 import template from '../templates/branch.hbs';
 import NodeViewConfig from '../services/NodeViewConfig';
 import NodeBehavior from '../behaviors/NodeBehavior';
-import ExpandBehavior from '../behaviors/ExpandBehavior';
+import CollapsibleBehavior from '../behaviors/CollapsibleBehavior';
+import meta from '../meta';
 
-const iconNames = {
-    collapse: 'chevron-right',
-    expand: 'chevron-down'
-};
+const iconNames = meta.iconNames;
 
 export default Marionette.CollectionView.extend({
     initialize(options: { model: any, unNamedType?: string, stopNestingType?: string }) {
         this.collection = options.model.get(options.model.childrenAttribute);
-        if (this.model.collapsed == null) {
-            this.model.collapsed = true;
-        }
+        this.__initCollapsedState();
+        this.collapseClassElement = [...this.el.childNodes].find(childNode => childNode.classList.contains('js-tree-item'));
     },
 
     templateContext() {
         return {
             text: this.__getNodeName(),
             eyeIconClass: this.__getIconClass(),
-            expandIconClass: iconNames.expand
+            collapseIconClass: iconNames.expand,
+            collapsed: this.model.collapsedNode
         };
     },
 
@@ -45,8 +43,24 @@ export default Marionette.CollectionView.extend({
         NodeBehavior: {
             behaviorClass: NodeBehavior
         },
-        ExpandBehavior: {
-            behaviorClass: ExpandBehavior
+        CollapsibleBehavior: {
+            behaviorClass: CollapsibleBehavior
+        }
+    },
+
+    collapseChildren(options: { interval: number, collapsed: boolean }) {
+        const { interval, collapsed } = options;
+
+        if (collapsed) {
+            this.$el.children('.js-branch-collection').hide(interval);
+        } else {
+            this.$el.children('.js-branch-collection').show(interval);
+        }
+    },
+
+    __initCollapsedState() {
+        if (this.model.collapsedNode == null) {
+            this.model.collapsedNode = true;
         }
     },
 

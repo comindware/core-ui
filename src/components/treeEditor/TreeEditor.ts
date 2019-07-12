@@ -59,7 +59,9 @@ export default class TreeEditor {
         });
 
         reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
-        reqres.reply('treeEditor:resize', () => popoutView.adjustPosition());
+        reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
+
+        popoutView.once('attach', () => popoutView.adjustPosition(false)); //TODO !!! it doesn't work like this
         popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
 
         if (options.hidden) {

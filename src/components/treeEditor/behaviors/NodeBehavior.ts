@@ -1,10 +1,10 @@
+import { getIconAndPrefixerClasses, setModelHiddenAttribute } from '../meta';
+
 const classes = {
     hiddenClass: 'hidden-node',
     dragover: 'dragover',
     dragoverContainer: 'dragover-container'
 };
-
-const isHiddenPropName = 'isHidden';
 
 const getSiblings = (element: HTMLElement) => {
     return Array.from(element.parentElement?.childNodes || []);
@@ -20,7 +20,7 @@ export default Marionette.Behavior.extend({
     },
 
     events: {
-        'click @ui.eyeBtn': '__handleEyeClick',
+        'click @ui.eyeBtn': '__onEyeBtnClick',
         dragenter: '__handleDragEnter',
         dragover: '__handleDragOver',
         dragleave: '__handleDragLeave',
@@ -33,16 +33,9 @@ export default Marionette.Behavior.extend({
         this.__toggleHiddenClass();
     },
 
-    __handleEyeClick(event: MouseEvent) {
+    __onEyeBtnClick(event: MouseEvent) {
         event.stopPropagation();
-        const model = this.view.options.model;
-        if (model.get('required')) {
-            return;
-        }
-
-        const isHidden = model.get(isHiddenPropName);
-
-        model.set(isHiddenPropName, !isHidden);
+        setModelHiddenAttribute(this.view.options.model);
     },
 
     __handleHiddenChange() {
@@ -52,18 +45,12 @@ export default Marionette.Behavior.extend({
     },
 
     __toggleHiddenClass() {
-        const isHidden = !!this.view.model.get(isHiddenPropName);
-
-        const getIconClasses = (hidden: boolean) => {
-            const iconClass = Handlebars.helpers.iconPrefixer(this.view.__getIconClass(hidden));
-            return iconClass.split(' ').filter((className: string) => className);
-        };
-
+        const isHidden = !!this.view.model.get('isHidden');
         const uiEyeElement = this.ui.eyeBtn[0];
 
         if (uiEyeElement) {
-            uiEyeElement.classList.remove(...getIconClasses(!isHidden));
-            uiEyeElement.classList.add(...getIconClasses(isHidden));
+            uiEyeElement.classList.remove(...getIconAndPrefixerClasses(this.view.__getIconClass(!isHidden)));
+            uiEyeElement.classList.add(...getIconAndPrefixerClasses(this.view.__getIconClass(isHidden)));
         }
 
         this.el.classList.toggle(classes.hiddenClass, isHidden);
