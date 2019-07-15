@@ -86,7 +86,7 @@ export default Marionette.View.extend({
         }
 
         const toolbar = new Core.components.Toolbar({
-            allItemsCollection: new Backbone.Collection([
+            toolbarItems: new Backbone.Collection([
                 {
                     iconClass: 'plus',
                     id: 'component',
