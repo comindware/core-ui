@@ -1,3 +1,5 @@
+const getArrayCopy = array => (array ? (Array.isArray(array) ? array : [array]).slice() : null);
+
 export default class GroupedCollection {
     constructor(options) {
         this.allItems = options.allItems;
@@ -28,7 +30,7 @@ export default class GroupedCollection {
         if (!models) {
             return;
         }
-        const modelsArray = this.__getArrayCopy(models);
+        const modelsArray = getArrayCopy(models);
         modelsArray.length && modelsArray[0].group?.remove(modelsArray);
 
         const targetCollection = (targetName && this.groups[targetName]) || this.ungrouped;
@@ -37,11 +39,11 @@ export default class GroupedCollection {
     }
 
     getModels(targetName) {
-        return this.__getArrayCopy(((targetName && this.groups[targetName]) || this.ungrouped).models);
+        return getArrayCopy(((targetName && this.groups[targetName]) || this.ungrouped).models);
     }
 
     getAllItemsModels() {
-        return this.__getArrayCopy(this.allItems.models);
+        return getArrayCopy(this.allItems.models);
     }
 
     reset() {
@@ -54,9 +56,5 @@ export default class GroupedCollection {
     __moveToGroupByKind(model) {
         const { kindConst, constGroupName, mainGroupName } = this.groupsSortOptions;
         this.move(model, model.get('kind') === kindConst ? constGroupName : mainGroupName);
-    }
-
-    __getArrayCopy(models) {
-        return models ? (Array.isArray(models) ? models : [models]).slice() : null;
     }
 }

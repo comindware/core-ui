@@ -24,17 +24,27 @@ export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
 
-        const optionsAllItemsCollection = this.options.allItemsCollection;
-        const allItemsCollection = optionsAllItemsCollection instanceof Backbone.Collection ? optionsAllItemsCollection : new ToolbarItemsCollection(optionsAllItemsCollection);
-        const allItems = (this.allItemsCollection = new VirtualCollection(allItemsCollection));
+        const optionsToolbarCollection = this.options.allItemsCollection;
+        const toolbarCollection =
+            optionsToolbarCollection instanceof Backbone.Collection
+                ? (() => {
+                      // this case is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.
+                      optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
+                      optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
+                      return optionsToolbarCollection;
+                  })()
+                : new ToolbarItemsCollection(optionsToolbarCollection);
 
+        const allItems = (this.allItemsCollection = new VirtualCollection(toolbarCollection));
         const groupsSortOptions = { kindConst: meta.kinds.CONST, constGroupName: groupNames.const, mainGroupName: groupNames.main };
+
         this.groupedCollection = new GroupedCollection({
             allItems,
             class: ToolbarItemsCollection,
             groups: Object.values(groupNames),
             groupsSortOptions
         });
+
         this.mainActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.main]);
         this.constActionsView = this.__createActionsGroupsView(this.groupedCollection.groups[groupNames.const]);
         this.popupMenuView = this.__createDropdownActionsView(this.groupedCollection.groups[groupNames.menu]);
@@ -81,7 +91,7 @@ export default Marionette.View.extend({
         });
     },
 
-    getAllItemsCollection() {
+    getToolbarItems() {
         return this.groupedCollection.allItems;
     },
 

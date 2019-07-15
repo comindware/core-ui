@@ -730,8 +730,8 @@ export default Marionette.View.extend({
         }
     },
 
-    getToolbarCollection() {
-        return this.toolbarView?.getAllItemsCollection();
+    getToolbarItems() {
+        return this.toolbarView?.getToolbarItems();
     },
 
     __updateEmpty() {
