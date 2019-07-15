@@ -85,6 +85,7 @@ export default Marionette.View.extend({
                 childView: this.options.listItemView,
                 disableKeydownHandler: true,
                 columns: [],
+                showHeader: false,
                 childViewOptions: {
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,

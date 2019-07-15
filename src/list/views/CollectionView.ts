@@ -33,8 +33,7 @@ const defaultOptions = {
     useSlidingWindow: true,
     disableKeydownHandler: false,
     customHeight: false,
-    childHeight: 35,
-    headerHeight: 35
+    childHeight: 35
 };
 
 /**
@@ -79,7 +78,6 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
-        options.headerHeight = options.headerHeight || defaultOptions.headerHeight;
         this.height = options.height;
         this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
 
