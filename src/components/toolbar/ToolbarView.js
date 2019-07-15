@@ -14,10 +14,10 @@ const getDefaultOptions = options => ({
 
 export default Marionette.View.extend({
     initialize() {
-        helpers.ensureOption(this.options, 'allItemsCollection');
+        helpers.ensureOption(this.options, 'toolbarItems');
         _.defaults(this.options, getDefaultOptions(this.options));
 
-        this.allItemsCollection = this.options.allItemsCollection;
+        this.toolbarItems = this.options.toolbarItems;
         this.toolbarItemsCollection = new ToolbarItemsCollection();
         this.menuItemsCollection = new ToolbarItemsCollection();
         this.toolbarConstItemsCollection = new ToolbarItemsCollection();
@@ -30,7 +30,7 @@ export default Marionette.View.extend({
         this.debounceRebuildLong = _.debounce(this.rebuildView, 300);
         this.debounceRebuildShort = _.debounce(this.rebuildView, 5);
         this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuildLong);
-        this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
+        this.listenTo(this.toolbarItems, 'change add remove reset update', this.debounceRebuildShort);
     },
 
     className() {
@@ -120,7 +120,7 @@ export default Marionette.View.extend({
     },
 
     __resetCollections() {
-        const rawCollection = this.allItemsCollection.toJSON();
+        const rawCollection = this.toolbarItems.toJSON();
         this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== meta.kinds.CONST));
         this.menuItemsCollection.reset();
         this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === meta.kinds.CONST));
