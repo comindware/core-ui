@@ -260,7 +260,7 @@ export default function() {
         return model.get('name');
     };
 
-    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName, unNamedType: 'unNamed' });
+    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName, unNamedType: 'unNamed', showToolbar: true });
     view.listenTo(view, 'save', config => console.log(config));
 
     return view;
