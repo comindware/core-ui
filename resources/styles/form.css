@@ -893,7 +893,7 @@ input[type="color"], .colorpicker{
     position: relative!important;
 }
 
-.new-expression-editor-field {
+.new-expression-editor-field:not(.cell) {
     display: flex;
 }
 
