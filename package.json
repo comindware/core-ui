@@ -103,7 +103,7 @@
         "jasmine-core": "^3.4.0",
         "jasmine-expect": "^4.0.2",
         "jasmine-jquery": "^2.1.1",
-        "karma": "^4.1.0",
+        "karma": "^4.2.0",
         "karma-chrome-launcher": "^2.2.0",
         "karma-coverage": "^1.1.2",
         "karma-firefox-launcher": "^1.1.0",
@@ -127,13 +127,13 @@
         "typescript": "^3.5.3",
         "url-loader": "^2.0.1",
         "webpack": "^4.35.3",
-        "webpack-cli": "^3.3.5"
+        "webpack-cli": "^3.3.6"
     },
     "dependencies": {
         "@babel/runtime-corejs3": "^7.5.4",
         "@fortawesome/fontawesome-free": "^5.9.0",
-        "@typescript-eslint/eslint-plugin": "^1.11.0",
-        "@typescript-eslint/parser": "^1.11.0",
+        "@typescript-eslint/eslint-plugin": "^1.12.0",
+        "@typescript-eslint/parser": "^1.12.0",
         "autosize": "^4.0.2",
         "backbone": "^1.4.0",
         "backbone-associations": "^0.6.2",
