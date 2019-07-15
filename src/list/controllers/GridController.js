@@ -49,7 +49,7 @@ export default Marionette.Object.extend({
         );
 
         if (this.options.showToolbar) {
-            const allToolbarActions = this.view.getToolbarCollection();
+            const allToolbarActions = this.view.getToolbarItems();
 
             this.__updateActions(allToolbarActions, collection);
             const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
