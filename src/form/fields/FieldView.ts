@@ -9,6 +9,7 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
+const editorSelector = '.js-editor-region';
 export default class {
     constructor(options = {}) {
         this.model = options.model;
@@ -42,7 +43,7 @@ export default class {
 
         const { template } = options;
         const EditorConstructor = formRepository.editors[editorOptions.type];
- 
+
         const editorTemplateContext = EditorConstructor.prototype.templateContext;
 
         const editorHTML = function(opt) {
@@ -72,7 +73,7 @@ export default class {
 
                 Object.keys(events).map(key => {
                     if (key.split(' ').length === 1) {
-                        events[`${key} .js-editor-region`] = events[key];
+                        events[`${key} ${editorSelector}`] = events[key];
                         delete events[key];
                     }
                 });
@@ -83,23 +84,16 @@ export default class {
             onRender() {
                 this.domEl = this.el;
                 this.$domEl = this.$el;
-                this.realEl = this.el = this.el.querySelector('.js-editor-region');
+                this.realEl = this.el = this.el.querySelector(editorSelector);
                 this.$realEl = this.$el = Backbone.$(this.el);
                 EditorConstructor.prototype.onRender?.apply(this, arguments);
-                this.once('render', () => {
-                    this.el = this.domEl;
-                    this.$el = this.$domEl;
-                });
-                this.once('attach', () => {
-                    this.el = this.realEl;
-                    this.$el = this.$realEl;
-                });
-                this.once('before:attach', () => this.__onBeforeAttach());
+                this.once('render', this.__switchElementsToField);
+                this.on('attach', this.__switchElementsToEdtior);
+                this.on('before:attach', this.__onBeforeAttach);
             },
 
             __onBeforeAttach() {
-                this.el = this.domEl;
-                this.$el = this.$domEl;
+                this.__switchElementsToField();
                 if (editorOptions.helpText && !editorOptions.isCell) {
                     const viewModel = new Backbone.Model({
                         helpText: editorOptions.helpText,
@@ -122,6 +116,14 @@ export default class {
                     });
                     this.helpTextRegion.show(infoPopout);
                 }
+            },
+
+            onBeforeDetach() {
+                this.__handleRemove();
+            },
+
+            onBeforeDestroy() {
+                this.__handleRemove();
             },
 
             onDestroy() {
@@ -177,8 +179,29 @@ export default class {
                 this.errorCollection && this.errorCollection.reset();
             },
 
+            __onMouseenter() {
+                this.$domEl.off(`mouseenter ${editorSelector}`);
+                EditorConstructor.prototype.__onMouseenter?.apply(this, arguments);
+            },
+
             __checkUiReady() {
                 return this.isRendered() && !this.isDestroyed();
+            },
+
+            __handleRemove() {
+                this.off('attach', this.__switchElementsToEdtior);
+                this.off('before:attach', this.__onBeforeAttach);
+                this.__switchElementsToField();
+            },
+
+            __switchElementsToField() {
+                this.el = this.domEl;
+                this.$el = this.$domEl;
+            },
+
+            __switchElementsToEdtior() {
+                this.el = this.realEl;
+                this.$el = this.$realEl;
             }
         });
 

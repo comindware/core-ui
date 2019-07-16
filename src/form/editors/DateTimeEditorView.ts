@@ -635,7 +635,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$realEl.off('mouseenter');
+        this.$el.off('mouseenter');
 
         if (!MobileService.isMobile && !this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);

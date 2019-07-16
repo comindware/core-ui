@@ -53,7 +53,8 @@ const defaultOptions = options => ({
     updateToolbarEvents: '',
     childHeight: 35,
     showTreeEditor: false,
-    treeEditorIsHidden: false
+    treeEditorIsHidden: false,
+    headerHeight: 35
 });
 
 const configConstants = {
@@ -165,7 +166,7 @@ export default Marionette.View.extend({
 
         if (this.options.showToolbar) {
             this.toolbarView = new ToolbarView({
-                allItemsCollection: allToolbarActions || new Backbone.Collection()
+                toolbarItems: allToolbarActions || new Backbone.Collection()
             });
             this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         }
@@ -418,7 +419,8 @@ export default Marionette.View.extend({
             parent$el: this.ui.tableWrapper,
             table$el: this.ui.table,
             minimumVisibleRows: this.options.minimumVisibleRows,
-            selectOnCursor: this.options.selectOnCursor
+            selectOnCursor: this.options.selectOnCursor,
+            headerHeight: this.options.showHeader ? this.options.headerHeight : 0
         });
         this.listenTo(this.listView, 'update:position:internal', state => this.updatePosition(state.topIndex, state.shouldScrollElement));
 

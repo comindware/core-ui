@@ -5,7 +5,7 @@ describe('Editors', () => {
     describe('CodeEditorView', () => {
         it('should initialize', function () {
             const view = new core.components.Toolbar({
-                allItemsCollection: new Backbone.Collection([
+                toolbarItems: new Backbone.Collection([
                     {
                         iconClass: 'plus',
                         id: 'create',
