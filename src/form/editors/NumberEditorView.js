@@ -49,14 +49,14 @@ const defaultOptions = {
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=null] Минимальное возможное значение. Если <code>null</code>, не ограничено.
- * 
+ *
  * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]]) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
- * 
+ *
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.Number = BaseEditorView.extend({
+export default formRepository.editors.Number = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     focusElement: '.js-input',
@@ -203,7 +203,8 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if ((value === this.value && !force) || (typeof value === 'string' && [this.decimalSymbol, '_', '-'].includes(value.slice(-1)))) { // '_' - placeholder from mask
+        if ((value === this.value && !force) || (typeof value === 'string' && [this.decimalSymbol, '_', '-'].includes(value.slice(-1)))) {
+            // '_' - placeholder from mask
             return;
         }
 
@@ -273,14 +274,14 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
     },
 
     __parseToString(number) {
-        return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);     
+        return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);
     },
 
     __onMouseenter() {
-        this.$realEl.off('mouseenter');
+        this.$el.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);
         }
     }
-}));
+});
