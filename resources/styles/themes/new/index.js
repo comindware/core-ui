@@ -244,7 +244,7 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        padding: '2px 0'
+        padding: '1px 0'
     },
     'bubbles-item-theme-hover': {
         padding: '2px 20px 2px 0'
