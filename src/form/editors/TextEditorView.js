@@ -164,7 +164,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapText, iconWrapRemove);

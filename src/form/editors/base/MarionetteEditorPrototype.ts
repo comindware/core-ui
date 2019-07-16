@@ -1,4 +1,12 @@
 import formRepository from '../../formRepository';
+import dropdown from 'dropdown';
+import ErrorButtonView from '../../../views/ErrorButtonView';
+import InfoButtonView from '../../../views/InfoButtonView';
+import TooltipPanelView from '../../../views/TooltipPanelView';
+import ErrosPanelView from '../../../views/ErrosPanelView';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import Marionette from 'backbone.marionette';
 import { keyCode } from 'utils';
 
 const classes = {
@@ -16,13 +24,13 @@ const classes = {
 const onRender = function() {
     this.setValue(this.value);
     if (this.focusElement) {
-        this.$el.on('focus', this.focusElement, this.onFocus);
-        this.$el.on('blur', this.focusElement, this.onBlur);
-        this.$el.on('keyup', this.focusElement, this.onKeyup);
+        this.$editorEl.on('focus', this.focusElement, this.onFocus);
+        this.$editorEl.on('blur', this.focusElement, this.onBlur);
+        this.$editorEl.on('keyup', this.focusElement, this.onKeyup);
     } else if (this.focusElement !== null) {
-        this.$el.on('focus', this.onFocus);
-        this.$el.on('blur', this.onBlur);
-        this.$el.on('keyup', this.onKeyup);
+        this.$editorEl.on('focus', this.onFocus);
+        this.$editorEl.on('blur', this.onBlur);
+        this.$editorEl.on('keyup', this.onKeyup);
     }
 
     if (this.enabled) {
@@ -126,11 +134,13 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
 
             this.on('render', this.__onEditorRender.bind(this));
             this.on('change', onChange.bind(this));
+            this.on('before:attach', this.__onBeforeAttach);
+            this.on('destroy', this.__onDestroy);
 
             const fn = this.setValue;
             this.setValue = function() {
                 fn.apply(this, arguments);
-                if (this.$el) {
+                if (this.$editorEl) {
                     this.__updateEmpty();
                 }
             };
@@ -142,13 +152,17 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             this.readonly = this.options.readonly;
             this.hidden = this.options.hidden;
 
+            this.isField = this.options.isField;
+
             viewClass.prototype.constructor.apply(this, arguments);
 
             const isEmpty = this.isEmptyValue();
 
             const classState = {
                 disabled: !this.enabled,
+                editorDisabled: !this.enabled,
                 readonly: this.readonly,
+                editorReadonly: this.readonly,
                 hidden: this.hidden,
                 EMPTY: isEmpty,
                 REQUIRED: this.options.required && isEmpty
@@ -162,11 +176,11 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             }, []);
 
             if (classList.length) {
-                this.el.classList.add(...classList);
+                this.editorEl.classList.add(...classList);
             }
 
             if (this.id) {
-                this.el.setAttribute('id', this.id);
+                this.editorEl.setAttribute('id', this.id);
             }
 
             if (this.model) {
@@ -175,7 +189,80 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 this.listenTo(this.model, 'validate:force', (e = {}) => {
                     e.validationResult = this.validate();
                 });
+                if (options.getReadonly || options.getHidden) {
+                    this.model.on('change', () => this.__updateExternalChange(options));
+                }
             }
+        },
+
+        _ensureElement() {
+            if (this.el) {
+                this.setElement(_.result(this, 'el'));
+                return;
+            }
+
+            if (this.isField) {
+                const { attributes, className, tagName = 'div', fieldId: id, title, showLabel } = this.options.fieldOptions;
+                this.fieldEl = this._createElement(tagName);
+                this.__setAttributes(this.fieldEl, {
+                    ...attributes,
+                    class: className,
+                    id
+                });
+                const labelHtml = showLabel ? `<label class="form-label__txt" for="${this.options.fieldId}">${title || ''}</label>` : '';
+                this.fieldEl.insertAdjacentHTML(
+                    'afterbegin',
+                    `<div class="form-label ${title ? '' : 'form-label--empty'}">
+                        ${labelHtml}
+                    </div>`
+                );
+                this.editorEl = this._createElement(this.tagName);
+                this.$editorEl = Backbone.$(this.editorEl);
+                var attrs = { ..._.result(this, 'attributes') };
+                if (this.id) {
+                    attrs.id = _.result(this, 'id');
+                }
+                if (this.className) {
+                    attrs['class'] = _.result(this, 'className');
+                }
+                this.fieldEl.insertAdjacentElement('beforeend', this.editorEl);
+                this.__setAttributes(this.editorEl, attrs);
+                this.setElement(this.fieldEl);
+            } else {
+                var attrs = _.extend({}, _.result(this, 'attributes'));
+                if (this.id) {
+                    attrs.id = _.result(this, 'id');
+                }
+                if (this.className) {
+                    attrs['class'] = _.result(this, 'className');
+                }
+                this.editorEl = this._createElement(_.result(this, 'tagName'));
+                this.$editorEl = Backbone.$(this.editorEl);
+                this.setElement(this.editorEl);
+                this._setAttributes(attrs);
+            }
+        },
+
+        setElement(element: HTMLElement) {
+            this.undelegateEvents();
+            this._setElement(this.editorEl);
+            this.delegateEvents();
+            this._setElement(element);
+            return this;
+        },
+
+        _renderTemplate(template: Function) {
+            const data = this.mixinTemplateContext(this.serializeData()) || {};
+            const html = this._renderHtml(template, data);
+            this.editorEl.insertAdjacentHTML('afterbegin', html);
+        },
+
+        __setAttributes(el: HTMLElement, attributes: Object = {}) {
+            Object.entries(attributes).forEach(([key, value]) => {
+                if (value) {
+                    el.setAttribute(key, value);
+                }
+            });
         },
 
         __onEditorRender: onRender,
@@ -184,7 +271,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             if (this.options.required) {
                 this.__toggleRequiredClass(isEmpty);
             }
-            this.$el.toggleClass(classes.EMPTY, Boolean(isEmpty));
+            this.$editorEl.toggleClass(classes.EMPTY, Boolean(isEmpty));
         },
 
         __toggleRequiredClass(required) {
@@ -203,7 +290,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
 
         __applyClass() {
             if (this.options.class) {
-                this.el.classList.add(...this.options.class.split(' ').filter(className => className));
+                this.editorEl.classList.add(...this.options.class.split(' ').filter(className => className));
             }
         },
 
@@ -225,7 +312,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 return;
             }
             this.setValue(this.getModelValue());
-            this.validate();
+            this.validate({ internal: true });
         },
 
         /**
@@ -238,9 +325,9 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
 
         __getFocusElement() {
             if (this.focusElement) {
-                return this.__focusElement || (this.__focusElement = this.$el.find(this.focusElement));
+                return this.__focusElement || (this.__focusElement = this.$editorEl.find(this.focusElement));
             }
-            return this.$el;
+            return this.$editorEl;
         },
 
         __setEnabledFocusElement(enabled: boolean): void {
@@ -311,16 +398,16 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         setHidden(hidden: Boolean) {
             this.hidden = hidden;
-            this.$el.toggleClass(classes.hidden, hidden);
+            this.$editorEl.toggleClass(classes.hidden, hidden);
         },
 
         __setEnabled(enabled: Boolean) {
             this.enabled = enabled;
             this.__setEnabledFocusElement(enabled);
             if (!this.enabled) {
-                this.el.classList.add(classes.disabled, classes.editorDisabled);
+                this.editorEl.classList.add(classes.disabled, classes.editorDisabled);
             } else {
-                this.el.classList.remove(classes.disabled, classes.editorDisabled);
+                this.editorEl.classList.remove(classes.disabled, classes.editorDisabled);
             }
             this.trigger('enabled', enabled);
         },
@@ -345,9 +432,9 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             this.readonly = readonly;
             this.__setReadonlyFocusElement(readonly);
             if (this.readonly && this.getEnabled()) {
-                this.el.classList.add(classes.readonly, classes.editorReadonly);
+                this.editorEl.classList.add(classes.readonly, classes.editorReadonly);
             } else {
-                this.el.classList.remove(classes.readonly, classes.editorReadonly);
+                this.editorEl.classList.remove(classes.readonly, classes.editorReadonly);
             }
             this.trigger('readonly', readonly);
         },
@@ -390,7 +477,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
          */
         commit(options: Object = {}) {
-            let error = this.validate(true);
+            let error = this.validate({ internal: true });
             if (error && !this.options.forceCommit) {
                 return error;
             }
@@ -419,7 +506,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          * Check validity with built-in validator functions (initially passed into constructor options).
          * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
          */
-        validate(internal: Boolean) {
+        validate({ internal } = {}) {
             let error = null;
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
@@ -438,8 +525,13 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 });
             }
 
-            if (this.isRendered() && !this.isDestroyed()) {
-                this.$el.toggleClass(classes.ERROR, !!error);
+            if (!internal && this.isRendered() && !this.isDestroyed()) {
+                this.$editorEl.toggleClass(classes.ERROR, !!error);
+                if (error) {
+                    this.setError([error]);
+                } else {
+                    this.clearError();
+                }
             }
 
             return error;
@@ -505,7 +597,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
         },
 
         onFocus(event, options) {
-            this.el.classList.add(classes.FOCUSED);
+            this.editorEl.classList.add(classes.FOCUSED);
             //ToDo what for pass 'this' as first argument ?
             this.trigger('focus', this, event, options);
         },
@@ -514,12 +606,94 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             if (options.triggerChange === undefined || options.triggerChange === true) {
                 this.checkChange();
             }
-            this.el.classList.remove(classes.FOCUSED);
+            this.editorEl.classList.remove(classes.FOCUSED);
             this.trigger('blur', this, event, options);
         },
 
         renderIcons(...iconTemplates) {
-            this.el.insertAdjacentHTML('beforeend', iconTemplates.join(' '));
+            this.editorEl.insertAdjacentHTML('beforeend', iconTemplates.join(' '));
+        },
+
+        __onBeforeAttach() {
+            if (this.isField && this.options.fieldOptions.helpText && this.options.fieldOptions.showHelpText) {
+                const viewModel = new Backbone.Model({
+                    helpText: this.options.helpText,
+                    errorText: null
+                });
+
+                const infoPopout = dropdown.factory.createPopout({
+                    buttonView: InfoButtonView,
+                    panelView: TooltipPanelView,
+                    panelViewOptions: {
+                        model: viewModel,
+                        textAttribute: 'helpText'
+                    },
+                    popoutFlow: 'right',
+                    customAnchor: true
+                });
+
+                this.el.firstElementChild.insertAdjacentHTML('beforeend', `<div class="js-help-text-region form-label__info"></div>`);
+
+                this.helpTextRegion = new Marionette.Region({
+                    el: this.el.querySelector('.js-help-text-region')
+                });
+                this.helpTextRegion.show(infoPopout);
+            }
+        },
+
+        __onDestroy() {
+            this.helpTextRegion?.destroy();
+            this.errorsRegion?.destroy();
+        },
+
+        setError(errors: Array<any>): void {
+            if (!this.__checkUiReady() || !this.isField) {
+                return;
+            }
+
+            this.el.classList.add(...this.classes.ERROR.split(' '));
+            this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
+
+            if (!this.isErrorShown) {
+                const errorPopout = dropdown.factory.createPopout({
+                    buttonView: ErrorButtonView,
+                    panelView: ErrosPanelView,
+                    panelViewOptions: {
+                        collection: this.errorCollection
+                    },
+                    popoutFlow: 'right',
+                    customAnchor: true
+                });
+
+                this.el.firstElementChild.insertAdjacentHTML('beforeend', `<div class="js-error-text-region form-label__error"></div>`);
+                this.errorsRegion = new Marionette.Region({
+                    el: this.el.querySelector('.js-error-text-region')
+                });
+
+                this.errorsRegion.show(errorPopout);
+                this.isErrorShown = true;
+            }
+        },
+
+        clearError(): void {
+            if (!this.__checkUiReady() || !this.isField) {
+                return;
+            }
+            this.el.classList.remove(...this.classes.ERROR.split(' '));
+            this.errorCollection && this.errorCollection.reset();
+        },
+
+        __checkUiReady() {
+            return this.isRendered() && !this.isDestroyed();
+        },
+
+        __updateExternalChange(options) {
+            if (typeof options.getReadonly === 'function') {
+                this.setReadonly(Boolean(options.getReadonly(options.model)));
+            }
+            if (typeof options.getHidden === 'function') {
+                this.setHidden(Boolean(options.getHidden(options.model)));
+            }
         }
     };
 }

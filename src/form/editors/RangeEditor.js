@@ -14,51 +14,50 @@ import formRepository from '../formRepository';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.RangeEditor = BaseEditorView.extend({
-        tagName: 'input',
+export default formRepository.editors.RangeEditor = BaseEditorView.extend({
+    tagName: 'input',
 
-        template: _.noop,
+    template: _.noop,
 
-        templateContext() {
-            return _.extend(this.options, {
-                title: this.value || ''
-            });
-        },
+    templateContext() {
+        return _.extend(this.options, {
+            title: this.value || ''
+        });
+    },
 
-        setValue(value) {
-            this.__value(value, true, false);
-        },
+    setValue(value) {
+        this.__value(value, true, false);
+    },
 
-        events: {
-            mouseup: '__change'
-        },
+    events: {
+        mouseup: '__change'
+    },
 
-        attributes() {
-            return {
-                min: this.getOption('min'),
-                max: this.getOption('max'),
-                step: this.getOption('step'),
-                type: 'range'
-            };
-        },
+    attributes() {
+        return {
+            min: this.getOption('min'),
+            max: this.getOption('max'),
+            step: this.getOption('step'),
+            type: 'range'
+        };
+    },
 
-        __change() {
-            this.__value(Number(this.el.value), false, true);
-        },
+    __change() {
+        this.__value(Number(this.editorEl.value), false, true);
+    },
 
-        onRender() {
-            this.el.value = this.getOption('value');
-        },
+    onRender() {
+        this.editorEl.value = this.getOption('value');
+    },
 
-        __value(value, updateUi, triggerChange) {
-            if (this.value === value) {
-                return;
-            }
-            this.value = value;
+    __value(value, updateUi, triggerChange) {
+        if (this.value === value) {
+            return;
+        }
+        this.value = value;
 
-            if (triggerChange) {
-                this.__triggerChange();
-            }
+        if (triggerChange) {
+            this.__triggerChange();
         }
     }
-));
+});

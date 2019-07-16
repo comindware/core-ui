@@ -79,9 +79,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.ui.fadingPanel.hide();
 
         if (this.options.showMode === showModes.button) {
-            this.el.classList.add(classes.buttonMode);
+            this.editorEl.classList.add(classes.buttonMode);
         } else {
-            this.el.classList.remove(classes.buttonMode);
+            this.editorEl.classList.remove(classes.buttonMode);
         }
         this.__setEditBtnText();
     },

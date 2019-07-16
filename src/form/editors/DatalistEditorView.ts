@@ -505,7 +505,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isThisFocus() {
-        return this.el.contains(document.activeElement);
+        return this.editorEl.contains(document.activeElement);
     },
 
     __clearSearch() {
