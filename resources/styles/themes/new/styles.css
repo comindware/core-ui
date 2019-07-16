@@ -441,4 +441,5 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .dev-code-editor-toolbar{
   background: #fff;
   border: solid 1px #ced3d7;
+  border-bottom: none;
 }
