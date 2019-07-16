@@ -1,10 +1,9 @@
 import { objectPropertyTypes, contextIconType } from '../Meta';
 import { dateHelpers, userHelpers } from 'utils';
-import FieldView from '../form/fields/FieldView';
 import ExtensionIconService from '../form/editors/impl/document/services/ExtensionIconService';
 import DateTimeService from '../form/editors/services/DateTimeService';
+import CellFieldView from './views/CellFieldView';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
-import editableCellField from './templates/editableCellField.hbs';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
@@ -15,14 +14,7 @@ type Column = { key: string, customClass: string, editable: boolean, type: strin
 
 type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
 
-const CellFieldView = class CellFieldViewClass extends FieldView {
-    constructor(options) {
-        options.template = editableCellField;
-        super(options);
-    }
-};
-
-export default (factory = {
+export default factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
             return CellFieldView;
@@ -329,4 +321,4 @@ export default (factory = {
             {{/if}}
         </div>`;
     }
-});
+};

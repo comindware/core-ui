@@ -20,7 +20,7 @@ const defaultOptions = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-export default (formRepository.editors.BooleanGroup = BaseCollectionEditorView.extend({
+export default formRepository.editors.BooleanGroup = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -73,8 +73,8 @@ export default (formRepository.editors.BooleanGroup = BaseCollectionEditorView.e
     __setReadonly(readonly) {
         BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
-            this.$el.prop('tabindex', readonly ? -1 : 0);
+            this.$editorEl.prop('tabindex', readonly ? -1 : 0);
         }
         Object.values(this.children._views).forEach(view => view.__setReadonly(readonly));
     }
-}));
+});

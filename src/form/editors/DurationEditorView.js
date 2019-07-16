@@ -632,12 +632,12 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         const val = this.__createInputString(this.state.displayValue, inEditMode);
         this.ui.input.val(val);
         if (this.options.showTitle && !inEditMode) {
-            this.$el.prop('title', val);
+            this.$editorEl.prop('title', val);
         }
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);

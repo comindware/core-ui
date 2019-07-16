@@ -59,8 +59,8 @@ body {
 .cell.error .form-label__error{
   margin: 0;
   position: absolute;
-  left: 0;
-  top: -4px;
+  left: -15px;
+  top: -8px;
   z-index: 1;
 }
 

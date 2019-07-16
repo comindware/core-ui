@@ -82,7 +82,7 @@ const defaultOptions = {
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * @param {String} [options.valueType = 'normal'] type of value (id or [{ id, name }]).
  * */
-export default (formRepository.editors.Datalist = BaseEditorView.extend({
+export default formRepository.editors.Datalist = BaseEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
         helpers.ensureOption(options, 'collection');
@@ -280,7 +280,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isThisFocus() {
-        return this.el.contains(document.activeElement);
+        return this.editorEl.contains(document.activeElement);
     },
 
     getInputView() {
@@ -727,4 +727,4 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.__onValueSelect();
         }
     }
-}));
+});

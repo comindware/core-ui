@@ -228,7 +228,7 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         this.__updateEmpty();
 
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.$editorEl.prop('title', value);
         }
 
         if (!this.format || this.value === null) {
@@ -278,7 +278,7 @@ export default formRepository.editors.Number = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);

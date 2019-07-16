@@ -148,7 +148,7 @@ export default formRepository.editors.NewExpression = BaseEditorView.extend({
         this.__showTypeEditor();
         this.__updateEditorState();
         if (this.options.displayInline) {
-            this.el.classList.add(classes.inline);
+            this.editorEl.classList.add(classes.inline);
         }
     },
 
