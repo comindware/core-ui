@@ -523,8 +523,8 @@ tr:hover .cell_selection-index {
   height: var(--grid-checkbox-size);
   position: absolute;
   right: 5px;
-  top: 50%;
-  margin-top: -8px;
+  top: 0;
+  margin-top: 10px;
 }
 
 .cell .input {
@@ -565,14 +565,7 @@ tr:hover .cell_selection-index {
       position:relative;
       background-clip: padding-box;
   }
-  .cell_selection-index > .checkbox,
-  .cell_selection > .checkbox{
-      margin-top: 0
-  }
-  .grid-header .cell_selection-index > .checkbox,
-  .grid-header .cell_selection > .checkbox{
-      margin-top: 10px
-  }
+
 
 }
 

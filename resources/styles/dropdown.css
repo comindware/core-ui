@@ -144,7 +144,7 @@
 
 .dd-list__btn.reference-btn{
     margin: 5px;
-    width: calc(100% - 5px);
+    width: calc(100% - 10px);
     line-height: normal;
 }
 
