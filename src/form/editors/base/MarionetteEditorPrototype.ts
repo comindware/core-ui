@@ -254,7 +254,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
         _renderTemplate(template: Function) {
             const data = this.mixinTemplateContext(this.serializeData()) || {};
             const html = this._renderHtml(template, data);
-            this.editorEl.innerHtml = html;
+            this.editorEl.innerHTML = html;
         },
 
         __setAttributes(el: HTMLElement, attributes: Object = {}) {
