@@ -1,6 +1,6 @@
-<div class="js-tree-item branch-header tree-item">
-    <i class="js-expand-btn expand-btn {{iconPrefixer expandIconClass}}"></i>
-    <span class="branch-header-name js-expand-btn">{{text}}</span>
+<div class="js-tree-item branch-header tree-item {{#if collapsed}}collapsed{{/if}}">
+    <i class="js-collapse-btn collapse-btn {{iconPrefixer collapseIconClass}}"></i>
+    <span class="branch-header-name js-collapse-btn">{{text}}</span>
     <i class="js-eye-btn eye-btn {{iconPrefixer eyeIconClass}}"></i>
 </div>
-<div class="js-branch-collection branch-collection"></div>
+<div class="js-branch-collection branch-collection" {{#if collapsed}}style="display: none" {{/if}}></div>

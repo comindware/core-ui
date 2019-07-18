@@ -5,7 +5,8 @@ const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
     configDiff: {},
-    getNodeName: undefined
+    getNodeName: undefined,
+    showToolbar: false
 };
 
 interface TConfigDiff {
@@ -24,7 +25,8 @@ type TTreeEditorOptions = {
     unNamedType?: string,
     stopNestingType?: string,
     forceBranchType?: string,
-    getNodeName?: (model: any) => string
+    getNodeName?: (model: any) => string,
+    showToolbar?: boolean
 };
 
 export default class TreeEditor {
@@ -34,7 +36,7 @@ export default class TreeEditor {
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
-        this.oldConfigDiff = options.configDiff;
+        this.oldConfigDiff = { ...options.configDiff };
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
@@ -49,7 +51,8 @@ export default class TreeEditor {
                 model: this.model,
                 unNamedType: options.unNamedType,
                 stopNestingType: options.stopNestingType,
-                forceBranchType: options.forceBranchType
+                forceBranchType: options.forceBranchType,
+                showToolbar: options.showToolbar
             }),
             panelViewOptions: {
                 ...options,
@@ -59,14 +62,22 @@ export default class TreeEditor {
         });
 
         reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
-        reqres.reply('treeEditor:resize', () => popoutView.adjustPosition());
-        popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
+        reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
+
+        popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
+
+        popoutView.listenTo(popoutView, 'close', () => this.__onSave());
+
+        if (options.showToolbar) {
+            reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
+        } else {
+        }
 
         if (options.hidden) {
             popoutView.el.setAttribute('hidden', true);
         }
 
-        return popoutView;
+        return (this.popoutView = popoutView);
     }
 
     applyConfigDiff(id: string, config: TConfigDiff) {
@@ -77,7 +88,25 @@ export default class TreeEditor {
         }
     }
 
-    __onSave(popoutView) {
-        popoutView.trigger('save', this.configDiff);
+    __onSave() {
+        this.popoutView.trigger('save', this.configDiff);
+    }
+
+    __onReset() {
+        this.configDiff = {};
+        this.popoutView.trigger('reset');
+    }
+
+    __commandExecute(actionModel) {
+        switch (actionModel.id) {
+            case 'reset':
+                this.__onReset();
+                break;
+            case 'apply':
+                this.__onSave();
+                break;
+            default:
+                break;
+        }
     }
 }
