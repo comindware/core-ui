@@ -42,6 +42,7 @@ export default {
 
         GlobalEventService.initialize();
         InterfaceErrorMessageService.initialize();
+        Core.services.MobileService.initialize();
 
         const toastNotificationRegion = options.toastNotificationRegion;
 
