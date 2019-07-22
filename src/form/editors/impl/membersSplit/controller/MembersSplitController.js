@@ -323,8 +323,8 @@ export default Marionette.Object.extend({
 
         const availableItems = Object.values(items);
 
-        this.model.get('available').set(availableItems);
-        this.model.get('selected').set(selectedItems);
+        this.model.get('available').reset(availableItems);
+        this.model.get('selected').reset(selectedItems);
     },
 
     __moveItems(gridView, model) {
