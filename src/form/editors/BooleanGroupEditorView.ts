@@ -24,7 +24,7 @@ export default formRepository.editors.BooleanGroup = BaseCollectionEditorView.ex
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.collection = new Backbone.Collection(options.items);
+        this.collection = new Backbone.Collection(this.options.items);
     },
 
     childViewContainer: '.js-checkbox-group_conianer',

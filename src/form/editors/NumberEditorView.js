@@ -66,26 +66,26 @@ export default formRepository.editors.Number = BaseEditorView.extend({
     initialize(options) {
         this.__applyOptions(options, defaultOptions);
 
-        this.format = options.format || options.intlOptions || options.allowFloat;
+        this.format = this.options.format || this.options.intlOptions || this.options.allowFloat;
         this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {
-            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
+            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, this.options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
-            if (options.intlOptions && options.intlOptions.useGrouping === false) {
+            if (this.options.intlOptions && this.options.intlOptions.useGrouping === false) {
                 this.thousandsSeparator = '';
             }
             this.numberMask = createNumberMask({
                 prefix: '',
                 suffix: '',
-                includeThousandsSeparator: options.intlOptions.useGrouping,
+                includeThousandsSeparator: this.options.intlOptions.useGrouping,
                 thousandsSeparatorSymbol: this.thousandsSeparator,
-                allowDecimal: options.allowFloat,
+                allowDecimal: this.options.allowFloat,
                 decimalSymbol: this.decimalSymbol,
-                decimalLimit: options.intlOptions.maximumFractionDigits,
-                integerLimit: options.intlOptions.maximumSignificantDigits || null,
-                requireDecimal: options.requireDecimal,
-                allowNegative: options.allowNegative,
-                allowLeadingZeroes: options.allowLeadingZeroes
+                decimalLimit: this.options.intlOptions.maximumFractionDigits,
+                integerLimit: this.options.intlOptions.maximumSignificantDigits || null,
+                requireDecimal: this.options.requireDecimal,
+                allowNegative: this.options.allowNegative,
+                allowLeadingZeroes: this.options.allowLeadingZeroes
             });
         }
         this.isChangeModeKeydown = this.options.changeMode === changeMode.keydown;
