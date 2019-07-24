@@ -285,6 +285,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 0 12px;
 }
 
+.cell > .collapsible-btn + .form-label + .editor {
+  left: 5px;
+  width: auto;
+}
+
 .cell > .context_select {
   position: static;
   padding: 4px 20px 4px 10px;
