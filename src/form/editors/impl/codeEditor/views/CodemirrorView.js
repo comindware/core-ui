@@ -353,7 +353,7 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion'
         };
         let newArr = [];
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
@@ -373,7 +373,7 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion'
         };
 
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
