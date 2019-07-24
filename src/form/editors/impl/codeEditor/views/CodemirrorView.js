@@ -220,7 +220,7 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.codemirror.setValue(value?.replace(/\n/g, lineSeparator) || '');
+        this.codemirror.setValue(value?.replace(/[^\r]\n/g, lineSeparator) || '');
         this.refresh();
     },
 
@@ -304,10 +304,12 @@ export default Marionette.View.extend({
     },
 
     __onChange() {
-        if (!this.isExternalChange) {
-            if (this.options.mode === 'expression') {
-                this.__showHint();
-            }
+        if (this.isExternalChange) {
+            this.isExternalChange = false;
+            return;
+        }
+        if (this.options.mode === 'expression') {
+            this.__showHint();
         }
         this.__change();
     },

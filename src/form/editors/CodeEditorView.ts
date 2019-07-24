@@ -18,7 +18,6 @@ const defaultOptions = {
     height: 300,
     showMode: showModes.normal,
     ontologyService: null,
-    lineSeparator: undefined,
     showDebug: true
 };
 
