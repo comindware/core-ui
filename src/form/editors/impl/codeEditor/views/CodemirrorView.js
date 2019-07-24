@@ -541,13 +541,11 @@ export default Marionette.View.extend({
         }
         if (this.options.mode === 'script') {
             const formatQuery = {
-                UserCode: {
-                    SourceCode: this.codemirror.getValue(),
-                    SourceType: 'CSharp'
-                }
+                SourceCode: this.codemirror.getValue(),
+                SourceType: 'CSharp'
             };
             this.intelliAssist.getFormatCSharp(formatQuery).then(ontologyModel => {
-                this.codemirror.setValue(ontologyModel.get('userCode').sourceCode);
+                this.codemirror.setValue(ontologyModel.get('sourceCode'));
             });
         }
     },
