@@ -780,7 +780,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__value(value, { triggerChange: true });
                 this.panelCollection.selectNone({ isSilent: true });
                 this.close();
-                this.__setInputValue('');
+                this.__focusButton();
+                this.__clearSearch();
                 return;
             }
 
@@ -832,7 +833,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonFocus(view, event) {
-        if (this.isNextFocusInner) {
+        if (this.isNextFocusInner || this.hasFocus) {
             event.stopImmediatePropagation();
             this.isNextFocusInner = false;
             return;
