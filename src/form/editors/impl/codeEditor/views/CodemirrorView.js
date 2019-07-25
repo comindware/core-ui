@@ -441,8 +441,9 @@ export default Marionette.View.extend({
         let newArrErr = [];
         let newArrWarn = [];
         const userCompileQuery = {
-            UserCode: this.codemirror.getValue(),
-            SourceType: 'CSharp'
+            SourceCode: this.codemirror.getValue(),
+            SourceType: 'CSharp',
+            UseOntologyLibriary: this.options.config?.useOntologyLibriary
         };
         if (this.intelliAssist) {
             this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
@@ -543,7 +544,8 @@ export default Marionette.View.extend({
             const formatQuery = {
                 UserCode: {
                     SourceCode: this.codemirror.getValue(),
-                    SourceType: 'CSharp'
+                    SourceType: 'CSharp',
+                    UseOntologyLibriary: this.options.config?.useOntologyLibriary
                 }
             };
             this.intelliAssist.getFormatCSharp(formatQuery).then(ontologyModel => {
