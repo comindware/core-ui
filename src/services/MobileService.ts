@@ -1,8 +1,10 @@
 import IEService from './IEService';
+import EdgeService from './EdgeService';
 
 export default class MobileService {
     static isMobile: boolean;
     static isIE: boolean;
+    static isEdge: boolean;
     static initialize() {
         if (
             navigator.userAgent.match(/Android/i) ||
@@ -26,6 +28,12 @@ export default class MobileService {
             IEService.initialize();
         } else {
             this.isIE = false;
+        }
+        if (/Edge\//.test(navigator.userAgent)) {
+            this.isEdge = true;
+            EdgeService.initialize();
+        } else {
+            this.isEdge = false;
         }
     }
 }
