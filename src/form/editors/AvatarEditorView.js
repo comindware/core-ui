@@ -64,8 +64,6 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
             this.__preview(this.controller.getImage(this.getValue()));
         } else if (this.controller.getImage()) {
             this.__preview(this.controller.getImage());
-        } else {
-            this.ui.initials.show();
         }
 
         this.ui.tooltip.hide();

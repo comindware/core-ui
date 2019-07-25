@@ -85,10 +85,113 @@ export default function() {
                 iconClass: 'low-vision',
                 severity: 'None',
                 class: 'customclass',
-                items:[{ class: 'customclass', userCommandId:'event.176', name: 'Delete', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.1', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
-                { userCommandId: 'event.176', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
-                { userCommandId: 'event.176', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }]
+                items: [
+                    {
+                        class: 'customclass',
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 0,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        iconClass: 'braille',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    },
+                    {
+                        userCommandId: 'event.1',
+                        name: 'Create',
+                        order: 1,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        iconClass: 'wheelchair',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Create',
+                        resultType: 'DataChange'
+                    },
+                    {
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 2,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    },
+                    {
+                        userCommandId: 'event.176',
+                        name: 'Delete',
+                        order: 3,
+                        type: 'Action',
+                        iconType: 'Undefined',
+                        severity: 'None',
+                        skipValidation: false,
+                        kind: 'Delete',
+                        resultType: 'DataChange',
+                        confirmation: {
+                            id: 'confirmation.27',
+                            title: 'New operation',
+                            text: 'Confirm operation',
+                            yesButtonText: 'Execute',
+                            noButtonText: 'Cancel',
+                            severity: 'None'
+                        }
+                    }
+                ]
+            },
+            {
+                iconClass: 'Undefined', //will be set by selected state.
+                type: 'SelectState',
+                id: '5',
+                name: 'SelectState',
+                severity: 'Critical',
+                items: [
+                    {
+                        id: 'headLine',
+                        type: 'Headline',
+                        name: 'some header'
+                    },
+                    {
+                        id: 'firstState',
+                        iconClass: 'align-left',
+                        name: 'Left'
+                    },
+                    {
+                        id: 'secondState',
+                        iconClass: 'align-center',
+                        name: 'Center'
+                    },
+                    {
+                        id: 'thirdState',
+                        iconClass: 'align-right',
+                        name: 'Right'
+                    },
+                    {
+                        id: 'fourthState',
+                        iconClass: 'align-justify',
+                        name: 'Justify'
+                    }
+                ]
             }
         ]
     });
@@ -134,8 +237,8 @@ export default function() {
                 break;
             default:
                 break;
-        };
-    }
+        }
+    };
 
     canvasView.listenTo(gridController, 'execute', canvasView.__executeAction);
 

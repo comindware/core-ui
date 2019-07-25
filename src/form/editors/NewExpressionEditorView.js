@@ -82,8 +82,9 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
                 value: null
             };
         }
-        this.options.valueEditorOptions = _.extend(this.options.valueEditorOptions, {
-            enabled: this.options.enabled
+        _.defaults(this.options.valueEditorOptions, {
+            enabled: this.options.enabled,
+            key: this.key
         });
     },
 

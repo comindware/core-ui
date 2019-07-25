@@ -72,3 +72,10 @@
 .layout__tab-layout__stepper_view-item .stepper-view_content {
     text-align: center;
 }
+
+.layout__tab-layout__no-tabs-message {
+    font-size: 18px;
+    font-weight: 300;
+    color: #70787F;
+    padding: 5px;
+}

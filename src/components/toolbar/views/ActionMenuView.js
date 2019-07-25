@@ -3,7 +3,7 @@ import ActionMenuPanelView from './actionMenu/ActionMenuPanelView';
 import ActionMenuButtonView from './actionMenu/ActionMenuButtonView';
 import keyCode from '../../../utils/keyCode';
 
-export default Marionette.View.extend({
+export default class ActionMenuView {
     constructor(options) {
         const menu = Core.dropdown.factory.createDropdown({
             buttonView: ActionMenuButtonView,
@@ -14,22 +14,24 @@ export default Marionette.View.extend({
             },
             buttonViewOptions: {
                 model: options.model
-            }
+            },
+            model: options.model
         });
 
         menu.listenTo(menu, 'panel:click:item', this.__handleSeveritySelect);
         menu.listenTo(menu, 'button:keyup', this.__keyup);
+
         return menu;
-    },
+    }
 
     __keyup(buttonView, event) {
         if ([keyCode.ENTER, keyCode.SPACE].includes(event.keyCode)) {
             this.open();
         }
-    },
+    }
 
     __handleSeveritySelect(model) {
         this.trigger('action:click', model);
         this.close();
     }
-});
+}

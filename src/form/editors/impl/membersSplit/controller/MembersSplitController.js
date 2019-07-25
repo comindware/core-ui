@@ -162,7 +162,8 @@ export default Marionette.Object.extend({
                       memberService: this.options.memberService,
                       filterFns: this.filterFns,
                       filterState: this.filterState,
-                      title: availableText
+                      title: availableText,
+                      textFilterDelay: this.options.textFilterDelay
                   })
               )
             : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
@@ -185,7 +186,11 @@ export default Marionette.Object.extend({
             this.listenTo(view.controller, 'click', model => this.__moveItems(view, model));
         });
         if (this.isMemberService) {
-            this.listenTo(availableGridView, 'members:update', filterState => this.__updateItems(filterState));
+            this.listenTo(availableGridView, 'members:update', async filterState => {
+                availableGridView.gridView.toggleSearchActivity(false);
+                await this.__updateItems(filterState);
+                availableGridView.gridView.toggleSearchActivity(true);
+            });
         }
 
         this.view.once('attach', () => availableGridView.gridView.searchView.focus());
@@ -318,8 +323,8 @@ export default Marionette.Object.extend({
 
         const availableItems = Object.values(items);
 
-        this.model.get('available').set(availableItems);
-        this.model.get('selected').set(selectedItems);
+        this.model.get('available').reset(availableItems);
+        this.model.get('selected').reset(selectedItems);
     },
 
     __moveItems(gridView, model) {

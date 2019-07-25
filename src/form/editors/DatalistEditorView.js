@@ -225,16 +225,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     isEmptyValue(): boolean {
         const value = this.getValue();
-        return Array.isArray(value) ?
-            value == null || !value.length :
-            value == null;
+        return Array.isArray(value) ? value == null || !value.length : value == null;
     },
 
     __convertToValue(estimatedObjects) {
         if (this.getOption('valueType') === 'id') {
-            return Array.isArray(estimatedObjects) ?
-                estimatedObjects.map(value => value && value.id) :
-                estimatedObjects && estimatedObjects.id;
+            return Array.isArray(estimatedObjects) ? estimatedObjects.map(value => value && value.id) : estimatedObjects && estimatedObjects.id;
         }
         return estimatedObjects;
     },
@@ -293,7 +289,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     fetchUpdateFilter(value, forceCompareText, openOnRender) {
         const searchText = (value || '').trim();
-        
+
         if (this.searchText === searchText && !forceCompareText) {
             this.open();
             this.dropdownView?.buttonView?.setLoading(false);
@@ -338,9 +334,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         // this.selectedButtonCollection.reset(models == null ? undefined : models);
-        this.selectedButtonCollection.remove(
-            this.selectedButtonCollection.filter(model => !(model instanceof FakeInputModel))
-        );
+        this.selectedButtonCollection.remove(this.selectedButtonCollection.filter(model => !(model instanceof FakeInputModel)));
         if (models) {
             this.selectedButtonCollection.add(models);
         }
@@ -424,23 +418,27 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return this.__getValueFromPanelCollection(value);
     },
 
+    __getValueFromButtonCollection(value) {
+        return this.selectedButtonCollection?.get(value)?.get(this.options.displayAttribute);
+    },
+
     __getValueFromPanelCollection(value) {
-        return this.panelCollection.get(value) ||
+        return (
+            this.panelCollection.get(value) ||
             (_.isObject(value) && this.panelCollection.findWhere(value)) || //backbone get no item with id == null
-            this.__tryToCreateAdjustedValue(value);
+            this.__tryToCreateAdjustedValue(value)
+        );
     },
 
     __tryToCreateAdjustedValue(value) {
-        return value instanceof Backbone.Model ?
-            value :
-            (_.isObject(value) ?
-                new Backbone.Model(value) :
-                new Backbone.Model({
-                    id: value,
-                    text: this.__isValueEqualNotSet(value) ?
-                        Localizer.get('CORE.COMMON.NOTSET') :
-                        undefined
-                }));
+        return value instanceof Backbone.Model
+            ? value
+            : _.isObject(value)
+            ? new Backbone.Model(value)
+            : new Backbone.Model({
+                  id: value,
+                  [this.options.displayAttribute || 'text']: this.__isValueEqualNotSet(value) ? Localizer.get('CORE.COMMON.NOTSET') : this.__getValueFromButtonCollection(value)
+              });
     },
 
     __isValueEqualNotSet(value) {
@@ -521,7 +519,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __checkSelectedState(model) {
         const selected = Object.values(model.collection.selected);
         if (selected.length > 1) {
-            selected.forEach(selectedModel => selectedModel.selected = false);
+            selected.forEach(selectedModel => (selectedModel.selected = false));
             model.selected = true;
             model.collection.selected = {
                 [model.cid]: model
@@ -600,7 +598,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
 
-        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) { //length = 1 + fakeInputModel
+        if (this.selectedButtonCollection.length === 2 && !this.options.allowEmptyValue) {
+            //length = 1 + fakeInputModel
             return;
         }
 

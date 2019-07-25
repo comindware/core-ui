@@ -272,6 +272,10 @@ export default Marionette.View.extend({
         }
     },
 
+    toggleSearchActivity(enableSearch) {
+        this.searchView.toggleInputActivity(enableSearch);
+    },
+
     onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();
@@ -724,6 +728,10 @@ export default Marionette.View.extend({
         } else {
             this.stopListening(this.collection, 'add remove reset update', this.__updateEmpty);
         }
+    },
+
+    getToolbarItems() {
+        return this.toolbarView?.getToolbarItems();
     },
 
     __updateEmpty() {

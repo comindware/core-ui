@@ -1,5 +1,6 @@
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
+import { htmlHelpers } from '../../../../../utils';
 
 const classes = {
     SELECTED: 'editor_checked'
@@ -10,17 +11,22 @@ export default Marionette.View.extend({
         return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: [{
-        behaviorClass: list.views.behaviors.ListItemViewBehavior,
-        multiSelect: true,
-        selectOnCursor: false
-    }],
+    behaviors: [
+        {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior,
+            multiSelect: true,
+            selectOnCursor: false
+        }
+    ],
 
     template: Handlebars.compile(template),
 
     templateContext() {
+        const text = this.options.getDisplayText(this.model.toJSON());
+
         return {
-            text: this.options.getDisplayText(this.model.toJSON()),
+            textForTitle: htmlHelpers.getTextfromHTML(text),
+            text,
             showCheckboxes: this.options.showCheckboxes
         };
     },

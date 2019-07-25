@@ -353,7 +353,7 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion'
         };
         let newArr = [];
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
@@ -373,7 +373,7 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion'
         };
 
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
@@ -549,7 +549,7 @@ export default Marionette.View.extend({
                 }
             };
             this.intelliAssist.getFormatCSharp(formatQuery).then(ontologyModel => {
-                this.codemirror.setValue(ontologyModel.get('userCode').sourceCode);
+                this.codemirror.setValue(ontologyModel.get('sourceCode'));
             });
         }
     },
