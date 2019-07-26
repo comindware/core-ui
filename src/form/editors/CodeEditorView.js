@@ -19,7 +19,8 @@ const defaultOptions = {
     height: 300,
     showMode: showModes.normal,
     ontologyService: null,
-    lineSeparator: undefined
+    lineSeparator: undefined,
+    config: null
 };
 
 /**
@@ -70,7 +71,8 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
             mode: this.options.mode,
             height: this.options.height,
             lineSeparator: this.options.lineSeparator,
-            ontologyService: this.options.ontologyService
+            ontologyService: this.options.ontologyService,
+            config: this.options.config
         });
 
         this.editor.on('change', this.__change, this);

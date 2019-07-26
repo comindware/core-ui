@@ -31,7 +31,8 @@ const defaultOptions = {
     scriptEditorHeight: 300,
     codeEditorMode: 'normal',
     displayInline: false,
-    ontologyService: null
+    ontologyService: null,
+    config: null
 };
 
 export default (formRepository.editors.NewExpression = BaseEditorView.extend({
@@ -237,7 +238,8 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             mode: 'expression',
             height: this.options.expressionEditorHeight,
             showMode: this.options.codeEditorMode,
-            ontologyService: this.options.ontologyService
+            ontologyService: this.options.ontologyService,
+            config: this.options.config
         };
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
@@ -259,7 +261,8 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             mode: 'script',
             height: this.options.scriptEditorHeight,
             showMode: this.options.codeEditorMode,
-            ontologyService: this.options.ontologyService
+            ontologyService: this.options.ontologyService,
+            config: this.options.config
         };
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
