@@ -1,39 +1,22 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
 import TreeDiffController from './controllers/TreeDiffController';
+import { TConfigDiff, TTreeEditorOptions } from './types';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
     configDiff: {},
     getNodeName: undefined,
-    showToolbar: false
-};
-
-interface TConfigDiff {
-    [key: string]: {
-        index?: number,
-        isHidden?: boolean
-    };
-}
-
-type TTreeEditorOptions = {
-    model: any,
-    hidden?: boolean,
-    eyeIconClass?: string,
-    closedEyeIconClass?: string,
-    configDiff?: TConfigDiff,
-    unNamedType?: string,
-    stopNestingType?: string,
-    forceBranchType?: string,
-    forceLeafType?: string | string[],
-    getNodeName?: (model: any) => string,
-    showToolbar?: boolean
+    showToolbar: false,
+    childsFilter: undefined
 };
 
 export default class TreeEditor {
     configDiff: TConfigDiff;
     model: any;
+    view: Backbone.View;
+    controller: TreeDiffController;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
@@ -88,7 +71,7 @@ export default class TreeEditor {
         return this.controller.configDiff;
     }
 
-    __setDiffConfig(configDiff) {
+    __setDiffConfig(configDiff: TConfigDiff) {
         this.controller.set(configDiff);
     }
 

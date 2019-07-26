@@ -3,14 +3,15 @@ import template from '../templates/root.hbs';
 import CollapsibleBehavior from '../behaviors/CollapsibleBehavior';
 import { getIconAndPrefixerClasses, setModelHiddenAttribute } from '../meta';
 import LocalizationService from '../../../services/LocalizationService';
+import { GraphModel, RootViewFactoryOptions } from '../types';
 
 export default BranchView.extend({
-    initialize(options) {
+    initialize(options: RootViewFactoryOptions) {
         BranchView.prototype.initialize.call(this, options);
 
-        let filteredModels = this.collection.filter(model => !model.get('required'));
-        if (options.childsFilter) {
-            filteredModels = filteredModels.filter(model => options.childsFilter.call({}, { model }));
+        let filteredModels = this.collection.filter((model: GraphModel) => !model.get('required'));
+        if (typeof options.childsFilter === 'function') {
+            filteredModels = filteredModels.filter((model: GraphModel) => options.childsFilter.call({}, { model }));
         }
 
         const filteredCollection = (this.filteredCollection = new Backbone.Collection(filteredModels));
@@ -70,7 +71,7 @@ export default BranchView.extend({
 
     __getHiddenPrevalence() {
         const slicedRequiredModels = this.filteredCollection;
-        const isHiddenPrevalence = slicedRequiredModels.filter(model => model.get('isHidden')).length > slicedRequiredModels.length / 2;
+        const isHiddenPrevalence = slicedRequiredModels.filter((model: GraphModel) => model.get('isHidden')).length > slicedRequiredModels.length / 2;
 
         return (this.model.allChildsHidden = isHiddenPrevalence);
     },
@@ -96,14 +97,14 @@ export default BranchView.extend({
             : LocalizationService.get('CORE.TOOLBAR.BLINKCHECKBOX.HIDEALL');
     },
 
-    __settHiiddenToChildsModels(hidden) {
+    __settHiiddenToChildsModels(hidden: boolean) {
         this.model.allChildsHidden = hidden;
         this.filteredCollection.settingAllState = true;
-        this.filteredCollection.forEach(model => setModelHiddenAttribute(model, hidden));
+        this.filteredCollection.forEach((model: GraphModel) => setModelHiddenAttribute(model, hidden));
         delete this.filteredCollection.settingAllState;
     },
 
     __hasContainerChilds() {
-        return !!this.options.model.get(this.options.model.childrenAttribute).find(model => model.isContainer);
+        return !!this.options.model.get(this.options.model.childrenAttribute).find((model: GraphModel) => model.isContainer);
     }
 });

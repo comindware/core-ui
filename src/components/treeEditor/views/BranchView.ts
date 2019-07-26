@@ -4,11 +4,12 @@ import NodeViewConfig from '../services/NodeViewConfig';
 import NodeBehavior from '../behaviors/NodeBehavior';
 import CollapsibleBehavior from '../behaviors/CollapsibleBehavior';
 import meta from '../meta';
+import { NodeViewFactoryOptions, GraphModel } from '../types';
 
 const iconNames = meta.iconNames;
 
 export default Marionette.CollectionView.extend({
-    initialize(options: { model: any, unNamedType?: string, stopNestingType?: string, childsFilter?: any }) {
+    initialize(options: NodeViewFactoryOptions) {
         this.collection = options.model.get(options.model.childrenAttribute);
         this.__initCollapsedState();
         this.collapseClassElement = [...this.el.childNodes].find(childNode => childNode.classList.contains('js-tree-item'));
@@ -27,7 +28,7 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    childView(childModel) {
+    childView(childModel: GraphModel) {
         return NodeViewFactory.getNodeView({
             model: childModel,
             unNamedType: this.options.unNamedType,

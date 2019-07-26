@@ -1,14 +1,26 @@
+import { GraphModel, TConfigDiff } from '../types';
+
+type TreeDiffControllerOptions = {
+    configDiff: TConfigDiff,
+    graphModel: GraphModel,
+    reqres: Backbone.Radio.Channel
+};
+
+interface CollectionWithInitIalConfig extends Backbone.Collection {
+    initialConfig: string[];
+}
+
 const personalConfigProps = ['index', 'width', 'isHidden']; //TODO add them dynamically (personalConfigProps aggregator)
 
-const findAllDescendants = model => {
+const findAllDescendants = (model: GraphModel) => {
     if (!model.isContainer) {
         return [];
     }
 
-    const result = [];
+    const result: GraphModel[] = [];
     const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
 
-    children.forEach(c => {
+    children.forEach((c: GraphModel) => {
         result.push(c);
         const r = findAllDescendants(c);
         if (r && r.length > 0) {
@@ -20,12 +32,16 @@ const findAllDescendants = model => {
 };
 
 export default class TreeDiffController {
-    constructor(options) {
+    configDiff: any;
+    configuredCollectionsSet: Set<Backbone.Collection>;
+    graphDescendants: object;
+
+    constructor(options: TreeDiffControllerOptions) {
         const { configDiff, graphModel, reqres } = options;
 
         this.configuredCollectionsSet = new Set();
 
-        this.__initDescendants({ graphModel, reqres });
+        this.__initDescendants(graphModel);
         this.__initConfiguration(configDiff);
 
         reqres.reply('treeEditor:setWidgetConfig', (widgetId: string, config: {}) => this.__setWidgetConfig(widgetId, config));
@@ -36,21 +52,20 @@ export default class TreeDiffController {
         this.__applyDiff();
     }
 
-    set(configDiff) {
+    set(configDiff: TConfigDiff) {
         this.configDiff = configDiff;
         this.__applyDiff();
     }
 
-    __initConfiguration(configDiff) {
+    __initConfiguration(configDiff: TConfigDiff) {
         this.set(configDiff);
     }
 
-    __initDescendants(options) {
-        const { graphModel } = options;
+    __initDescendants(graphModel: GraphModel) {
         const collectionsSet = new Set();
 
         const graphDescendantsArray = typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants() : findAllDescendants(graphModel);
-        this.graphDescendants = graphDescendantsArray.reduce((allDesc, model) => ((allDesc[model.id] = model), allDesc), {});
+        this.graphDescendants = graphDescendantsArray.reduce((allDesc: GraphModel[], model: GraphModel) => ((allDesc[model.id] = model), allDesc), {});
 
         const containsNonUniqueIds = (() => {
             const keys = graphDescendantsArray.map(model => model.id);
@@ -85,7 +100,7 @@ export default class TreeDiffController {
             }
         });
 
-        collectionsSet.forEach(coll => (coll.initialCollectionConfig = coll.map(m => m.id)));
+        collectionsSet.forEach((coll: CollectionWithInitIalConfig) => (coll.initialConfig = coll.map(m => m.id)));
     }
 
     // set given widget's diff config to configDiff array
@@ -96,7 +111,7 @@ export default class TreeDiffController {
             if (key === 'index') {
                 const model = this.graphDescendants[widgetId];
 
-                return value === model.collection.initialCollectionConfig.indexOf(model.id);
+                return value === model.collection.initialConfig.indexOf(model.id);
             }
             return !value || value === initialValue; // here "!value" means: isHidden===false or width===0
         })();
@@ -125,7 +140,7 @@ export default class TreeDiffController {
     // apply diff to graphModel
     __applyDiff() {
         Object.entries(this.graphDescendants).forEach(([modelId, model]) => {
-            //if we come to the situation where we return to initial state, we don't want to apply any changes
+            //if we come to the situation where we had returned to initial state, we don't want to apply any changes
             if (this.configDiff[modelId] && _.isEqual(this.configDiff[modelId], model.initialConfig)) {
                 delete this.configDiff[modelId];
             }
@@ -140,30 +155,30 @@ export default class TreeDiffController {
 
             const collection = model.collection;
             if (collection) {
-                const configIndex = config.index == null ? collection.initialCollectionConfig.indexOf(model.id) : config.index;
-                if (configIndex != collection.indexOf(model)) {
+                const configIndex = config.index == null ? collection.initialConfig.indexOf(model.id) : config.index;
+                if (configIndex !== collection.indexOf(model)) {
                     this.configuredCollectionsSet.add(collection);
                 }
             }
         });
 
-        this.configuredCollectionsSet.forEach(coll => {
+        this.configuredCollectionsSet.forEach((coll: CollectionWithInitIalConfig) => {
             this.__reorderCollectionByIndex(coll);
-            if (coll.initialCollectionConfig.every((id, i) => coll.at(i).id === id)) {
+            if (coll.initialConfig.every((id, i) => coll.at(i).id === id)) {
                 // that means collection returned to the inital state
                 this.configuredCollectionsSet.delete(coll);
             }
         });
     }
 
-    __reorderCollectionByIndex(collection) {
+    __reorderCollectionByIndex(collection: CollectionWithInitIalConfig) {
         const collIndexes = collection.map(model => model.id);
-        const getModelsIndex = id => (this.configDiff[id]?.index != null ? this.configDiff[id].index : collection.initialCollectionConfig.indexOf(id));
-        const collectionConfig = collection.map(model => model.id).sort((a, b) => getModelsIndex(a) - getModelsIndex(b));
+        const getModelsIndex = (id: string) => (this.configDiff[id]?.index != null ? this.configDiff[id].index : collection.initialConfig.indexOf(id));
+        const collectionConfig = collection.map((model: GraphModel) => model.id).sort((a: string, b: string) => getModelsIndex(a) - getModelsIndex(b));
         const groupsToReorder = collectionConfig
             // beautiful, clean and self-explanatory code don't need to be commented
             .reduce(
-                (groupsAccumulator, currentId, i) => {
+                (groupsAccumulator: [string[]], currentId: string, i: number) => {
                     if (currentId != collIndexes[i]) {
                         groupsAccumulator[groupsAccumulator.length - 1].push(currentId);
                     } else {
@@ -175,15 +190,15 @@ export default class TreeDiffController {
                 },
                 [[]]
             )
-            .filter(group => group.length);
+            .filter((group: string[]) => group.length);
 
-        const getConfigIndex = model => collectionConfig.indexOf(model.id);
+        const getConfigIndex = (model: GraphModel) => collectionConfig.indexOf(model.id);
 
-        groupsToReorder.map(group => {
-            const modelsGroup = [...collection.filter(model => group.includes(model.id))];
+        groupsToReorder.map((group: string[]) => {
+            const modelsGroup = [...collection.filter((model: GraphModel) => group.includes(model.id))];
             const insertIndex = collection.indexOf(modelsGroup[0]);
 
-            modelsGroup.sort((a, b) => getConfigIndex(a) - getConfigIndex(b));
+            modelsGroup.sort((a: GraphModel, b: GraphModel) => getConfigIndex(a) - getConfigIndex(b));
 
             collection.remove(modelsGroup);
             collection.add(modelsGroup, { at: insertIndex });
