@@ -351,9 +351,19 @@ export default Marionette.View.extend({
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.__tabsCollection.length;
         this.treeModel.childrenAttribute = 'rows';
-        this.treeEditorView = new Core.components.TreeEditor({
+
+        const treeEditorOptions = {
             model: this.treeModel,
-            hidden: this.options.treeEditorIsHidden
-        });
+            hidden: this.options.treeEditorIsHidden,
+            configDiff: this.options.treeEditorConfig
+        };
+
+        const childsFilter = this.options.treeEditorChildsFilter;
+
+        if (childsFilter && typeof childsFilter === 'function') {
+            treeEditorOptions.childsFilter = childsFilter;
+        }
+
+        this.treeEditorView = new Core.components.TreeEditor(treeEditorOptions);
     }
 });

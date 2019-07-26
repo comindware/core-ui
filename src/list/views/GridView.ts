@@ -22,6 +22,7 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
+import TestService from 'services/TestService';
 
 const classes = {
     REQUIRED: 'required',
@@ -54,6 +55,7 @@ const defaultOptions = options => ({
     childHeight: 35,
     showTreeEditor: false,
     treeEditorIsHidden: false,
+    treeEditorConfig: {},
     headerHeight: 35
 });
 
@@ -873,35 +875,57 @@ export default Marionette.View.extend({
         const columnsCollection = new Backbone.Collection(this.options.columns);
         columnsCollection.map(model => {
             model.id = model.get('key');
-            this.listenTo(model, 'change:isHidden', model => this.__toggleColumnVisibility(model.id, model.get('isHidden')));
 
             return model;
         });
+        this.listenTo(columnsCollection, 'change:isHidden', model => {
+            if (this.isAttached()) {
+                this.__toggleColumnVisibility(model.id, model.get('isHidden'));
+            } else {
+                TestService.wait({
+                    condition: () => this.isAttached(),
+                    callback: () => this.__toggleColumnVisibility(model.id, model.get('isHidden'))
+                });
+            }
+        });
+
         this.treeModel = new Backbone.Model({
             title: this.options.title,
             columnsCollection
         });
 
+        this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
+
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.options.columns.length;
         this.treeModel.childrenAttribute = 'columnsCollection';
+
         this.treeEditorView = new Core.components.TreeEditor({
             hidden: this.options.treeEditorIsHidden,
             model: this.treeModel,
+            configDiff: this.options.treeEditorConfig,
             getNodeName(model) {
                 return model.get('title');
             }
         });
 
         this.listenTo(columnsCollection, 'add', model => {
-            const treeEditorConfig = {
+            const diffConfig = {
                 oldIndex: this.options.columns.findIndex(col => col.key === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
-            this.__moveColumn(treeEditorConfig);
+            this.__moveColumn(diffConfig);
         });
 
         this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
+    },
+
+    resetDiffConfig() {
+        this.treeEditorView.resetDiffConfig();
+    },
+
+    __reorderColumns(config: string[]) {
+        this.options.columns.sort((a, b) => config.indexOf(a.key) - config.indexOf(b.key)); // TODO a, b type: Column
     },
 
     __moveColumn(options: { oldIndex: number, newIndex: number }) {
@@ -929,8 +953,6 @@ export default Marionette.View.extend({
         cells.forEach(row => moveElement(row));
 
         this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
-
-        this.trigger('column:move', options);
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {

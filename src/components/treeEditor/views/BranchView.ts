@@ -8,10 +8,14 @@ import meta from '../meta';
 const iconNames = meta.iconNames;
 
 export default Marionette.CollectionView.extend({
-    initialize(options: { model: any, unNamedType?: string, stopNestingType?: string }) {
+    initialize(options: { model: any, unNamedType?: string, stopNestingType?: string, childsFilter?: any }) {
         this.collection = options.model.get(options.model.childrenAttribute);
         this.__initCollapsedState();
         this.collapseClassElement = [...this.el.childNodes].find(childNode => childNode.classList.contains('js-tree-item'));
+
+        if (options.childsFilter) {
+            this.setFilter(options.childsFilter);
+        }
     },
 
     templateContext() {
@@ -28,7 +32,9 @@ export default Marionette.CollectionView.extend({
             model: childModel,
             unNamedType: this.options.unNamedType,
             stopNestingType: this.options.stopNestingType,
-            forceBranchType: this.options.forceBranchType
+            forceBranchType: this.options.forceBranchType,
+            forceLeafType: this.options.forceLeafType,
+            childsFilter: this.options.childsFilter
         });
     },
 

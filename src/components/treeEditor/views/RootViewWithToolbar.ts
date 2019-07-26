@@ -4,7 +4,7 @@ const RootViewWithToolbar = Marionette.View.extend({
     initialize() {
         this.toolbarView = new Core.components.Toolbar({
             class: 'tree-editor-toolbar',
-            allItemsCollection: new Backbone.Collection([
+            toolbarItems: new Backbone.Collection([
                 {
                     iconClass: 'trash-alt',
                     id: 'reset',

@@ -31,7 +31,7 @@ export default function() {
                         name: 'tab2'
                     },
                     {
-                        id: '3.5',
+                        id: '3.3',
                         name: 'tab3',
                         isContainer: true,
                         childrenAttribute: 'rows',
@@ -193,14 +193,15 @@ export default function() {
                 id: '2.3',
                 name: 'Genious',
                 isContainer: true,
+                visible: false,
                 childrenAttribute: 'columns',
                 childrens: [
                     {
-                        id: '3.3',
+                        id: '3.13',
                         name: 'Pasha'
                     },
                     {
-                        id: '3.4',
+                        id: '3.14',
                         name: 'Tony'
                     }
                 ]
@@ -209,6 +210,7 @@ export default function() {
                 id: '2.4',
                 name: 'Average',
                 isContainer: true,
+                visible: false,
                 childrenAttribute: 'columns',
                 childrens: [
                     {
@@ -226,7 +228,7 @@ export default function() {
 
     class TreeNode {
         constructor(options) {
-            const { id, name, isContainer, childrenAttribute, childrens, type, required, isHidden } = options;
+            const { id, name, isContainer, childrenAttribute, childrens, type, required, isHidden, visible } = options;
             const model = new Backbone.Model({
                 name
             });
@@ -239,6 +241,9 @@ export default function() {
             }
             if (isHidden != null) {
                 model.set({ isHidden });
+            }
+            if (visible != null) {
+                model.set({ visible });
             }
             type && model.set({ type });
             isContainer && (model.isContainer = isContainer);
@@ -260,8 +265,17 @@ export default function() {
         return model.get('name');
     };
 
-    const view = new Core.components.TreeEditor({ model: createTreeModel(tree), getNodeName, unNamedType: 'unNamed', showToolbar: true });
+    const view = new Core.components.TreeEditor({
+        model: createTreeModel(tree),
+        getNodeName,
+        unNamedType: 'unNamed',
+        showToolbar: true,
+        childsFilter: child => child.model.get('visible') !== false,
+        configDiff: {"2.q":{"index":0},"2.2":{"index":1},"2.hh":{"index":2},"2.1":{"index":3},"3.2":{"index":0},"3.1":{"index":1}}
+    });
+    console.log(view.getDiffConfig());
     view.listenTo(view, 'save', config => console.log(config));
+    view.listenTo(view, 'reset', () => console.log('reseted'));
 
     return view;
 }

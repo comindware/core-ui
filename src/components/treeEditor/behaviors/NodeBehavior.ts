@@ -148,12 +148,6 @@ export default Marionette.Behavior.extend({
     },
 
     __getWidgetId(model = this.view.model) {
-        const columnModel = model.get('columnModel');
-
-        if (columnModel) {
-            return columnModel.id;
-        }
-
         return model.id;
     },
 
