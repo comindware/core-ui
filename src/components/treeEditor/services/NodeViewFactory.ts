@@ -7,7 +7,7 @@ import UnNamedBranchView from '../views/UnNamedBranchView';
 
 export default {
     getRootView(config: {
-        model: any,
+        model: Backbone.Model,
         unNamedType?: string,
         stopNestingType?: string,
         forceBranchType?: string,
@@ -22,14 +22,23 @@ export default {
         return RootView;
     },
 
-    getNodeView(config: { model: any, unNamedType?: string, stopNestingType?: string, forceBranchType?: string, forceLeafType?: string | string[], childsFilter?: any }) {
+    getNodeView(config: {
+        model: Backbone.Model,
+        unNamedType?: string,
+        stopNestingType?: string,
+        forceBranchType?: string,
+        forceLeafType?: string | string[],
+        childsFilter?: any
+    }) {
         const { model, unNamedType, stopNestingType, forceBranchType, forceLeafType, childsFilter } = config;
         const type = model.get('type');
         const fieldType = model.get('fieldType');
-        const isForcedBranch = forceBranchType && Array.isArray(forceBranchType) ? forceBranchType.includes(type) : type === forceBranchType;
+        const isForcedBranch =
+            forceBranchType &&
+            (Array.isArray(forceBranchType) ? forceBranchType.includes(type) || forceBranchType.includes(fieldType) : type === forceBranchType || fieldType === forceBranchType);
         const isForcedLeaf =
             forceLeafType &&
-            (Array.isArray(forceLeafType) ? forceLeafType.includes(type) || forceLeafType.includes(fieldType) : type === forceLeafType || fieldType === forceLeafType);
+            (Array.isArray(forceLeafType) ? forceLeafType.includes(type) || forceLeafType.includes(fieldType) : type === forceLeafType || fieldType === forceLeafType); //TODO remove repetitive code
         const nestingAllowed = !stopNestingType || model.getParent()?.get('type') !== stopNestingType; // TODO think about passing an optional getNodeView
         const isBranchView = isForcedBranch || nestingAllowed;
 

@@ -2,10 +2,12 @@ const personalConfigProps = ['index', 'width', 'isHidden']; //TODO add them dyna
 
 const findAllDescendants = model => {
     if (!model.isContainer) {
-        return null;
+        return [];
     }
+
     const result = [];
-    const children = model.getChildren && typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
+    const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
+
     children.forEach(c => {
         result.push(c);
         const r = findAllDescendants(c);
@@ -13,18 +15,8 @@ const findAllDescendants = model => {
             result.push(...r);
         }
     });
+
     return result;
-};
-
-const objectsDeepComparison = (objOne, objTwo) => {
-    const props = [...new Set([...Object.keys(objOne), ...Object.keys(objTwo)])];
-
-    return props.every(prop => {
-        if (objOne[prop] instanceof Object && objTwo[prop] instanceof Object) {
-            return objectsDeepComparison(objOne[prop], objTwo[prop]);
-        }
-        return objOne[prop] === objTwo[prop];
-    });
 };
 
 export default class TreeDiffController {
@@ -57,20 +49,23 @@ export default class TreeDiffController {
         const { graphModel } = options;
         const collectionsSet = new Set();
 
-        const graphDescendantsArray =
-            graphModel.findAllDescendants && typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants() : findAllDescendants(graphModel);
+        const graphDescendantsArray = typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants() : findAllDescendants(graphModel);
         this.graphDescendants = graphDescendantsArray.reduce((allDesc, model) => ((allDesc[model.id] = model), allDesc), {});
 
-        const keys = Object.keys(this.graphDescendants);
-        const set = new Set(keys);
-        if (keys.length !== set.size) {
+        const containsNonUniqueIds = (() => {
+            const keys = graphDescendantsArray.map(model => model.id);
+            const set = new Set(keys);
+            return keys.length !== set.size;
+        })();
+
+        if (containsNonUniqueIds) {
             Core.InterfaceError.logError('Error: graph models have non-unique ids. You must to reboot your computer immediately!!!');
         }
 
-        Object.values(this.graphDescendants).map(model => {
+        Object.values(this.graphDescendants).forEach(model => {
             const initialConfig = {};
 
-            personalConfigProps.map(prop => {
+            personalConfigProps.forEach(prop => {
                 const propValue = model.get(prop);
                 if (propValue != null) {
                     if (prop !== 'index' && !propValue) {
@@ -131,7 +126,7 @@ export default class TreeDiffController {
     __applyDiff() {
         Object.entries(this.graphDescendants).forEach(([modelId, model]) => {
             //if we come to the situation where we return to initial state, we don't want to apply any changes
-            if (this.configDiff[modelId] && objectsDeepComparison(this.configDiff[modelId], model.initialConfig)) {
+            if (this.configDiff[modelId] && _.isEqual(this.configDiff[modelId], model.initialConfig)) {
                 delete this.configDiff[modelId];
             }
 
@@ -192,8 +187,8 @@ export default class TreeDiffController {
 
             collection.remove(modelsGroup);
             collection.add(modelsGroup, { at: insertIndex });
-
-            collection.trigger('columns:move', collectionConfig);
         });
+
+        collection.trigger('columns:move', collectionConfig);
     }
 }

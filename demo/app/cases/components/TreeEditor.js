@@ -93,7 +93,7 @@ export default function() {
                         type: 'unNamed',
                         childrens: [
                             {
-                                id: '3.6',
+                                id: '3.6_',
                                 name: 'tab9',
                                 isContainer: true,
                                 childrenAttribute: 'rows',
@@ -261,9 +261,7 @@ export default function() {
         return new TreeNode(treeObj);
     };
 
-    const getNodeName = model => {
-        return model.get('name');
-    };
+    const getNodeName = model => model.get('name');
 
     const view = new Core.components.TreeEditor({
         model: createTreeModel(tree),
@@ -271,7 +269,7 @@ export default function() {
         unNamedType: 'unNamed',
         showToolbar: true,
         childsFilter: child => child.model.get('visible') !== false,
-        configDiff: {"2.q":{"index":0},"2.2":{"index":1},"2.hh":{"index":2},"2.1":{"index":3},"3.2":{"index":0},"3.1":{"index":1}}
+        configDiff: { '2.q': { index: 0 }, 2.2: { index: 1 }, '2.hh': { index: 2 }, 2.1: { index: 3 }, 3.2: { index: 0 }, 3.1: { index: 1 } }
     });
     console.log(view.getDiffConfig());
     view.listenTo(view, 'save', config => console.log(config));

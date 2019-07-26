@@ -6,7 +6,7 @@ const classes = {
     dragoverContainer: 'dragover-container'
 };
 
-const getSiblings = (element: HTMLElement) => {
+const getSiblings = (element: ChildNode) => {
     return Array.from(element.parentElement?.childNodes || []);
 };
 
@@ -56,13 +56,13 @@ export default Marionette.Behavior.extend({
         this.el.classList.toggle(classes.hiddenClass, isHidden);
     },
 
-    __handleDragStart(event: Event) {
+    __handleDragStart(event: JQueryEventObject) {
         event.stopPropagation();
         this.view.model.collection.draggingModel = this.view.model;
         this.__getRealTargetElement(event.target).parentElement.classList.add(classes.dragoverContainer);
     },
 
-    __handleDragEnter(event: Event) {
+    __handleDragEnter(event: JQueryEventObject) {
         const fromElement = event.originalEvent.fromElement;
         const targetElement = event.target;
 
@@ -81,7 +81,7 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    __handleDragLeave(event: Event) {
+    __handleDragLeave(event: JQueryEventObject) {
         const fromElement = event.originalEvent.fromElement;
         const targetElement = event.target;
 
@@ -95,7 +95,7 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    __handleDragOver(event: Event) {
+    __handleDragOver(event: JQueryEventObject) {
         if (this.__isInValidDropTarget()) {
             return;
         }
@@ -104,12 +104,12 @@ export default Marionette.Behavior.extend({
         event.stopPropagation();
     },
 
-    __handleDragEnd(event: Event) {
+    __handleDragEnd(event: JQueryEventObject) {
         delete this.view.model.collection?.draggingModel;
         this.__removeContainerDragoverClass();
     },
 
-    __handleDrop(event: Event) {
+    __handleDrop(event: JQueryEventObject) {
         event.stopPropagation();
         const targetElement = this.__getDragoverParent(event.target);
         if (!targetElement) {

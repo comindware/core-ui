@@ -105,7 +105,7 @@ export default class TreeEditor {
         this.view.trigger('reset');
     }
 
-    __commandExecute(actionModel: { id: string }) {
+    __commandExecute(actionModel: Backbone.Model) {
         switch (actionModel.id) {
             case 'reset':
                 this.__onReset();
