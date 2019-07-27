@@ -186,9 +186,7 @@ export default {
 
         if (!this.activeModule || movingOut || customModuleRegion) {
             if (customModuleRegion) {
-                const moduleFunc = await Module();
-
-                activeSubModule = new moduleFunc({
+                activeSubModule = await new Module({
                     config,
                     region: customModuleRegion
                 });
@@ -197,9 +195,7 @@ export default {
                 activeSubModule.once('destroy', activeSubModule.off);
                 */
             } else {
-                const moduleFunc = await Module();
-
-                this.activeModule = new moduleFunc({
+                this.activeModule = await new Module({
                     config,
                     region: window.app.getView().getRegion('contentRegion')
                 });
