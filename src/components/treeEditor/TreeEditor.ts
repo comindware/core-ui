@@ -1,12 +1,12 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
 import TreeDiffController from './controllers/TreeDiffController';
-import { TConfigDiff, TTreeEditorOptions } from './types';
+import { TConfigDiff, TTreeEditorOptions, GraphModel } from './types';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
-    configDiff: {},
+    configDiff: new Map(),
     getNodeName: undefined,
     showToolbar: false,
     childsFilter: undefined
@@ -14,7 +14,7 @@ const defaultOptions = {
 
 export default class TreeEditor {
     configDiff: TConfigDiff;
-    model: any;
+    model: GraphModel;
     view: Backbone.View;
     controller: TreeDiffController;
     constructor(options: TTreeEditorOptions) {

@@ -50,7 +50,7 @@ export default function() {
                         text: 'Commit',
                         type: 'Button',
                         handler() {
-                            console.log((window.temp = view));
+                            console.log(window.temp = view);
                             view.form.commit();
                             // alert(JSON.stringify(model.toJSON(), null, 4));
                         }
@@ -142,11 +142,7 @@ export default function() {
         view: new Core.layout.TabLayout({
             showTreeEditor: true,
             treeEditorIsHidden: false,
-            treeEditorConfig: {
-                tab2: { index: 2 },
-                tab3: { index: 3, isHidden: true },
-                tab4: { index: 1 }
-            },
+            treeEditorConfig: new Map([['tab2', { index: 2 }], ['tab3', { index: 3, isHidden: true }], ['tab4', { index: 1 }]]),
             treeEditorChildsFilter: view => view.model.get('visible') !== false,
             tabs,
             showStepper: true,

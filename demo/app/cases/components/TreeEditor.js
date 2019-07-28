@@ -6,52 +6,60 @@ export default function() {
         childrenAttribute: 'rows',
         childrens: [
             {
-                id: '2.1',
+                id: '1.1',
+                name: 'First single item'
+            },
+            {
+                id: '1.1a',
                 name: 'Single item'
             },
             {
-                id: '2.q',
+                id: '1.1b',
+                name: 'Another single item'
+            },
+            {
+                id: '1.2',
                 name: '*VerticalLayout*',
                 isContainer: true,
                 childrenAttribute: 'rows',
                 childrens: []
             },
             {
-                id: '2.2',
+                id: '1.3',
                 name: 'Tabs',
                 isContainer: true,
                 childrenAttribute: 'tabs',
                 childrens: [
                     {
-                        id: '3.1',
+                        id: '1.3.1',
                         name: 'tab1'
                     },
                     {
-                        id: '3.2',
+                        id: '1.3.2',
                         name: 'tab2'
                     },
                     {
-                        id: '3.3',
+                        id: '1.3.3',
                         name: 'tab3',
                         isContainer: true,
                         childrenAttribute: 'rows',
                         childrens: [
                             {
-                                id: '4.1',
+                                id: '1.3.3.1',
                                 name: 'item1'
                             },
                             {
-                                id: '4.2',
+                                id: '1.3.3.2',
                                 name: 'item2',
                                 required: true
                             },
                             {
-                                id: '4.3',
+                                id: '1.3.3.3',
                                 name: 'item3',
                                 isHidden: true
                             },
                             {
-                                id: '4.4',
+                                id: '1.3.3.4',
                                 name: 'item4'
                             }
                         ]
@@ -59,83 +67,83 @@ export default function() {
                 ]
             },
             {
-                id: '2.hh',
+                id: '1.4',
                 name: 'HorizontalLayout',
                 isContainer: true,
                 childrenAttribute: 'columns',
                 childrens: [
                     {
-                        id: '2.7x',
+                        id: '1.4.1',
                         name: 'VerticalLayout',
                         isContainer: true,
                         childrenAttribute: 'columns',
                         type: 'unNamed',
                         childrens: [
                             {
-                                id: '3.7g',
+                                id: '1.4.1.1',
                                 name: '7Dog'
                             },
                             {
-                                id: '3.7h',
+                                id: '1.4.1.2',
                                 name: '7Cat'
                             },
                             {
-                                id: '3.7n',
+                                id: '1.4.1.3',
                                 name: '7Cow'
                             }
                         ]
                     },
                     {
-                        id: '2.x',
+                        id: '1.4.2',
                         name: 'VerticalLayout',
                         isContainer: true,
                         childrenAttribute: 'columns',
                         type: 'unNamed',
                         childrens: [
                             {
-                                id: '3.6_',
+                                id: '1.4.2.1',
                                 name: 'tab9',
                                 isContainer: true,
                                 childrenAttribute: 'rows',
                                 childrens: [
                                     {
-                                        id: '4.11',
+                                        id: '1.4.2.1.1',
                                         name: 'xxx'
                                     },
                                     {
-                                        id: '4.12',
+                                        id: '1.4.2.1.2',
                                         name: 'vvv'
                                     },
                                     {
-                                        id: '4.13',
+                                        id: '1.4.2.1.3',
                                         name: 'sss'
                                     },
                                     {
-                                        id: '4.14',
+                                        id: '1.4.2.1.4',
                                         name: 'iii'
                                     }
                                 ]
                             },
                             {
-                                id: '3.7',
+                                id: '1.4.2.2',
                                 name: 'tab10',
                                 isContainer: true,
                                 childrenAttribute: 'rows',
                                 childrens: [
                                     {
-                                        id: '4.21',
+                                        id: '1.4.2.2.1',
                                         name: 'uuu'
                                     },
                                     {
-                                        id: '4.22',
+                                        id: '1.4.2.2.2',
                                         name: 'zzz'
                                     },
                                     {
-                                        id: '4.23',
+                                        id: '1.4.2.2.3',
                                         name: 'lll'
                                     },
                                     {
-                                        id: '4.24',
+                                        id: '1.4.2.2.4',
                                         name: 'ttt'
                                     }
                                 ]
@@ -143,44 +151,44 @@ export default function() {
                         ]
                     },
                     {
-                        id: '2.zzz',
+                        id: '1.4.3',
                         name: 'VerticalLayout',
                         isContainer: true,
                         childrenAttribute: 'columns',
                         type: 'unNamed',
                         childrens: [
                             {
-                                id: '3.1g',
+                                id: '1.4.3.1',
                                 name: 'Dog'
                             },
                             {
-                                id: '3.1h',
+                                id: '1.4.3.2',
                                 name: 'Cat'
                             },
                             {
-                                id: '3.1n',
+                                id: '1.4.3.3',
                                 name: 'Cow'
                             },
                             {
-                                id: '3.16',
+                                id: '1.4.3.4',
                                 name: 'tab19',
                                 isContainer: true,
                                 childrenAttribute: 'rows',
                                 childrens: [
                                     {
-                                        id: '4.211',
+                                        id: '1.4.3.4.1',
                                         name: '111'
                                     },
                                     {
-                                        id: '4.212',
+                                        id: '1.4.3.4.2',
                                         name: '222'
                                     },
                                     {
-                                        id: '4.213',
+                                        id: '1.4.3.4.3',
                                         name: '333'
                                     },
                                     {
-                                        id: '4.214',
+                                        id: '1.4.3.4.4',
                                         name: '444'
                                     }
                                 ]
@@ -190,38 +198,50 @@ export default function() {
                 ]
             },
             {
-                id: '2.3',
+                id: '1.5',
                 name: 'Genious',
                 isContainer: true,
                 visible: false,
                 childrenAttribute: 'columns',
                 childrens: [
                     {
-                        id: '3.13',
+                        id: '1.5.1',
                         name: 'Pasha'
                     },
                     {
-                        id: '3.14',
-                        name: 'Tony'
+                        id: '1.5.2',
+                        name: 'Stas'
+                    },
+                    {
+                        id: '1.5.3',
+                        name: 'Vlad'
                     }
                 ]
             },
             {
-                id: '2.4',
-                name: 'Average',
+                id: '1.6',
+                name: 'Below average',
                 isContainer: true,
                 visible: false,
                 childrenAttribute: 'columns',
                 childrens: [
                     {
-                        id: '3.5',
-                        name: 'Stas'
-                    },
-                    {
-                        id: '3.6',
-                        name: 'Vlad'
+                        id: '1.6.1',
+                        name: 'Tony'
                     }
                 ]
+            },
+            {
+                id: '1.7',
+                name: 'Some single item'
+            },
+            {
+                id: '1.8',
+                name: 'Penultimate item'
+            },
+            {
+                id: '1.9',
+                name: 'Last single item'
             }
         ]
     };
@@ -247,7 +267,7 @@ export default function() {
             }
             type && model.set({ type });
             isContainer && (model.isContainer = isContainer);
-            model.id = id;
+            model.id = id || _.unique('id');
 
             return model;
         }
@@ -269,10 +289,17 @@ export default function() {
         unNamedType: 'unNamed',
         showToolbar: true,
         childsFilter: child => child.model.get('visible') !== false,
-        configDiff: { '2.q': { index: 0 }, 2.2: { index: 1 }, '2.hh': { index: 2 }, 2.1: { index: 3 }, 3.2: { index: 0 }, 3.1: { index: 1 } }
+        configDiff: new Map([
+            ['1.3', { index: 1, isHidden: true }],
+            ['1.1a', { index: 2 }],
+            ['1.1b', { index: 3 }],
+            ['1.2', { index: 4 }],
+            ['1.8', { isHidden: true }],
+            ['1.4', { isHidden: true }]
+        ])
     });
     console.log(view.getDiffConfig());
-    view.listenTo(view, 'save', config => console.log(config));
+    view.listenTo(view, 'save', config => console.log(`saved: ${config}`));
     view.listenTo(view, 'reset', () => console.log('reseted'));
 
     return view;

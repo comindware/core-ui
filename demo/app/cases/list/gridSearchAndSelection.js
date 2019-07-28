@@ -77,13 +77,13 @@ export default function() {
         draggable: true,
         showRowIndex: true,
         showTreeEditor: true,
-        treeEditorConfig: {
-            dateTimeCell: { index: 3 },
-            durationCell: { index: 4, isHidden: true },
-            numberCell: { index: 2 },
-            textCell: { index: 1 },
-            userCell: { index: 0 }
-        },
+        treeEditorConfig: new Map([
+            ['dateTimeCell', { index: 3 }],
+            ['durationCell', { index: 4, isHidden: true }],
+            ['numberCell', { index: 2 }],
+            ['textCell', { index: 1 }],
+            ['userCell', { index: 0 }]
+        ]),
         excludeActions: ['delete'],
         additionalActions: [
             {

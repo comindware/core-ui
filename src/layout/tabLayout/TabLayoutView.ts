@@ -360,7 +360,7 @@ export default Marionette.View.extend({
 
         const childsFilter = this.options.treeEditorChildsFilter;
 
-        if (childsFilter && typeof childsFilter === 'function') {
+        if (typeof childsFilter === 'function') {
             treeEditorOptions.childsFilter = childsFilter;
         }
 

@@ -126,7 +126,7 @@ export default Marionette.Behavior.extend({
         const collection = this.view.model.collection;
         const draggingModel = collection.draggingModel;
         const oldIndex = collection.indexOf(draggingModel);
-        const newIndex = Array.from(realTarget.parentElement.childNodes).indexOf(realTarget);
+        const newIndex = collection.lastIndexOf(this.view.model);
 
         collection.remove(draggingModel);
         collection.add(draggingModel, { at: newIndex });
@@ -167,27 +167,17 @@ export default Marionette.Behavior.extend({
 
     __isInValidDropTarget(element?: ChildNode | null) {
         const collection = this.view.model.collection;
-        if (!collection) {
-            return true;
-        }
-
-        if (!collection.draggingModel) {
-            return true;
-        }
-
         const draggingModel = collection.draggingModel;
 
-        if (this.view.model === draggingModel) {
-            return true;
-        }
+        const conditions = [
+            !collection,
+            !collection.draggingModel,
+            this.view.model === draggingModel,
+            !collection.contains(draggingModel),
+            element && !getSiblings(element).includes(this.view.el)
+        ];
 
-        if (!collection.contains(draggingModel)) {
-            return true;
-        }
-
-        if (element && !getSiblings(element).includes(this.view.el)) {
-            return true;
-        }
+        return conditions.some(c => c);
     },
 
     __getRealTargetElement(element: HTMLElement) {

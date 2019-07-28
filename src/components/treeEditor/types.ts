@@ -1,3 +1,5 @@
+import DiffItem from './classes/DiffItem';
+
 export interface GraphModel extends Backbone.Model {
     isContainer?: boolean;
     childrenAttribute?: string;
@@ -12,14 +14,6 @@ export interface ParentModel extends Backbone.Model {
     getParent: () => GraphModel;
     getChildren: () => GraphModel;
     findAllDescendants?: () => GraphModel[];
-}
-
-export interface TConfigDiff {
-    [key: string]: {
-        index?: number,
-        isHidden?: boolean,
-        width?: number
-    };
 }
 
 export type TTreeEditorOptions = {
@@ -46,6 +40,15 @@ export type NodeViewFactoryOptions = {
     forceLeafType?: string | string[],
     childsFilter?: ChildsFilter
 };
+
 export interface RootViewFactoryOptions extends NodeViewFactoryOptions {
     showToolbar?: boolean;
 }
+
+export type TConfigDiff = Map<string, NodeConfig>;
+
+export type SingleItem = boolean | number | string;
+
+export type NodeConfig = { [prop: string]: SingleItem };
+
+export type TreeConfig = Map<string, DiffItem>;
