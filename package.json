@@ -71,7 +71,7 @@
         "babel-loader": "^8.0.6",
         "babel-runtime": "^6.26.0",
         "chance": "^1.0.18",
-        "copy-webpack-plugin": "^5.0.3",
+        "copy-webpack-plugin": "^5.0.4",
         "coveralls": "^3.0.5",
         "cross-env": "^5.2.0",
         "css-loader": "^3.1.0",
@@ -122,11 +122,11 @@
         "puppeteer": "^1.19.0",
         "source-map-loader": "^0.2.4",
         "style-loader": "^0.23.1",
-        "typedoc": "^0.14.2",
+        "typedoc": "^0.15.0",
         "typedoc-webpack-plugin": "^1.1.4",
         "typescript": "^3.5.3",
         "url-loader": "^2.1.0",
-        "webpack": "^4.37.0",
+        "webpack": "^4.38.0",
         "webpack-cli": "^3.3.6"
     },
     "dependencies": {

@@ -180,7 +180,26 @@ export default Marionette.PartialCollectionView.extend({
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
             this._addChild(child, index);
+            this.__updateChildTop(child);
         }
+    },
+
+    __updateChildTop(child) {
+        if (!child || !this.collection.length) {
+            return;
+        }
+        requestAnimationFrame(() => {
+            const childModel = child.model;
+            if (this.getOption('showRowIndex')) {
+                const index = childModel.collection.indexOf(childModel) + 1;
+                if (index !== childModel.currentIndex) {
+                    childModel.trigger('update:model', index);
+                }
+            }
+            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                child.insertFirstCellHtml();
+            }
+        });
     },
 
     _setupChildView(view, index) {
