@@ -180,8 +180,11 @@ export default Marionette.PartialCollectionView.extend({
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
             this._addChild(child, index);
-            this.__updateChildTop(child);
         }
+    },
+
+    onAddChild(child) {
+        this.__updateChildTop(child);
     },
 
     __updateChildTop(child) {
