@@ -183,7 +183,7 @@ export default Marionette.PartialCollectionView.extend({
         }
     },
 
-    onAddChild(child) {
+    onAddChild(view, child) {
         this.__updateChildTop(child);
     },
 
