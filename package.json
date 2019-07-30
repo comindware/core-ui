@@ -131,7 +131,7 @@
     },
     "dependencies": {
         "@babel/runtime-corejs3": "^7.5.4",
-        "@fortawesome/fontawesome-free": "^5.9.0",
+        "@fortawesome/fontawesome-free": "^5.10.0",
         "@typescript-eslint/eslint-plugin": "^1.13.0",
         "@typescript-eslint/parser": "^1.13.0",
         "autosize": "^4.0.2",

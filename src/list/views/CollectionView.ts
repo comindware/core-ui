@@ -196,7 +196,7 @@ export default Marionette.PartialCollectionView.extend({
             if (this.getOption('showRowIndex')) {
                 const index = childModel.collection.indexOf(childModel) + 1;
                 if (index !== childModel.currentIndex) {
-                    childModel.trigger('update:model', index);
+                    child.updateIndex && child.updateIndex();
                 }
             }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
