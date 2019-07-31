@@ -4,9 +4,10 @@ import RootViewWithToolbar from '../views/RootViewWithToolbar';
 import LeafView from '../views/LeafView';
 import EmptyView from '../views/EmptyView';
 import UnNamedBranchView from '../views/UnNamedBranchView';
+import { RootViewFactoryOptions, NodeViewFactoryOptions, ParentModel } from '../types';
 
 export default {
-    getRootView(config: { model: any, unNamedType?: string, stopNestingType?: string, forceBranchType?: string, showToolbar?: boolean }) {
+    getRootView(config: RootViewFactoryOptions) {
         if (config.showToolbar) {
             return RootViewWithToolbar;
         }
@@ -14,27 +15,53 @@ export default {
         return RootView;
     },
 
-    getNodeView(config: { model: any, unNamedType?: string, stopNestingType?: string, forceBranchType?: string }) {
-        const { model, unNamedType, stopNestingType, forceBranchType } = config;
-        const isForcedBranch = forceBranchType && model.get('type') === forceBranchType;
-        const nestingAllowed = !stopNestingType || model.getParent()?.get('type') !== stopNestingType;
+    getNodeView(config: NodeViewFactoryOptions) {
+        const { model, unNamedType, stopNestingType, forceBranchType, forceLeafType } = config;
+
+        const type = model.get('type');
+        const fieldType = model.get('fieldType');
+
+        const getIsForceType = (forceType?: string[] | string) => {
+            if (!forceType) {
+                return;
+            }
+
+            const result = Array.isArray(forceType) ? forceType.includes(type) || forceType.includes(fieldType) : type === forceType || fieldType === forceType;
+
+            return result;
+        };
+
+        const isForcedBranch = getIsForceType(forceBranchType);
+        const isForcedLeaf = getIsForceType(forceLeafType);
+
+        const nestingAllowed =
+            !stopNestingType ||
+            (() => {
+                const modelParent = model.getParent;
+                if (!modelParent) {
+                    return false;
+                }
+
+                return modelParent().get('type') !== stopNestingType || modelParent().get('fieldType') !== stopNestingType;
+            })(); // TODO think about passing an optional getNodeView
+
         const isBranchView = isForcedBranch || nestingAllowed;
 
-        if (model.isContainer) {
-            const collection = model.get(model.childrenAttribute);
-            if (!collection.length) {
-                return EmptyView;
-            }
-
-            if (unNamedType && model.get('type') === unNamedType) {
-                return UnNamedBranchView;
-            }
-
-            if (isBranchView) {
-                return BranchView;
-            }
+        if (!model.isContainer || isForcedLeaf) {
+            return LeafView;
         }
 
-        return LeafView;
+        const collection = model.get(model.childrenAttribute);
+        if (!collection.length) {
+            return EmptyView;
+        }
+
+        if (unNamedType && type === unNamedType) {
+            return UnNamedBranchView;
+        }
+
+        if (isBranchView) {
+            return BranchView;
+        }
     }
 };

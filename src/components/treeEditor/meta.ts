@@ -8,7 +8,7 @@ export const getIconAndPrefixerClasses = (classWithoutPrefixer: string) => {
     return iconClass.split(' ').filter((className: string) => className);
 };
 
-export const setModelHiddenAttribute = (model, isHidden?: boolean) => {
+export const setModelHiddenAttribute = (model: Backbone.Model, isHidden?: boolean) => {
     if (model.get('required')) {
         return;
     }

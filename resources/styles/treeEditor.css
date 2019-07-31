@@ -144,7 +144,7 @@
     width: 22px;
 }
 
-*:not(.required) > .eye-btn {
+.root *:not(.required) > .eye-btn {
     cursor: pointer;
 }
 
@@ -184,6 +184,10 @@
     margin: 5px;
     width: 100%;
     justify-content: space-evenly;
+}
+
+.root__header-name {
+    margin-right: 5px;
 }
 
 

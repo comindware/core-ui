@@ -4,7 +4,7 @@ const RootViewWithToolbar = Marionette.View.extend({
     initialize() {
         this.toolbarView = new Core.components.Toolbar({
             class: 'tree-editor-toolbar',
-            allItemsCollection: new Backbone.Collection([
+            toolbarItems: new Backbone.Collection([
                 {
                     iconClass: 'trash-alt',
                     id: 'reset',
@@ -22,7 +22,7 @@ const RootViewWithToolbar = Marionette.View.extend({
             ])
         });
 
-        this.listenTo(this.toolbarView, 'command:execute', actionModel => this.options.reqres.request('command:execute', actionModel));
+        this.listenTo(this.toolbarView, 'command:execute', (actionModel: Backbone.Model) => this.options.reqres.request('command:execute', actionModel));
     },
 
     template: Handlebars.compile('<div class="js-toolbar-region"></div><div class="js-root-region"></div>'),

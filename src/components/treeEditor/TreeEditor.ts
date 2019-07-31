@@ -1,45 +1,30 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
+import TreeDiffController from './controllers/TreeDiffController';
+import { TConfigDiff, TTreeEditorOptions, GraphModel } from './types';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
-    configDiff: {},
+    configDiff: new Map(),
     getNodeName: undefined,
-    showToolbar: false
-};
-
-interface TConfigDiff {
-    [key: string]: {
-        index?: number,
-        isHidden?: boolean
-    };
-}
-
-type TTreeEditorOptions = {
-    model: any,
-    hidden?: boolean,
-    eyeIconClass?: string,
-    closedEyeIconClass?: string,
-    configDiff?: TConfigDiff,
-    unNamedType?: string,
-    stopNestingType?: string,
-    forceBranchType?: string,
-    getNodeName?: (model: any) => string,
-    showToolbar?: boolean
+    showToolbar: false,
+    childsFilter: undefined
 };
 
 export default class TreeEditor {
     configDiff: TConfigDiff;
-    oldConfigDiff: TConfigDiff;
-    model: any;
+    model: GraphModel;
+    view: Backbone.View;
+    controller: TreeDiffController;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
-        this.oldConfigDiff = { ...options.configDiff };
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
+
+        this.controller = new TreeDiffController({ configDiff: this.configDiff, graphModel: this.model, reqres });
 
         const popoutView = Core.dropdown.factory.createPopout({
             buttonView: TEButtonView,
@@ -52,6 +37,7 @@ export default class TreeEditor {
                 unNamedType: options.unNamedType,
                 stopNestingType: options.stopNestingType,
                 forceBranchType: options.forceBranchType,
+                forceLeafType: options.forceLeafType,
                 showToolbar: options.showToolbar
             }),
             panelViewOptions: {
@@ -61,43 +47,48 @@ export default class TreeEditor {
             }
         });
 
-        reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
         reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
 
         popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
-
         popoutView.listenTo(popoutView, 'close', () => this.__onSave());
-
         if (options.showToolbar) {
             reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
-        } else {
         }
 
         if (options.hidden) {
             popoutView.el.setAttribute('hidden', true);
         }
 
-        return (this.popoutView = popoutView);
+        popoutView.getDiffConfig = this.__getDiffConfig.bind(this);
+        popoutView.setDiffConfig = this.__setDiffConfig.bind(this);
+        popoutView.resetDiffConfig = this.__resetDiffConfig.bind(this);
+        popoutView.reorderCollectionByIndex = TreeDiffController.prototype.__reorderCollectionByIndex; // Or should we export controller with coreApi?
+
+        return (this.view = popoutView);
     }
 
-    applyConfigDiff(id: string, config: TConfigDiff) {
-        if (this.configDiff[id]) {
-            Object.assign(this.configDiff[id], config);
-        } else {
-            this.configDiff[id] = config;
-        }
+    __getDiffConfig() {
+        return this.controller.configDiff;
+    }
+
+    __setDiffConfig(configDiff: TConfigDiff) {
+        this.controller.set(configDiff);
+    }
+
+    __resetDiffConfig() {
+        this.controller.reset();
     }
 
     __onSave() {
-        this.popoutView.trigger('save', this.configDiff);
+        this.view.trigger('save', this.__getDiffConfig());
     }
 
     __onReset() {
-        this.configDiff = {};
-        this.popoutView.trigger('reset');
+        this.__resetDiffConfig();
+        this.view.trigger('reset');
     }
 
-    __commandExecute(actionModel) {
+    __commandExecute(actionModel: Backbone.Model) {
         switch (actionModel.id) {
             case 'reset':
                 this.__onReset();
