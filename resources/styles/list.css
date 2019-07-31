@@ -716,6 +716,7 @@ tr.dragover td{
 
 .grid-table-wrapper {
     min-height: 100%;
+    display: contents;
 }
 
 .grid-table-wrapper-war {
