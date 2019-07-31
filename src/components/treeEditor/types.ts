@@ -5,7 +5,7 @@ export interface GraphModel extends Backbone.Model {
     childrenAttribute?: string;
     getParent?: () => GraphModel;
     getChildren: () => GraphModel;
-    findAllDescendants?: () => GraphModel[];
+    findAllDescendants?: (predicate?: (graphModel: GraphModel) => boolean) => GraphModel[];
 }
 
 export interface ParentModel extends Backbone.Model {
@@ -16,6 +16,12 @@ export interface ParentModel extends Backbone.Model {
     findAllDescendants?: () => GraphModel[];
 }
 
+export type NestingOptions = {
+    stopNestingType?: string | string[],
+    forceBranchType?: string | string[],
+    forceLeafType?: string | string[],
+}
+
 export type TTreeEditorOptions = {
     model: any,
     hidden?: boolean,
@@ -23,6 +29,7 @@ export type TTreeEditorOptions = {
     closedEyeIconClass?: string,
     configDiff: TConfigDiff,
     unNamedType?: string,
+    nestingOptions: NestingOptions
     stopNestingType?: string,
     forceBranchType?: string,
     forceLeafType?: string | string[],
@@ -30,14 +37,12 @@ export type TTreeEditorOptions = {
     showToolbar?: boolean
 };
 
-export type ChildsFilter = (argument: Backbone.View) => boolean;
+export type ChildsFilter = (argument: { model: Backbone.Model }) => boolean;
 
 export type NodeViewFactoryOptions = {
     model: ParentModel | Backbone.Model,
     unNamedType?: string | string[],
-    stopNestingType?: string | string[],
-    forceBranchType?: string | string[],
-    forceLeafType?: string | string[],
+    nestingOptions: NestingOptions,
     childsFilter?: ChildsFilter
 };
 

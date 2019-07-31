@@ -1,6 +1,6 @@
 import 'jasmine-jquery';
 
-fdescribe('Layout', () => {
+describe('Layout', () => {
     describe('AutoLayout', () => {
         //Todo test
     });

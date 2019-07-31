@@ -4,7 +4,7 @@ import RootViewWithToolbar from '../views/RootViewWithToolbar';
 import LeafView from '../views/LeafView';
 import EmptyView from '../views/EmptyView';
 import UnNamedBranchView from '../views/UnNamedBranchView';
-import { RootViewFactoryOptions, NodeViewFactoryOptions, ParentModel } from '../types';
+import { RootViewFactoryOptions, NodeViewFactoryOptions } from '../types';
 
 export default {
     getRootView(config: RootViewFactoryOptions) {
@@ -16,7 +16,8 @@ export default {
     },
 
     getNodeView(config: NodeViewFactoryOptions) {
-        const { model, unNamedType, stopNestingType, forceBranchType, forceLeafType } = config;
+        const { model, unNamedType, nestingOptions } = config;
+        const { stopNestingType, forceBranchType, forceLeafType } = nestingOptions;
 
         const type = model.get('type');
         const fieldType = model.get('fieldType');

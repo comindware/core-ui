@@ -2,13 +2,19 @@ import DiffItem from './DiffItem';
 import BaseDiffMap from './BaseDiffMap';
 import { TreeConfig, NodeConfig } from '../types';
 
-const isEqualMaps = (a: DiffItem, b: DiffItem) => {
+type paramType = Parameters<typeof _.isEqual> | Map<any, any>;
+
+const isEqualExtended = (a: paramType, b: paramType) => {
+    if (!(a instanceof Map && b instanceof Map)) {
+        return _.isEqual(a ,b);
+    }
+
     if (a.size !== b.size) {
         return false;
     }
 
     for (const key of a.keys()) {
-        if (!b.has(key) || !isEqualMaps(b.get(key), a.get(key))) {
+        if (!b.has(key) || !isEqualExtended(b.get(key), a.get(key))) {
             return false;
         }
     }
@@ -38,7 +44,7 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
             diffItem.set(...entry);
         });
 
-        if (isEqualMaps(diffItem, initItem)) {
+        if (isEqualExtended(diffItem, initItem)) {
             this.delete(key);
 
             return this;
@@ -61,5 +67,26 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
         });
 
         return mappedConfig;
+    }
+
+    mapChildsToObjects() {
+        // let rrr = config.renameKeys(key => key.replace(keyReplaceRegExp, ''))
+        const newMap = new Map();
+
+        this.forEach((value: DiffItem, key: string) => {
+            newMap.set(key, value.toObject())
+        });
+
+        return newMap;
+        // const obj: NodeConfig = {};
+
+        // this.forEach((diff: DiffItem, key: string) => {
+        //     obj[key] = diff.toObject();
+        // });
+
+        // return obj;
+
+
+        //return //Array.from(this).reduce((obj: NodeConfig , [key, value]) => ((obj[key] = value), obj), {});
     }
 }

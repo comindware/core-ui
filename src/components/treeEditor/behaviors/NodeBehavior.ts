@@ -169,15 +169,14 @@ export default Marionette.Behavior.extend({
         const collection = this.view.model.collection;
         const draggingModel = collection.draggingModel;
 
-        const conditions = [
-            !collection,
-            !collection.draggingModel,
-            this.view.model === draggingModel,
-            !collection.contains(draggingModel),
-            element && !getSiblings(element).includes(this.view.el)
-        ];
+        const isValid =
+            collection &&
+            collection.draggingModel &&
+            this.view.model !== draggingModel &&
+            collection.contains(draggingModel) &&
+            (!element || getSiblings(element).includes(this.view.el));
 
-        return conditions.some(c => c);
+        return !isValid;
     },
 
     __getRealTargetElement(element: HTMLElement) {

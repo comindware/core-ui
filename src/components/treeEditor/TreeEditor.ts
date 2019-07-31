@@ -1,6 +1,6 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
-import TreeDiffController from './controllers/TreeDiffController';
+import DiffController from './controllers/DiffController';
 import { TConfigDiff, TTreeEditorOptions, GraphModel } from './types';
 
 const defaultOptions = {
@@ -16,15 +16,16 @@ export default class TreeEditor {
     configDiff: TConfigDiff;
     model: GraphModel;
     view: Backbone.View;
-    controller: TreeDiffController;
+    controller: DiffController;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
         this.configDiff = options.configDiff;
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
+        const nestingOptions = { stopNestingType: options.stopNestingType, forceBranchType: options.forceBranchType, forceLeafType: options.forceLeafType };
 
-        this.controller = new TreeDiffController({ configDiff: this.configDiff, graphModel: this.model, reqres });
+        this.controller = new DiffController({ configDiff: this.configDiff, graphModel: this.model, reqres, nestingOptions });
 
         const popoutView = Core.dropdown.factory.createPopout({
             buttonView: TEButtonView,
@@ -35,9 +36,7 @@ export default class TreeEditor {
             panelView: NodeViewFactory.getRootView({
                 model: this.model,
                 unNamedType: options.unNamedType,
-                stopNestingType: options.stopNestingType,
-                forceBranchType: options.forceBranchType,
-                forceLeafType: options.forceLeafType,
+                nestingOptions,
                 showToolbar: options.showToolbar
             }),
             panelViewOptions: {
@@ -62,7 +61,7 @@ export default class TreeEditor {
         popoutView.getDiffConfig = this.__getDiffConfig.bind(this);
         popoutView.setDiffConfig = this.__setDiffConfig.bind(this);
         popoutView.resetDiffConfig = this.__resetDiffConfig.bind(this);
-        popoutView.reorderCollectionByIndex = TreeDiffController.prototype.__reorderCollectionByIndex; // Or should we export controller with coreApi?
+        popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
 
         return (this.view = popoutView);
     }

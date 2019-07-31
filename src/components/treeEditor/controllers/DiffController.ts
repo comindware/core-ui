@@ -1,11 +1,12 @@
-import { GraphModel, TConfigDiff, NodeConfig } from '../types';
+import { GraphModel, TConfigDiff, NodeConfig, NestingOptions } from '../types';
 import DiffItem from '../classes/DiffItem';
 import ConfigDiff from '../classes/ConfigDiff';
 
 type TreeDiffControllerOptions = {
     configDiff: TConfigDiff,
     graphModel: GraphModel,
-    reqres: Backbone.Radio.Channel
+    reqres: Backbone.Radio.Channel,
+    nestingOptions: NestingOptions
 };
 
 interface CollectionWithInitIalConfig extends Backbone.Collection {
@@ -21,7 +22,24 @@ const findDuplicates = (array: string[]): string[] => {
 
 const personalConfigProps = ['index', 'width', 'isHidden']; //TODO add them dynamically (i.e. something like personalConfigProps aggregator)
 
-const findAllDescendants = (model: GraphModel) => {
+// findAllDescendants(predicate) {
+//     if (!this.isContainer) {
+//         return null;
+//     }
+//     const result = [];
+//     this.getChildren().forEach(c => {
+//         if (!predicate || predicate(c)) {
+//             result.push(c);
+//         }
+//         const r = c.findAllDescendants(predicate);
+//         if (r && r.length > 0) {
+//             result.push(...r);
+//         }
+//     });
+//     return result;
+// },
+
+const findAllDescendants = (model: GraphModel, predicate?: (graphModel: GraphModel) => boolean) => {
     if (!model.isContainer) {
         return [];
     }
@@ -30,8 +48,12 @@ const findAllDescendants = (model: GraphModel) => {
     const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
 
     children.forEach((c: GraphModel) => {
-        result.push(c);
+        if (!predicate || predicate(c)) {
+            result.push(c);
+        }
+
         const r = findAllDescendants(c);
+
         if (r && r.length > 0) {
             result.push(...r);
         }
@@ -41,16 +63,16 @@ const findAllDescendants = (model: GraphModel) => {
 };
 
 export default class TreeDiffController {
-    configDiff: ConfigDiff;
+    configDiff: TConfigDiff;
     configuredCollectionsSet: Set<Backbone.Collection>;
     graphDescendants: Map<string, GraphModel>;
 
     constructor(options: TreeDiffControllerOptions) {
-        const { configDiff, graphModel, reqres } = options;
+        const { configDiff, graphModel, reqres, nestingOptions } = options;
 
         this.configuredCollectionsSet = new Set();
 
-        this.__initDescendants(graphModel);
+        this.__initDescendants(graphModel, nestingOptions);
         this.__initConfiguration(configDiff);
 
         reqres.reply('treeEditor:setWidgetConfig', (widgetId: string, config: NodeConfig) => this.__setNodeConfig(widgetId, config));
@@ -74,13 +96,24 @@ export default class TreeDiffController {
         this.set(configDiff);
     }
 
-    __initDescendants(graphModel: GraphModel) {
+    __getNestingFilter(nestingOptions: NestingOptions) {
+        const { stopNestingType, forceBranchType, forceLeafType } = nestingOptions;
+        const filterFn = (model: GraphModel) => true;
+
+        return filterFn
+    }
+
+    __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
+        
+        const filterFn = this.__getNestingFilter(nestingOptions);
+        const descendants = typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants(filterFn) : findAllDescendants(graphModel, filterFn);
+        // const descendants = this.__applyNestingFilter(graphDescendantsArray, nestingOptions)
+
+        this.graphDescendants = new Map(descendants.map((model: GraphModel) => [model.id, model]));
+
         const collectionsSet = new Set();
-        const graphDescendantsArray = typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants() : findAllDescendants(graphModel);
 
-        this.graphDescendants = new Map(graphDescendantsArray.map(model => [model.id, model]));
-
-        graphDescendantsArray.forEach(model => {
+        descendants.forEach((model: GraphModel) => {
             if (model.collection) {
                 collectionsSet.add(model.collection);
             }
@@ -95,11 +128,11 @@ export default class TreeDiffController {
             return initialConfig;
         };
 
-        const initialConfig = graphDescendantsArray.reduce(reducer, new Map());
+        const initialConfig = descendants.reduce(reducer, new Map());
 
         this.configDiff = new ConfigDiff(initialConfig);
 
-        const nonUniqueList = findDuplicates(graphDescendantsArray.map(model => model.id));
+        const nonUniqueList = findDuplicates(descendants.map((model: GraphModel)  => model.id));
         if (nonUniqueList.length) {
             Core.InterfaceError.logError(`Error: graph models has non-unique ids: ${nonUniqueList}. Unpredictable behavior is possible.`);
         }

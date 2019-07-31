@@ -5,6 +5,8 @@ import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import TabModel from './models/TabModel';
+import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
+import { ChildsFilter, TreeConfig, GraphModel } from '../../components/treeEditor/types';
 
 type Tab = { view: any, id: string };
 
@@ -343,7 +345,7 @@ export default Marionette.View.extend({
             name: 'Tabs', //TODO Localize, getNodeName
             rows: this.__tabsCollection
         });
-        this.__tabsCollection.forEach(tabModel => {
+        this.__tabsCollection.forEach((tabModel: GraphModel) => {
             tabModel.isContainer = true;
             tabModel.childrenAttribute = 'tabComponents';
             tabModel.set('tabComponents', new Backbone.Collection([{ id: _.uniqueId('treeItem'), name: 'tab content' }])); //TODO generate proper childrens
@@ -352,7 +354,12 @@ export default Marionette.View.extend({
         this.treeModel.isContainer = !!this.__tabsCollection.length;
         this.treeModel.childrenAttribute = 'rows';
 
-        const treeEditorOptions = {
+        const treeEditorOptions: {
+            model: TreeConfig,
+            hidden: boolean,
+            configDiff: ConfigDiff,
+            childsFilter?: ChildsFilter
+        } = {
             model: this.treeModel,
             hidden: this.options.treeEditorIsHidden,
             configDiff: this.options.treeEditorConfig

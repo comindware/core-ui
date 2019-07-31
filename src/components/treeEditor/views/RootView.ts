@@ -10,8 +10,10 @@ export default BranchView.extend({
         BranchView.prototype.initialize.call(this, options);
 
         let filteredModels = this.collection.filter((model: GraphModel) => !model.get('required'));
-        if (typeof options.childsFilter === 'function') {
-            filteredModels = filteredModels.filter((model: GraphModel) => options.childsFilter.call({}, { model }));
+        const childsFilter = options.childsFilter;
+
+        if (typeof childsFilter === 'function') {
+            filteredModels = filteredModels.filter((model: GraphModel) => childsFilter({ model }));
         }
 
         const filteredCollection = (this.filteredCollection = new Backbone.Collection(filteredModels));
@@ -80,7 +82,7 @@ export default BranchView.extend({
         event.stopPropagation();
         const allChildsHidden = !this.model.allChildsHidden;
 
-        this.__settHiiddenToChildsModels(allChildsHidden);
+        this.__setHiiddenToChildsModels(allChildsHidden);
         this.__toggleHideAll(allChildsHidden);
     },
 
@@ -97,7 +99,7 @@ export default BranchView.extend({
             : LocalizationService.get('CORE.TOOLBAR.BLINKCHECKBOX.HIDEALL');
     },
 
-    __settHiiddenToChildsModels(hidden: boolean) {
+    __setHiiddenToChildsModels(hidden: boolean) {
         this.model.allChildsHidden = hidden;
         this.filteredCollection.settingAllState = true;
         this.filteredCollection.forEach((model: GraphModel) => setModelHiddenAttribute(model, hidden));
