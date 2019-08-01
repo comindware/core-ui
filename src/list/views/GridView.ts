@@ -912,18 +912,18 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
-            const diffConfig = {
+            const configDiff = {
                 oldIndex: this.options.columns.findIndex(col => col.key === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
-            this.__moveColumn(diffConfig);
+            this.__moveColumn(configDiff);
         });
 
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
     },
 
-    resetDiffConfig() {
-        this.treeEditorView.resetDiffConfig();
+    resetConfigDiff() {
+        this.treeEditorView.resetConfigDiff();
     },
 
     __reorderColumns(config: string[]) {

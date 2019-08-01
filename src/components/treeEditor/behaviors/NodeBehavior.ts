@@ -174,7 +174,11 @@ export default Marionette.Behavior.extend({
             collection.draggingModel &&
             this.view.model !== draggingModel &&
             collection.contains(draggingModel) &&
-            (!element || getSiblings(element).includes(this.view.el));
+            (el => {
+                const hasSiblings = !el || getSiblings(el).includes(this.view.el);
+
+                return hasSiblings;
+            })(element);
 
         return !isValid;
     },

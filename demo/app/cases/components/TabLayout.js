@@ -143,7 +143,7 @@ export default function() {
             showTreeEditor: true,
             treeEditorIsHidden: false,
             treeEditorConfig: new Map([['tab2', { index: 2 }], ['tab3', { index: 3, isHidden: true }], ['tab4', { index: 1 }]]),
-            treeEditorChildsFilter: vw => vw.model.get('visible') !== false,
+            treeEditorChildsFilter: childView => childView.model.get('visible') !== false,
             tabs,
             showStepper: true,
             showMoveButtons: true

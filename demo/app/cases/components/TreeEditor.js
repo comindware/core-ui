@@ -300,7 +300,7 @@ export default function() {
             ['1.4', { isHidden: true }]
         ])
     });
-    console.log(view.getDiffConfig());
+    console.log(view.getConfigDiff());
     view.listenTo(view, 'save', config => console.log(`saved: ${config}`));
     view.listenTo(view, 'reset', () => console.log('reseted'));
 

@@ -60,32 +60,32 @@ export default class TreeEditor {
             popoutView.el.setAttribute('hidden', true);
         }
 
-        popoutView.getDiffConfig = this.__getDiffConfig.bind(this);
-        popoutView.setDiffConfig = this.__setDiffConfig.bind(this);
-        popoutView.resetDiffConfig = this.__resetDiffConfig.bind(this);
+        popoutView.getConfigDiff = this.__getConfigDiff.bind(this);
+        popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
+        popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
 
         return (this.view = popoutView);
     }
 
-    __getDiffConfig() {
+    __getConfigDiff() {
         return this.controller.configDiff;
     }
 
-    __setDiffConfig(configDiff: ConfigDiff) {
+    __setConfigDiff(configDiff: ConfigDiff) {
         this.controller.set(configDiff);
     }
 
-    __resetDiffConfig() {
+    __resetConfigDiff() {
         this.controller.reset();
     }
 
     __onSave() {
-        this.view.trigger('save', this.__getDiffConfig());
+        this.view.trigger('save', this.__getConfigDiff());
     }
 
     __onReset() {
-        this.__resetDiffConfig();
+        this.__resetConfigDiff();
         this.view.trigger('reset');
     }
 
