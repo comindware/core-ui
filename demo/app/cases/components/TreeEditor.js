@@ -105,6 +105,7 @@ export default function() {
                                 name: 'tab9',
                                 isContainer: true,
                                 childrenAttribute: 'rows',
+                                type: 'hasController',
                                 childrens: [
                                     {
                                         id: '1.4.2.1.1',
@@ -289,6 +290,7 @@ export default function() {
         unNamedType: 'unNamed',
         showToolbar: true,
         childsFilter: child => child.model.get('visible') !== false,
+        nestingOptions: { hasControllerType: 'hasController' },
         configDiff: new Map([
             ['1.3', { index: 1, isHidden: true }],
             ['1.1a', { index: 2 }],
@@ -298,7 +300,7 @@ export default function() {
             ['1.4', { isHidden: true }]
         ])
     });
-    console.log(view.getDiffConfig());
+    console.log(view.getConfigDiff());
     view.listenTo(view, 'save', config => console.log(`saved: ${config}`));
     view.listenTo(view, 'reset', () => console.log('reseted'));
 

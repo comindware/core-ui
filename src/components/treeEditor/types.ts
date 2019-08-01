@@ -1,11 +1,12 @@
 import DiffItem from './classes/DiffItem';
+import ConfigDiff from './classes/ConfigDiff';
 
 export interface GraphModel extends Backbone.Model {
     isContainer?: boolean;
     childrenAttribute?: string;
     getParent?: () => GraphModel;
     getChildren: () => GraphModel;
-    findAllDescendants?: () => GraphModel[];
+    findAllDescendants?: (predicate?: (graphModel: GraphModel) => boolean) => GraphModel[];
 }
 
 export interface ParentModel extends Backbone.Model {
@@ -16,36 +17,39 @@ export interface ParentModel extends Backbone.Model {
     findAllDescendants?: () => GraphModel[];
 }
 
+type StringOrArray = string | string[];
+
+export type NestingOptions = {
+    stopNestingType?: StringOrArray,
+    forceBranchType?: StringOrArray,
+    forceLeafType?: StringOrArray,
+    hasControllerType?: StringOrArray,
+}
+
 export type TTreeEditorOptions = {
     model: any,
     hidden?: boolean,
     eyeIconClass?: string,
     closedEyeIconClass?: string,
-    configDiff: TConfigDiff,
+    configDiff: ConfigDiff,
     unNamedType?: string,
-    stopNestingType?: string,
-    forceBranchType?: string,
-    forceLeafType?: string | string[],
+    nestingOptions: NestingOptions
     getNodeName?: (model: GraphModel) => string,
     showToolbar?: boolean
 };
 
-export type ChildsFilter = (argument: Backbone.View) => boolean;
+export type ChildsFilter = (argument: { model: Backbone.Model }) => boolean;
 
 export type NodeViewFactoryOptions = {
     model: ParentModel | Backbone.Model,
     unNamedType?: string | string[],
-    stopNestingType?: string | string[],
-    forceBranchType?: string | string[],
-    forceLeafType?: string | string[],
+    nestingOptions: NestingOptions,
     childsFilter?: ChildsFilter
 };
 
 export interface RootViewFactoryOptions extends NodeViewFactoryOptions {
     showToolbar?: boolean;
 }
-
-export type TConfigDiff = Map<string, NodeConfig>;
 
 export type SingleItem = boolean | number | string;
 

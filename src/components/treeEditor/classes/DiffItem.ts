@@ -27,4 +27,8 @@ export default class DiffItem extends BaseDiffMap<NodeConfig> {
 
         return super.set(key, value);
     }
+
+    toObject() {
+        return Object.fromEntries(this);
+    }
 }
