@@ -70,7 +70,6 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
     }
 
     mapChildsToObjects() {
-        // let rrr = config.renameKeys(key => key.replace(keyReplaceRegExp, ''))
         const newMap = new Map();
 
         this.forEach((value: DiffItem, key: string) => {
@@ -78,15 +77,5 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
         });
 
         return newMap;
-        // const obj: NodeConfig = {};
-
-        // this.forEach((diff: DiffItem, key: string) => {
-        //     obj[key] = diff.toObject();
-        // });
-
-        // return obj;
-
-
-        //return //Array.from(this).reduce((obj: NodeConfig , [key, value]) => ((obj[key] = value), obj), {});
     }
 }

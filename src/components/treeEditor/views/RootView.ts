@@ -64,7 +64,7 @@ export default BranchView.extend({
     },
 
     collapseChildren(options: { interval: number, collapsed: boolean }) {
-        this.children.forEach(view => view.toggleCollapsedState && view.toggleCollapsedState(options));
+        this.children.forEach((view: Backbone.View) => view.toggleCollapsedState && view.toggleCollapsedState(options));
     },
 
     onRender() {

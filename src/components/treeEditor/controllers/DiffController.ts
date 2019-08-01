@@ -1,9 +1,9 @@
-import { GraphModel, TConfigDiff, NodeConfig, NestingOptions } from '../types';
+import { GraphModel, NodeConfig, NestingOptions } from '../types';
 import DiffItem from '../classes/DiffItem';
 import ConfigDiff from '../classes/ConfigDiff';
 
 type TreeDiffControllerOptions = {
-    configDiff: TConfigDiff,
+    configDiff: ConfigDiff,
     graphModel: GraphModel,
     reqres: Backbone.Radio.Channel,
     nestingOptions: NestingOptions
@@ -22,24 +22,30 @@ const findDuplicates = (array: string[]): string[] => {
 
 const personalConfigProps = ['index', 'width', 'isHidden']; //TODO add them dynamically (i.e. something like personalConfigProps aggregator)
 
-// findAllDescendants(predicate) {
-//     if (!this.isContainer) {
-//         return null;
-//     }
-//     const result = [];
-//     this.getChildren().forEach(c => {
-//         if (!predicate || predicate(c)) {
-//             result.push(c);
-//         }
-//         const r = c.findAllDescendants(predicate);
-//         if (r && r.length > 0) {
-//             result.push(...r);
-//         }
-//     });
-//     return result;
-// },
+const findAllDescendants = (model: GraphModel, predicate?: (model: GraphModel) => boolean) => {
+    if (!model.isContainer) {
+        return [];
+    }
 
-const findAllDescendants = (model: GraphModel, predicate?: (graphModel: GraphModel) => boolean) => {
+    const result: GraphModel[] = [];
+    const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
+
+    children.forEach(c => {
+        if (!predicate || predicate(c)) {
+            result.push(c);
+        }
+
+        const r = findAllDescendants(c, predicate);
+
+        if (r && r.length > 0) {
+            result.push(...r);
+        }
+    });
+
+    return result;
+};
+
+const filterDescendants = (model: GraphModel, filterFn: (graphModel: GraphModel) => boolean) => {
     if (!model.isContainer) {
         return [];
     }
@@ -48,11 +54,13 @@ const findAllDescendants = (model: GraphModel, predicate?: (graphModel: GraphMod
     const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
 
     children.forEach((c: GraphModel) => {
-        if (!predicate || predicate(c)) {
-            result.push(c);
+        result.push(c);
+
+        if (!filterFn(c)) {
+            return;
         }
 
-        const r = findAllDescendants(c);
+        const r = filterDescendants(c, filterFn);
 
         if (r && r.length > 0) {
             result.push(...r);
@@ -63,9 +71,9 @@ const findAllDescendants = (model: GraphModel, predicate?: (graphModel: GraphMod
 };
 
 export default class TreeDiffController {
-    configDiff: TConfigDiff;
+    configDiff: ConfigDiff;
     configuredCollectionsSet: Set<Backbone.Collection>;
-    graphDescendants: Map<string, GraphModel>;
+    filteredDescendants: Map<string, GraphModel>;
 
     constructor(options: TreeDiffControllerOptions) {
         const { configDiff, graphModel, reqres, nestingOptions } = options;
@@ -83,7 +91,7 @@ export default class TreeDiffController {
         this.__applyDiff();
     }
 
-    set(configDiff: TConfigDiff) {
+    set(configDiff: ConfigDiff) {
         configDiff.forEach((value, key) => this.configDiff.set(key, value));
         this.__applyDiff();
     }
@@ -92,25 +100,32 @@ export default class TreeDiffController {
         this.configDiff.set(widgetId, keyValue);
     }
 
-    __initConfiguration(configDiff: TConfigDiff) {
+    __initConfiguration(configDiff: ConfigDiff) {
         this.set(configDiff);
     }
 
-    __getNestingFilter(nestingOptions: NestingOptions) {
-        const { stopNestingType, forceBranchType, forceLeafType } = nestingOptions;
-        const filterFn = (model: GraphModel) => true;
-
-        return filterFn
-    }
-
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
+        const { hasControllerType } = nestingOptions;
+        const filterFn = (model: GraphModel) => {
+            const type = model.get('type');
+            const fieldType = model.get('fieldType');
+
+            if (!hasControllerType) {
+                return true;
+            }
+
+            const result = Array.isArray(hasControllerType) 
+                ? hasControllerType.includes(type) || hasControllerType.includes(fieldType)
+                : type === hasControllerType || fieldType === hasControllerType;
+
+            return !result;
+        };
         
-        const filterFn = this.__getNestingFilter(nestingOptions);
-        const descendants = typeof graphModel.findAllDescendants === 'function' ? graphModel.findAllDescendants(filterFn) : findAllDescendants(graphModel, filterFn);
-        // const descendants = this.__applyNestingFilter(graphDescendantsArray, nestingOptions)
+        const filteredDests = filterDescendants(graphModel, filterFn);
+        this.filteredDescendants = new Map(filteredDests.map((model: GraphModel) => [model.id, model]));
 
-        this.graphDescendants = new Map(descendants.map((model: GraphModel) => [model.id, model]));
-
+        const findAllDescendantsFunc = graphModel.findAllDescendants;
+        const descendants = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
         const collectionsSet = new Set();
 
         descendants.forEach((model: GraphModel) => {
@@ -140,7 +155,7 @@ export default class TreeDiffController {
 
     // apply diff to graphModel
     __applyDiff() {
-        this.graphDescendants.forEach((model, modelId) => {
+        this.filteredDescendants.forEach((model, modelId) => {
             const configMap = this.configDiff.get(modelId) || this.configDiff.initialConfig.get(modelId);
             const configObject = configMap.toObject();
 

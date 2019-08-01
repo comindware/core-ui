@@ -1,4 +1,5 @@
 import DiffItem from './classes/DiffItem';
+import ConfigDiff from './classes/ConfigDiff';
 
 export interface GraphModel extends Backbone.Model {
     isContainer?: boolean;
@@ -16,10 +17,13 @@ export interface ParentModel extends Backbone.Model {
     findAllDescendants?: () => GraphModel[];
 }
 
+type StringOrArray = string | string[];
+
 export type NestingOptions = {
-    stopNestingType?: string | string[],
-    forceBranchType?: string | string[],
-    forceLeafType?: string | string[],
+    stopNestingType?: StringOrArray,
+    forceBranchType?: StringOrArray,
+    forceLeafType?: StringOrArray,
+    hasControllerType?: StringOrArray,
 }
 
 export type TTreeEditorOptions = {
@@ -27,12 +31,9 @@ export type TTreeEditorOptions = {
     hidden?: boolean,
     eyeIconClass?: string,
     closedEyeIconClass?: string,
-    configDiff: TConfigDiff,
+    configDiff: ConfigDiff,
     unNamedType?: string,
     nestingOptions: NestingOptions
-    stopNestingType?: string,
-    forceBranchType?: string,
-    forceLeafType?: string | string[],
     getNodeName?: (model: GraphModel) => string,
     showToolbar?: boolean
 };
@@ -49,8 +50,6 @@ export type NodeViewFactoryOptions = {
 export interface RootViewFactoryOptions extends NodeViewFactoryOptions {
     showToolbar?: boolean;
 }
-
-export type TConfigDiff = Map<string, NodeConfig>;
 
 export type SingleItem = boolean | number | string;
 

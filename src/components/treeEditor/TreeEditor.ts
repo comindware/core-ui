@@ -1,7 +1,8 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
 import DiffController from './controllers/DiffController';
-import { TConfigDiff, TTreeEditorOptions, GraphModel } from './types';
+import { TTreeEditorOptions, GraphModel } from './types';
+import ConfigDiff from './classes/ConfigDiff';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
@@ -9,11 +10,12 @@ const defaultOptions = {
     configDiff: new Map(),
     getNodeName: undefined,
     showToolbar: false,
-    childsFilter: undefined
+    childsFilter: undefined,
+    nestingOptions: {}
 };
 
 export default class TreeEditor {
-    configDiff: TConfigDiff;
+    configDiff: ConfigDiff;
     model: GraphModel;
     view: Backbone.View;
     controller: DiffController;
@@ -23,7 +25,7 @@ export default class TreeEditor {
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
-        const nestingOptions = { stopNestingType: options.stopNestingType, forceBranchType: options.forceBranchType, forceLeafType: options.forceLeafType };
+        const nestingOptions = options.nestingOptions;
 
         this.controller = new DiffController({ configDiff: this.configDiff, graphModel: this.model, reqres, nestingOptions });
 
@@ -70,7 +72,7 @@ export default class TreeEditor {
         return this.controller.configDiff;
     }
 
-    __setDiffConfig(configDiff: TConfigDiff) {
+    __setDiffConfig(configDiff: ConfigDiff) {
         this.controller.set(configDiff);
     }
 

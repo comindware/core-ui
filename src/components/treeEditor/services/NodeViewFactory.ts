@@ -38,7 +38,7 @@ export default {
         const nestingAllowed =
             !stopNestingType ||
             (() => {
-                const modelParent = model.getParent;
+                const modelParent = model.getParent; // TODO resolve type errors
                 if (!modelParent) {
                     return false;
                 }

@@ -32,9 +32,7 @@ export default Marionette.CollectionView.extend({
         return NodeViewFactory.getNodeView({
             model: childModel,
             unNamedType: this.options.unNamedType,
-            stopNestingType: this.options.stopNestingType,
-            forceBranchType: this.options.forceBranchType,
-            forceLeafType: this.options.forceLeafType,
+            nestingOptions: this.options.nestingOptions,
             childsFilter: this.options.childsFilter
         });
     },

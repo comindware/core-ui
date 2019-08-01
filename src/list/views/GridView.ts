@@ -23,6 +23,8 @@ import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
 import TestService from 'services/TestService';
+import { GraphModel } from '../../components/treeEditor/types';
+import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 
 const classes = {
     REQUIRED: 'required',
@@ -904,12 +906,12 @@ export default Marionette.View.extend({
             hidden: this.options.treeEditorIsHidden,
             model: this.treeModel,
             configDiff: this.options.treeEditorConfig,
-            getNodeName(model) {
+            getNodeName(model: GraphModel) {
                 return model.get('title');
             }
         });
 
-        this.listenTo(columnsCollection, 'add', model => {
+        this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
             const diffConfig = {
                 oldIndex: this.options.columns.findIndex(col => col.key === model.id),
                 newIndex: columnsCollection.indexOf(model)
@@ -917,7 +919,7 @@ export default Marionette.View.extend({
             this.__moveColumn(diffConfig);
         });
 
-        this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
+        this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
     },
 
     resetDiffConfig() {
