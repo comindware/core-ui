@@ -135,6 +135,7 @@ export default Marionette.PartialCollectionView.extend({
         this.parent$el = this.options.parent$el;
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.handleResize(false);
+        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
     },
 
     __specifyChildHeight() {
@@ -181,6 +182,28 @@ export default Marionette.PartialCollectionView.extend({
             this._destroyEmptyView();
             this._addChild(child, index);
         }
+    },
+
+    onAddChild(view, child) {
+        this.__updateChildTop(child);
+    },
+
+    __updateChildTop(child) {
+        if (!child || !this.collection.length) {
+            return;
+        }
+        requestAnimationFrame(() => {
+            const childModel = child.model;
+            if (this.getOption('showRowIndex')) {
+                const index = childModel.collection.indexOf(childModel) + 1;
+                if (index !== childModel.currentIndex) {
+                    child.updateIndex && child.updateIndex(index);
+                }
+            }
+            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                child.insertFirstCellHtml();
+            }
+        });
     },
 
     _setupChildView(view, index) {

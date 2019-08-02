@@ -281,6 +281,11 @@ export default Marionette.View.extend({
         });
     },
 
+    updateIndex(index: number) {
+        this.el.querySelector('.js-index').innerHTML = index;
+        this.model.currentIndex = index;
+    },
+
     insertFirstCellHtml(force: boolean) {
         const elements = this.el.getElementsByTagName('td');
         if (elements.length) {
