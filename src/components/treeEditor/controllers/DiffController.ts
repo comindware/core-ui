@@ -92,7 +92,7 @@ export default class TreeDiffController {
     }
 
     set(configDiff: ConfigDiff) {
-        configDiff.forEach((value, key) => this.configDiff.set(key, value));
+        this.__passConfigDiff(configDiff);
         this.__applyDiff();
     }
 
@@ -101,7 +101,13 @@ export default class TreeDiffController {
     }
 
     __initConfiguration(configDiff: ConfigDiff) {
-        this.set(configDiff);
+        this.__passConfigDiff(configDiff);
+        this.__applyDiff(this.filteredDescendants);
+        
+    }
+
+    __passConfigDiff(configDiff) {
+        configDiff.forEach((value, key) => this.configDiff.set(key, value));
     }
 
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
@@ -125,7 +131,7 @@ export default class TreeDiffController {
         this.filteredDescendants = new Map(filteredDests.map((model: GraphModel) => [model.id, model]));
 
         const findAllDescendantsFunc = graphModel.findAllDescendants;
-        const descendants = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
+        const descendants = this.descendants = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
         const collectionsSet = new Set();
 
         descendants.forEach((model: GraphModel) => {
@@ -154,8 +160,8 @@ export default class TreeDiffController {
     }
 
     // apply diff to graphModel
-    __applyDiff() {
-        this.filteredDescendants.forEach((model, modelId) => {
+    __applyDiff(descendants = this.descendants) {
+        descendants.forEach((model, modelId) => {
             const configMap = this.configDiff.get(modelId) || this.configDiff.initialConfig.get(modelId);
             const configObject = configMap.toObject();
 
