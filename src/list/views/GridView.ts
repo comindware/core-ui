@@ -337,7 +337,9 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
-            this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
+            if (this.options.showTreeEditor) {
+                this.__setVisibilityAllColumns();
+            }
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -436,6 +438,10 @@ export default Marionette.View.extend({
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
+
+        this.listenTo(this.columnsCollection, 'change:isHidden', model => {
+            this.__toggleColumnVisibility(model.id, model.get('isHidden'));
+        });
 
         if (this.options.columns.length) {
             this.__toggleNoColumnsMessage(this.options.columns);
@@ -874,21 +880,11 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = new Backbone.Collection(this.options.columns);
+        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns));
         columnsCollection.map(model => {
             model.id = model.get('key');
 
             return model;
-        });
-        this.listenTo(columnsCollection, 'change:isHidden', model => {
-            if (this.isAttached()) {
-                this.__toggleColumnVisibility(model.id, model.get('isHidden'));
-            } else {
-                TestService.wait({
-                    condition: () => this.isAttached(),
-                    callback: () => this.__toggleColumnVisibility(model.id, model.get('isHidden'))
-                });
-            }
         });
 
         this.treeModel = new Backbone.Model({
@@ -920,10 +916,15 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
+        this.listenTo(this.treeEditorView, 'reset', (config: ConfigDiff) => console.log('reset', config));
     },
 
     resetConfigDiff() {
         this.treeEditorView.resetConfigDiff();
+    },
+
+    __setVisibilityAllColumns() {
+        this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
     },
 
     __reorderColumns(config: string[]) {

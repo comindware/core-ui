@@ -76,6 +76,11 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
             newMap.set(key, value.toObject())
         });
 
+        newMap.initialConfig = new Map();
+        this.initialConfig.forEach((value: DiffItem, key: string) => {
+            newMap.initialConfig.set(key, {...value.initialConfig, ...value.toObject()});
+        });
+
         return newMap;
     }
 }

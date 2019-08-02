@@ -106,8 +106,8 @@ export default class TreeDiffController {
         
     }
 
-    __passConfigDiff(configDiff) {
-        configDiff.forEach((value, key) => this.configDiff.set(key, value));
+    __passConfigDiff(configDiff: ConfigDiff) {
+        (configDiff.initialConfig || configDiff).forEach((value, key) => this.configDiff.set(key, configDiff.get(key) || value));
     }
 
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
@@ -127,11 +127,12 @@ export default class TreeDiffController {
             return !result;
         };
         
-        const filteredDests = filterDescendants(graphModel, filterFn);
-        this.filteredDescendants = new Map(filteredDests.map((model: GraphModel) => [model.id, model]));
+        const filteredDestsArr = filterDescendants(graphModel, filterFn);
+        this.filteredDescendants = new Map(filteredDestsArr.map((model: GraphModel) => [model.id, model]));
 
         const findAllDescendantsFunc = graphModel.findAllDescendants;
-        const descendants = this.descendants = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
+        const descendantsArr = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
+        const descendants = this.descendants = new Map(descendantsArr.map((model: GraphModel) => [model.id, model]));
         const collectionsSet = new Set();
 
         descendants.forEach((model: GraphModel) => {
@@ -139,21 +140,35 @@ export default class TreeDiffController {
                 collectionsSet.add(model.collection);
             }
         });
-        collectionsSet.forEach((coll: CollectionWithInitIalConfig) => (coll.initialConfig = coll.map(m => m.id)));
+
+        collectionsSet.forEach((coll: CollectionWithInitIalConfig) => {
+            if(!coll.initialConfig) {
+                Object.defineProperty(coll, 'initialConfig' , {
+                    writable: false,
+                    value: coll.map(m => m.id)
+                })
+            }
+        });
 
         const reducer = (initialConfig: Map<string, DiffItem>, model: GraphModel) => {
-            const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model) }); // TODO maybe the rest of defaults should be moved to here too
-
-            initialConfig.set(model.id, new DiffItem(pick));
+            if (!model.initialConfig) {
+                const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model), isHidden: 0, width: 0 });
+                Object.defineProperty(model, 'initialConfig' , {
+                    writable: false,
+                    value: pick
+                })
+            }
+            
+            initialConfig.set(model.id, new DiffItem(model.initialConfig));
 
             return initialConfig;
         };
 
-        const initialConfig = descendants.reduce(reducer, new Map());
+        const initialConfig = descendantsArr.reduce(reducer, new Map());
 
         this.configDiff = new ConfigDiff(initialConfig);
 
-        const nonUniqueList = findDuplicates(descendants.map((model: GraphModel)  => model.id));
+        const nonUniqueList = findDuplicates(descendantsArr.map((model: GraphModel)  => model.id));
         if (nonUniqueList.length) {
             Core.InterfaceError.logError(`Error: graph models has non-unique ids: ${nonUniqueList}. Unpredictable behavior is possible.`);
         }
