@@ -22,7 +22,6 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
-import TestService from 'services/TestService';
 import { GraphModel } from '../../components/treeEditor/types';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 
@@ -337,9 +336,6 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
-            if (this.options.showTreeEditor) {
-                this.__setVisibilityAllColumns();
-            }
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -439,9 +435,9 @@ export default Marionette.View.extend({
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
 
-        this.listenTo(this.columnsCollection, 'change:isHidden', model => {
-            this.__toggleColumnVisibility(model.id, model.get('isHidden'));
-        });
+        if (this.options.showTreeEditor && this.options.showHeader) {
+            this.__onDiffApplied();
+        }
 
         if (this.options.columns.length) {
             this.__toggleNoColumnsMessage(this.options.columns);
@@ -880,12 +876,7 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns));
-        columnsCollection.map(model => {
-            model.id = model.get('key');
-
-            return model;
-        });
+        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.key, ...column }))));
 
         this.treeModel = new Backbone.Model({
             title: this.options.title,
@@ -915,8 +906,14 @@ export default Marionette.View.extend({
             this.__moveColumn(configDiff);
         });
 
+        this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
+        this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
+
+        this.listenTo(columnsCollection, 'change:isHidden', model => {
+            this.__setColumnVisibility(model.id, model.get('isHidden'));
+        });
+
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
-        this.listenTo(this.treeEditorView, 'reset', (config: ConfigDiff) => console.log('reset', config));
     },
 
     resetConfigDiff() {
@@ -924,7 +921,16 @@ export default Marionette.View.extend({
     },
 
     __setVisibilityAllColumns() {
-        this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
+        this.options.columns.forEach(column => this.__setColumnVisibility(column.key, column.isHidden));
+    },
+
+    __onDiffApplied() {
+        const columnsCollection = this.columnsCollection;
+        this.options.columns.forEach(column => {
+            const model = columnsCollection.get(column.key);
+            Object.entries(model.pick('width', 'isHidden')).forEach(([key, value]) => (column[key] = value));
+        });
+        this.__setVisibilityAllColumns();
     },
 
     __reorderColumns(config: string[]) {
@@ -965,7 +971,7 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __toggleColumnVisibility(key: string, isHidden = false) {
+    __setColumnVisibility(key: string, isHidden = false) {
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.key === key);
         const columnToBeHidden = columns[index];

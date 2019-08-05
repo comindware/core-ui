@@ -74,10 +74,12 @@ export default class TreeDiffController {
     configDiff: ConfigDiff;
     configuredCollectionsSet: Set<Backbone.Collection>;
     filteredDescendants: Map<string, GraphModel>;
+    reqres: Backbone.Radio.Channel
 
     constructor(options: TreeDiffControllerOptions) {
         const { configDiff, graphModel, reqres, nestingOptions } = options;
 
+        this.reqres= reqres;
         this.configuredCollectionsSet = new Set();
 
         this.__initDescendants(graphModel, nestingOptions);
@@ -107,7 +109,12 @@ export default class TreeDiffController {
     }
 
     __passConfigDiff(configDiff: ConfigDiff) {
-        (configDiff.initialConfig || configDiff).forEach((value, key) => this.configDiff.set(key, configDiff.get(key) || value));
+        if (configDiff.initialConfig) {
+            configDiff.initialConfig.forEach((value, key) => this.configDiff.set(key, configDiff.get(key) || value));
+        } else {
+            configDiff.forEach((value, key) => this.configDiff.set(key, value));
+        }
+        
     }
 
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
@@ -127,8 +134,8 @@ export default class TreeDiffController {
             return !result;
         };
         
-        const filteredDestsArr = filterDescendants(graphModel, filterFn);
-        this.filteredDescendants = new Map(filteredDestsArr.map((model: GraphModel) => [model.id, model]));
+        const filteredDestsArray = filterDescendants(graphModel, filterFn);
+        this.filteredDescendants = new Map(filteredDestsArray.map((model: GraphModel) => [model.id, model]));
 
         const findAllDescendantsFunc = graphModel.findAllDescendants;
         const descendantsArr = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
@@ -152,7 +159,7 @@ export default class TreeDiffController {
 
         const reducer = (initialConfig: Map<string, DiffItem>, model: GraphModel) => {
             if (!model.initialConfig) {
-                const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model), isHidden: 0, width: 0 });
+                const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model), isHidden: false, width: 0 });
                 Object.defineProperty(model, 'initialConfig' , {
                     writable: false,
                     value: pick
@@ -202,6 +209,8 @@ export default class TreeDiffController {
                 this.configuredCollectionsSet.delete(coll);
             }
         });
+
+        this.reqres.trigger('treeEditor:diffApplied');
     }
 
     __reorderCollectionByIndex(collection: CollectionWithInitIalConfig) {
