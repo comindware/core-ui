@@ -609,6 +609,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         dateMoment.hours(timeDuration.hours());
         dateMoment.minutes(timeDuration.minutes());
         dateMoment.seconds(timeDuration.seconds());
+        dateMoment.milliseconds(timeDuration.milliseconds());
         return dateMoment.toISOString();
     },
 
