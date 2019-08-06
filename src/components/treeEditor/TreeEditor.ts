@@ -49,6 +49,7 @@ export default class TreeEditor {
         });
 
         reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
+        popoutView.listenTo(reqres, 'treeEditor:diffApplied', () => popoutView.trigger('treeEditor:diffApplied'));
 
         popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
         popoutView.listenTo(popoutView, 'close', () => this.__onSave());
@@ -78,6 +79,7 @@ export default class TreeEditor {
 
     __resetConfigDiff() {
         this.controller.reset();
+        this.view.trigger('reset');
     }
 
     __onSave() {
@@ -86,7 +88,6 @@ export default class TreeEditor {
 
     __onReset() {
         this.__resetConfigDiff();
-        this.view.trigger('reset');
     }
 
     __commandExecute(actionModel: Backbone.Model) {

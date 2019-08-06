@@ -74,10 +74,12 @@ export default class TreeDiffController {
     configDiff: ConfigDiff;
     configuredCollectionsSet: Set<Backbone.Collection>;
     filteredDescendants: Map<string, GraphModel>;
+    reqres: Backbone.Radio.Channel
 
     constructor(options: TreeDiffControllerOptions) {
         const { configDiff, graphModel, reqres, nestingOptions } = options;
 
+        this.reqres= reqres;
         this.configuredCollectionsSet = new Set();
 
         this.__initDescendants(graphModel, nestingOptions);
@@ -92,7 +94,7 @@ export default class TreeDiffController {
     }
 
     set(configDiff: ConfigDiff) {
-        configDiff.forEach((value, key) => this.configDiff.set(key, value));
+        this.__passConfigDiff(configDiff);
         this.__applyDiff();
     }
 
@@ -101,7 +103,18 @@ export default class TreeDiffController {
     }
 
     __initConfiguration(configDiff: ConfigDiff) {
-        this.set(configDiff);
+        this.__passConfigDiff(configDiff);
+        this.__applyDiff(this.filteredDescendants);
+        
+    }
+
+    __passConfigDiff(configDiff: ConfigDiff) {
+        if (configDiff.initialConfig) {
+            configDiff.initialConfig.forEach((value, key) => this.configDiff.set(key, configDiff.get(key) || value));
+        } else {
+            configDiff.forEach((value, key) => this.configDiff.set(key, value));
+        }
+        
     }
 
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
@@ -121,11 +134,12 @@ export default class TreeDiffController {
             return !result;
         };
         
-        const filteredDests = filterDescendants(graphModel, filterFn);
-        this.filteredDescendants = new Map(filteredDests.map((model: GraphModel) => [model.id, model]));
+        const filteredDestsArray = filterDescendants(graphModel, filterFn);
+        this.filteredDescendants = new Map(filteredDestsArray.map((model: GraphModel) => [model.id, model]));
 
         const findAllDescendantsFunc = graphModel.findAllDescendants;
-        const descendants = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
+        const descendantsArr = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
+        const descendants = this.descendants = new Map(descendantsArr.map((model: GraphModel) => [model.id, model]));
         const collectionsSet = new Set();
 
         descendants.forEach((model: GraphModel) => {
@@ -133,29 +147,43 @@ export default class TreeDiffController {
                 collectionsSet.add(model.collection);
             }
         });
-        collectionsSet.forEach((coll: CollectionWithInitIalConfig) => (coll.initialConfig = coll.map(m => m.id)));
+
+        collectionsSet.forEach((coll: CollectionWithInitIalConfig) => {
+            if(!coll.initialConfig) {
+                Object.defineProperty(coll, 'initialConfig' , {
+                    writable: false,
+                    value: coll.map(m => m.id)
+                })
+            }
+        });
 
         const reducer = (initialConfig: Map<string, DiffItem>, model: GraphModel) => {
-            const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model) }); // TODO maybe the rest of defaults should be moved to here too
-
-            initialConfig.set(model.id, new DiffItem(pick));
+            if (!model.initialConfig) {
+                const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model), isHidden: false, width: 0 });
+                Object.defineProperty(model, 'initialConfig' , {
+                    writable: false,
+                    value: pick
+                })
+            }
+            
+            initialConfig.set(model.id, new DiffItem(model.initialConfig));
 
             return initialConfig;
         };
 
-        const initialConfig = descendants.reduce(reducer, new Map());
+        const initialConfig = descendantsArr.reduce(reducer, new Map());
 
         this.configDiff = new ConfigDiff(initialConfig);
 
-        const nonUniqueList = findDuplicates(descendants.map((model: GraphModel)  => model.id));
+        const nonUniqueList = findDuplicates(descendantsArr.map((model: GraphModel)  => model.id));
         if (nonUniqueList.length) {
             Core.InterfaceError.logError(`Error: graph models has non-unique ids: ${nonUniqueList}. Unpredictable behavior is possible.`);
         }
     }
 
     // apply diff to graphModel
-    __applyDiff() {
-        this.filteredDescendants.forEach((model, modelId) => {
+    __applyDiff(descendants = this.descendants) {
+        descendants.forEach((model, modelId) => {
             const configMap = this.configDiff.get(modelId) || this.configDiff.initialConfig.get(modelId);
             const configObject = configMap.toObject();
 
@@ -181,6 +209,8 @@ export default class TreeDiffController {
                 this.configuredCollectionsSet.delete(coll);
             }
         });
+
+        this.reqres.trigger('treeEditor:diffApplied');
     }
 
     __reorderCollectionByIndex(collection: CollectionWithInitIalConfig) {

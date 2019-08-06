@@ -81,8 +81,8 @@ export default function() {
             ['dateTimeCell', { index: 3 }],
             ['durationCell', { index: 4, isHidden: true }],
             ['numberCell', { index: 2 }],
-            ['textCell', { index: 1 }],
-            ['userCell', { index: 0 }]
+            ['textCell', { index: 1, isHidden: true }],
+            ['userCell', { index: 0, isHidden: true }]
         ]),
         excludeActions: ['delete'],
         additionalActions: [

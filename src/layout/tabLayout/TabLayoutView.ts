@@ -78,6 +78,15 @@ export default Marionette.View.extend({
         this.showChildView('headerRegion', headerView);
         if (this.showTreeEditor) {
             this.showChildView('treeEditorRegion', this.treeEditorView);
+
+            const configDiff = this.treeEditorView.getConfigDiff();
+            this.__tabsCollection.forEach(model => {
+                const visible = !configDiff.get(model.id)?.get('isHidden');
+
+                if (visible === true || visible === false) {
+                    model.set({ visible });
+                }
+            });
         }
 
         if (this.getOption('deferRender')) {
@@ -249,6 +258,12 @@ export default Marionette.View.extend({
 
         if (this.showTreeEditor) {
             this.__initTreeEditor();
+
+            this.__tabsCollection.forEach(model => {
+                this.listenTo(model, 'change:isHidden', () => {
+                    this.setVisible(model.id, !model.get('isHidden'));
+                });
+            });
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
@@ -292,7 +307,7 @@ export default Marionette.View.extend({
     __findSelectedTab() {
         const selectedTab = this.__tabsCollection.find(tabModel => tabModel.get('selected'));
 
-        return selectedTab;
+        return selectedTab || this.__tabsCollection.find(tabModel => tabModel.get('visible'));
     },
 
     __getTabIndex(model) {
