@@ -775,6 +775,10 @@ input[type="color"], .colorpicker{
     align-items: center;
 }
 
+.task-links__i > .fa-li {
+    top: 0;
+}
+
 .task-links__link {
     flex: 1 1 auto;
     text-decoration: none;
