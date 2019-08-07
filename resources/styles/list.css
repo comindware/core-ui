@@ -717,6 +717,13 @@ tr.dragover td{
 .grid-table-wrapper {
     min-height: 100%;
     display: contents;
+    width: 100%;
+}
+/* fix for EDGE  */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .grid-table-wrapper {
+        display: ruby-base;
+    }
 }
 
 .grid-table-wrapper-war {
