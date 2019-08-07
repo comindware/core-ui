@@ -312,6 +312,10 @@
     max-width: 100%;
 }
 
+.layout__vertical-layout > .grid-container{
+   flex: 1 1 auto;
+}
+
 .grid-container > .form-label {
     flex: none;
 }
