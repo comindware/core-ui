@@ -1316,11 +1316,13 @@ a:hover {
 }
 
 .member-split-wrp .member-split-grid {
+    display: flex;
+    flex-direction: column;
     overflow-x: unset;
 }
 
 .member-split-wrp .grid-container, .member-split-wrp .grid-content-wrp {
-    height: calc(100% - 60px);
+    min-height: 100px;
     margin-bottom: 0;
 }
 
