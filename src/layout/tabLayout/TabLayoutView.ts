@@ -18,9 +18,15 @@ const classes = {
     HIDDEN: 'layout__tab-hidden'
 };
 
+const defaultOptions = {
+    headerClass: '',
+    bodyClass: ''
+};
+
 export default Marionette.View.extend({
     initialize(options: { tabs: TabsList, showTreeEditor?: boolean }) {
         helpers.ensureOption(options, 'tabs');
+        _.defaults(options, defaultOptions);
 
         this.showTreeEditor = options.showTreeEditor;
         this.__tabsCollection = options.tabs;
