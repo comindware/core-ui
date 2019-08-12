@@ -1,6 +1,8 @@
 export const iconNames = {
     collapse: 'chevron-right',
-    expand: 'chevron-down'
+    expand: 'chevron-down',
+    save: 'save',
+    delete: 'trash-alt'
 };
 
 export const getIconAndPrefixerClasses = (classWithoutPrefixer: string) => {
