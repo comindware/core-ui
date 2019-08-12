@@ -9,6 +9,7 @@ import ToolbarSelectItemView from './views/ToolbarSelectItemView';
 import SearchButtonView from './views/SearchButtonView';
 import SplitButtonView from './views/SplitButtonView';
 import HeadLineView from './views/HeadLineView';
+import TreeEditorView from './views/TreeEditorView';
 
 const __getSeverity = (classPrefix = 'toolbar-btn') => ({
     None: {
@@ -56,7 +57,8 @@ export const toolbarItemType = {
     SELECTSTATE: 'SelectState',
     HEADLINE: 'Headline',
     SEARCH: 'Search',
-    SPLITBUTTON: 'SplitButton'
+    SPLITBUTTON: 'SplitButton',
+    TREEEDITOR: 'TreeEditor'
 };
 
 const viewsByType = {
@@ -70,7 +72,8 @@ const viewsByType = {
     [toolbarItemType.BLINKCHECKBOX]: BlinkCheckboxView,
     [toolbarItemType.HEADLINE]: HeadLineView,
     [toolbarItemType.SEARCH]: SearchButtonView,
-    [toolbarItemType.SPLITBUTTON]: SplitButtonView
+    [toolbarItemType.SPLITBUTTON]: SplitButtonView,
+    [toolbarItemType.TREEEDITOR]: TreeEditorView
 };
 
 const getViewByModel = model => viewsByType[model.get('type')] || ActionView;

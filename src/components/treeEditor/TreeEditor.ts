@@ -52,9 +52,11 @@ export default class TreeEditor {
         popoutView.listenTo(reqres, 'treeEditor:diffApplied', () => popoutView.trigger('treeEditor:diffApplied'));
 
         popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
-        popoutView.listenTo(popoutView, 'close', () => this.__onSave());
+
         if (options.showToolbar) {
             reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
+        } else {
+            popoutView.listenTo(popoutView, 'close', () => this.__onSave());
         }
 
         if (options.hidden) {
@@ -65,8 +67,13 @@ export default class TreeEditor {
         popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
         popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
+        popoutView.getRootCollection = this.__getRootCollection.bind(this);
 
         return (this.view = popoutView);
+    }
+
+    __getRootCollection() {
+        return this.model.get(this.model.childrenAttribute);
     }
 
     __getConfigDiff() {

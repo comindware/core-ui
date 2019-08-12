@@ -27,13 +27,13 @@ export type NestingOptions = {
 }
 
 export type TTreeEditorOptions = {
-    model: any,
+    model: GraphModel,
     hidden?: boolean,
     eyeIconClass?: string,
     closedEyeIconClass?: string,
-    configDiff: ConfigDiff,
+    configDiff?: ConfigDiff,
     unNamedType?: string,
-    nestingOptions: NestingOptions
+    nestingOptions?: NestingOptions
     getNodeName?: (model: GraphModel) => string,
     showToolbar?: boolean
 };
