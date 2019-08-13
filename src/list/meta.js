@@ -143,6 +143,7 @@ export const classes = {
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
     collapsibleIcon: 'js-tree-first-cell',
+    checkboxCell: 'js-cell_selection',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
     cell: 'cell',
