@@ -102,10 +102,10 @@ export default class UIService {
                 clientRect,
                 documentWidth,
                 documentHeight: document.body.offsetHeight,
-                startStyleLeft: parseInt(computedStyle.left || '') || clientRect.left,
-                startStyleTop: parseInt(computedStyle.top || '') || clientRect.top,
-                startStyleRight: parseInt(computedStyle.right || '') || (documentWidth - clientRect.right),
-                startStyleBottom: parseInt(computedStyle.bottom || '') || (documentHeight - clientRect.bottom),
+                startStyleLeft: parseInt(computedStyle.left || '0') || clientRect.left,
+                startStyleTop: parseInt(computedStyle.top || '0') || clientRect.top,
+                startStyleRight: parseInt(computedStyle.right || '0') || (documentWidth - clientRect.right),
+                startStyleBottom: parseInt(computedStyle.bottom || '0') || (documentHeight - clientRect.bottom),
                 startClientX: event.clientX,
                 startClientY: event.clientY
             };
