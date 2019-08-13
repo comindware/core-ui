@@ -423,8 +423,7 @@ export default Marionette.View.extend({
 
         this.trigger('changed:selectedTab', model);
 
-        // todo: find bettter way to initiate child resize
-        Core.services.GlobalEventService.trigger('window:resize', false);
+        Core.services.GlobalEventService.trigger('popout:resize', false);
     },
 
     __handleStepperSelect(model: Backbone.Model): void {

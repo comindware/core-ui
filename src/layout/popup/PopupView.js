@@ -104,7 +104,7 @@ export default Marionette.View.extend({
 
         this.ui.window[0].ondragstart = () => false;
         this.__debounceOnResize = _.debounce(this.__onResize, 300);
-        this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
+        this.listenTo(GlobalEventService, 'window:resize popout:resize', this.__debounceOnResize);
     },
 
     update() {
