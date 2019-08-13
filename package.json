@@ -127,13 +127,13 @@
         "typescript": "^3.5.3",
         "url-loader": "^2.1.0",
         "webpack": "^4.39.1",
-        "webpack-cli": "^3.3.6"
+        "webpack-cli": "^3.3.6",
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0"
     },
     "dependencies": {
         "@babel/runtime-corejs3": "^7.5.4",
         "@fortawesome/fontawesome-free": "^5.10.1",
-        "@typescript-eslint/eslint-plugin": "^1.13.0",
-        "@typescript-eslint/parser": "^1.13.0",
         "autosize": "^4.0.2",
         "backbone": "^1.4.0",
         "backbone-associations": "^0.6.2",

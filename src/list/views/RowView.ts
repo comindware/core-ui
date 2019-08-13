@@ -372,10 +372,11 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleCheckboxClick() {
-        this.model.toggleChecked();
+    __handleCheckboxClick(e: PointerEvent) {
+        this.model.toggleChecked(e.shiftKey);
+
         if (this.getOption('bindSelection')) {
-            this.model.collection.updateTreeNodesCheck(this.model);
+            this.model.collection.updateTreeNodesCheck(this.model, undefined, e.shiftKey);
         }
     },
 
