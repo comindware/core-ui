@@ -35,7 +35,8 @@ export type TTreeEditorOptions = {
     unNamedType?: string,
     nestingOptions?: NestingOptions
     getNodeName?: (model: GraphModel) => string,
-    showToolbar?: boolean
+    showToolbar?: boolean,
+    showResetButton?: boolean
 };
 
 export type ChildsFilter = (argument: { model: Backbone.Model }) => boolean;
@@ -49,6 +50,7 @@ export type NodeViewFactoryOptions = {
 
 export interface RootViewFactoryOptions extends NodeViewFactoryOptions {
     showToolbar?: boolean;
+    showResetButton?: boolean;
 }
 
 export type SingleItem = boolean | number | string;

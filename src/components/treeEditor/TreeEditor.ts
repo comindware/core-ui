@@ -10,6 +10,7 @@ const defaultOptions = {
     configDiff: new Map(),
     getNodeName: undefined,
     showToolbar: false,
+    showResetButton: true,
     childsFilter: undefined,
     nestingOptions: {}
 };
@@ -39,7 +40,8 @@ export default class TreeEditor {
                 model: this.model,
                 unNamedType: options.unNamedType,
                 nestingOptions,
-                showToolbar: options.showToolbar
+                showToolbar: options.showToolbar,
+                showResetButton: options.showResetButton
             }),
             panelViewOptions: {
                 ...options,
