@@ -35,7 +35,7 @@ export default BaseEditorView.extend({
     },
 
     updatePlaceholder(placeholder = this.__placeholderShouldBe()) {
-        this.ui?.input?.prop('placeholder', placeholder);
+        typeof this.ui?.input?.prop === 'function' && this.ui.input.prop('placeholder', placeholder);
     },
 
     __placeholderShouldBe() {
