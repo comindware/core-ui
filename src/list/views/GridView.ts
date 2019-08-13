@@ -392,7 +392,7 @@ export default Marionette.View.extend({
 
         const showRowIndex = this.getOption('showRowIndex');
 
-        const childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+        const childViewOptions = this.childViewOptions = Object.assign(this.options.childViewOptions || {}, {
             columns: this.options.columns,
             transliteratedFields: this.options.transliteratedFields,
             gridEventAggregator: this,
@@ -583,6 +583,11 @@ export default Marionette.View.extend({
         }
 
         return error;
+    },
+
+    setDraggable(draggable: boolean): void {
+        this.childViewOptions.draggable = draggable;
+        this.trigger('set:draggable', draggable);
     },
 
     __handleDragLeave(event) {
