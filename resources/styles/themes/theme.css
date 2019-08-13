@@ -760,6 +760,15 @@ svg.svg-grid-icons {
   @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  padding: 3px 8px;
+}
+.toolbar-btn > .toolbar__icons > i {
+  width: 100%;
+  height: auto;
 }
 .toolbar-items-wrp > div:last-child.toolbar-btn,
 .toolbar-items-wrp > div:last-child .toolbar-btn{
@@ -839,6 +848,8 @@ svg.svg-grid-icons {
 
 .toolbar__icons {
   display: inline-block;
+  width: 20px;
+  flex: none;
 }
 
 .toolbar__icons .fa {
@@ -846,7 +857,7 @@ svg.svg-grid-icons {
 }
 
 .toolbar__icons + .toolbar-btn__text{
-  margin-left: 5px;
+  margin-left: 8px;
 }
 
 .toolbar__icons + .toolbar-btn__text:empty{
