@@ -65,7 +65,6 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.checkbox': '__handleCheckboxClick',
         dragstart: '__handleDragStart',
         dragend: '__handleDragEnd',
         click: '__handleClick',
@@ -109,19 +108,16 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleClick(event) {
-        if (!this.selectAllCell) {
-            this.model.trigger('click', event);
-        }
-    },
-
     __handleDblClick(event) {
         if (!this.selectAllCell) {
             this.model.trigger('dblclick', event);
         }
     },
 
-    __handleCheckboxClick() {
+    __handleClick(event) {
+        if (!this.selectAllCell) {
+            this.model.trigger('click', event);
+        }
         if (this.selectAllCell) {
             this.collection.toggleCheckAll();
         } else {
