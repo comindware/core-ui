@@ -182,18 +182,21 @@ export default Marionette.View.extend({
                 checkboxColumnClass = `${this.uniqueId}-checkbox-column`;
                 this.columnClasses.push(checkboxColumnClass);
             }
+
+            this.selectionPanelChildOptions = {
+                draggable,
+                showCheckbox: options.showCheckbox,
+                showRowIndex,
+                bindSelection: this.getOption('bindSelection'),
+                checkboxColumnClass
+            };
+
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
                 gridEventAggregator: this,
                 checkboxColumnClass,
                 showRowIndex: this.options.showRowIndex,
-                childViewOptions: {
-                    draggable,
-                    showCheckbox: options.showCheckbox,
-                    showRowIndex,
-                    bindSelection: this.getOption('bindSelection'),
-                    checkboxColumnClass
-                }
+                childViewOptions: this.selectionPanelChildOptions
             });
 
             this.selectionHeaderView = new SelectionCellView({
@@ -205,10 +208,8 @@ export default Marionette.View.extend({
                 showRowIndex
             });
 
-            if (draggable) {
-                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
-                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
-            }
+            this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
+            this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
 
             if (this.options.showConfigurationPanel) {
                 this.__initializeConfigurationPanel();
@@ -594,6 +595,13 @@ export default Marionette.View.extend({
         }
 
         return error;
+    },
+
+    setDraggable(draggable) {
+        if (this.selectionPanelView) {
+            this.selectionPanelChildOptions.draggable = draggable;
+            this.selectionPanelView.render();
+        }
     },
 
     __handleDragLeave(event) {

@@ -34,10 +34,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     attributes() {
-        return {
-            draggable: this.getOption('draggable'),
-            showCheckbox: this.getOption('showCheckbox')
-        };
+        if (this.getOption('draggable')) {
+            return {
+                draggable: true
+            };
+        }
     },
 
     templateContext() {
