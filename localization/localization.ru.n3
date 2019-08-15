@@ -270,7 +270,7 @@
 
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 
-<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содеражат ошибки"; l10n:originalData "Grid fields has erros"].
+<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содержат ошибки"; l10n:originalData "Grid fields has errors"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 

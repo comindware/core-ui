@@ -183,7 +183,7 @@ describe('Components', () => {
             expect(document.querySelector('.js-toolbar-actions').children.length).toBe(3); // 3 groups: main, menu, const
         });
 
-        fit('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
+        it('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
             const popupView = new core.layout.Popup({
                 size: {
                     width: 1500,
