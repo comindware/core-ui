@@ -663,24 +663,31 @@ svg.svg-grid-icons {
 }
 
 /* button */
+.btn,
 .toolbar-btn.btn{
   @apply --button-theme;
 }
+.btn-strong,
 .toolbar-btn.btn-strong{
   @apply --button-strong;
 }
+.btn-pale,
 .toolbar-btn.btn-pale{
   @apply --button-pale;
 }
+.btn-strong:hover,
 .toolbar-btn.btn-strong:hover{
   @apply --button-strong-hover-theme;
 }
+.btn-strong:active,
 .toolbar-btn.btn-strong:active{
   @apply --button-strong-active-theme;
 }
+.btn-pale:hover,
 .toolbar-btn.btn-pale:hover{
   @apply --button-pale-hover-theme;
 }
+.btn-pale:active,
 .toolbar-btn.btn-pale:active{
   @apply --button-pale-active-theme;
 }
