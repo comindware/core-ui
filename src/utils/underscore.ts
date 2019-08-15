@@ -1,5 +1,5 @@
 import { Model } from 'backbone';
-declare var _: any;
+import _ from 'underscore';
 
 export default {
     cloneDeep(obj: Array<any> | object | Model): Array<any> | object {
@@ -9,7 +9,7 @@ export default {
 
         if (Array.isArray(pureJSType)) {
             out = [];
-            for (i = pureJSType.length; i; ) {
+            for (i = pureJSType.length; i;) {
                 --i;
                 // @ts-ignore
                 out[i] = _.cloneDeep(pureJSType[i]);
@@ -31,7 +31,7 @@ export default {
         return pureJSType;
     },
 
-    guid() {
+    guid(): string {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
             const r = (Math.random() * 16) | 0;
 
@@ -40,13 +40,27 @@ export default {
         });
     },
 
-    defaultsPure(...args: Array<any>) {
+    defaultsPure(...args: Array<any>): object {
         return Object.assign({}, ...args.reverse());
     },
 
     cutOffTo(string: string, toStr: string, defaultString = string): string {
-        return string.includes(toStr) ?
-            string.slice(0, string.indexOf(toStr)) :
-            string;
+        return string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : defaultString;
+    },
+
+    capitalize(string: string): string {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    unCapitalize(string: string): string {
+        return string.charAt(0).toLowerCase() + string.slice(1);
+    },
+
+    getResult(value: any, context: object, ...args: Array<any>): any {
+        return typeof value === 'function' ? value.call(context, ...args) : value;
+    },
+
+    onlyUnique(array: Array<any>): Array<any> {
+        return array.filter((value, index, self) => self.indexOf(value) === index);
     }
 };

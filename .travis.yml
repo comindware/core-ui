@@ -1,9 +1,8 @@
 language: node_js
 node_js:
-  - '11'
+  - '12'
 #os: osx todo restore safari
 install: ./build/npm-install.sh
-before_install: if [[ `npm -v` != 6* ]]; then npm i -g npm; fi
 script:
   - npm run deploy
 after_script:

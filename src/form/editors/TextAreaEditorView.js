@@ -46,7 +46,7 @@ const defaultOptions = () => ({
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-export default (formRepository.editors.TextArea = BaseEditorView.extend({
+export default formRepository.editors.TextArea = BaseEditorView.extend({
     initialize(options) {
         this.__applyOptions(options, defaultOptions);
     },
@@ -75,7 +75,7 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
         const value = this.getValue() || '';
         this.ui.input.val(value);
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.$editorEl.prop('title', value);
         }
         switch (this.options.size) {
             case size.auto:
@@ -106,7 +106,7 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
         this.value = value;
 
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.$editorEl.prop('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);
@@ -188,4 +188,4 @@ export default (formRepository.editors.TextArea = BaseEditorView.extend({
     select() {
         this.ui.input.select();
     }
-}));
+});

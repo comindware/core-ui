@@ -6,7 +6,7 @@ import LayoutBehavior from '../behaviors/LayoutBehavior';
 const classes = {
     CLASS_NAME: 'layout__button',
     PALE: 'btn-pale',
-    STRONG: 'btn-strong',
+    STRONG: 'btn-strong'
 };
 
 export default Marionette.View.extend({
@@ -40,7 +40,7 @@ export default Marionette.View.extend({
 
     events: {
         'click @ui.btn': '__onClick',
-        keyup: function (event) {
+        keyup: function(event) {
             [keyCode.ENTER, keyCode.SPACE].includes(event.keyCode) && this.__onClick();
         }
     },

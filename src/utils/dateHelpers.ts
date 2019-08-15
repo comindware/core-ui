@@ -1,6 +1,8 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
+import moment from 'moment';
+import _ from 'underscore';
 
 const dateTimeFormats = {
     en: {
@@ -70,7 +72,7 @@ const dateTimeFormats = {
             time: 'HH:mm' // 19:00
         },
         generalDateLongTime: {
-            general: 'DD.MM.YYYY HH:mm:ss', // 6/15/2009 1:45:30 PM
+            general: 'DD.MM.YYYY HH:mm:ss', // 03.11.2014 19:00:00
             date: 'DD.MM.YYYY', // 6/15/2009
             time: 'HH:mm:ss' //1:45:30 PM
         },
@@ -101,7 +103,7 @@ const dateTimeFormats = {
         monthDay: { general: 'D MMMM' /* 3 декабря */ },
         yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */ },
         fullDateShortTime: {
-            general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
+            general: 'D MMMM, YYYY HH:mm' /* 3 декабря 2014 19:00 */,
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
@@ -202,12 +204,12 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return val ? moment(val).format(format) : '';
     },
 
-    getFormat(formatName) {
+    getFormat(formatName, formatPart = 'general') {
         const lang = LocalizationService.langCode;
         if (!dateTimeFormats[lang][formatName]) {
             throw new Error(`Unexpected format ${formatName}`);
         }
-        return dateTimeFormats[lang][formatName].general;
+        return dateTimeFormats[lang][formatName][formatPart];
     },
 
     getDisplayTime(time) {
@@ -218,9 +220,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getTimeEditFormat(hasSeconds) {
-        return hasSeconds
-            ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time
-            : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     dateToDateTimeString(date, formatName) {

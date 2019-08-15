@@ -29,7 +29,7 @@ export default Marionette.View.extend({
             addNewItemText: this.options.addNewItemText,
             showCollection: this.options.showCollection,
             showListTitle: this.options.showCollection && this.options.listTitle,
-            showSelectedTitle: showSelectedCollection && this.options.selectedTitle,
+            showSelectedTitle: showSelectedCollection && this.options.showSelectedTitle,
             selectedTitle: this.options.selectedTitle,
             listTitle: this.options.listTitle
         };
@@ -85,6 +85,7 @@ export default Marionette.View.extend({
                 childView: this.options.listItemView,
                 disableKeydownHandler: true,
                 columns: [],
+                showHeader: false,
                 childViewOptions: {
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,

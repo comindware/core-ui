@@ -66,8 +66,16 @@ export const presentingComponentsTypes = {
 export const iconsNames = {
     expand: 'expand',
     minimize: 'compress',
-    goTo: 'share-square',
-    close: 'times'
+    goTo: 'external-link-square',
+    close: 'times',
+    zoomIn: 'search-plus',
+    zoomOut: 'search-minus',
+    delete: 'trash-alt',
+    download: 'download',
+    previous: 'chevron-left',
+    next: 'chevron-right',
+    user: 'address-card',
+    users: 'users'
 };
 
 export const objectPropertyFormats = {
@@ -104,6 +112,11 @@ export const objectPropertyFormats = {
 
     PLAIN_TEXT: 'PlainText',
     HTML_TEXT: 'HtmlText'
+};
+
+export const virtualCollectionFilterActions = {
+    PUSH: 'push',
+    REMOVE: 'remove'
 };
 
 export default {

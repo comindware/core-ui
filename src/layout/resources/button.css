@@ -1,6 +1,9 @@
 .layout__button {
     flex: none;
 }
+.layout__horizontal-layout > .layout__button {
+    align-self: baseline;
+}
 .btn {
     display: inline-block;
     cursor: pointer;
@@ -24,7 +27,7 @@
 .split-button-wrp .btn-separator {
     width: 0px;
     height: 70%;
-    border: solid 1px;
+    border-right: solid 1px;
     align-self: center;
 }
 

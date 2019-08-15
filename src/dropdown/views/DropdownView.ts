@@ -1,5 +1,3 @@
-// @flow
-import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -15,23 +13,24 @@ const classes = {
 };
 
 const WINDOW_BORDER_OFFSET = 10;
-const MAX_DROPDOWN_PANEL_WIDTH = 200;
+const MIN_DROPDOWN_PANEL_WIDTH = 100;
+
+const popoutFlow = {
+    LEFT: 'left',
+    RIGHT: 'right'
+};
 
 const panelPosition = {
     DOWN: 'down',
     UP: 'up'
 };
 
-const panelMinWidth = {
-    NONE: 'none',
-    BUTTON_WIDTH: 'button-width'
-};
-
 const defaultOptions = {
+    popoutFlow: popoutFlow.LEFT,
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
-    panelMinWidth: panelMinWidth.BUTTON_WIDTH,
+    panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
     externalBlurHandler: () => false
 };
@@ -121,16 +120,9 @@ export default class DropdownView {
             }
         });
 
-        return this.button;
-    }
+        this.button.on('destroy', this.__onDestroy, this);
 
-    onDestroy() {
-        if (this.button) {
-            this.button.destroy();
-        }
-        if (this.button.isOpen) {
-            WindowService.closePopup(this.popupId);
-        }
+        return this.button;
     }
 
     adjustPosition(isNeedToRefreshAnchorPosition) {
@@ -145,34 +137,84 @@ export default class DropdownView {
 
         const viewportHeight = window.innerHeight;
         const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
-        const dropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
-        const dropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
-        const buttonEl = dropDownRoot || this.button.el;
-        const buttonRect = buttonEl.getBoundingClientRect();
-
+        const isDropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
+        const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
+        const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        const computedWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
-
-        const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
-
-        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            this.panelEl.style.width = `${panelWidth}px`;
+        if (this.maxWidth) {
+            this.panelEl.style.maxWidth = `${this.maxWidth}px`;
         }
 
-        let leftOffset = buttonRect.left;
+        const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+        this.panelEl.style.minWidth = `${minWidth}px`;
+
         let offsetHeight = this.panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
 
-        if (dropDownRoot && dropDownRootPositionUp) {
+        if (dropDownRoot && isDropDownRootPositionUp) {
             position = panelPosition.UP;
-        } else if (dropDownRoot && dropDownRootPositionDown) {
+        } else if (dropDownRoot && isDropDownRootPositionDown) {
             position = panelPosition.DOWN;
         } else if (position === panelPosition.DOWN && ((bottom < offsetHeight && buttonRect.top > bottom) || bottom < this.options.minAvailableHeight + offsetHeight)) {
             position = panelPosition.UP;
         } else if (position === panelPosition.UP && buttonRect.top < offsetHeight && bottom > buttonRect.top) {
             position = panelPosition.DOWN;
+        }
+
+        const viewport = {
+            height: window.innerHeight,
+            width: window.innerWidth
+        };
+
+        const panelRect = this.panelEl.getBoundingClientRect();
+
+        const css: {
+            left?: number,
+            right?: number
+        } = {};
+
+        switch (this.options.popoutFlow) {
+            case popoutFlow.RIGHT: {
+                if (buttonRect.left < WINDOW_BORDER_OFFSET) {
+                    css.left = WINDOW_BORDER_OFFSET;
+                } else if (buttonRect.left + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                    css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else {
+                    css.left = buttonRect.left;
+                }
+
+                this.panelEl.style.left = `${css.left}px`;
+                break;
+            }
+            case popoutFlow.LEFT: {
+                const anchorRightCenter = viewport.width - (buttonRect.left + buttonRect.width);
+
+                if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
+                    css.right = WINDOW_BORDER_OFFSET;
+                } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                    css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else {
+                    css.right = anchorRightCenter;
+                }
+
+                this.panelEl.style.right = `${css.right}px`;
+                break;
+            }
+            default:
+                break;
+        }
+
+        // class adjustments
+        if (this.options.popoutFlow === popoutFlow.LEFT) {
+            this.panelEl.classList.add(classes.FLOW_LEFT);
+
+            this.panelEl.classList.remove(classes.FLOW_RIGHT);
+        } else if (position === panelPosition.UP) {
+            this.panelEl.classList.add(classes.FLOW_RIGHT);
+
+            this.panelEl.classList.remove(classes.FLOW_LEFT);
         }
 
         // class adjustments
@@ -189,7 +231,6 @@ export default class DropdownView {
             this.button.el.classList.remove(classes.DROPDOWN_DOWN);
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
-        this.panelEl.classList.add('dropdown__wrp');
 
         offsetHeight = this.panelEl.offsetHeight;
 
@@ -226,11 +267,6 @@ export default class DropdownView {
 
         this.panelEl.style.top = `${top}px`;
 
-        if (panelWidth > buttonRect.width) {
-            leftOffset -= panelWidth - buttonRect.width;
-        }
-        this.panelEl.style.left = `${leftOffset}px`;
-
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.button.el);
         }
@@ -256,11 +292,14 @@ export default class DropdownView {
         this.panelEl = this.panelView.el;
 
         this.button.isOpen = true;
-        this.__adjustPosition();
+
+        this.panelEl.classList.add('dropdown__wrp');
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.button.el
         });
+
+        this.__adjustPosition();
 
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
@@ -381,6 +420,12 @@ export default class DropdownView {
         });
         if (document.activeElement) {
             document.activeElement.removeEventListener('blur', this.__onBlur.bind(this));
+        }
+    }
+
+    __onDestroy() {
+        if (this.button.isOpen) {
+            WindowService.closePopup(this.popupId);
         }
     }
 

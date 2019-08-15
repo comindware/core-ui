@@ -7,17 +7,17 @@ import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
 import meta from 'Meta';
+import MobileService from 'services/MobileService';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view',
+    MOBILE: 'layout__popup-view_mobile',
+    MOBILE_SYSTEM_TYPE: 'layout__popup-view_mobile-system-type',
     EXPAND: 'layout__popup-view-window_expand',
     CURSOR_AUTO: 'cur_aI'
 };
 
-const cutOffTo = (string, toStr) => 
-    (string.includes(toStr) ?
-    string.slice(0, string.indexOf(toStr)) :
-    string);
+const cutOffTo = (string, toStr) => (string.includes(toStr) ? string.slice(0, string.indexOf(toStr)) : string);
 
 const getValueOf = str => Number(cutOffTo(str, 'px'));
 
@@ -28,10 +28,6 @@ const sizeVisibleChunk = 50; //px;
 
 export default Marionette.View.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'header');
-        helpers.ensureOption(options, 'buttons');
-        helpers.ensureOption(options, 'content');
-
         this.content = options.content;
         this.onClose = options.onClose;
         this.__expanded = false;
@@ -42,15 +38,20 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return Object.assign(
-            {
-                headerText: this.options.header
-            },
-            iconsNames
-        );
+        return {
+            headerText: this.options.header,
+            ...iconsNames
+        };
     },
 
-    className: classes.CLASS_NAME,
+    className() {
+        if (MobileService.isMobile && !this.options.isSystemPopup) {
+            return classes.MOBILE;
+        } else if (MobileService.isMobile && this.options.isSystemPopup) {
+            return classes.MOBILE_SYSTEM_TYPE;
+        }
+        return classes.CLASS_NAME;
+    },
 
     behaviors: {
         LayoutBehavior: {
@@ -87,7 +88,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.options.size) {
+        if (this.options.size && !MobileService.isMobile) {
             this.ui.window.css(this.options.size);
         }
         this.showChildView('contentRegion', this.options.content);
@@ -103,7 +104,7 @@ export default Marionette.View.extend({
 
         this.ui.window[0].ondragstart = () => false;
         this.__debounceOnResize = _.debounce(this.__onResize, 300);
-        this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
+        this.listenTo(GlobalEventService, 'window:resize popout:resize', this.__debounceOnResize);
     },
 
     update() {
@@ -150,13 +151,10 @@ export default Marionette.View.extend({
     __callWithTransition(callback, callbackAfterTransition) {
         this.ui.window.css('transition', `all ${TRANSITION}ms ease-in-out 0s`);
         typeof callback === 'function' && callback();
-        setTimeout(
-            () => {
-                this.ui.window.css('transition', 'unset');
-                typeof callbackAfterTransition === 'function' && callbackAfterTransition();
-            },
-            TRANSITION
-        );
+        setTimeout(() => {
+            this.ui.window.css('transition', 'unset');
+            typeof callbackAfterTransition === 'function' && callbackAfterTransition();
+        }, TRANSITION);
     },
 
     async close() {
@@ -172,7 +170,7 @@ export default Marionette.View.extend({
     },
 
     __createButtonsView() {
-        const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        const buttons = this.options.buttons.map(item => new ButtonView({ context: this, ...item }));
 
         return new Core.layout.HorizontalLayout({
             columns: buttons
@@ -220,20 +218,13 @@ export default Marionette.View.extend({
     },
 
     __eventOutOfClient(e) {
-        return e.clientX > this.dragContext.documentWidth
-            || e.clientY > this.dragContext.documentHeight
-            || e.clientX < 0
-            || e.clientY < 0;
+        return e.clientX > this.dragContext.documentWidth || e.clientY > this.dragContext.documentHeight || e.clientX < 0 || e.clientY < 0;
     },
 
     __getCorrectPopupDiffs(assumedDiffX, assumedDiffY) {
         return {
-            diffX: this.__checkLeftContainment(
-                this.__checkRightContainment(assumedDiffX)
-            ),
-            diffY: this.__checkTopContainment(
-                this.__checkBottomContainment(assumedDiffY)
-            )
+            diffX: this.__checkLeftContainment(this.__checkRightContainment(assumedDiffX)),
+            diffY: this.__checkTopContainment(this.__checkBottomContainment(assumedDiffY))
         };
     },
 
@@ -252,7 +243,7 @@ export default Marionette.View.extend({
 
     __checkTopContainment(diffY) {
         const offsetTop = this.dragContext.startOffsetTop + diffY;
-    
+
         if (offsetTop < 0) {
             return -this.dragContext.startOffsetTop;
         }

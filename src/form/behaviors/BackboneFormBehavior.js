@@ -89,14 +89,12 @@ const Form = Marionette.MnObject.extend({
 
         // Commit
         let modelError = null;
-        const setOptions = Object.assign(
-            {
-                error(model, e) {
-                    modelError = e;
-                }
+        const setOptions = {
+            error(model, e) {
+                modelError = e;
             },
-            options
-        );
+            ...options
+        };
 
         this.model.set(this.getValue(), setOptions);
         return modelError;
@@ -214,7 +212,7 @@ const Form = Marionette.MnObject.extend({
             const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                const isDictionary = modelErrors instanceof Object && !Array.isArray(modelErrors);
+                const isDictionary = _.isObject(modelErrors) && !Array.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {
@@ -277,10 +275,10 @@ const Form = Marionette.MnObject.extend({
     },
 
     __renderComponents(componentType) {
-        const $target = this.options.$target;
+        const target = this.options.target;
         const view = this.options.view;
 
-        $target.find(`[data-${componentType}s]`).each((i, el) => {
+        target.querySelectorAll(`[data-${componentType}s]`).forEach(el => {
             if ((!this.model.uniqueFormId && !el.hasAttribute(`${componentType}-for`)) || this.model.uniqueFormId.has(el.getAttribute(`${componentType}-for`))) {
                 const key = el.getAttribute(`data-${componentType}s`);
                 const regionName = `${key}Region`;
@@ -361,7 +359,7 @@ export default Marionette.Behavior.extend({
                 {
                     model,
                     schema,
-                    $target: this.$el,
+                    target: this.el,
                     view: this.view
                 },
                 this.options,
@@ -373,6 +371,6 @@ export default Marionette.Behavior.extend({
             this.view.initForm();
         }
         this.view.trigger('form:render', form);
-        this.view.onFormRender?.apply(this.view, form);
+        this.view.onFormRender?.call(this.view, form);
     }
 });

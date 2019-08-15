@@ -11,7 +11,7 @@ export default Marionette.View.extend({
 
     className: 'dd-list__i',
 
-    behaviors: [list.views.behaviors.ListItemViewBehavior],
+    behaviors: [ list.views.behaviors.ListItemViewBehavior],
 
     events: {
         click: '__select'

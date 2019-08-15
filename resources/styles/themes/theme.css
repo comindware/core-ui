@@ -11,7 +11,6 @@ body {
   background-color: var(--selected-color);
 }
 
-.form-group + .form-group,
 .field-width + .field-width{
     margin-top: var(--form-field-margin);
 }
@@ -60,8 +59,9 @@ body {
 .cell.error .form-label__error{
   margin: 0;
   position: absolute;
-  left: 0;
-  top: -13px;
+  left: -15px;
+  top: -8px;
+  z-index: 1;
 }
 
 .cell.error .form-label__error-button{
@@ -161,7 +161,6 @@ body {
 .editor_error.editor .input,
 .editor_error.editor .textarea,
 .editor_error.editor .bubbles,
-.editor_error.editor .popout-field-user,
 .editor_error.editor_date-time {
   border-color: var(--error-color);
 }
@@ -182,12 +181,16 @@ body {
 }
 
 .bubbles__i.bubble__focused{
-    border: var(--focus);
-    border-radius: 4px;
+  border: 1px solid #bdb8b8;
+  border-radius: 2px;
+  background: #f5f5f5;
+  padding: 2px;
 }
 .reference-btn.bubble__focused{
-  border: var(--focus);
-  border-radius: 4px;
+  border: 1px solid #bdb8b8;
+  border-radius: 2px;
+  background: #f5f5f5;
+  padding: 2px;
 }
 /*------------------ End Form Editor ------------------*/
 
@@ -316,7 +319,9 @@ body {
   padding: var(--input-padding);
   overflow: hidden;
 }
-
+.cell.editor_date-time {
+  background: transparent;
+}
 .editor_disabled.editor_date-time,
 .editor_disabled.editor_date-time:hover,
 .editor_readonly.editor_date-time,
@@ -380,8 +385,17 @@ svg.svg-grid-icons {
 }
 
 
-.grid-header .cell_selection-index {
+.grid-header .cell_selection,
+.grid-header .cell_selection:hover,
+.grid-header:hover .cell_selection,
+.grid-header .cell_selection-index,
+.grid-header .cell_selection-index:hover,
+.grid-header:hover .cell_selection-index{
   background-color: var(--grid-header-bg);
+  top: 0;
+  border: none;
+  box-shadow: inset -1px 0 0 0 #90c3eb, inset 0 1px 0 0 #0575bd;
+  z-index: 20;
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
@@ -394,17 +408,14 @@ svg.svg-grid-icons {
 .cell {
   height: var(--grid-cell-height);
   line-height: var(--grid-cell-height);
-  font-size: var(--grid-header-font-size);
-  color: var(--text-color);
+  font-size: 13px;
   padding: var(--grid-cell-padding);
   border: 1px solid #e2e2e2;
+  position: relative;
 }
 
 .cell.editor {
-  height: auto;
   line-height: initial;
-  min-height: 34px;
-  max-height: 34px;
 }
 
 .compact.grid-container .cell.editor{
@@ -439,7 +450,6 @@ svg.svg-grid-icons {
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
-  box-shadow: var(--grid-cell-border-first);
   padding-left: 10px;
 }
 
@@ -447,7 +457,6 @@ svg.svg-grid-icons {
   color: var(--grid-selection-color);
   width: 25px;
   background-color: var(--grid-selection-bg);
-  box-shadow: var(--grid-cell-border-first);
 }
 
 .cell_selection[draggable], .cell_selection-index[draggable] {
@@ -471,19 +480,22 @@ tr.row-checked,
   color: #666;
 }
 
-tr.selected,
+tr.selected .cell,
 tr.selected .cell_selection,
 tr.selected .cell_selection-index{
   background-color: #eaf3f8;
 }
 
+.row-checked .cell,
 .row-checked .cell_selection,
 .row-checked .cell_selection-index{
   background-color: #c2d7e5;
   color: #666;
 }
 
-tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
+tr:hover .cell,
+tr:hover .cell_selection,
+tr:hover .cell_selection-index {
   background-color: #efefef;
 }
 
@@ -511,8 +523,8 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   height: var(--grid-checkbox-size);
   position: absolute;
   right: 5px;
-  top: 50%;
-  margin-top: -8px;
+  top: 0;
+  margin-top: 10px;
 }
 
 .cell .input {
@@ -534,8 +546,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background-color: var(--grid-header-selection-bg);
 }
 
-.cell_selection-index {
-  width: var(--grid-selection-index-width);
+.cell_selection, .cell_selection-index {
   padding: 0 var(--grid-selection-index-padding-checkbox) 0 var(--grid-selection-index-padding-x);
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
@@ -544,6 +555,19 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   position: sticky;
   left: 0;
   z-index: 10;
+  width: 47px;
+  min-width: 47px;
+  background-clip: padding-box;
+}
+
+/* for IE*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .cell_selection, .cell_selection-index, .grid-header-column {
+      position:relative;
+      background-clip: padding-box;
+  }
+
+
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -579,19 +603,24 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 
 .collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: var(--collapse-icon);
-  vertical-align: middle
+  /*background-image: var(--collapse-icon);*/
+  vertical-align: middle;
+  z-index: 1;
 }
 
 .context-collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -604,12 +633,36 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   transform: rotate(90deg);
 }
 
+.collapsible-btn svg, .context-collapsible-btn svg{
+    width: 70%;
+    height: 70%;
+}
+
 .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(90deg);
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
   transform: rotate(-90deg);
+}
+
+.cell .collapsible-btn{
+  transform: rotate(-90deg);
+  background: none;
+  fill: #636262;
+  position: absolute;
+  left: 0;
+  top: 9px;
+}
+
+.cell .collapsible-btn svg{
+  transform: translate(3px, 2px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(0deg);
+  background: none;
+  top: 8px;
 }
 
 .grid-header-column-content .collapsible-btn {
@@ -722,17 +775,27 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  flex: 0 1 auto;
 }
-.bubbles__i:hover a,
-.bubbles__i:hover span {
-  width: calc(100% - 20px);
+.bubble__pencil-edit:hover a,
+.bubble__pencil-edit:hover span {
+
   
+}
+.editor_readonly .bubble__pencil-edit:hover a,
+.editor_disabled .bubble__pencil-edit:hover span {
+  width: 100%;
+
 }
 
 .bubbles .bubbles__caret,
 .bubbles .spinner {
   @apply --absolute-center-y-theme;
 }
+.editor_bubble .bubbles .bubbles__caret{
+  line-height: 12px;
+}
+
 .bubbles .bubble-doc_icon{
   /* @apply --relative-center-y-theme; this stuff not working! */
   position: relative;
@@ -743,6 +806,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 .bubbles .bubble-doc_text{
   height: 100%;
   line-height: 100%;
+  flex: 0 1 auto;
 }
 .bubbles .spinner {
   line-height: 1;
@@ -756,10 +820,13 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   background: transparent;
   flex-wrap: nowrap;
   align-items: center;
+  box-shadow: none !important;
+  flex: none;
 }
 .cell .editor_disabled .bubbles,
 .cell .editor_readonly .bubbles {
   background: transparent;
+  box-shadow: none;
 }
 
 .datalist-panel_list.disable-select .dd-list__i:not(.editor_checked){
@@ -915,68 +982,68 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   color: #636262;
 } */
 
-.split-btn_low{
+.split-btn_low, .toolbar-btn.split-btn_low{
   @apply --toolbar-btn-low-theme;
 }
-.toolbar-btn_low{
+.toolbar-btn_low, .toolbar-btn.toolbar-btn_low{
   @apply --toolbar-btn-low-theme;
 }
-.toolbar-btn_low:hover{
+.toolbar-btn_low:hover, .toolbar-btn.toolbar-btn_low:hover{
   @apply --toolbar-btn-low-hover-theme;
 }
-.toolbar-btn_low:active{
+.toolbar-btn_low:active, .toolbar-btn.toolbar-btn_low:active{
   @apply --toolbar-btn-low-active-theme;
 }
 
-.split-btn_normal{
+.split-btn_normal, .toolbar-btn.split-btn_normal{
   @apply --toolbar-btn-normal-theme;
 }
-.toolbar-btn_normal{
+.toolbar-btn_normal, .toolbar-btn.toolbar-btn_normal{
   @apply --toolbar-btn-normal-theme;
 }
-.toolbar-btn_normal:hover{
+.toolbar-btn_normal:hover, .toolbar-btn.toolbar-btn_normal:hover{
   @apply --toolbar-btn-normal-hover-theme;
 }
-.toolbar-btn_normal:active{
+.toolbar-btn_normal:active, .toolbar-btn.toolbar-btn_normal:active{
   @apply --toolbar-btn-normal-active-theme;
 }
 
-.split-btn_major{
+.split-btn_major, .toolbar-btn.split-btn_major{
   @apply --toolbar-btn-major-theme;
 }
-.toolbar-btn_major{
+.toolbar-btn_major, .toolbar-btn.toolbar-btn_major{
   @apply --toolbar-btn-major-theme;
 }
-.toolbar-btn_major:hover{
+.toolbar-btn_major:hover, .toolbar-btn.toolbar-btn_major:hover{
   @apply --toolbar-btn-major-hover-theme;
 }
-.toolbar-btn_major:active{
+.toolbar-btn_major:active, .toolbar-btn.toolbar-btn_major:active{
   @apply --toolbar-btn-major-active-theme;
 }
 
-.split-btn_critical{
+.split-btn_critical, .toolbar-btn.split-btn_critical{
   @apply --toolbar-btn-critical-theme;
 }
-.toolbar-btn_critical{
+.toolbar-btn_critical, .toolbar-btn.toolbar-btn_critical{
   @apply --toolbar-btn-critical-theme;
 }
-.toolbar-btn_critical:hover{
+.toolbar-btn_critical:hover, .toolbar-btn.toolbar-btn_critical:hover{
   @apply --toolbar-btn-critical-hover-theme;
 }
-.toolbar-btn_critical:active{
+.toolbar-btn_critical:active, .toolbar-btn.toolbar-btn_critical:active{
   @apply --toolbar-btn-critical-active-theme;
 }
 
-.split-btn_fatal{
+.split-btn_fatal, .toolbar-btn.split-btn_fatal{
   @apply --toolbar-btn-fatal-theme;
 }
-.toolbar-btn_fatal{
+.toolbar-btn_fatal, .toolbar-btn.toolbar-btn_fatal{
   @apply --toolbar-btn-fatal-theme;
 }
-.toolbar-btn_fatal:hover{
+.toolbar-btn_fatal:hover, .toolbar-btn.toolbar-btn_fatal:hover{
   @apply --toolbar-btn-fatal-hover-theme;
 }
-.toolbar-btn_fatal:active{
+.toolbar-btn_fatal:active, .toolbar-btn.toolbar-btn_fatal:active{
   @apply --toolbar-btn-fatal-active-theme;
 }
 

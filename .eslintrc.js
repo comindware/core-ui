@@ -1,5 +1,13 @@
 module.exports = {
+    //parser: '@typescript-eslint/parser',
     parser: 'babel-eslint',
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
+        ecmaFeatures: {
+            modules: true
+        }
+    },
     env: {
         browser: true,
         es6: true
@@ -701,6 +709,7 @@ module.exports = {
         // http://eslint.org/docs/rules/unicode-bom
         'unicode-bom': ['error', 'never'],
         // require regex literals to be wrapped in parentheses
-        'wrap-regex': 'off'
+        'wrap-regex': 'off',
+        'prefer-object-spread': 'error'
     }
 };

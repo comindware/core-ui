@@ -19,6 +19,8 @@ const CHECK_VISIBILITY_DELAY = 200;
 const classes = constants.classes;
 const types = constants.types;
 
+const lineSeparator = '\r\n';
+
 export default Marionette.View.extend({
     initialize(options = {}) {
         this.tt = new Backbone.Model();
@@ -139,7 +141,7 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            lineSeparator: this.options.lineSeparator || '\r\n',
+            lineSeparator,
             mode: modes[this.options.mode],
             ontologyObjects: this.autoCompleteArray,
             matchBrackets: true,
@@ -148,6 +150,7 @@ export default Marionette.View.extend({
             lint: true,
             indentUnit: 4,
             foldGutter: true,
+            theme: Core.services.ThemeService.isThemeShadeIsDark() ? 'pastel-on-dark' : 'default',
             selectionPointer: true,
             showTrailingSpace: true,
             fixedGutter: true,
@@ -217,7 +220,7 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.codemirror.setValue(value || '');
+        this.codemirror.setValue(value?.replace(/[^\r]\n/g, lineSeparator) || '');
         this.refresh();
     },
 
@@ -258,8 +261,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __hideHintOnClick(event) {
-        if (this.hintIsShown && !event.target.contains('.js-code-editor-container')) {
+    __hideHintOnClick(target) {
+        if (this.hintIsShown && !this.ui.editor.get(0).contains(target)) {
             this.__hideHint();
         }
     },
@@ -270,12 +273,14 @@ export default Marionette.View.extend({
     },
 
     __onMaximize() {
-        this.$el.addClass(classes.maximized);
+        this.el.classList.add(classes.maximized);
         this.ui.editor.css('height', '80%');
 
-        document.querySelector(this.regions.editorOutputContainer).style.height = '30%';
+        document.querySelector(this.regions.editorOutputContainer.el).style.height = '30%';
         document.querySelector(this.regions.output).style.height = '100%';
-        document.querySelector(this.regions.outputTabs).style.height = '100%';
+        if (this.options.mode === 'script' && this.options.showDebug !== false) {
+            document.querySelector(this.regions.outputTabs).style.height = '100%';
+        }
         this.$el.appendTo('body');
         this.codemirror.refresh();
         this.codemirror.focus();
@@ -284,7 +289,7 @@ export default Marionette.View.extend({
     __onMinimize() {
         this.trigger('minimize', this);
         this.$el.appendTo(this.parentElement);
-        this.$el.removeClass(classes.maximized);
+        this.el.classList.remove(classes.maximized);
         this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();
         this.__change();
@@ -299,10 +304,12 @@ export default Marionette.View.extend({
     },
 
     __onChange() {
-        if (!this.isExternalChange) {
-            if (this.options.mode === 'expression') {
-                this.__showHint();
-            }
+        if (this.isExternalChange) {
+            this.isExternalChange = false;
+            return;
+        }
+        if (this.options.mode === 'expression') {
+            this.__showHint();
         }
         this.__change();
     },
@@ -635,9 +642,9 @@ export default Marionette.View.extend({
 
         const tooltipMargin = 10;
         const hintPanel = hintEl.parentNode;
-        const hintPanelPosition = hintPanel.position();
-        const hintPanelWidth = hintPanel.width();
-        const tooltipWidth = this.tooltip.$el.width();
+        const hintPanelPosition = hintPanel.getBoundingClientRect();
+        const hintPanelWidth = hintPanelPosition.width;
+        const tooltipWidth = this.tooltip.$el.width;
 
         let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
         if (left + tooltipWidth > window.innerWidth) {

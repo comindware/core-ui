@@ -1,36 +1,21 @@
 import { objectPropertyTypes } from '../Meta';
-import { moment } from '../lib';
-import { Moment } from 'moment';
+import moment from 'moment';
 
-export const stringComparator2Asc = function(a?: string, b?: string) {
-    if (a) {
-        if (b) {
-            return a.localeCompare(b);
-        }
-        return -1;
-    } else if (b) {
-        return 1;
-    }
-    return 0;
+const stringNaturalComparator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+export const stringComparator2Asc = function(a, b) {
+    return stringNaturalComparator.compare(a, b);
 };
 
-export const stringComparator2Desc = function(a?: string, b?: string) {
-    if (a) {
-        if (b) {
-            return -a.localeCompare(b);
-        }
-        return 1;
-    } else if (b) {
-        return -1;
-    }
-    return 0;
+export const stringComparator2Desc = function(a, b) {
+    return stringComparator2Asc(b, a);
 };
 
-export const numberComparator2Asc = function(a: number, b: number) {
+export const numberComparator2Asc = function(a, b) {
     return a - b;
 };
 
-export const numberComparator2Desc = function(a: number, b: number) {
+export const numberComparator2Desc = function(a, b) {
     return b - a;
 };
 
@@ -54,7 +39,7 @@ export const durationComparator2Desc = function(a, b) {
     return b ? (a ? b - a : 1) : a ? -1 : 0;
 };
 
-export const booleanComparator2Asc = function(a: boolean, b: boolean) {
+export const booleanComparator2Asc = function(a, b) {
     // true goes first
     return a ? (b ? 0 : -1) : b ? 1 : 0;
 };
@@ -69,7 +54,7 @@ export const dateComparator2Asc = function(a, b) {
     return a ? (b ? a - b : 1) : b ? -1 : 0;
 };
 
-export const dateComparator2Desc = function(a: Date | string | Moment, b: Date | string | Moment) {
+export const dateComparator2Desc = function(a, b) {
     if (a) {
         a = moment(a);
     }
@@ -79,7 +64,7 @@ export const dateComparator2Desc = function(a: Date | string | Moment, b: Date |
     return b ? (a ? b - a : 1) : a ? -1 : 0;
 };
 
-export const booleanComparator2Desc = function(a: boolean, b: boolean) {
+export const booleanComparator2Desc = function(a, b) {
     return a ? (b ? 0 : 1) : b ? -1 : 0;
 };
 
@@ -131,7 +116,7 @@ export const getComparatorByDataType = function(dataType, sorting) {
     return comparator;
 };
 
-export const stringComparator1 = function(a: string) {
+export const stringComparator1 = function(a) {
     return a;
 };
 

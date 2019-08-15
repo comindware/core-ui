@@ -2,6 +2,7 @@ import template from '../../templates/filterPanel/configPanelAgregation.html';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
 
 export default Marionette.View.extend({
+    //todo make it functional component
     initialize() {
         if (this.model.get('columnModel')) {
             this.listenTo(this.model, 'change', () => this.render());
@@ -12,10 +13,6 @@ export default Marionette.View.extend({
 
     regions: {
         dropdownRegion: '.js-dropdown-region'
-    },
-
-    triggers: {
-        'js-apply-button': 'trigger:apply'
     },
 
     template: Handlebars.compile(template),

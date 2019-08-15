@@ -25,7 +25,7 @@ const defaultOptions = options => ({
     readonly: false,
     allowDelete: true,
     multiple: true,
-    fileFormat: undefined,
+    fileFormat: '',
     showRevision: true,
     showAll: Boolean(options.isCell),
     createDocument: null,
@@ -34,7 +34,7 @@ const defaultOptions = options => ({
     isCell: false
 });
 
-export default (formRepository.editors.Document = BaseCollectionEditorView.extend({
+export default formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
@@ -204,9 +204,9 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
 
     __onCollectionLengthChange() {
         if (this.collection?.length) {
-            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
+            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
         } else if (this.collection?.length === 0) {
-            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
+            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
         }
     },
 
@@ -499,7 +499,7 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
             this.ui.showMore.hide();
             return;
         }
-        const affordabletWidth = this.$el.width();
+        const affordabletWidth = this.$editorEl.width();
         const childViews = documentElements;
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
@@ -538,4 +538,4 @@ export default (formRepository.editors.Document = BaseCollectionEditorView.exten
                 break;
         }
     }
-}));
+});

@@ -47,10 +47,10 @@
   height: 18px;
   line-height: 18px;
 }
-.editor_disabled .bubbles__list,
-.editor_disabled .bubbles__list:hover,
-.editor_readonly .bubbles__list,
-.editor_readonly .bubbles__list:hover{
+.editor_disabled .bubbles,
+.editor_disabled .bubbles:hover,
+.editor_readonly .bubbles,
+.editor_readonly .bubbles:hover{
     border-bottom-color:transparent;
     background: transparent;
 }
@@ -150,7 +150,7 @@ svg.svg-grid-icons {
   top: 50%;
   margin-top: -10px;
 }
-.bubbles__list .editor__icons {
+.bubbles .editor__icons {
   font-size: 14px;
 }
 
@@ -297,7 +297,7 @@ svg.svg-grid-icons {
   padding-left: 5px;
 }
 
-.bubbles__list:hover {
+.bubbles:hover {
   border-bottom-color:#b9bcbd;
 }
 .editor:not(.editor_readonly).bubbles__i:hover,

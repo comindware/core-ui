@@ -42,11 +42,11 @@ export default function(a_: Array<any>, b_: Array<any>) {
     const P = function(
         x: number,
         y: number,
-        k?: number
+        k: number | undefined
     ): {
         x: number,
         y: number,
-        k?: number
+        k: number | undefined
     } {
         return {
             x,

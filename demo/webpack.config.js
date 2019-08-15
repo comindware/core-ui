@@ -7,10 +7,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const pathResolver = {
     client() {
-        return path.resolve.apply(path.resolve, [__dirname, 'public/assets'].concat(Array.from(arguments)));
+        return path.resolve.apply(path.resolve, [__dirname, 'assets'].concat(Array.from(arguments)));
     },
     source() {
-        return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(Array.from(arguments)));
+        return path.resolve.apply(path.resolve, [__dirname, ''].concat(Array.from(arguments)));
     },
     node_modules() {
         return path.resolve.apply(path.resolve, [__dirname, 'node_modules']);
@@ -26,7 +26,7 @@ module.exports = () => {
     return {
         mode: PRODUCTION ? 'production' : 'development',
         entry: {
-            app: ['./public/index']
+            app: ['./index']
         },
         devtool: 'source-map',
         output: {
@@ -52,11 +52,7 @@ module.exports = () => {
                             loader: 'postcss-loader',
                             options: {
                                 sourceMap: true,
-                                plugins: [
-                                    autoprefixer({
-                                        browsers: ['last 2 versions']
-                                    })
-                                ]
+                                plugins: [autoprefixer()]
                             }
                         }
                     ]
@@ -81,32 +77,12 @@ module.exports = () => {
                                         ie: 11
                                     },
                                     useBuiltIns: 'usage',
-                                    corejs: 3,
+                                    corejs: '3.1',
                                     modules: false
                                 }
                             ]
                         ],
                         plugins: [require('@babel/plugin-syntax-dynamic-import')]
-                    }
-                },
-                {
-                    test: /\.eot(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-eot'
-                    }
-                },
-                {
-                    test: /\.ttf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-ttf'
                     }
                 },
                 {
@@ -158,42 +134,42 @@ module.exports = () => {
                 orientation: 'landscape-secondary',
                 icons: [
                     {
-                        src: 'public/styles/icons/icon-72x72.png',
+                        src: 'styles/icons/icon-72x72.png',
                         sizes: '72x72',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-96x96.png',
+                        src: 'styles/icons/icon-96x96.png',
                         sizes: '96x96',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-128x128.png',
+                        src: 'styles/icons/icon-128x128.png',
                         sizes: '128x128',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-144x144.png',
+                        src: 'styles/icons/icon-144x144.png',
                         sizes: '144x144',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-152x152.png',
+                        src: 'styles/icons/icon-152x152.png',
                         sizes: '152x152',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-192x192.png',
+                        src: 'styles/icons/icon-192x192.png',
                         sizes: '192x192',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-384x384.png',
+                        src: 'styles/icons/icon-384x384.png',
                         sizes: '384x384',
                         type: 'image/png'
                     },
                     {
-                        src: 'public/styles/icons/icon-512x512.png',
+                        src: 'styles/icons/icon-512x512.png',
                         sizes: '512x512',
                         type: 'image/png'
                     }
@@ -213,11 +189,11 @@ module.exports = () => {
                     to: pathResolver.client('themes')
                 },
                 {
-                    from: `${__dirname}/../demo/public/ajaxStub`,
+                    from: `${__dirname}/../demo/ajaxStub`,
                     to: pathResolver.client('images')
                 },
                 {
-                    from: `${__dirname}/../demo/public/index.html`,
+                    from: `${__dirname}/../demo/index.html`,
                     to: pathResolver.client('')
                 }
             ])
@@ -226,12 +202,10 @@ module.exports = () => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'comindware/core': `${__dirname}/../dist/core.js`,
-                prism: `${__dirname}/public/lib/prism/prism.js`,
-                markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                 localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,
                 localizationMapDe: `${__dirname}/../dist/localization/localization.de.json`,
                 localizationMapRu: `${__dirname}/../dist/localization/localization.ru.json`,
-                ajaxMap: `${__dirname}/public/ajax/ajaxMap.js`
+                ajaxMap: `${__dirname}/ajax/ajaxMap.js`
             }
         },
         resolveLoader: {

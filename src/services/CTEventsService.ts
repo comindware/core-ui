@@ -10,11 +10,11 @@ export default class CTEventsService {
         Object.assign(this, Backbone.Events);
     }
 
-    static triggerStorageEvent(eventId: string, data: any) {
+    static triggerStorageEvent(eventId, data) {
         localStorage.setItem('cbEvent', JSON.stringify({ id: eventId, data }));
     }
 
-    static __handleStorageEvent(newValue: any) {
+    static __handleStorageEvent(newValue) {
         this.trigger('cbEvent', JSON.parse(newValue));
     }
 }

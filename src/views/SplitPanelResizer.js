@@ -26,20 +26,23 @@ export default Marionette.View.extend({
             this.minimumTop = this.firstPanel.el.offsetTop + constants.MIN_HEIGHT;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
 
-            this.$el.draggable({
+            Core.services.UIService.draggable({
+                el: this.el,
                 axis: 'y',
                 drag: (event, ui) => this.__onResizerDragHorizontal(ui)
             });
         } else {
             const originalPanel1Width = this.firstPanel.el.getBoundingClientRect().width;
 
+            this.leftOffset = this.firstPanel.el.offsetLeft;
             this.$el.css('top', '');
             this.$el.css('left', `${originalPanel1Width + this.firstPanel.el.offsetLeft}px`);
             this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
             this.minimumLeft = this.firstPanel.el.offsetLeft + constants.MIN_WIDTH;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
 
-            this.$el.draggable({
+            Core.services.UIService.draggable({
+                el: this.el,
                 axis: 'x',
                 drag: (event, ui) => this.__onResizerDragVertical(ui)
             });
@@ -57,7 +60,7 @@ export default Marionette.View.extend({
 
     __onResizerDragVertical(ui) {
         const totalWidth = this.originalParentWidth;
-        let width = ui.position.left;
+        let width = ui.position.left - this.leftOffset;
 
         if (width < constants.MIN_WIDTH) {
             width = constants.MIN_WIDTH;

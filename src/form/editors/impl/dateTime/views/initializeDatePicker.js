@@ -102,10 +102,19 @@ export default function($, dates) {
         this.endDate = new Date(8639968443048000);
         this.datesDisabled = [];
         this.daysOfWeekDisabled = [];
+        this.weekends = [];
+        this.holidays = [];
+        this.shortdays = [];
+        this.additional = null;
         this.setStartDate(options.startDate);
         this.setEndDate(options.endDate);
         this.setDatesDisabled(options.datesDisabled);
         this.setDaysOfWeekDisabled(options.daysOfWeekDisabled);
+        if (options.calendar) {
+            this.additional = options.calendar.additional;
+
+            this.setSpecialCalendarDays(options.calendar);
+        }
         this.fillDow();
         this.showMode();
 
@@ -203,11 +212,11 @@ export default function($, dates) {
 
         setDatesDisabled(datesDisabled) {
             this.datesDisabled = datesDisabled || [];
-            if (!$.isArray(this.datesDisabled)) {
+            if (!Array.isArray(this.datesDisabled)) {
                 this.datesDisabled = this.datesDisabled.split(/,\s*/);
             }
             const mThis = this;
-            this.datesDisabled = $.map(this.datesDisabled, d => DPGlobal.parseDate(d, mThis.format, mThis.language, mThis.formatType, mThis.timezone).toDateString());
+            this.datesDisabled = this.datesDisabled.map(d => DPGlobal.parseDate(d, mThis.format, mThis.language, mThis.formatType, mThis.timezone).toDateString());
         },
 
         setTitle(selector, value) {
@@ -219,10 +228,30 @@ export default function($, dates) {
 
         setDaysOfWeekDisabled(daysOfWeekDisabled) {
             this.daysOfWeekDisabled = daysOfWeekDisabled || [];
-            if (!$.isArray(this.daysOfWeekDisabled)) {
+            if (!Array.isArray(this.daysOfWeekDisabled)) {
                 this.daysOfWeekDisabled = this.daysOfWeekDisabled.split(/,\s*/);
             }
-            this.daysOfWeekDisabled = $.map(this.daysOfWeekDisabled, d => parseInt(d, 10));
+            this.daysOfWeekDisabled = this.daysOfWeekDisabled.map(d => parseInt(d, 10));
+        },
+
+        setSpecialCalendarDays(calendar) {
+            calendar.dates.forEach(date => {
+                const parsetDate = moment(date.date).format('LL');
+
+                switch (date.type) {
+                    case 'weekend':
+                        this.weekends.push(parsetDate);
+                        break;
+                    case 'holiday':
+                        this.holidays.push(parsetDate);
+                        break;
+                    case 'shortday':
+                        this.shortdays.push(parsetDate);
+                        break;
+                    default:
+                        break;
+                }
+            });
         },
 
         hour_minute: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
@@ -338,11 +367,30 @@ export default function($, dates) {
                 if (
                     prevMonth.valueOf() + 86400000 <= this.startDate ||
                     prevMonth.valueOf() > this.endDate ||
-                    $.inArray(prevMonth.getDay(), this.daysOfWeekDisabled) !== -1 ||
-                    $.inArray(prevMonth.toDateString(), this.datesDisabled) !== -1
+                    this.daysOfWeekDisabled.includes(prevMonth.getDay()) ||
+                    this.datesDisabled.includes(prevMonth.toDateString())
                 ) {
                     classes.push('disabled');
                 }
+
+                if (this.weekends.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('weekends');
+                }
+
+                if (this.holidays.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('holiday');
+                }
+
+                if (this.shortdays.includes(moment(prevMonth).format('LL'))) {
+                    classes.push('shortday');
+                }
+
+                const isDateAvailable = this.__isDateAvailableByRule(moment(prevMonth).format('LL'));
+
+                if (!isDateAvailable) {
+                    classes.push('disabled');
+                }
+
                 html.push(`<td class="${classes.join(' ')}">${prevMonth.getDate()}</td>`);
                 if (UTCDay === this.weekEnd) {
                     html.push('</tr>');
@@ -619,6 +667,20 @@ export default function($, dates) {
                 date: this.date
             });
             if (date === null) this.date = this.viewDate;
+        },
+
+        __isDateAvailableByRule(date) {
+            if (this.additional === null) {
+                return true;
+            } else if (this.additional === []) {
+                return false;
+            }
+
+            return this.__isDateMentionedInAvailableDates(date);
+        },
+
+        __isDateMentionedInAvailableDates(date) {
+            return this.additional.some(availableDatesRange => moment(date).isSameOrAfter(availableDatesRange[0]) && moment(date).isSameOrBefore(availableDatesRange[1]));
         },
 
         moveDate(date, dir) {
@@ -1060,7 +1122,7 @@ export default function($, dates) {
 
                                     return m === p;
                                 });
-                                val = $.inArray(filtered[0], dates[language].months) + 1;
+                                val = dates[language].months.includes(filtered[0]) + 1;
                                 break;
                             case 'M':
                                 filtered = $(dates[language].monthsShort).filter(() => {
@@ -1069,11 +1131,11 @@ export default function($, dates) {
 
                                     return m.toLowerCase() === p.toLowerCase();
                                 });
-                                val = $.inArray(filtered[0], dates[language].monthsShort) + 1;
+                                val = dates[language].monthsShort.includes(filtered[0]) + 1;
                                 break;
                             case 'p':
                             case 'P':
-                                val = $.inArray(parts[i].toLowerCase(), dates[language].meridiem);
+                                val = dates[language].meridiem.includes(parts[i].toLowerCase());
                                 break;
                             case 'z':
                             case 'Z':

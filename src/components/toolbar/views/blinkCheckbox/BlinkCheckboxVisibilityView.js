@@ -55,9 +55,9 @@ export default Marionette.View.extend({
 
     setDragging(isDragging) {
         if (isDragging) {
-            this.$el.addClass(constants.dragging);
+            this.el.classList.add(constants.dragging);
         } else {
-            this.$el.removeClass(constants.dragging);
+            this.el.classList.remove(constants.dragging);
         }
     },
 

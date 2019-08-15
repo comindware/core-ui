@@ -42,7 +42,7 @@ const defaultOptions = () => ({
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.Text = BaseEditorView.extend({
+export default formRepository.editors.Text = BaseEditorView.extend({
     initialize(options) {
         const defOps = defaultOptions();
         if (options.format) {
@@ -50,7 +50,7 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
         } else {
             this.mask = this.options.mask;
         }
-        
+
         this.__applyOptions(options, defOps);
     },
 
@@ -66,13 +66,10 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return Object.assign(
-            {},
-            this.options,
-            {
-                type: this.options.format === 'tel' ? 'tel' : 'text' 
-            }
-        );
+        return {
+            ...this.options,
+            type: this.options.format === 'tel' ? 'tel' : 'text'
+        };
     },
 
     events() {
@@ -89,17 +86,13 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
 
     onAttach() {
         if (this.mask) {
-            this.maskedInputController = maskInput(
-                Object.assign(
-                    {
-                        inputElement: this.ui.input[0],
-                        mask: this.mask,
-                        placeholderChar: this.options.placeholderChar,
-                        autoUnmask: true
-                    },
-                    this.options.maskOptions || {}
-                )
-            );
+            this.maskedInputController = maskInput({
+                inputElement: this.ui.input[0],
+                mask: this.mask,
+                placeholderChar: this.options.placeholderChar,
+                autoUnmask: true,
+                ...(this.options.maskOptions || {})
+            });
         }
     },
 
@@ -171,7 +164,7 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapText, iconWrapRemove);
@@ -205,4 +198,4 @@ export default (formRepository.editors.Text = BaseEditorView.extend({
             }
         }
     }
-}));
+});

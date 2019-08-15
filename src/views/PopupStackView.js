@@ -7,6 +7,8 @@ const classes = {
 
 const POPUP_ID_PREFIX = 'popup-region-';
 
+const maxTransitionDelay = 1000;
+
 export default Marionette.View.extend({
     initialize() {
         this.__stack = [];
@@ -30,6 +32,7 @@ export default Marionette.View.extend({
         const regionEl = document.createElement('div');
         regionEl.setAttribute('data-popup-id', popupId);
         regionEl.classList.add('js-core-ui__global-popup-region');
+        regionEl.classList.add('core-ui__global-popup-region');
 
         let parentPopup;
         let parentPopupId = null;
@@ -63,7 +66,7 @@ export default Marionette.View.extend({
 
         view.once('attach', () =>
             requestAnimationFrame(() => {
-                view.$el.addClass('presented-modal-window');
+                view.el.classList.add('presented-modal-window');
             })
         );
         this.getRegion(popupId).show(view);
@@ -285,23 +288,31 @@ export default Marionette.View.extend({
 
     __removePopup(popupDef, immediate) {
         const popRemove = () => {
+            if (popupDef.isRemoved) {
+                return;
+            }
             this.removeRegion(popupDef.popupId);
             this.el.removeChild(popupDef.regionEl);
             this.trigger('popup:close', popupDef.popupId);
+            popupDef.isRemoved = true;
         };
+        
         if (immediate) {
             popRemove();
         } else {
+            const timeoutId = setTimeout(() => popRemove(), maxTransitionDelay);
+
             popupDef.view.el.addEventListener(
                 'transitionend',
                 () => {
+                    clearTimeout(timeoutId);
                     popRemove();
                 },
                 { once: true }
             );
         }
 
-        popupDef.view.$el.removeClass('presented-modal-window');
+        popupDef.view.el?.classList.remove('presented-modal-window');
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
     },
 

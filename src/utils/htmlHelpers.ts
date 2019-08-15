@@ -9,7 +9,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightText(rawText: string, fragment: string, escape: boolean) {
+    highlightText(rawText, fragment, escape) {
         let text = rawText;
         if (!text) {
             return '';
@@ -42,7 +42,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightMentions(rawText: string, escape: boolean): string {
+    highlightMentions(rawText, escape) {
         let text = rawText;
         if (!text) {
             return '';
@@ -59,7 +59,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
         }, {});
         const regex = /(\s|^)@([a-z0-9_\.]+)/gi;
 
-        return text.replace(regex, (fragment, whitespace, userName) => {
+        return text.replace(regex, (fragment, whitespace, userName: string) => {
             const user = membersByUserName[userName];
             if (user) {
                 return `${whitespace}<a href="${user.url}" title="${user.name}">@${user.userName}</a>`;
@@ -75,7 +75,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightUrls(rawText: string, escape: boolean): string {
+    highlightUrls(rawText, escape) {
         let text = rawText;
         if (!text) {
             return '';
@@ -85,7 +85,17 @@ export default /** @lends module:core.utils.htmlHelpers */ {
         }
 
         const regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
+        return text.replace(regex, url => `<a href="${url}">${url}</a>`);
+    },
 
-        return text.replace(regex, (url: string) => `<a href="${url}">${url}</a>`);
+    /**
+     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt;.
+     * @param {String} htmlText HTML to escape all tags info.
+     * @return {String} Escaped text
+     * */
+    getTextfromHTML(htmlText = '') {
+        return String(htmlText)
+            .replace(/<[^>]*>/g, '', '')
+            .replace(/"/g, '&quot;');
     }
 };

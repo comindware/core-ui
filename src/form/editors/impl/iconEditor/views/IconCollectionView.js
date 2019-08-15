@@ -2,7 +2,7 @@ import template from '../templates/iconCollectionView.html';
 import IconItemCategoryView from './IconItemCategoryView';
 
 export default Marionette.CollectionView.extend({
-    className: 'ld-setting-dd-panel ld-setting-dd-panel_icons dev-setting-dd-panel_icons',
+    className: 'ld-setting-dd-panel_icons icons-panel-collection',
 
     template: Handlebars.compile(template),
 

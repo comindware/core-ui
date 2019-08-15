@@ -1,6 +1,20 @@
-<div class="galleryImage">
-  <div class="js-close galleryButton" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.CLOSE'}}">X</div>
-  <div class="js-image"></div>
+<div class="gallery-top-menu">
+    <div class="js-info-widget-region"></div>
+    <div class="js-fileName gallery-filename"></div>
+    <div class="gallery-top-menu-buttons-wrp">
+        <div class="js-zoom-in gallery-zoom-in gallery-btn {{iconPrefixer zoomIn}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.ZOOMIN'}}"></div>
+        <div class="js-zoom-out gallery-zoom-out gallery-btn hidden {{iconPrefixer zoomOut}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.ZOOMOUT'}}"></div>
+        <div class="js-expand gallery-expand gallery-btn {{iconPrefixer expand}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.MAXIMIZE'}}"></div>
+        <div class="js-minimize gallery-minimize gallery-btn hidden {{iconPrefixer minimize}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.MINIMIZE'}}"></div>
+        <div class="js-close gallery-top-menu-close gallery-btn {{iconPrefixer close}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.CLOSE'}}"></div>
+    </div>
 </div>
-<div class="js-download btn btn-pale"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</span></div>
-<div class="js-loading-region dev-l-loader-image-gallery"></div>
+<div class="js-image-region gallery-main-image"></div>
+<div class="gallery-controls-menu-wrp">
+    <div class="js-delete gallery-delete gallery-btn {{iconPrefixer delete}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}</span></div>
+    <div class="js-fileName gallery-filename"></div>
+    <div class="js-download gallery-download gallery-btn {{iconPrefixer download}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}</span></div>
+</div>
+<div class="js-previews-collection-region gallery-previews-collection"></div>
+<div class="js-previous-image gallery-nav-btn gallery-btn gallery-previous" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.PREVIOUSIMAGE'}}"><i class="{{iconPrefixer previous}}"></i></div>
+<div class="js-next-image gallery-nav-btn gallery-btn gallery-next" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.NEXTIMAGE'}}"><i class="{{iconPrefixer next}}"></i></div>

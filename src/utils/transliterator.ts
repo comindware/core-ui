@@ -1,83 +1,15 @@
-import Backbone from 'backbone';
-
 export default {
     translitePrimer: new Map([
-        ['А', 'A'],
-        ['а', 'a'],
-        ['Б', 'B'],
-        ['б', 'b'],
-        ['В', 'V'],
-        ['в', 'v'],
-        ['Г', 'G'],
-        ['г', 'g'],
-        ['Д', 'D'],
-        ['д', 'd'],
-        ['Е', 'E'],
-        ['е', 'e'],
-        ['Ё', 'Yo'],
-        ['ё', 'yo'],
-        ['Ж', 'Zh'],
-        ['ж', 'zh'],
-        ['З', 'Z'],
-        ['з', 'z'],
-        ['И', 'I'],
-        ['и', 'i'],
-        ['Й', 'Y'],
-        ['й', 'y'],
-        ['К', 'K'],
-        ['к', 'k'],
-        ['Л', 'L'],
-        ['л', 'l'],
-        ['М', 'M'],
-        ['м', 'm'],
-        ['Н', 'N'],
-        ['н', 'n'],
-        ['О', 'O'],
-        ['о', 'o'],
-        ['П', 'P'],
-        ['п', 'p'],
-        ['Р', 'R'],
-        ['р', 'r'],
-        ['С', 'S'],
-        ['с', 's'],
-        ['Т', 'T'],
-        ['т', 't'],
-        ['У', 'U'],
-        ['у', 'u'],
-        ['Ф', 'F'],
-        ['ф', 'f'],
-        ['Х', 'Kh'],
-        ['х', 'kh'],
-        ['Ц', 'Ts'],
-        ['ц', 'ts'],
-        ['Ч', 'Ch'],
-        ['ч', 'ch'],
-        ['Ш', 'Sh'],
-        ['ш', 'sh'],
-        ['Щ', 'Sch'],
-        ['щ', 'sch'],
-        ['Ъ', '"'],
-        ['ъ', '"'],
-        ['Ы', 'Y'],
-        ['ы', 'y'],
-        ['Ь', "'"],
-        ['ь', "'"],
-        ['Э', 'E'],
-        ['э', 'e'],
-        ['Ю', 'Yu'],
-        ['ю', 'yu'],
-        ['Я', 'Ya'],
-        ['я', 'ya'],
-        [' ', '_'],
-        ['Ä', 'A'],
-        ['ä', 'a'],
-        ['É', 'E'],
-        ['é', 'e'],
-        ['Ö', 'O'],
-        ['ö', 'o'],
-        ['Ü', 'U'],
-        ['ü', 'u'],
-        ['ß', 's']
+        ['А', 'A'],  ['а', 'a'],  ['Б', 'B'],   ['б', 'b'],  ['В', 'V'],   ['в', 'v'],   ['Г', 'G'],  ['г', 'g'],
+        ['Д', 'D'],  ['д', 'd'],  ['Е', 'E'],   ['е', 'e'],  ['Ё', 'Yo'],  ['ё', 'yo'],  ['Ж', 'Zh'], ['ж', 'zh'],
+        ['З', 'Z'],  ['з', 'z'],  ['И', 'I'],   ['и', 'i'],  ['Й', 'Y'],   ['й', 'y'],   ['К', 'K'],  ['к', 'k'],
+        ['Л', 'L'],  ['л', 'l'],  ['М', 'M'],   ['м', 'm'],  ['Н', 'N'],   ['н', 'n'],   ['О', 'O'],  ['о', 'o'],
+        ['П', 'P'],  ['п', 'p'],  ['Р', 'R'],   ['р', 'r'],  ['С', 'S'],   ['с', 's'],   ['Т', 'T'],  ['т', 't'],
+        ['У', 'U'],  ['у', 'u'],  ['Ф', 'F'],   ['ф', 'f'],  ['Х', 'Kh'],  ['х', 'kh'],  ['Ц', 'Ts'], ['ц', 'ts'],
+        ['Ч', 'Ch'], ['ч', 'ch'], ['Ш', 'Sh'],  ['ш', 'sh'], ['Щ', 'Sch'], ['щ', 'sch'], ['Ъ', '"'],  ['ъ', '"'],
+        ['Ы', 'Y'],  ['ы', 'y'],  ['Ь', "'"],   ['ь', "'"],  ['Э', 'E'],   ['э', 'e'],   ['Ю', 'Yu'], ['ю', 'yu'],
+        ['Я', 'Ya'], ['я', 'ya'], [' ', '_'],   ['Ä', 'A'],  ['ä', 'a'],   ['É', 'E'],   ['é', 'e'],  ['Ö', 'O'],
+        ['ö', 'o'],  ['Ü', 'U'],  ['ü', 'u'],   ['ß', 's']
     ]),
 
     initializeTransliteration(options) {
@@ -100,25 +32,21 @@ export default {
         };
     },
 
-    setOptionsToComputedTransliteratedFields(
-        schema,
-        transliteratedFields = { name: 'alias' },
-        inputSettings = {
+    setOptionsToComputedTransliteratedFields(schema, transliteratedFields = {name: 'alias'}, inputSettings = {
             changeMode: 'blur',
             autocommit: true,
             forceCommit: true,
             transliteratorChangedSomeProperties: true
-        }
-    ) {
+        }) {
         let computedRelatedFields = Object.values(transliteratedFields);
         computedRelatedFields = computedRelatedFields.concat(Object.keys(transliteratedFields).filter(name => !(schema[name] && schema[name].allowEmptyValue)));
 
-        computedRelatedFields.forEach(input => {
+        computedRelatedFields.forEach((input) => {
             if (!schema[input]) {
                 console.warn(`Transliterator: schema has no input '${input}'`);
                 return;
             }
-            Object.keys(inputSettings).forEach(propetry => {
+            Object.keys(inputSettings).forEach((propetry) => {
                 if (schema[input][propetry] !== undefined && !schema[input].transliteratorChangedSomeProperties) {
                     console.warn(`Transliterator: Property '${propetry}' of input '${input}' was overwritten`);
                 }
@@ -154,9 +82,9 @@ export default {
             newSchema.push(input);
             return newSchema;
         }, initArray);
-    },
+    },  
 
-    systemNameFiltration(string?: string) {
+    systemNameFiltration(string) {
         if (!string) {
             return '';
         }
@@ -166,12 +94,10 @@ export default {
         const nonLatinReg = /[^a-zA-Z_]/g;
         const nonLatinDigitReg = /[^a-zA-Z0-9_]/g;
 
-        return Array.from(str)
-            .map((char: string) => {
-                firstIsDigit && (firstIsDigit = nonLatinReg.test(char));
-                return char.replace(firstIsDigit ? nonLatinReg : nonLatinDigitReg, '');
-            })
-            .join('');
+        return Array.from(str).map(char => {
+            firstIsDigit && (firstIsDigit = nonLatinReg.test(char));
+            return char.replace(firstIsDigit ? nonLatinReg : nonLatinDigitReg, '');
+        }).join('');
     },
 
     getTranslitToSystemName() {
@@ -187,8 +113,8 @@ export default {
         return this.__translitToSystemName;
     },
 
-    extendComputed(model: Backbone.Model, transliteratedFields = { name: 'alias' }, schema = {}) {
-        const computed = (model.computed = model.computed || {});
+    extendComputed(model, transliteratedFields = {name: 'alias'}, schema = {}) {
+        const computed = model.computed = model.computed || {};
 
         const required = function(name) {
             return function(fields) {
@@ -198,14 +124,15 @@ export default {
                 return this.previous(name);
             };
         };
-        const getTranslite = (name: string, alias: string) => fields => {
-            if (fields[alias]) {
-                return schema[alias] && schema[alias].returnRawValue ? fields[alias] : this.systemNameFiltration(fields[alias]);
-            }
-            return this.systemNameFiltration(fields[name]);
-        };
+        const getTranslite = (name, alias) =>
+            (fields) => {
+                if (fields[alias]) {
+                    return schema[alias] && schema[alias].returnRawValue ? fields[alias] : this.systemNameFiltration(fields[alias]);
+                }
+                return this.systemNameFiltration(fields[name]);
+            };
 
-        Object.entries(transliteratedFields).forEach(keyValue => {
+        Object.entries(transliteratedFields).forEach((keyValue) => {
             const name = keyValue[0];
             const alias = keyValue[1];
 
@@ -236,7 +163,7 @@ export default {
         return model;
     },
 
-    translite(text: string) {
+    translite(text) {
         return String(text).replace(/[а-яё]/gi, ruChar => this.getTranslitToSystemName()[ruChar] || '');
-    }
+    }    
 };

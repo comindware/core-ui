@@ -14,10 +14,10 @@ const getDefaultOptions = options => ({
 
 export default Marionette.View.extend({
     initialize() {
-        helpers.ensureOption(this.options, 'allItemsCollection');
+        helpers.ensureOption(this.options, 'toolbarItems');
         _.defaults(this.options, getDefaultOptions(this.options));
 
-        this.allItemsCollection = this.options.allItemsCollection;
+        this.toolbarItems = this.options.toolbarItems;
         this.toolbarItemsCollection = new ToolbarItemsCollection();
         this.menuItemsCollection = new ToolbarItemsCollection();
         this.toolbarConstItemsCollection = new ToolbarItemsCollection();
@@ -30,7 +30,7 @@ export default Marionette.View.extend({
         this.debounceRebuildLong = _.debounce(this.rebuildView, 300);
         this.debounceRebuildShort = _.debounce(this.rebuildView, 5);
         this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuildLong);
-        this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuildShort);
+        this.listenTo(this.toolbarItems, 'change add remove reset update', this.debounceRebuildShort);
     },
 
     className() {
@@ -53,7 +53,7 @@ export default Marionette.View.extend({
         this.showChildView('toolbarItemsRegion', this.toolbarActions);
         this.showChildView('popupMenuRegion', this.popupMenu);
         this.showChildView('toolbarConstItemsRegion', this.constToolbarActions);
-        this.getRegion('popupMenuRegion').$el.hide();
+        this.getRegion('popupMenuRegion').el.setAttribute('hidden', true);
     },
 
     __createActionsGroupsView(collection) {
@@ -73,20 +73,18 @@ export default Marionette.View.extend({
         }
 
         this.__resetCollections();
-        const toolbarActions = this.getRegion('toolbarItemsRegion')
-            .$el.children()
-            .children();
+        const toolbarActions = this.getRegion('toolbarItemsRegion').el.firstChild.children;
         if (toolbarActions.length === 0) {
             return;
         }
         let toolbarWidth = this.$el.width();
-        const constItemsEl = this.getRegion('toolbarConstItemsRegion').$el;
-        constItemsEl.length && (toolbarWidth -= constItemsEl.outerWidth());
-        const menuActionsWidth = this.getRegion('popupMenuRegion').$el.outerWidth();
+        const constItemsEl = this.getRegion('toolbarConstItemsRegion').el;
+        constItemsEl && (toolbarWidth -= constItemsEl.offsetWidth);
+        const menuActionsWidth = this.getRegion('popupMenuRegion').el.offsetWidth;
 
         let childWidth = 0;
         let notFitItem = -1;
-        toolbarActions.each((i, val) => {
+        toolbarActions.forEach((i, val) => {
             childWidth += val.offsetWidth;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 if (i === toolbarActions.length - 1) {
@@ -100,7 +98,7 @@ export default Marionette.View.extend({
         });
 
         if (notFitItem >= 0) {
-            this.getRegion('popupMenuRegion').$el.show();
+            this.getRegion('popupMenuRegion').el.removeAttribute('hidden');
 
             //Ungroup grouped items
             const ungroupedCollection = new Backbone.Collection();
@@ -117,14 +115,12 @@ export default Marionette.View.extend({
             this.menuItemsCollection.reset(ungroupedCollection.models.slice(notFitItem));
             this.toolbarItemsCollection.reset(this.toolbarItemsCollection.models.slice(0, notFitItem));
         } else {
-            this.getRegion('popupMenuRegion').$el.hide();
+            this.getRegion('popupMenuRegion').el.setAttribute('hidden', true);
         }
-
-        this.trigger('toolbar:ready');
     },
 
     __resetCollections() {
-        const rawCollection = this.allItemsCollection.toJSON();
+        const rawCollection = this.toolbarItems.toJSON();
         this.toolbarItemsCollection.reset(rawCollection.filter(model => model.kind !== meta.kinds.CONST));
         this.menuItemsCollection.reset();
         this.toolbarConstItemsCollection.reset(rawCollection.filter(model => model.kind === meta.kinds.CONST));

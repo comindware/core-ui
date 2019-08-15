@@ -1,13 +1,14 @@
+/* eslint-disable global-require */
+/* eslint-disable no-undef */
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const pathResolver = require('./pathResolver');
-
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -50,7 +51,6 @@ module.exports = options => {
                     exclude: [pathResolver.node_modules()],
                     options: {
                         presets: [
-                            '@babel/preset-flow',
                             '@babel/typescript',
                             [
                                 '@babel/preset-env',
@@ -65,10 +65,10 @@ module.exports = options => {
                             ]
                         ],
                         plugins: [
-                            require('@babel/plugin-proposal-optional-chaining'),
-                            require('@babel/plugin-proposal-object-rest-spread'),
-                            require('@babel/plugin-transform-parameters'),
-                            require('@babel/plugin-proposal-class-properties')
+                            '@babel/plugin-proposal-optional-chaining',
+                            '@babel/plugin-proposal-object-rest-spread',
+                            '@babel/plugin-transform-parameters',
+                            '@babel/plugin-proposal-class-properties'
                         ],
                         cacheDirectory: true
                     }
@@ -83,11 +83,7 @@ module.exports = options => {
                             options: {
                                 sourceMap: true,
                                 plugins: () => {
-                                    const plugins = [
-                                        autoprefixer({
-                                            browsers: ['ie 11', '> 0.25%', 'not chrome 29']
-                                        })
-                                    ];
+                                    const plugins = [require('postcss-preset-env')()];
                                     if (UGLIFY) {
                                         plugins.push(
                                             cssnano({
@@ -127,26 +123,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /\.eot(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-eot'
-                    }
-                },
-                {
-                    test: /\.ttf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-ttf'
-                    }
-                },
-                {
                     test: /\.woff2(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -154,16 +130,6 @@ module.exports = options => {
                         name: '[path][name].[ext]',
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff2'
-                    }
-                },
-                {
-                    test: /\.otf(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'font/opentype'
                     }
                 },
                 {
@@ -247,14 +213,22 @@ module.exports = options => {
             new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
+            new TypedocWebpackPlugin({
+                out: './docs',
+                module: 'commonjs',
+                target: 'es6',
+                exclude: '**/node_modules/**/*.*',
+                tsconfig: '../tsconfig.json',
+                experimentalDecorators: true,
+                ignoreCompilerErrors: true
+            })
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
                 'jquery-ui': pathResolver.source('external/jquery-ui.js'),
-                stickybits: pathResolver.source('external/stickybits.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             },
@@ -267,7 +241,7 @@ module.exports = options => {
     };
 
     if (!TEST) {
-        webpackConfig.entry = [pathResolver.source('coreApi.js')];
+        webpackConfig.entry = [pathResolver.source('coreApi.ts')];
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,

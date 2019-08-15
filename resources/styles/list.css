@@ -29,7 +29,6 @@
 .visible-collection {
     height: 100%;
     width: auto;
-    position: relative;
 }
 
 .visible-collection-wrp, .selection-panel-wrp {
@@ -52,8 +51,9 @@
 
 .grid-content-wrp {
     display: table;
-    width: 100%;
+    min-width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .grid-header-wrp {
@@ -73,6 +73,11 @@
     z-index: 2;
     padding: 9px 0 0 17px;
 }
+
+.grid-header > .cell_selection > .checkbox {
+    z-index: 1
+}
+
 .grid-header:hover > .cell_selection {
     background-color: #0575bd;
 }
@@ -194,7 +199,9 @@
     height: 35px;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
+    background-clip: padding-box;
+    max-width: 0px; /*hack to set width less than cells content */
 }
 
 .header-column-wrp{
@@ -303,6 +310,10 @@
     flex-direction: column;
     flex: 1;
     max-width: 100%;
+}
+
+.layout__vertical-layout > .grid-container{
+   flex: 1 1 auto;
 }
 
 .grid-container > .form-label {
@@ -423,10 +434,10 @@
 .cell {
     text-overflow: ellipsis;
     white-space: nowrap;
-    cursor: default;
     overflow: hidden;
-    min-width: 50px;
-    position: relative;
+    background-clip: padding-box;    
+    max-width: 0px; /*hack to set width less than cells content */
+    width: auto;
 }
 .cell_editable {
     display: flex;
@@ -444,6 +455,7 @@
     left: 0;
     z-index: 1;
     background-color: #fff;
+    background-clip: padding-box;
 }
 tr.row-checked .cell_selection{
     background-color: #c2d7e5;
@@ -481,10 +493,18 @@ tr:hover .cell_selection {
 .cell .js-tree-first-cell + .editor {
     flex: 1 1 auto;
 }
-.dragover .cell,
-.dragover.cell,
-.dragover .grid-header-column{
+tr.dragover td.grid-header-column,
+tr.dragover td.cell_selection-index,
+tr.dragover td{
     border-bottom: 1px solid #ff0000;
+}
+
+.dragover .cell *,
+.dragover.cell_draggable *,
+.dragover .grid-header-column *,
+.dragover .cell_selection-index *,
+.dragover .cell_selection * {
+    pointer-events: none;
 }
 
 .cell > .editor:after{
@@ -498,10 +518,6 @@ tr:hover .cell_selection {
 .cell .editor_checkbox {
     display: flex;
     align-items: center;
-}
-
-.grid-container .cell{
-    font-size: 13px;
 }
 
 .cell .input{
@@ -550,6 +566,7 @@ tr:hover .cell_selection {
     text-overflow: ellipsis;
     font-size: 13px;
     margin: 0 3px 0 -3px;
+    background-clip: padding-box;
 }
 
 .cell .checkbox {
@@ -571,6 +588,10 @@ tr:hover .cell_selection {
 
 .cell.editor_bubble .bubbles__i{
     height: auto;
+}
+
+.cell > .task-links__link  {
+    display: initial;
 }
 
 /*-- Compact list --*/
@@ -699,9 +720,88 @@ tr:hover .cell_selection {
 
 .grid-table-wrapper {
     min-height: 100%;
+    display: contents;
+    width: 100%;
+}
+/* fix for EDGE  */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .grid-table-wrapper {
+        display: ruby-base;
+    }
 }
 
 .grid-table-wrapper-war {
     overflow: auto;
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-height: 100%;
+}
+
+.grid-label_tree-editor {
+    margin-left: auto;
+}
+
+.composite-user-abr__container{
+    height: 23px;
+    width: 23px;
+    text-align: center;
+    line-height: 23px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 1px solid #e2e2e2;
+    flex: 0 0 auto;
+}
+.composite-user-abr__container img {
+    height: 23px;
+    width: 23px;
+    border-radius: 50%;
+}
+.composite-user-abr__name {
+    margin-left: 0.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.composite-cell__count {
+    margin-left: auto;
+    opacity: 0.6;
+}
+
+.composite-user-abr__avatar {
+    width: 27px;
+    height: 27px;
+}
+
+.grid_composite-cell .dropdown__button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid-composite_panel {
+    position: fixed;
+    font-size: 12px;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 600;
+}
+
+.composite-cell_container {
+    display: flex;
+    min-width: 200px;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.composite-cell__wrp {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.composite-cell__wrp .bubbles__caret{
+    margin-left: 0.5rem;
+}
+
+.composite-cell_container .task-links__link, .composite-cell__wrp .task-links__link {
+    margin-left: 0.25rem;
 }

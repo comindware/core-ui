@@ -1,18 +1,28 @@
 // @flow
+/*
+ *
+ * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
+ *
+ * */
+
 import formRepository from '../../formRepository';
 import { keyCode } from 'utils';
 
 const classes = {
-    disabled: 'editor_disabled disabled',
-    readonly: 'editor_readonly readonly',
+    disabled: 'editor_disabled',
+    readonly: 'editor_readonly',
     hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty',
-    ERROR: 'editor_error error',
-    REQUIRED: 'required'
+    ERROR: 'js-editor_error'
 };
 
 const onRender = function() {
+    if (this.id) {
+        this.el.setAttribute('id', this.id);
+    }
+    this.setPermissions(this.enabled, this.readonly);
+    this.setHidden(this.hidden);
     this.setValue(this.value);
     if (this.focusElement) {
         this.$el.on('focus', this.focusElement, this.onFocus);
@@ -23,28 +33,28 @@ const onRender = function() {
         this.$el.on('blur', this.onBlur);
         this.$el.on('keyup', this.onKeyup);
     }
-
-    if (this.enabled) {
-        this.__setReadonlyFocusElement(this.readonly);
-    } else {
-        this.__setEnabledFocusElement(this.enabled);
-    }
+    this.__updateEmpty();
 
     // revalidate if model isInvalid
     if (this.model && this.model.validationResult) {
-        this.validate();
+        if (this.field) {
+            this.field.validate();
+        } else {
+            this.validate();
+        }
     }
 };
 
 const onChange = function() {
-    if (this.model && this.options.autocommit) {
+    this.__previousValue = this.value;
+    if (this.model && this.schema.autocommit) {
         this.commit();
     }
     if (this.__validatedOnce) {
         if (this.form) {
             this.form.validate();
-        } else {
-            this.validate();
+        } else if (this.field) {
+            this.field.validate();
         }
     }
     this.__updateEmpty();
@@ -56,6 +66,7 @@ const onChange = function() {
  * @class Base class for all editors in the library.
  * While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul>
  * <li><code>BaseCollectionEditorView</code></li>
+ * <li><code>BaseCompositeEditorView</code></li>
  * <li><code>BaseEditorView</code></li></ul>
  * Possible events:<ul>
  * <li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
@@ -81,31 +92,25 @@ const onChange = function() {
  *                                Must be used together with  <code>model</code> options.
  * @param {Function[]} [options.validators] An array of validator function which look like the following:
  * <code>function(value, formValues) -> ({type, message}|undefined)</code>
+ * @param {Object} [options.schema] When created implicitly by form, all the editor options are passed through this option.
+ * Не использовать явно.
  * */
 
-const defaultOptions = {
-    autocommit: false,
-    enabled: true,
-    readonly: false,
-    hidden: false,
-    forceCommit: false,
-    validators: undefined,
-    getFocusElementReadonly: readonly => readonly,
-    getFocusElementTabindex: readonly => (readonly ? -1 : 0)
-};
-
 export default {
-    create(viewClass: Marionette.View | Marionette.CollectionView) {
+    create(viewClass: Marionette.View | Marionette.CollectionView | Marionette.CompositeView) {
         return {
-            classes,
+            classes: {
+                disabled: 'editor_disabled',
+                readonly: 'editor_readonly',
+                hidden: 'editor_hidden',
+                FOCUSED: 'editor_focused',
+                EMPTY: 'editor_empty'
+            },
 
             hasFocus: false,
 
             constructor(options: Object = {}) {
-                this.onFocus = this.onFocus.bind(this);
-                this.onBlur = this.onBlur.bind(this);
-                this.checkChange = this.checkChange.bind(this);
-                this.onKeyup = this.onKeyup.bind(this);
+                _.bindAll(this, 'onFocus', 'onBlur', 'checkChange', 'onKeyup');
 
                 //Set initial value
                 if (options.model) {
@@ -119,118 +124,63 @@ export default {
                     this.value = null;
                 }
 
+                this.__previousValue = this.value;
+
                 this.key = options.key;
                 this.form = options.form;
+                this.field = options.field;
 
+                const schema = (this.schema = options.schema || {});
+
+                this.validators = options.validators || schema.validators;
                 this.__validatedOnce = false;
 
-                this.on('render', this.__onEditorRender.bind(this));
+                this.on('render', onRender.bind(this));
                 this.on('change', onChange.bind(this));
-    
-                const fn = this.setValue;
-                this.setValue = function() {
-                    fn.apply(this, arguments);
+                this.setValue = _.wrap(this.setValue, (fn, ...rest) => {
+                    fn.call(this, ...rest);
                     if (this.$el) {
                         this.__updateEmpty();
                     }
-                };
+                    this.__previousValue = this.value;
+                });
 
-                this.options = _.defaults({}, options, defaultOptions, this.options);
+                // ToDo fix: if schema autocommit false take undefined value from options.autocommit
+                schema.autocommit = schema.autocommit || options.autocommit;
 
-                this.validators = this.options.validators;
-                this.enabled = this.options.enabled;
-                this.readonly = this.options.readonly;
-                this.hidden = this.options.hidden;
-                
+                this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
+                this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
+                this.hidden = schema.hidden = schema.hidden || options.hidden || (schema.hidden !== undefined && options.hidden !== undefined);
+                schema.forceCommit = options.forceCommit || schema.forceCommit;
+
                 viewClass.prototype.constructor.apply(this, arguments);
-
-                const isEmpty = this.isEmptyValue();
-
-                const classState = {
-                    disabled: !this.enabled,
-                    readonly: this.readonly,
-                    hidden: this.hidden,
-                    EMPTY: isEmpty,
-                    REQUIRED: this.options.required && isEmpty
-                };
-
-                const classList = Object.entries(classes).reduce(
-                    (classesList, [key, classString]) => {
-                        if (classState[key]) {
-                            classesList.push(...classString.split(' '));
-                        }
-                        return classesList;
-                    },
-                    []
-                );
-
-                if (classList.length) {
-                    this.el.classList.add(...classList);
-                }
-
-                if (this.id) {
-                    this.el.setAttribute('id', this.id);
-                }
-
                 if (this.model) {
                     this.listenTo(this.model, `change:${this.key}`, this.updateValue);
                     this.listenTo(this.model, 'sync', this.updateValue);
                     this.listenTo(this.model, 'validate:force', (e = {}) => {
-                        e.validationResult = this.validate();
+                        if (this.field) {
+                            e.validationResult = this.field.validate();
+                        } else {
+                            e.validationResult = this.validate();
+                        }
                     });
                 }
             },
 
-            __onEditorRender: onRender,
-
-            __updateEmpty(isEmpty = this.isEmptyValue()) {
-                if (this.options.required) {
-                    this.__toggleRequiredClass(isEmpty);
+            __updateEmpty() {
+                const isEmpty = this.isEmptyValue();
+                if (this.options.fieldUpdateEmpty) {
+                    this.options.fieldUpdateEmpty(isEmpty);
                 }
-                this.$el.toggleClass(classes.EMPTY, Boolean(isEmpty));
-            },
-        
-            __toggleRequiredClass(required) {
-                this.$el.toggleClass(this.classes.REQUIRED, Boolean(required));
-            },
-
-            __applyOptions(options, defaults) {
-                this.__applyDefaults(options, defaults);
-                this.__applyClass();
-            },
-
-            __applyDefaults(options, defaults) {
-                const defOps = typeof defaults === 'function' ? defaults(options) : defaults;
-                this.options = _.defaults({}, options, defOps, this.options);
-            },
-
-            __applyClass() {
-                if (this.options.class) {
-                    this.el.classList.add(
-                        ...(this.options.class.split(' ').filter(className => className))
-                    );
-                }
-            },
-
-            setRequired(required = this.options.required) {
-                this.options.required = required;
-                if (required) {
-                    this.__updateEmpty();
-                } else {
-                    this.__toggleRequiredClass(false);
-                }
+                this.$el.toggleClass(classes.EMPTY, isEmpty);
             },
 
             /**
              * Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
              * Shouldn't be called normally. The method is called internally on model's <code>change</code> event.
              * */
-            updateValue(model, value, options) {
-                if (options.isEditorSetValue) {
-                    return;
-                }
+            updateValue() {
                 this.setValue(this.getModelValue());
-                this.validate();
             },
 
             /**
@@ -243,27 +193,9 @@ export default {
 
             __getFocusElement() {
                 if (this.focusElement) {
-                    return this.__focusElement || (this.__focusElement = this.$el.find(this.focusElement));
+                    return this.$el.find(this.focusElement);
                 }
                 return this.$el;
-            },
-
-            __setEnabledFocusElement(enabled) {
-                if (this.focusElement === null) {
-                    return;
-                }
-                this.__getFocusElement().prop('disabled', !enabled);
-            },
-
-            __setReadonlyFocusElement(readonly) {
-                if (this.focusElement === null) {
-                    return;
-                }
-                if (this.getEnabled()) {
-                    const focusElement = this.__getFocusElement();
-                    focusElement.prop('readonly', this.options.getFocusElementReadonly(readonly));
-                    focusElement.prop('tabindex', this.options.getFocusElementTabindex(readonly));
-                }
             },
 
             __triggerChange(...args: Array<any>) {
@@ -321,13 +253,12 @@ export default {
 
             __setEnabled(enabled: Boolean) {
                 this.enabled = enabled;
-                this.__setEnabledFocusElement(enabled);
+                this.trigger('enabled', enabled);
                 if (!this.enabled) {
                     this.$el.addClass(classes.disabled);
                 } else {
                     this.$el.removeClass(classes.disabled);
                 }
-                this.trigger('enabled', enabled);
             },
 
             /**
@@ -348,13 +279,12 @@ export default {
 
             __setReadonly(readonly: Boolean) {
                 this.readonly = readonly;
-                this.__setReadonlyFocusElement(readonly);
+                this.trigger('readonly', readonly);
                 if (this.readonly && this.getEnabled()) {
                     this.$el.addClass(classes.readonly);
                 } else {
                     this.$el.removeClass(classes.readonly);
                 }
-                this.trigger('readonly', readonly);
             },
 
             /**
@@ -365,15 +295,10 @@ export default {
                 return this.readonly;
             },
 
-            getEditable() {
-                return this.getEnabled() && !this.getReadonly();
-            },
-
             /**
              * Sets the focus onto this editor.
              */
             focus() {
-                //TODO if focusElement === null ?
                 this.__getFocusElement().focus();
                 this.hasFocus = true;
             },
@@ -382,7 +307,6 @@ export default {
              * Clears the focus.
              */
             blur() {
-                //TODO if focusElement === null ?
                 this.__getFocusElement().blur();
                 this.hasFocus = false;
             },
@@ -396,7 +320,7 @@ export default {
              */
             commit(options: Object = {}) {
                 let error = this.validate(true);
-                if (error && !this.options.forceCommit) {
+                if (error && !this.schema.forceCommit) {
                     return error;
                 }
 
@@ -406,11 +330,10 @@ export default {
 
                 this.model.set(this.key, this.getValue(), {
                     silent: false,
-                    validate: options.validate === true,
-                    isEditorSetValue: true
+                    validate: options.validate === true
                 });
 
-                if (error && !this.options.forceCommit) {
+                if (error && !this.schema.forceCommit) {
                     return error;
                 }
                 this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
@@ -484,7 +407,7 @@ export default {
 
                 //Use a customised built-in validator if given an object
                 //noinspection JSUnresolvedVariable
-                if (validator instanceof Object && validator.type) {
+                if (_.isObject(validator) && validator.type) {
                     const config = validator;
 
                     //noinspection JSUnresolvedVariable
@@ -496,10 +419,8 @@ export default {
             },
 
             checkChange() {
-                if (this.model) {
-                    if (this.value !== this.model.get(this.key)) {
-                        this.__triggerChange();
-                    }
+                if (this.__previousValue !== this.value) {
+                    this.__triggerChange();
                 }
             },
 
@@ -509,18 +430,17 @@ export default {
                 }
             },
 
-            onFocus(event, options) {
+            onFocus() {
                 this.$el.addClass(classes.FOCUSED);
-                //ToDo what for pass 'this' as first argument ?
-                this.trigger('focus', this, event, options);
+                this.trigger('focus', this);
             },
 
-            onBlur(event, options = {}) {
-                if (options.triggerChange === undefined || options.triggerChange === true) {
+            onBlur({ triggerChange = true } = {}) {
+                if (triggerChange) {
                     this.checkChange();
                 }
                 this.$el.removeClass(classes.FOCUSED);
-                this.trigger('blur', this, event, options);
+                this.trigger('blur', this);
             },
 
             renderIcons(...iconTemplates) {

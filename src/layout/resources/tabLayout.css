@@ -11,6 +11,12 @@
     flex: 0 0 auto;
 }
 
+.layout__tab-layout__tree-editor {
+    position: absolute;
+    right: 0px;
+    top: -5px;
+}
+
 .layout__tab-layout__header-view {
     display: flex;
     align-items: flex-end;
@@ -47,6 +53,7 @@
 
 .layout__tab-layout__panel-region > div {
     height: 100%;
+    overflow: auto;
 }
 
 .output-tabs-region .layout__tab-layout__panel-region > .grid-container {
@@ -71,4 +78,11 @@
 
 .layout__tab-layout__stepper_view-item .stepper-view_content {
     text-align: center;
+}
+
+.layout__tab-layout__no-tabs-message {
+    font-size: 18px;
+    font-weight: 300;
+    color: #70787F;
+    padding: 5px;
 }

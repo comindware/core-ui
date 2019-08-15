@@ -1,31 +1,29 @@
 // @flow
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
-import template from '../templates/bubbleItem.hbs';
 import meta from '../meta';
+import { htmlHelpers } from '../../../../../utils';
 
 export default Marionette.View.extend({
-    template: Handlebars.compile(template),
+    template: Handlebars.compile('{{{customTemplate}}}'),
 
     templateContext() {
         const attributes = this.model.toJSON();
-        return {
-            customTemplate: !this.options.customTemplate ?
-                null :
-                Handlebars.compile(
-                    typeof this.options.customTemplate === 'function' ?
-                        this.options.customTemplate(attributes) :
-                        this.options.customTemplate
-                )(attributes),
-            url: this.options.createValueUrl && this.options.createValueUrl(attributes),
+        const data = {
+            ...attributes,
+            url: attributes.url || (this.options.createValueUrl && this.options.createValueUrl(attributes)),
             text: this.options.getDisplayText(attributes)
+        };
+        return {
+            customTemplate: Handlebars.compile(this.options.customTemplate)(data),
+            subtext: this.options.showButtonSubtext ? this.options.getDisplayText(attributes, this.options.subtextProperty) : null
         };
     },
 
     attributes() {
         return {
             draggable: true,
-            title: this.options.getDisplayText(this.options.model.attributes),
+            title: htmlHelpers.getTextfromHTML(this.options.getDisplayText(this.options.model.attributes)),
             tabindex: '-1'
         };
     },
@@ -98,6 +96,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
+            this.el.classList.add(meta.classes.PENCIL_EDIT);
         }
     },
 
@@ -107,6 +106,7 @@ export default Marionette.View.extend({
         }
         if (this.options.enabled && this.options.canDeleteItem) {
             this.el.removeChild(this.el.lastElementChild);
+            this.el.classList.remove(meta.classes.PENCIL_EDIT);
         }
     }
 });

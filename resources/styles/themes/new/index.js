@@ -244,7 +244,7 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        padding: '2px 0'
+        padding: '1px 0'
     },
     'bubbles-item-theme-hover': {
         padding: '2px 20px 2px 0'
@@ -362,13 +362,37 @@ module.exports.apply = {
     'toolbar-btn-theme': {
         'margin-right': '5px'
     },
-    'toolbar-btn-low-theme': {},
-    'toolbar-btn-low-hover-theme': {},
-    'toolbar-btn-low-active-theme': {},
+    'toolbar-btn-low-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
+    'toolbar-btn-low-hover-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
+    'toolbar-btn-low-active-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
 
-    'toolbar-btn-normal-theme': {},
-    'toolbar-btn-normal-hover-theme': {},
-    'toolbar-btn-normal-active-theme': {},
+    'toolbar-btn-normal-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
+    'toolbar-btn-normal-hover-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
+    'toolbar-btn-normal-active-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
 
     'toolbar-btn-major-theme': {
         color: variables.white,
@@ -446,7 +470,8 @@ module.exports.apply = {
         padding: '15px',
         'background-color': variables.white,
         'border-radius': variables['border-radius-big'],
-        'overflow-y': 'auto'
+        'overflow-y': 'auto',
+        flex: '1'
     },
     'drop-zone-theme': {
         'background-color': variables['grey-100'],

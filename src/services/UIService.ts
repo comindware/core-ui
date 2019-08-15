@@ -31,10 +31,6 @@ export default class UIService {
                     (console.warn('Unexpected value of axis'), ['left', 'top'])));
     }
 
-    static getPixelNumbers(str: string | null): number {
-        return Number(str && _.cutOffTo(str, 'px', ''));
-    }
-
     static draggable(
         { el, start, stop, drag, axis = false, setProperties = this.__getDefaultsSetProperties(axis) }:
             { el: HTMLElement, start: Function, stop: Function, drag: Function, axis: axis, setProperties: Array<string> }) {
@@ -49,14 +45,15 @@ export default class UIService {
                 || e.clientY < 0;
         };
 
-        const onResize = function (e: MouseEvent) {
+        const onMove = function (e: MouseEvent) {
+            e.preventDefault();
             if (eventOutOfClient(e)) {
                 return;
             }
 
             const position: position = {};
+            const diffX = e.clientX - (state.startClientX || 0);
             if (axis !== 'y') {
-                const diffX = e.clientX - (state.startClientX || 0);
                 position.left = (state.startStyleLeft || 0) + diffX;
                 position.right = (state.startStyleRight || 0) - diffX;
                 if (setProperties.includes('left')) {
@@ -66,8 +63,8 @@ export default class UIService {
                 }
             }
 
+            const diffY = e.clientY - (state.startClientY || 0);
             if (axis !== 'x') {
-                const diffY = e.clientY - (state.startClientY || 0);
                 position.top = (state.startStyleTop || 0) + diffY;
                 position.bottom = (state.startStyleBottom || 0) - diffY;
                 if (setProperties.includes('top')) {
@@ -82,33 +79,38 @@ export default class UIService {
                 {
                     offset: position,
                     originalPosition: state.clientRect,
-                    position
+                    position,
+                    translation: {
+                        x: diffX,
+                        y: diffY
+                    }
                 }
             );
         };
 
         const onStop = (event: MouseEvent) => {
             document.removeEventListener('pointerup', onStop, true);
-            document.removeEventListener('pointermove', onResize, true);
+            document.removeEventListener('pointermove', onMove, true);
             typeof stop === 'function' && stop(event, el);
         };
         const onStart = (event: MouseEvent) => {
             const clientRect = el.getBoundingClientRect();
             const documentWidth = document.body.offsetWidth;
             const documentHeight = document.body.offsetHeight;
+            const computedStyle = getComputedStyle(el);
             state = {
                 clientRect,
                 documentWidth,
                 documentHeight: document.body.offsetHeight,
-                startStyleLeft: this.getPixelNumbers(el.style.left) || clientRect.left,
-                startStyleTop: this.getPixelNumbers(el.style.top) || clientRect.top,
-                startStyleRight: this.getPixelNumbers(el.style.right) || (documentWidth - clientRect.right),
-                startStyleBottom: this.getPixelNumbers(el.style.bottom) || (documentHeight - clientRect.bottom),
+                startStyleLeft: parseInt(computedStyle.left || '') || clientRect.left,
+                startStyleTop: parseInt(computedStyle.top || '') || clientRect.top,
+                startStyleRight: parseInt(computedStyle.right || '') || (documentWidth - clientRect.right),
+                startStyleBottom: parseInt(computedStyle.bottom || '') || (documentHeight - clientRect.bottom),
                 startClientX: event.clientX,
                 startClientY: event.clientY
             };
             document.addEventListener('pointerup', onStop, true);
-            document.addEventListener('pointermove', onResize, true);
+            document.addEventListener('pointermove', onMove, true);
             typeof start === 'function' && start(event, el);
         };
         el.addEventListener('pointerdown', onStart);

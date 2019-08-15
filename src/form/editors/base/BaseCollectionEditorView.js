@@ -5,4 +5,4 @@
 
 import MarionetteEditorPrototype from './MarionetteEditorPrototype';
 
-export default Marionette.CollectionView.extend(MarionetteEditorPrototype.create(Marionette.CollectionView));
+export default Marionette.CollectionView.extend(MarionetteEditorPrototype(Marionette.CollectionView));

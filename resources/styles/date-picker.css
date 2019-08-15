@@ -1,10 +1,10 @@
 .datetimepicker {
-	padding: 4px;
+	padding: 16px 18px 10px;
 	direction: ltr;
 }
 
 .datetimepicker-inline {
-	width: 220px;
+	/*width: 300px;*/
 }
 
 .datetimepicker.datetimepicker-rtl {
@@ -122,57 +122,69 @@
 	display: block;
 }
 
-.datetimepicker table {
+
+
+
+.datetimepicker table{
+	border-collapse: initial;
+	border-spacing: 0;
 	margin: 0;
+    width: 252px;
 }
 
-.datetimepicker  td,
-.datetimepicker th {
+.datetimepicker tbody tr,
+.datetimepicker tbody tr:hover{
 	text-align: center;
-	width: 30px;
-	height: 30px;
-	border: none;
+	height: 36px;
+	background: transparent;
 }
 
-.table-striped .datetimepicker table tr td,
-.table-striped .datetimepicker table tr th {
-	background-color: transparent;
-}
-
-.datetimepicker table tr td.minute:hover {
-	background: #eeeeee;
+.datetimepicker tbody td{
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	text-align: center;
+	border: 1px solid transparent;
+	border-radius: 4px;
 	cursor: pointer;
 }
-
-.datetimepicker table tr td.hour:hover {
-	background: #eeeeee;
-	cursor: pointer;
+.datetimepicker tbody td:hover{
+	border-color: #0375BD;
+	background: transparent;
 }
 
-.datetimepicker table tr td.day:hover {
-	background: #eeeeee;
-	cursor: pointer;
-}
 
-.datetimepicker table tr td.old,
-.datetimepicker table tr td.new {
-	color: #999999;
+
+.datetimepicker tbody td.old,
+.datetimepicker tbody td.new {
+	color: #999;
 }
 
 .datetimepicker table tr td.disabled,
 .datetimepicker table tr td.disabled:hover {
-	background: none;
-	color: #999999;
+	background: #efefef;
+	color: #ccc;
 	cursor: default;
 }
 
-.datetimepicker table tr td.today,
-.datetimepicker table tr td.today:hover,
-.datetimepicker table tr td.today.disabled,
-.datetimepicker table tr td.today.disabled:hover {
-	background-color: #fde19a;
+.datetimepicker tbody td.today,
+.datetimepicker tbody td.today:hover,
+.datetimepicker tbody td.today.disabled,
+.datetimepicker tbody td.today.disabled:hover {
+	border-color: #0375BD;
+	background: #fff;
 }
 
+.datetimepicker tbody td.active,
+.datetimepicker tbody td.active:hover,
+.datetimepicker tbody td.active.disabled,
+.datetimepicker tbody td.active.disabled:hover {
+	background-color: #0375BD;
+	border-color: #0375BD;
+	color: #ffffff;
+}
+
+/*
 .datetimepicker table tr td.today:hover,
 .datetimepicker table tr td.today:hover:hover,
 .datetimepicker table tr td.today.disabled:hover,
@@ -205,14 +217,6 @@
 .datetimepicker table tr td.today.disabled.active,
 .datetimepicker table tr td.today.disabled:hover.active {
 	background-color: #fbf069;
-}
-
-.datetimepicker table tr td.active,
-.datetimepicker table tr td.active:hover,
-.datetimepicker table tr td.active.disabled,
-.datetimepicker table tr td.active.disabled:hover {
-	background-color: #0575bd;
-	color: #ffffff;
 }
 
 .datetimepicker table tr td.active:hover,
@@ -248,6 +252,7 @@
 .datetimepicker table tr td.active.disabled:hover.active {
 	background-color: #0575bd;
 }
+
 
 .datetimepicker table tr td span {
 	display: block;
@@ -337,23 +342,13 @@
 	color: #999999;
 }
 
-.datetimepicker th.switch {
-	width: 145px;
-}
+
 
 .datetimepicker th span.glyphicon {
 	pointer-events: none;
 }
 
-.datetimepicker thead tr:first-child th,
-.datetimepicker tfoot tr:first-child th {
-	cursor: pointer;
-}
 
-.datetimepicker thead tr:first-child th:hover,
-.datetimepicker tfoot tr:first-child th:hover {
-	background: #eeeeee;
-}
 
 .input-append.date .add-on i,
 .input-prepend.date .add-on i,
@@ -363,66 +358,120 @@
 	height: 14px;
 }
 
-
-
-.datetimepicker table{
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.datetimepicker th.switch {
-	width: inherit;
-}
-
 .datetimepicker table tr td span {
 	display: block;
 	height: 40px;
 	line-height: 40px;
 }
 
-.datetimepicker td, .datetimepicker th{
+.datetimepicker .table-condensed thead tr:first-child{
+	height: 32px;
+}
+
+*/
+
+
+.datetimepicker thead tr,
+.datetimepicker thead tr:hover{
+	text-align: center;
+	height: 26px;
+	background: transparent;
+	color: #404040;
+}
+
+.datetimepicker thead th,
+.datetimepicker thead th:hover{
 	text-align: center;
 	height: 26px;
 	vertical-align: middle;
 	font-size: 13px;
 	border-radius: 4px;
-	box-sizing: content-box;
+	cursor: default;
 }
 
-.datetimepicker .table-condensed thead tr:first-child{
-	height: 32px;
-}
-.datetimepicker th.switch{
-	position: absolute;
-	left:32px;
-	right:32px;
+
+.datetimepicker thead th.switch,
+.datetimepicker thead th.switch:hover {
+	width: inherit;
 	font-size: 17px;
-	line-height: 26px;
+	cursor: pointer;
 }
+.datetimepicker thead th.switch:hover {
+	background-color: #F2F2F2;
+}
+
 .datetimepicker th.prev,
 .datetimepicker th.next{
-	position: absolute;
-	width: 32px;
 	line-height: 28px;
-	left:0;
-}
-.datetimepicker th.next{
-	left:auto;
-	right:0;
+	cursor: pointer;
 }
 
-.datetimepicker .icon-arrow-left{
-	display: inline-block;
-	border-top:5px solid transparent;
-	border-bottom:5px solid transparent;
-	border-right:8px solid #0575bd;
+.datetimepicker th.prev:hover,
+.datetimepicker th.next:hover{
+	background-color: #F2F2F2;
 }
+
+.datetimepicker .icon-arrow-left,
 .datetimepicker .icon-arrow-right{
 	display: inline-block;
-	border-top:5px solid transparent;
-	border-bottom:5px solid transparent;
-	border-left:8px solid #0575bd;
+	width: 100%;
+	text-align: center;
+	line-height: 28px;
+	cursor: pointer;
 }
+
+.datetimepicker .icon-arrow-left:after,
+.datetimepicker .icon-arrow-right:after{
+	 content: '\003C';
+	 display: inline-block;
+	 color:  #0375BD;
+	 font-size: 18px;
+	 transform: scaleY(1.5);
+}
+
+.datetimepicker .icon-arrow-right:after{
+	 content: '\003E';
+}
+
+.datetimepicker tfoot tr{
+    padding-top: 5px;
+}
+.datetimepicker tfoot tr:hover{
+    background-color: #F2F2F2;
+}
+
+.datetimepicker tfoot th{
+    height: 25px;
+    vertical-align: middle;
+    text-align: center;
+    color: #0175BD;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+.datetimepicker-months tbody td:hover,
+.datetimepicker-years tbody td:hover{
+    border-color: transparent;
+}
+.datetimepicker-months tbody td span,
+.datetimepicker-years tbody td span{
+    width: 83px;
+    height: 36px;
+    border: 1px solid transparent;
+    line-height: 36px;
+    float: left;
+    border-radius: 4px;
+}
+.datetimepicker-months tbody td span.active,
+.datetimepicker-months tbody td span:hover,
+.datetimepicker-years tbody td span.active,
+.datetimepicker-years tbody td span:hover{
+    border-color: #0375BD;
+}
+
 
 .datetimepicker th.clear,
 .datetimepicker td.clear{

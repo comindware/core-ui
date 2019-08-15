@@ -8,9 +8,7 @@
 
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 
-<http://comindware.com/text/core/bootstrapper/errors/default#description> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die angeforderte Aktion ist wegen eines Serverfehlers fehlgeschlagen. Kontaktieren Sie Ihren Systemadministrator oder öffnen Sie das Ereignisprotokoll des Servers, um Details einzusehen."; l10n:originalData "The requested action failed due to server error. Please contact your system administrator or view the Event Log on the server."].
-
-<http://comindware.com/text/core/common#notset> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:isBeingTranslated true; l10n:originalData "notset"].
+<http://comindware.com/text/core/common#loading> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Wird geladen..."; l10n:originalData "Loading..."].
 
 <http://comindware.com/text/core/demo/cases/other#localizationService> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Demo Text"; l10n:originalData "Demo text"].
 
@@ -19,10 +17,6 @@
 <http://comindware.com/text/core/form/editors#dropdown> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/form/editors/collection#addNewItem> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
-<http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Farbe hier eingeben"; l10n:originalData "Enter color here"].
 
@@ -82,7 +76,7 @@
 
 <http://comindware.com/text/core/form/editors/reference#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suchen..."; l10n:originalData "Search..."].
 
-<http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
+<http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""].
 
 <http://comindware.com/text/core/form/editors/splitEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suche"; l10n:originalData "search"].
 

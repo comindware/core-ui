@@ -1,4 +1,4 @@
-import { moment } from '../lib';
+import helpers from '../utils/helpers';
 
 const global = window;
 const defaultLangCode = 'en';
@@ -9,27 +9,27 @@ type locOpt = {
     localizationMap?: Object
 };
 
-type LocalizationService = {
-    initialize: Function,
+interface LocalizationService {
+    initialize(options: locOpt): void;
 
-    langCode?: string,
+    langCode?: string;
 
-    timeZone?: string,
+    timeZone?: string;
 
-    thousandsSeparatorSymbol?: string,
+    thousandsSeparatorSymbol?: string;
 
-    decimalSymbol?: string,
+    decimalSymbol?: string;
 
-    localizationMap?: Object,
+    localizationMap?: Object;
 
-    get(locId: string): string,
+    get(locId: string): string;
 
-    replaceParams(locId: string): string,
+    replaceParams(locId: string): string;
 
-    tryGet(locId: string): string,
+    tryGet(locId: string): string;
 
-    resolveLocalizedText(localizedText: Object): string
-};
+    resolveLocalizedText(localizedText: Object): string;
+}
 
 const service: LocalizationService = {
     initialize(options: locOpt = {}) {
@@ -75,13 +75,8 @@ const service: LocalizationService = {
         return text;
     },
 
-    replaceParams(locId: string, ...args) {
-        const value = this.get(locId);
-
-        if (typeof value !== 'string') {
-            return '';
-        }
-        return value.replace(/\{(\d)\}/g, (s, num) => args[num]);
+    replaceParams(locId: string, zero, one, two, ...args) {
+        return helpers.replaceParams(this.get(locId), zero, one, two, ...args);
     },
 
     tryGet(locId: string) {
@@ -101,20 +96,6 @@ const service: LocalizationService = {
         }
 
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
-    },
-
-    /**
-     * Accepts string and duplicates it into every field of LocalizedText object.
-     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
-     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
-     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
-     * */
-    createLocalizedText(defaultText: string) {
-        return {
-            en: defaultText,
-            de: defaultText,
-            ru: defaultText
-        };
     }
 };
 

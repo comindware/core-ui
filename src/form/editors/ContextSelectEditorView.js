@@ -89,7 +89,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         this.showChildView('contextPopoutRegion', this.popoutView);
 
-        this.listenTo(this.popoutView, 'panel:childview:click', this.__applyContext);
+        this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
     },
 
     setPermissions(enabled, readonly) {
@@ -129,7 +129,9 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
     },
 
     __getButtonText(selectedItem) {
-        if (!selectedItem || selectedItem === 'False') return '';
+        if (!selectedItem || selectedItem === 'False') {
+            return '';
+        }
         let instanceTypeId = this.viewModel.get('panel').get('instanceTypeId');
         let text = '';
 

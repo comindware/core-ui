@@ -1,0 +1,24 @@
+[
+  {
+    "className": "Case",
+    "methodName": "Complete",
+    "parameters": [
+      {
+        "name": "caseId",
+        "typeName": "System.String"
+      }
+    ],
+    "url": "Case/Complete"
+  },
+  {
+    "className": "Case",
+    "methodName": "Reopen",
+    "parameters": [
+      {
+        "name": "caseId",
+        "typeName": "System.String"
+      }
+    ],
+    "url": "Case/Reopen"
+  }
+]

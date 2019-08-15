@@ -1,13 +1,13 @@
-//@flow
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';
 import RoutingService from '../services/RoutingService';
 import PresenterService from '../services/PresenterService';
+import Backbone from 'backbone';
 
 export default class Controller {
     constructor(options = {}) {
-        this.moduleRegion = window.contentRegion;
+        this.moduleRegion = options.region || window.contentRegion;
         this.options = options;
         /*
         this.listenTo(CTEventsService, 'cbEvent', this.__handleEvent);
@@ -37,8 +37,8 @@ export default class Controller {
         return this.__checkPromisesAndLeave(true);
     }
 
-    static setLoading(isLoading) {
-        RoutingService.setModuleLoading(isLoading);
+    static setLoading(isLoading: boolean, message: string | undefined): void {
+        RoutingService.setModuleLoading(isLoading, { message });
         if (isLoading === false) {
             this.__onModuleReady();
         }
@@ -105,7 +105,7 @@ export default class Controller {
         this.onDestroy?.(...rest);
     }
 
-    __checkPromisesAndLeave(canLeave) {
+    __checkPromisesAndLeave(canLeave: boolean) {
         if (Core.services.PromiseService.checkBeforeLeave()) {
             return Core.services.MessageService.showSystemMessage({
                 type: Core.services.MessageService.systemMessagesTypes.unsavedChanges
@@ -186,11 +186,12 @@ export default class Controller {
                         break;
                     }
                     case 'GET':
-                        return data;
                     default:
                         break;
                 }
             }
+
+            return data;
         }
         return null; //todo handle error
     }
@@ -203,7 +204,7 @@ export default class Controller {
 
     __applyCallParamsFilter(callParams, urlParams, routingAction) {
         if (routingAction && urlParams) {
-            const queryString = this.getOption('config').navigationUrl[routingAction];
+            const queryString = this.options.config.navigationUrl[routingAction];
             const params = queryString.split('/');
             const filteredParams = [];
 

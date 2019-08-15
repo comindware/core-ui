@@ -1,118 +1,52 @@
-import { columnTypes, queryBuilderActions } from '../../meta';
 import ConfigPanelSortView from './ConfigPanelSortView';
-import template from '../../templates/filterPanel/gridColumnConfigPanel.html';
 import ConfigPanelGroupView from './ConfigPanelGroupView';
 import ConfigPanelFilterView from './ConfigPanelFilterView';
 import ConfigPanelAggregationView from './ConfigPanelAggregationView';
 
-export default Marionette.View.extend({
-    triggers: {
-        'click @ui.addFilterButton': 'click:addFilterButton'
-    },
-
-    regions: {
-        tabsRegion: '.js-dataset-options-container'
-    },
-
-    events: {
-        'click @ui.applyButton': '__applyButtonClick'
-    },
-
-    ui: {
-        addFilterButton: '.js-add-filter-button',
-        applyButton: '.js-apply-button'
-    },
-
-    onRender() {
-        this.showChildView('tabsRegion', this.__getTabsView());
-    },
-
-    template: Handlebars.compile(template),
-
-    className: 'dev-dropdown-filter-panel',
-
-    __getTabsView() {
-        const tabs = new Core.layout.TabLayout({
-            tabs: [
-                {
-                    name: '<i class="fal fa-sort-amount-down" aria-hidden="true"></i>',
-                    id: 'sort',
-                    view: new ConfigPanelSortView({ model: this.options.model })
-                },
-                {
-                    name: '<i class="fal fa-filter" aria-hidden="true"></i>',
-                    id: 'filter',
-                    view: new ConfigPanelFilterView({
-                        filtersConfigurationModel: this.options.model.get('filtersConfigurationModel'),
-                        columnType: this.options.model.get('columnType'),
-                        model: this.options.model
-                    })
-                },
-                {
-                    name: '<i class="fal fa-clone" aria-hidden="true"></i>',
-                    id: 'group',
-                    view: new ConfigPanelGroupView({
-                        level: this.options.model.get('level'),
-                        model: this.options.model
-                    })
-                },
-                {
-                    name: '<i class="fal fa-plus-square" aria-hidden="true"></i>',
-                    id: 'Aggregation',
-                    view: new ConfigPanelAggregationView({
-                        columnType: this.options.model.get('columnType'),
-                        model: this.options.model
-                    })
-                }
-            ]
-        });
-
-        this.listenTo(tabs, 'changed:selectedTab', model => {
-            this.__adjustAddFilterButtonVisibility();
-            this.trigger('panel:tab:switch', model.id);
-        });
-        this.listenTo(tabs, 'tab:trigger:apply', () => this.__applyButtonClick());
-
-        return tabs;
-    },
-
-    __applyButtonClick() {
-        this.trigger('click:applyButton');
-    },
-
-    __adjustAddFilterButtonVisibility(isModelEmpty) {
-        if (this.model.get('actionId') === queryBuilderActions.filter) {
-            if (isModelEmpty) {
-                this.ui.addFilterButton.show();
-            } else {
-                switch (this.model.get('columnType')) {
-                    case columnTypes.id:
-                    case columnTypes.string:
-                    case columnTypes.integer:
-                    case columnTypes.decimal:
-                    case columnTypes.datetime:
-                    case columnTypes.duration:
-                        this.ui.addFilterButton.show();
-                        break;
-                    case columnTypes.boolean:
-                        if (this.collection.length < 3) {
-                            this.ui.addFilterButton.show();
-                        } else {
-                            this.ui.addFilterButton.hide();
-                        }
-                        break;
-                    case columnTypes.enumerable:
-                    case columnTypes.users:
-                    case columnTypes.document:
-                    case columnTypes.reference:
-                        this.ui.addFilterButton.hide();
-                        break;
-                    default:
-                        throw new Error(`Unknown column type ${this.actionId}`);
-                }
-            }
-        } else {
-            this.ui.addFilterButton.hide();
+export default function(options = {}) {
+    const TabView = Core.layout.TabLayout.extend({
+        triggers: {
+            mouseleave: 'mouseleave',
+            mouseenter: 'mouseenter'
         }
-    }
-});
+    });
+    return new TabView({
+        bodyClass: 'dataset-configuration-panel',
+        tabs: [
+            {
+                name: '<i class="fal fa-sort-amount-down" aria-hidden="true"></i>',
+                description: Localizer.get('PROCESS.DATASET.FILTERTOOLTIPS.SORTING'),
+                id: 'sort',
+                view: new ConfigPanelSortView({ model: options.model })
+            },
+            {
+                name: '<i class="fal fa-filter" aria-hidden="true"></i>',
+                description: Localizer.get('PROCESS.DATASET.FILTERTOOLTIPS.FILTRATION'),
+                id: 'filter',
+                view: new ConfigPanelFilterView({
+                    filtersConfigurationModel: options.model.get('filtersConfigurationModel'),
+                    columnType: options.model.get('columnType'),
+                    model: options.model
+                })
+            },
+            {
+                name: '<i class="fal fa-clone" aria-hidden="true"></i>',
+                description: Localizer.get('PROCESS.DATASET.FILTERTOOLTIPS.GROUPING'),
+                id: 'group',
+                view: new ConfigPanelGroupView({
+                    level: options.model.get('level'),
+                    model: options.model
+                })
+            },
+            {
+                name: '<i class="fal fa-plus-square" aria-hidden="true"></i>',
+                description: Localizer.get('PROCESS.DATASET.FILTERTOOLTIPS.AGGREGATION'),
+                id: 'Aggregation',
+                view: new ConfigPanelAggregationView({
+                    columnType: options.model.get('columnType'),
+                    model: options.model
+                })
+            }
+        ]
+    });
+}

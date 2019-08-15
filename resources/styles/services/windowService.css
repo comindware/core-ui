@@ -41,3 +41,7 @@
     top: 0;
     bottom: 0;
 }
+
+.core-ui__global-popup-region .grid-container {
+    max-height: 100%;
+}

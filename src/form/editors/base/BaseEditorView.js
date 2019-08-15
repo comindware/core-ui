@@ -1,8 +1,8 @@
 // @flow
 
 /*
-* This class is fully compatible with Backbone.Form.editors.Base and should be used to create Marionette-based editors for Backbone.Form
-* */
+ * This class is fully compatible with Backbone.Form.editors.Base and should be used to create Marionette-based editors for Backbone.Form
+ * */
 
 const defaultOptions = () => ({
     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
@@ -11,12 +11,12 @@ const defaultOptions = () => ({
 
 import MarionetteEditorPrototype from './MarionetteEditorPrototype';
 
-const BaseEditorView = Marionette.View.extend(MarionetteEditorPrototype.create(Marionette.View));
+const BaseEditorView = Marionette.View.extend(MarionetteEditorPrototype(Marionette.View));
 
 export default BaseEditorView.extend({
     constructor() {
         this.options = this.options || {};
-        
+
         _.defaults(this.options, defaultOptions());
         BaseEditorView.prototype.constructor.apply(this, arguments);
     },
@@ -35,15 +35,10 @@ export default BaseEditorView.extend({
     },
 
     updatePlaceholder(placeholder = this.__placeholderShouldBe()) {
-        this.ui?.input?.prop(
-            'placeholder',
-            placeholder
-        );
+        typeof this.ui?.input?.prop === 'function' && this.ui.input.prop('placeholder', placeholder);
     },
 
     __placeholderShouldBe() {
-        return this.getEditable() ?
-            this.options.emptyPlaceholder :
-            this.options.readonlyPlaceholder;
+        return this.getEditable() ? this.options.emptyPlaceholder : this.options.readonlyPlaceholder;
     }
 });

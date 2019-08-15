@@ -1,5 +1,6 @@
 /* Data & Datatime utils*/
-
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // @ts-ignore
 import moment_ from 'moment-timezone';
 import '../node_modules/moment-timezone/moment-timezone-utils';
@@ -34,20 +35,18 @@ import jquery from 'jquery';
 import autosize from 'autosize';
 
 import CodeMirror from 'codemirror';
-import 'innersvg-polyfill';
 
 import domapi from './utils/DOMApi';
 
 (<any>window)._ = _underscore.mixin(mixin.default);
 // @ts-ignore
-Marionette_.setDomApi(domapi);
-// @ts-ignore
 Marionette_.AppRouter = AppRouter;
 // @ts-ignore
-Marionette_.PartialCollectionView = OldCollectionView; 
+Marionette_.PartialCollectionView = OldCollectionView.setDomApi(domapi);
+// @ts-ignore
+Marionette_.setDomApi(domapi);
 
 (<any>window).Marionette = Marionette_;
-
 
 const api = {
     moment: moment_,

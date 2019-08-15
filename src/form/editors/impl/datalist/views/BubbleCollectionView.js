@@ -11,12 +11,12 @@ export default Marionette.CollectionView.extend({
     childView: BubbleItemView,
 
     childViewOptions() {
-        return Object.assign(
-            {
-                parent: this.$el
-            },
-            this.options.bubbleItemViewOptions
-        );
+        return {
+            parent: this.$el,
+            showButtonSubtext: this.options.showButtonSubtext,
+            subtextProperty: this.options.subtextProperty,
+            ...this.options.bubbleItemViewOptions
+        };
     },
 
     updateEnabled(enabled) {
