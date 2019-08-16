@@ -88,6 +88,12 @@ export default Marionette.View.extend({
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
+        this.options.columns.forEach((column, index) => {
+            if (typeof column.getHidden === 'function') {
+                this.listenTo(this.model, 'change', () => this.__setCellHidden({ column, index, isHidden: Boolean(column.getHidden(this.model)) }));
+                column.isHidden = false;
+            }
+        });
     },
 
     getValue(id) {
@@ -139,8 +145,14 @@ export default Marionette.View.extend({
         this.cellViewsByKey = {};
 
         const isTree = this.getOption('isTree');
-        this.options.columns.forEach((gridColumn, index) => {
-            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
+        this.options.columns.forEach((column, index) => {
+            let cell;
+            if (typeof column.getHidden === 'function' && Boolean(column.getHidden(this.model))) {
+                column.isHidden = true;
+                cell = `<div class="cell ${column.columnClass}"></div>`;
+            } else {
+                cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model); // move to factory
+            }
 
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
@@ -150,29 +162,9 @@ export default Marionette.View.extend({
                 return;
             }
 
-            let cellClasses = gridColumn.customClass ? `${gridColumn.customClass} ` : '';
-            if (gridColumn.editable) cellClasses += classes.cellEditable;
-
-            gridColumn.isCell = true;
-
-            const cellView = new cell({
-                className: `${classes.cell} ${gridColumn.columnClass} ${cellClasses}`,
-                schema: gridColumn,
-                model: this.model,
-                key: gridColumn.key
-            });
-
-            cellView.el.setAttribute('tabindex', -1);
-
-            if (isTree && index === 0) {
-                cellView.on('render', () => this.insertFirstCellHtml(true));
-            }
-            cellView.render();
+            const cellView = this.__renderCell({ column, index, CellView: cell });
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('attach');
-
-            this.cellViewsByKey[gridColumn.key] = cellView;
-            this.cellViews.push(cellView);
         });
     },
 
@@ -511,5 +503,60 @@ export default Marionette.View.extend({
 
     __removeCheckedClass() {
         this.el.classList.remove(classes.checked);
+    },
+
+    __setCellHidden({ column, index, isHidden }) {
+        if (column.isHidden === isHidden) {
+            return;
+        }
+        const isTree = this.getOption('isTree');
+        column.isHidden = isHidden;
+        const oldCellView = this.cellViewsByKey[column.key];
+        const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+        if (isHidden) {
+            element.innerHTML = '';
+        } else {
+            const cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model);
+            if (typeof cell === 'string') {
+                this.el.insertAdjacentHTML('beforeend', cell);
+                element.outerHtml = cell;
+                if (isTree && index === 0) {
+                    this.insertFirstCellHtml();
+                }
+            } else {
+                const cellView = this.__renderCell({ column, index, CellView: cell });
+                this.el.replaceChild(cellView.el, element);
+                cellView.triggerMethod('attach');
+            }
+        }
+        if (oldCellView) {
+            oldCellView.destroy();
+        }
+    },
+
+    __renderCell({ column, index, CellView }) {
+        const isTree = this.getOption('isTree');
+        let cellClasses = column.customClass ? `${column.customClass} ` : '';
+        if (column.editable) cellClasses += classes.cellEditable;
+
+        const cellView = new CellView({
+            className: `${classes.cell} ${column.columnClass} ${cellClasses}`,
+            schema: column,
+            model: this.model,
+            key: column.key
+        });
+
+        cellView.el.setAttribute('tabindex', -1);
+
+        if (isTree && index === 0) {
+            cellView.on('render', () => this.insertFirstCellHtml(true));
+        }
+        cellView.render();
+        this.el.insertAdjacentElement('beforeend', cellView.el);
+
+        this.cellViewsByKey[column.key] = cellView;
+        this.cellViews.push(cellView);
+
+        return cellView;
     }
 });

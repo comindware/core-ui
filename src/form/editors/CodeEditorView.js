@@ -67,6 +67,19 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     onRender() {
+        this.ui.fadingPanel.hide();
+        if (this.options.showMode === showModes.button) {
+            this.ui.editor.hide();
+            this.el.classList.add(classes.buttonMode);
+            this.__setEditBtnText();
+        } else {
+            this.showEditor();
+            this.ui.editBtn.hide();
+            this.ui.clearBtn.hide();
+        }
+    },
+
+    showEditor() {
         this.editor = new CodemirrorView({
             mode: this.options.mode,
             height: this.options.height,
@@ -80,18 +93,15 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         this.editor.on('minimize', () => this.__onMinimize());
         this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
-        this.ui.fadingPanel.hide();
-        if (this.options.showMode === showModes.button) {
-            this.ui.editor.hide();
-            this.$el.addClass(classes.buttonMode);
-        } else {
-            this.ui.editBtn.hide();
-            this.ui.clearBtn.hide();
+        if (this.readonly) {
+            this.__setReadonly(this.readonly);
         }
-        this.__setEditBtnText();
     },
 
     focus() {
+        if (this.options.showMode === showModes.button) {
+            this.ui.button.focus();
+        }
         this.editor.codemirror.focus();
         this.hasFocus = true;
     },
@@ -124,6 +134,9 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     __onEdit() {
+        if (!this.editor) {
+            this.showEditor();
+        }
         this.ui.editor.show();
         this.ui.fadingPanel.show();
         this.editor.maximize();
@@ -154,6 +167,6 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
 
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        this.editor.setReadonly(readonly);
+        this.editor?.setReadonly(readonly);
     }
 }));

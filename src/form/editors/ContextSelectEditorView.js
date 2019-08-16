@@ -5,6 +5,7 @@ import PopoutWrapperView from './impl/context/views/PopoutWrapperView';
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import dropdownFactory from '../../dropdown/factory';
+import { objectPropertyTypes } from '../../Meta';
 
 const defaultOptions = {
     recordTypeId: undefined,
@@ -30,7 +31,6 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
-            context: this.__createTreeCollection(this.context, this.options.recordTypeId),
             propertyTypes: this.options.propertyTypes,
             usePropertyTypes: this.options.usePropertyTypes,
             instanceRecordTypeId: this.options.instanceRecordTypeId,
@@ -91,6 +91,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.showChildView('contextPopoutRegion', this.popoutView);
 
         this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
+        this.listenTo(this.popoutView, 'before:open', this.__onBeforeOpen);
     },
 
     setValue(value) {
@@ -126,7 +127,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
     __getButtonText(selectedItem) {
         if (!selectedItem || selectedItem === 'False') return '';
-        let instanceTypeId = this.viewModel.get('panel').get('instanceTypeId');
+        let instanceTypeId = this.options.recordTypeId;
         let text = '';
 
         selectedItem.forEach((item, index) => {
@@ -163,56 +164,64 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.updateContext(this.options.recordTypeId, newData);
     },
 
+    __onBeforeOpen() {
+        const panelModel = this.viewModel.get('panel');
+        if (!panelModel.get('context')) {
+            panelModel.set('context', this.__createTreeCollection(this.context, this.options.recordTypeId));
+        }
+    },
+
     __createTreeCollection(context, recordTypeId) {
         if (!context || !context[recordTypeId]) {
             return new Backbone.Collection();
         }
-
-        const deepContext = _.cloneDeep(context);
         const propertyTypes = this.options.propertyTypes;
 
-        Object.keys(deepContext).forEach(key => {
-            let items = deepContext[key];
-            if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length) {
-                items = items.filter(item => propertyTypes.includes(item.type) || item.type === 'Instance');
-            }
-            deepContext[key] = new Backbone.Collection(items);
-        });
-
-        Object.values(deepContext).forEach(entry =>
-            entry.forEach(innerEntry => {
-                if (innerEntry.get('type') === 'Instance' && this.options.isInstanceExpandable) {
-                    const model = deepContext[innerEntry.get('instanceTypeId')];
-                    if (model) {
-                        innerEntry.children = new Backbone.Collection(model.toJSON());
-                        innerEntry.collapsed = true;
-                        innerEntry.children.forEach(childModel => (childModel.parent = innerEntry));
+        const mappedContext = {};
+        Object.entries(context).forEach(([key, value]) => {
+            const mappedProperties = value.reduce((filteredProperites, property) => {
+                const isInstance = property.type === objectPropertyTypes.INSTANCE;
+                if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length && !(isInstance || propertyTypes.includes(property.type))) {
+                    return filteredProperites;
+                }
+                const propertyModel = new Backbone.Model(property);
+                if (isInstance && this.options.isInstanceExpandable) {
+                    const linkedProperties = context[property.instanceTypeId];
+                    if (linkedProperties) {
+                        propertyModel.children = new Backbone.Collection(linkedProperties);
+                        propertyModel.collapsed = true;
+                        propertyModel.children.forEach(childModel => (childModel.parent = propertyModel));
                     }
                 }
-                delete innerEntry.id; //todo wtf
+                filteredProperites.push(propertyModel);
 
-                return innerEntry;
-            })
-        );
-
-        const collection = deepContext[recordTypeId];
-
-        collection.on('expand', model => {
-            model.children &&
-                model.children.forEach(child => {
-                    if (child.get('type') === 'Instance') {
-                        const newChild = deepContext[child.get('instanceTypeId')];
-
-                        if (newChild) {
-                            child.children = new Backbone.Collection(newChild.toJSON());
-                            child.collapsed = true;
-                            child.children.forEach(childModel => (childModel.parent = child));
-                        }
-                    }
-                });
+                return filteredProperites;
+            }, []);
+            mappedContext[key] = mappedProperties;
         });
 
+        const collection = new Backbone.Collection(mappedContext[recordTypeId]);
+
+        this.listenTo(collection, 'expand', model => this.__onExpand({ model, mappedContext }));
+
         return collection;
+    },
+
+    __onExpand({ model, mappedContext }) {
+        if (!model.children) {
+            return;
+        }
+        model.children.forEach(child => {
+            if (child.get('type') === objectPropertyTypes.INSTANCE) {
+                const newChild = mappedContext[child.get('instanceTypeId')];
+
+                if (newChild) {
+                    child.children = new Backbone.Collection(newChild.toJSON());
+                    child.collapsed = true;
+                    child.children.forEach(childModel => (childModel.parent = child));
+                }
+            }
+        });
     },
 
     __collectPropertyPath(selectedModel, collectedPath = []) {

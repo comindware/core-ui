@@ -1,6 +1,8 @@
 // @flow
-import template from './impl/newExpressionEditor/templates/newExpression.html';
+import template from './templates/complexEditor.html';
 import BaseEditorView from './base/BaseEditorView';
+import ContextSelectEditorView from './ContextSelectEditorView';
+import CodeEditorView from './CodeEditorView';
 import DatalistEditorView from './DatalistEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
@@ -14,7 +16,8 @@ const valueTypes = {
 };
 
 const classes = {
-    inline: 'dev-expression-editor-field-inline'
+    inline: 'dev-expression-editor-field-inline',
+    base: 'complex-editor-field layout__vertical-layout'
 };
 
 const defaultOptions = {
@@ -35,25 +38,27 @@ const defaultOptions = {
     config: null
 };
 
-export default (formRepository.editors.NewExpression = BaseEditorView.extend({
-    className: 'new-expression-editor-field layout__vertical-layout',
+export default (formRepository.editors.Complex = BaseEditorView.extend({
+    className() {
+        return `${classes.base} ${this.options.displayInline ? classes.inline : ''}`;
+    },
 
     regions: {
-        typeContainer: '.js-new-expression-type-container',
-        valueContainer: '.js-new-expression-value-container',
-        contextContainer: '.js-new-expression-context-container',
-        scriptContainer: '.js-new-expression-script-container',
-        expressionContainer: '.js-new-expression-expression-container',
-        templateContainer: '.js-new-expression-template-container'
+        typeContainer: '.js-complex-type-container',
+        valueContainer: '.js-complex-value-container',
+        contextContainer: '.js-complex-context-container',
+        scriptContainer: '.js-complex-script-container',
+        expressionContainer: '.js-complex-expression-container',
+        templateContainer: '.js-complex-template-container'
     },
 
     ui: {
-        type: '.js-new-expression-type-container',
-        value: '.js-new-expression-value-container',
-        context: '.js-new-expression-context-container',
-        script: '.js-new-expression-script-container',
-        expression: '.js-new-expression-expression-container',
-        template: '.js-new-expression-template-container'
+        type: '.js-complex-type-container',
+        value: '.js-complex-value-container',
+        context: '.js-complex-context-container',
+        script: '.js-complex-script-container',
+        expression: '.js-complex-expression-container',
+        template: '.js-complex-template-container'
     },
 
     attributes: {
@@ -86,6 +91,10 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             enabled: this.options.enabled,
             key: this.key
         });
+
+        this.__createValueTypesCollection();
+        this.options.showTypeEditor = this.valueTypeCollection.length > 1;
+        this.__isFirstValueSetting = true;
     },
 
     setValue(oldValue) {
@@ -96,14 +105,20 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
                 value: null
             };
         }
-
-        if (_.isEqual(this.value, value)) {
+        if (!this.__isFirstValueSetting && _.isEqual(this.value, value)) {
             return;
         }
-        this.typeEditor.setValue(value.type || valueTypes.value);
+        this.__isFirstValueSetting = false;
+
+        this.typeEditor?.setValue(value.type || valueTypes.value);
+        this.__checkEditorExist(value.type);
         switch (value.type) {
             case valueTypes.value:
+                if (!this.options.showValue) {
+                    return;
+                }
                 if (!this.valueEditor) {
+                    this.__showTypeEditor();
                     return;
                 }
                 if (Array.isArray(this.value.value) && this.value.value.length === 1) {
@@ -113,22 +128,28 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
                 }
                 break;
             case valueTypes.context:
-                if (!this.contextEditor) {
+                if (!this.options.showContext) {
                     return;
                 }
                 this.contextEditor.setValue(value.value);
                 break;
             case valueTypes.expression:
-                if (!this.expressionEditor) {
+                if (!this.options.showExpression) {
                     return;
                 }
                 this.expressionEditor.setValue(value.value);
                 break;
             case valueTypes.script:
-                if (!this.scriptEditor) {
+                if (!this.options.showScript) {
                     return;
                 }
                 this.scriptEditor.setValue(value.value);
+                break;
+            case valueTypes.template:
+                if (!this.options.showTemplate) {
+                    return;
+                }
+                this.templateEditor.setValue(value.value);
                 break;
             default:
                 break;
@@ -136,70 +157,44 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
     },
 
     onRender() {
-        this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
-        this.__showValueEditor();
-        this.__showContextEditor();
-        this.__showExpressionEditor();
-        this.__showScriptEditor();
-        this.__showTemplateEditor();
         this.__showTypeEditor();
         this.__updateEditorState();
-        if (this.options.displayInline) {
-            this.$el.addClass(classes.inline);
-        }
     },
 
     __showTypeEditor() {
-        if (this.valueTypeCollection.length === 0) {
-            throw new Error('Al least one value option should be specified');
-        }
         if (!this.valueTypeCollection.get(this.value.type)) {
             this.value.type = this.valueTypeCollection.at(0).id;
         }
+        if (!this.options.showTypeEditor) {
+            return;
+        }
+
         this.typeEditor = new DatalistEditorView({
             collection: this.valueTypeCollection,
             allowEmptyValue: false,
-            valueType: 'id'
+            valueType: 'id',
+            showSearch: false
         });
-        this.typeEditor.on('change', () => {
+        this.typeEditor.on('change', editor => {
+            this.__checkEditorExist(editor.getValue());
             this.__updateEditorValue();
             this.__updateEditorState();
         });
 
-        if (this.valueTypeCollection.length === 1) {
-            this.ui.type.hide();
-        }
         this.showChildView('typeContainer', this.typeEditor);
         this.typeEditor.setValue(this.value.type);
     },
 
     __showValueEditor() {
-        if (!this.options.showValue) {
-            return;
-        }
-        this.valueTypeCollection.add({
-            id: valueTypes.value,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
-        });
-
-        const value = this.value.value;
-
-        this.valueEditor = new this.options.valueEditor(
-            _.extend(this.options.valueEditorOptions, {
-                value: this.value.type === valueTypes.value ? value : null
-            })
-        );
-
+        this.valueEditor = new this.options.valueEditor(this.options.valueEditorOptions);
         this.valueEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('valueContainer', this.valueEditor);
+        this.valueEditor.setReadonly(this.readonly);
     },
 
     __showContextEditor() {
-        if (!this.options.showContext) {
-            return;
-        }
-
-        const contextOptions = _.pick(this.options.schema || this.options,
+        const contextOptions = _.pick(
+            this.options.schema || this.options,
             'recordTypeId',
             'context',
             'contextModel',
@@ -210,29 +205,13 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             'isInstanceExpandable'
         );
 
-        _.extend(contextOptions, {
-            value: this.value.type === valueTypes.context ? this.value.value : null
-        });
-
-        this.contextEditor = new formRepository.editors.ContextSelect(contextOptions);
+        this.contextEditor = new ContextSelectEditorView(contextOptions);
         this.contextEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('contextContainer', this.contextEditor);
-
-        this.valueTypeCollection.add({
-            id: valueTypes.context,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
-        });
+        this.contextEditor.setReadonly(this.readonly);
     },
 
     __showExpressionEditor() {
-        if (!this.options.showExpression) {
-            return;
-        }
-        this.valueTypeCollection.add({
-            id: valueTypes.expression,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
-        });
-
         const expressionEditorOptionsOptions = {
             value: this.value.type === valueTypes.expression ? this.value.value : null,
             mode: 'expression',
@@ -242,20 +221,13 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             config: this.options.config
         };
 
-        this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
+        this.expressionEditor = new CodeEditorView(expressionEditorOptionsOptions);
         this.expressionEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('expressionContainer', this.expressionEditor);
+        this.expressionEditor.setReadonly(this.readonly);
     },
 
     __showScriptEditor() {
-        if (!this.options.showScript) {
-            return;
-        }
-        this.valueTypeCollection.add({
-            id: valueTypes.script,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
-        });
-
         const scriptEditorOptionsOptions = {
             value: this.value.type === valueTypes.script ? this.value.value : null,
             mode: 'script',
@@ -265,38 +237,25 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
             config: this.options.config
         };
 
-        this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
+        this.scriptEditor = new CodeEditorView(scriptEditorOptionsOptions);
         this.scriptEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('scriptContainer', this.scriptEditor);
+        this.scriptEditor.setReadonly(this.readonly);
     },
 
     __showTemplateEditor() {
-        if (!this.options.showTemplate) {
-            return;
-        }
-        this.valueTypeCollection.add({
-            id: valueTypes.template,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
-        });
-
-        const value = this.value.value;
-
-        this.templateEditor = new this.options.templateEditor(
-            _.extend(this.options.templateEditorOptions, {
-                value: this.value.type === valueTypes.template ? value : null
-            })
-        );
-
+        this.templateEditor = new formRepository.editors.Datalist(this.options.templateEditorOptions);
         this.templateEditor.on('change', this.__updateEditorValue, this);
         this.showChildView('templateContainer', this.templateEditor);
+        this.templateEditor.setReadonly(this.readonly);
     },
 
     __updateEditorState() {
-        this.ui.value.toggleClass('hidden', this.value.type !== valueTypes.value);
-        this.ui.expression.toggleClass('hidden', this.value.type !== valueTypes.expression);
-        this.ui.script.toggleClass('hidden', this.value.type !== valueTypes.script);
-        this.ui.context.toggleClass('hidden', this.value.type !== valueTypes.context);
-        this.ui.template.toggleClass('hidden', this.value.type !== valueTypes.template);
+        this.ui.value.toggleClass?.('hidden', this.value.type !== valueTypes.value);
+        this.ui.expression.toggleClass?.('hidden', this.value.type !== valueTypes.expression);
+        this.ui.script.toggleClass?.('hidden', this.value.type !== valueTypes.script);
+        this.ui.context.toggleClass?.('hidden', this.value.type !== valueTypes.context);
+        this.ui.template.toggleClass?.('hidden', this.value.type !== valueTypes.template);
     },
 
     __updateEditorValue() {
@@ -322,31 +281,101 @@ export default (formRepository.editors.NewExpression = BaseEditorView.extend({
                 break;
         }
         this.value = { type, value };
-        this.__triggerChange();
+        this.__triggerChange(this.value);
     },
 
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
 
-        this.typeEditor.setReadonly(readonly);
+        this.typeEditor?.setReadonly(readonly);
         switch (this.value && this.value.type) {
             case valueTypes.value:
-                this.valueEditor.setReadonly(readonly);
+                this.valueEditor?.setReadonly(readonly);
                 break;
             case valueTypes.context:
-                this.contextEditor.setReadonly(readonly);
+                this.contextEditor?.setReadonly(readonly);
                 break;
             case valueTypes.expression:
-                this.expressionEditor.setReadonly(readonly);
+                this.expressionEditor?.setReadonly(readonly);
                 break;
             case valueTypes.script:
-                this.scriptEditor.setReadonly(readonly);
+                this.scriptEditor?.setReadonly(readonly);
                 break;
             case valueTypes.template:
-                this.templateEditor.setReadonly(readonly);
+                this.templateEditor?.setReadonly(readonly);
                 break;
             default:
                 break;
+        }
+    },
+
+    __checkEditorExist(valueType) {
+        switch (valueType) {
+            case valueTypes.value:
+                if (!this.valueEditor && this.options.showValue) {
+                    this.__showValueEditor();
+                }
+                break;
+            case valueTypes.context:
+                if (!this.contextEditor && this.options.showContext) {
+                    this.__showContextEditor();
+                }
+                break;
+            case valueTypes.expression:
+                if (!this.expressionEditor && this.options.showExpression) {
+                    this.__showExpressionEditor();
+                }
+                break;
+            case valueTypes.script:
+                if (!this.scriptEditor && this.options.showScript) {
+                    this.__showScriptEditor();
+                }
+                break;
+            case valueTypes.template:
+                if (!this.templateEditor && this.options.showTemplate) {
+                    this.__showTemplateEditor();
+                }
+                break;
+            default:
+                break;
+        }
+    },
+
+    __createValueTypesCollection() {
+        this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
+        const { showValue, showContext, showExpression, showScript, showTemplate } = this.options;
+        if (showValue) {
+            this.valueTypeCollection.add({
+                id: valueTypes.value,
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
+            });
+        }
+        if (showContext) {
+            this.valueTypeCollection.add({
+                id: valueTypes.context,
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
+            });
+        }
+        if (showExpression) {
+            this.valueTypeCollection.add({
+                id: valueTypes.expression,
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
+            });
+        }
+        if (showScript) {
+            this.valueTypeCollection.add({
+                id: valueTypes.script,
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.SCRIPT')
+            });
+        }
+        if (showTemplate) {
+            this.valueTypeCollection.add({
+                id: valueTypes.template,
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
+            });
+        }
+        if (this.valueTypeCollection.length === 0) {
+            throw new Error('Al least one value option should be specified');
         }
     }
 }));
