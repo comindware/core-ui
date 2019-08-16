@@ -58,17 +58,28 @@ body {
 
 .cell.error .form-label__error{
   margin: 0;
-  position: absolute;
+  position: relative;
   left: -15px;
-  top: -8px;
   z-index: 1;
 }
 
 .cell.error .form-label__error-button{
   height: 0;
   width: 0;
-  border-top: 10px solid #e61212;
-  border-right: 10px solid transparent;
+  border-top: 16px solid #e61212;
+  border-right: 16px solid transparent;
+  vertical-align: top;
+}
+
+.cell.error .form-label__error-button:after {
+  content: '!';
+  color: #fff;
+  position: absolute;
+  vertical-align: top;
+  top: 0;
+  font-size: 10px;
+  font-weight: bold;
+  left: 3px;
 }
 
 .cell.error .form-label__error-button:before{
