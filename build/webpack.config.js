@@ -177,15 +177,6 @@ module.exports = options => {
                     ]
                 },
                 {
-                    test: /moment\.js/,
-                    use: [
-                        {
-                            loader: 'expose-loader',
-                            options: 'moment'
-                        }
-                    ]
-                },
-                {
                     test: /handlebars\.js/,
                     use: [
                         {
@@ -213,7 +204,6 @@ module.exports = options => {
             new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
             new TypedocWebpackPlugin({
                 out: './docs',
                 module: 'commonjs',

@@ -1,4 +1,5 @@
 import helpers from '../utils/helpers';
+import { DateTime, Settings } from 'luxon';
 
 const global = window;
 const defaultLangCode = 'en';
@@ -33,8 +34,10 @@ interface LocalizationService {
 
 const service: LocalizationService = {
     initialize(options: locOpt = {}) {
-        this.langCode = options.langCode;
-        this.timeZone = options.timeZone || moment.tz.guess();
+        this.langCode = options.langCode || defaultLangCode;
+
+        Settings.defaultZoneName = options.timeZone || 'local';
+        this.timeZone = DateTime.local().zoneName;
         this.localizationMap = options.localizationMap;
 
         const formattedNumber = new Intl.NumberFormat(this.langCode, {
@@ -44,21 +47,7 @@ const service: LocalizationService = {
         this.thousandsSeparatorSymbol = formattedNumber.slice(1, 2);
         this.decimalSymbol = formattedNumber.slice(-3, -2);
 
-        //TODO remove this then server start to return full date
-        const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
-        const unpacked = {
-            name: 'Custom/CMW',
-            abbrs: ['CMWC', 'CMWC'],
-            offsets: [offset, offset],
-            untils: [-1988164200000, null]
-        };
-        moment.tz.add(moment.tz.pack(unpacked));
-
-        moment.tz.setDefault('Custom/CMW');
-        //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
-        //End of hack
-
-        moment.locale(this.langCode);
+        Settings.defaultLocale = this.langCode;
     },
 
     get(locId: string) {
@@ -95,8 +84,8 @@ const service: LocalizationService = {
             return '';
         }
 
-        return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
+        return localizedText[this.langCode] || '';
     }
 };
 
-export default (global.Localizer = service);
+export default global.Localizer = service;

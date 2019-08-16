@@ -1,7 +1,8 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
-import moment from 'moment';
+import { DateTime } from 'luxon';
+import { Duration } from 'luxon';
 import _ from 'underscore';
 
 const dateTimeFormats = {
@@ -142,22 +143,21 @@ const dateTimeFormats = {
 };
 
 export default /** @lends module:core.utils.dateHelpers */ {
-    durationISOToObject(duration) {
+    durationISOToObject(duration: string) {
         if (!duration) {
             return null;
         }
         return this.durationToObject(duration);
     },
 
-    durationToObject(duration) {
-        const val = moment.duration(duration);
+    durationToObject(duration: string) {
+        const val = Duration.fromISO(duration).toObject();
 
         return {
-            // we don't use moment.days() here because it returns only up to 30 days
-            days: Math.floor(val.asDays()),
-            hours: val.hours(),
-            minutes: val.minutes(),
-            seconds: val.seconds()
+            days: val.days,
+            hours: val.hours,
+            minutes: val.minutes,
+            seconds: val.seconds
         };
     },
 
