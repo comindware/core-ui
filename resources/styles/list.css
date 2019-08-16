@@ -312,6 +312,10 @@
     max-width: 100%;
 }
 
+.modal-window-wrapper .grid-container{
+    max-height: 100%;
+}
+
 .layout__vertical-layout > .grid-container{
    flex: 1 1 auto;
 }
