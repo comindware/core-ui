@@ -150,15 +150,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /bootstrap-datetime-picker/,
-                    use: [
-                        {
-                            loader: 'imports-loader',
-                            options: 'jquery'
-                        }
-                    ]
-                },
-                {
                     test: /backbone\.marionette\.js/,
                     use: [
                         {
@@ -184,19 +175,6 @@ module.exports = options => {
                             options: 'Handlebars'
                         }
                     ]
-                },
-                {
-                    test: /jquery\.js/,
-                    use: [
-                        {
-                            loader: 'expose-loader',
-                            options: '$'
-                        },
-                        {
-                            loader: 'expose-loader',
-                            options: 'jQuery'
-                        }
-                    ]
                 }
             ]
         },
@@ -218,7 +196,6 @@ module.exports = options => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
-                'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             },

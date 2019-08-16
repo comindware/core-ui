@@ -36,7 +36,6 @@ const defaultOptions = () => ({
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
  * @param {String} [options.format=''] ('email'/'tel') set the predefined input mask, validator and type for input.
  * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
- * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
  * @param {String} [options.placeholderChar='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.

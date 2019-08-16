@@ -1,7 +1,5 @@
-export default function($, dates) {
+export default function(dates) {
     let DPGlobal;
-
-    const old = $.fn && $.fn.datetimepicker;
 
     function timeZoneAbbreviation() {
         const date = new Date().toString();
@@ -16,17 +14,15 @@ export default function($, dates) {
 
     // Picker object
     const Datetimepicker = function(element, options) {
-        this.element = $(element);
+        //todo remove all usage of jqery functon on this element
+        this.element = element;
 
         this.language = options.language || 'en';
         this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr
         this.language = this.language in dates ? this.language : 'en';
         this.isRTL = dates[this.language].rtl || false;
-        this.formatType = options.formatType || this.element.data('format-type') || 'standard';
-        this.format = DPGlobal.parseFormat(
-            options.format || this.element.data('date-format') || dates[this.language].format || DPGlobal.getDefaultFormat(this.formatType, 'input'),
-            this.formatType
-        );
+        this.formatType = options.formatType || 'standard';
+        this.format = DPGlobal.parseFormat(options.format || dates[this.language].format || DPGlobal.getDefaultFormat(this.formatType, 'input'), this.formatType);
 
         this.title = typeof options.title === 'undefined' ? false : options.title;
         this.timezone = options.timezone || timeZoneAbbreviation();
@@ -1296,14 +1292,6 @@ export default function($, dates) {
 </div>
 </div>`;
     $.fn.datetimepicker.DPGlobal = DPGlobal;
-
-    /* DATETIMEPICKER NO CONFLICT
-     * =================== */
-
-    $.fn.datetimepicker.noConflict = function() {
-        $.fn.datetimepicker = old;
-        return this;
-    };
 
     /* DATETIMEPICKER DATA-API
      * ================== */
