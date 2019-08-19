@@ -13,7 +13,7 @@ type locOpt = {
 interface LocalizationService {
     initialize(options: locOpt): void;
 
-    langCode?: string;
+    langCode: string;
 
     timeZone?: string;
 

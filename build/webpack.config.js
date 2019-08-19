@@ -8,7 +8,6 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -150,6 +149,15 @@ module.exports = options => {
                     }
                 },
                 {
+                    test: /bootstrap-datetime-picker/,
+                    use: [
+                        {
+                            loader: 'imports-loader',
+                            options: 'jquery'
+                        }
+                    ]
+                },
+                {
                     test: /backbone\.marionette\.js/,
                     use: [
                         {
@@ -175,27 +183,32 @@ module.exports = options => {
                             options: 'Handlebars'
                         }
                     ]
+                },
+                {
+                    test: /jquery\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: '$'
+                        },
+                        {
+                            loader: 'expose-loader',
+                            options: 'jQuery'
+                        }
+                    ]
                 }
             ]
         },
         plugins: [
             new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
-            }),
-            new TypedocWebpackPlugin({
-                out: './docs',
-                module: 'commonjs',
-                target: 'es6',
-                exclude: '**/node_modules/**/*.*',
-                tsconfig: '../tsconfig.json',
-                experimentalDecorators: true,
-                ignoreCompilerErrors: true
             })
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
+                jquery: pathResolver.source('external/jquery-3.4.1.slim.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             },

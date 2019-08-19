@@ -1,5 +1,5 @@
 import { objectPropertyTypes } from '../Meta';
-import moment from 'moment';
+import { Duration, DateTime } from 'luxon';
 
 const stringNaturalComparator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
 
@@ -21,20 +21,20 @@ export const numberComparator2Desc = function(a, b) {
 
 export const durationComparator2Asc = function(a, b) {
     if (a) {
-        a = moment.duration(a);
+        a = Duration.fromISO(a).toObject();
     }
     if (b) {
-        b = moment.duration(b);
+        b = Duration.fromISO(b).toObject();
     }
     return a ? (b ? a - b : 1) : b ? -1 : 0;
 };
 
 export const durationComparator2Desc = function(a, b) {
     if (a) {
-        a = moment.duration(a);
+        a = Duration.fromISO(a).toObject();
     }
     if (b) {
-        b = moment.duration(b);
+        b = Duration.fromISO(b).toObject();
     }
     return b ? (a ? b - a : 1) : a ? -1 : 0;
 };

@@ -123,12 +123,10 @@
         "puppeteer": "^1.19.0",
         "source-map-loader": "^0.2.4",
         "style-loader": "^1.0.0",
-        "typedoc": "^0.15.0",
-        "typedoc-webpack-plugin": "^1.1.4",
         "typescript": "^3.5.3",
         "url-loader": "^2.1.0",
         "webpack": "^4.39.2",
-        "webpack-cli": "^3.3.6"
+        "webpack-cli": "^3.3.7"
     },
     "dependencies": {
         "@babel/runtime-corejs3": "^7.5.4",
@@ -141,7 +139,6 @@
         "backbone.radio": "^2.0.0",
         "codemirror": "^5.48.2",
         "core-js": "^3.2.1",
-        "jquery": "^3.4.1",
         "luxon": "^1.17.2",
         "marionette.approuter": "^1.0.2",
         "marionette.oldcollectionview": "^1.0.0",

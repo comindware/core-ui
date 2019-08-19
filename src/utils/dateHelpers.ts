@@ -1,8 +1,7 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 import LocalizationService from '../services/LocalizationService';
-import { DateTime } from 'luxon';
-import { Duration } from 'luxon';
+import { Duration, DateTime } from 'luxon';
 import _ from 'underscore';
 
 const dateTimeFormats = {
@@ -161,17 +160,17 @@ export default /** @lends module:core.utils.dateHelpers */ {
         };
     },
 
-    dateISOToDuration(dateIsoString, options) {
+    dateISOToDuration(dateIsoString: string, options) {
         const opt = _.defaults(options, { seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
-        const mom = moment(dateIsoString);
+        const mom = Duration.fromISO(dateIsoString).toObject();
 
-        return moment.duration({
-            seconds: opt.seconds && mom.seconds(),
-            minutes: opt.minutes && mom.minutes(),
-            hours: opt.hours && mom.hours(),
-            days: opt.days && mom.days(),
-            months: opt.months && mom.month(),
-            years: opt.years && mom.years()
+        return Duration.fromObject({
+            seconds: opt.seconds && mom.seconds,
+            minutes: opt.minutes && mom.minutes,
+            hours: opt.hours && mom.hours,
+            days: opt.days && mom.days,
+            months: opt.months && mom.month,
+            years: opt.years && mom.years
         });
     },
 
@@ -219,7 +218,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return time.format(format);
     },
 
-    getTimeEditFormat(hasSeconds) {
+    getTimeEditFormat(hasSeconds: boolean) {
         return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 

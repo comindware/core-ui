@@ -44,6 +44,7 @@ Marionette_.setDomApi(domapi);
 const api = {
     DateTime: DateTime,
     Handlebars: Handlebars_,
+    $: jquery,
     Backbone: backbone,
     codemirror: CodeMirror,
     autosize,
@@ -53,6 +54,7 @@ const api = {
 };
 
 const dateTime = api.DateTime;
+const $ = api.$;
 const codemirror = api.codemirror;
 const _ = (<any>window)._;
 
