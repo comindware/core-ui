@@ -239,6 +239,19 @@ export default Marionette.View.extend({
         }
     },
 
+    replaceColumns(newColumns = []) {
+        const columns = this.options.columns;
+
+        newColumns.forEach(newColumn => {
+            const index = columns.findIndex(column => column.key === newColumn.key);
+            const [oldColumn] = columns.splice(index, 1, newColumn);
+
+            newColumn.columnClass = oldColumn.columnClass;
+        });
+
+        this.listView.render();
+    },
+
     __onCursorMove(delta, options = {}) {
         const maxIndex = this.editableCellsIndexes.length - 1;
         const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);

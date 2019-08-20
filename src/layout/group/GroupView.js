@@ -71,6 +71,7 @@ export default Marionette.View.extend({
     },
 
     onToggleButtonClick(e) {
+        e.stopPropagation();
         this.toggleCollapse();
     },
 

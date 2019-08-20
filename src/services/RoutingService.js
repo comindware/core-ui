@@ -184,15 +184,13 @@ export default {
             this.activeModule.destroy();
         }
 
-        let activeSubModule = null;
-
         if (!this.activeModule || movingOut || customModuleRegion) {
             if (customModuleRegion) {
-                activeSubModule = new Module({
+                this.activeSubModule = new Module({
                     config,
                     region: customModuleRegion
                 });
-                this.listenTo(activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
+                this.listenTo(this.activeSubModule, 'all', (...rest) => this.activeModule.triggerMethod(...rest));
             } else {
                 this.activeModule = new Module({
                     config,
@@ -202,10 +200,10 @@ export default {
         }
         this.trigger('module:loaded', config, callbackName, routingArgs); //args like in Backbone.on('route')
 
-        if (activeSubModule) {
-            if (activeSubModule.onRoute) {
-                activeSubModule.routerAction = callbackName;
-                await activeSubModule.onRoute.apply(activeSubModule, routingArgs);
+        if (this.activeSubModule) {
+            if (this.activeSubModule.onRoute) {
+                this.activeSubModule.routerAction = callbackName;
+                await this.activeSubModule.onRoute.apply(this.activeSubModule, routingArgs);
             }
         }
 
@@ -219,10 +217,10 @@ export default {
             }
         }
 
-        if (!this.isCurrentModuleSplit() || activeSubModule) {
+        if (!this.isCurrentModuleSplit() || this.activeSubModule) {
             try {
-                if (activeSubModule) {
-                    this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
+                if (this.activeSubModule) {
+                    this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, this.activeSubModule);
                 } else {
                     this.__callRoutingActionForActiveModule(callbackName, routingArgs);
                 }
