@@ -1,5 +1,6 @@
 import EdgeService from './EdgeService';
 import 'innersvg-polyfill';
+import cssVars from 'css-vars-ponyfill';
 
 const classListToggle = function (name: string, flag = !this.contains(name)) {
     return flag ? (this.add(name), true) : (this.remove(name), false);
@@ -15,9 +16,16 @@ type classList = {
 export default class IEService extends EdgeService {
     static initialize() {
         super.initialize();
+        this.__addCssVariables();
         this.__addDOMClassListToggle();
         this.__addSVGClassList();
         this.__addChildNodeRemove();
+    }
+
+    static __addCssVariables() {
+        cssVars({
+            onlyLegacy: true
+        });
     }
 
     static __addDOMClassListToggle() {
