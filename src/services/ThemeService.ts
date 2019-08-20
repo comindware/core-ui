@@ -48,13 +48,15 @@ export default class ThemeService {
 
     static _setSprite() {
         const url = `${this.url}/sprites.svg`;
-        $.get(url, data => {
-            const div = document.createElement('div');
-            div.id = 'core-ui-sprites';
-            div.classList.add('visually-hidden');
-            div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
-            document.body.insertAdjacentElement('afterbegin', div);
-        });
+        fetch(url, { method: 'GET' })
+            .then(rawData => rawData.formData())
+            .then(data => {
+                const div = document.createElement('div');
+                div.id = 'core-ui-sprites';
+                div.classList.add('visually-hidden');
+                div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
+                document.body.insertAdjacentElement('afterbegin', div);
+            });
     }
 
     static _removeElement(id) {

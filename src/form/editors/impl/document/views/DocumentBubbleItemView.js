@@ -1,4 +1,4 @@
-//@flow
+
 import dropdown from 'dropdown';
 import template from '../templates/documentBubbleItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';

@@ -1,4 +1,3 @@
-// @flow
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
@@ -6,6 +5,7 @@ import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
+import { Duration } from 'luxon';
 
 const focusablePartId = {
     DAYS: 'days',
@@ -212,7 +212,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             }
         }
 
-        this.__value(moment.duration(this.state.displayValue).toISOString(), true);
+        this.__value(Duration.fromISO(this.state.displayValue).toISO(), true);
     },
 
     getCaretPos() {
@@ -588,7 +588,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         if (object === null) {
             return null;
         }
-        let totalMilliseconds = moment.duration(object).asMilliseconds();
+        let totalMilliseconds = Duration.fromObject(object).as('milliseconds');
         const result = {
             days: 0,
             hours: 0,
@@ -645,13 +645,13 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
     },
 
     __checkMaxMinObject(valueObject, maxValue, minValue) {
-        let value = moment.duration(valueObject).asMilliseconds();
+        let value = Duration.fromObject(valueObject).as('milliseconds');
         if (maxValue != null) {
-            const max = moment.duration(maxValue).asMilliseconds();
+            const max = Duration.fromObject(maxValue).as('milliseconds');
             value = value > max ? max : value;
         }
         if (minValue != null) {
-            const min = moment.duration(minValue).asMilliseconds();
+            const min = Duration.fromObject(minValue).as('milliseconds');
             value = value < min ? min : value;
         }
         return dateHelpers.durationToObject(value);

@@ -1,4 +1,3 @@
-//@flow
 import SelectableBehavior from '../../../models/behaviors/SelectableBehavior';
 
 export default Backbone.Model.extend({

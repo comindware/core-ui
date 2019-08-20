@@ -1,4 +1,3 @@
-//@flow
 import ActionView from './ActionView';
 
 export default ActionView.extend({
@@ -11,13 +10,10 @@ export default ActionView.extend({
     },
 
     templateContext() {
-        return Object.assign(
-            ActionView.prototype.templateContext.apply(this, arguments),
-            {
-                checkbox: true,
-                showName: this.model.get('name')
-            }
-        );
+        return Object.assign(ActionView.prototype.templateContext.apply(this, arguments), {
+            checkbox: true,
+            showName: this.model.get('name')
+        });
     },
 
     onRender() {

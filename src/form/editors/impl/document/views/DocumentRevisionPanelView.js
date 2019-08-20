@@ -1,4 +1,3 @@
-//@flow
 import DocumentRevisionItemView from './DocumentRevisionItemView';
 import template from '../templates/documentRevisionPanel.html';
 

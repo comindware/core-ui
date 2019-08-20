@@ -1,4 +1,3 @@
-//@flow
 import { dateHelpers } from 'utils';
 
 export default Marionette.MnObject.extend({

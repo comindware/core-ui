@@ -1,4 +1,3 @@
-//@flow
 import CellViewFactory from '../CellViewFactory';
 import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';

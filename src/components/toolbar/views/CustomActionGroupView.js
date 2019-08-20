@@ -1,4 +1,3 @@
-//@flow
 import meta from '../meta';
 
 export default Marionette.CollectionView.extend({

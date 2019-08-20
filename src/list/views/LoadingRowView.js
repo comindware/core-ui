@@ -1,4 +1,3 @@
-//@flow
 import template from '../templates/loadingRow.hbs';
 
 /**

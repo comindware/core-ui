@@ -1,4 +1,3 @@
-//@flow
 import { helpers, keyCode } from 'utils';
 import template from '../templates/galleryWindow.html';
 import GlobalEventService from 'services/GlobalEventService';

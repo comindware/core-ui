@@ -7,6 +7,7 @@ import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
+import { Duration } from 'luxon';
 
 let factory;
 
@@ -143,7 +144,8 @@ export default factory = {
             if (!value) {
                 return '';
             }
-            let totalMilliseconds = moment.duration(value).asMilliseconds();
+
+            let totalMilliseconds = Duration.fromObject(value).as('milliseconds');
 
             if (options.allowDays) {
                 result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;

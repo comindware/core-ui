@@ -1,4 +1,3 @@
-//@flow
 import CustomActionGroupView from './CustomActionGroupView';
 import ActionMenuButtonView from './actionMenu/ActionMenuButtonView';
 import { keyCode } from 'utils';

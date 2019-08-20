@@ -1,4 +1,3 @@
-//@flow
 import template from './templates/splitPanel.hbs';
 import SplitPanelResizer from './SplitPanelResizer';
 

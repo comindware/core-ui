@@ -1,4 +1,3 @@
-//@flow
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.View.extend({

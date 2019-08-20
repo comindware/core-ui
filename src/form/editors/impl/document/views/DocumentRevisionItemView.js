@@ -1,4 +1,3 @@
-//@flow
 import template from '../templates/documentRevisionItem.html';
 
 export default Marionette.View.extend({

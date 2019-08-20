@@ -1,4 +1,3 @@
-//@flow
 import TriggerButtonView from '../TriggerButtonView';
 
 export default TriggerButtonView.extend({
@@ -7,12 +6,9 @@ export default TriggerButtonView.extend({
     },
 
     templateContext() {
-        return Object.assign(
-            TriggerButtonView.prototype.templateContext.apply(this, arguments),
-            {
-                isGroup: true,
-                customAnchor: this.options.customAnchor
-            }
-        );
+        return Object.assign(TriggerButtonView.prototype.templateContext.apply(this, arguments), {
+            isGroup: true,
+            customAnchor: this.options.customAnchor
+        });
     }
 });

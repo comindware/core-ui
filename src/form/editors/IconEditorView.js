@@ -1,4 +1,3 @@
-//@flow
 import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
@@ -17,7 +16,7 @@ const defaultOptions = () => {
     };
 };
 
-export default (formRepository.editors.Icon = BaseEditorView.extend({
+export default formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
         const defaults = defaultOptions();
         this.__applyOptions(options, defaults);
@@ -137,4 +136,4 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
     }
-}));
+});

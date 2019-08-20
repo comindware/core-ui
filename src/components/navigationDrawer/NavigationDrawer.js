@@ -1,4 +1,3 @@
-//@flow
 import GroupItemView from './views/DrawerItemView';
 import GroupsCollection from './collections/GroupsCollection';
 import template from './templates/navigationDrawer.html';

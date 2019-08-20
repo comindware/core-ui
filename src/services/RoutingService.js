@@ -1,4 +1,3 @@
-//@flow
 import WindowService from './WindowService';
 
 // storing active url to get back to it while canceling module leave

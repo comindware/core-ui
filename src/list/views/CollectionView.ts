@@ -1,4 +1,3 @@
-//@flow
 import { keyCode, helpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import _ from 'underscore';

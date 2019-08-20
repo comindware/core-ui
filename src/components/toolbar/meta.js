@@ -1,4 +1,3 @@
-//@flow
 import BlinkCheckboxView from './views/BlinkCheckboxView';
 import ActionView from './views/ActionView';
 import ActionMenuView from './views/ActionMenuView';

@@ -1,4 +1,3 @@
-//@flow
 import ButtonView from './ButtonView';
 import keyCode from '../../../utils/keyCode';
 
