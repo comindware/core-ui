@@ -163,6 +163,12 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
+        const maxWidth = this.options.panelViewOptions?.maxWidth ? this.options.panelViewOptions.maxWidth : 0;
+
+        if (maxWidth) {
+            panelEl.style.maxWidth = `${maxWidth}px`;
+        }
+
         const minWidth = Math.max(MIN_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
         panelEl.style.minWidth = `${minWidth}px`;
 
