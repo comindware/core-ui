@@ -88,10 +88,11 @@ export default Marionette.View.extend({
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.columnClasses = this.options.columnClasses;
         this.collection = this.model.collection;
+        this.cellConfigs = {};
         this.options.columns.forEach((column, index) => {
+            this.cellConfigs[column.key] = { isHidden: false };
             if (typeof column.getHidden === 'function') {
                 this.listenTo(this.model, 'change', () => this.__setCellHidden({ column, index, isHidden: Boolean(column.getHidden(this.model)) }));
-                column.isHidden = false;
             }
         });
     },
@@ -148,7 +149,7 @@ export default Marionette.View.extend({
         this.options.columns.forEach((column, index) => {
             let cell;
             if (typeof column.getHidden === 'function' && Boolean(column.getHidden(this.model))) {
-                column.isHidden = true;
+                this.cellConfigs[column.key].isHidden = true;
                 cell = `<div class="cell ${column.columnClass}"></div>`;
             } else {
                 cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model); // move to factory
@@ -506,11 +507,11 @@ export default Marionette.View.extend({
     },
 
     __setCellHidden({ column, index, isHidden }) {
-        if (column.isHidden === isHidden) {
+        if (this.cellConfigs[column.key].isHidden === isHidden) {
             return;
         }
         const isTree = this.getOption('isTree');
-        column.isHidden = isHidden;
+        this.cellConfigs[column.key].isHidden = isHidden;
         const oldCellView = this.cellViewsByKey[column.key];
         const element = this.el.querySelector(`.${this.columnClasses[index]}`);
         if (isHidden) {
@@ -552,8 +553,6 @@ export default Marionette.View.extend({
             cellView.on('render', () => this.insertFirstCellHtml(true));
         }
         cellView.render();
-        this.el.insertAdjacentElement('beforeend', cellView.el);
-
         this.cellViewsByKey[column.key] = cellView;
         this.cellViews.push(cellView);
 

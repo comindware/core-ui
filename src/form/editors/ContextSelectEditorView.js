@@ -87,13 +87,14 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
             buttonViewOptions: {
                 model: this.viewModel.get('button')
             },
-            autoOpen: true
+            autoOpen: false
         });
 
         this.showChildView('contextPopoutRegion', this.popoutView);
 
         this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
         this.listenTo(this.popoutView, 'before:open', this.__onBeforeOpen);
+        this.listenTo(this.popoutView, 'click', this.__onButtonClick);
     },
 
     setValue(value) {
@@ -144,6 +145,13 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         return text;
     },
 
+    __onButtonClick() {
+        if (this.getReadonly()) {
+            return;
+        }
+        this.popoutView.toggle();
+    },
+
     __isInstanceInContext(item) {
         if (!item || item === 'False') return false;
 
@@ -183,14 +191,14 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         Object.entries(context).forEach(([key, value]) => {
             const mappedProperties = value.reduce((filteredProperites, property) => {
                 const isInstance = property.type === this.options.instanceTypeProperty;
-                if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length && !(isInstance || propertyTypes.includes(property.type))) {
+                if (!this.__isPropertyValid(property)) {
                     return filteredProperites;
                 }
                 const propertyModel = new Backbone.Model(property);
                 if (isInstance && this.options.isInstanceExpandable) {
                     const linkedProperties = context[property[this.options.instanceValueProperty]];
                     if (linkedProperties) {
-                        propertyModel.children = new Backbone.Collection(linkedProperties);
+                        propertyModel.children = new Backbone.Collection(linkedProperties.filter(p => this.__isPropertyValid(p)));
                         propertyModel.collapsed = true;
                         propertyModel.children.forEach(childModel => (childModel.parent = propertyModel));
                     }
@@ -207,6 +215,12 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.listenTo(collection, 'expand', model => this.__onExpand({ model, mappedContext }));
 
         return collection;
+    },
+
+    __isPropertyValid(property) {
+        const { usePropertyTypes, propertyTypes } = this.options;
+        const isFilterEnabled = usePropertyTypes && propertyTypes?.length;
+        return !isFilterEnabled || property.type === this.options.instanceTypeProperty || propertyTypes.includes(property.type);
     },
 
     __onExpand({ model, mappedContext }) {
