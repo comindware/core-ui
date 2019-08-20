@@ -185,7 +185,7 @@ module.exports = options => {
                     ]
                 },
                 {
-                    test: /jquery\.js/,
+                    test: pathResolver.source('external/jquery-3.4.1.slim.js'),
                     use: [
                         {
                             loader: 'expose-loader',

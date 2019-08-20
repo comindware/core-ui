@@ -114,7 +114,7 @@ const stateModes = {
  * @param {Number}  [seconds.maxLength=4] Max digit capacity of seconds
  * @param {Number}  [seconds.text=(localization)] Separator. Show after part.
  * Similar options for days, hours, minutes. If all options are similar, use @param {Object} [allFocusableParts] by default.
- * @param {Object, String, Number} [max, min] Max, min value. Type - like arg for moment.duration
+ * @param {Object, String, Number} [max, min] Max, min value. Type - like arg for luxon Duration object
  * */
 
 export default formRepository.editors.Duration = BaseEditorView.extend({

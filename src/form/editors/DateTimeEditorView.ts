@@ -13,6 +13,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 import DurationEditorView from './DurationEditorView';
 import { getClasses } from './impl/dateTime/meta';
 import MobileService from 'services/MobileService';
+import { Duration, DateTime } from 'luxon';
 
 const defaultOptions = () => ({
     allowEmptyValue: true,
@@ -604,12 +605,12 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         if (!valTimeModel) {
             return;
         }
-        const dateMoment = moment(ISOstr || {}).clone();
-        const timeDuration = moment.duration(valTimeModel).clone();
-        dateMoment.hours(timeDuration.hours());
-        dateMoment.minutes(timeDuration.minutes());
-        dateMoment.seconds(timeDuration.seconds());
-        dateMoment.milliseconds(timeDuration.milliseconds());
+        const dateMoment = DateTime(ISOstr || {});
+        const timeDuration = Duration.fromISO(valTimeModel).toObject();
+        dateMoment.hours(timeDuration.hours);
+        dateMoment.minutes(timeDuration.minutes);
+        dateMoment.seconds(timeDuration.seconds);
+        dateMoment.milliseconds(timeDuration.milliseconds);
         return dateMoment.toISOString();
     },
 
