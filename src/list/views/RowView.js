@@ -281,7 +281,7 @@ export default Marionette.View.extend({
                     return;
                 }
 
-                if (treeFirstCell) {
+                if (treeFirstCell && treeFirstCell.parentElement === el) {
                     el.removeChild(treeFirstCell);
                 }
 

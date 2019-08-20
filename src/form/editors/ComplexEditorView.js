@@ -202,7 +202,9 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             'usePropertyTypes',
             'popoutFlow',
             'allowBlank',
-            'isInstanceExpandable'
+            'isInstanceExpandable',
+            'instanceTypeProperty',
+            'instanceValueProperty'
         );
 
         this.contextEditor = new ContextSelectEditorView(contextOptions);

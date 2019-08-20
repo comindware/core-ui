@@ -15,7 +15,9 @@ const defaultOptions = {
     usePropertyTypes: true,
     allowBlank: false,
     instanceRecordTypeId: undefined,
-    isInstanceExpandable: true
+    isInstanceExpandable: true,
+    instanceTypeProperty: objectPropertyTypes.INSTANCE,
+    instanceValueProperty: 'instanceTypeId'
 };
 
 export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
@@ -135,7 +137,7 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
 
             if (searchItem) {
                 text += index ? ` - ${searchItem.name}` : searchItem.name;
-                instanceTypeId = searchItem.instanceTypeId;
+                instanceTypeId = searchItem[this.options.instanceValueProperty];
             }
         });
 
@@ -180,13 +182,13 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         const mappedContext = {};
         Object.entries(context).forEach(([key, value]) => {
             const mappedProperties = value.reduce((filteredProperites, property) => {
-                const isInstance = property.type === objectPropertyTypes.INSTANCE;
+                const isInstance = property.type === this.options.instanceTypeProperty;
                 if (this.options.usePropertyTypes && propertyTypes && propertyTypes.length && !(isInstance || propertyTypes.includes(property.type))) {
                     return filteredProperites;
                 }
                 const propertyModel = new Backbone.Model(property);
                 if (isInstance && this.options.isInstanceExpandable) {
-                    const linkedProperties = context[property.instanceTypeId];
+                    const linkedProperties = context[property[this.options.instanceValueProperty]];
                     if (linkedProperties) {
                         propertyModel.children = new Backbone.Collection(linkedProperties);
                         propertyModel.collapsed = true;
@@ -212,11 +214,11 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
             return;
         }
         model.children.forEach(child => {
-            if (child.get('type') === objectPropertyTypes.INSTANCE) {
-                const newChild = mappedContext[child.get('instanceTypeId')];
+            if (child.get('type') === this.options.instanceTypeProperty) {
+                const newChildren = mappedContext[child.get(this.options.instanceValueProperty)]?.map(m => m.toJSON());
 
-                if (newChild) {
-                    child.children = new Backbone.Collection(newChild.toJSON());
+                if (newChildren) {
+                    child.children = new Backbone.Collection(newChildren);
                     child.collapsed = true;
                     child.children.forEach(childModel => (childModel.parent = child));
                 }
