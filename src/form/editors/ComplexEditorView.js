@@ -289,7 +289,12 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
 
-        this.typeEditor?.setReadonly(readonly);
+        if (this.typeEditor) {
+            this.typeEditor.setReadonly(readonly);
+            if (this.isRendered() && !this.isDestroyed()) {
+                this.ui.type.toggle(!readonly);
+            }
+        }
         switch (this.value && this.value.type) {
             case valueTypes.value:
                 this.valueEditor?.setReadonly(readonly);
