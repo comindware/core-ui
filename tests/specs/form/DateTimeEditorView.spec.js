@@ -4,8 +4,9 @@ import 'jasmine-expect';
 import { keyCode } from 'utils';
 import DateTimeService from '../../../src/form/editors/services/DateTimeService';
 import FocusTests from './FocusTests';
+import { DateTime } from 'luxon';
 
-const someDate = moment('1986-09-04T17:30:00.000Z');
+const someDate = DateTime.fromISO('1986-09-04T17:30:00.000Z');
 const formatLocalisePrefix = 'CORE.FORMATS.MOMENT';
 
 const roundingAccuracyMs = 10000;
@@ -103,29 +104,30 @@ afterEach(() => {
     window.app
         .getView()
         .getRegion('contentRegion')
-        .empty()
+        .empty();
 });
 
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
-        const findDateInput = function (view) {
+        const findDateInput = function(view) {
             return view.$('input:first');
         };
 
-        const findTimeInput = function (view) {
+        const findTimeInput = function(view) {
             return view.$('input:last');
         };
 
-        const selectTodayOnOpenPanel = function (view) {
+        const selectTodayOnOpenPanel = function(view) {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
         const getDatePartFromISOString = ISOStr => ISOStr.slice(0, ISOStr.indexOf('T'));
 
-        const show = view => window.app
-            .getView()
-            .getRegion('contentRegion')
-            .show(view);
+        const show = view =>
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
         const someDateTimeISO = '2015-07-20T10:46:37.000Z';
 
@@ -272,9 +274,13 @@ describe('Editors', () => {
 
             // assert
             const expected = model.get('data');
-            expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
-            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
+            expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(DateTime.fromISO(expected)));
+            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(DateTime.fromISO(expected)));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(DateTime.fromISO(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -291,9 +297,13 @@ describe('Editors', () => {
             const value = view.getValue();
 
             // assert
-            expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
-            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(expected).format('HH:mm:ss'));
+            expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(DateTime.fromISO(expected)));
+            // expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(DateTime.fromISO(expected)));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(DateTime.fromISO(expected).format('HH:mm:ss'));
             expect(value).toEqual(expected);
         });
 
@@ -318,7 +328,7 @@ describe('Editors', () => {
 
             // assert
             expect(view.getValue()).toEqual(model.get('data'));
-            expect(core.lib.moment(view.getValue()).year()).toEqual(core.lib.moment().year());
+            expect(DateTime.fromISO(view.getValue()).year()).toEqual(DateTime.fromISO().year());
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
@@ -339,7 +349,7 @@ describe('Editors', () => {
             // assert
             /* todo fix it
             expect(value).not.toEqual(expected);
-            expect(core.lib.moment(value).year()).toEqual(core.lib.moment().year());
+            expect(DateTime.fromISO(value).year()).toEqual(DateTime.fromISO().year());
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
             */
         });
@@ -361,8 +371,8 @@ describe('Editors', () => {
             const value = view.getValue();
 
             const expected = model.get('data');
-            //expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(core.lib.moment(expected)));
-            //expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(core.lib.moment(expected)));
+            //expect(findDateInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayDate(DateTime.fromISO(expected)));
+            //expect(findTimeInput(view).val()).toEqual(core.utils.dateHelpers.getDisplayTime(DateTime.fromISO(expected)));
             expect(value).toEqual(expected);
             expect(onChangeCallback).not.toHaveBeenCalled();
         });
@@ -415,7 +425,7 @@ describe('Editors', () => {
             selectTodayOnOpenPanel(view);
 
             expect(view.getValue()).toEqual(model.get('data'));
-            expect(core.lib.moment(view.getValue()).year()).toEqual(core.lib.moment().year());
+            expect(DateTime.fromISO(view.getValue()).year()).toEqual(DateTime.fromISO().year());
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
             expect(onCommitCallback).toHaveBeenCalledTimes(1);
         });
@@ -472,36 +482,39 @@ describe('Editors', () => {
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
 
-        it('should set time on time select', () => new Promise(function(resolve) {
-            const model = new Backbone.Model({
-                data: '2015-07-20T10:46:37.000Z'
-            });
+        it('should set time on time select', () =>
+            new Promise(function(resolve) {
+                const model = new Backbone.Model({
+                    data: '2015-07-20T10:46:37.000Z'
+                });
 
-            const view = new core.form.editors.DateTimeEditor({
-                model,
-                autocommit: true,
-                key: 'data',
-                timeDisplayFormat: 'HH:mm:ss'
-            });
+                const view = new core.form.editors.DateTimeEditor({
+                    model,
+                    autocommit: true,
+                    key: 'data',
+                    timeDisplayFormat: 'HH:mm:ss'
+                });
 
-            show(view);
+                show(view);
 
-            view.on('change', () => {
-                expect(view.getValue()).toBe('2015-07-19T22:00:00.000Z');
-                expect(model.get('data')).toBe('2015-07-19T22:00:00.000Z');
+                view.on('change', () => {
+                    expect(view.getValue()).toBe('2015-07-19T22:00:00.000Z');
+                    expect(model.get('data')).toBe('2015-07-19T22:00:00.000Z');
 
-                core.services.TestService.wait({
-                    callback: resolve,
-                    condition: () => findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '') === core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss')
-                })
-            });
+                    core.services.TestService.wait({
+                        callback: resolve,
+                        condition: () =>
+                            findTimeInput(view)
+                                .val()
+                                .replace(new RegExp('\\s+', 'g'), '') === DateTime.fromISO('01:00', 'HH:mm').format('HH:mm:ss')
+                    });
+                });
 
-            findTimeInput(view)[0].focus();
+                findTimeInput(view)[0].focus();
 
-            document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
-        }));
+                document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
+            }));
 
-                
         it('should hide clear button if hideClearButton = true', () => {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -520,7 +533,6 @@ describe('Editors', () => {
             expect(view.$('.js-clear-button').length).toEqual(0);
         });
 
-        
         it('should have no title options.showTitle false', () => {
             const dateTimeISO = '2015-07-20T10:46:37.000Z';
             const model = new Backbone.Model({
@@ -586,14 +598,32 @@ describe('Editors', () => {
             });
 
             show(view);
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithSeconds));
-            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(DateTime.fromISO(someDateTimeISO).format(formatWithSeconds));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith(':')
+            ).toEqual(false);
 
             view.setFormat({
                 timeDisplayFormat: formatWithoutSeconds
             });
-            expect(findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '')).toEqual(core.lib.moment(someDateTimeISO).format(formatWithoutSeconds));
-            expect(findTimeInput(view).val().trim().endsWith(':')).toEqual(false);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .replace(new RegExp('\\s+', 'g'), '')
+            ).toEqual(DateTime.fromISO(someDateTimeISO).format(formatWithoutSeconds));
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith(':')
+            ).toEqual(false);
         });
 
         it('should show custom minutes free from format', () => {
@@ -615,12 +645,22 @@ describe('Editors', () => {
             });
 
             show(view);
-            expect(findTimeInput(view).val().trim().includes('minutes')).toEqual(true);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .includes('minutes')
+            ).toEqual(true);
 
             view.setFormat({
                 timeDisplayFormat: formatWithoutSeconds
             });
-            expect(findTimeInput(view).val().trim().endsWith('minutes')).toEqual(true);
+            expect(
+                findTimeInput(view)
+                    .val()
+                    .trim()
+                    .endsWith('minutes')
+            ).toEqual(true);
         });
 
         it('should has correct readonly', done => {
@@ -637,26 +677,17 @@ describe('Editors', () => {
 
             view.on('attach', () => {
                 expect(view.readonly).toBeTrue('view.readonly is false after render with options readonly = true');
-                view.$el.find('input').each(
-                    (i, input) =>
-                        expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has no readonly after render`)
-                );
+                view.$el.find('input').each((i, input) => expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has no readonly after render`));
 
                 view.setReadonly(false);
 
                 expect(view.readonly).toBeFalse('view.readonly is true after setReadonly(false)');
-                view.$el.find('input').each(
-                    (i, input) =>
-                        expect(input.hasAttribute('readonly')).toBeFalse(`${i} input has readonly after setReadonly(true)`)
-                );
+                view.$el.find('input').each((i, input) => expect(input.hasAttribute('readonly')).toBeFalse(`${i} input has readonly after setReadonly(true)`));
 
                 view.setReadonly(true);
 
                 expect(view.readonly).toBeTrue('view.readonly is false after setReadonly(true)');
-                view.$el.find('input').each(
-                    (i, input) =>
-                        expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has readonly after setReadonly(true)`)
-                );
+                view.$el.find('input').each((i, input) => expect(input.hasAttribute('readonly')).toBeTrue(`${i} input has readonly after setReadonly(true)`));
                 done();
             });
 
@@ -675,7 +706,7 @@ describe('Editors', () => {
                     key: 'date'
                 });
 
-                const nowMoment = core.lib.moment();
+                const nowMoment = DateTime.local();
 
                 view.on('attach', () => {
                     const nowDisplay = core.utils.dateHelpers.getDisplayDate(nowMoment);
@@ -689,11 +720,7 @@ describe('Editors', () => {
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
                     const mowMomentValue = nowMoment.toISOString();
-                    expect(
-                        getDatePartFromISOString(modelValue)
-                        ).toEqual(
-                            getDatePartFromISOString(mowMomentValue)
-                        );
+                    expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
 
@@ -711,7 +738,7 @@ describe('Editors', () => {
                     key: 'date'
                 });
 
-                const nowMoment = core.lib.moment();
+                const nowMoment = DateTime.fromISO();
 
                 view.on('attach', () => {
                     const dateInput = findDateInput(view);
@@ -724,11 +751,7 @@ describe('Editors', () => {
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
                     const mowMomentValue = nowMoment.toISOString();
-                    expect(
-                        getDatePartFromISOString(modelValue)
-                        ).toEqual(
-                            getDatePartFromISOString(mowMomentValue)
-                        );
+                    expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
 
@@ -746,7 +769,7 @@ describe('Editors', () => {
                     key: 'date'
                 });
 
-                const nowMoment = Core.lib.moment();
+                const nowMoment = DateTime.fromISO();
 
                 view.on('attach', () => {
                     const ISOLocalFormat = Core.utils.dateHelpers.getFormat('dateISO');
@@ -761,11 +784,7 @@ describe('Editors', () => {
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
                     const mowMomentValue = nowMoment.toISOString();
-                    expect(
-                        getDatePartFromISOString(modelValue)
-                        ).toEqual(
-                            getDatePartFromISOString(mowMomentValue)
-                        );
+                    expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
 
@@ -1001,7 +1020,9 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.DOWN, shiftKey: true });
 
-                const shouldBeMilliseconds = moment(someDateTimeISO).subtract(1, 'years').valueOf();
+                const shouldBeMilliseconds = moment(someDateTimeISO)
+                    .subtract(1, 'years')
+                    .valueOf();
 
                 expect(moment(view.value).valueOf()).toEqual(shouldBeMilliseconds);
 
@@ -1044,7 +1065,9 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.UP, shiftKey: true });
 
-                const shouldBeMilliseconds = moment(someDateTimeISO).add(1, 'years').valueOf();
+                const shouldBeMilliseconds = moment(someDateTimeISO)
+                    .add(1, 'years')
+                    .valueOf();
 
                 expect(moment(view.value).valueOf()).toEqual(shouldBeMilliseconds);
 
@@ -1087,7 +1110,9 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.LEFT, shiftKey: true });
 
-                const shouldBeMilliseconds = moment(someDateTimeISO).subtract(1, 'months').valueOf();
+                const shouldBeMilliseconds = moment(someDateTimeISO)
+                    .subtract(1, 'months')
+                    .valueOf();
 
                 expect(moment(view.value).valueOf()).toEqual(shouldBeMilliseconds);
 
@@ -1130,7 +1155,9 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-                const shouldBeMilliseconds = moment(someDateTimeISO).add(1, 'months').valueOf();
+                const shouldBeMilliseconds = moment(someDateTimeISO)
+                    .add(1, 'months')
+                    .valueOf();
 
                 expect(moment(view.value).valueOf()).toEqual(shouldBeMilliseconds);
 
@@ -1243,7 +1270,11 @@ describe('Editors', () => {
 
                 dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / roundingAccuracyMs);
+                const shouldBeMilliseconds = Math.round(
+                    moment()
+                        .add(1, 'months')
+                        .valueOf() / roundingAccuracyMs
+                );
 
                 expect(Math.round(moment(view.value).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
 
@@ -1270,7 +1301,7 @@ describe('Editors', () => {
                 key: 'date'
             });
 
-            const nowMoment = Core.lib.moment();
+            const nowMoment = DateTime.fromISO();
             const ISOLocalFormat = Core.utils.dateHelpers.getFormat('dateISO');
             const nowDisplay = nowMoment.format(ISOLocalFormat);
 
@@ -1287,11 +1318,7 @@ describe('Editors', () => {
                     const dateInput = findDateInput(view);
                     const modelValue = model.get('date');
                     const mowMomentValue = nowMoment.toISOString();
-                    expect(
-                        getDatePartFromISOString(modelValue)
-                        ).toEqual(
-                            getDatePartFromISOString(mowMomentValue)
-                        );
+                    expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     const dateInputValue = dateInput.val();
                     expect(dateInputValue === nowDisplay).toBeTrue(`show ${dateInputValue} in input!`);
                     done();
@@ -1362,7 +1389,7 @@ describe('Editors', () => {
             view.on('attach', () => {
                 view.$el.trigger('mouseenter');
                 view.$('.js-clear-button').click();
-    
+
                 expect(model.get('date') === someDateTimeISO).toBeTrue('change model without blur after clear!');
                 expect(view.isEmptyValue()).toBeTrue('view.isEmptyValue() is not true onClear!');
                 expect(onChangeCallback).toHaveBeenCalledTimes(0);
@@ -1393,7 +1420,7 @@ describe('Editors', () => {
                 view.$el.trigger('mouseenter');
                 view.$('.js-clear-button').click();
                 view.blur();
-    
+
                 expect(model.get('date')).toBeNull('not set null to model onClear after blur!');
                 expect(view.isEmptyValue()).toBeTrue('view.isEmptyValue() is not true onClear!');
                 expect(onChangeCallback).toHaveBeenCalledTimes(1);

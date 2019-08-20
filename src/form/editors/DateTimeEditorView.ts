@@ -605,7 +605,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         if (!valTimeModel) {
             return;
         }
-        const dateMoment = DateTime(ISOstr || {});
+        const dateMoment = DateTime.fromISO(ISOstr || {});
         const timeDuration = Duration.fromISO(valTimeModel).toObject();
         dateMoment.hours(timeDuration.hours);
         dateMoment.minutes(timeDuration.minutes);
