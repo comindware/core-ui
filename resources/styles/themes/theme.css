@@ -346,6 +346,10 @@ svg.svg-grid-icons {
   display: none;
 }
 
+.grid__headless .grid-content-view{
+  overflow: auto;
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);

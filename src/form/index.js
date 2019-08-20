@@ -24,9 +24,8 @@ import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
-import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import ExtensionIconService from './editors/impl/document/services/ExtensionIconService';
-import NewExpressionEditorView from './editors/NewExpressionEditorView';
+import ComplexEditorView from './editors/ComplexEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/members/models/MemberModel';
@@ -148,8 +147,7 @@ const api = /** @lends module:core.form */ {
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         MembersSplitEditor: MembersSplitEditorView,
-        DocumentExpressionEditor: DocumentExpressionEditorView,
-        NewExpressionEditor: NewExpressionEditorView,
+        ComplexEditor: ComplexEditorView,
         IconEditor: IconEditorView,
         ColorPickerEditor,
         RangeEditor,

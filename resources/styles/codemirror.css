@@ -544,8 +544,13 @@ li.CodeMirror-hint-active {
     line-height: initial;
 }
 
+.cell .dev-code-editor-button-mode {
+    height: auto;
+}
+
 .dev-code-editor-field:hover .editor__icons.icon-remove {
     visibility: visible;
+    padding-right: 10px;
 }
 
 .editor_empty.dev-code-editor-field:hover .editor__icons.icon-remove {
@@ -567,7 +572,7 @@ li.CodeMirror-hint-active {
     color: #838c93;
     height: unset;
     margin: 4px 10px;
-    padding: 4px 10px 2px 5px;
+    padding: 4px 16px 2px 5px;
     text-align: center;
 }
 
