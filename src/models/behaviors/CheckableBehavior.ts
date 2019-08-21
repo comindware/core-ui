@@ -89,11 +89,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
                 const startIndex = Math.min(lastSelectedIndex, thisIndex);
                 const endIndex = Math.max(lastSelectedIndex, thisIndex);
                 const models = collection.models;
-                Object.values(this.checked).forEach(checked => {
-                    if (checked !== model) {
-                        checked.uncheck();
-                    }
-                });
+
                 for (let i = startIndex; i <= endIndex; i++) {
                     models[i].check();
                 }
