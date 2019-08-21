@@ -23,7 +23,7 @@ export default BaseMembersGridView.extend({
     onRender() {
         BaseMembersGridView.prototype.onRender.apply(this);
         this.showChildView('quantityWarningRegion', this.quantityWarningView);
-        this.getRegion('quantityWarningRegion').$el.hide();
+        this.getRegion('quantityWarningRegion').el.setAttribute('hidden', true);
     },
 
     onAttach() {
@@ -38,7 +38,7 @@ export default BaseMembersGridView.extend({
             if (this.collection.length < this.collection.totalCount) {
                 this.getRegion('quantityWarningRegion').$el.show();
             } else {
-                this.getRegion('quantityWarningRegion').$el.hide();
+                this.getRegion('quantityWarningRegion').el.setAttribute('hidden', true);
             }
         }
     }
