@@ -207,7 +207,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             return null;
         }
         if (this.options.showDate) {
-            return moment(value).toISOString();
+            return moment(value).toISO();
         } else if (this.options.showTime) {
             const parsedTime = value.split(':');
             const hour = parsedTime[0];
@@ -217,7 +217,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
                 .minutes(minutes)
                 .seconds(0)
                 .milliseconds(0)
-                .toISOString();
+                .toISO();
         }
     },
 
@@ -358,7 +358,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __adjustValue(value: string): string {
-        return value == null ? null : DateTime.fromISO(value);
+        return value == null ? null : DateTime.fromISO(value).toString();
     },
 
     __updateTitle(): void {
@@ -370,7 +370,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
     __createDateDropdownEditor() {
         this.dateButtonModel = new Backbone.Model({
-            [this.key]: this.value == null ? '' : moment(this.value).format(this.options.dateDisplayFormat)
+            [this.key]: this.value == null ? '' : DateTime.fromISO(this.value).toFormat(this.options.dateDisplayFormat)
         });
         this.listenTo(this.dateButtonModel, `change:${this.key}`, this.__onDateModelChange);
 
@@ -438,7 +438,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
                 inner: true
             });
         }
-        return recipientMoment.toISOString();
+        return recipientMoment.toISO();
     },
 
     __onDateModelChange(model, formattedDate, options) {
@@ -534,7 +534,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
     __createTimeDropdownView() {
         const model = new Backbone.Model({
-            [this.key]: this.value == null ? '' : dateHelpers.dateISOToDuration(this.value, { days: false }).toISOString()
+            [this.key]: this.value == null ? '' : dateHelpers.dateISOToDuration(this.value, { days: false }).toISO()
         });
         this.listenTo(model, 'change', this.__onTimeModelChange);
 
@@ -613,7 +613,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         dateMoment.seconds(timeDuration.seconds);
         dateMoment.milliseconds(timeDuration.milliseconds);
 
-        return dateMoment.toISOString();
+        return dateMoment.toISO();
     },
 
     __onTimeModelChange(model) {
@@ -624,7 +624,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __setValueToTimeButton(dateISOstring: string) {
-        const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
+        const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISO();
         this.timeDropdownView && this.timeDropdownView.setValue(newDuration, true);
     },
 

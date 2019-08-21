@@ -719,7 +719,7 @@ describe('Editors', () => {
 
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
-                    const mowMomentValue = nowMoment.toISOString();
+                    const mowMomentValue = nowMoment.toISO();
                     expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
@@ -743,14 +743,14 @@ describe('Editors', () => {
                 view.on('attach', () => {
                     const dateInput = findDateInput(view);
                     dateInput.focus();
-                    dateInput.val(nowMoment.toISOString());
+                    dateInput.val(nowMoment.toISO());
                     dateInput.change();
                     dateInput.blur();
                 });
 
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
-                    const mowMomentValue = nowMoment.toISOString();
+                    const mowMomentValue = nowMoment.toISO();
                     expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
@@ -783,7 +783,7 @@ describe('Editors', () => {
 
                 model.on('change:date', () => {
                     const modelValue = model.get('date');
-                    const mowMomentValue = nowMoment.toISOString();
+                    const mowMomentValue = nowMoment.toISO();
                     expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     done();
                 });
@@ -1317,7 +1317,7 @@ describe('Editors', () => {
                 setTimeout(() => {
                     const dateInput = findDateInput(view);
                     const modelValue = model.get('date');
-                    const mowMomentValue = nowMoment.toISOString();
+                    const mowMomentValue = nowMoment.toISO();
                     expect(getDatePartFromISOString(modelValue)).toEqual(getDatePartFromISOString(mowMomentValue));
                     const dateInputValue = dateInput.val();
                     expect(dateInputValue === nowDisplay).toBeTrue(`show ${dateInputValue} in input!`);

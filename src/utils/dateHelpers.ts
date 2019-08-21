@@ -162,16 +162,9 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     dateISOToDuration(dateIsoString: string, options) {
         const opt = _.defaults(options, { seconds: true, minutes: true, hours: true, days: true, months: false, years: false });
-        const mom = Duration.fromISO(dateIsoString).toObject();
+        const mom = Duration.fromMillis(DateTime.fromISO(dateIsoString).toMillis()).shiftTo(...Object.keys(opt).filter(o => o));
 
-        return Duration.fromObject({
-            seconds: opt.seconds && mom.seconds,
-            minutes: opt.minutes && mom.minutes,
-            hours: opt.hours && mom.hours,
-            days: opt.days && mom.days,
-            months: opt.months && mom.month,
-            years: opt.years && mom.years
-        });
+        return mom;
     },
 
     isFormatHasSeconds(format) {
@@ -215,7 +208,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
         const lang = LocalizationService.langCode;
         const format = dateTimeFormats[lang].fullDateShortTime.time;
 
-        return time.format(format);
+        return DateTime.fromISO(time).toFormat(format);
     },
 
     getTimeEditFormat(hasSeconds: boolean) {

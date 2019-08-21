@@ -1,4 +1,5 @@
 import { dateHelpers } from 'utils';
+import { DateTime } from 'luxon';
 
 export default {
     getDateDisplayValue(value?: string, format: string): string {
@@ -6,13 +7,14 @@ export default {
         if (value === null) {
             formattedDisplayValue = '';
         } else {
-            formattedDisplayValue = moment(value).format(format || dateHelpers.getFormat('dateISO'));
+            formattedDisplayValue = DateTime.fromISO(value).toFormat(format || dateHelpers.getFormat('dateISO'));
         }
         return formattedDisplayValue;
     },
 
     tryGetValidMoment(value?: string, format: string): string {
-        const sortedMom = this.getPrioritySortedFormats(format).map(f => moment(value, f));
+        const sortedMom = this.getPrioritySortedFormats(format).map(f => DateTime.fromISO(value).toFormat(f));
+
         return sortedMom.find(mom => mom.isValid());
     },
 
@@ -27,9 +29,9 @@ export default {
         if (value === null || value === '') {
             formattedValue = '';
         } else if (format) {
-            formattedValue = moment(value).format(format);
+            formattedValue = DateTime.fromISO(value).toFormat(format);
         } else {
-            formattedValue = dateHelpers.getDisplayTime(moment(value));
+            formattedValue = dateHelpers.getDisplayTime(DateTime.fromISO(value).toString());
         }
         return formattedValue;
     }
