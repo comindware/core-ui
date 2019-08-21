@@ -1,4 +1,4 @@
-export default function(dates) {
+export default function($, dates) {
     let DPGlobal;
 
     function timeZoneAbbreviation() {
@@ -14,8 +14,7 @@ export default function(dates) {
 
     // Picker object
     const Datetimepicker = function(element, options) {
-        //todo remove all usage of jqery functon on this element
-        this.element = element;
+        this.element = $(element);
 
         this.language = options.language || 'en';
         this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr

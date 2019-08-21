@@ -12,7 +12,7 @@ export default {
         return formattedDisplayValue;
     },
 
-    tryGetValidMoment(value?: string, format: string): string {
+    tryGetValidMoment(value?: string, format: string): DateTime {
         const sortedMom = this.getPrioritySortedFormats(format).map(f => DateTime.fromISO(value).toFormat(f));
 
         return sortedMom.find(mom => mom.isValid());

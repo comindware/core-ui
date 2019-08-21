@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export default function(date) {
-    return moment(date).format('ll');
+    return DateTime.fromISO(date).toFormat('ll');
 }

@@ -412,25 +412,21 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.listenTo(this.calendarDropdownView, 'keydown', this.__dateButtonInputKeydown);
     },
 
-    __updateDateAndValidateToButton(recipientISO, fromFormatted, { includeTime = false }) {
-        const recipientMoment = moment(recipientISO || {});
+    __updateDateAndValidateToButton(recipientISO: string, fromFormatted, { includeTime = false }) {
+        const recipientMoment = DateTime.fromISO(recipientISO);
         const fromMoment = DateTimeService.tryGetValidMoment(fromFormatted, this.options.dateDisplayFormat);
+
         if (fromMoment) {
-            recipientMoment.year(fromMoment.year());
-            recipientMoment.month(fromMoment.month());
-            recipientMoment.date(fromMoment.date());
+            recipientMoment.set({ year: fromMoment.year, month: fromMoment.month, day: fromMoment.day });
             if (includeTime) {
-                recipientMoment.milliseconds(fromMoment.milliseconds());
-                recipientMoment.seconds(fromMoment.seconds());
-                recipientMoment.minutes(fromMoment.minutes());
-                recipientMoment.hours(fromMoment.hours());
+                recipientMoment.set({ millisecond: fromMoment.millisecond, second: fromMoment.second, minute: fromMoment.minute, hour: fromMoment.hour });
             } else if (recipientISO == null) {
                 recipientMoment.milliseconds(0);
                 recipientMoment.seconds(0);
                 recipientMoment.minutes(0);
                 recipientMoment.hours(0);
             }
-            this.dateButtonModel.set(this.key, recipientMoment.format(this.options.dateDisplayFormat), {
+            this.dateButtonModel.set(this.key, recipientMoment.toFormat(this.options.dateDisplayFormat), {
                 inner: true
             });
         } else {
