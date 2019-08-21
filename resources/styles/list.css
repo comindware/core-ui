@@ -724,13 +724,19 @@ tr.dragover td{
 
 .grid-table-wrapper {
     min-height: 100%;
-    display: contents;
+    display: initial;
     width: 100%;
 }
 /* fix for EDGE  */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .grid-table-wrapper {
-        display: ruby-base;
+        /*display: ruby-base;*/
+        overflow: hidden;
+        min-height: 62px;
+    }
+    .top-nav .grid-table-wrapper {
+        overflow: inherit;
+        min-height: auto;
     }
 }
 
