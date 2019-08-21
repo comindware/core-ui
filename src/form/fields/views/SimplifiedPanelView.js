@@ -1,3 +1,4 @@
+import UserService from 'services/UserService';
 import template from '../templates/simplifiedPanel.hbs';
 import SearchBarView from '../../../views/SearchBarView';
 
@@ -29,8 +30,7 @@ export default Marionette.View.extend({
             showSearch: false,
             openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
-            customTemplate:
-                '<div class="user-edit-wrp" title="{{name}}">{{#if abbreviation}}<div class="simple-field_container">{{#if avatarUrl}}<img src="{{avatarUrl}}">{{else}}{{abbreviation}}{{/if}}</div>{{/if}}</div>',
+            customTemplate: '<div class="user-edit-wrp" title="{{name}}"><div class="composite-user-abr__container">{{getAvatar}}</div></div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
         if (this.options.editorConfig.schema) {

@@ -15,7 +15,7 @@ const classes = {
 };
 
 const WINDOW_BORDER_OFFSET = 10;
-const MIN_DROPDOWN_PANEL_WIDTH = 200;
+const MAX_DROPDOWN_PANEL_WIDTH = 200;
 
 const panelPosition = {
     DOWN: 'down',
@@ -159,19 +159,20 @@ export default Marionette.View.extend({
         const dropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
         const buttonEl = dropDownRoot || this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
+
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        if (this.maxWidth) {
-            panelEl.style.maxWidth = `${this.maxWidth}px`;
-        } else if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            // TODO: if panel should be size by button width, panel width should set by button's width manualy
-            panelEl.style.width = `${buttonRect.width}px`;
+        const computedWidth = Math.max(MAX_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
+
+        const panelWidth = this.maxWidth ? Math.min(computedWidth, this.maxWidth) : computedWidth;
+
+        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
+            panelEl.style.width = `${panelWidth}px`;
         }
 
-        const minWidth = Math.max(MIN_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
-        panelEl.style.minWidth = `${minWidth}px`;
-
-        const panelRect = this.panelEl.getBoundingClientRect();
+        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            panelEl.style.minWidth = `${panelWidth}px`;
+        }
 
         let leftOffset = buttonRect.left;
         let offsetHeight = panelEl.offsetHeight;
@@ -238,10 +239,9 @@ export default Marionette.View.extend({
 
         panelEl.style.top = `${top}px`;
 
-        if (panelRect.width > buttonRect.width) {
-            leftOffset -= panelRect.width - buttonRect.width;
+        if (panelWidth > buttonRect.width) {
+            leftOffset -= panelWidth - buttonRect.width;
         }
-        leftOffset = Math.max(leftOffset, WINDOW_BORDER_OFFSET);
         panelEl.style.left = `${leftOffset}px`;
 
         if (isNeedToRefreshAnchorPosition) {

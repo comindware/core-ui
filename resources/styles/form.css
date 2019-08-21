@@ -976,10 +976,6 @@ input[type="color"], .colorpicker{
     width: auto;
 }
 
-.simplified-button_container[extended] .cell .simple-field_container{
-    margin-right: 5px;
-}
-
 .simplified-button_grid .cell{
     min-width: 28px;
     width: 28px;
@@ -1143,11 +1139,9 @@ input[type="color"], .colorpicker{
     padding: 4px 20px 4px 0;
     align-items: center;
     display: flex;
-}
-
-.simplified-panel_container .bubbles__list > .bubbles__i > .user-edit-wrp{
-    margin-right: 10px;
-    margin-top: -4px;
+    flex-direction: row;
+    justify-content: stretch;
+    height: 26px;
 }
 
 .simplified-panel_container .bubbles__list > .bubbles__i > a{
@@ -1157,30 +1151,29 @@ input[type="color"], .colorpicker{
 }
 
 .user-edit-wrp {
-    display: flex;
+    display: flex;    
+    align-items: center
 }
 
-.simple-field_container {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
+.composite-user-abr__container {
+    height: 23px;
+    width: 23px;
     text-align: center;
-    line-height: 20px;
-    background-color: white;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #0575bd;
-    margin-left: 1px;
-    margin-top: 6px;
-    color: #0575bd;
-    font-size: 10px;
+    line-height: 21px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 1px solid #e2e2e2;
+    flex: 0 0 auto;
+    margin-right: 5px;
 }
 
-.simple-field_container img{
-    width: 22px;
-    height: 22px;
-    margin-top: -1px;
-    margin-left: -1px;
+
+.composite-user-abr__container img {
+    height: 23px;
+    width: 23px;
+    border-radius: 50%;
 }
+
 .simplified-button_grid .row {
     pointer-events: none;
 }
