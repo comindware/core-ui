@@ -30,7 +30,7 @@ export default {
             window.contentRegion = appView.getRegion('contentRegion');
 
             if (window.contentLoadingRegion) {
-                this.__initializeLoadingMaskAndHideIt();
+                //this.__initializeLoadingMaskAndHideIt(); todo fall on test bundle. Needs research
             }
         }
 

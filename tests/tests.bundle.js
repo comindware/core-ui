@@ -9,28 +9,37 @@ core.form.editors.impl.common.initializeDatePicker($);
 
 const rootView = Marionette.View.extend({
     template: Handlebars.compile(`
-        <div class="js-fading-region fading-container hidden"></div>
-<div class="js-popup-region popup-container hidden"></div>
-<div class="wrapper">
-    <div class="js-navigation-region js-navigation-container wrapper__menu"></div>
+    <div class="js-navigation-container wrapper__menu"></div>
     <div class="js-content-container wrapper__content">
         <div class="js-navigation-toolbar"></div>
         <div class="js-content-loading-region l-loader"></div>
         <div class="js-content-region layout"></div>
         <div class="js-toast-notification-region"></div>
+        <div class="js-common-notification-region"></div>
     </div>
-</div>
     `),
 
     className: 'app-region-container',
 
     regions: {
-        navigationRegion: '.js-navigation-region',
-        contentRegion: '.js-content-region',
-        navigationToolbarRegion: '.js-navigation-toolbar',
+        navigationRegion: {
+            replaceElement: true,
+            el: '.js-navigation-container'
+        },
+        contentRegion: {
+            replaceElement: true,
+            el: '.js-content-region'
+        },
+        navigationToolbarRegion: {
+            replaceElement: true,
+            el: '.js-navigation-toolbar'
+        },
         contentLoadingRegion: '.js-content-loading-region',
-        popupRegion: '.js-popup-region',
-        toastNotificationRegion: '.js-toast-notification-region'
+        toastNotificationRegion: '.js-toast-notification-region',
+        commonNotificationRegion: {
+            replaceElement: true,
+            el: '.js-common-notification-region'
+        }
     }
 });
 
@@ -52,7 +61,7 @@ const Application = Marionette.Application.extend({
                 theme: 'new',
                 themesPath: '../dist/themes/'
             },
-            contentView: Marionette.View.extend({ template: _.noop, }),
+            contentView: Marionette.View.extend({ template: _.noop }),
             localizationService: {
                 langCode: 'en',
                 localizationMap,
@@ -86,7 +95,7 @@ const Application = Marionette.Application.extend({
                 popupRegion: $('.js-popup-region'),
                 toastNotificationRegion: $('.js-toast-notification-region')
             },
-            serviceInitializer() { }
+            serviceInitializer() {}
         });
 
         ajaxStub.initialize();

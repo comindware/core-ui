@@ -78,7 +78,7 @@ describe('Editors', () => {
         window.app
             .getView()
             .getRegion('contentRegion')
-            .empty()
+            .empty();
     });
 
     describe('DatalistEditorView', () => {
