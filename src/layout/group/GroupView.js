@@ -87,7 +87,7 @@ export default Marionette.View.extend({
             this.getRegion('containerRegion').el.setAttribute('hidden', true);
             200;
         } else {
-            this.getRegion('containerRegion').$el.show(200);
+            this.getRegion('containerRegion').el.removeAttribute('hidden');
         }
     }
 });

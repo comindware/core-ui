@@ -190,13 +190,13 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return startDay;
     },
 
-    getDisplayDate(val) {
+    getDisplayDate(val: string) {
         const format = this.getFormat('dateISO');
 
-        return val ? moment(val).format(format) : '';
+        return val ? DateTime.fromISO(val).toFormat(format) : '';
     },
 
-    getFormat(formatName, formatPart = 'general') {
+    getFormat(formatName: string, formatPart = 'general') {
         const lang = LocalizationService.langCode;
         if (!dateTimeFormats[lang][formatName]) {
             throw new Error(`Unexpected format ${formatName}`);
@@ -217,6 +217,6 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     dateToDateTimeString(date, formatName) {
         const lang = LocalizationService.langCode;
-        return moment(date).format(dateTimeFormats[lang][formatName].general);
+        return DateTime.fromISO(date).toFormat(dateTimeFormats[lang][formatName].general);
     }
 };
