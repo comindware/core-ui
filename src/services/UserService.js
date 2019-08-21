@@ -1,6 +1,7 @@
 import helpers from 'utils/helpers';
 
 let dataProvider;
+let avatarGetter;
 
 /**
  * @name UserService
@@ -17,7 +18,8 @@ export default {
     initialize(options) {
         helpers.ensureOption(options, 'dataProvider');
 
-        dataProvider = options.dataProvider;
+        avatarGetter = options.dataProvider;
+        avatarGetter = options.avatarGetter;
     },
 
     listUsers() {
@@ -26,5 +28,39 @@ export default {
 
     listGroups() {
         return dataProvider.listGroups();
+    },
+
+    getAvatar({ id, name, abbreviation, avatarUrl, size } = {}) {
+        const abbr = abbreviation || this.getAbbreviation(name);
+        const url = avatarUrl || avatarGetter?.({ id, size });
+
+        if (avatarGetter) {
+            return `<img src="${url}" onerror="this.parentNode.innerHTML='${abbr}'"></img>`;
+        }
+        return abbr;
+    },
+
+    getAbbreviation(fullName) {
+        if (!fullName) {
+            return '';
+        }
+
+        const words = fullName.split(/[, _]/);
+        switch (words.length) {
+            case 0:
+                return '';
+            case 1:
+                return this._getWordAbbreviation(words[0], true);
+            default:
+                return this._getWordAbbreviation(words[0], words[1].length === 0) + this._getWordAbbreviation(words[1], words[0].length === 0);
+        }
+    },
+
+    _getWordAbbreviation(word, takeTwo) {
+        if (word.length === 0) {
+            return '';
+        }
+
+        return word.substring(0, word.length > 1 && takeTwo ? 2 : 1);
     }
 };

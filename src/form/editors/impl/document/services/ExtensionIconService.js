@@ -1,23 +1,16 @@
-const fileIconClasses = {
-    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
-    word: 'docx doc rtf',
-    excel: 'xls xlsx xlsm xlsb',
-    pdf: 'pdf'
-};
+import { fileIconClasses } from '../meta';
 
 export default {
-    getIconForDocument(isLoading, extension) {
+    getIconForDocument({ isLoading, name, extension, type } = {} ) {
         if (isLoading) {
             return 'spinner pulse';
         }
+
+        const ext = extension || type || name?.replace(/.*\./g, '');
         let icon;
 
-        if (extension) {
-            Object.keys(fileIconClasses).forEach(key => {
-                if (fileIconClasses[key].indexOf(extension.toLowerCase()) !== -1) {
-                    icon = key;
-                }
-            });
+        if (ext) {
+            icon = Object.keys(fileIconClasses).find(key => fileIconClasses[key].includes(ext.toLowerCase()));
         }
 
         return icon || 'file';

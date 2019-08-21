@@ -1,5 +1,6 @@
 import { objectPropertyTypes, contextIconType } from '../Meta';
-import { dateHelpers, userHelpers } from 'utils';
+import { dateHelpers } from 'utils';
+import UserService from 'services/UserService';
 import ExtensionIconService from '../form/editors/impl/document/services/ExtensionIconService';
 import DateTimeService from '../form/editors/services/DateTimeService';
 import CellFieldView from './views/CellFieldView';
@@ -210,8 +211,9 @@ export default factory = {
 
     __getDocumentCell({ values, column, model }) {
         values.forEach(value => {
-            value.icon = ExtensionIconService.getIconForDocument(value.isLoading, value.extension);
-            value.name = value.name || value.text;
+            const { name, text, isLoading, extension } = value
+            value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
+            value.name = name || text;
         });
 
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
@@ -224,10 +226,8 @@ export default factory = {
 
     __getUserCell({ values, column, model }) {
         values.forEach(value => {
-            if (!value.abbreviation) {
-                value.abbreviation = userHelpers.getAbbreviation(value.name);
-            }
-        });
+            value.avatar = UserService.getAvatar(value)
+        });;
 
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
