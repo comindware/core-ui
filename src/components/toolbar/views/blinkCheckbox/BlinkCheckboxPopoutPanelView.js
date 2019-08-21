@@ -81,10 +81,12 @@ export default Marionette.CollectionView.extend({
             dragItemView: new BlinkCheckboxVisibilityDragView({ model: options.model }).render()
         };
         const ctx = this.dragContext;
-        ctx.dragItemView.$el.css({
+
+        Object.assign(ctx.dragItemView.el.style, {
             top: event.pageY - constants.dragElOffsetY,
             left: event.pageX - constants.dragElOffsetX
         });
+
         this.$el.append(ctx.dragItemView.el);
         ctx.view.setDragging(true);
         document.addEventListener('mousemove', this.__documentMouseMove);
@@ -123,7 +125,8 @@ export default Marionette.CollectionView.extend({
         }
 
         const ctx = this.dragContext;
-        ctx.dragItemView.$el.css({
+
+        Object.assign(ctx.dragItemView.el.style, {
             top: event.pageY - constants.dragElOffsetY,
             left: event.pageX - constants.dragElOffsetX
         });

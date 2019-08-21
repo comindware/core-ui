@@ -14,6 +14,7 @@ import DurationEditorView from './DurationEditorView';
 import { getClasses } from './impl/dateTime/meta';
 import MobileService from 'services/MobileService';
 import { Duration, DateTime } from 'luxon';
+import Marionette from 'backbone.marionette';
 
 const defaultOptions = () => ({
     allowEmptyValue: true,
@@ -357,7 +358,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __adjustValue(value: string): string {
-        return value == null ? null : moment(value).toISOString();
+        return value == null ? null : DateTime.fromISO(value);
     },
 
     __updateTitle(): void {
@@ -599,18 +600,19 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.listenTo(this.timeDropdownView, 'keydown', this.__timeButtonInputKeydown);
     },
 
-    __updateTime(ISOstr) {
+    __updateTime(ISOstr: string) {
         //replace time of ISO string to time from timebutton
         const valTimeModel = this.timeDropdownView && this.timeDropdownView.model.get(this.key);
         if (!valTimeModel) {
             return;
         }
-        const dateMoment = DateTime.fromISO(ISOstr || {});
+        const dateMoment = DateTime.fromISO(ISOstr);
         const timeDuration = Duration.fromISO(valTimeModel).toObject();
         dateMoment.hours(timeDuration.hours);
         dateMoment.minutes(timeDuration.minutes);
         dateMoment.seconds(timeDuration.seconds);
         dateMoment.milliseconds(timeDuration.milliseconds);
+
         return dateMoment.toISOString();
     },
 
@@ -621,7 +623,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.__value(this.__updateTime(this.value), false, true);
     },
 
-    __setValueToTimeButton(dateISOstring) {
+    __setValueToTimeButton(dateISOstring: string) {
         const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
         this.timeDropdownView && this.timeDropdownView.setValue(newDuration, true);
     },

@@ -20,8 +20,11 @@ export default Marionette.View.extend({
         if (this.options.orientation === 'horizontal') {
             const originalPanel1Height = this.firstPanel.el.getBoundingClientRect().height;
 
-            this.$el.css('left', '');
-            this.$el.css('top', `${originalPanel1Height + this.firstPanel.el.offsetTop}px`);
+            Object.assign(this.el.style, {
+                left: '',
+                top: `${originalPanel1Height + this.firstPanel.el.offsetTop}px`
+            });
+
             this.originalParentHeight = this.firstPanel.parentEl().offsetHeight + this.firstPanel.parentEl().getBoundingClientRect().top;
             this.minimumTop = this.firstPanel.el.offsetTop + constants.MIN_HEIGHT;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
@@ -35,8 +38,11 @@ export default Marionette.View.extend({
             const originalPanel1Width = this.firstPanel.el.getBoundingClientRect().width;
 
             this.leftOffset = this.firstPanel.el.offsetLeft;
-            this.$el.css('top', '');
-            this.$el.css('left', `${originalPanel1Width + this.firstPanel.el.offsetLeft}px`);
+            Object.assign(this.el.style, {
+                top: '',
+                left: `${originalPanel1Width + this.firstPanel.el.offsetLeft}px`
+            });
+
             this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
             this.minimumLeft = this.firstPanel.el.offsetLeft + constants.MIN_WIDTH;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
@@ -74,7 +80,9 @@ export default Marionette.View.extend({
             ui.position.left = this.firstPanel.el.offsetLeft + maxWidth;
         }
 
-        this.firstPanel.$el.css('flex', `0 0 ${width}px`);
+        Object.assign(this.firstPanel.el.style, {
+            flex: `0 0 ${width}px`
+        });
     },
 
     __onResizerDragHorizontal(ui) {
@@ -92,6 +100,8 @@ export default Marionette.View.extend({
             ui.position.top = maxHeight;
         }
 
-        this.firstPanel.$el.css('flex', `0 0 ${top}px`);
+        Object.assign(this.firstPanel.el.style, {
+            flex: `0 0 ${top}px`
+        });
     }
 });
