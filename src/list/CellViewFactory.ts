@@ -145,7 +145,7 @@ export default factory = {
                 return '';
             }
 
-            let totalMilliseconds = Duration.fromObject(value).as('milliseconds');
+            let totalMilliseconds = Duration.fromObject(value).as('milliseconds'); //todo vaidate types
 
             if (options.allowDays) {
                 result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;

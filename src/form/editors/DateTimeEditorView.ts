@@ -162,7 +162,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             [editorTypes.time]: 'HH:mm'
         };
 
-        this.ui.mobileInput[0].value = value ? moment(value).format(nativeFormats[this.editorType]) : null;
+        this.ui.mobileInput[0].value = value ? DateTime.fromISO(value).toFormat(nativeFormats[this.editorType]) : null;
     },
 
     focusElement: null,
@@ -202,21 +202,24 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.setValue(this.__mapNativeToValue(value), { updateButtons: true, triggerChange: true });
     },
 
-    __mapNativeToValue(value) {
+    __mapNativeToValue(value: string) {
         if (!value) {
             return null;
         }
         if (this.options.showDate) {
-            return moment(value).toISO();
+            return DateTime.fromISO(value).toISO();
         } else if (this.options.showTime) {
             const parsedTime = value.split(':');
-            const hour = parsedTime[0];
-            const minutes = parsedTime[1];
-            return moment(this.value || undefined)
-                .hour(hour)
-                .minutes(minutes)
-                .seconds(0)
-                .milliseconds(0)
+            const hour = Number(parsedTime[0]);
+            const minute = Number(parsedTime[1]);
+
+            return DateTime.fromISO(this.value || undefined)
+                .set({
+                    hour,
+                    minute,
+                    second: 0,
+                    millisecond: 0
+                })
                 .toISO();
         }
     },
@@ -253,16 +256,16 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         const oldValue = this.value === null ? undefined : this.value;
         switch (event.keyCode) {
             case keyCode.UP:
-                newValue = event.shiftKey ? moment(oldValue).add(1, 'years') : moment(oldValue).subtract(1, 'weeks');
+                newValue = event.shiftKey ? DateTime.fromISO(oldValue).plus({ years: 1 }) : DateTime.fromISO(oldValue).minus({ weeks: 1 });
                 break;
             case keyCode.DOWN:
-                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'years') : moment(oldValue).add(1, 'weeks');
+                newValue = event.shiftKey ? DateTime.fromISO(oldValue).minus({ years: 1 }) : DateTime.fromISO(oldValue).plus({ weeks: 1 });
                 break;
             case keyCode.LEFT:
-                newValue = event.shiftKey ? moment(oldValue).subtract(1, 'months') : moment(oldValue).subtract(1, 'days');
+                newValue = event.shiftKey ? DateTime.fromISO(oldValue).minus({ months: 1 }) : DateTime.fromISO(oldValue).minus({ days: 1 });
                 break;
             case keyCode.RIGHT:
-                newValue = event.shiftKey ? moment(oldValue).add(1, 'months') : moment(oldValue).add(1, 'days');
+                newValue = event.shiftKey ? DateTime.fromISO(oldValue).plus({ months: 1 }) : DateTime.fromISO(oldValue).plus({ days: 1 });
                 break;
             default:
                 return;
@@ -445,7 +448,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __setValueToDate(value) {
-        this.dateButtonModel.set(this.key, value == null ? value : moment(value).format(this.options.dateDisplayFormat), {
+        this.dateButtonModel.set(this.key, value == null ? value : DateTime.fromISO(value).toFormat(this.options.dateDisplayFormat), {
             inner: true
         });
     },
@@ -502,8 +505,8 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
         for (let h = 0; h < 24; h++) {
             for (let m = 0; m < 60; m += 15) {
-                const val = { hours: h, minutes: m };
-                const time = moment(val);
+                const val = { hour: h, minute: m };
+                const time = DateTime.fromObject(val);
                 const formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
@@ -604,10 +607,13 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         }
         const dateMoment = DateTime.fromISO(ISOstr);
         const timeDuration = Duration.fromISO(valTimeModel).toObject();
-        dateMoment.hours(timeDuration.hours);
-        dateMoment.minutes(timeDuration.minutes);
-        dateMoment.seconds(timeDuration.seconds);
-        dateMoment.milliseconds(timeDuration.milliseconds);
+
+        dateMoment.set({
+            hour: timeDuration.hours,
+            minute: timeDuration.minutes,
+            second: timeDuration.seconds,
+            millisecond: timeDuration.milliseconds
+        });
 
         return dateMoment.toISO();
     },
