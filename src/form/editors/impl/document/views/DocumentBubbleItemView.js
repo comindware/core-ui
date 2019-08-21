@@ -27,9 +27,10 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        const { text, name, isLoading, extension } = this.model.toJSON();
         return {
-            text: this.model.get('text') || this.model.get('name'),
-            icon: ExtensionIconService.getIconForDocument(this.model.get('isLoading'), this.model.get('extension'))
+            text: text || name,
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name })
         };
     },
 
