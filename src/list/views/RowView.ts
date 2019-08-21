@@ -373,7 +373,11 @@ export default Marionette.View.extend({
     },
 
     __handleCheckboxClick(e: PointerEvent) {
-        this.model.toggleChecked(e.shiftKey);
+        const isShiftKeyPressed = e.shiftKey;
+        if (isShiftKeyPressed) {
+            e.preventDefault(); //remove text highlighting from table
+        }
+        this.model.toggleChecked(isShiftKeyPressed);
 
         if (this.getOption('bindSelection')) {
             this.model.collection.updateTreeNodesCheck(this.model, undefined, e.shiftKey);

@@ -131,9 +131,6 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     updateTreeNodesCheck(model, updateParent = true, shiftPressed) {
-        if (shiftPressed) {
-            this.checkSmart(model, false, shiftPressed);
-        }
         if (model.children && model.children.length) {
             model.children.forEach(child => {
                 if (typeof child.check !== 'function') {
