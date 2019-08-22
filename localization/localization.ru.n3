@@ -60,6 +60,8 @@
 
 <http://comindware.com/text/core/form/editors/code#redo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Повторить"; l10n:originalData "Redo"].
 
+<http://comindware.com/text/core/form/editors/code#show> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать"; l10n:originalData "Show"].
+
 <http://comindware.com/text/core/form/editors/code#successfulcompile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Успешная компиляция"; l10n:originalData "Successful compile"].
 
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].

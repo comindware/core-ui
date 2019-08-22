@@ -128,12 +128,17 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.__updateDisplayValue();
     },
 
-    __getButtonText(selectedItem) {
-        if (!selectedItem || selectedItem === 'False') return '';
+    __getButtonText(value) {
+        if (!value || value === 'False') {
+            return '';
+        }
+        if (typeof value === 'string') {
+            return value;
+        }
         let instanceTypeId = this.options.recordTypeId;
         let text = '';
 
-        selectedItem.forEach((item, index) => {
+        value.forEach((item, index) => {
             const searchItem = this.context[instanceTypeId]?.find(contextItem => contextItem.id === item);
 
             if (searchItem) {
