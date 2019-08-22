@@ -159,7 +159,11 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
 
     __setEditBtnText() {
         if (this.value) {
-            this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+            if (this.getReadonly()) {
+                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.SHOW'));
+            } else {
+                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+            }
         } else {
             this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));
         }
@@ -168,5 +172,8 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         this.editor?.setReadonly(readonly);
+        if (this.options.showMode === showModes.button) {
+            this.__setEditBtnText();
+        }
     }
 }));
