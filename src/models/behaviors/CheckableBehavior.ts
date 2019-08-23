@@ -24,7 +24,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         this.checked[model.cid] = model;
         model.check();
-        this.collection.lastSelectedModel = model.cid;
+
         this.__triggerCheck();
     },
 
