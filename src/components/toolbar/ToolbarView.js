@@ -115,34 +115,19 @@ export default Marionette.View.extend({
         }
 
         const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-
-        this.groupedCollection.move(this.groupedCollection.getModels(groupNames.menu), groupNames.main);
-
         const mainGroupModels = this.groupedCollection.getModels(groupNames.main);
+
         if (mainGroupModels.length === 0) {
             return false;
         }
 
-        const container = toolbarItemsRegion.el.querySelector('.js-icon-container');
+        const menuCollection = this.groupedCollection.groups[groupNames.menu];
+        const toolbarElementsItems = [...toolbarItemsRegion.el.querySelector('.js-toolbar-items-container').children];
+        const indexOfNotFitItem = toolbarElementsItems.map(el => el.getBoundingClientRect().top).findIndex((topCoord, i, array) => i > 0 && topCoord > array[i - 1]);
+        const menuModels = indexOfNotFitItem > -1 ? this.groupedCollection.groups[groupNames.main].slice(indexOfNotFitItem) : [];
 
-        const outerWidth = el => {
-            let width = el.offsetWidth;
-            const style = getComputedStyle(el);
-
-            width += parseInt(style.marginLeft) + parseInt(style.marginRight);
-            return width;
-        };
-
-        let widthAggregator = 0;
-        const containerOffsetWidth = container.offsetWidth;
-        const notFitItemIndex = Array.from(container.childNodes).findIndex(el => {
-            widthAggregator += outerWidth(el);
-            return containerOffsetWidth < widthAggregator;
-        });
-
-        if (notFitItemIndex >= 0) {
-            this.groupedCollection.move(mainGroupModels.slice(notFitItemIndex), groupNames.menu);
-        }
+        // TODO: from now, groupedCollection class doesn't make sence anymore and can be removed
+        menuCollection.reset(menuModels);
 
         return true;
     },

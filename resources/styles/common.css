@@ -953,6 +953,15 @@ a:hover {
     display: inline-block;
 }
 
+/* Its a key part of secret CSS-js magic trick, so do not remove or modify it please. Thanks. */
+.toolbar-items-wrp {
+    overflow: hidden;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    height: 30px;
+}
+/* end secret CSS-js magic trick */
+
 .toolbar-btn__text {
     user-select: none;
 }
