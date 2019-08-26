@@ -3,7 +3,7 @@ import template from '../templates/customActionGroupView.html';
 import meta from '../meta';
 
 export default Marionette.CollectionView.extend({
-    className: 'js-icon-container toolbar-items-wrp',
+    className: 'js-toolbar-items-container toolbar-items-wrp',
 
     template: Handlebars.compile(template),
 
