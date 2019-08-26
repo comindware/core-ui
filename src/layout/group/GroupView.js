@@ -36,12 +36,12 @@ export default Marionette.View.extend({
     },
 
     ui: {
-        toggleCollapseButton: '.js-toggle',
+        toggleCollapseButtons: '.js-toggle',
         containerRegion: '.js-container-region'
     },
 
     events: {
-        'click @ui.toggleCollapseButton': 'onToggleButtonClick'
+        'click @ui.toggleCollapseButtons': 'onToggleButtonClick'
     },
 
     onRender() {
@@ -71,8 +71,9 @@ export default Marionette.View.extend({
     },
 
     onToggleButtonClick(e) {
-        e.stopPropagation();
-        this.toggleCollapse();
+        if ([ ...this.ui.toggleCollapseButtons ].some(el => el === e.currentTarget)) {
+            this.toggleCollapse();
+        }
     },
 
     toggleCollapse(collapse = !this.model.get('collapsed')) {
@@ -83,11 +84,11 @@ export default Marionette.View.extend({
     },
 
     __onCollapsedChange(model = this.model, collapsed = this.model.get('collapsed')) {
-        this.ui.toggleCollapseButton.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
+        this.ui.toggleCollapseButtons.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
         if (collapsed) {
-            this.getRegion('containerRegion').$el.hide(200);
+            this.ui.containerRegion.hide(200);
         } else {
-            this.getRegion('containerRegion').$el.show(200);
+            this.ui.containerRegion.show(200);
         }
     }
 });

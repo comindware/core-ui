@@ -302,6 +302,7 @@ body {
   height: var(--radio-size);
   margin-right: var(--radio-right-margin);
   border: 1px solid var(--checkbox-border-color);
+  flex-shrink: 0;
 }
 .radiobutton-text {
   line-height: var(--line-height);
