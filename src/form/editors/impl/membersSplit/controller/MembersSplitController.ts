@@ -183,7 +183,7 @@ export default Marionette.MnObject.extend({
         this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
 
         [availableGridView, selectedGridView].forEach(view => {
-            this.listenTo(view.gridView, 'execute:action', act => this.__executeAction(view, act));
+            this.listenTo(view.gridView, 'execute', act => this.__executeAction(view, act));
             this.listenTo(view.gridView, 'click', model => this.__moveItems(view, model));
         });
         if (this.isMemberService) {
