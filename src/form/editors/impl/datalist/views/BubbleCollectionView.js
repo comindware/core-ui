@@ -15,7 +15,6 @@ export default Marionette.CollectionView.extend({
             parent: this.$el,
             showButtonSubtext: this.options.showButtonSubtext,
             subtextProperty: this.options.subtextProperty,
-            showEditButton: this.options.showEditButton,
             ...this.options.bubbleItemViewOptions
         };
     },
