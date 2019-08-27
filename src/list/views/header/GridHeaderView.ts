@@ -157,22 +157,21 @@ const GridHeaderView = Marionette.View.extend({
 
     __startDrag(e: PointerEvent) {
         const dragger = e.target.parentNode;
-        const columnNode = dragger.parentNode;
+        const columnElement = dragger.parentNode;
 
         const draggedColumn = {
-            el: columnNode,
+            el: columnElement,
             initialWidth: 0,
-            index: 0
+            index: Array.from(columnElement.parentElement.parentElement.children).indexOf(columnElement.parentElement)
         };
 
         this.dragContext = {
             pageOffsetX: e.pageX,
             dragger,
-            draggedColumn,
-            resizingElement: columnNode
+            draggedColumn
         };
 
-        this.__updateColumnAndNeighbourWidths(columnNode);
+        this.__updateColumnAndNeighbourWidths(columnElement);
 
         dragger.classList.add('active');
 
@@ -186,7 +185,7 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         const draggerElement = this.dragContext.dragger;
-        this.__triggerUpdateWidth(draggerElement);
+        this.__triggerUpdateWidth();
 
         draggerElement.classList.remove('active');
         this.dragContext = null;
@@ -218,9 +217,9 @@ const GridHeaderView = Marionette.View.extend({
         return false;
     },
 
-    __triggerUpdateWidth(element: HTMLElement) {
-        const index = Array.from(this.el.querySelectorAll('.grid-header-dragger')).indexOf(element);
-        const columnElement = this.el.querySelectorAll('.grid-header-column').item(index);
+    __triggerUpdateWidth() {
+        const index = this.dragContext.draggedColumn.index;
+        const columnElement = this.dragContext.draggedColumn.el;
 
         this.trigger('update:width', { index, newColumnWidth: this.__getElementOuterWidth(columnElement) });
     },

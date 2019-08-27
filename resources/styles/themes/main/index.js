@@ -235,9 +235,7 @@ module.exports.apply = {
         width: '26px',
         height: '26px',
         right: '0',
-        opacity: '.8',
-        background:
-            'no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHZJREFUeNpinDlzpj0DA0M7EPsD8WsGCBAF4i1AXMYEJLqA2BKId0ElQHgvEJuB5FiAhA9UwABKg4AuEF8GybFAjXWGSupCFVyGir1mYiAAmJDshBl7GcoGiYmyQF2ri2QsA5KGLSATKoH4FMxOJDedBckBBBgAX6IbvaqTe1UAAAAASUVORK5CYII=)'
+        opacity: '.8'
     },
     'textarea-theme': {
         'border-bottom': `1px solid ${variables['grey-200']}`,
