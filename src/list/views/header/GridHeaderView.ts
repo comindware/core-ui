@@ -156,13 +156,11 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __startDrag(e: PointerEvent) {
-        const dragger = e.target.parentNode;
-        const columnElement = dragger.parentNode;
+        const dragger = e.target.parentElement;
+        const columnElement = dragger.parentElement.parentElement;
 
         const draggedColumn = {
-            el: columnElement,
-            initialWidth: 0,
-            index: Array.from(columnElement.parentElement.parentElement.children).indexOf(columnElement.parentElement) - 1
+            el: columnElement
         };
 
         this.dragContext = {
@@ -247,6 +245,7 @@ const GridHeaderView = Marionette.View.extend({
         for (let i = 0; i < this.options.columns.length; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
+
             if (child === column) {
                 this.dragContext.draggedColumn.index = i;
                 this.dragContext.draggedColumn.initialWidth = width;
