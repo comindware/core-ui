@@ -746,6 +746,7 @@ tr.dragover td{
     max-height: 100%;
 }
 
+
 .grid-label_tree-editor {
     margin-left: auto;
 }
@@ -813,4 +814,21 @@ tr.dragover td{
 
 .composite-cell_container .task-links__link, .composite-cell__wrp .task-links__link {
     margin-left: 0.25rem;
+}
+
+
+/*--- Fix colletion scroll header ---*/
+.dev-collection .grid-table-wrapper-war {
+    overflow: inherit;
+}
+
+.dev-collection .toolbar {
+    position: sticky;
+    top: 0;
+}
+.dev-collection .grid-header-column,
+.dev-collection .cell_selection,
+.dev-collection .cell_selection-index{
+    position: sticky;
+    top: 50px;
 }
