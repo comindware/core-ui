@@ -42,9 +42,9 @@ export default Marionette.View.extend({
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
         this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
 
-        this.tabs = options.tabs.reduce((s, a) => {
-            s[a.id] = a.view;
-            return s;
+        this.tabs = this.__tabsCollection.reduce((tabsViewById, tabOptionsModel) => {
+            tabsViewById[tabOptionsModel.id] = tabOptionsModel.get('view');
+            return tabsViewById;
         }, {});
     },
 
