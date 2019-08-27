@@ -43,7 +43,7 @@ export default Marionette.View.extend({
             mouseleave: '__onMouseleave'
         };
 
-        if (this.options.edit) {
+        if (this.options.showEditButton) {
             events['click @ui.editButton'] = '__edit';
         }
 
