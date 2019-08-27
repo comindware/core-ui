@@ -125,8 +125,6 @@ const variables = {
 
     'grid-sort-icon-size': '11px',
     'grid-sort-icon-offset-y': '2px',
-    'grid-sort-icon':
-        'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNDQ4NDJBRDQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNDQ4NDJBRTQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM0NDg0MkFCNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjM0NDg0MkFDNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4m7sIQAAAKtJREFUeNqMkbENwkAMRe8o6KAlFbAAe4QMwAzZAJggrJARQAI6yB4sEEQTajqa8L7kk05RQHzpyTr72c354+nsLDPYQAYJNHCBHdwlDExM4QY5TGFoNbd+GuQ57GHk+qP+QZ7kLYw7gu9ZWEteuv+SSZ78uBi/E8nPqNFGgrd3SCP52rnWdmpIJbmA15eFEM0LyTWsehZiUfM6fEoFCyjhAW+rpfU1dx8BBgDWbSIkm9JfYQAAAABJRU5ErkJggg==)',
 
     'columns-select-border': 'var(--border)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
@@ -232,10 +230,12 @@ module.exports.apply = {
         'border-color': 'transparent'
     },
     'input-search-clear-theme': {
-        width: '26px',
-        height: '26px',
+        width: '20px',
+        height: '29px',
+        opacity: '.8',
         right: '0',
-        opacity: '.8'
+        top: '17px',
+        'font-size': '16px'
     },
     'textarea-theme': {
         'border-bottom': `1px solid ${variables['grey-200']}`,

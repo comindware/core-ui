@@ -5,9 +5,7 @@ const icons = {
     arrowIcon:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
     angleRight:
-        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E",
-    search:
-        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z'/%3E%3C/svg%3E"
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E"
 };
 
 const variables = {
@@ -72,7 +70,6 @@ const variables = {
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
     'input-search-padding': '4px 24px 4px var(--form-input-padding)',
-    'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
     'textarea-padding': '4px 20px 4px 10px',
@@ -138,7 +135,6 @@ const variables = {
 
     'grid-sort-icon-size': 'var(--base-font-size)',
     'grid-sort-icon-offset-y': '1px',
-    'grid-sort-icon': `url(${utils.buildIcon(icons.arrowIcon, 'var(--white)')})`,
 
     'columns-select-border': '0',
 
@@ -262,10 +258,12 @@ module.exports.apply = {
         'background-color': 'transparent'
     },
     'input-search-clear-theme': {
-        width: '26px',
-        height: '26px',
+        width: '20px',
+        height: '29px',
+        opacity: '.8',
         right: '0',
-        opacity: '.8'
+        top: '17px',
+        'font-size': '16px'
     },
     'textarea-theme': {
         border: variables.border,

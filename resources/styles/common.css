@@ -489,7 +489,6 @@ a:hover {
 
 .tr-search__clear {
     position: absolute;
-    top: 50%;
     cursor: pointer;
     transform: translateY(-50%);
 }

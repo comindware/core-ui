@@ -162,7 +162,7 @@ const GridHeaderView = Marionette.View.extend({
         const draggedColumn = {
             el: columnElement,
             initialWidth: 0,
-            index: Array.from(columnElement.parentElement.parentElement.children).indexOf(columnElement.parentElement)
+            index: Array.from(columnElement.parentElement.parentElement.children).indexOf(columnElement.parentElement) - 1
         };
 
         this.dragContext = {
