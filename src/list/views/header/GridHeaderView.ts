@@ -155,9 +155,9 @@ const GridHeaderView = Marionette.View.extend({
         return el.getBoundingClientRect().width;
     },
 
-    __startDrag(e) {
-        const dragger = e.target;
-        const columnNode = dragger.parentNode.parentNode;
+    __startDrag(e: PointerEvent) {
+        const dragger = e.target.parentNode;
+        const columnNode = dragger.parentNode;
 
         const draggedColumn = {
             el: columnNode,
@@ -218,7 +218,7 @@ const GridHeaderView = Marionette.View.extend({
         return false;
     },
 
-    __triggerUpdateWidth(element) {
+    __triggerUpdateWidth(element: HTMLElement) {
         const index = Array.from(this.el.querySelectorAll('.grid-header-dragger')).indexOf(element);
         const columnElement = this.el.querySelectorAll('.grid-header-column').item(index);
 
@@ -244,7 +244,7 @@ const GridHeaderView = Marionette.View.extend({
         // this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
     },
 
-    __updateColumnAndNeighbourWidths(column: Node) {
+    __updateColumnAndNeighbourWidths(column: HTMLElement) {
         for (let i = 0; i < this.options.columns.length; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
@@ -264,7 +264,7 @@ const GridHeaderView = Marionette.View.extend({
         this.gridEventAggregator.trigger('toggle:collapse:all', this.collapsed);
     },
 
-    __updateCollapseAll(collapsed) {
+    __updateCollapseAll(collapsed: Boolean) {
         this.collapsed = collapsed;
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
