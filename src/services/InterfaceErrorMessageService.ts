@@ -6,7 +6,7 @@ export default class InterfaceErrorMessageService {
     }
 
     static logError(exception, viewId) {
-        this.trigger('InterfaceError', { exception, viewId });
+        //this.trigger('InterfaceError', { exception, viewId });
         console.log(exception); //TODO check on listeners, hide if exist
     }
 }

@@ -190,7 +190,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
         this.__presentView();
 
-        this.$el.attr('class', this.__getClassName());
+        this.$editorEl.attr('class', this.__getClassName());
     },
 
     __onMobileInput(event) {
@@ -363,7 +363,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         const dateDisplayValue = DateTimeService.getDateDisplayValue(this.getValue(), this.options.dateDisplayFormat);
         const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat);
         const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;
-        this.$el.prop('title', resultValue);
+        this.$editorEl.prop('title', resultValue);
     },
 
     __createDateDropdownEditor() {
@@ -609,6 +609,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         dateMoment.hours(timeDuration.hours());
         dateMoment.minutes(timeDuration.minutes());
         dateMoment.seconds(timeDuration.seconds());
+        dateMoment.milliseconds(timeDuration.milliseconds());
         return dateMoment.toISOString();
     },
 
@@ -635,7 +636,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __onMouseenter() {
-        this.$realEl.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!MobileService.isMobile && !this.options.hideClearButton) {
             this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);

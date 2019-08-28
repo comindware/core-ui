@@ -217,7 +217,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const bubbleItemViewOptions = {
             getDisplayText: this.__getDisplayText,
             bubbleDelete: this.__onBubbleDelete.bind(this),
-            edit: this.options.edit,
+            edit: this.options.showEditButton ? this.options.edit : false,
             canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
             createValueUrl: this.options.createValueUrl,
             enabled: this.getEnabled(),
@@ -505,7 +505,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     isThisFocus() {
-        return this.el.contains(document.activeElement);
+        return this.editorEl.contains(document.activeElement);
     },
 
     __clearSearch() {
@@ -780,7 +780,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__value(value, { triggerChange: true });
                 this.panelCollection.selectNone({ isSilent: true });
                 this.close();
-                this.__setInputValue('');
+                this.__focusButton();
+                this.__clearSearch();
                 return;
             }
 
@@ -832,7 +833,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonFocus(view, event) {
-        if (this.isNextFocusInner) {
+        if (this.isNextFocusInner || this.hasFocus) {
             event.stopImmediatePropagation();
             this.isNextFocusInner = false;
             return;

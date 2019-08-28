@@ -775,6 +775,10 @@ input[type="color"], .colorpicker{
     align-items: center;
 }
 
+.task-links__i > .fa-li {
+    top: 0;
+}
+
 .task-links__link {
     flex: 1 1 auto;
     text-decoration: none;
@@ -893,7 +897,7 @@ input[type="color"], .colorpicker{
     position: relative!important;
 }
 
-.new-expression-editor-field {
+.new-expression-editor-field:not(.cell) {
     display: flex;
 }
 

@@ -24,7 +24,7 @@ export default Marionette.View.extend({
     templateContext() {
         const showSelectedCollection = Boolean(this.options.selectedCollection);
         return {
-            showAddNewButton: Boolean(this.options.addNewItem),
+            showAddNewButton: Boolean(this.options.showAddNewButton),
             showSelectedCollection,
             addNewItemText: this.options.addNewItemText,
             showCollection: this.options.showCollection,
@@ -85,6 +85,7 @@ export default Marionette.View.extend({
                 childView: this.options.listItemView,
                 disableKeydownHandler: true,
                 columns: [],
+                showHeader: false,
                 childViewOptions: {
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,

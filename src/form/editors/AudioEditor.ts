@@ -10,7 +10,7 @@ import BaseEditorView from './base/BaseEditorView';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.AudioEditor = BaseEditorView.extend({
+export default formRepository.editors.AudioEditor = BaseEditorView.extend({
     tagName: 'audio',
 
     template: _.noop,
@@ -29,11 +29,11 @@ export default (formRepository.editors.AudioEditor = BaseEditorView.extend({
     },
 
     onRender() {
-        const audio: AudioNode = this.el;
+        const audio: AudioNode = this.editorEl;
         let recorder = {};
         const regionEl = document.createElement('div');
         regionEl.className = 'js-button-region';
-        this.$el.parent().append(regionEl);
+        this.$editorEl.parent().append(regionEl);
         const region = this.addRegion('js-button-region', {
             el: regionEl
         });
@@ -74,4 +74,4 @@ export default (formRepository.editors.AudioEditor = BaseEditorView.extend({
         audio.src = URL.createObjectURL(e.data);
         audio.play();
     }
-}));
+});

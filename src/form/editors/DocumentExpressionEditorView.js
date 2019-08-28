@@ -21,7 +21,7 @@ const valueTypes = {
 export default (formRepository.editors.DocumentExpression = NewExpressionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        NewExpressionEditorView.prototype.initialize.call(this, options);
+        NewExpressionEditorView.prototype.initialize.call(this, this.options);
     },
 
     template: Handlebars.compile(template),

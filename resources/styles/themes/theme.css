@@ -58,17 +58,28 @@ body {
 
 .cell.error .form-label__error{
   margin: 0;
-  position: absolute;
-  left: 0;
-  top: -4px;
+  position: relative;
+  left: -15px;
   z-index: 1;
 }
 
 .cell.error .form-label__error-button{
   height: 0;
   width: 0;
-  border-top: 10px solid #e61212;
-  border-right: 10px solid transparent;
+  border-top: 16px solid #e61212;
+  border-right: 16px solid transparent;
+  vertical-align: top;
+}
+
+.cell.error .form-label__error-button:after {
+  content: '!';
+  color: #fff;
+  position: absolute;
+  vertical-align: top;
+  top: 0;
+  font-size: 10px;
+  font-weight: bold;
+  left: 3px;
 }
 
 .cell.error .form-label__error-button:before{
@@ -291,6 +302,7 @@ body {
   height: var(--radio-size);
   margin-right: var(--radio-right-margin);
   border: 1px solid var(--checkbox-border-color);
+  flex-shrink: 0;
 }
 .radiobutton-text {
   line-height: var(--line-height);
@@ -508,7 +520,6 @@ tr:hover .cell_selection-index {
 .sort_down, .sort_up {
   width: var(--grid-sort-icon-size);
   height: var(--grid-sort-icon-size);
-  background-image: var(--grid-sort-icon);
   top: var(--grid-sort-icon-offset-y);
 }
 
@@ -523,8 +534,8 @@ tr:hover .cell_selection-index {
   height: var(--grid-checkbox-size);
   position: absolute;
   right: 5px;
-  top: 50%;
-  margin-top: -8px;
+  top: 0;
+  margin-top: 10px;
 }
 
 .cell .input {
@@ -557,6 +568,7 @@ tr:hover .cell_selection-index {
   z-index: 10;
   width: 47px;
   min-width: 47px;
+  background-clip: padding-box;
 }
 
 /* for IE*/
@@ -565,14 +577,7 @@ tr:hover .cell_selection-index {
       position:relative;
       background-clip: padding-box;
   }
-  .cell_selection-index > .checkbox,
-  .cell_selection > .checkbox{
-      margin-top: 0
-  }
-  .grid-header .cell_selection-index > .checkbox,
-  .grid-header .cell_selection > .checkbox{
-      margin-top: 10px
-  }
+
 
 }
 
@@ -656,6 +661,9 @@ tr:hover .cell_selection-index {
   transform: rotate(-90deg);
   background: none;
   fill: #636262;
+  position: absolute;
+  left: 0;
+  top: 9px;
 }
 
 .cell .collapsible-btn svg{
@@ -665,6 +673,7 @@ tr:hover .cell_selection-index {
 .cell .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(0deg);
   background: none;
+  top: 8px;
 }
 
 .grid-header-column-content .collapsible-btn {
@@ -794,6 +803,10 @@ tr:hover .cell_selection-index {
 .bubbles .spinner {
   @apply --absolute-center-y-theme;
 }
+.editor_bubble .bubbles .bubbles__caret{
+  line-height: 12px;
+}
+
 .bubbles .bubble-doc_icon{
   /* @apply --relative-center-y-theme; this stuff not working! */
   position: relative;

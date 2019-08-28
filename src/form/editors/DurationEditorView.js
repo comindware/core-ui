@@ -117,7 +117,7 @@ const stateModes = {
  * @param {Object, String, Number} [max, min] Max, min value. Type - like arg for moment.duration
  * */
 
-export default (formRepository.editors.Duration = BaseEditorView.extend({
+export default formRepository.editors.Duration = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
         this.focusableParts = createFocusableParts(this.options);
@@ -212,10 +212,7 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
             }
         }
 
-        this.__value(
-            moment.duration(this.state.displayValue).toISOString(),
-            true
-        );
+        this.__value(moment.duration(this.state.displayValue).toISOString(), true);
     },
 
     getCaretPos() {
@@ -635,12 +632,12 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         const val = this.__createInputString(this.state.displayValue, inEditMode);
         this.ui.input.val(val);
         if (this.options.showTitle && !inEditMode) {
-            this.$el.prop('title', val);
+            this.$editorEl.prop('title', val);
         }
     },
 
     __onMouseenter() {
-        this.$realEl.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);
@@ -659,4 +656,4 @@ export default (formRepository.editors.Duration = BaseEditorView.extend({
         }
         return dateHelpers.durationToObject(value);
     }
-}));
+});

@@ -71,7 +71,7 @@ export default formRepository.editors.NewExpression = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
-        _.extend(this, _.pick(options, 'field'));
+        _.extend(this, _.pick(this.options, 'field'));
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
         }
@@ -148,7 +148,7 @@ export default formRepository.editors.NewExpression = BaseEditorView.extend({
         this.__showTypeEditor();
         this.__updateEditorState();
         if (this.options.displayInline) {
-            this.el.classList.add(classes.inline);
+            this.editorEl.classList.add(classes.inline);
         }
     },
 

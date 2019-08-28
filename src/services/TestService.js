@@ -9,7 +9,7 @@ export default class TestService {
                     action();
                 }
                 if (typeof condition === 'function' ? condition() : true) {
-                    clearTimeout(first);
+                    clearInterval(first);
                     resolve(typeof callback === 'function' && callback());
                 }
             }, checkInterval);

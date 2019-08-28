@@ -7,6 +7,8 @@ const classes = {
 
 const POPUP_ID_PREFIX = 'popup-region-';
 
+const maxTransitionDelay = 1000;
+
 export default Marionette.View.extend({
     initialize() {
         this.__stack = [];
@@ -286,37 +288,28 @@ export default Marionette.View.extend({
 
     __removePopup(popupDef, immediate) {
         const popRemove = () => {
+            if (popupDef.isRemoved) {
+                return;
+            }
             this.removeRegion(popupDef.popupId);
             this.el.removeChild(popupDef.regionEl);
             this.trigger('popup:close', popupDef.popupId);
+            popupDef.isRemoved = true;
         };
         
         if (immediate) {
             popRemove();
         } else {
-            let transitionStarted = false;
-
-            popupDef.view.el.addEventListener(
-                'transitionstart',
-                () => {
-                    transitionStarted = true;
-                },
-                { once: true }
-            );
+            const timeoutId = setTimeout(() => popRemove(), maxTransitionDelay);
 
             popupDef.view.el.addEventListener(
                 'transitionend',
                 () => {
+                    clearTimeout(timeoutId);
                     popRemove();
                 },
                 { once: true }
             );
-
-            setTimeout(() => {
-                if (!transitionStarted) {
-                    popRemove();
-                }
-            }, 100);
         }
 
         popupDef.view.el?.classList.remove('presented-modal-window');

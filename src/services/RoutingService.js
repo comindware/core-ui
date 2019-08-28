@@ -22,6 +22,7 @@ export default {
         Object.assign(this, Backbone.Events);
         this.loadersCount = 0;
         this.defaultUrl = options.defaultUrl;
+
         options.modules.forEach(config => {
             const controller = {};
 
@@ -185,7 +186,7 @@ export default {
 
         if (!this.activeModule || movingOut || customModuleRegion) {
             if (customModuleRegion) {
-                activeSubModule = new Module({
+                activeSubModule = await new Module({
                     config,
                     region: customModuleRegion
                 });
@@ -194,7 +195,7 @@ export default {
                 activeSubModule.once('destroy', activeSubModule.off);
                 */
             } else {
-                this.activeModule = new Module({
+                this.activeModule = await new Module({
                     config,
                     region: window.app.getView().getRegion('contentRegion')
                 });

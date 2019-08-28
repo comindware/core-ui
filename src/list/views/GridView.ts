@@ -22,6 +22,8 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
+import { GraphModel } from '../../components/treeEditor/types';
+import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 
 const classes = {
     REQUIRED: 'required',
@@ -53,7 +55,9 @@ const defaultOptions = options => ({
     updateToolbarEvents: '',
     childHeight: 35,
     showTreeEditor: false,
-    treeEditorIsHidden: false
+    treeEditorIsHidden: false,
+    treeEditorConfig: new Map(),
+    headerHeight: 35
 });
 
 const configConstants = {
@@ -165,7 +169,7 @@ export default Marionette.View.extend({
 
         if (this.options.showToolbar) {
             this.toolbarView = new ToolbarView({
-                allItemsCollection: allToolbarActions || new Backbone.Collection()
+                toolbarItems: allToolbarActions || new Backbone.Collection()
             });
             this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         }
@@ -332,7 +336,6 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
-            this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -389,7 +392,7 @@ export default Marionette.View.extend({
 
         const showRowIndex = this.getOption('showRowIndex');
 
-        const childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+        const childViewOptions = this.childViewOptions = Object.assign(this.options.childViewOptions || {}, {
             columns: this.options.columns,
             transliteratedFields: this.options.transliteratedFields,
             gridEventAggregator: this,
@@ -418,7 +421,8 @@ export default Marionette.View.extend({
             parent$el: this.ui.tableWrapper,
             table$el: this.ui.table,
             minimumVisibleRows: this.options.minimumVisibleRows,
-            selectOnCursor: this.options.selectOnCursor
+            selectOnCursor: this.options.selectOnCursor,
+            headerHeight: this.options.showHeader ? this.options.headerHeight : 0
         });
         this.listenTo(this.listView, 'update:position:internal', state => this.updatePosition(state.topIndex, state.shouldScrollElement));
 
@@ -430,6 +434,10 @@ export default Marionette.View.extend({
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
+
+        if (this.options.showTreeEditor && this.options.showHeader) {
+            this.__onDiffApplied();
+        }
 
         if (this.options.columns.length) {
             this.__toggleNoColumnsMessage(this.options.columns);
@@ -575,6 +583,11 @@ export default Marionette.View.extend({
         }
 
         return error;
+    },
+
+    setDraggable(draggable: boolean): void {
+        this.childViewOptions.draggable = draggable;
+        this.trigger('set:draggable', draggable);
     },
 
     __handleDragLeave(event) {
@@ -868,38 +881,65 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = new Backbone.Collection(this.options.columns);
-        columnsCollection.map(model => {
-            model.id = model.get('key');
-            this.listenTo(model, 'change:isHidden', model => this.__toggleColumnVisibility(model.id, model.get('isHidden')));
+        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.key, ...column }))));
 
-            return model;
-        });
         this.treeModel = new Backbone.Model({
             title: this.options.title,
             columnsCollection
         });
 
+        this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
+
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.options.columns.length;
         this.treeModel.childrenAttribute = 'columnsCollection';
+
         this.treeEditorView = new Core.components.TreeEditor({
             hidden: this.options.treeEditorIsHidden,
             model: this.treeModel,
-            getNodeName(model) {
+            configDiff: this.options.treeEditorConfig,
+            getNodeName(model: GraphModel) {
                 return model.get('title');
             }
         });
 
-        this.listenTo(columnsCollection, 'add', model => {
-            const treeEditorConfig = {
+        this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
+            const configDiff = {
                 oldIndex: this.options.columns.findIndex(col => col.key === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
-            this.__moveColumn(treeEditorConfig);
+            this.__moveColumn(configDiff);
         });
 
-        this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
+        this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
+        this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
+
+        this.listenTo(columnsCollection, 'change:isHidden', model => {
+            this.__setColumnVisibility(model.id, model.get('isHidden'));
+        });
+
+        this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
+    },
+
+    resetConfigDiff() {
+        this.treeEditorView.resetConfigDiff();
+    },
+
+    __setVisibilityAllColumns() {
+        this.options.columns.forEach(column => this.__setColumnVisibility(column.key, column.isHidden));
+    },
+
+    __onDiffApplied() {
+        const columnsCollection = this.columnsCollection;
+        this.options.columns.forEach(column => {
+            const model = columnsCollection.get(column.key);
+            Object.entries(model.pick('width', 'isHidden')).forEach(([key, value]) => (column[key] = value));
+        });
+        this.__setVisibilityAllColumns();
+    },
+
+    __reorderColumns(config: string[]) {
+        this.options.columns.sort((a, b) => config.indexOf(a.key) - config.indexOf(b.key)); // TODO a, b type: Column
     },
 
     __moveColumn(options: { oldIndex: number, newIndex: number }) {
@@ -927,8 +967,6 @@ export default Marionette.View.extend({
         cells.forEach(row => moveElement(row));
 
         this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
-
-        this.trigger('column:move', options);
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
@@ -938,7 +976,7 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __toggleColumnVisibility(key: string, isHidden = false) {
+    __setColumnVisibility(key: string, isHidden = false) {
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.key === key);
         const columnToBeHidden = columns[index];

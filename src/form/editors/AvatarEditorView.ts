@@ -26,7 +26,7 @@ const defaultOptions = {
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
 
-export default (formRepository.editors.Avatar = BaseEditorView.extend({
+export default formRepository.editors.Avatar = BaseEditorView.extend({
     className: 'user-avatar-wrp',
 
     template: Handlebars.compile(template),
@@ -70,7 +70,7 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
         this.ui.tooltip.hide();
         this.ui.remove.hide();
 
-        this.$el.hover(
+        this.$editorEl.hover(
             () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.ui.tooltip.show();
@@ -148,7 +148,7 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
                 userInitials = (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
                 break;
         }
-        this.el.querySelector('.user-avatar-default-icon').style.visibility = userInitials ? 'hidden' : 'visible';
+        this.editorEl.querySelector('.user-avatar-default-icon').style.visibility = userInitials ? 'hidden' : 'visible';
         return userInitials;
     },
 
@@ -191,4 +191,4 @@ export default (formRepository.editors.Avatar = BaseEditorView.extend({
 
         previewURL && this.ui.image.css('background-image', `url("${previewURL}")`);
     }
-}));
+});

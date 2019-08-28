@@ -92,7 +92,7 @@ export default class Controller {
                 viewParams.currentState = callParams;
                 const presentingView = new view(viewParams);
                 if (viewEvents) {
-                    Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key]));
+                    Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                 }
                 presentingView.request = this.__handleViewResourceRequest.bind(this);
                 this.moduleRegion.show(presentingView);

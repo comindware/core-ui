@@ -4,6 +4,7 @@ import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
 import { classes } from '../meta';
+import draggableDots from '../templates/draggableDots.html';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -76,6 +77,7 @@ export default Marionette.View.extend({
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
+        this.listenTo(this.gridEventAggregator, 'set:draggable', this.__updateDraggable);
         this.collection = this.model.collection;
     },
 
@@ -281,6 +283,11 @@ export default Marionette.View.extend({
         });
     },
 
+    updateIndex(index: number) {
+        this.el.querySelector('.js-index').innerHTML = index;
+        this.model.currentIndex = index;
+    },
+
     insertFirstCellHtml(force: boolean) {
         const elements = this.el.getElementsByTagName('td');
         if (elements.length) {
@@ -330,18 +337,9 @@ export default Marionette.View.extend({
         this.el.insertAdjacentHTML(
             'afterBegin',
             `
-            <td class="js-cell_selection ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}" draggable="${this.options.draggable}">
-        ${
-            this.options.draggable
-                ? `
-<svg class="cell__dots" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-    x="0px" y="0px" viewBox="0 0 2 35" xml:space="preserve">
-    <circle cx="1" cy="12" r="1.2"></circle>
-    <circle cx="1" cy="17" r="1.2"></circle>
-    <circle cx="1" cy="22" r="1.2"></circle>
-</svg>`
-                : ''
-        }${
+            <td class="${classes.checkboxCell} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}"
+             ${this.options.draggable ? 'draggable="true"' : ''}>
+        ${this.options.draggable ? draggableDots : ''}${
                 this.options.showRowIndex
                     ? `
 <span class="js-index cell__index">
@@ -359,10 +357,30 @@ export default Marionette.View.extend({
         );
     },
 
-    __handleCheckboxClick() {
-        this.model.toggleChecked();
+    __updateDraggable(draggable: boolean): void {
+        const checkboxCellEl = this.el.querySelector(`.${classes.checkboxCell}`);
+        if (!checkboxCellEl) {
+            return;
+        }
+        const hasDraggableAttribute = checkboxCellEl.hasAttribute('draggable');
+        if (draggable && !hasDraggableAttribute) {
+            checkboxCellEl.setAttribute('draggable', true);
+            checkboxCellEl.insertAdjacentHTML('afterbegin', draggableDots);
+        } else if (hasDraggableAttribute) {
+            checkboxCellEl.removeAttribute('draggable');
+            checkboxCellEl.removeChild(checkboxCellEl.firstElementChild);
+        }
+    },
+
+    __handleCheckboxClick(e: PointerEvent) {
+        const isShiftKeyPressed = e.shiftKey;
+        if (isShiftKeyPressed) {
+            e.preventDefault(); //remove text highlighting from table
+        }
+        this.model.toggleChecked(isShiftKeyPressed);
+
         if (this.getOption('bindSelection')) {
-            this.model.collection.updateTreeNodesCheck(this.model);
+            this.model.collection.updateTreeNodesCheck(this.model, undefined, e.shiftKey);
         }
     },
 

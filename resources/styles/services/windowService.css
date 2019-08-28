@@ -43,6 +43,5 @@
 }
 
 .core-ui__global-popup-region .grid-container {
-    min-height: 130px;
     max-height: 100%;
 }

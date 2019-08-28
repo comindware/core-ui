@@ -25,7 +25,7 @@ const classes = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-export default (formRepository.editors.Boolean = BaseEditorView.extend(
+export default formRepository.editors.Boolean = BaseEditorView.extend(
     {
         initialize(options = {}) {
             this.__applyOptions(options, defaultOptions);
@@ -85,21 +85,21 @@ export default (formRepository.editors.Boolean = BaseEditorView.extend(
 
         __updateState() {
             if (this.value) {
-                this.el.classList.add(classes.CHECKED);
-                this.el.classList.remove(classes.CHECKED_SOME);
+                this.editorEl.classList.add(classes.CHECKED);
+                this.editorEl.classList.remove(classes.CHECKED_SOME);
             } else if (this.value === false || !this.options.thirdState) {
-                this.el.classList.remove(classes.CHECKED_SOME);
-                this.el.classList.remove(classes.CHECKED);
+                this.editorEl.classList.remove(classes.CHECKED_SOME);
+                this.editorEl.classList.remove(classes.CHECKED);
             } else {
-                this.el.classList.remove(classes.CHECKED);
-                this.el.classList.add(classes.CHECKED_SOME);
+                this.editorEl.classList.remove(classes.CHECKED);
+                this.editorEl.classList.add(classes.CHECKED_SOME);
             }
         },
 
         __setReadonly(readonly) {
             BaseEditorView.prototype.__setReadonly.call(this, readonly);
             if (this.getEnabled()) {
-                this.$el.prop('tabindex', readonly ? -1 : 0);
+                this.$editorEl.prop('tabindex', readonly ? -1 : 0);
             }
         },
 
@@ -116,4 +116,4 @@ export default (formRepository.editors.Boolean = BaseEditorView.extend(
     {
         classes
     }
-));
+);

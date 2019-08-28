@@ -1,7 +1,7 @@
-//@flow
-import { keyCode, helpers } from 'utils';
+import { keyCode, helpers } from '../../utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import _ from 'underscore';
+import Backbone from 'backbone';
 
 /*
     Public interface:
@@ -33,8 +33,7 @@ const defaultOptions = {
     useSlidingWindow: true,
     disableKeydownHandler: false,
     customHeight: false,
-    childHeight: 35,
-    headerHeight: 35
+    childHeight: 35
 };
 
 /**
@@ -79,7 +78,6 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
-        options.headerHeight = options.headerHeight || defaultOptions.headerHeight;
         this.height = options.height;
         this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
 
@@ -137,6 +135,7 @@ export default Marionette.PartialCollectionView.extend({
         this.parent$el = this.options.parent$el;
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.handleResize(false);
+        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
     },
 
     __specifyChildHeight() {
@@ -185,6 +184,28 @@ export default Marionette.PartialCollectionView.extend({
         }
     },
 
+    onAddChild(view, child) {
+        this.__updateChildTop(child);
+    },
+
+    __updateChildTop(child) {
+        if (!child || !this.collection.length) {
+            return;
+        }
+        requestAnimationFrame(() => {
+            const childModel = child.model;
+            if (this.getOption('showRowIndex')) {
+                const index = childModel.collection.indexOf(childModel) + 1;
+                if (index !== childModel.currentIndex) {
+                    child.updateIndex && child.updateIndex(index);
+                }
+            }
+            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                child.insertFirstCellHtml();
+            }
+        });
+    },
+
     _setupChildView(view, index) {
         if (this.sort) {
             view._index = index;
@@ -208,8 +229,8 @@ export default Marionette.PartialCollectionView.extend({
         return childView;
     },
 
-    __handleKeydown(e) {
-        if (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode)) {
+    __handleKeydown(e: KeyboardEvent) {
+        if (!e || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
             return;
         }
         e.stopPropagation();
@@ -278,6 +299,11 @@ export default Marionette.PartialCollectionView.extend({
             case keyCode.END:
                 if (handle) {
                     this.__moveCursorTo(this.collection.length - 1, { shiftPressed: e.shiftKey });
+                }
+                return !handle;
+            case keyCode.A:
+                if (handle && e.ctrlKey) {
+                    this.collection.toggleCheckAll();
                 }
                 return !handle;
             default:

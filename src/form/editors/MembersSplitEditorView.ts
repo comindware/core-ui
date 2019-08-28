@@ -30,7 +30,7 @@ const defaultOptions = () => ({
 export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        this.__initializeController(options);
+        this.__initializeController(this.options);
     },
 
     className: 'member-split',

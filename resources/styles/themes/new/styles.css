@@ -273,17 +273,22 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .cell .date-view,
 .cell .time-view,
-.cell > div,
 .editable-grid-field {
     height: 100%;
 }
 
 .cell > .editor {
   position: absolute;
+  height: 34px;
   top: 0;
   left: 0;
   right: 0;
   padding: 0 12px;
+}
+
+.cell > .collapsible-btn + .form-label + .editor {
+  left: 5px;
+  width: auto;
 }
 
 .cell > .context_select {
@@ -441,4 +446,5 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .dev-code-editor-toolbar{
   background: #fff;
   border: solid 1px #ced3d7;
+  border-bottom: none;
 }

@@ -1,10 +1,10 @@
 import { objectPropertyTypes, contextIconType } from '../Meta';
-import { dateHelpers, userHelpers } from 'utils';
-import FieldView from '../form/fields/FieldView';
+import { dateHelpers } from 'utils';
+import UserService from 'services/UserService';
 import ExtensionIconService from '../form/editors/impl/document/services/ExtensionIconService';
 import DateTimeService from '../form/editors/services/DateTimeService';
+import CellFieldView from './views/CellFieldView';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
-import editableCellField from './templates/editableCellField.hbs';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
@@ -15,14 +15,7 @@ type Column = { key: string, customClass: string, editable: boolean, type: strin
 
 type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
 
-const CellFieldView = class CellFieldViewClass extends FieldView {
-    constructor(options) {
-        options.template = editableCellField;
-        super(options);
-    }
-};
-
-export default (factory = {
+export default factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
             return CellFieldView;
@@ -218,8 +211,9 @@ export default (factory = {
 
     __getDocumentCell({ values, column, model }) {
         values.forEach(value => {
-            value.icon = ExtensionIconService.getIconForDocument(value.isLoading, value.extension);
-            value.name = value.name || value.text;
+            const { name, text, isLoading, extension } = value
+            value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
+            value.name = name || text;
         });
 
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
@@ -232,10 +226,8 @@ export default (factory = {
 
     __getUserCell({ values, column, model }) {
         values.forEach(value => {
-            if (!value.abbreviation) {
-                value.abbreviation = userHelpers.getAbbreviation(value.name);
-            }
-        });
+            value.avatar = UserService.getAvatar(value)
+        });;
 
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
@@ -329,4 +321,4 @@ export default (factory = {
             {{/if}}
         </div>`;
     }
-});
+};

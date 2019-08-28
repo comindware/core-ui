@@ -126,8 +126,7 @@ export default function() {
                                 title: 'My awesome column'
                             }
                         ],
-                        collection: new Backbone.Collection([{}, {}, {}, {}, {}, {}]),
-                        key: 11
+                        collection: new Backbone.Collection([{}, {}, {}, {}, {}, {}])
                     },
                     {
                         type: 'button',

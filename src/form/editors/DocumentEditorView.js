@@ -204,9 +204,9 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     __onCollectionLengthChange() {
         if (this.collection?.length) {
-            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
+            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
         } else if (this.collection?.length === 0) {
-            this.el.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
+            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
         }
     },
 
@@ -499,7 +499,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             this.ui.showMore.hide();
             return;
         }
-        const affordabletWidth = this.$el.width();
+        const affordabletWidth = this.$editorEl.width();
         const childViews = documentElements;
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;

@@ -2,6 +2,7 @@ import EmptyGridView from './views/EmptyGridView';
 import GridHeaderView from './views/header/GridHeaderView';
 import GridView from './views/GridView';
 import RowView from './views/RowView';
+import CellFieldView from './views/CellFieldView';
 import ListItemViewBehavior from './behaviors/ListItemViewBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
@@ -29,7 +30,7 @@ export default {
         GridHeaderView,
         GridView,
         RowView,
-
+        CellFieldView,
         behaviors: {
             ListItemViewBehavior
         }

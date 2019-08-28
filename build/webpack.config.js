@@ -65,10 +65,10 @@ module.exports = options => {
                             ]
                         ],
                         plugins: [
-                            require('@babel/plugin-proposal-optional-chaining'),
-                            require('@babel/plugin-proposal-object-rest-spread'),
-                            require('@babel/plugin-transform-parameters'),
-                            require('@babel/plugin-proposal-class-properties')
+                            '@babel/plugin-proposal-optional-chaining',
+                            '@babel/plugin-proposal-object-rest-spread',
+                            '@babel/plugin-transform-parameters',
+                            '@babel/plugin-proposal-class-properties'
                         ],
                         cacheDirectory: true
                     }
