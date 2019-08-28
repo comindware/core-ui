@@ -190,7 +190,8 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     e.validationResult = this.validate();
                 });
                 if (options.getReadonly || options.getHidden) {
-                    this.model.on('change', () => this.__updateExternalChange(options));
+                    this.model.on('change', () => this.__updateDynamicFieldAccess(options));
+                    this.once('render', () => this.__updateDynamicFieldAccess(options));
                 }
             }
         },
@@ -687,7 +688,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             return this.isRendered() && !this.isDestroyed();
         },
 
-        __updateExternalChange(options) {
+        __updateDynamicFieldAccess(options) {
             if (typeof options.getReadonly === 'function') {
                 this.setReadonly(Boolean(options.getReadonly(options.model)));
             }

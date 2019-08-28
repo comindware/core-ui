@@ -16,8 +16,6 @@ let avatarGetter;
 
 export default {
     initialize(options) {
-        helpers.ensureOption(options, 'dataProvider');
-
         avatarGetter = options.dataProvider;
         avatarGetter = options.avatarGetter;
     },
