@@ -159,8 +159,6 @@ export default Marionette.View.extend({
         const dropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
         const buttonEl = dropDownRoot || this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
-        const panelRect = this.panelEl.getBoundingClientRect();
-
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
         if (this.maxWidth) {
@@ -169,6 +167,8 @@ export default Marionette.View.extend({
 
         const minWidth = Math.max(MIN_DROPDOWN_PANEL_WIDTH, buttonRect.width || 0);
         panelEl.style.minWidth = `${minWidth}px`;
+
+        const panelRect = this.panelEl.getBoundingClientRect();
 
         let leftOffset = buttonRect.left;
         let offsetHeight = panelEl.offsetHeight;

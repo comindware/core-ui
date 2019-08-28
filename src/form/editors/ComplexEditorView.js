@@ -261,7 +261,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
     },
 
     __updateEditorValue() {
-        const type = this.typeEditor.getValue();
+        const type = this.typeEditor?.getValue() || this.value.type;
         let value;
         switch (type) {
             case valueTypes.value:
