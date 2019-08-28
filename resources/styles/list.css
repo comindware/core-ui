@@ -827,8 +827,8 @@ tr.dragover td{
     top: 0;
 }
 .dev-collection .grid-header-column,
-.dev-collection .cell_selection,
-.dev-collection .cell_selection-index{
+.dev-collection .grid-header .cell_selection,
+.dev-collection .grid-header .cell_selection-index{
     position: sticky;
     top: 50px;
 }
