@@ -915,7 +915,7 @@ export default Marionette.View.extend({
         this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
 
         this.listenTo(columnsCollection, 'change:isHidden', model => {
-            this.__setColumnVisibility(model.id, model.get('isHidden'));
+            this.setColumnVisibility(model.id, !model.get('isHidden'));
         });
 
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
@@ -926,7 +926,7 @@ export default Marionette.View.extend({
     },
 
     __setVisibilityAllColumns() {
-        this.options.columns.forEach(column => this.__setColumnVisibility(column.key, column.isHidden));
+        this.options.columns.forEach(column => this.setColumnVisibility(column.key, !column.isHidden));
     },
 
     __onDiffApplied() {
@@ -976,7 +976,8 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __setColumnVisibility(key: string, isHidden = false) {
+    setColumnVisibility(key: string, visibility = true) {
+        const isHidden = !visibility;
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.key === key);
         const columnToBeHidden = columns[index];

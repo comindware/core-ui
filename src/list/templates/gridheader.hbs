@@ -8,7 +8,7 @@
 </td>
 {{/if}}
 {{#each columns}}
-<td class="grid-header-column" title="{{title}}"  {{#if width}}style="min-width:{{width}};width:{{width}}; {{/if}}">
+<td class="grid-header-column{{#if isHidden}} {{hiddenClass}}{{/if}}" title="{{title}}"  {{#if width}}style="min-width:{{width}};width:{{width}};"{{/if}}>
     <div class="header-column-wrp">
         {{#unless alignRight}}<div class="grid-header-column-title">
             {{title}}</div>{{/unless}}

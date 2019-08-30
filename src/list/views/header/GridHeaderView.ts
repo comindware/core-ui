@@ -72,10 +72,12 @@ const GridHeaderView = Marionette.View.extend({
     templateContext() {
         return {
             columns: this.options.columns.map(column =>
-                Object.assign({}, column, {
+                ({
+                    ...column,
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
-                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : ''
+                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : '',
+                    hiddenClass: classes.hiddenByTreeEditorClass
                 })
             ),
             showCheckbox: this.options.showCheckbox && !!this.options.columns.length,
@@ -276,17 +278,23 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragEnter(event: MouseEvent) {
-        this.el.classList.add(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.add(classes.dragover);
+        }
     },
 
     __handleDragLeave(event: MouseEvent) {
-        this.el.classList.remove(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.remove(classes.dragover);
+        }
     },
 
     __handleDrop(event: MouseEvent) {
         event.preventDefault();
         if (this.__allowDrop()) {
+            this.el.classList.remove(classes.dragover);
             this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModel);
+            delete this.collection.draggingModel;
         }
     },
 
