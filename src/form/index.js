@@ -34,6 +34,7 @@ import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAv
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/datalist/controllers/DemoReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/datalist/controllers/BaseReferenceEditorController';
+import StaticController from './editors/impl/datalist/controllers/StaticController';
 import BaseReferenceCollection from './editors/impl/datalist/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/datalist/models/DefaultReferenceModel';
 import LoadingView from './editors/impl/datalist/views/LoadingView';
@@ -116,7 +117,8 @@ const api = /** @lends module:core.form */ {
              * */
             controllers: {
                 DemoReferenceEditorController,
-                BaseReferenceEditorController
+                BaseReferenceEditorController,
+                StaticController
             },
             collections: {
                 BaseReferenceCollection
