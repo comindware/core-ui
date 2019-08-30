@@ -256,7 +256,7 @@ export default Marionette.View.extend({
             return;
         }
         const config = this.__stack[this.__stack.length - 1];
-        if (!config.view.__isNeedToPrevent || !config.view.__isNeedToPrevent()) {
+        if (!config.view.isNeedToPrevent?.()) {
             if (config.view.close) {
                 const results = await config.view.close();
                 if (results) {
