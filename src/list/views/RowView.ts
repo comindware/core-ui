@@ -251,11 +251,15 @@ export default Marionette.View.extend({
     },
 
     __handleDragEnter(event: MouseEvent) {
-        this.el.classList.add(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.add(classes.dragover);
+        }
     },
 
     __handleDragLeave(event: MouseEvent) {
-        this.el.classList.remove(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.remove(classes.dragover);
+        }
     },
 
     __handleDrop(event: MouseEvent) {
@@ -264,6 +268,7 @@ export default Marionette.View.extend({
             this.el.classList.remove(classes.dragover);
 
             this.gridEventAggregator.trigger('drag:drop', this.model.collection.draggingModel, this.model);
+            delete this.collection.draggingModel;
         }
     },
 
