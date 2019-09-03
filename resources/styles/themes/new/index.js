@@ -23,6 +23,8 @@ const variables = {
     'grey-300': '#e2e2e2',
     'grey-400': '#c1c1c1',
 
+    'grey-800': '#70787F',
+
     'blue-100': '#d6e7f2',
     'blue-200': '#90c3eb',
     'blue-300': '#0575bd',
@@ -277,7 +279,7 @@ module.exports.apply = {
         'justify-content': 'center'
     },
     'checkbox-disabled-theme': {
-        color: variables['grey-400'],
+        color: variables['grey-800'],
         'border-color': variables['grey-400'],
         background: variables['grey-300']
     },

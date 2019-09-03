@@ -11,6 +11,7 @@ const defaultOptions = {
 
 const classes = {
     CHECKED: 'editor_checked',
+    UNCHECKED: 'editor_unchecked',
     CHECKED_SOME: 'editor_checked_some'
 };
 
@@ -84,15 +85,11 @@ export default (formRepository.editors.Boolean = BaseEditorView.extend(
         },
 
         __updateState() {
-            if (this.value) {
-                this.$el.addClass(classes.CHECKED);
-                this.$el.removeClass(classes.CHECKED_SOME);
-            } else if (this.value === false || !this.options.thirdState) {
-                this.$el.removeClass(classes.CHECKED_SOME);
-                this.$el.removeClass(classes.CHECKED);
-            } else {
-                this.$el.removeClass(classes.CHECKED);
-                this.$el.addClass(classes.CHECKED_SOME);
+            this.$el.toggleClass(classes.CHECKED, this.value === true);
+            this.$el.toggleClass(classes.UNCHECKED, this.value === false);
+
+            if (this.options.thirdState) {
+                this.$el.toggleClass(classes.CHECKED_SOME, this.value === false);
             }
         },
 

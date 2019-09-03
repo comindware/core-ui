@@ -194,7 +194,9 @@ body {
   @apply --custom-cotrol-disabled-theme;
 }
 .editor_checked.editor_readonly .checkbox,
-.editor_checked.editor_disabled .checkbox {
+.editor_checked.editor_disabled .checkbox,
+.editor_checkbox.editor_readonly .checkbox,
+.editor_checkbox.editor_disabled .checkbox{
   @apply --checkbox-disabled-theme;
 }
 /* /checkbox */

@@ -1,10 +1,8 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     const model = new Backbone.Model({
-        booleanValue: true
+        booleanValue: null
     });
 
     return new CanvasView({

@@ -748,10 +748,14 @@ input[type="color"], .colorpicker{
     transform: translate(-50%, -50%);
 }
 
-.svg-icons_checked{
+.editor_checkbox .svg-icons{
     visibility: hidden;
+    position: absolute;
 }
 .editor_checked .svg-icons_checked{
+    visibility: visible;
+}
+.editor_unchecked .svg-icons_unchecked{
     visibility: visible;
 }
 
