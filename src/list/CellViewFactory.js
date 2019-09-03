@@ -26,12 +26,13 @@ export default (factory = {
     getCellHtml(column: Column, model: Backbone.Model) {
         const value = model.get(column.key);
 
-        if (value === null || value === undefined) {
+        const type = column.dataType || column.type;
+        if (value == null && type !== objectPropertyTypes.BOOLEAN) {
             return `<div class="cell ${column.columnClass}"></div>`;
         }
         let adjustedValue = value;
 
-        switch (column.dataType || column.type) {
+        switch (type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
                 return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
@@ -129,13 +130,13 @@ export default (factory = {
                 return `<div class="cell ${column.columnClass}" title="${this.__getTitle(column, model, adjustedValue)}">${adjustedValue}</div>`;
             }
             case objectPropertyTypes.BOOLEAN:
-                adjustedValue = Array.isArray(value) ? value : [value || ''];
+                adjustedValue = Array.isArray(value) ? value : [value];
                 adjustedValue = adjustedValue
                     .map(v => {
                         let result = '';
                         if (v === true) {
                             result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-                        } else if (v === false) {
+                        } else if (v === false || v == null) {
                             result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
                         }
                         return result;
