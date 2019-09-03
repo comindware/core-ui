@@ -184,6 +184,8 @@ export default {
             this.activeModule.destroy();
         }
 
+        this.activeSubModule = null;
+
         if (!this.activeModule || movingOut || customModuleRegion) {
             if (customModuleRegion) {
                 this.activeSubModule = new Module({
