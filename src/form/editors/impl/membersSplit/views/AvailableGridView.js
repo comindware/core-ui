@@ -9,7 +9,7 @@ export default BaseMembersGridView.extend({
         const toggleQuantityWarning = _.debounce(() => this.__toggleQuantityWarning(), 300);
         this.listenTo(this.collection, 'reset update filter', toggleQuantityWarning);
 
-        this.__debounceMembersUpdate = _.debounce(this.__membersUpdate, this.options.textFilterDelay);
+        this.__debounceMembersUpdate = _.debounce((...args) => this.__membersUpdate(...args), this.options.textFilterDelay);
 
         BaseMembersGridView.prototype.initialize.call(this, options);
         this.filterState = options.filterState;
