@@ -302,7 +302,7 @@ export default Marionette.View.extend({
             const el = elements[index];
             const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
 
-            if (treeFirstCell) {
+            if (treeFirstCell && treeFirstCell.parentElement === el) {
                 el.removeChild(treeFirstCell);
             }
 
@@ -648,10 +648,10 @@ export default Marionette.View.extend({
 
         cellView.el.setAttribute('tabindex', -1);
 
+        cellView.render();
         if (isTree && index === 0) {
             cellView.on('render', () => this.insertFirstCellHtml(true));
         }
-        cellView.render();
         this.cellViewsByKey[column.key] = cellView;
         this.cellViews.push(cellView);
 

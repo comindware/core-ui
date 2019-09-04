@@ -31,9 +31,9 @@ export default Marionette.View.extend({
 
         this.showTreeEditor = options.showTreeEditor;
         this.__initializeTabCollection(options.tabs);
-        this.tabs = options.tabs.reduce((s: TabsKeyValue, a: Tab): TabsKeyValue => {
-            s[a.id] = a.view;
-            return s;
+        this.tabs = this.__tabsCollection.reduce((tabsViewById, tabOptionsModel) => {
+            tabsViewById[tabOptionsModel.id] = tabOptionsModel.get('view');
+            return tabsViewById;
         }, {});
     },
 

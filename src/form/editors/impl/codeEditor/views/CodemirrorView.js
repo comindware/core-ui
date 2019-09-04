@@ -345,8 +345,8 @@ export default Marionette.View.extend({
         return offset;
     },
 
-    __countLineAndColumn(itemOffset, userCodeOffset) {
-        const userOffset = itemOffset - userCodeOffset;
+    __countLineAndColumn(itemOffset) {
+        const userOffset = itemOffset;
         const content = this.codemirror.getValue();
         let curLine = 1;
         let curColumn = 1;
@@ -373,7 +373,8 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion',
+            UseOntologyLibriary: this.options.config.useOntologyLibriary
         };
         let newArr = [];
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
@@ -393,7 +394,8 @@ export default Marionette.View.extend({
             SourceCode: this.codemirror.getValue(),
             CursorOffset: this.__countOffset(),
             SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
+            QueryCompleteHoverType: 'Completion',
+            UseOntologyLibriary: this.options.config.useOntologyLibriary
         };
 
         this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
@@ -458,30 +460,38 @@ export default Marionette.View.extend({
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
         }
+
+        const ERROR = 'Error';
+        const WARNING = 'Warning';
+
         let newArrErr = [];
         let newArrWarn = [];
+        let newArrInfo = [];
+
         const userCompileQuery = {
-            UserCode: this.codemirror.getValue(),
-            SourceType: 'CSharp'
+            SourceCode: this.codemirror.getValue(),
+            SourceType: 'CSharp',
+            UseOntologyLibriary: this.options.config?.useOntologyLibriary
         };
         if (this.intelliAssist) {
             this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
                 if (ontologyModel) {
-                    const userCodeOffset = ontologyModel.get('userCodeOffsetStart');
                     if (ontologyModel.get('compilerRemarks').length > 0) {
                         ontologyModel.get('compilerRemarks').forEach(el => {
-                            if (el.offsetStart > userCodeOffset) {
-                                if (el.severity === 'Error') {
-                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
-                                    el.line = obj.line;
-                                    el.column = obj.column;
-                                    newArrErr = newArrErr.concat([el]);
-                                }
-                                if (el.severity === 'Warning') {
-                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
-                                    el.line = obj.line;
-                                    el.column = obj.column;
-                                    newArrWarn = newArrWarn.concat([el]);
+                            if (el.offsetStart) {
+                                const obj = this.__countLineAndColumn(el.offsetStart);
+                                el.line = obj.line;
+                                el.column = obj.column;
+                                switch (el.severity) {
+                                    case ERROR:
+                                        newArrErr = newArrErr.concat([el]);
+                                        break;
+                                    case WARNING:
+                                        newArrWarn = newArrWarn.concat([el]);
+                                        break;
+                                    default:
+                                        newArrInfo = newArrInfo.concat([el]);
+                                        break;
                                 }
                             }
                         });
@@ -491,10 +501,12 @@ export default Marionette.View.extend({
                 } else {
                     newArrErr = [];
                     newArrWarn = [];
+                    newArrInfo = [];
                 }
                 const OutputObj = {
                     errors: newArrErr,
-                    warnings: newArrWarn
+                    warnings: newArrWarn,
+                    info: newArrInfo
                 };
 
                 this.trigger('compile', OutputObj);
@@ -561,13 +573,12 @@ export default Marionette.View.extend({
         }
         if (this.options.mode === 'script') {
             const formatQuery = {
-                UserCode: {
-                    SourceCode: this.codemirror.getValue(),
-                    SourceType: 'CSharp'
-                }
+                SourceCode: this.codemirror.getValue(),
+                SourceType: 'CSharp',
+                UseOntologyLibriary: this.options.config?.useOntologyLibriary
             };
             this.intelliAssist.getFormatCSharp(formatQuery).then(ontologyModel => {
-                this.codemirror.setValue(ontologyModel.get('userCode').sourceCode);
+                this.codemirror.setValue(ontologyModel.get('sourceCode'));
             });
         }
     },

@@ -63,7 +63,7 @@ export default function() {
                 iconClass: 'dog',
                 id: '2',
                 name: 'Some',
-                type: 'Search',
+                type: 'Action',
                 severity: 'Low',
                 description: 'createComponent'
             },
@@ -284,9 +284,7 @@ export default function() {
         ])
     });
 
-    toolbarView.on('command:execute', (model, options) => {
-        console.log(model.id || model.get('userCommandId'), options);
-    });
+    toolbarView.on('command:execute', (model, options) => console.log(model.id || model.get('userCommandId'), options));
 
     return toolbarView;
 }
