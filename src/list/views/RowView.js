@@ -521,14 +521,14 @@ export default Marionette.View.extend({
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
                 element.outerHtml = cell;
-                if (isTree && index === 0) {
-                    this.insertFirstCellHtml();
-                }
             } else {
                 const cellView = this.__renderCell({ column, index, CellView: cell });
                 this.el.replaceChild(cellView.el, element);
                 cellView.triggerMethod('attach');
             }
+        }
+        if (isTree && index === 0) {
+            this.insertFirstCellHtml();
         }
         if (oldCellView) {
             oldCellView.destroy();
@@ -548,11 +548,10 @@ export default Marionette.View.extend({
         });
 
         cellView.el.setAttribute('tabindex', -1);
-
+        cellView.render();
         if (isTree && index === 0) {
             cellView.on('render', () => this.insertFirstCellHtml(true));
         }
-        cellView.render();
         this.cellViewsByKey[column.key] = cellView;
         this.cellViews.push(cellView);
 
