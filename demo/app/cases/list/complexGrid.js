@@ -93,7 +93,7 @@ export default function () {
         },
         {
             key: 'propertyRule',
-            type: 'NewExpression',
+            type: 'Complex',
             helpText: 'Expression',
             title: 'Expression',
             required: false,

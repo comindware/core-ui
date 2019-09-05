@@ -79,6 +79,13 @@ export default Marionette.View.extend({
         this.gridEventAggregator = this.options.gridEventAggregator;
         this.listenTo(this.gridEventAggregator, 'set:draggable', this.__updateDraggable);
         this.collection = this.model.collection;
+        this.cellConfigs = {};
+        this.options.columns.forEach((column, index) => {
+            this.cellConfigs[column.key] = { isHidden: false };
+            if (typeof column.getHidden === 'function') {
+                this.listenTo(this.model, 'change', () => this.__setCellHidden({ column, index, isHidden: Boolean(column.getHidden(this.model)) }));
+            }
+        });
     },
 
     getValue(id: string) {
@@ -154,9 +161,15 @@ export default Marionette.View.extend({
             this.__insertCellChechbox();
         }
 
-        this.options.columns.forEach(gridColumn => {
-            this.__setCustomClassToColumn(gridColumn);
-            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
+        this.options.columns.forEach((column, index) => {
+            this.__setCustomClassToColumn(column);
+            let cell;
+            if (typeof column.getHidden === 'function' && Boolean(column.getHidden(this.model))) {
+                this.cellConfigs[column.key].isHidden = true;
+                cell = `<td class="cell ${column.columnClass || ''}"></td>`;
+            } else {
+                cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model); // move to factory
+            }
 
             if (typeof cell === 'string') {
                 this.el.insertAdjacentHTML('beforeend', cell);
@@ -167,25 +180,12 @@ export default Marionette.View.extend({
                 return;
             }
 
-            gridColumn.isCell = true;
-            const cellView = new cell({
-                class: `${classes.cell} ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`,
-                schema: gridColumn,
-                model: this.model,
-                key: gridColumn.key,
-                tagName: 'td'
-            });
-
-            cellView.el.setAttribute('tabindex', -1); //todo add tabindex by default
-
-            cellView.render();
+            const cellView = this.__renderCell({ column, index, CellView: cell });
+            cellView.el.setAttribute('tabindex', -1);
 
             this.el.insertAdjacentElement('beforeend', cellView.el);
             cellView.triggerMethod('before:attach');
             cellView.triggerMethod('attach');
-
-            this.cellViewsByKey[gridColumn.key] = cellView;
-            this.cellViews.push(cellView);
         });
     },
 
@@ -307,7 +307,7 @@ export default Marionette.View.extend({
             const el = elements[index];
             const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
 
-            if (treeFirstCell) {
+            if (treeFirstCell && treeFirstCell.parentElement === el) {
                 el.removeChild(treeFirstCell);
             }
 
@@ -607,5 +607,59 @@ export default Marionette.View.extend({
                 this.el.classList.remove(classes.rowChecked);
                 break;
         }
+    },
+    
+    __setCellHidden({ column, index, isHidden }) {
+        if (this.cellConfigs[column.key].isHidden === isHidden) {
+            return;
+        }
+        const isTree = this.getOption('isTree');
+        this.cellConfigs[column.key].isHidden = isHidden;
+        const oldCellView = this.cellViewsByKey[column.key];
+        const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+        if (isHidden) {
+            element.innerHTML = '';
+        } else {
+            const cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model);
+            if (typeof cell === 'string') {
+                element.outerHtml = cell;    
+            } else if (typeof cell === 'object') {
+                this.el.replaceChild(cell, element);
+            } else {
+                const cellView = this.__renderCell({ column, index, CellView: cell });
+                this.el.replaceChild(cellView.el, element);
+                cellView.triggerMethod('before:attach');
+                cellView.triggerMethod('attach');
+            }
+        }        
+        if (isTree && index === 0) {
+            this.insertFirstCellHtml();
+        }  
+        if (oldCellView) {
+            oldCellView.destroy();
+        }
+    },
+
+    __renderCell({ column, index, CellView }) {
+        const isTree = this.getOption('isTree');
+
+        const cellView = new CellView({
+            class: `${classes.cell} ${column.customClass || ''}`,
+            tagName: 'td',
+            schema: column,
+            model: this.model,
+            key: column.key
+        });
+
+        cellView.el.setAttribute('tabindex', -1);
+
+        cellView.render();
+        if (isTree && index === 0) {
+            cellView.on('render', () => this.insertFirstCellHtml(true));
+        }
+        this.cellViewsByKey[column.key] = cellView;
+        this.cellViews.push(cellView);
+
+        return cellView;
     }
 });

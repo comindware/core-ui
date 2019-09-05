@@ -236,6 +236,7 @@ body {
 
 --------------*/
 .demo-content__present{
+    max-width: 100%;
     position: relative;
     flex: 1 1;
     display: flex;

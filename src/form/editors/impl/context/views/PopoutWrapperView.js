@@ -28,8 +28,7 @@ export default Marionette.View.extend({
                 key: 'name',
                 type: 'ExtendedString',
                 title: 'TextCell',
-                sorting: 'asc',
-                width: 380
+                sorting: 'asc'
             }
         ];
 

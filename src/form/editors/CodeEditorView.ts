@@ -18,7 +18,9 @@ const defaultOptions = {
     height: 300,
     showMode: showModes.normal,
     ontologyService: null,
-    showDebug: true
+    lineSeparator: undefined,
+    showDebug: true,
+    config: null
 };
 
 /**
@@ -68,6 +70,20 @@ export default formRepository.editors.Code = BaseEditorView.extend({
     },
 
     onRender() {
+        this.ui.fadingPanel.hide();
+        if (this.options.showMode === showModes.button) {
+            this.ui.editor.hide();
+            this.editorEl.classList.add(classes.buttonMode);
+            this.__setEditBtnText();
+        } else {
+            this.showEditor();
+            this.ui.editBtn.hide();
+            this.ui.clearBtn.hide();
+	    this.editorEl.classList.remove(classes.buttonMode);
+        }
+    },
+
+    showEditor() {
         this.editor = new CodemirrorView(this.options);
 
         this.editor.on('change', this.__change, this);
@@ -75,17 +91,15 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.editor.on('minimize', () => this.__onMinimize());
         this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
-        this.ui.fadingPanel.hide();
-
-        if (this.options.showMode === showModes.button) {
-            this.editorEl.classList.add(classes.buttonMode);
-        } else {
-            this.editorEl.classList.remove(classes.buttonMode);
+        if (this.readonly) {
+            this.__setReadonly(this.readonly);
         }
-        this.__setEditBtnText();
     },
 
     focus() {
+        if (this.options.showMode === showModes.button) {
+            this.ui.button.focus();
+        }
         this.editor.codemirror.focus();
         this.hasFocus = true;
     },
@@ -117,10 +131,14 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.__value(value, false, true);
     },
 
-    __onEdit() {
+    __onEdit(e) {
+        if (!this.editor) {
+            this.showEditor();
+        }
         this.ui.editor.show();
         this.ui.fadingPanel.show();
         this.editor.maximize();
+        e.stopPropagation();
     },
 
     __onMinimize() {
@@ -140,7 +158,11 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
     __setEditBtnText() {
         if (this.value) {
-            this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+            if (this.getReadonly()) {
+                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.SHOW'));
+            } else {
+                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+            }
         } else {
             this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));
         }
@@ -148,6 +170,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
-        this.editor.setReadonly(readonly);
+        this.editor?.setReadonly(readonly);
+        if (this.options.showMode === showModes.button) {
+            this.__setEditBtnText();
+        }
     }
 });

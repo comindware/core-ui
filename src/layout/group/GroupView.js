@@ -71,7 +71,7 @@ export default Marionette.View.extend({
     },
 
     onToggleButtonClick(e) {
-        if ([ ...this.ui.toggleCollapseButtons ].some(el => el === e.currentTarget)) {
+        if ([ ...this.ui.toggleCollapseButtons].some(el => el === e.currentTarget)) {
             this.toggleCollapse();
         }
     },

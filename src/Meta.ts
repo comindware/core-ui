@@ -15,6 +15,7 @@ export const contextIconType = {
     contextIconType: 'list-ul',
     grouppanel: 'list-alt',
     horizontallayout: 'columns',
+    integer: 'superscript',
     staticcontent: 'stream',
     date: 'calendar-alt',
     datetime: 'calendar-alt',

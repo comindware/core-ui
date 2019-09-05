@@ -170,6 +170,7 @@ export default formRepository.editors.Avatar = BaseEditorView.extend({
             URL.revokeObjectURL(this.__previewURL);
             this.ui.image.css('background-image', 'none');
             this.ui.remove.hide();
+            this.ui.initials.show();
 
             this.__removed = true;
         }
@@ -178,6 +179,7 @@ export default formRepository.editors.Avatar = BaseEditorView.extend({
     },
 
     __preview(image) {
+        this.ui.initials.hide();
         URL.revokeObjectURL(this.__previewURL);
         let previewURL;
 

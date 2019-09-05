@@ -459,6 +459,10 @@ svg.svg-grid-icons {
   display: none;
 }
 
+.grid__headless .grid-content-view{
+  overflow: auto;
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
@@ -866,25 +870,32 @@ tr:hover .cell_selection-index {
 }
 
 /* button */
-.btn{
+.btn,
+.toolbar-btn.btn{
   @apply --button-theme;
 }
-.btn-strong{
+.btn-strong,
+.toolbar-btn.btn-strong{
   @apply --button-strong;
 }
-.btn-pale{
+.btn-pale,
+.toolbar-btn.btn-pale{
   @apply --button-pale;
 }
-.btn-strong:hover{
+.btn-strong:hover,
+.toolbar-btn.btn-strong:hover{
   @apply --button-strong-hover-theme;
 }
-.btn-strong:active{
+.btn-strong:active,
+.toolbar-btn.btn-strong:active{
   @apply --button-strong-active-theme;
 }
-.btn-pale:hover{
+.btn-pale:hover,
+.toolbar-btn.btn-pale:hover{
   @apply --button-pale-hover-theme;
 }
-.btn-pale:active{
+.btn-pale:active,
+.toolbar-btn.btn-pale:active{
   @apply --button-pale-active-theme;
 }
 .layout__button .btn:focus{
@@ -966,6 +977,11 @@ tr:hover .cell_selection-index {
   @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
+  padding: 3px 15px;
+}
+.toolbar-btn > .toolbar__icons > i {
+  width: 100%;
+  height: auto;
 }
 .toolbar-items-wrp > div:last-child.toolbar-btn,
 .toolbar-items-wrp > div:last-child .toolbar-btn{
@@ -1060,6 +1076,8 @@ tr:hover .cell_selection-index {
 
 .toolbar__icons {
   display: inline-block;
+  width: 20px;
+  flex: none;
 }
 
 .toolbar__icons .fa {
