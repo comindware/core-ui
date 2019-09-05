@@ -9,7 +9,7 @@ export default class GroupedCollection {
             this.groups[groupName] = group;
         });
 
-        this.allCollaplibleItems = new options.class();
+        this.allCollapsibleItems = new options.class();
         this.allItems.listenTo(this.allItems, 'remove', model => {
             model.trigger('destroy', model);
         });
@@ -19,7 +19,7 @@ export default class GroupedCollection {
             if (model.get('kind') === kindConst) {
                 this.groups[groupNames.const].add(model);
             } else {
-                this.allCollaplibleItems.add(model);
+                this.allCollapsibleItems.add(model);
             }
         });
 
@@ -27,20 +27,20 @@ export default class GroupedCollection {
     }
 
     getModels(targetName) {
-        return ((targetName && this.groups[targetName]) || this.allCollaplibleItems).slice();
+        return ((targetName && this.groups[targetName]) || this.allCollapsibleItems).slice();
     }
 
     getAllItemsModels() {
-        return this.allItems.parentCollection.slice();
+        return this.allItems.slice();
     }
 
     reset() {
         const { kindConst, groupNames } = this.groupsSortOptions;
 
-        const collabpsibleModels = this.allItems.parentCollection.filter(model => model.get('kind') !== kindConst);
-        const constModels = this.allItems.parentCollection.filter(model => model.get('kind') === kindConst);
+        const collapsibleModels = this.allItems.slice().filter(model => model.get('kind') !== kindConst);
+        const constModels = this.allItems.slice().filter(model => model.get('kind') === kindConst);
 
-        this.allCollaplibleItems.reset(collabpsibleModels);
+        this.allCollapsibleItems.reset(collapsibleModels);
         this.groups[groupNames.main].reset();
         this.groups[groupNames.menu].reset();
         this.groups[groupNames.const].reset(constModels);
