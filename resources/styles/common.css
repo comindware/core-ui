@@ -950,12 +950,14 @@ a:hover {
 
 .toolbar-items-wrp > * {
     display: inline-block;
+    flex: 0 0 auto;
 }
 
 /* Its a key part of secret CSS-js magic trick, so do not remove or modify it please. Thanks. */
 .toolbar-items-wrp {
     overflow: hidden;
-    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     height: 30px;
 }

@@ -1,5 +1,3 @@
-const getArrayCopy = array => (array ? (Array.isArray(array) ? array : [array]).slice() : null);
-
 export default class GroupedCollection {
     constructor(options) {
         this.allItems = options.allItems;
@@ -11,50 +9,40 @@ export default class GroupedCollection {
             this.groups[groupName] = group;
         });
 
-        this.ungrouped = new options.class();
-
+        this.allCollaplibleItems = new options.class();
         this.allItems.listenTo(this.allItems, 'remove', model => {
-            model.group.remove(model);
-            delete model.group;
+            model.trigger('destroy', model);
         });
 
         this.allItems.listenTo(this.allItems, 'add', model => {
-            this.ungrouped.add(model);
-            this.__moveToGroupByKind(model);
+            const { kindConst, groupNames } = this.groupsSortOptions;
+            if (model.get('kind') === kindConst) {
+                this.groups[groupNames.const].add(model);
+            } else {
+                this.allCollaplibleItems.add(model);
+            }
         });
 
         this.reset();
     }
 
-    move(models, targetName) {
-        if (!models) {
-            return;
-        }
-        const modelsArray = getArrayCopy(models);
-        modelsArray.length && modelsArray[0].group?.remove(modelsArray);
-
-        const targetCollection = (targetName && this.groups[targetName]) || this.ungrouped;
-        targetCollection.add(modelsArray);
-        modelsArray.forEach(model => (model.group = targetCollection));
-    }
-
     getModels(targetName) {
-        return getArrayCopy(((targetName && this.groups[targetName]) || this.ungrouped).models);
+        return ((targetName && this.groups[targetName]) || this.allCollaplibleItems).slice();
     }
 
     getAllItemsModels() {
-        return getArrayCopy(this.allItems.models);
+        return this.allItems.parentCollection.slice();
     }
 
     reset() {
-        Object.values(this.groups).forEach(group => group.reset());
-        this.getAllItemsModels().forEach(model => {
-            this.__moveToGroupByKind(model);
-        });
-    }
+        const { kindConst, groupNames } = this.groupsSortOptions;
 
-    __moveToGroupByKind(model) {
-        const { kindConst, constGroupName, mainGroupName } = this.groupsSortOptions;
-        this.move(model, model.get('kind') === kindConst ? constGroupName : mainGroupName);
+        const collabpsibleModels = this.allItems.parentCollection.filter(model => model.get('kind') !== kindConst);
+        const constModels = this.allItems.parentCollection.filter(model => model.get('kind') === kindConst);
+
+        this.allCollaplibleItems.reset(collabpsibleModels);
+        this.groups[groupNames.main].reset();
+        this.groups[groupNames.menu].reset();
+        this.groups[groupNames.const].reset(constModels);
     }
 }
