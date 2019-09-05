@@ -28,15 +28,17 @@ export default Marionette.View.extend({
         const toolbarCollection =
             optionsToolbarCollection instanceof Backbone.Collection
                 ? (() => {
-                      // this case is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.
-                      optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
-                      optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
-                      return optionsToolbarCollection;
-                  })()
+                    Core.InterfaceError.logError(
+                        'Pass collection for toolbar is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.'
+                    );
+                    optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
+                    optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
+                    return optionsToolbarCollection;
+                })()
                 : new ToolbarItemsCollection(optionsToolbarCollection);
 
         const allItems = (this.allItemsCollection = new VirtualCollection(toolbarCollection));
-        const groupsSortOptions = { kindConst: meta.kinds.CONST, constGroupName: groupNames.const, mainGroupName: groupNames.main };
+        const groupsSortOptions = { kindConst: meta.kinds.CONST, groupNames };
 
         this.groupedCollection = new GroupedCollection({
             allItems,
@@ -62,6 +64,12 @@ export default Marionette.View.extend({
         toolbarConstItemsRegion: '.js-toolbar-const-items'
     },
 
+    ui: {
+        toolbarItemsRegion: '.js-toolbar-items',
+        popupMenuRegion: '.js-menu-actions-region',
+        toolbarConstItemsRegion: '.js-toolbar-const-items'
+    },
+
     onRender() {
         this.showChildView('toolbarItemsRegion', this.mainActionsView);
         this.showChildView('popupMenuRegion', this.popupMenuView);
@@ -80,15 +88,11 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.__resetCollections();
-        const debounceRebuildView = _.debounce(() => this.rebuildView(), debounceInterval.short);
-        this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', () => {
-            const interval = setInterval(() => {
-                if (debounceRebuildView()) {
-                    clearInterval(interval);
-                }
-                //TODO: move menu dropdown on resize
-            }, debounceInterval.medium);
-        });
+        const debouncedRebuild = _.debounce(() => {
+            const interval = setInterval(() => this.rebuildView(interval), debounceInterval.medium);
+        }, debounceInterval.medium);
+        //TODO: move menu dropdown on resize
+        this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', debouncedRebuild);
     },
 
     getToolbarItems() {
@@ -109,27 +113,40 @@ export default Marionette.View.extend({
         this.rebuildView();
     },
 
-    rebuildView() {
-        if (this.isDestroyed() || document.readyState !== 'complete') {
-            return false;
+    rebuildView(interval) {
+        if (this.isDestroyed()) {
+            clearInterval(interval);
+            return;
+        }
+        if (document.readyState !== 'complete') {
+            return;
         }
 
         const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-        const mainGroupModels = this.groupedCollection.getModels(groupNames.main);
+        const allModels = this.groupedCollection.getModels();
 
-        if (mainGroupModels.length === 0) {
-            return false;
+        if (allModels.length === 0) {
+            return;
         }
 
+        const mainCollection = this.groupedCollection.groups[groupNames.main];
         const menuCollection = this.groupedCollection.groups[groupNames.menu];
+
+        mainCollection.reset(allModels);
+        menuCollection.reset();
+
         const toolbarElementsItems = [...toolbarItemsRegion.el.querySelector('.js-toolbar-items-container').children];
-        const indexOfNotFitItem = toolbarElementsItems.map(el => el.getBoundingClientRect().top).findIndex((topCoord, i, array) => i > 0 && topCoord > array[i - 1]);
-        const menuModels = indexOfNotFitItem > -1 ? this.groupedCollection.groups[groupNames.main].slice(indexOfNotFitItem) : [];
+        const maxRight = this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width;
+        const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => btn.getBoundingClientRect().right > maxRight);
 
-        // TODO: from now, groupedCollection class doesn't make sence anymore and can be removed
-        menuCollection.reset(menuModels);
+        if (indexOfNotFitItem > -1) {
+            const sliceIndex = indexOfNotFitItem;
 
-        return true;
+            mainCollection.reset(allModels.slice(0, sliceIndex));
+            menuCollection.reset(allModels.slice(sliceIndex));
+        }
+
+        clearInterval(interval);
     },
 
     __createDropdownActionsView() {
