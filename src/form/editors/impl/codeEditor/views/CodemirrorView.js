@@ -33,6 +33,7 @@ export default Marionette.View.extend({
             '__undo',
             '__redo',
             '__format',
+            '__download',
             '__cmwHint',
             '__showTooltip',
             '__hideTooltip',
@@ -110,6 +111,7 @@ export default Marionette.View.extend({
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
+        this.toolbar.on('download', this.__download);
         this.toolbar.on('show:hint', this.__showHint);
         this.toolbar.on('find', this.__find);
         this.toolbar.on('compile', this.__compile);
@@ -124,6 +126,7 @@ export default Marionette.View.extend({
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
+            this.tt.set('info', new Backbone.Collection([]));
             this.output = new OutputView({
                 editor: this.editor,
                 model: this.tt
@@ -463,6 +466,7 @@ export default Marionette.View.extend({
 
         const ERROR = 'Error';
         const WARNING = 'Warning';
+        const reqres = this.options.reqres;
 
         let newArrErr = [];
         let newArrWarn = [];
@@ -473,13 +477,17 @@ export default Marionette.View.extend({
             SourceType: 'CSharp',
             UseOntologyLibriary: this.options.config?.useOntologyLibriary
         };
+
+        const content = this.codemirror.getValue();
         if (this.intelliAssist) {
             this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
                 if (ontologyModel) {
                     if (ontologyModel.get('compilerRemarks').length > 0) {
                         ontologyModel.get('compilerRemarks').forEach(el => {
-                            if (el.offsetStart) {
-                                const obj = this.__countLineAndColumn(el.offsetStart);
+                            const offsetStart = el.offsetStart;
+
+                            if ((el.offsetStart != null) && (content.length >= offsetStart)) {
+                                const obj = this.__countLineAndColumn(offsetStart, content);
                                 el.line = obj.line;
                                 el.column = obj.column;
                                 switch (el.severity) {
@@ -581,6 +589,10 @@ export default Marionette.View.extend({
                 this.codemirror.setValue(ontologyModel.get('sourceCode'));
             });
         }
+    },
+
+    async __download() {
+        this.options.getTemplate(this.codemirror);
     },
 
     __cmwHint() {

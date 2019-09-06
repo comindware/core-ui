@@ -30,6 +30,8 @@
 
 <http://comindware.com/text/core/form/editors/code#compile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Компилировать"; l10n:originalData "Compile"].
 
+<http://comindware.com/text/core/form/editors/code#downloadTemplate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать шаблон"; l10n:originalData "downloadTemplate"].
+
 <http://comindware.com/text/core/form/editors/code#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "edit"].
 
 <http://comindware.com/text/core/form/editors/code#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "empty"].

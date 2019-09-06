@@ -40,11 +40,11 @@
 
 <http://comindware.com/text/core/form/editors#icon> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "icon"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/form/editors/code#view> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "View"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors/collection#addNewItem> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Add a new item"].
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "You need to create record before adding values to the table"].
-
-<http://comindware.com/text/core/form/editors/code#view> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "View"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/document/documentRevision#download> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Download"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
