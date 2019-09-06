@@ -375,7 +375,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         if (showScript) {
             this.valueTypeCollection.add({
                 id: valueTypes.script,
-                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.SCRIPT')
+                text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
             });
         }
         if (showTemplate) {
