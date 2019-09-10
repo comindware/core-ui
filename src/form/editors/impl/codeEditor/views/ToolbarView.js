@@ -13,7 +13,8 @@ export default Marionette.View.extend({
         hint: '.js-code-editor-hint',
         find: '.js-code-editor-find',
         maximize: '.js-code-editor-maximize',
-        minimize: '.js-code-editor-minimize'
+        minimize: '.js-code-editor-minimize',
+        download: '.js-code-editor-download'
     },
 
     triggers: {
@@ -22,7 +23,8 @@ export default Marionette.View.extend({
         'click @ui.redo': 'redo',
         'click @ui.format': 'format',
         'click @ui.hint': 'show:hint',
-        'click @ui.find': 'find'
+        'click @ui.find': 'find',
+        'click @ui.download': 'download'
     },
 
     events: {
