@@ -285,10 +285,14 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleColumnSelect(event) {
+        const { currentTarget } = event;
+        if (!document.contains(currentTarget)) {
+            return;
+        }
         this.trigger('handleColumnSelect', {
             event,
-            el: event.currentTarget,
-            model: this.options.columns[Array.prototype.indexOf.call(event.currentTarget.parentElement.children, event.currentTarget)]
+            el: currentTarget,
+            model: this.options.columns[Array.prototype.indexOf.call(currentTarget.parentElement.children, currentTarget)]
         });
     },
 
