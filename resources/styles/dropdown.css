@@ -440,7 +440,6 @@
 /*-----//------*/
 
 .bubbles__list .bubbles__i {
-    height: 100%;
     flex-direction: column;
     justify-content: center;
 }
