@@ -1,6 +1,5 @@
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
-import { helpers } from 'utils';
 import ToolbarItemsCollection from './collections/ToolbarItemsCollection';
 import VirtualCollection from '../../collections/VirtualCollection';
 import meta from './meta';
@@ -21,28 +20,29 @@ const debounceInterval = {
 const getDefaultOptions = options => ({
     mode: 'Normal', // 'Mobile'
     showName: options.mode !== 'Mobile',
-    class: ''
+    class: '',
+    toolbarItems: []
 });
 
 export default Marionette.View.extend({
     initialize() {
-        helpers.ensureOption(this.options, 'toolbarItems');
         _.defaults(this.options, getDefaultOptions(this.options));
 
         const optionsToolbarCollection = this.options.toolbarItems;
-        const toolbarCollection =
-            optionsToolbarCollection instanceof Backbone.Collection
-                ? (() => {
-                    Core.InterfaceError.logError(
-                        'Pass collection for toolbar is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.'
-                    );
-                    optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
-                    optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
-                    return optionsToolbarCollection;
-                })()
-                : new ToolbarItemsCollection(optionsToolbarCollection);
+        let allItems;
+        if (optionsToolbarCollection instanceof Backbone.Collection) {
+            Core.InterfaceError.logError(
+                'Pass collection for toolbar is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.'
+            );
+            optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
+            optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
+            allItems = optionsToolbarCollection;
+        } else {
+            allItems = new ToolbarItemsCollection(optionsToolbarCollection);
+        }
 
-        const allItems = new VirtualCollection(toolbarCollection);
+        allItems = new VirtualCollection(allItems);
+
         const groupsSortOptions = { kindConst: meta.kinds.CONST, groupNames };
 
         this.groupedCollection = new GroupedCollection({
@@ -131,17 +131,16 @@ export default Marionette.View.extend({
             return;
         }
 
-        const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-        const allModels = this.groupedCollection.getModels();
+        const allCollapsibleModels = this.groupedCollection.getCollapsibleModels();
 
-        if (allModels.length === 0) {
+        if (allCollapsibleModels.length === 0) {
             return;
         }
 
         const mainCollection = this.groupedCollection.groups[groupNames.main];
         const menuCollection = this.groupedCollection.groups[groupNames.menu];
 
-        mainCollection.reset(allModels);
+        mainCollection.reset(allCollapsibleModels);
         menuCollection.reset();
 
         const toolbarElementsItems = [...this.getRegion('toolbarItemsRegion').el.firstElementChild.children];
@@ -151,8 +150,8 @@ export default Marionette.View.extend({
         if (indexOfNotFitItem > -1) {
             const sliceIndex = indexOfNotFitItem;
 
-            mainCollection.reset(allModels.slice(0, sliceIndex));
-            menuCollection.reset(allModels.slice(sliceIndex));
+            mainCollection.reset(allCollapsibleModels.slice(0, sliceIndex));
+            menuCollection.reset(allCollapsibleModels.slice(sliceIndex));
         }
 
         clearInterval(interval);
@@ -164,6 +163,8 @@ export default Marionette.View.extend({
             model: new Backbone.Model({
                 items: this.groupedCollection.groups[groupNames.menu],
             }),
+            mode: this.options.mode,
+            showName: this.options.showName,
             customAnchor: actionsMenuLabel
         });
 

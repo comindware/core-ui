@@ -1,12 +1,22 @@
 import SelectStateItemsCollection from '../collections/SelectStateItemsCollection';
 import meta from '../meta';
 
-export default Backbone.Model.extend({
+export default Backbone.AssociatedModel.extend({
+    defaults: {
+        items: []
+    },
+
+    relations: [
+        {
+            type: Backbone.Many,
+            key: 'items',
+            collectionType: SelectStateItemsCollection
+        }
+    ],
+
     initialize() {
-        const items = this.get('items');
-        const itemsCollection = new SelectStateItemsCollection(items);
+        const itemsCollection = this.get('items');
         this.listenTo(itemsCollection, 'select:one', model => this.set('iconClass', model.get('iconClass')));
-        this.set('items', itemsCollection);
 
         this.__selectDefaultModel(itemsCollection);
         this.__addDropdownClass();
