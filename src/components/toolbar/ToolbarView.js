@@ -25,19 +25,20 @@ export default Marionette.View.extend({
         helpers.ensureOption(this.options, 'allItemsCollection');
 
         const optionsToolbarCollection = this.options.allItemsCollection;
-        const toolbarCollection =
-            optionsToolbarCollection instanceof Backbone.Collection
-                ? (() => {
-                    Core.InterfaceError.logError(
-                        'Pass collection for toolbar is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.'
-                    );
-                    optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
-                    optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
-                    return optionsToolbarCollection;
-                })()
-                : new ToolbarItemsCollection(optionsToolbarCollection);
+        let allItems;
+        if (optionsToolbarCollection instanceof Backbone.Collection) {
+            Core.InterfaceError.logError(
+                'Pass collection for toolbar is deprecated. Instead, pass an array and use getToolbarItems to access the toolbar items collection.'
+            );
+            optionsToolbarCollection.model = ToolbarItemsCollection.prototype.model;
+            optionsToolbarCollection.reset(optionsToolbarCollection.toJSON());
+            allItems = optionsToolbarCollection;
+        } else {
+            allItems = new ToolbarItemsCollection(optionsToolbarCollection);
+        }
 
-        const allItems = (this.allItemsCollection = new VirtualCollection(toolbarCollection));
+        allItems = new VirtualCollection(allItems);
+
         const groupsSortOptions = { kindConst: meta.kinds.CONST, groupNames };
 
         this.groupedCollection = new GroupedCollection({
@@ -122,28 +123,27 @@ export default Marionette.View.extend({
             return;
         }
 
-        const toolbarItemsRegion = this.getRegion('toolbarItemsRegion');
-        const allModels = this.groupedCollection.getModels();
+        const allCollapsibleModels = this.groupedCollection.getCollapsibleModels();
 
-        if (allModels.length === 0) {
+        if (allCollapsibleModels.length === 0) {
             return;
         }
 
         const mainCollection = this.groupedCollection.groups[groupNames.main];
         const menuCollection = this.groupedCollection.groups[groupNames.menu];
 
-        mainCollection.reset(allModels);
+        mainCollection.reset(allCollapsibleModels);
         menuCollection.reset();
 
-        const toolbarElementsItems = [...toolbarItemsRegion.el.querySelector('.js-toolbar-items-container').children];
+        const toolbarElementsItems = [...this.ui.toolbarItemsRegion.get(0).querySelector('.js-toolbar-items-container').children];
         const maxRight = this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width;
         const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => btn.getBoundingClientRect().right > maxRight);
 
         if (indexOfNotFitItem > -1) {
             const sliceIndex = indexOfNotFitItem;
 
-            mainCollection.reset(allModels.slice(0, sliceIndex));
-            menuCollection.reset(allModels.slice(sliceIndex));
+            mainCollection.reset(allCollapsibleModels.slice(0, sliceIndex));
+            menuCollection.reset(allCollapsibleModels.slice(sliceIndex));
         }
 
         clearInterval(interval);
