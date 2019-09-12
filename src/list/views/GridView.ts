@@ -108,9 +108,6 @@ export default Marionette.View.extend({
 
         this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
-        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
-
         this.uniqueId = _.uniqueId('native-grid');
         this.childHeight = options.childHeight || 35; //todo fix it
 
@@ -155,24 +152,8 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
-        this.__updateActions(allToolbarActions, this.collection);
-        if (this.options.showToolbar || this.options.draggable) {
-            if (this.options.showCheckbox) {
-                this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
-            } else {
-                this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
-            }
-            if (this.options.updateToolbarEvents) {
-                this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
-            }
-        }
+        this.__initializeToolbar();
 
-        if (this.options.showToolbar) {
-            this.toolbarView = new ToolbarView({
-                toolbarItems: allToolbarActions || new Backbone.Collection()
-            });
-            this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
-        }
         if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
@@ -180,6 +161,31 @@ export default Marionette.View.extend({
         if (this.options.showTreeEditor) {
             this.__initTreeEditor();
         }
+    },
+
+    __initializeToolbar() {
+        if (!this.options.showToolbar) {
+            return;
+        }
+
+        this.toolbarView = new ToolbarView({
+            toolbarItems: this.__getToolbarActions() || []
+        });
+
+        const allToolbarActions = this.toolbarView.getToolbarItems();
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
+        this.__updateActions(allToolbarActions, this.collection);
+
+        if (this.options.showCheckbox) {
+            this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
+        } else {
+            this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+        }
+        if (this.options.updateToolbarEvents) {
+            this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
+        }
+
+        this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
     },
 
     __handleColumnWidthChange(config: { index: number, newColumnWidth: number }) {

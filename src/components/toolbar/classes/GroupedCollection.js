@@ -26,19 +26,18 @@ export default class GroupedCollection {
         this.reset();
     }
 
-    getModels(targetName) {
-        return ((targetName && this.groups[targetName]) || this.allCollapsibleItems).slice();
-    }
-
-    getAllItemsModels() {
-        return this.allItems.slice();
+    getCollapsibleModels() {
+        return this.allCollapsibleItems.slice();
     }
 
     reset() {
         const { kindConst, groupNames } = this.groupsSortOptions;
 
-        const collapsibleModels = this.allItems.slice().filter(model => model.get('kind') !== kindConst);
-        const constModels = this.allItems.slice().filter(model => model.get('kind') === kindConst);
+        // used models, because allCollapsibleItem is Virtual Collection with 'filter' feature.
+        const allModels = this.allItems.models;
+
+        const collapsibleModels = allModels.filter(model => model.get('kind') !== kindConst);
+        const constModels = allModels.filter(model => model.get('kind') === kindConst);
 
         this.allCollapsibleItems.reset(collapsibleModels);
         this.groups[groupNames.main].reset();
