@@ -286,7 +286,7 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleColumnSelect(event) {
         const { currentTarget } = event;
-        if (!document.contains(currentTarget)) {
+        if (!document.body.contains(currentTarget)) {
             return;
         }
         this.trigger('handleColumnSelect', {
