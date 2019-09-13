@@ -115,4 +115,19 @@ export default class UIService {
         };
         el.addEventListener('pointerdown', onStart);
     }
+
+    static getTransitionDurationMilliseconds(el: HTMLElement): number {
+        const transitionDuration = getComputedStyle(el).transitionDuration;
+        const isSeconds = /^(\d)+\.*(\d)*s$/.test(transitionDuration);
+        const isMilliseconds = /^(\d)+ms$/.test(transitionDuration);
+
+        if (isSeconds && !isMilliseconds) {
+            return parseFloat(transitionDuration) * 1000;
+        } else if (isMilliseconds && !isSeconds) {
+            return parseFloat(transitionDuration);
+        } else {
+            Core.InterfaceError.logError(`Unexpected transition duration "${transitionDuration}"`);
+            return 0;
+        }
+    }
 }

@@ -32,11 +32,11 @@ export default Marionette.View.extend({
                 drag: (event, ui) => this.__onResizerDragHorizontal(ui)
             });
         } else {
-            const originalPanel1Width = this.firstPanel.el.getBoundingClientRect().width;
+            const originalPanelWidth = this.firstPanel.el.getBoundingClientRect().width;
 
             this.leftOffset = this.firstPanel.el.offsetLeft;
             this.$el.css('top', '');
-            this.$el.css('left', `${originalPanel1Width + this.firstPanel.el.offsetLeft}px`);
+            this.$el.css('left', `${originalPanelWidth + this.firstPanel.el.offsetLeft}px`);
             this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
             this.minimumLeft = this.firstPanel.el.offsetLeft + constants.MIN_WIDTH;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
@@ -64,14 +64,14 @@ export default Marionette.View.extend({
 
         if (width < constants.MIN_WIDTH) {
             width = constants.MIN_WIDTH;
-            ui.position.left = this.minimumLeft;
+            this.el.style.left = `${this.minimumLeft}px`;
         }
 
         const maxWidth = totalWidth - constants.MIN_WIDTH;
 
         if (width > maxWidth) {
             width = maxWidth;
-            ui.position.left = this.firstPanel.el.offsetLeft + maxWidth;
+            this.el.style.left = `${this.firstPanel.el.offsetLeft + maxWidth}px`;
         }
 
         this.firstPanel.$el.css('flex', `0 0 ${width}px`);
@@ -82,14 +82,14 @@ export default Marionette.View.extend({
 
         if (top < constants.MIN_HEIGHT) {
             top = constants.MIN_HEIGHT;
-            ui.position.top = this.minimumTop;
+            this.el.style.top = `${this.minimumTop}px`;
         }
 
         const maxHeight = this.originalParentHeight - constants.MIN_HEIGHT;
 
         if (top > maxHeight) {
             top = maxHeight;
-            ui.position.top = maxHeight;
+            this.el.style.top = `${maxHeight}px`;
         }
 
         this.firstPanel.$el.css('flex', `0 0 ${top}px`);
