@@ -461,10 +461,13 @@ export default Marionette.View.extend({
 
     onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
-        if (Core.services.MobileService.isIE) {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
-        } else {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+
+        if (this.isRendered()) {
+            if (Core.services.MobileService.isIE) {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+            } else {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+            }
         }
     },
 

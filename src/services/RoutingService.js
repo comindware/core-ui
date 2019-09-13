@@ -192,7 +192,7 @@ export default {
 
         context.loadingContext = null;
 
-        const continueHandling = await this.__callOnRoute({ context });
+        const continueHandling = await this.__callOnRoute({ context, routingArgs, callbackName });
         if (continueHandling === false) {
             return;
         }
