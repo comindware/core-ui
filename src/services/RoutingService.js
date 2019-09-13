@@ -94,7 +94,7 @@ export default {
             newUrl = this.__getSplitModuleUrl(url);
         }
         if (!shouldCheckUrl) {
-            if (!options.split) {
+            if (!options.split && !this.isUrlModuleSplit(url)) {
                 newUrl = this.__getUpdatedUrl(url);
             }
 
@@ -121,17 +121,24 @@ export default {
 
     getRoutHandlers(url = '') {
         const urlParts = url.split('&nxt').splice(1);
-        const matchingUrls = [];
 
-        return (Backbone.history.handlers.filter(handler => urlParts.some(part => handler.route.test(part) && matchingUrls.push(part))) || []).map((h, i) => ({
-            callback: h.callback,
-            route: matchingUrls[i],
-            routeRegExp: h.route
-        }));
+        return urlParts.reduce((routeHandlers, part) => {
+            const handler = Backbone.history.handlers.find(h => h.route.test(part));
+            if (handler) {
+                routeHandlers.push({ callback: handler.callback, route: part, routeRegExp: handler.route });
+            } else {
+                Core.InterfaceError.logError(`Can not find handler for route ${part}`);
+            }
+            return routeHandlers;
+        }, []);
     },
 
-    isCurrentModuleSplit() {
-        return activeUrl?.startsWith('#custom');
+    isCurrentModuleCustom() {
+        return activeUrl ? this.isUrlModuleSplit(activeUrl) : false;
+    },
+
+    isUrlModuleSplit(url = '') {
+        return url.startsWith('#custom');
     },
 
     setModuleLoading(show, { message, useForce = false } = {}) {
@@ -140,29 +147,28 @@ export default {
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
-        this.loadingContext = {
-            config,
-            leavingPromise: null,
-            loaded: false
-        };
 
-        const customModuleRegion = this.__tryGetSubmoduleRegion(config);
+        const subModuleContext = this.__tryGetSubmoduleContext(config);
 
-        if (this.activeModule && !customModuleRegion) {
-            const isLeaved = await this.__tryLeaveActiveModule(!!customModuleRegion);
-            if (!isLeaved) {
-                return;
-            }
+        const context = subModuleContext || this;
+
+        const isLeaved = await this.__tryLeaveModuleAndCheckRaceCondition({ context, config });
+        if (!isLeaved) {
+            return false;
         }
 
-        // reject race condition
-        if (this.loadingContext === null || this.loadingContext.config.module !== config.module) {
-            return;
+        this.setModuleLoading(true);
+
+        if (!subModuleContext) {
+            //do not trigger events and cancel requests for submodules
+            this.trigger('module:leave', {
+                page: this.activeModule ? this.activeModule.moduleId : null,
+                activeUrl,
+                previousUrl
+            });
+            //clear all promises of the previous module
+            Core.services.PromiseService.cancelAll();
         }
-
-        this.loadingContext.loaded = true;
-
-        const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
 
         let componentQuery;
 
@@ -177,68 +183,78 @@ export default {
             }
         }
 
-        if (this.activeModule && movingOut && !customModuleRegion) {
-            this.activeModule.destroy();
-        }
-        this.setModuleLoading(true);
+        const movingOut = this.__destroyPreviousModuleIfMovingOut({ context, config });
 
-        let activeSubModule = null;
+        await this.__initializeModuleIfNeeded({ context, movingOut, config, Module });
 
-        if (!this.activeModule || movingOut || customModuleRegion) {
-            if (customModuleRegion) {
-                activeSubModule = await new Module({
-                    config,
-                    region: customModuleRegion
-                });
-                /*
-                activeSubModule.on('all', (...rest) => this.activeModule.triggerMethod(...rest));
-                activeSubModule.once('destroy', activeSubModule.off);
-                */
-            } else {
-                this.activeModule = await new Module({
-                    config,
-                    region: window.app.getView().getRegion('contentRegion')
-                });
-            }
-        }
         this.trigger('module:loaded', config, callbackName, routingArgs); //args like in Backbone.on('route')
 
-        if (activeSubModule) {
-            if (activeSubModule.onRoute) {
-                activeSubModule.routerAction = callbackName;
-                await activeSubModule.onRoute.apply(activeSubModule, routingArgs);
-            }
+
+        context.loadingContext = null;
+
+        const continueHandling = await this.__callOnRoute({ context });
+        if (continueHandling === false) {
+            return;
         }
 
-        // navigate to new module
-        this.loadingContext = null;
-        if (this.activeModule.onRoute) {
-            this.activeModule.routerAction = callbackName;
-            const continueHandling = await this.activeModule.onRoute.apply(this.activeModule, routingArgs);
-            if (continueHandling === false) {
-                return;
-            }
-        }
+        // if onModuleLoaded not apply any await, then url has no changes, therefore we need setTimeout.
+        await new Promise(resolve => setTimeout(resolve));
 
-        if (!this.isCurrentModuleSplit() || activeSubModule) {
-            try {
-                if (activeSubModule) {
-                    this.__callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule);
-                } else {
-                    this.__callRoutingActionForActiveModule(callbackName, routingArgs);
-                }
-            } catch (e) {
-                this.setModuleLoading(false, { useForce: true });
-                Core.utils.helpers.throwError(e);
-            }
-        } else if (this.isCurrentModuleSplit() && !this.activeModule.moduleRegion.currentView) {
-            this.__callRoutingActionForActiveModule(callbackName, routingArgs);
-        } else {
-            this.__invalidateSubModules(this.activeModule.moduleRegion.currentView.regionModulesMap);
+        const isFindCallback = this.__callRoutingActionForModule(callbackName, routingArgs, context.activeModule);
+
+        if (isFindCallback === false) {
+            this.setModuleLoading(false, { useForce: true });
         }
 
         this.__setupComponentQuery(componentQuery);
         this.setModuleLoading(false);
+    },
+
+    async __tryLeaveModuleAndCheckRaceCondition({ context = this, config }) {
+        context.loadingContext = { config };
+        const isLeaved = await this.__tryLeaveModule(context.activeModule);
+        if (!isLeaved) {
+            return false;
+        }
+
+        // reject race condition
+        if (context.loadingContext === null || context.loadingContext.config.module !== config.module) {
+            return false;
+        }
+
+        return true;
+    },
+
+    __destroyPreviousModuleIfMovingOut({ context = this, config }) {
+        const loadedModule = context.activeModule;
+        const movingOut = loadedModule && loadedModule.options.config.module !== config.module;
+        if (loadedModule && movingOut) {
+            loadedModule.destroy();
+        }
+        return movingOut;
+    },
+
+    async __initializeModuleIfNeeded({ context = this, movingOut, config, Module }) {
+        if (!context.activeModule || movingOut) {
+            context.activeModule = await new Module({
+                config,
+                // custom region for submodules
+                region: context !== this ? context.region : window.app.getView().getRegion('contentRegion')
+            });
+
+            /*
+            activeSubModule.on('all', (...rest) => this.activeModule.triggerMethod(...rest));
+            */
+        }
+    },
+
+    async __callOnRoute({ context, routingArgs, callbackName }) {
+        const activeModule = context.activeModule;
+        if (activeModule && activeModule.onRoute) {
+            activeModule.routerAction = callbackName;
+            const continueHandling = await activeModule.onRoute.apply(activeModule, routingArgs);
+            return continueHandling;
+        }
     },
 
     __showViewPlaceholder(message) {
@@ -257,8 +273,11 @@ export default {
         }
     },
 
-    async __tryLeaveActiveModule() {
-        const canLeave = await this.activeModule.leave();
+    async __tryLeaveModule(module) {
+        if (!module) {
+            return true;
+        }
+        const canLeave = await module.leave();
 
         if (!canLeave && this.getPreviousUrl()) {
             // getting back to last url
@@ -266,28 +285,17 @@ export default {
             return false;
         }
 
-        //do not trigger events and cancel requests for submodules
-        this.trigger('module:leave', {
-            page: this.activeModule ? this.activeModule.moduleId : null,
-            activeUrl,
-            previousUrl
-        });
-        //clear all promises of the previous module
-        Core.services.PromiseService.cancelAll();
-        if (!this.loadingContext.loaded) {
-            this.setModuleLoading(false);
-        }
         return true;
     },
 
-    __tryGetSubmoduleRegion(config) {
+    __tryGetSubmoduleContext(config) {
         if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
                 const match = map.find(pair => Object.values(config.navigationUrl).some(url => RegExp(pair.routeRegExp).test(url)));
                 if (match) {
-                    return match.region;
+                    return match;
                 }
             }
         }
@@ -295,37 +303,24 @@ export default {
         return null;
     },
 
-    __callRoutingActionForActiveSubModule(callbackName, routingArgs, activeSubModule) {
-        if (activeSubModule.routingActions && activeSubModule.routingActions[callbackName]) {
-            const configuration = activeSubModule.routingActions[callbackName].bind(activeSubModule);
+    __callRoutingActionForModule(callbackName, routingArgs, module) {
+        if (module.routingActions && module.routingActions[callbackName]) {
+            let configuration = module.routingActions[callbackName];
+            if (typeof configuration === 'function') {
+                configuration = configuration.bind(module);
+            }
 
             configuration.routingAction = callbackName;
 
-            activeSubModule.handleRouterEvent.call(activeSubModule, configuration, routingArgs);
+            module.handleRouterEvent.call(module, configuration, routingArgs);
         } else {
-            const routingCallback = activeSubModule[callbackName];
+            const routingCallback = module[callbackName];
 
             if (!routingCallback) {
-                throw new Error();
+                Core.InterfaceError.logError(`Can not find routing callback "${callbackName}" for module "${module.moduleId}"`);
+                return false;
             }
-            routingCallback.apply(activeSubModule, routingArgs);
-        }
-    },
-
-    __callRoutingActionForActiveModule(callbackName, routingArgs) {
-        if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-            const configuration = this.activeModule.routingActions[callbackName];
-
-            configuration.routingAction = callbackName;
-
-            this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
-        } else {
-            const routingCallback = this.activeModule[callbackName];
-
-            if (!routingCallback) {
-                throw new Error();
-            }
-            routingCallback.apply(this.activeModule, routingArgs);
+            routingCallback.apply(module, routingArgs);
         }
     },
 
@@ -337,27 +332,22 @@ export default {
         }
     },
 
-    __invalidateSubModules(regionModulesMap) {
-        regionModulesMap.forEach(module => {
-            const cleanUrl = module.pair.route.replace('#', '');
-            const prefix = cleanUrl.split('/')[0];
-            const urlParts = activeUrl.split('&nxt');
-            const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
-            const newRoute = window.location.hash.replace('#', '').split('&nxt')[replaceIndex];
-
-            if (replaceIndex !== -1 && urlParts[replaceIndex] !== newRoute) {
-                module.pair.route = newRoute;
-                setTimeout(() => module.pair.callback(module.pair.route));
-            }
-        });
-    },
-
     __getSplitModuleUrl(nextModuleUrl) {
-        if (this.isCurrentModuleSplit()) {
+        if (this.isCurrentModuleCustom()) {
             return this.__getUpdatedUrl(nextModuleUrl);
         }
 
         return `#custom/&nxt${window.location.hash.replace('#', '')}&nxt${nextModuleUrl.replace('#', '')}`;
+    },
+
+    __getUrlsFromSplitModuleUrl(splitModuleUrl) {
+        if (!this.isUrlModuleSplit(splitModuleUrl)) {
+            Core.InterfaceError.logError(`Unexpected split module url ${splitModuleUrl}`);
+            return [];
+        }
+        const urlParts = splitModuleUrl.split('&nxt');
+        // first part is '#custom/'
+        return urlParts.slice(1);
     },
 
     __getUpdatedUrl(url = '') {
