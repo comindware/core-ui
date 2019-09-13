@@ -40,7 +40,7 @@ export default class Controller {
     static setLoading(isLoading: boolean, message: string | undefined): void {
         RoutingService.setModuleLoading(isLoading, { message });
         if (isLoading === false) {
-            this.__onModuleReady();
+            Core.Controller.__onModuleReady();
         }
     }
 
