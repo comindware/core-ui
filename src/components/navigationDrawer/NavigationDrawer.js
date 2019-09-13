@@ -40,29 +40,10 @@ export default Marionette.CollectionView.extend({
 
     onRender() {
         this.__updatePanelStyle();
-        Core.services.UIService.draggable({
-            el: this.ui.resizer[0],
-            axis: 'x',
-            drag: this.__onDrag.bind(this),
-            start: this.__onDragStart.bind(this),
-            stop: this.__onDragStop.bind(this),
-            setProperties: []
+        Core.services.UIService.resizable({
+            el: this.el,
+            min: 240
         });
-    },
-
-    __onDragStart() {
-        this.el.style.transition = 'unset';
-    },
-
-    __onDragStop() {
-        this.el.style.transition = '';
-    },
-
-    __onDrag(event, { position: { left } }) {
-        if (left < 240) {
-            return;
-        }
-        this.el.style.width = `${left}px`;
     },
 
     __toggleCollapse() {

@@ -22,15 +22,6 @@ type position = {
 };
 
 export default class UIService {
-    static __getDefaultsSetProperties(axis: axis): Array<string> {
-        return !axis ?
-            ['left', 'top'] :
-            (axis === 'x' ? ['left'] :
-                (axis === 'y' ?
-                    ['top'] :
-                    (console.warn('Unexpected value of axis'), ['left', 'top'])));
-    }
-
     static draggable(
         { el, start, stop, drag, axis = false, setProperties = this.__getDefaultsSetProperties(axis) }:
             { el: HTMLElement, start: Function, stop: Function, drag: Function, axis: axis, setProperties: Array<string> }) {
@@ -114,5 +105,81 @@ export default class UIService {
             typeof start === 'function' && start(event, el);
         };
         el.addEventListener('pointerdown', onStart);
+    }
+
+    static __getDefaultsSetProperties(axis: axis): Array<string> {
+        return !axis ?
+            ['left', 'top'] :
+            (axis === 'x' ? ['left'] :
+                (axis === 'y' ?
+                    ['top'] :
+                    (console.warn('Unexpected value of axis'), ['left', 'top'])));
+    }
+
+    static resizable({ el, min = -Infinity, max = Infinity }: { el: HTMLElement, min: number, max: number }): void {
+        const resizer = this.__addResizer(el);
+
+        const onDragStart = () => {
+            el.style.transition = 'unset';
+        };
+
+        const onDragStop = () => {
+            el.style.transition = '';
+        };
+
+        const onDrag = (event: MouseEvent, { position: { left } }: { position: position }) => {
+            if (!left || left < min || left > max) {
+                return;
+            }
+
+            el.style.flexBasis = `${left}px`;
+            el.style.width = `${left}px`;
+        };
+
+        this.draggable({
+            el: resizer,
+            axis: 'x',
+            drag: onDrag,
+            start: onDragStart,
+            stop: onDragStop,
+            setProperties: []
+        });
+    }
+
+    static __addResizer(el: HTMLElement): HTMLElement {
+        if (document.contains(el)) {
+            Core.InterfaceError.logError('Element is attached to document, add resizer may trigger repaint');
+        }
+        const children = Array.from(el.children);
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('ui-resizable__resize-content-wrapper');
+        const overflow = getComputedStyle(el).overflow;
+        wrapper.style.overflow = overflow;
+
+        const resizer = document.createElement('div');
+        resizer.classList.add('ui-resizable__resizer');
+
+        children.reverse().forEach(child => wrapper.insertAdjacentElement('afterbegin', child));
+
+        el.insertAdjacentElement('afterbegin', wrapper);
+        el.insertAdjacentElement('afterbegin', resizer);
+
+        return resizer;
+    }
+
+    static getTransitionDurationMilliseconds(el: HTMLElement): number {
+        const transitionDuration = getComputedStyle(el).transitionDuration;
+        const isSeconds = /^(\d)+\.*(\d)*s$/.test(transitionDuration);
+        const isMilliseconds = /^(\d)+ms$/.test(transitionDuration);
+
+        if (isSeconds && !isMilliseconds) {
+            return parseFloat(transitionDuration) * 1000;
+        } else if (isMilliseconds && !isSeconds) {
+            return parseFloat(transitionDuration);
+        } else {
+            Core.InterfaceError.logError(`Unexpected transition duration "${transitionDuration}"`);
+            return 0;
+        }
     }
 }
