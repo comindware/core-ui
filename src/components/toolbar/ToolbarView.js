@@ -115,7 +115,7 @@ export default Marionette.View.extend({
     },
 
     rebuildView(interval) {
-        if (this.isDestroyed()) {
+        if (this.isDestroyed() || !this.isRendered()) {
             clearInterval(interval);
             return;
         }
