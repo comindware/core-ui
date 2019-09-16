@@ -19,6 +19,12 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    templateContext() {
+        return {
+            isTitle: this.model.has('title'),
+        };
+    },
+
     onAttach() {
         const collection = new Backbone.Collection(this.model.get('overloads'));
         this.functionOverloads = new Core.list.GridView({
@@ -32,7 +38,9 @@ export default Marionette.View.extend({
             this.showChildView('functionParametersRegion', new FunctionParametersView({ model }));
         });
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
-        this.showChildView('functionOverloadsRegion', this.functionOverloads);
+        if (collection.length > 0) {
+            this.showChildView('functionOverloadsRegion', this.functionOverloads);
+        }
 
         if (this.options.isFull) {
             collection.at(0).select();
@@ -42,6 +50,7 @@ export default Marionette.View.extend({
     setPosition(position) {
         this.$el.css('top', position.top);
         this.$el.css('left', position.left);
+        this.$el.css('right', position.right);
     },
 
     __onKeydown(e) {
