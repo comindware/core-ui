@@ -26,5 +26,10 @@ export default {
         literal: 'literal',
         operator: 'operator',
         attribute: 'attribute'
+    },
+
+    mode: {
+        script: 'script',
+        expression: 'expression'
     }
 };

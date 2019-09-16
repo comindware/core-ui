@@ -555,7 +555,7 @@ li.CodeMirror-hint-active {
 .dev-code-editor-button-mode .dev-codemirror {
     display: none;
 }
-  
+
 .code-editor:not(.dev-code-editor-button-mode) .dev-code-button-edit,
 .code-editor:not(.dev-code-editor-button-mode) .icon-remove {
     display: none;
@@ -595,7 +595,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-tooltip {
-    position: fixed;
+    position: absolute;
     z-index: 102;
     border: 1px solid silver;
     border-radius: 3px;
@@ -619,6 +619,10 @@ li.CodeMirror-hint-active {
 
 .dev-code-editor-tooltip-row {
     padding: 5px 0;
+}
+
+.code-editor-row__title-description {
+    font-weight: 600;
 }
 
 .dev-code-editor-tooltip-parameter-type {

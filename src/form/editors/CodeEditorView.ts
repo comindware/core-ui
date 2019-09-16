@@ -123,6 +123,8 @@ export default formRepository.editors.Code = BaseEditorView.extend({
     },
 
     setValue(value) {
+        //reset outputView
+        this.editor.trigger('compile', { errors: [], warnings: [], info: [] });
         this.__value(value, true, false);
     },
 
