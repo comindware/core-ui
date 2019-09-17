@@ -1054,15 +1054,20 @@ a:hover {
     display: flex;
 }
 
-.split-panel_container.split-panel_vertical {
-    flex-wrap: wrap;
+.split-panel_container.split-panel__vertical {
+    flex-direction: row;
+    flex-wrap: wrap; 
 }
 
-.split-panel_container.split-panel_horizontal {
+.split-panel_container.split-panel__horizontal {
     flex-direction: column;
 }
 
-.split-panel_tile {
+.split-panel__general .split-panel__tile:not(.general) {
+    display: none;
+}
+
+.split-panel__tile {
     flex: 1;
     min-width: 500px;
     min-height: 300px;

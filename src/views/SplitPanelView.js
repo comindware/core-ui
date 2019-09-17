@@ -1,14 +1,21 @@
 //@flow
 import template from './templates/splitPanel.hbs';
 import SplitPanelResizer from './SplitPanelResizer';
+import { splitViewTypes } from '../Meta';
 
 const orientationClasses = {
-    vertical: 'split-panel_vertical',
-    horizontal: 'split-panel_horizontal'
+    [splitViewTypes.GENERAL]: 'split-panel__general',
+    [splitViewTypes.VERTICAL]: 'split-panel__vertical',
+    [splitViewTypes.HORIZONTAL]: 'split-panel__horizontal'
+};
+
+const defaultOptions = {
+    viewType: splitViewTypes.VERTICAL
 };
 
 export default Marionette.View.extend({
     initialize() {
+        _.defaults(this.options, defaultOptions);
         this.regionModulesMap = [];
         this.resisersList = [];
     },
@@ -16,7 +23,7 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     className() {
-        return `split-panel_container ${this.options.horizontal ? orientationClasses.horizontal : orientationClasses.vertical}`;
+        return `split-panel_container ${orientationClasses[this.options.viewType]}`;
     },
 
     onRender() {
@@ -27,14 +34,11 @@ export default Marionette.View.extend({
         }
     },
 
-    toggleOrientation(type) {
-        if (type === 'no') {
-            this.__hidePanels();
-        } else {
-            this.__showPanels();
-            this.el.className = `split-panel_container ${type === 'horizontal' ? orientationClasses.horizontal : orientationClasses.vertical}`;
-            this.resisersList.forEach(resizer => resizer.toggleOrientation(type));
-        }
+    toggleOrientation(viewType = defaultOptions.viewType) {
+        this.options.viewType = viewType;
+        this.__showPanels();
+        this.el.className = this.className();
+        this.resisersList.forEach(resizer => resizer.toggleOrientation(this.options.viewType));
     },
 
     onAttach() {
@@ -48,7 +52,7 @@ export default Marionette.View.extend({
     __initializeViews(handlerRoutPairs) {
         handlerRoutPairs.forEach((pair, i) => {
             const regionEl = document.createElement('div');
-            regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
+            regionEl.className = `js-tile${i + 1}-region split-panel__tile${i === 0 ? ' general' : ''}`;
 
             this.el.insertAdjacentElement('beforeEnd', regionEl);
 
@@ -69,7 +73,7 @@ export default Marionette.View.extend({
             //after each, except last
             const resizer = new SplitPanelResizer({
                 firstPanel: this.regionModulesMap[i].region,
-                secondPanel: this.regionModulesMap[i + 1]?.region
+                secondPanel: this.regionModulesMap[i + 1] ?.region
             });
             this.resisersList.push(resizer);
             this.regionModulesMap[i].region.el.insertAdjacentElement('afterEnd', resizer.render().el);

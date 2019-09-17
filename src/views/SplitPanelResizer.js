@@ -1,3 +1,5 @@
+import { splitViewTypes } from '../Meta';
+
 const constants = {
     DEFAULT_MODE_WIDTH: 250,
     COMPACT_MODE_WIDTH: 50,
@@ -17,7 +19,8 @@ export default Marionette.View.extend({
     template: Handlebars.compile('<div class="js-resizer split-panel_resizer"></div>'),
 
     onRender() {
-        if (this.options.orientation === 'horizontal') {
+        Core.services.UIService.undraggable({ el: this.el });
+        if (this.options.orientation === splitViewTypes.HORIZONTAL) {
             const originalPanel1Height = this.firstPanel.el.getBoundingClientRect().height;
 
             this.$el.css('left', '');
