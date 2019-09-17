@@ -222,11 +222,22 @@
     opacity: .8;
 }
 
-.grid-header .grid-header-dragger {
+.grid-header-dragger:before{
+    content: '';
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    left: 1px;
+    top:50%;
+    margin-top: -7px;
     visibility: hidden;
 }
 
-.grid-header:hover .grid-header-dragger {
+.grid-header-dragger:before{
+    background-color: #fff;
+}
+
+.grid-header:hover .grid-header-dragger:before{
     visibility: visible;
 }
 

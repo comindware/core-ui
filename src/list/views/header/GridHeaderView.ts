@@ -158,8 +158,8 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __startDrag(e: PointerEvent) {
-        const dragger = e.target.parentElement;
-        const columnElement = dragger.parentElement.parentElement;
+        const dragger = e.target.parentNode;
+        const columnElement = dragger.parentNode;
 
         const draggedColumn = {
             el: columnElement
@@ -194,7 +194,7 @@ const GridHeaderView = Marionette.View.extend({
         document.removeEventListener('pointerup', this.__draggerMouseUp);
     },
 
-    __draggerMouseMove(e: MouseEvent) {
+    __draggerMouseMove(e: PointerEvent) {
         if (!this.dragContext) {
             return;
         }
