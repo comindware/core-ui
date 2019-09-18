@@ -120,10 +120,17 @@ export const virtualCollectionFilterActions = {
     REMOVE: 'remove'
 };
 
+export const splitViewTypes = {
+    GENERAL: 'General',
+    VERTICAL: 'SplitVertical',
+    HORIZONTAL: 'SplitHorizontal',
+};
+
 export default {
     objectPropertyTypes,
     contextIconType,
     presentingComponentsTypes,
+    splitViewTypes,
     iconsNames,
     coreIcons,
     objectPropertyFormats

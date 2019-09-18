@@ -21,6 +21,8 @@ type position = {
     bottom?: number
 };
 
+let onStart: EventListener;
+
 export default class UIService {
     static __getDefaultsSetProperties(axis: axis): Array<string> {
         return !axis ?
@@ -93,7 +95,7 @@ export default class UIService {
             document.removeEventListener('pointermove', onMove, true);
             typeof stop === 'function' && stop(event, el);
         };
-        const onStart = (event: MouseEvent) => {
+        onStart = (event: MouseEvent) => {
             const clientRect = el.getBoundingClientRect();
             const documentWidth = document.body.offsetWidth;
             const documentHeight = document.body.offsetHeight;
@@ -113,7 +115,14 @@ export default class UIService {
             document.addEventListener('pointermove', onMove, true);
             typeof start === 'function' && start(event, el);
         };
+
         el.addEventListener('pointerdown', onStart);
+    }
+
+    static undraggable({ el }: { el: HTMLElement }) {
+        if (onStart) {
+            el.removeEventListener('pointerdown', onStart);
+        }
     }
 
     static getTransitionDurationMilliseconds(el: HTMLElement): number {

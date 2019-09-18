@@ -120,7 +120,7 @@ export default Marionette.View.extend({
     __initializeViews(views) {
         views.forEach((view, i) => {
             const regionEl = document.createElement('div');
-            regionEl.className = `js-tile${i + 1}-region split-panel_tile`;
+            regionEl.className = `js-tile${i + 1}-region split-panel__tile`;
 
             this.ui.splitPanelWrapper.append(regionEl);
 
