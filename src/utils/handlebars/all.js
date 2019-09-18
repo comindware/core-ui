@@ -7,6 +7,7 @@ import renderDate from './renderDate';
 import renderFullDate from './renderFullDate';
 import renderFullDateTime from './renderFullDateTime';
 import renderShortDuration from './renderShortDuration';
+import getAvatar from './getAvatar';
 
 Handlebars.registerHelper('equal', equal);
 Handlebars.registerHelper('highlightFragment', highlightFragment);
@@ -17,3 +18,4 @@ Handlebars.registerHelper('renderDate', renderDate);
 Handlebars.registerHelper('renderFullDate', renderFullDate);
 Handlebars.registerHelper('renderFullDateTime', renderFullDateTime);
 Handlebars.registerHelper('renderShortDuration', renderShortDuration);
+Handlebars.registerHelper('getAvatar', getAvatar);

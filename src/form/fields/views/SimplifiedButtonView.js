@@ -1,3 +1,4 @@
+import UserService from 'services/UserService';
 import template from '../templates/simplifiedButton.hbs';
 
 export default Marionette.View.extend({
@@ -62,12 +63,12 @@ export default Marionette.View.extend({
                 return Array.isArray(values)
                     ? _.compact(values).map(v => ({
                           value: `
-                <div class="user-edit-wrp">
-                    <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
-                </div>
-                 ${v.name}
-            </div>`
+                            <div class="user-edit-wrp">
+                                <div class="composite-user-abr__container">
+                                ${UserService.getAvatar(v)}
+                                </div>
+                                ${v.name}
+                            </div>`
                       }))
                     : [{ value: values?.name }];
             }
@@ -75,11 +76,11 @@ export default Marionette.View.extend({
                 return Array.isArray(values)
                     ? _.compact(values).map(v => ({
                           value: `
-                <div class="user-edit-wrp">
-                    <div class="simple-field_container">
-                    ${v.avatarUrl ? `<img src="${v.avatarUrl}">` : v.abbreviation}
-                </div>
-            </div>`
+                            <div class="user-edit-wrp">
+                                <div class="composite-user-abr__container">
+                                ${UserService.getAvatar(v)}
+                                </div>
+                            </div>`
                       }))
                     : [{ value: values?.name }];
             }
