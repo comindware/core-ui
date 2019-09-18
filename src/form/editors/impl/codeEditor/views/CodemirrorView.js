@@ -549,7 +549,7 @@ export default Marionette.View.extend({
         this.codemirror.execCommand('find');
     },
     async __compile() {
-        if (this.intelliAssist) {
+        if (!this.intelliAssist) {
             return;
         }
         if (this.currentHighlightedLine) {
