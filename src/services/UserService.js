@@ -16,7 +16,7 @@ let avatarGetter;
 
 export default {
     initialize(options) {
-        avatarGetter = options.dataProvider;
+        dataProvider = options.dataProvider;
         avatarGetter = options.avatarGetter;
     },
 
