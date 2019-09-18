@@ -126,6 +126,7 @@ export default Marionette.View.extend({
         const allCollapsibleModels = this.groupedCollection.getCollapsibleModels();
 
         if (allCollapsibleModels.length === 0) {
+            clearInterval(interval);
             return;
         }
 

@@ -7,6 +7,8 @@ export default Marionette.CollectionView.extend({
 
     template: Handlebars.compile(template),
 
+    viewComparator: 'order',
+
     childView(model) {
         return meta.getViewByModel(model);
     },
