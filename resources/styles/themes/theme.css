@@ -489,7 +489,7 @@ svg.svg-grid-icons {
 tr.row-checked,
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
-  background-color: #c2d7e5;
+  background-color: var(--selected-color);
 }
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
