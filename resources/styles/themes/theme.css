@@ -58,17 +58,28 @@ body {
 
 .cell.error .form-label__error{
   margin: 0;
-  position: absolute;
+  position: relative;
   left: -15px;
-  top: -8px;
   z-index: 1;
 }
 
 .cell.error .form-label__error-button{
   height: 0;
   width: 0;
-  border-top: 10px solid #e61212;
-  border-right: 10px solid transparent;
+  border-top: 16px solid #e61212;
+  border-right: 16px solid transparent;
+  vertical-align: top;
+}
+
+.cell.error .form-label__error-button:after {
+  content: '!';
+  color: #fff;
+  position: absolute;
+  vertical-align: top;
+  top: 0;
+  font-size: 10px;
+  font-weight: bold;
+  left: 3px;
 }
 
 .cell.error .form-label__error-button:before{
@@ -291,6 +302,7 @@ body {
   height: var(--radio-size);
   margin-right: var(--radio-right-margin);
   border: 1px solid var(--checkbox-border-color);
+  flex-shrink: 0;
 }
 .radiobutton-text {
   line-height: var(--line-height);
@@ -447,6 +459,10 @@ svg.svg-grid-icons {
   display: none;
 }
 
+.grid__headless .grid-content-view{
+  overflow: auto;
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
@@ -508,7 +524,6 @@ tr:hover .cell_selection-index {
 .sort_down, .sort_up {
   width: var(--grid-sort-icon-size);
   height: var(--grid-sort-icon-size);
-  background-image: var(--grid-sort-icon);
   top: var(--grid-sort-icon-offset-y);
 }
 
@@ -855,25 +870,32 @@ tr:hover .cell_selection-index {
 }
 
 /* button */
-.btn{
+.btn,
+.toolbar-btn.btn{
   @apply --button-theme;
 }
-.btn-strong{
+.btn-strong,
+.toolbar-btn.btn-strong{
   @apply --button-strong;
 }
-.btn-pale{
+.btn-pale,
+.toolbar-btn.btn-pale{
   @apply --button-pale;
 }
-.btn-strong:hover{
+.btn-strong:hover,
+.toolbar-btn.btn-strong:hover{
   @apply --button-strong-hover-theme;
 }
-.btn-strong:active{
+.btn-strong:active,
+.toolbar-btn.btn-strong:active{
   @apply --button-strong-active-theme;
 }
-.btn-pale:hover{
+.btn-pale:hover,
+.toolbar-btn.btn-pale:hover{
   @apply --button-pale-hover-theme;
 }
-.btn-pale:active{
+.btn-pale:active,
+.toolbar-btn.btn-pale:active{
   @apply --button-pale-active-theme;
 }
 .layout__button .btn:focus{
@@ -955,6 +977,11 @@ tr:hover .cell_selection-index {
   @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
+  padding: 3px 15px;
+}
+.toolbar-btn > .toolbar__icons > i {
+  width: 100%;
+  height: auto;
 }
 .toolbar-items-wrp > div:last-child.toolbar-btn,
 .toolbar-items-wrp > div:last-child .toolbar-btn{
@@ -1049,6 +1076,8 @@ tr:hover .cell_selection-index {
 
 .toolbar__icons {
   display: inline-block;
+  width: 20px;
+  flex: none;
 }
 
 .toolbar__icons .fa {

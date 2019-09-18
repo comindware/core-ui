@@ -360,8 +360,9 @@ export default {
 
                 if (validators) {
                     //Run through validators until an error is found
-                    validators.every(validator => {
-                        error = getValidator(validator)(value, formValues);
+                    validators.every(validatorOptions => {
+                        const validator = getValidator(validatorOptions);
+                        error = validator.call(this, value, formValues);
                         return !error;
                     });
                 }

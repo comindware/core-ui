@@ -291,7 +291,7 @@ export default Marionette.View.extend({
     },
 
     isNeedToPrevent() {
-        return this.el.querySelector('.dev-codemirror-maximized') !== null || this.el.querySelector('.CodeMirror-hints') !== null;
+        return document.querySelector('.dev-codemirror-maximized') !== null || document.querySelector('.CodeMirror-hints') !== null;
     },
 
     setLoading(loading: boolean) {

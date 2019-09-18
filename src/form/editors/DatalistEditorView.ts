@@ -217,7 +217,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const bubbleItemViewOptions = {
             getDisplayText: this.__getDisplayText,
             bubbleDelete: this.__onBubbleDelete.bind(this),
-            edit: this.options.edit,
+            edit: this.options.showEditButton ? this.options.edit : false,
             canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
             createValueUrl: this.options.createValueUrl,
             enabled: this.getEnabled(),

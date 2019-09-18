@@ -2,7 +2,6 @@ import comparators_ from './comparators';
 import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
-import userHelpers_ from './userHelpers';
 import diffHelper_ from './diffHelper';
 import keyCode_ from './keyCode';
 import './handlebars/all';
@@ -16,7 +15,6 @@ export const dateHelpers = dateHelpers_;
 export const keyCode = keyCode_;
 export const diffHelper = diffHelper_;
 export const transliterator = transliterator_;
-export const userHelpers = userHelpers_;
 
 export default {
     /**
@@ -49,7 +47,5 @@ export default {
     keyCode,
     transliterator,
 
-    diffHelper,
-
-    userHelpers
+    diffHelper
 };

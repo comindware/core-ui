@@ -108,9 +108,6 @@ export default Marionette.View.extend({
 
         this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
-        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
-
         this.uniqueId = _.uniqueId('native-grid');
         this.childHeight = options.childHeight || 35; //todo fix it
 
@@ -155,24 +152,8 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
-        this.__updateActions(allToolbarActions, this.collection);
-        if (this.options.showToolbar || this.options.draggable) {
-            if (this.options.showCheckbox) {
-                this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
-            } else {
-                this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
-            }
-            if (this.options.updateToolbarEvents) {
-                this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
-            }
-        }
+        this.__initializeToolbar();
 
-        if (this.options.showToolbar) {
-            this.toolbarView = new ToolbarView({
-                toolbarItems: allToolbarActions || new Backbone.Collection()
-            });
-            this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
-        }
         if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
@@ -180,6 +161,31 @@ export default Marionette.View.extend({
         if (this.options.showTreeEditor) {
             this.__initTreeEditor();
         }
+    },
+
+    __initializeToolbar() {
+        if (!this.options.showToolbar) {
+            return;
+        }
+
+        this.toolbarView = new ToolbarView({
+            toolbarItems: this.__getToolbarActions() || []
+        });
+
+        const allToolbarActions = this.toolbarView.getToolbarItems();
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
+        this.__updateActions(allToolbarActions, this.collection);
+
+        if (this.options.showCheckbox) {
+            this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
+        } else {
+            this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+        }
+        if (this.options.updateToolbarEvents) {
+            this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
+        }
+
+        this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
     },
 
     __handleColumnWidthChange(config: { index: number, newColumnWidth: number }) {
@@ -461,10 +467,13 @@ export default Marionette.View.extend({
 
     onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
-        if (Core.services.MobileService.isIE) {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
-        } else {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+
+        if (this.isRendered()) {
+            if (Core.services.MobileService.isIE) {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+            } else {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+            }
         }
     },
 
@@ -915,7 +924,7 @@ export default Marionette.View.extend({
         this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
 
         this.listenTo(columnsCollection, 'change:isHidden', model => {
-            this.__setColumnVisibility(model.id, model.get('isHidden'));
+            this.setColumnVisibility(model.id, !model.get('isHidden'));
         });
 
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
@@ -926,7 +935,7 @@ export default Marionette.View.extend({
     },
 
     __setVisibilityAllColumns() {
-        this.options.columns.forEach(column => this.__setColumnVisibility(column.key, column.isHidden));
+        this.options.columns.forEach(column => this.setColumnVisibility(column.key, !column.isHidden));
     },
 
     __onDiffApplied() {
@@ -976,7 +985,8 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __setColumnVisibility(key: string, isHidden = false) {
+    setColumnVisibility(key: string, visibility = true) {
+        const isHidden = !visibility;
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.key === key);
         const columnToBeHidden = columns[index];

@@ -548,10 +548,14 @@ li.CodeMirror-hint-active {
     line-height: initial;
 }
 
+.cell .dev-code-editor-button-mode {
+    height: auto;
+}
+
 .dev-code-editor-button-mode .dev-codemirror {
     display: none;
 }
-  
+
 .code-editor:not(.dev-code-editor-button-mode) .dev-code-button-edit,
 .code-editor:not(.dev-code-editor-button-mode) .icon-remove {
     display: none;
@@ -559,6 +563,7 @@ li.CodeMirror-hint-active {
 
 .code-editor:hover .editor__icons.icon-remove {
     visibility: visible;
+    padding-right: 10px;
 }
 
 .editor_empty.code-editor:hover .editor__icons.icon-remove {
@@ -580,7 +585,7 @@ li.CodeMirror-hint-active {
     color: #838c93;
     height: unset;
     margin: 4px 10px;
-    padding: 4px 10px 2px 5px;
+    padding: 4px 16px 2px 5px;
     text-align: center;
 }
 
@@ -590,7 +595,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-tooltip {
-    position: fixed;
+    position: absolute;
     z-index: 102;
     border: 1px solid silver;
     border-radius: 3px;
@@ -614,6 +619,10 @@ li.CodeMirror-hint-active {
 
 .dev-code-editor-tooltip-row {
     padding: 5px 0;
+}
+
+.code-editor-row__title-description {
+    font-weight: 600;
 }
 
 .dev-code-editor-tooltip-parameter-type {

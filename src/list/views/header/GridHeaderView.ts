@@ -72,10 +72,12 @@ const GridHeaderView = Marionette.View.extend({
     templateContext() {
         return {
             columns: this.options.columns.map(column =>
-                Object.assign({}, column, {
+                ({
+                    ...column,
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
-                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : ''
+                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : '',
+                    hiddenClass: classes.hiddenByTreeEditorClass
                 })
             ),
             showCheckbox: this.options.showCheckbox && !!this.options.columns.length,
@@ -155,24 +157,21 @@ const GridHeaderView = Marionette.View.extend({
         return el.getBoundingClientRect().width;
     },
 
-    __startDrag(e) {
-        const dragger = e.target;
-        const columnNode = dragger.parentNode.parentNode;
+    __startDrag(e: PointerEvent) {
+        const dragger = e.target.parentElement;
+        const columnElement = dragger.parentElement.parentElement;
 
         const draggedColumn = {
-            el: columnNode,
-            initialWidth: 0,
-            index: 0
+            el: columnElement
         };
 
         this.dragContext = {
             pageOffsetX: e.pageX,
             dragger,
-            draggedColumn,
-            resizingElement: columnNode
+            draggedColumn
         };
 
-        this.__updateColumnAndNeighbourWidths(columnNode);
+        this.__updateColumnAndNeighbourWidths(columnElement);
 
         dragger.classList.add('active');
 
@@ -186,7 +185,7 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         const draggerElement = this.dragContext.dragger;
-        this.__triggerUpdateWidth(draggerElement);
+        this.__triggerUpdateWidth();
 
         draggerElement.classList.remove('active');
         this.dragContext = null;
@@ -218,9 +217,9 @@ const GridHeaderView = Marionette.View.extend({
         return false;
     },
 
-    __triggerUpdateWidth(element) {
-        const index = Array.from(this.el.querySelectorAll('.grid-header-dragger')).indexOf(element);
-        const columnElement = this.el.querySelectorAll('.grid-header-column').item(index);
+    __triggerUpdateWidth() {
+        const index = this.dragContext.draggedColumn.index;
+        const columnElement = this.dragContext.draggedColumn.el;
 
         this.trigger('update:width', { index, newColumnWidth: this.__getElementOuterWidth(columnElement) });
     },
@@ -244,10 +243,11 @@ const GridHeaderView = Marionette.View.extend({
         // this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
     },
 
-    __updateColumnAndNeighbourWidths(column: Node) {
+    __updateColumnAndNeighbourWidths(column: HTMLElement) {
         for (let i = 0; i < this.options.columns.length; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
+
             if (child === column) {
                 this.dragContext.draggedColumn.index = i;
                 this.dragContext.draggedColumn.initialWidth = width;
@@ -264,7 +264,7 @@ const GridHeaderView = Marionette.View.extend({
         this.gridEventAggregator.trigger('toggle:collapse:all', this.collapsed);
     },
 
-    __updateCollapseAll(collapsed) {
+    __updateCollapseAll(collapsed: Boolean) {
         this.collapsed = collapsed;
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
@@ -278,17 +278,23 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragEnter(event: MouseEvent) {
-        this.el.classList.add(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.add(classes.dragover);
+        }
     },
 
     __handleDragLeave(event: MouseEvent) {
-        this.el.classList.remove(classes.dragover);
+        if (this.__allowDrop()) {
+            this.el.classList.remove(classes.dragover);
+        }
     },
 
     __handleDrop(event: MouseEvent) {
         event.preventDefault();
         if (this.__allowDrop()) {
+            this.el.classList.remove(classes.dragover);
             this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModel);
+            delete this.collection.draggingModel;
         }
     },
 

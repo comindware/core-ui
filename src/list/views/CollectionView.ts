@@ -1,7 +1,7 @@
-//@flow
-import { keyCode, helpers } from 'utils';
+import { keyCode, helpers } from '../../utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import _ from 'underscore';
+import Backbone from 'backbone';
 
 /*
     Public interface:
@@ -229,8 +229,8 @@ export default Marionette.PartialCollectionView.extend({
         return childView;
     },
 
-    __handleKeydown(e) {
-        if (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode)) {
+    __handleKeydown(e: KeyboardEvent) {
+        if (!e || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
             return;
         }
         e.stopPropagation();
@@ -299,6 +299,11 @@ export default Marionette.PartialCollectionView.extend({
             case keyCode.END:
                 if (handle) {
                     this.__moveCursorTo(this.collection.length - 1, { shiftPressed: e.shiftKey });
+                }
+                return !handle;
+            case keyCode.A:
+                if (handle && e.ctrlKey) {
+                    this.collection.toggleCheckAll();
                 }
                 return !handle;
             default:

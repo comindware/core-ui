@@ -190,7 +190,8 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     e.validationResult = this.validate();
                 });
                 if (options.getReadonly || options.getHidden) {
-                    this.model.on('change', () => this.__updateExternalChange(options));
+                    this.model.on('change', () => this.__updateDynamicFieldAccess(options));
+                    this.once('render', () => this.__updateDynamicFieldAccess(options));
                 }
             }
         },
@@ -507,7 +508,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
          */
         validate({ internal } = {}) {
-            let error = null;
+            const errors = [];
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;
@@ -518,23 +519,24 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             }
 
             if (validators) {
-                //Run through validators until an error is found
-                validators.every(validator => {
-                    error = getValidator(validator)(value, formValues);
-                    return !error;
+                validators.forEach(validator => {
+                    let error = getValidator(validator)(value, formValues);
+                    if (error) {
+                        errors.push(error)
+                    }
                 });
             }
 
             if (!internal && this.isRendered() && !this.isDestroyed()) {
-                this.$editorEl.toggleClass(classes.ERROR, !!error);
-                if (error) {
-                    this.setError([error]);
+                this.$editorEl.toggleClass(classes.ERROR, !!errors.length);
+                if (errors.length) {
+                    this.setError(errors);
                 } else {
                     this.clearError();
                 }
             }
 
-            return error;
+            return errors.length ? errors : null;
         },
 
         trigger(event: 'focus' | 'blur') {
@@ -687,7 +689,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             return this.isRendered() && !this.isDestroyed();
         },
 
-        __updateExternalChange(options) {
+        __updateDynamicFieldAccess(options) {
             if (typeof options.getReadonly === 'function') {
                 this.setReadonly(Boolean(options.getReadonly(options.model)));
             }

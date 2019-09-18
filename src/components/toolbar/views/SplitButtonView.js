@@ -10,7 +10,7 @@ export default Marionette.View.extend({
     initialize() {
         this.juggleStates = this.model.get('juggleStates');
         if (this.juggleStates) {
-            this.__initCollectionGenerator(this.model.get('items'), this.model.get('initialState') || 0);
+            this.__initCollectionGenerator(this.model.get('items'), this.model.get('stateIndex') || this.model.get('initialState') || 0);
         } else {
             this.itemsCollection = new SelectStateItemsCollection(this.model.get('items'));
         }
@@ -109,7 +109,7 @@ export default Marionette.View.extend({
 
     __onPanelCommandExecute(actionModel, options) {
         const stateData = actionModel.toJSON();
-        const stateIndex = this.model.get('items').findIndex(x => _.isEqual(x, stateData));
+        const stateIndex = this.model.get('items').filter(x => x.type !== toolbarItemType.HEADLINE).findIndex(x => x.id === stateData.id);
 
         this.buttonView.model.set({
             stateIndex,
