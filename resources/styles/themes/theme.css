@@ -486,11 +486,12 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
+/*
 tr.row-checked,
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
   background-color: var(--selected-color);
-}
+}*/
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
   color: #666;
@@ -1306,7 +1307,7 @@ tr:hover .cell_selection-index {
 
 
 .task-links__link {
-  color: var(--text-color);
+  color:var(--theme-colors__text_fade);
 }
 
 .task-links__link:hover {
