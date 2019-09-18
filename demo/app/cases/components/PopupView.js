@@ -54,6 +54,7 @@ export default function() {
 
     const createPopup = () =>
         new Core.layout.Popup({
+            expand: true,
             size: {
                 width: '800px',
                 height: '700px'
