@@ -105,7 +105,7 @@ export default class TreeDiffController {
     __initConfiguration(configDiff: ConfigDiff) {
         this.__passConfigDiff(configDiff);
         this.__applyDiff(this.filteredDescendants);
-        
+
     }
 
     __passConfigDiff(configDiff: ConfigDiff) {
@@ -114,7 +114,7 @@ export default class TreeDiffController {
         } else {
             configDiff.forEach((value, key) => this.configDiff.set(key, value));
         }
-        
+
     }
 
     __initDescendants(graphModel: GraphModel, nestingOptions: NestingOptions) {
@@ -127,13 +127,13 @@ export default class TreeDiffController {
                 return true;
             }
 
-            const result = Array.isArray(hasControllerType) 
+            const result = Array.isArray(hasControllerType)
                 ? hasControllerType.includes(type) || hasControllerType.includes(fieldType)
                 : type === hasControllerType || fieldType === hasControllerType;
 
             return !result;
         };
-        
+
         const filteredDestsArray = filterDescendants(graphModel, filterFn);
         this.filteredDescendants = new Map(filteredDestsArray.map((model: GraphModel) => [model.id, model]));
 
@@ -165,7 +165,7 @@ export default class TreeDiffController {
                     value: pick
                 })
             }
-            
+
             initialConfig.set(model.id, new DiffItem(model.initialConfig));
 
             return initialConfig;
@@ -189,9 +189,8 @@ export default class TreeDiffController {
 
             if (configMap.size) {
                 model.set(configObject);
+                personalConfigProps.filter(prop => configObject[prop] == null).map(prop => model.unset(prop));
             }
-
-            personalConfigProps.filter(prop => configObject[prop] == null).map(prop => model.unset(prop));
 
             const collection = model.collection;
             if (collection) {
