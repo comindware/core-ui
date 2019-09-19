@@ -519,8 +519,9 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             }
 
             if (validators) {
-                validators.forEach(validator => {
-                    let error = getValidator(validator)(value, formValues);
+                validators.forEach(validatorOptions => {
+                    const validator = getValidator(validatorOptions);
+                    let error = validator.call(this, value, formValues);
                     if (error) {
                         errors.push(error)
                     }

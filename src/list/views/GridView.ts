@@ -599,6 +599,19 @@ export default Marionette.View.extend({
         this.trigger('set:draggable', draggable);
     },
 
+    replaceColumns(newColumns = []) {
+        const columns = this.options.columns;
+
+        newColumns.forEach(newColumn => {
+            const index = columns.findIndex(column => column.key === newColumn.key);
+            const [oldColumn] = columns.splice(index, 1, newColumn);
+
+            newColumn.columnClass = oldColumn.columnClass;
+        });
+
+        this.listView.render();
+    },
+
     __handleDragLeave(event) {
         const element = document.elementFromPoint(event.pageX, event.pageY);
         if (!this.el.contains(element)) {
