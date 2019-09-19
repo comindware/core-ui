@@ -842,3 +842,14 @@ tr.dragover td{
     position: sticky;
     top: 50px;
 }
+
+.modal-window-wrapper .dev-collection .grid-table-wrapper-war{
+    overflow: auto;
+}
+.modal-window-wrapper .dev-collection .grid-header-column,
+.modal-window-wrapper .dev-collection .grid-header .cell_selection,
+.modal-window-wrapper .dev-collection .grid-header .cell_selection-index{
+    top: 0px;
+}
+
+/*--- end of Fix colletion scroll header ---*/
