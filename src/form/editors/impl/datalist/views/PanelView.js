@@ -24,7 +24,7 @@ export default Marionette.View.extend({
     templateContext() {
         const showSelectedCollection = Boolean(this.options.selectedCollection);
         return {
-            showAddNewButton: Boolean(this.options.showAddNewButton),
+            showAddNewButton: Boolean(this.options.addNewItemText),
             showSelectedCollection,
             addNewItemText: this.options.addNewItemText,
             showCollection: this.options.showCollection,
