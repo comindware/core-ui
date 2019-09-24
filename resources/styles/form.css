@@ -479,6 +479,12 @@ input[type="checkbox"].checkbox {
     display: inline-block;
     align-self: center;
 }
+
+.editor_disabled .bubbles__form,
+.editor_readonly .bubbles__form {
+    display: none;
+}
+
 .bubbles__input {
     width: 100%;
     height: 100%;
@@ -907,13 +913,18 @@ input[type="color"], .colorpicker{
     padding: 10px;
 }
 
-
 .cell .bubbles .bubbles__list{
-    flex: 0 1 auto
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
 }
+
+.cell .bubbles__input:focus {
+    min-width: 200px;
+}
+
 .cell .bubbles__i.bubble__pencil-edit .bubble-doc_text{
 
 }
 .cell .bubbles .bubbles__list .bubbles__i{
-    flex: 0 1 auto
+    flex: 0 1 auto;
 }
