@@ -194,7 +194,7 @@ export default Marionette.PartialCollectionView.extend({
         }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            if (this.getOption('showRowIndex')) {
+            if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
                 const index = childModel.collection.indexOf(childModel) + 1;
                 if (index !== childModel.currentIndex) {
                     child.updateIndex && child.updateIndex(index);

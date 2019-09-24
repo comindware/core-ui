@@ -826,9 +826,9 @@ tr.dragover td{
     margin-left: 0.25rem;
 }
 
-
+/* temporary disabled */
 /*--- Fix colletion scroll header ---*/
-.dev-collection .grid-table-wrapper-war {
+/* .dev-collection .grid-table-wrapper-war {
     overflow: inherit;
 }
 
@@ -850,6 +850,6 @@ tr.dragover td{
 .modal-window-wrapper .dev-collection .grid-header .cell_selection,
 .modal-window-wrapper .dev-collection .grid-header .cell_selection-index{
     top: 0px;
-}
+} */
 
 /*--- end of Fix colletion scroll header ---*/

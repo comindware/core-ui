@@ -159,7 +159,7 @@ export default {
 
         this.setModuleLoading(true);
 
-        if (!subModuleContext) {
+        if (!subModuleContext && context.activeModule) {
             //do not trigger events and cancel requests for submodules
             this.trigger('module:leave', {
                 page: this.activeModule ? this.activeModule.moduleId : null,

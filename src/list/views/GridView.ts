@@ -394,6 +394,9 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
+        if (this.options.maxHeight) {
+            this.ui.tableWrapper.get(0).style.maxHeight = `${this.options.maxHeight}px`;
+        }
         const childView = this.options.childView || RowView;
 
         const showRowIndex = this.getOption('showRowIndex');
@@ -460,7 +463,7 @@ export default Marionette.View.extend({
 
     updateListViewResize(options) {
         if (options.newMaxHeight) {
-            this.ui.content.css('maxHeight', options.newMaxHeight);
+            this.ui.tableWrapper.get(0).style.maxHeight = `${options.newMaxHeight}px`;
         }
         this.listView.handleResize(options.shouldUpdateScroll);
     },

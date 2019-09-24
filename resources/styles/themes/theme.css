@@ -666,9 +666,7 @@ tr:hover .cell_selection-index {
   transform: rotate(-90deg);
   background: none;
   fill: #636262;
-  position: absolute;
   left: 0;
-  top: 9px;
 }
 
 .cell .collapsible-btn svg{
@@ -678,7 +676,6 @@ tr:hover .cell_selection-index {
 .cell .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(0deg);
   background: none;
-  top: 8px;
 }
 
 .grid-header-column-content .collapsible-btn {
