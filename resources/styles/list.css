@@ -74,7 +74,8 @@
     padding: 9px 0 0 17px;
 }
 
-.grid-header > .cell_selection > .checkbox {
+.grid-header > .cell_selection > .checkbox,
+.grid-header > .cell_selection-index > .checkbox {
     z-index: 1
 }
 
