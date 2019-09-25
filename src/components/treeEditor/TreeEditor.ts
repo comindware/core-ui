@@ -79,7 +79,7 @@ export default class TreeEditor {
     }
 
     __getConfigDiff() {
-        return this.controller.configDiff;
+        return this.controller.configDiff.__mapChildsToObjects();
     }
 
     __setConfigDiff(configDiff: ConfigDiff) {
