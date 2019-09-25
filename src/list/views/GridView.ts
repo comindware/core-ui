@@ -192,7 +192,9 @@ export default Marionette.View.extend({
         const { index, newColumnWidth } = config;
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
-            this.trigger('treeEditor:save', { [this.options.columns[index].columnModel.id]: { width: newColumnWidth } });
+            const configWidthColumn = new Map();
+            configWidthColumn.set(this.options.columns[index].columnModel.id, { width: newColumnWidth });
+            this.trigger('treeEditor:save', configWidthColumn);
         }
     },
 
@@ -903,7 +905,7 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.key, ...column }))));
+        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column }))));
 
         this.treeModel = new Backbone.Model({
             title: this.options.title,
@@ -948,14 +950,14 @@ export default Marionette.View.extend({
     },
 
     __setVisibilityAllColumns() {
-        this.options.columns.forEach(column => this.setColumnVisibility(column.key, !column.isHidden));
+        this.options.columns.forEach(column => this.setColumnVisibility(column.id, !column.isHidden));
     },
 
     __onDiffApplied() {
         const columnsCollection = this.columnsCollection;
         this.options.columns.forEach(column => {
-            const model = columnsCollection.get(column.key);
-            Object.entries(model.pick('width', 'isHidden')).forEach(([key, value]) => (column[key] = value));
+            const model = columnsCollection.get(column.id);
+            Object.entries(model.pick('width', 'isHidden')).forEach(([id, value]) => (column[id] = value));
         });
         this.__setVisibilityAllColumns();
     },
@@ -998,10 +1000,10 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    setColumnVisibility(key: string, visibility = true) {
+    setColumnVisibility(id: string, visibility = true) {
         const isHidden = !visibility;
         const columns = this.options.columns;
-        const index = columns.findIndex(item => item.key === key);
+        const index = columns.findIndex(item => item.id === id);
         const columnToBeHidden = columns[index];
 
         if (isHidden) {
@@ -1027,7 +1029,7 @@ export default Marionette.View.extend({
             this.__toggleNoColumnsMessage(columns);
         }
 
-        this.trigger('column:set:isHidden', { key, isHidden });
+        this.trigger('column:set:isHidden', { id, isHidden });
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {

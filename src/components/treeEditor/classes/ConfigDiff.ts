@@ -69,7 +69,7 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
         return mappedConfig;
     }
 
-    mapChildsToObjects() {
+    __mapChildsToObjects() {
         const newMap = new Map();
 
         this.forEach((value: DiffItem, key: string) => {
