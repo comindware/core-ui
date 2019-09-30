@@ -314,7 +314,7 @@ const VirtualCollection = Backbone.Collection.extend({
                 this.filterFn = [...new Set(this.filterFn)];
                 break;
             case virtualCollectionFilterActions.REMOVE: //removes from the array the filter function with the specified name
-                const index = this.filterFn.findIndex(fn => fn.name === filterFn);
+                const index = this.filterFn.findIndex(fn => fn === filterFn);
                 if (index > -1) {
                     this.filterFn.splice(index, 1);
                 }
