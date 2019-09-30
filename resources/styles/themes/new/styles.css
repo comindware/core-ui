@@ -32,13 +32,6 @@
   color: var(--grey-400);
 }
 
-.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
-.editor_checked.checkbox {
-  color: var(--checkbox-checked-color);
-  background: var(--light-gradient);
-  border-color: var(--checkbox-border-color);
-}
-
 .tr-search__input {
   @apply --input-theme;
   height: var(--input-height);

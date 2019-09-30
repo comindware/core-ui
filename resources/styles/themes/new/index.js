@@ -81,7 +81,6 @@ const variables = {
 
     // checkbox
     'checkbox-size': '18px',
-    'checkbox-checked-color': 'var(--blue-300)',
     'checkbox-border-color': 'var(--border-color)',
     'checkbox-radius': 'var(--border-radius)',
     'checkbox-intermediate-color': 'var(--blue-300)',
@@ -90,7 +89,7 @@ const variables = {
     // radio
     'radio-size': 'var(--checkbox-size)',
     'radio-right-margin': '10px',
-    'radio-checked-color': 'var(--checkbox-checked-color)',
+    'radio-checked-color': 'var(--blue-300)',
     'radio-inner-size': '10px',
     'radio-checked-disabled-color': 'var(--grey-400)',
 
