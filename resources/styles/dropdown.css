@@ -52,6 +52,14 @@
     flex-direction: column;
 }
 
+.dropdown__wrp_reference.dropdown__wrp_down {
+    flex-direction: column;
+}
+
+.dropdown__wrp_reference.dropdown__wrp_up {
+    flex-direction: column-reverse;
+}
+
 .dd-list__filter {
     opacity: 1;
     flex: 0 0 auto
@@ -276,6 +284,7 @@
 .dropdown__wrp_list{
     overflow-y: auto;
     display: flex;
+    flex-direction: column;
 }
 
 /* icons panel */

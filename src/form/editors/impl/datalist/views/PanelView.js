@@ -28,7 +28,7 @@ export default Marionette.View.extend({
             showSelectedCollection,
             addNewItemText: this.options.addNewItemText,
             showCollection: this.options.showCollection,
-            showListTitle: this.options.showCollection && this.options.listTitle,
+            showListTitle: this.options.showCollection && this.options.listTitle && showSelectedCollection,
             showSelectedTitle: showSelectedCollection && this.options.showSelectedTitle,
             selectedTitle: this.options.selectedTitle,
             listTitle: this.options.listTitle
