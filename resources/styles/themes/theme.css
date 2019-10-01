@@ -28,6 +28,9 @@ body {
 .form-label:not(.form-label--empty) {
   margin-bottom: var(--form-label-margin);
 }
+.datalist-panel .form-label:not(.form-label--empty) {
+  margin-top: var(--form-label-margin);
+}
 
 .form-label__info:not(:empty),
 .error .form-label__error {
@@ -396,6 +399,20 @@ svg.svg-grid-icons {
   vertical-align: top;
 }
 
+.datalist-panel .form-label{
+  padding: var(--grid-header-padding);
+}
+.datalist-panel__list-splitter > div{
+  height: 1px;
+  padding: 5px 0;
+}
+.datalist-panel__list-splitter > div::after{
+    content: ' ';
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    border-top: 1px solid var(--grey-400);
+}
 
 .grid-header .cell_selection,
 .grid-header .cell_selection:hover,

@@ -17,14 +17,14 @@ import compositeUserCell from '../../list/templates/compositeUserCell.html';
 import Backbone from 'backbone';
 import _ from 'underscore';
 
-type options = {
-    collection?: Backbone.Collection | Array<object>,
+type optionsType = {
+    collection?: Backbone.Collection | Array<Object>,
 
     fetchFiltered?: boolean,
     showCollection?: boolean,
 
     displayAttribute?: string,
-    buttonView?: object,
+    buttonView?: Object,
 
     showAdditionalList?: boolean,
     subtextProperty?: string,
@@ -54,10 +54,10 @@ type options = {
     buttonBubbleTemplate?: string,
     panelBubbleTemplate?: string,
 
-    format?: 'user' | 'document' //name of preset for editor
+    format?: 'user' | 'document', //name of preset for editor
 
     boundEditor?: Marionette.View<Backbone.Model>,
-    boundEditorOptions?: object,
+    boundEditorOptions?: Object,
 
     //dropdown options
     externalBlurHandler?: any,
@@ -75,7 +75,7 @@ type options = {
     storeArray?: boolean
 };
 
-const defaultOptions = (options: options): options => ({
+const defaultOptions = (options: optionsType): optionsType => ({
     displayAttribute: 'name',
     buttonView: ButtonView,
 
@@ -132,7 +132,7 @@ const defaultOptions = (options: options): options => ({
 });
 
 const presetsDefaults = {
-    document: (options: options) => ({
+    document: (options: optionsType) => ({
         listTitle: options.title,
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeDocumentCell,
@@ -150,7 +150,7 @@ const presetsDefaults = {
             options.maxQuantitySelected !== 1 ? 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT' : 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT'
         )
     }),
-    user: (options: options) => ({
+    user: (options: optionsType) => ({
         listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
@@ -267,6 +267,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                     iconProperty: this.options.iconProperty
                 },
                 listTitle: this.options.listTitle,
+                idProperty: this.options.idProperty,
                 selectedTitle: this.options.selectedTitle,
                 showSelectedTitle: this.options.showSelectedTitle,
                 textFilterDelay: this.options.textFilterDelay
@@ -288,7 +289,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return isEmpty ? this.options.readonlyPlaceholder : '';
     },
 
-    __mapDatalistOptions(options: options) {
+    __mapDatalistOptions(options: optionsType) {
         let defaults;
         if (typeof options.format === 'string') {
             const presetFn = presetsDefaults[options.format];
@@ -1157,7 +1158,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return true;
     },
 
-    setLoading(state) {
+    setLoading(state: boolean) {
         this.dropdownView.setLoading(state);
     },
 
