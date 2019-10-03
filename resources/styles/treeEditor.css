@@ -170,19 +170,13 @@
     justify-content: center;
 }
 
-.tree-editor-toolbar .toolbar-buttons_container__const {
-    display: none;
-}
-
-.tree-editor-toolbar .toolbar-buttons_container {
-    width: 100%;
-    justify-content: center;
-}
-
 .tree-editor-toolbar .toolbar-items-wrp {
     margin: 5px;
     width: 100%;
     justify-content: space-evenly;
+}
+.tree-editor-toolbar .toolbar-items-wrp:empty {
+    margin: 0;
 }
 
 .root__header-name {
