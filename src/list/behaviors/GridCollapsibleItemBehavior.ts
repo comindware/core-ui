@@ -103,7 +103,7 @@ export default function() {
         },
 
         highlight(text: String) {
-            if (this.highlighted) {
+            if (this.highlightedFragment === text) {
                 return;
             }
 
