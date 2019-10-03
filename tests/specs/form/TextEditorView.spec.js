@@ -459,10 +459,10 @@ describe('Editors', () => {
             expect(input.prop('placeholder')).toEqual('Enter email');
             expect(input.val()).toEqual('someinvalid@email.comm');
             model.set('data', 'invalid');
-            expect(view.validate()).toEqual({
+            expect(view.validate()).toEqual([{
                 type: 'email',
                 message: 'Invalid email address'
-            });
+            }]);
 
             model.set('data', 'valid@email.com');
             expect(view.validate()).toBeUndefined();
@@ -489,10 +489,10 @@ describe('Editors', () => {
             expect(input.prop('placeholder')).toBe('5 (555) 555-55-55');
             expect(input.val()).toBe('1 (234) 567-89-__');
             model.set('data', 'invalid');
-            expect(view.validate()).toEqual({
+            expect(view.validate()).toEqual([{
                 type: 'phone',
                 message: 'Invalid phone number'
-            });
+            }]);
             model.set('data', '5 (555) 555-55-55');
             expect(view.validate()).toBeUndefined();
         });

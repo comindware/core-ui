@@ -184,14 +184,14 @@ export default formRepository.editors.Number = BaseEditorView.extend({
 
     __setEnabled(enabled) {
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
+        this.ui.input.prop?.('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
+            this.ui.input.prop?.('readonly', readonly);
+            this.ui.input.prop?.('tabindex', readonly ? -1 : 0);
         }
     },
 

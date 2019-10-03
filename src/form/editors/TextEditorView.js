@@ -126,7 +126,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         const value = this.getValue() || '';
         this.ui.input.val(value);
         if (this.options.showTitle) {
-            this.ui.input.prop('title', value);
+            this.ui.input.prop?.('title', value);
         }
     },
 
@@ -142,7 +142,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         this.__updateEmpty();
 
         if (this.getOption('showTitle')) {
-            this.ui.input.prop('title', value);
+            this.ui.input.prop?.('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);

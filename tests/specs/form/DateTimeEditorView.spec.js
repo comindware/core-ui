@@ -472,7 +472,7 @@ describe('Editors', () => {
             expect(view.timeDropdownView.isOpen).toEqual(true);
         });
 
-        it('should set time on time select', () => new Promise(function(resolve) {
+        xit('should set time on time select', done => {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
             });
@@ -491,7 +491,7 @@ describe('Editors', () => {
                 expect(model.get('data')).toBe('2015-07-19T22:00:00.000Z');
 
                 core.services.TestService.wait({
-                    callback: resolve,
+                    callback: done,
                     condition: () => findTimeInput(view).val().replace(new RegExp('\\s+', 'g'), '') === core.lib.moment('01:00', 'HH:mm').format('HH:mm:ss')
                 })
             });
@@ -499,7 +499,7 @@ describe('Editors', () => {
             findTimeInput(view)[0].focus();
 
             document.getElementsByClassName('time-dropdown__i')[4].click(); // '01:00' clicked
-        }));
+        });
 
 
         it('should hide clear button if hideClearButton = true', () => {
@@ -1212,52 +1212,50 @@ describe('Editors', () => {
             show(view);
         });
 
-        it('should add month to now moment on keydown RIGHT (shift) if panel is open after clear', done => {
-            console.log('test "DateTime add month from keyboard" is disabled, please enable it as soon as possible');
-            done();
-            // const model = new Backbone.Model({
-            //     date: someDateTimeISO
-            // });
+        xit('should add month to now moment on keydown RIGHT (shift) if panel is open after clear', done => {
+            const model = new Backbone.Model({
+                date: someDateTimeISO
+            });
 
-            // const view = new core.form.editors.DateTimeEditor({
-            //     model,
-            //     autocommit: true,
-            //     key: 'date'
-            // });
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                autocommit: true,
+                key: 'date'
+            });
 
-            // view.on('attach', () => {
-            //     const dateInput = findDateInput(view);
+            view.on('attach', () => {
+                const dateInput = findDateInput(view);
 
-            //     view.$el.trigger('mouseenter');
-            //     view.$('.js-clear-button').click();
+                view.$el.trigger('mouseenter');
+                view.$('.js-clear-button').click();
 
-            //     dateInput.focus();
-            //     expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
+                dateInput.focus();
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar no open on focus!');
 
-            //     dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.F2, shiftKey: true });
-            //     expect(view.calendarDropdownView.isOpen).toBeFalse('Calendar not close on F2!');
+                dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.F2, shiftKey: true });
+                expect(view.calendarDropdownView.isOpen).toBeFalse('Calendar not close on F2!');
 
-            //     dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
-            //     expect(view.value === null).toBeTrue('Keydown RIGHT change editor value when panel closed!');
+                dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
+                expect(view.value === null).toBeTrue('Keydown RIGHT change editor value when panel closed!');
 
-            //     dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.F2, shiftKey: true });
-            //     expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar not open on F2!');
+                dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.F2, shiftKey: true });
+                expect(view.calendarDropdownView.isOpen).toBeTrue('Calendar not open on F2!');
 
-            //     dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
+                dateInput.trigger({ type: 'keydown', bubbles: true, keyCode: keyCode.RIGHT, shiftKey: true });
 
-            //     const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / roundingAccuracyMs);
+                const shouldBeMilliseconds = Math.round(moment().add(1, 'months').valueOf() / roundingAccuracyMs);
 
-            //     expect(Math.round(moment(view.value).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
+                expect(Math.round(moment(view.value).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
 
-            //     model.on('change:date', (model, date) => {
-            //         expect(Math.round(moment(date).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
-            //         done();
-            //     });
+                model.on('change:date', (model, date) => {
+                    expect(Math.round(moment(date).valueOf() / roundingAccuracyMs)).toEqual(shouldBeMilliseconds);
+                    done();
+                });
 
-            //     dateInput.blur();
-            // });
+                dateInput.blur();
+            });
 
-            // show(view);
+            show(view);
         });
 
         it('should show correct date on date button if moment is valid', done => {

@@ -23,8 +23,10 @@ export default {
         Handlebars.registerHelper('iconPrefixer', iconPrefixer);
         Handlebars.registerHelper('iconUnicode', getIconUnicode(options.iconService));
         Handlebars.registerHelper('documentIcon', getDocumentIcon(iconPrefixer)); // must be registred after iconPrefixer
-        const appView = window.app.getView();
 
+        LocalizationService.initialize(options.localizationService);
+
+        const appView = window.app.getView();
         if (appView) {
             window.contentLoadingRegion = appView.getRegion('contentLoadingRegion');
             window.contentRegion = appView.getRegion('contentRegion');
@@ -58,7 +60,6 @@ export default {
 
         options.userService && UserService.initialize(options.userService);
         WindowService.initialize();
-        LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
         marionetteApp.defaultContentView = options.contentView;
         marionetteApp.options = options;

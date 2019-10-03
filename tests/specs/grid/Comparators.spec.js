@@ -18,7 +18,7 @@ describe('Data comparators', () => {
         expect(comparators.stringComparator2Desc('a', null)).toEqual(1);
         expect(comparators.stringComparator2Desc(null, 'b')).toEqual(-1);
         expect(comparators.stringComparator2Desc(null, null)).toEqual(0);
-        expect(comparators.stringComparator2Desc('a', 'a')).toEqual(-0);
+        expect(comparators.stringComparator2Desc('a', 'a')).toEqual(0);
     });
 
     it('should apply number Comparator 2 Asc', () => {
