@@ -1023,41 +1023,24 @@ export default Marionette.View.extend({
         this.trigger('column:set:isHidden', { id, isHidden });
     },
 
-    setClassToColumn(id: string, isHidden = false, index: number, classCell: string) {
-        const classHiddenOnForm = 'hidden-by-form-designer';
+    setClassToColumn(id: string, state = false, index: number, classCell: string) {
         let elementIndex = index + 1;
         if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
-        this.el.querySelector(headerSelector).classList.toggle(classCell, isHidden);
+        this.el.querySelector(headerSelector).classList.toggle(classCell, state);
 
         const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
-            element.classList.toggle(classCell, isHidden);
+            element.classList.toggle(classCell, state);
         });
+    },
 
-        if (classCell === classHiddenOnForm) {
-            const column = this.columnCollectionDefault.filter(model => model.get('id') === id);
-            if (isHidden) {
-                this.columnsCollection.remove(column);
-            } else {
-                this.columnsCollection.add(column);
-
-                //TODO check correct __updateObjectLayout
-                const columns = this.options.columns;
-                const classHiddenPersonalConf = 'hidden-by-tree-editor';
-                const isHiddenPersonalConf = columns[index].isHidden ? columns[index].isHidden : false;
-                const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
-                this.el.querySelector(headerSelector).classList.toggle(classHiddenPersonalConf, isHiddenPersonalConf);
-
-                const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
-                Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
-                    element.classList.toggle(classHiddenPersonalConf, isHiddenPersonalConf);
-                });
-            }
-        }
+    updateTreeEditorConfig(arrIdVisibleColumns) {
+        const newColumnsTreeEditor = this.columnCollectionDefault.filter( model => arrIdVisibleColumns.includes(model.get('id')));
+        this.columnsCollection.reset(newColumnsTreeEditor);
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {
