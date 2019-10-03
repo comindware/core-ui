@@ -4,13 +4,21 @@
 			"path": "."
 		}
 	],
-	"settings": { 
-		   "workbench.iconTheme": "material-icon-theme",
-		"workbench.colorTheme": "Material Theme",
-		"workbench.activityBar.visible": false,
+	"settings": {
 		"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
 		"flow.useNPMPackagedFlow": true,
-		"editor.formatOnSave": true,
-		"javascript.validate.enable": false
+		"editor.formatOnSave": false,
+		"javascript.validate.enable": false,
+		"eslint.validate": [
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+		  "dbaeumer.vscode-eslint"
+		]
 	}
 }
