@@ -96,12 +96,11 @@ export default Marionette.View.extend({
     initialize(options) {
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-
-        this.collection = factory.createWrappedCollection(Object.assign({}, this.options, { comparator }));
+        this.columnCollectionDefault = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
-
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.setOptionsToFieldsOfNewSchema(this.options.columns, this.options.transliteratedFields);
         }
@@ -235,11 +234,11 @@ export default Marionette.View.extend({
     __onScroll() {
         const nextScroll = this.ui.tableTopMostWrapper[0].scrollTop;
         if (
-            this.listView.state.viewportHeight === undefined ||
-            this.__prevScroll === nextScroll ||
-            this.isDestroyed() ||
-            this.collection.length <= this.listView.state.viewportHeight ||
-            this.internalScroll
+            this.listView.state.viewportHeight === undefined
+            || this.__prevScroll === nextScroll
+            || this.isDestroyed()
+            || this.collection.length <= this.listView.state.viewportHeight
+            || this.internalScroll
         ) {
             return;
         }
@@ -942,7 +941,7 @@ export default Marionette.View.extend({
         this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
 
         this.listenTo(columnsCollection, 'change:isHidden', model => {
-            this.setColumnVisibility(model.id, !model.get('isHidden'));
+            this.__setColumnVisibility(model.id, !model.get('isHidden'));
         });
 
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
@@ -953,7 +952,7 @@ export default Marionette.View.extend({
     },
 
     __setVisibilityAllColumns() {
-        this.options.columns.forEach(column => this.setColumnVisibility(column.id, !column.isHidden));
+        this.options.columns.forEach(column => this.__setColumnVisibility(column.id, !column.isHidden));
     },
 
     __onDiffApplied() {
@@ -987,13 +986,14 @@ export default Marionette.View.extend({
             parentElement.insertBefore(el, parentElement.children[newIndex + one]);
         };
         const element = headerElementsCollection[oldIndex];
+        if (element) {
+            moveElement(element);
 
-        moveElement(element);
+            const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
+            cells.forEach(row => moveElement(row));
 
-        const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
-        cells.forEach(row => moveElement(row));
-
-        this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+            this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+        }
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
@@ -1003,7 +1003,7 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    setColumnVisibility(id: string, visibility = true) {
+    __setColumnVisibility(id: string, visibility = true) {
         const isHidden = !visibility;
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.id === id);
@@ -1015,24 +1015,49 @@ export default Marionette.View.extend({
             delete columnToBeHidden.isHidden;
         }
 
+        this.setClassToColumn(id, isHidden, index, meta.classes.hiddenByTreeEditorClass);
+
+        if (this.isAttached()) {
+            this.__toggleNoColumnsMessage(columns);
+        }
+        this.trigger('column:set:isHidden', { id, isHidden });
+    },
+
+    setClassToColumn(id: string, isHidden = false, index: number, classCell: string) {
+        const classHiddenOnForm = 'hidden-by-form-designer';
         let elementIndex = index + 1;
         if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
-        this.el.querySelector(headerSelector).classList.toggle(meta.classes.hiddenByTreeEditorClass, isHidden);
+        this.el.querySelector(headerSelector).classList.toggle(classCell, isHidden);
 
         const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
-            element.classList.toggle(meta.classes.hiddenByTreeEditorClass, isHidden);
+            element.classList.toggle(classCell, isHidden);
         });
 
-        if (this.isAttached()) {
-            this.__toggleNoColumnsMessage(columns);
-        }
+        if (classCell === classHiddenOnForm) {
+            const column = this.columnCollectionDefault.filter(model => model.get('id') === id);
+            if (isHidden) {
+                this.columnsCollection.remove(column);
+            } else {
+                this.columnsCollection.add(column);
 
-        this.trigger('column:set:isHidden', { id, isHidden });
+                //TODO check correct __updateObjectLayout
+                const columns = this.options.columns;
+                const classHiddenPersonalConf = 'hidden-by-tree-editor';
+                const isHiddenPersonalConf = columns[index].isHidden ? columns[index].isHidden : false;
+                const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
+                this.el.querySelector(headerSelector).classList.toggle(classHiddenPersonalConf, isHiddenPersonalConf);
+
+                const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
+                Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
+                    element.classList.toggle(classHiddenPersonalConf, isHiddenPersonalConf);
+                });
+            }
+        }
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {
@@ -1043,15 +1068,18 @@ export default Marionette.View.extend({
             }
         });
         if (hiddenColumnsCounter === columns.length) {
-            const noColumnsMessage = document.createElement('div');
-            noColumnsMessage.innerText = Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN');
-            noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
-
-            this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
-            this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+            if (this.el.querySelectorAll('.tree-editor-no-columns-message').length < 1) {
+                const noColumnsMessage = document.createElement('div');
+                noColumnsMessage.innerText = Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN');
+                noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
+                this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
+                this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+                this.el.querySelector('.grid-header').classList.add('hidden-by-tree-editor');
+            }
         } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
             this.el.querySelector('.tree-editor-no-columns-message').remove();
             this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
+            this.el.querySelector('.grid-header').classList.remove('hidden-by-tree-editor');
         }
     }
 });
