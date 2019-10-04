@@ -27,7 +27,7 @@ const copySyncRecursive = (src, dest) => {
 
 const copyDemo = resolver => {
     run('npm run build', pathResolver.demo());
-    copySyncRecursive(pathResolver.demo('public/assets'), resolver());
+    copySyncRecursive(pathResolver.demo('assets'), resolver());
 };
 
 const copyDoc = resolver => {
