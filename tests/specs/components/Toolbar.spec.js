@@ -182,61 +182,60 @@ describe('Components', () => {
             expect(document.querySelector('.js-toolbar-actions').children.length).toBe(3); // 3 groups: main, menu, const
         });
 
-        it('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
-            console.log('test "Toolbar drop-down menu" is disabled, please enable it as soon as possible');
+        xit('if items do not fit into the toolbar, they should move to the drop-down menu.', done => {
             done();
-            // const popupView = new core.layout.Popup({
-            //     size: {
-            //         width: 1500,
-            //         height: 200
-            //     },
-            //     header: 'My horrible header',
-            //     buttons: [
-            //         {
-            //             id: 'accept',
-            //             text: 'Accept',
-            //             handler: popup => {
-            //                 popup.trigger('save');
-            //             }
-            //         },
-            //         {
-            //             id: 'reject',
-            //             text: 'Reject',
-            //             handler() {
-            //                 core.services.WindowService.closePopup();
-            //             }
-            //         }
-            //     ],
-            //     content: new core.components.Toolbar({
-            //         allItemsCollection: sampleItems
-            //     })
-            // });
+            const popupView = new core.layout.Popup({
+                size: {
+                    width: 1500,
+                    height: 200
+                },
+                header: 'My horrible header',
+                buttons: [
+                    {
+                        id: 'accept',
+                        text: 'Accept',
+                        handler: popup => {
+                            popup.trigger('save');
+                        }
+                    },
+                    {
+                        id: 'reject',
+                        text: 'Reject',
+                        handler() {
+                            core.services.WindowService.closePopup();
+                        }
+                    }
+                ],
+                content: new core.components.Toolbar({
+                    allItemsCollection: sampleItems
+                })
+            });
 
-            // core.services.WindowService.showPopup(popupView);
+            core.services.WindowService.showPopup(popupView);
 
-            // ToolbarService.wait({
-            //     condition: () => popupView.el.querySelector('.layout__popup-view-window .toolbar-items-wrp').children.length,
-            //     callback: () => {
-            //         popupView.el.style.width = '400px';
-            //         window.dispatchEvent(new Event('resize'));
+            TestService.wait({
+                condition: () => popupView.el.querySelector('.layout__popup-view-window .toolbar-items-wrp').children.length,
+                callback: () => {
+                    popupView.el.style.width = '400px';
+                    window.dispatchEvent(new Event('resize'));
 
-            //         ToolbarService.wait({
-            //             condition: () => document.querySelector('.toolbar-menu-actions .popout__action-btn'),
-            //             callback: () => {
-            //                 document.querySelector('.layout__popup-view-window .toolbar-menu-actions .popout__action-btn').click();
-            //                 ToolbarService.wait({
-            //                     condition: () => document.querySelector('.popout-menu').children.length === 3,
-            //                     callback: () => {
-            //                         expect(document.querySelector('.layout__popup-view-window .js-toolbar-items .toolbar-items-wrp').children.length).toBe(3); //including btn-separator
+                    TestService.wait({
+                        condition: () => document.querySelector('.toolbar-menu-actions .popout__action-btn'),
+                        callback: () => {
+                            document.querySelector('.layout__popup-view-window .toolbar-menu-actions .popout__action-btn').click();
+                            TestService.wait({
+                                condition: () => document.querySelector('.popout-menu').children.length === 3,
+                                callback: () => {
+                                    expect(document.querySelector('.layout__popup-view-window .js-toolbar-items .toolbar-items-wrp').children.length).toBe(3); //including btn-separator
 
-            //                         Core.services.WindowService.closePopup();
-            //                         done();
-            //                     }
-            //                 });
-            //             }
-            //         });
-            //     }
-            // });
+                                    Core.services.WindowService.closePopup();
+                                    done();
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         });
 
         it('shows each of the buttons types', done => {
@@ -258,7 +257,7 @@ describe('Components', () => {
                 ]
             });
 
-            ToolbarService.wait({
+            TestService.wait({
                 condition: () => document.querySelector('.toolbar-buttons_container').children,
                 callback: () => {
                     expect(true).toBe(true);

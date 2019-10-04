@@ -537,7 +537,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 }
             }
 
-            return errors.length ? errors : null;
+            return errors.length ? errors : undefined;
         },
 
         trigger(event: 'focus' | 'blur') {

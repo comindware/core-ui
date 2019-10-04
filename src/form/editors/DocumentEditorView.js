@@ -184,7 +184,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
                   .toJSON()
                   .filter(model => !model.isLoading)
                   .map(m => {
-                      const { file, isLoading, ...rest } = m;
+                      const { file, isLoading, uniqueId, ...rest } = m;
                       return rest;
                   })
             : [];
