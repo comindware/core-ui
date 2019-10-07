@@ -15,7 +15,6 @@ const defaultOptions = {
 
 export default Marionette.View.extend({
     initialize() {
-        _.defaults(this.options, defaultOptions);
         this.regionModulesMap = [];
         this.resisersList = [];
     },
@@ -23,6 +22,7 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     className() {
+        _.defaults(this.options, defaultOptions);
         return `split-panel_container ${orientationClasses[this.options.viewType]}`;
     },
 
