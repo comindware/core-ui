@@ -315,7 +315,7 @@ export default Marionette.View.extend({
         tools: '.js-grid-tools',
         header: '.js-grid-header-view',
         content: '.js-grid-content',
-        tableWrapper: '.grid-table-wrapper',
+        tableWrapper: '.js-grid-table-wrapper',
         table: '.grid-content-wrp',
         tableTopMostWrapper: '.grid-table-wrapper-war'
     },
@@ -1039,7 +1039,7 @@ export default Marionette.View.extend({
     },
 
     updateTreeEditorConfig(arrIdVisibleColumns) {
-        const newColumnsTreeEditor = this.columnCollectionDefault.filter( model => arrIdVisibleColumns.includes(model.get('id')));
+        const newColumnsTreeEditor = this.columnCollectionDefault.filter(model => arrIdVisibleColumns.includes(model.get('id')));
         this.columnsCollection.reset(newColumnsTreeEditor);
     },
 
