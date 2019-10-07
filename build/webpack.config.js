@@ -251,7 +251,7 @@ module.exports = options => {
     }
     if (TEST_COVERAGE) {
         webpackConfig.module.rules.push({
-            test: /\.js$|\.jsx$/,
+            test: /\.(j|t)sx?$/,
             enforce: 'post',
             exclude: [pathResolver.tests(), pathResolver.node_modules(), pathResolver.source('external')],
             use: {

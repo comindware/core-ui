@@ -77,15 +77,20 @@ module.exports = config => {
     };
 
     if (TEST_COVERAGE) {
-        result.plugins.push('karma-coverage');
+        result.plugins.push('karma-coverage-istanbul-reporter');
 
-        result.reporters.push('coverage');
+        result.reporters.push('coverage-istanbul');
 
-        result.coverageReporter = {
-            dir: 'reports/',
-            reporters: [{ type: 'html', subdir: 'report-html' }, { type: 'lcov', subdir: 'report-lcov' }, { type: 'teamcity', subdir: '.', file: 'teamcity.txt' }],
-            instrumenterOptions: {
-                istanbul: { noCompact: true, embedSource: true }
+        result.coverageIstanbulReporter = {
+            reports: ['lcov', 'teamcity', 'text-summary'],
+            fixWebpackSourcePaths: true,
+            combineBrowserReports: true,
+            dir: '../reports',
+            'report-config': {
+                teamcity: {
+                    subdir: '.',
+                    file: 'teamcity.txt'
+                }
             }
         };
 

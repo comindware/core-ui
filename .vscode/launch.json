@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Запустить Chrome для localhost",
             "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/demo/public"
+            "webRoot": "${workspaceFolder}/demo"
         }
     ]
 }
