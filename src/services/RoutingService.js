@@ -82,28 +82,13 @@ export default {
 
     // options: replace (history), trigger (routing), split (show in split)
     navigateToUrl(url, options = {}) {
-        let newUrl = url;
-
         if (options.trigger === undefined) {
             options.trigger = true;
         }
 
         shouldCheckUrl = options.trigger || activeUrl === url;
 
-        if (options.split) {
-            newUrl = this.__getSplitModuleUrl(url);
-        }
-        if (!shouldCheckUrl) {
-            if (!options.split && !this.isUrlModuleSplit(url)) {
-                newUrl = this.__getUpdatedUrl(url);
-            }
-
-            if (url !== newUrl) {
-                shouldCheckUrl = true;
-            }
-        }
-
-        Backbone.history.navigate(newUrl, options);
+        Backbone.history.navigate(url, options);
     },
 
     getPreviousUrl() {
@@ -117,28 +102,6 @@ export default {
 
     setDefaultUrl(newDefaultUrl) {
         this.defaultUrl = newDefaultUrl;
-    },
-
-    getRoutHandlers(url = '') {
-        const urlParts = url.split('&nxt').splice(1);
-
-        return urlParts.reduce((routeHandlers, part) => {
-            const handler = Backbone.history.handlers.find(h => h.route.test(part));
-            if (handler) {
-                routeHandlers.push({ callback: handler.callback, route: part, routeRegExp: handler.route });
-            } else {
-                Core.InterfaceError.logError(`Can not find handler for route ${part}`);
-            }
-            return routeHandlers;
-        }, []);
-    },
-
-    isCurrentModuleCustom() {
-        return activeUrl ? this.isUrlModuleSplit(activeUrl) : false;
-    },
-
-    isUrlModuleSplit(url = '') {
-        return url.startsWith('#custom');
     },
 
     setModuleLoading(show, { message, useForce = false } = {}) {
@@ -289,7 +252,7 @@ export default {
     },
 
     __tryGetSubmoduleContext(config) {
-        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#custom')) {
+        if (this.activeModule && this.activeModule.moduleRegion.currentView && window.location.hash.startsWith('#split')) {
             const map = this.activeModule.moduleRegion.currentView.regionModulesMap;
 
             if (map) {
@@ -330,38 +293,5 @@ export default {
         } else {
             this.activeModule.componentQuery = null;
         }
-    },
-
-    __getSplitModuleUrl(nextModuleUrl) {
-        if (this.isCurrentModuleCustom()) {
-            return this.__getUpdatedUrl(nextModuleUrl);
-        }
-
-        return `#custom/&nxt${window.location.hash.replace('#', '')}&nxt${nextModuleUrl.replace('#', '')}`;
-    },
-
-    __getUrlsFromSplitModuleUrl(splitModuleUrl) {
-        if (!this.isUrlModuleSplit(splitModuleUrl)) {
-            Core.InterfaceError.logError(`Unexpected split module url ${splitModuleUrl}`);
-            return [];
-        }
-        const urlParts = splitModuleUrl.split('&nxt');
-        // first part is '#custom/'
-        return urlParts.slice(1);
-    },
-
-    __getUpdatedUrl(url = '') {
-        const cleanUrl = url.replace('#', '');
-        const prefix = cleanUrl.split('/')[0];
-        const urlParts = window.location.hash.split('&nxt');
-        const replaceIndex = urlParts.findIndex(part => part.includes(prefix));
-
-        if (replaceIndex !== -1 && urlParts.some(part => part.startsWith('#custom'))) {
-            urlParts.splice(replaceIndex, 1, cleanUrl);
-
-            return urlParts.join('&nxt');
-        }
-
-        return url;
     }
 };
