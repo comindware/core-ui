@@ -4,6 +4,7 @@ import SplitPanelResizer from './SplitPanelResizer';
 import { splitViewTypes } from '../Meta';
 
 const orientationClasses = {
+    [splitViewTypes.UNDEFINED]: 'split-panel__general',
     [splitViewTypes.GENERAL]: 'split-panel__general',
     [splitViewTypes.VERTICAL]: 'split-panel__vertical',
     [splitViewTypes.HORIZONTAL]: 'split-panel__horizontal'
@@ -72,6 +73,7 @@ export default Marionette.View.extend({
         for (let i = 0; i < this.regionModulesMap.length - 1; i++) {
             //after each, except last
             const resizer = new SplitPanelResizer({
+                orientation: this.options.viewType,
                 firstPanel: this.regionModulesMap[i].region,
                 secondPanel: this.regionModulesMap[i + 1] ?.region
             });

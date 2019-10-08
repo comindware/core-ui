@@ -121,6 +121,7 @@ export const virtualCollectionFilterActions = {
 };
 
 export const splitViewTypes = {
+    UNDEFINED: 'Undefined',
     GENERAL: 'General',
     VERTICAL: 'SplitVertical',
     HORIZONTAL: 'SplitHorizontal',
