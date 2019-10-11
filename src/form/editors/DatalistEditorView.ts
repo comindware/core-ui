@@ -67,7 +67,8 @@ type options = {
     createValueUrl?: Function,
     edit?: Function,
     addNewItem?: Function,
-    addNewItemText?: string,
+    showAddNewButton?: boolean,
+    addNewButtonText?: string,
 
     //deprecated options
     controller?: Marionette.Object,
@@ -120,7 +121,8 @@ const defaultOptions = (options: options): options => ({
     createValueUrl: undefined,
     edit: undefined,
     addNewItem: undefined,
-    addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
+    showAddNewButton: Boolean(options.addNewButtonText),
+    addNewButtonText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
 
     //deprecated options
     controller: undefined,
@@ -144,7 +146,7 @@ const presetsDefaults = {
         boundEditorOptions: {
             multiple: options.maxQuantitySelected !== 1
         },
-        addNewItemText: LocalizationService.get(
+        addNewButtonText: LocalizationService.get(
             options.maxQuantitySelected !== 1 ? 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT' : 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT'
         )
     }),
@@ -248,7 +250,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showCollection: this.options.showCollection,
                 selectedCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 addNewItem: this.options.addNewItem && this.__panelAddNewItem.bind(this),
-                addNewItemText: this.options.addNewItemText,
+                showAddNewButton: this.options.showAddNewButton,
+                addNewButtonText: this.options.addNewButtonText,
                 bubbleItemViewOptions: Object.assign(
                     {
                         customTemplate: this.options.panelBubbleTemplate

@@ -16,6 +16,7 @@ describe('Editors', () => {
     const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
     const getCheckboxes = () => document.querySelectorAll('.checkbox');
     const getCheckedCheckboxes = () => document.querySelectorAll('.checkbox.editor_checked');
+    const getAddNewButton = () => document.querySelector('.js-add-new');
 
     const getInput = view => getElement(view, '.js-input');
 
@@ -146,6 +147,53 @@ describe('Editors', () => {
             show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
+        });
+
+        it('should display default addNewButtonText if showAddNewButton = true', done => {
+            const model = new Backbone.Model({
+                value: { id: 1, name: 1 }
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                showCheckboxes: true,
+                showAddNewButton: true,
+                maxQuantitySelected: 1
+            });
+
+            view.on('dropdown:open', () => {
+                expect(getAddNewButton().innerText).toBe('Create');
+                done();
+            });
+
+            show(view);
+            actionForOpen(view);
+        });
+
+        it('should display add new button if showAddNewButton = undefined, addNewButtonText = somestring', done => {
+            const someString = 'somestring';
+            const model = new Backbone.Model({
+                value: { id: 1, name: 1 }
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                showCheckboxes: true,
+                addNewButtonText: someString,
+                maxQuantitySelected: 1
+            });
+
+            view.on('dropdown:open', () => {
+                expect(getAddNewButton().innerText).toBe(someString);
+                done();
+            });
+
+            show(view);
+            actionForOpen(view);
         });
 
         describe('checked values on panel', () => {
