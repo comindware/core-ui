@@ -177,7 +177,7 @@ module.exports.apply = {
         'font-size': '12px',
         padding: '4px 10px',
         'white-space': 'nowrap',
-        'text-overflow': 'ellipsis',
+        'text-overflow': 'clip',
         overflow: 'hidden',
         border: `1px solid ${variables['grey-400']}`,
         'border-radius': '2px'
