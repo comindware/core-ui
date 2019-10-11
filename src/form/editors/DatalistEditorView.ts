@@ -172,7 +172,6 @@ const stop = (event: KeyboardEvent) => {
     2.Fix focus logic (make as dateTime).
     3.defaultOptions:displayAttribute should be text.
     4.getDisplayText should return string always. (String(returnedValue)).
-    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked. Is checkbox needed?
 */
 /**
  * @name DatalistView
@@ -635,17 +634,21 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __updateSelectedOnPanel() {
         this.panelCollection.selected = {};
 
-        if (this.options.maxQuantitySelected === 1) {
-            return;
-        }
-
         if (this.panelCollection.length > 0 && this.value) {
-            this.value.forEach(editorValue => {
-                const id = editorValue && editorValue[this.options.idProperty] !== undefined ? editorValue[this.options.idProperty] : editorValue;
-
-                this.panelCollection.get(id)?.select({ isSilent: true });
-            });
+            if (this.options.maxQuantitySelected === 1) {
+                if (this.options.showCheckboxes) {
+                    this.__setValueToPanelCollection(this.value);
+                }
+            } else {
+                this.value.forEach(value => this.__setValueToPanelCollection(value));
+            }
         }
+    },
+
+    __setValueToPanelCollection(value) {
+        const id = value && value[this.options.idProperty] !== undefined ? value[this.options.idProperty] : value;
+
+        this.panelCollection.get(id)?.select({ isSilent: true });
     },
 
     onAttach() {
