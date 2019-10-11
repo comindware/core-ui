@@ -817,7 +817,6 @@ tr:hover .cell_selection-index {
   margin-right: 10px;
 }
 .bubbles .bubble-doc_text{
-  height: 100%;
   line-height: 100%;
   flex: 0 1 auto;
 }

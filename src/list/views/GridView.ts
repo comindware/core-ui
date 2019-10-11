@@ -57,7 +57,7 @@ const defaultOptions = options => ({
     showTreeEditor: false,
     treeEditorIsHidden: false,
     treeEditorConfig: new Map(),
-    headerHeight: 35
+    headerHeight: 36
 });
 
 const configConstants = {
