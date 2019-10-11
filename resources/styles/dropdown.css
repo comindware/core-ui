@@ -346,6 +346,7 @@
     justify-content: flex-start;
     align-items: center;
 }
+
 .bubbles__list .bubbles__i .editor__icons{
     position: static;
     flex: none;

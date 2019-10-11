@@ -21,7 +21,7 @@ const defaultOptions = () => ({
     instanceValueProperty: 'instanceTypeId'
 });
 
-export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
+export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
@@ -267,4 +267,4 @@ export default (formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.__value(null, true, null);
         return false;
     }
-}));
+});
