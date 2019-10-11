@@ -14,6 +14,9 @@ describe('Editors', () => {
     const getBubbleDelete = view => getElement(view, '.js-bubble-delete');
     const getItemOfList = index => getElement(Backbone, `.dd-list__i:eq(${index})`);
     const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
+    const getCheckboxes = () => document.querySelectorAll('.checkbox');
+    const getCheckedCheckboxes = () => document.querySelectorAll('.checkbox.editor_checked');
+    const getAddNewButton = () => document.querySelector('.js-add-new');
 
     const getInput = view => getElement(view, '.js-input');
 
@@ -24,16 +27,6 @@ describe('Editors', () => {
     };
 
     const actionForOpen = view => getInput(view).focus();
-
-    const wait = (options = {}) => {
-        const first = setInterval(() => {
-            typeof options.action === 'function' && options.action();
-            if (typeof options.condition === 'function' ? options.condition() : true) {
-                clearTimeout(first);
-                typeof options.callback === 'function' && options.callback();
-            }
-        }, options.delay || 10);
-    };
 
     const whatIsThat = value => (Array.isArray(value) ? 'Array' : value === null ? 'null' : typeof value);
     const stopped = delay => new Promise(resolve => setTimeout(resolve, delay));
@@ -154,6 +147,122 @@ describe('Editors', () => {
             show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
+        });
+
+        it('should display default addNewButtonText if showAddNewButton = true', done => {
+            const model = new Backbone.Model({
+                value: { id: 1, name: 1 }
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                showCheckboxes: true,
+                showAddNewButton: true,
+                maxQuantitySelected: 1
+            });
+
+            view.on('dropdown:open', () => {
+                expect(getAddNewButton().innerText).toBe('Create');
+                done();
+            });
+
+            show(view);
+            actionForOpen(view);
+        });
+
+        it('should display add new button if showAddNewButton = undefined, addNewButtonText = somestring', done => {
+            const someString = 'somestring';
+            const model = new Backbone.Model({
+                value: { id: 1, name: 1 }
+            });
+
+            const view = new core.form.editors.DatalistEditor({
+                model,
+                collection: new Backbone.Collection(collectionData3),
+                key: 'value',
+                showCheckboxes: true,
+                addNewButtonText: someString,
+                maxQuantitySelected: 1
+            });
+
+            view.on('dropdown:open', () => {
+                expect(getAddNewButton().innerText).toBe(someString);
+                done();
+            });
+
+            show(view);
+            actionForOpen(view);
+        });
+
+        describe('checked values on panel', () => {
+            it('should be if maxQuantity === 1 and showCheckboxes = true', done => {
+                const model = new Backbone.Model({
+                    value: { id: 1, name: 1 }
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    key: 'value',
+                    showCheckboxes: true,
+                    maxQuantitySelected: 1
+                });
+
+                view.on('dropdown:open', () => {
+                    expect(getCheckedCheckboxes().length).toBe(1);
+                    expect(view.panelCollection.getSelected()).toBeArrayOfSize(1);
+                    done();
+                });
+
+                show(view);
+                actionForOpen(view);
+            });
+            it('should not be if maxQuantity === 1 and showCheckboxes = false', done => {
+                const model = new Backbone.Model({
+                    value: 1
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    key: 'value',
+                    valueType: 'id',
+                    showCheckboxes: false,
+                    maxQuantitySelected: 1
+                });
+
+                view.on('dropdown:open', () => {
+                    expect(view.panelCollection.getSelected()).toBeArrayOfSize(0);
+                    done();
+                });
+
+                show(view);
+                actionForOpen(view);
+            });
+            it('should be if maxQuantity === Infinity', done => {
+                const model = new Backbone.Model({
+                    value: [{ id: 1, name: 1 }]
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    key: 'value',
+                    maxQuantitySelected: Infinity,
+                    showCheckboxes: true
+                });
+
+                view.on('dropdown:open', () => {
+                    expect(getCheckedCheckboxes().length).toBe(1);
+                    expect(view.panelCollection.getSelected()).toBeArrayOfSize(1);
+                    done();
+                });
+
+                show(view);
+                actionForOpen(view);
+            });
         });
 
         it('view panelVirtualcollection should filtered on dropdown open if input value changed (on initilize === empty string) and fetchFiltered = false', done => {
@@ -1410,6 +1519,7 @@ describe('Editors', () => {
                     autocommit: true,
                     collection: someCollection,
                     maxQuantitySelected: 1,
+                    showCheckboxes: false,
                     allowEmptyValue: true
                 });
 
@@ -1422,7 +1532,7 @@ describe('Editors', () => {
                     expect(view.panelCollection.length).toEqual(arrayObjects15.length);
                     expect(view.dropdownView.isOpen).toBeFalsy();
 
-                    //if quan === 1 panelCollection not select this.value to prevent dblclick for close.
+                    //if quan === 1 panelCollection not select this.value to prevent dblclick for close if showCheckboxes = false.
                     expect(Object.keys(view.panelCollection.selected)).toBeArrayOfSize(0);
 
                     expect(view.value).toBeObject();

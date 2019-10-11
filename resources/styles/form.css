@@ -918,7 +918,7 @@ input[type="color"], .colorpicker{
     flex-wrap: nowrap;
 }
 
-.cell .bubbles__input:focus {
+.cell .open .bubbles__input:focus {
     min-width: 200px;
 }
 

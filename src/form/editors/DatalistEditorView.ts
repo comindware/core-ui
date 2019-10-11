@@ -67,7 +67,8 @@ type options = {
     createValueUrl?: Function,
     edit?: Function,
     addNewItem?: Function,
-    addNewItemText?: string,
+    showAddNewButton?: boolean,
+    addNewButtonText?: string,
 
     //deprecated options
     controller?: Marionette.Object,
@@ -120,7 +121,8 @@ const defaultOptions = (options: options): options => ({
     createValueUrl: undefined,
     edit: undefined,
     addNewItem: undefined,
-    addNewItemText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
+    showAddNewButton: Boolean(options.addNewButtonText),
+    addNewButtonText: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.CREATENEW'),
 
     //deprecated options
     controller: undefined,
@@ -144,7 +146,7 @@ const presetsDefaults = {
         boundEditorOptions: {
             multiple: options.maxQuantitySelected !== 1
         },
-        addNewItemText: LocalizationService.get(
+        addNewButtonText: LocalizationService.get(
             options.maxQuantitySelected !== 1 ? 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT' : 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT'
         )
     }),
@@ -172,7 +174,6 @@ const stop = (event: KeyboardEvent) => {
     2.Fix focus logic (make as dateTime).
     3.defaultOptions:displayAttribute should be text.
     4.getDisplayText should return string always. (String(returnedValue)).
-    5.if showCheckboxes and maxQuantitySelected === 1, checkbox not checked. Is checkbox needed?
 */
 /**
  * @name DatalistView
@@ -249,7 +250,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showCollection: this.options.showCollection,
                 selectedCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 addNewItem: this.options.addNewItem && this.__panelAddNewItem.bind(this),
-                addNewItemText: this.options.addNewItemText,
+                showAddNewButton: this.options.showAddNewButton,
+                addNewButtonText: this.options.addNewButtonText,
                 bubbleItemViewOptions: Object.assign(
                     {
                         customTemplate: this.options.panelBubbleTemplate
@@ -635,17 +637,21 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __updateSelectedOnPanel() {
         this.panelCollection.selected = {};
 
-        if (this.options.maxQuantitySelected === 1) {
-            return;
-        }
-
         if (this.panelCollection.length > 0 && this.value) {
-            this.value.forEach(editorValue => {
-                const id = editorValue && editorValue[this.options.idProperty] !== undefined ? editorValue[this.options.idProperty] : editorValue;
-
-                this.panelCollection.get(id)?.select({ isSilent: true });
-            });
+            if (this.options.maxQuantitySelected === 1) {
+                if (this.options.showCheckboxes) {
+                    this.__setValueToPanelCollection(this.value);
+                }
+            } else {
+                this.value.forEach(value => this.__setValueToPanelCollection(value));
+            }
         }
+    },
+
+    __setValueToPanelCollection(value) {
+        const id = value && value[this.options.idProperty] !== undefined ? value[this.options.idProperty] : value;
+
+        this.panelCollection.get(id)?.select({ isSilent: true });
     },
 
     onAttach() {
