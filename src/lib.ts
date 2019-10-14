@@ -39,14 +39,11 @@ import CodeMirror from 'codemirror';
 import domapi from './utils/DOMApi';
 
 (<any>window)._ = _underscore.mixin(mixin.default);
-// @ts-ignore
-Marionette_.AppRouter = AppRouter;
-// @ts-ignore
-Marionette_.PartialCollectionView = OldCollectionView.setDomApi(domapi);
-// @ts-ignore
-Marionette_.setDomApi(domapi);
 
 (<any>window).Marionette = Marionette_;
+(<any>window).Marionette.setDomApi(domapi);
+(<any>window).Marionette.AppRouter = AppRouter;
+(<any>window).Marionette.PartialCollectionView = OldCollectionView.setDomApi(domapi);
 
 const api = {
     moment: moment_,
