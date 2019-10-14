@@ -389,7 +389,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleClick(e) {
+    __handleClick(e: MouseEvent) {
         const model = this.model;
 
         const selectFn = model.collection.selectSmart || model.collection.select;
@@ -398,15 +398,16 @@ export default Marionette.View.extend({
                 isModelClick: true
             });
             if (this.gridEventAggregator.isEditable) {
-                const cellIndex = this.__getFocusedCellIndex(e);
+                const columnIndex = this.__getFocusedColumnIndex(e);
 
-                if (this.__isCellEditable(cellIndex)) {
-                    this.gridEventAggregator.pointedCell = cellIndex;
+                if (this.__isColumnEditable(columnIndex)) {
+                    this.gridEventAggregator.pointedCell = columnIndex;
 
                     // todo: find more clear way to handle this case
-                    const isFocusChangeNeeded = !e.target.classList.contains('js-field-error-button');
+                    const target = <Element>e.target;
+                    const isFocusChangeNeeded = target && !target.classList.contains('js-field-error-button');
                     setTimeout(
-                        () => this.__selectPointed(cellIndex, true, isFocusChangeNeeded),
+                        () => this.__selectPointed(columnIndex, true, isFocusChangeNeeded),
                         11 //need more than debounce delay in selectableBehavior calculateLength
                     );
                 }
@@ -415,13 +416,8 @@ export default Marionette.View.extend({
         this.gridEventAggregator.trigger('click', this.model);
     },
 
-    __isCellEditable(cellIndex) {
-        let optionsColumnsIndex = cellIndex;
-        if (this.el.querySelector('.js-cell_selection')) {
-            optionsColumnsIndex -= 1;
-        }
-
-        return optionsColumnsIndex > -1 && this.getOption('columns')[optionsColumnsIndex].editable;
+    __isColumnEditable(columnIndex: number): boolean {
+        return columnIndex > -1 && this.getOption('columns')[columnIndex].editable;
     },
 
     __handleDblClick() {
@@ -511,7 +507,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __selectPointed(pointed, isFocusEditor, isFocusChangeNeeded = true) {
+    __selectPointed(columnIndex: number, isFocusEditor: boolean, isFocusChangeNeeded = true) {
+        const pointed = this.getOption('showCheckbox') ? columnIndex + 1 : columnIndex;
         const pointedEl = this.el.getElementsByTagName('td')[pointed];
         if (pointedEl == null) return;
 
@@ -565,8 +562,9 @@ export default Marionette.View.extend({
         this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
     },
 
-    __getFocusedCellIndex(e) {
-        return Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
+    __getFocusedColumnIndex(e: MouseEvent): number {
+        const elIndex = Array.prototype.findIndex.call(this.el.children, cell => cell.contains(e.target));
+        return this.options.showCheckbox ? elIndex - 1 : elIndex;
     },
 
     __blink() {

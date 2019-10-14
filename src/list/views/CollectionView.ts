@@ -18,7 +18,7 @@ const config = {
     VISIBLE_COLLECTION_RESERVE: 20,
     VISIBLE_COLLECTION_RESERVE_HALF: 10,
     VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
-    HEIGHT_STOCK_TO_SCROLL: 1 //px
+    HEIGHT_STOCK_TO_SCROLL: 1 //px, border-collapse property for table (grid-content-wrp) add this 1 px
 };
 
 const heightOptions = {
@@ -428,7 +428,7 @@ export default Marionette.PartialCollectionView.extend({
         if (this.collection.length) {
             this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + config.HEIGHT_STOCK_TO_SCROLL;
         } else {
-            this.state.allItemsHeight = this.childHeight * 1 + this.options.headerHeight + config.HEIGHT_STOCK_TO_SCROLL;
+            this.state.allItemsHeight = 'auto';
         }
 
         if (!this.options.customHeight && this.state.allItemsHeight !== oldAllItemsHeight) {
