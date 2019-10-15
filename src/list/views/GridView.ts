@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import ColumnCollection from '../collections/ColumnCollection';
+
 import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
@@ -15,7 +17,6 @@ import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 import meta from '../meta';
-import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
