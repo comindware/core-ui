@@ -8,7 +8,7 @@ const classListToggle = function (name: string, flag = !this.contains(name)) {
 
 type classList = {
     add: Function,
-    remove: Function
+    remove: Function,
     contains: Function,
     toggle?: Function
 };
