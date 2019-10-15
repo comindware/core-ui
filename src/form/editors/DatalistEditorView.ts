@@ -289,11 +289,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __mapDatalistOptions(options: options) {
-        let defaults = defaultOptions(options);
+        let defaults;
         if (typeof options.format === 'string') {
             const presetFn = presetsDefaults[options.format];
             const preset = presetFn ? presetFn(options) : {};
-            defaults = _.defaults(options, preset, defaults);
+            const mergeOptions = _.defaults(preset, options);
+            defaults = _.defaults(mergeOptions, defaultOptions(mergeOptions));
+        } else {
+            defaults = defaultOptions(options);
         }
         this.__applyOptions(options, defaults);
         if (this.options.controller) {
@@ -640,7 +643,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (this.panelCollection.length > 0 && this.value) {
             if (this.options.maxQuantitySelected === 1) {
                 if (this.options.showCheckboxes) {
-                    this.__setValueToPanelCollection(this.value);
+                    if (this.options.storeArray && Array.isArray(this.value)) {
+                        this.value.forEach(value => this.__setValueToPanelCollection(value));
+                    } else {
+                        this.__setValueToPanelCollection(this.value);
+                    }
                 }
             } else {
                 this.value.forEach(value => this.__setValueToPanelCollection(value));
