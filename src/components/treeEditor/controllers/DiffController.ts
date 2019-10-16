@@ -98,6 +98,10 @@ export default class TreeDiffController {
         this.__applyDiff();
     }
 
+    setVisibleConfigDiffInit() {
+        this.configDiff.initialConfig.forEach( item => item.initialConfig.isHidden = false);
+    }
+
     __setNodeConfig(widgetId: string, keyValue: NodeConfig) {
         this.configDiff.set(widgetId, keyValue);
     }
@@ -159,7 +163,11 @@ export default class TreeDiffController {
 
         const reducer = (initialConfig: Map<string, DiffItem>, model: GraphModel) => {
             if (!model.initialConfig) {
-                const pick = _.defaults(model.pick(...personalConfigProps), { index: model.collection?.indexOf(model), isHidden: false, width: 0 });
+                const pick = {
+                    index: model.collection?.indexOf(model),
+                    isHidden: false,
+                    width: 0
+                };
                 Object.defineProperty(model, 'initialConfig' , {
                     writable: false,
                     value: pick
@@ -189,9 +197,8 @@ export default class TreeDiffController {
 
             if (configMap.size) {
                 model.set(configObject);
-                personalConfigProps.filter(prop => configObject[prop] == null).map(prop => model.unset(prop));
             }
-
+            personalConfigProps.filter(prop => configObject[prop] == null).map(prop => model.unset(prop));
             const collection = model.collection;
             if (collection) {
                 const configIndex = configObject.index == null ? collection.initialConfig.indexOf(model.id) : configObject.index;
