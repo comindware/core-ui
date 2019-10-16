@@ -2,25 +2,9 @@ import RootView from './RootView';
 import { RootViewFactoryOptions } from '../types';
 import { iconNames } from '../meta';
 
-const buttons = [
-    {
-        iconClass: iconNames.save,
-        id: 'apply',
-        name: 'Apply',
-        type: 'Action',
-        description: 'Apply'
-    },
-    {
-        iconClass: iconNames.delete,
-        id: 'reset',
-        name: 'Reset',
-        type: 'Action',
-        description: 'Reset'
-    }
-];
-
 const RootViewWithToolbar = Marionette.View.extend({
     initialize(options: RootViewFactoryOptions) {
+        const buttons = this.__getButtons();
         const toolbarItems = new Backbone.Collection(options.showResetButton ? buttons : buttons.filter(button => button.id !== 'reset'));
 
         this.toolbarView = new Core.components.Toolbar({
@@ -47,6 +31,25 @@ const RootViewWithToolbar = Marionette.View.extend({
     onRender() {
         this.showChildView('toolbarRegion', this.toolbarView);
         this.showChildView('rootRegion', new RootView(this.options));
+    },
+
+    __getButtons() {
+        return [
+            {
+                iconClass: iconNames.save,
+                id: 'apply',
+                name: Localizer.get('CORE.TOOLBAR.TREEEDITOR.APPLY'),
+                type: 'Action',
+                description: Localizer.get('CORE.TOOLBAR.TREEEDITOR.APPLY')
+            },
+            {
+                iconClass: iconNames.delete,
+                id: 'reset',
+                name: Localizer.get('CORE.TOOLBAR.TREEEDITOR.RESET'),
+                type: 'Action',
+                description: Localizer.get('CORE.TOOLBAR.TREEEDITOR.RESET')
+            }
+        ];
     }
 });
 
