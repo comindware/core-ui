@@ -22,6 +22,7 @@ export default class TreeEditor {
     controller: DiffController;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
+        this.storageConfigDiff = options.configDiff;
         this.configDiff = options.configDiff;
         this.model = options.model;
 
@@ -66,12 +67,17 @@ export default class TreeEditor {
         }
 
         popoutView.getConfigDiff = this.__getConfigDiff.bind(this);
+        popoutView.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
         popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
         popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
         popoutView.getRootCollection = this.__getRootCollection.bind(this);
 
         return (this.view = popoutView);
+    }
+
+    __setVisibleConfigDiffInit() {
+        this.controller.setVisibleConfigDiffInit();
     }
 
     __getRootCollection() {
@@ -88,6 +94,7 @@ export default class TreeEditor {
 
     __resetConfigDiff() {
         this.controller.reset();
+        this.controller.setVisibleConfigDiffInit();
         this.view.trigger('reset');
     }
 
