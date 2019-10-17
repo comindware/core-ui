@@ -406,6 +406,10 @@
 
 <http://comindware.com/text/core/toolbar/blinkCheckbox#showAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать все"; l10n:originalData "Show all"].
 
+<http://comindware.com/text/core/toolbar/treeEditor#Apply> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Применить"; l10n:originalData "Apply"].
+
+<http://comindware.com/text/core/toolbar/treeEditor#Reset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сброс"; l10n:originalData "Reset"].
+
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 
 <http://comindware.com/text/core/views/searchBar#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "Search..."].
