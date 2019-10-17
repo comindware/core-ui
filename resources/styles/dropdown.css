@@ -43,13 +43,21 @@
 }
 /* dropdown list */
 
-.dropdown__wrp_reference {
+.datalist-panel {
     min-width: 200px;
     max-width: 100%;
     padding: 0;
     position: fixed;
     display: flex;
     flex-direction: column;
+}
+
+.datalist-panel.dropdown__wrp_down {
+    flex-direction: column;
+}
+
+.datalist-panel.dropdown__wrp_up {
+    flex-direction: column-reverse;
 }
 
 .dd-list__filter {
@@ -328,13 +336,13 @@
 /*-----//------*/
 
 
-.dropdown__wrp_reference.dropdown__wrp_down {
+.datalist-panel.dropdown__wrp_down {
     border-radius: 0 0 4px 4px;
     border: 1px solid #0575bd;
     border-top-color: #fff;
 }
 
-.dropdown__wrp_reference.dropdown__wrp_up {
+.datalist-panel.dropdown__wrp_up {
     border-radius: 4px 4px 0 0;
     border: 1px solid #0575bd;
     border-bottom-color: #fff;

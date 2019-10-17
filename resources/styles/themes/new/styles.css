@@ -132,10 +132,10 @@
   transition: transform 0.1s linear, opacity 0.1s linear;
 }
 
-.dropdown__wrp_reference.dropdown__wrp_down {
+.datalist-panel.dropdown__wrp_down {
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
-.dropdown__wrp_reference.dropdown__wrp_up {
+.datalist-panel.dropdown__wrp_up {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 

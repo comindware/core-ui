@@ -32,7 +32,7 @@ export default function() {
         maxQuantitySelected: 5,
         maxButtonItems: 2,
         fetchFiltered: true,
-        addNewItem: () => alert('addNew'),
+        // addNewItem: () => alert('addNew'),
         collection
     });
 

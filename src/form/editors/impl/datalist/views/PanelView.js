@@ -16,7 +16,7 @@ const classes = {
 
 export default Marionette.View.extend({
     className() {
-        return `dropdown__wrp dropdown__wrp_reference ${this.options.class || ''}`;
+        return `dropdown__wrp datalist-panel ${this.options.class || ''}`;
     },
 
     template: Handlebars.compile(template),
@@ -27,11 +27,7 @@ export default Marionette.View.extend({
             showAddNewButton: Boolean(this.options.showAddNewButton),
             showSelectedCollection,
             addNewButtonText: this.options.addNewButtonText,
-            showCollection: this.options.showCollection,
-            showListTitle: this.options.showCollection && this.options.listTitle,
-            showSelectedTitle: showSelectedCollection && this.options.showSelectedTitle,
-            selectedTitle: this.options.selectedTitle,
-            listTitle: this.options.listTitle
+            showCollection: this.options.showCollection
         };
     },
 
@@ -68,8 +64,10 @@ export default Marionette.View.extend({
                 collection: selectedCollection,
                 childView: BubbleItemView,
                 childViewOptions: this.options.bubbleItemViewOptions,
-                columns: [],
                 disableKeydownHandler: true,
+                title: this.options.showSelectedTitle ? this.options.selectedTitle : '',
+                columns: [],
+                showHeader: false,
                 customHeight: true,
                 childHeight: config.SELECTED_CHILD_HEIGHT,
                 emptyView: null
@@ -84,6 +82,7 @@ export default Marionette.View.extend({
                 class: 'datalist-panel_list',
                 childView: this.options.listItemView,
                 disableKeydownHandler: true,
+                title: this.options.listTitle,
                 columns: [],
                 showHeader: false,
                 childViewOptions: {
