@@ -1008,22 +1008,19 @@ export default Marionette.View.extend({
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.id === id);
         const columnToBeHidden = columns[index];
-
         if (isHidden) {
             columnToBeHidden.isHidden = isHidden;
         } else {
             delete columnToBeHidden.isHidden;
         }
 
-        this.setClassToColumn(id, isHidden, index, meta.classes.hiddenByTreeEditorClass);
-
-        if (this.isAttached()) {
-            this.__toggleNoColumnsMessage(columns);
-        }
         this.trigger('column:set:isHidden', { id, isHidden });
+
+        this.setClassToColumn(id, isHidden, index, meta.classes.hiddenByTreeEditorClass);
     },
 
     setClassToColumn(id: string, state = false, index: number, classCell: string) {
+        const columns = this.options.columns;
         let elementIndex = index + 1;
         if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
@@ -1036,6 +1033,9 @@ export default Marionette.View.extend({
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
             element.classList.toggle(classCell, state);
         });
+        if (this.isAttached()) {
+            this.__toggleNoColumnsMessage(columns);
+        }
     },
 
     updateTreeEditorConfig(arrIdVisibleColumns) {
@@ -1045,8 +1045,10 @@ export default Marionette.View.extend({
 
     __toggleNoColumnsMessage(columns: Array<object>) {
         let hiddenColumnsCounter = 0;
+        let isHidden;
         columns.forEach(col => {
-            if (col.isHidden) {
+            isHidden = col.getStateHidden ? col.getStateHidden() : col.isHidden;
+            if (isHidden) {
                 hiddenColumnsCounter++;
             }
         });
