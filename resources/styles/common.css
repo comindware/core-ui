@@ -407,7 +407,7 @@ a:hover {
 }
 
 
-.dropdown__wrp_reference .l-loader:not(:empty)  {
+.datalist-panel .l-loader:not(:empty)  {
     z-index: 601;
 }
 

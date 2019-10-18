@@ -17,7 +17,8 @@ import Backbone from 'backbone';
 const config = {
     VISIBLE_COLLECTION_RESERVE: 20,
     VISIBLE_COLLECTION_RESERVE_HALF: 10,
-    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
+    HEIGHT_STOCK_TO_SCROLL: 1 //px, border-collapse property for table (grid-content-wrp) add this 1 px
 };
 
 const heightOptions = {
@@ -230,7 +231,7 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     __handleKeydown(e: KeyboardEvent) {
-        if (!e || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
+        if (!e || [keyCode.CTRL, keyCode.SHIFT].includes(e.keyCode) || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
             return;
         }
         e.stopPropagation();
@@ -424,7 +425,11 @@ export default Marionette.PartialCollectionView.extend({
 
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
-        this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight;
+        if (this.collection.length) {
+            this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + config.HEIGHT_STOCK_TO_SCROLL;
+        } else {
+            this.state.allItemsHeight = 'auto';
+        }
 
         if (!this.options.customHeight && this.state.allItemsHeight !== oldAllItemsHeight) {
             this.options.table$el.parent().css({ height: this.state.allItemsHeight || '' }); //todo optimizae it

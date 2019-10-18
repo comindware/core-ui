@@ -57,7 +57,7 @@ const defaultOptions = options => ({
     showTreeEditor: false,
     treeEditorIsHidden: false,
     treeEditorConfig: new Map(),
-    headerHeight: 35
+    headerHeight: 36
 });
 
 const configConstants = {
@@ -96,7 +96,8 @@ export default Marionette.View.extend({
     initialize(options) {
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-        this.columnCollectionDefault = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.columnCollectionDefault = this.columnsCollection.clone();
         this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
@@ -907,7 +908,7 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = (this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column }))));
+        const columnsCollection = this.columnsCollection;
 
         this.treeModel = new Backbone.Model({
             title: this.options.title,
@@ -931,7 +932,7 @@ export default Marionette.View.extend({
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
             const configDiff = {
-                oldIndex: this.options.columns.findIndex(col => col.key === model.id),
+                oldIndex: this.options.columns.findIndex(col => col.id === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
             this.__moveColumn(configDiff);
@@ -943,12 +944,23 @@ export default Marionette.View.extend({
         this.listenTo(columnsCollection, 'change:isHidden', model => {
             this.__setColumnVisibility(model.id, !model.get('isHidden'));
         });
-
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
+    },
+
+    setConfigDiff(configDiff) {
+        this.treeEditorView.setConfigDiff(configDiff);
     },
 
     resetConfigDiff() {
         this.treeEditorView.resetConfigDiff();
+    },
+
+    getConfigDiff() {
+        return this.treeEditorView.getConfigDiff();
+    },
+
+    setVisibleConfigDiffInit() {
+        this.treeEditorView.setVisibleConfigDiffInit();
     },
 
     __setVisibilityAllColumns() {
@@ -1039,7 +1051,7 @@ export default Marionette.View.extend({
     },
 
     updateTreeEditorConfig(arrIdVisibleColumns) {
-        const newColumnsTreeEditor = this.columnCollectionDefault.filter( model => arrIdVisibleColumns.includes(model.get('id')));
+        const newColumnsTreeEditor = this.columnCollectionDefault.filter(model => arrIdVisibleColumns.includes(model.get('id')));
         this.columnsCollection.reset(newColumnsTreeEditor);
     },
 
