@@ -1059,7 +1059,7 @@ export default Marionette.View.extend({
         let hiddenColumnsCounter = 0;
         let isHidden;
         columns.forEach(col => {
-            isHidden = col.getHidden ? col.getHidden() : col.isHidden;
+            isHidden = col.getStateHidden ? col.getStateHidden() : col.isHidden;
             if (isHidden) {
                 hiddenColumnsCounter++;
             }
