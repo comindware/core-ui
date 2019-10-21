@@ -316,7 +316,7 @@ export default Marionette.View.extend({
         tools: '.js-grid-tools',
         header: '.js-grid-header-view',
         content: '.js-grid-content',
-        tableWrapper: '.grid-table-wrapper',
+        tableWrapper: '.js-grid-table-wrapper',
         table: '.grid-content-wrp',
         tableTopMostWrapper: '.grid-table-wrapper-war'
     },
