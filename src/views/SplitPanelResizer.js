@@ -78,6 +78,7 @@ export default Marionette.View.extend({
         }
 
         this.firstPanel.$el.css('flex', `0 0 ${width}px`);
+        Core.services.GlobalEventService.trigger('window:resize');
     },
 
     __onResizerDragHorizontal(ui) {
