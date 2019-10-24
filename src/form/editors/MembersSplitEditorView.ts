@@ -81,7 +81,6 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         this.options.users = users;
         this.options.groups = groups;
         this.controller.fillInModel();
-        this.controller.initItems();
     },
 
     __initializeController(options) {
