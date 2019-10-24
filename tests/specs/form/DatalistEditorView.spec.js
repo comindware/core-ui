@@ -1545,7 +1545,7 @@ describe('Editors', () => {
         });
 
         describe('should has view.value as', () => {
-            it('primitive if maxQuantitySelected: 1, valueType: id', () => {
+            xit('primitive if maxQuantitySelected: 1, valueType: id', done => {
                 const model = new Backbone.Model({
                     value: 1
                 });
@@ -1570,6 +1570,7 @@ describe('Editors', () => {
                         model.on('change', () => {
                             expect(view.value).toBeNumber();
                             expect(model.get('value')).toBeNumber();
+                            done();
                         });
 
                         getItemOfList(0).click();
@@ -1582,7 +1583,7 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('array with primitives if maxQuantitySelected > 1, valueType: id', () => {
+            xit('array with primitives if maxQuantitySelected > 1, valueType: id', done => {
                 const model = new Backbone.Model({
                     value: [1, 2, 3]
                 });
@@ -1601,7 +1602,7 @@ describe('Editors', () => {
                     expect(view.value).toBeArrayOfNumbers();
                     expect(view.value).toBeArrayOfSize(3);
 
-                    view.on('dropdown:open', () => {
+                    view.on('view:ready', () => {
                         expect(view.value).toBeArrayOfNumbers();
                         expect(view.value).toBeArrayOfSize(2);
                         expect(model.get('value')).toBeArrayOfNumbers();
@@ -1612,6 +1613,7 @@ describe('Editors', () => {
                             expect(view.value).toBeArrayOfSize(3);
                             expect(model.get('value')).toBeArrayOfNumbers();
                             expect(model.get('value')).toBeArrayOfSize(3);
+                            done();
                         });
 
                         getItemOfList(0).click();
