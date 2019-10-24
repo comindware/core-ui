@@ -249,18 +249,25 @@ export default Marionette.View.extend({
     },
 
     __onCursorMove(delta, options = {}) {
-        const maxIndex = this.editableCellsIndexes.length - 1;
-        const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
+        const rangeVisibleCellIndex = this.editableCellsIndexes.filter((indexColumn : number) => {
+            const column = this.options.columns[indexColumn];
+            if (column && column.getStateHidden) {
+                return !column.getStateHidden();
+            }
+            return true;
+        });
+        const maxIndex = rangeVisibleCellIndex.length - 1;
+        const currentSelectedIndex = rangeVisibleCellIndex.indexOf(this.pointedCell);
         const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
 
-        const currentSelectedValue = this.editableCellsIndexes[currentSelectedIndex];
-        const newSelectedValue = this.editableCellsIndexes[newPosition];
+        const currentSelectedValue = rangeVisibleCellIndex[currentSelectedIndex];
+        const newSelectedValue = rangeVisibleCellIndex[newPosition];
         const currentModel = this.collection.find(model => model.cid === this.collection.cursorCid);
 
         if (currentModel) {
             if (newSelectedValue === currentSelectedValue && delta !== 0) {
                 const isPositiveDelta = delta >= 1;
-                this.pointedCell = isPositiveDelta ? 0 : this.editableCellsIndexes[this.editableCellsIndexes.length - 1];
+                this.pointedCell = isPositiveDelta ? 0 : rangeVisibleCellIndex[rangeVisibleCellIndex.length - 1];
                 this.collection.trigger(isPositiveDelta ? 'nextModel' : 'prevModel');
                 return;
             }
