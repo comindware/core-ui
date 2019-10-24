@@ -822,7 +822,7 @@ export default Marionette.View.extend({
     __applyFilter(regexp, columns, collection) {
         collection.filter(model => {
             let result = false;
-            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
+            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.key);
             searchableColumns.forEach(column => {
                 const values = model.get(column);
                 const testValueFunction = value => {
