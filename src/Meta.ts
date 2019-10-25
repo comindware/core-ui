@@ -65,18 +65,19 @@ export const presentingComponentsTypes = {
 };
 
 export const iconsNames = {
-    expand: 'expand',
-    minimize: 'compress',
-    goTo: 'external-link-square',
     close: 'times',
-    zoomIn: 'search-plus',
-    zoomOut: 'search-minus',
     delete: 'trash-alt',
     download: 'download',
-    previous: 'chevron-left',
+    expand: 'expand',
+    goTo: 'external-link-square',
+    minimize: 'compress',
     next: 'chevron-right',
+    preview: 'search',
+    previous: 'chevron-left',
     user: 'address-card',
-    users: 'users'
+    users: 'users',
+    zoomIn: 'search-plus',
+    zoomOut: 'search-minus',
 };
 
 export const objectPropertyFormats = {

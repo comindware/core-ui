@@ -134,9 +134,19 @@ export default class UIService {
             return parseFloat(transitionDuration) * 1000;
         } else if (isMilliseconds && !isSeconds) {
             return parseFloat(transitionDuration);
-        } else {
-            Core.InterfaceError.logError(`Unexpected transition duration "${transitionDuration}"`);
-            return 0;
         }
+        Core.InterfaceError.logError(`Unexpected transition duration "${transitionDuration}"`);
+        return 0;
+    }
+
+    static createElementsFromHTML(htmlString: string, context?: Object): Array<Element> {
+        let innerHTML = htmlString.trim();
+        if (context) {
+            innerHTML = Handlebars.compile(innerHTML)(context);
+        }
+        const div = document.createElement('div');
+        div.innerHTML = innerHTML;
+
+        return Array.from(div.children);
     }
 }

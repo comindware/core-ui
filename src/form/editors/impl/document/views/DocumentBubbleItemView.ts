@@ -5,9 +5,12 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+import iconWrapDownload from '../../../iconsWraps/iconWrapPreview.html';
 import ExtensionIconService from '../services/ExtensionIconService';
+import UIService from '../../../../../services/UIService';
 
 import meta from '../meta';
+import { iconsNames } from '../../../../../Meta';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -39,7 +42,8 @@ export default Marionette.View.extend({
     ui: {
         remove: '.js-bubble-delete',
         revise: '.js-revise-button-region',
-        link: '.js-link'
+        link: '.js-link',
+        previewButton: '.js-preview-button'
     },
 
     triggers: {
@@ -48,13 +52,21 @@ export default Marionette.View.extend({
 
     events: {
         'click @ui.revise': '__getDocumentRevision',
-        'click @ui.link': '__showPreview',
+        'click @ui.link': '__onLinkClick',
         mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave'
+        mouseleave: '__onMouseleave',
+        'click @ui.previewButton': '__showPreview'
     },
 
     modelEvents: {
         'change:isLoading': 'render'
+    },
+
+    __onLinkClick(event: MouseEvent): void {
+        if (this.__isNew() && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
+            event.preventDefault();
+        }
     },
 
     __getDocumentRevision() {
@@ -66,19 +78,24 @@ export default Marionette.View.extend({
     },
 
     __showPreview() {
-        const result = this.attachmentsController.showGallery(this.model);
-        if (this.__isNew() && window.navigator.msSaveOrOpenBlob && result) {
-            window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
-            return false;
-        }
-
-        return result;
+        this.attachmentsController.showGallery(this.model);
     },
 
     __onMouseenter() {
-        if (this.options.allowDelete) {
-            this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
+        this.__addRemoveButton();
+        this.__addRevisionButton();
+        this.__addPreviewButton();
+    },
+
+    __addRemoveButton() {
+        if (!this.options.allowDelete || this.__removeButtonElement) {
+            return;
         }
+        this.__removeButtonElement = UIService.createElementsFromHTML(iconWrapRemoveBubble)[0];
+        this.el.insertAdjacentElement('beforeend', this.__removeButtonElement);
+    },
+
+    __addRevisionButton() {
         if (!this.__isNew() && this.options.showRevision) {
             if (!this.isRevisonButtonShown) {
                 this.documentRevisionPopout = new dropdown.factory.createDropdown({
@@ -98,16 +115,43 @@ export default Marionette.View.extend({
         }
     },
 
+    __addPreviewButton() {
+        if (!this.attachmentsController.isModelHasPreview(this.model)) {
+            return;
+        }
+        this.__previewElement = UIService.createElementsFromHTML(iconWrapDownload, { preview: iconsNames.preview })[0];
+        this.ui.previewButton.get(0).insertAdjacentElement('beforeend', this.__previewElement);
+    },
+
     __isNew() {
         return !this.model.id?.startsWith(meta.savedDocumentPrefix);
     },
 
     __onMouseleave() {
-        if (this.options.allowDelete) {
-            this.el.removeChild(this.el.lastElementChild);
+        this.__removeRemoveButton();
+        this.__removeRevisionButton();
+        this.__removePreviewButton();
+    },
+
+    __removeRemoveButton() {
+        if (!this.options.allowDelete || !this.__removeButtonElement) {
+            return;
         }
+        this.el.removeChild(this.__removeButtonElement);
+        delete this.__removeButtonElement;
+    },
+
+    __removeRevisionButton() {
         if (!this.isRevisionButtonClicked) {
             this.ui.revise.hide();
         }
+    },
+
+    __removePreviewButton() {
+        if (!this.__previewElement) {
+            return;
+        }
+        this.ui.previewButton.get(0).removeChild(this.__previewElement);
+        delete this.__previewElement;
     }
 });
