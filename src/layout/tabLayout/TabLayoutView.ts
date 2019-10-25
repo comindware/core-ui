@@ -101,9 +101,7 @@ export default Marionette.View.extend({
         this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
 
         const selectedTab = this.__getSelectedTab();
-
-        if (this.getOption('deferRender')) {
-            const selectedTab = this.__getSelectedTab();
+        if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
             this.__renderTab(selectedTab, false);
         } else {
             this.__tabsCollection.forEach(model => {
@@ -111,7 +109,9 @@ export default Marionette.View.extend({
             });
         }
 
-        this.selectTab(selectedTab.id);
+        if (selectedTab) {
+            this.selectTab(selectedTab.id);
+        }
 
         this.__updateState();
         if (this.getOption('showStepper')) {
@@ -188,20 +188,29 @@ export default Marionette.View.extend({
         this.__findTab(tabId).set({ enabled });
     },
 
-    setVisible(tabId: string, visible: boolean): void {
-        const tab = this.__findTab(tabId);
-        tab.set({ visible });
-
-        let selectedtab = this.__getSelectedTab();
+    isAllHiddenTab() {
         const visibleCollection = this.__tabsCollection.filter('visible');
 
         // all tabs hidden: show message instead of tab panel
         if (!visibleCollection.length) {
+            return true;
+        }
+        return false;
+    },
+
+    setVisible(tabId: string, visible: boolean): void {
+        const tab = this.__findTab(tabId);
+        const visibleCollection = this.__tabsCollection.filter('visible');
+        let newTabIndex;
+        tab.set({ visible });
+
+        let selectedtab = this.__getSelectedTab();
+
+        if (this.isAllHiddenTab()) {
             this.__setNoTabsState(true);
             selectedtab?.set('selected', false);
             return;
         }
-
         // show first tab, other tabs was hidden before
         if (visible && this.hasNoVisibleTabs) {
             tab.set('selected', true);
@@ -219,9 +228,14 @@ export default Marionette.View.extend({
         }
 
         // if we hide selected tab, then another tab must be selected. Let it be the closest one.
-        const indexesOfVisibleCollection = visibleCollection.map((tabModel: TabModel) => this.__tabsCollection.indexOf(tabModel));
         const tabIndex = this.__tabsCollection.indexOf(tab);
-        const newTabIndex = this.__getClosestVisibleTab(indexesOfVisibleCollection, tabIndex);
+        if (visibleCollection.length) {
+            const indexesOfVisibleCollection = visibleCollection.map((tabModel: TabModel) => this.__tabsCollection.indexOf(tabModel));
+            newTabIndex = this.__getClosestVisibleTab(indexesOfVisibleCollection, tabIndex);
+        } else {
+            newTabIndex = tabIndex;
+        }
+
 
         this.selectTab(this.__tabsCollection.at(newTabIndex).id);
     },
