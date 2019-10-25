@@ -144,6 +144,12 @@
     width: 22px;
 }
 
+.layout__vertical-layout .layout__tab-layout__tree-editor {
+    z-index: 2;
+    top: -2px;
+    right: -5px;
+}
+
 .root *:not(.required) > .eye-btn {
     cursor: pointer;
 }
