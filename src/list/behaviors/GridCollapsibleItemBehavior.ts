@@ -92,16 +92,18 @@ export default function() {
             }
         },
 
-        toggleChecked() {
-            if (this.checked) {
-                this.uncheck();
+        toggleChecked(isShiftKeyPressed: boolean) {
+            if (isShiftKeyPressed) {
+                this.collection.checkSmart(this, isShiftKeyPressed);
+            } else if (this.checked) {
+                this.uncheck(isShiftKeyPressed);
             } else {
-                this.check();
+                this.check(isShiftKeyPressed);
             }
         },
 
         highlight(text: String) {
-            if (this.highlighted) {
+            if (this.highlightedFragment === text) {
                 return;
             }
 

@@ -7,6 +7,8 @@ const classes = {
 
 const POPUP_ID_PREFIX = 'popup-region-';
 
+const maxTransitionDelay = 1000;
+
 export default Marionette.View.extend({
     initialize() {
         this.__stack = [];
@@ -41,6 +43,7 @@ export default Marionette.View.extend({
         }
         const config = {
             view,
+            el: view.el,
             options,
             regionEl,
             popupId,
@@ -88,7 +91,7 @@ export default Marionette.View.extend({
         return popupId;
     },
 
-    showElInPopup(view, options) {
+    showElInPopup($el, options) {
         const { fadeBackground, transient } = options;
 
         if (!transient) {
@@ -101,7 +104,8 @@ export default Marionette.View.extend({
         regionEl.classList.add('js-core-ui__global-popup-region');
 
         const config = {
-            view,
+            view: $el,
+            el: $el.get(0),
             options,
             regionEl,
             popupId,
@@ -112,14 +116,14 @@ export default Marionette.View.extend({
         this.addRegion(popupId, {
             el: regionEl
         });
-        this.prevSublingOfContentEl = view.prev();
+        this.prevSublingOfContentEl = $el.prev();
         if (this.prevSublingOfContentEl.length === 0) {
             delete this.prevSublingOfContentEl;
-            this.parentOfContentEl = view.parent();
+            this.parentOfContentEl = $el.parent();
         }
         this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
 
-        view.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
+        $el.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
 
         if (fadeBackground) {
             let lastIndex = -1;
@@ -135,7 +139,7 @@ export default Marionette.View.extend({
         }
 
         this.__stack.push(config);
-        view.popupId = popupId;
+        $el.popupId = popupId;
 
         return popupId;
     },
@@ -263,7 +267,7 @@ export default Marionette.View.extend({
             return;
         }
         const config = this.__stack[this.__stack.length - 1];
-        if (!config.view.__isNeedToPrevent || !config.view.__isNeedToPrevent()) {
+        if (!config.view.isNeedToPrevent?.()) {
             if (config.view.close) {
                 const results = await config.view.close();
                 if (results) {
@@ -286,16 +290,24 @@ export default Marionette.View.extend({
 
     __removePopup(popupDef, immediate) {
         const popRemove = () => {
+            if (popupDef.isRemoved) {
+                return;
+            }
             this.removeRegion(popupDef.popupId);
             this.el.removeChild(popupDef.regionEl);
             this.trigger('popup:close', popupDef.popupId);
+            popupDef.isRemoved = true;
         };
+
         if (immediate) {
             popRemove();
         } else {
-            popupDef.view.el.addEventListener(
+            const timeoutId = setTimeout(() => popRemove(), maxTransitionDelay);
+
+            popupDef.el.addEventListener(
                 'transitionend',
                 () => {
+                    clearTimeout(timeoutId);
                     popRemove();
                 },
                 { once: true }

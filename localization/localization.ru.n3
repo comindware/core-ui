@@ -30,6 +30,8 @@
 
 <http://comindware.com/text/core/form/editors/code#compile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Компилировать"; l10n:originalData "Compile"].
 
+<http://comindware.com/text/core/form/editors/code#downloadTemplate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать шаблон"; l10n:originalData "downloadTemplate"].
+
 <http://comindware.com/text/core/form/editors/code#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "edit"].
 
 <http://comindware.com/text/core/form/editors/code#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "empty"].
@@ -53,6 +55,8 @@
 <http://comindware.com/text/core/form/editors/code#nosuggestions> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "нет предложений"; l10n:originalData "no suggestions"].
 
 <http://comindware.com/text/core/form/editors/code#redo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Повторить"; l10n:originalData "Redo"].
+
+<http://comindware.com/text/core/form/editors/code#show> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать"; l10n:originalData "Show"].
 
 <http://comindware.com/text/core/form/editors/code#successfulcompile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Успешная компиляция"; l10n:originalData "Successful compile"].
 
@@ -109,6 +113,8 @@
 <http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
 
 <http://comindware.com/text/core/form/editors/document#remove> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Remove"].
+
+<http://comindware.com/text/core/form/editors/document#replaceDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить документ"; l10n:originalData "Replace document"].
 
 <http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отобразить больше..."; l10n:originalData "Show more..."].
 
@@ -280,7 +286,7 @@
 
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 
-<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содеражат ошибки"; l10n:originalData "Grid fields has erros"].
+<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содержат ошибки"; l10n:originalData "Grid fields has errors"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 
@@ -374,6 +380,8 @@
 
 <http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
 
+<http://comindware.com/text/core/layout/tabLayout#noTabMessage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все вкладки скрыты"; l10n:originalData "All tabs are hidden"].
+
 <http://comindware.com/text/core/layoutDesigner#addHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите элементы из левой панели"; l10n:originalData "Drag elements from left panel"].
 
 <http://comindware.com/text/core/layoutDesigner#removeHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Для удаления перетащите элемент за границы"; l10n:originalData "removeHint"].
@@ -393,6 +401,14 @@
 <http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить и выйти"; l10n:originalData "Save and leave"].
 
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
+
+<http://comindware.com/text/core/toolbar/blinkCheckbox#hideAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть все"; l10n:originalData "Hide all"].
+
+<http://comindware.com/text/core/toolbar/blinkCheckbox#showAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать все"; l10n:originalData "Show all"].
+
+<http://comindware.com/text/core/toolbar/treeEditor#Apply> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Применить"; l10n:originalData "Apply"].
+
+<http://comindware.com/text/core/toolbar/treeEditor#Reset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сброс"; l10n:originalData "Reset"].
 
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 

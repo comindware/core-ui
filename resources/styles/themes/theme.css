@@ -28,6 +28,9 @@ body {
 .form-label:not(.form-label--empty) {
   margin-bottom: var(--form-label-margin);
 }
+.datalist-panel .form-label:not(.form-label--empty) {
+  margin-top: var(--form-label-margin);
+}
 
 .form-label__info:not(:empty),
 .error .form-label__error {
@@ -58,16 +61,28 @@ body {
 
 .cell.error .form-label__error{
   margin: 0;
-  position: absolute;
-  left: 0;
-  top: -13px;
+  position: relative;
+  left: -15px;
+  z-index: 1;
 }
 
 .cell.error .form-label__error-button{
   height: 0;
   width: 0;
-  border-top: 10px solid #e61212;
-  border-right: 10px solid transparent;
+  border-top: 16px solid #e61212;
+  border-right: 16px solid transparent;
+  vertical-align: top;
+}
+
+.cell.error .form-label__error-button:after {
+  content: '!';
+  color: #fff;
+  position: absolute;
+  vertical-align: top;
+  top: 0;
+  font-size: 10px;
+  font-weight: bold;
+  left: 3px;
 }
 
 .cell.error .form-label__error-button:before{
@@ -290,6 +305,7 @@ body {
   height: var(--radio-size);
   margin-right: var(--radio-right-margin);
   border: 1px solid var(--checkbox-border-color);
+  flex-shrink: 0;
 }
 .radiobutton-text {
   line-height: var(--line-height);
@@ -383,6 +399,20 @@ svg.svg-grid-icons {
   vertical-align: top;
 }
 
+.datalist-panel .form-label{
+  padding: var(--grid-header-padding);
+}
+.datalist-panel__list-splitter > div{
+  height: 1px;
+  padding: 5px 0;
+}
+.datalist-panel__list-splitter > div::after{
+    content: ' ';
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    border-top: 1px solid var(--grey-400);
+}
 
 .grid-header .cell_selection,
 .grid-header .cell_selection:hover,
@@ -414,10 +444,7 @@ svg.svg-grid-icons {
 }
 
 .cell.editor {
-  height: auto;
   line-height: initial;
-  min-height: 34px;
-  max-height: 34px;
 }
 
 .compact.grid-container .cell.editor{
@@ -449,6 +476,10 @@ svg.svg-grid-icons {
   display: none;
 }
 
+.grid__headless .grid-content-view{
+  overflow: auto;
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
@@ -472,29 +503,33 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-cell-border-first);
 }
 
+/*
 tr.row-checked,
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
-  background-color: #c2d7e5;
-}
+  background-color: var(--selected-color);
+}*/
 .cell_selection.row-checked,
 .cell_selection-index.row-checked{
   color: #666;
 }
 
-tr.selected,
+tr.selected .cell,
 tr.selected .cell_selection,
 tr.selected .cell_selection-index{
   background-color: #eaf3f8;
 }
 
+.row-checked .cell,
 .row-checked .cell_selection,
 .row-checked .cell_selection-index{
   background-color: #c2d7e5;
   color: #666;
 }
 
-tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
+tr:hover .cell,
+tr:hover .cell_selection,
+tr:hover .cell_selection-index {
   background-color: #efefef;
 }
 
@@ -507,7 +542,6 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 .sort_down, .sort_up {
   width: var(--grid-sort-icon-size);
   height: var(--grid-sort-icon-size);
-  background-image: var(--grid-sort-icon);
   top: var(--grid-sort-icon-offset-y);
 }
 
@@ -522,8 +556,8 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   height: var(--grid-checkbox-size);
   position: absolute;
   right: 5px;
-  top: 50%;
-  margin-top: -8px;
+  top: 0;
+  margin-top: 10px;
 }
 
 .cell .input {
@@ -555,6 +589,18 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   left: 0;
   z-index: 10;
   width: 47px;
+  min-width: 47px;
+  background-clip: padding-box;
+}
+
+/* for IE*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .cell_selection, .cell_selection-index, .grid-header-column {
+      position:relative;
+      background-clip: padding-box;
+  }
+
+
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -590,19 +636,24 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 
 .collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: var(--collapse-icon);
-  vertical-align: middle
+  /*background-image: var(--collapse-icon);*/
+  vertical-align: middle;
+  z-index: 1;
 }
 
 .context-collapsible-btn {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -615,12 +666,33 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   transform: rotate(90deg);
 }
 
+.collapsible-btn svg, .context-collapsible-btn svg{
+    width: 70%;
+    height: 70%;
+}
+
 .collapsible-btn.collapsible-btn_expanded{
   transform: rotate(90deg);
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
   transform: rotate(-90deg);
+}
+
+.cell .collapsible-btn{
+  transform: rotate(-90deg);
+  background: none;
+  fill: #636262;
+  left: 0;
+}
+
+.cell .collapsible-btn svg{
+  transform: translate(3px, 2px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(0deg);
+  background: none;
 }
 
 .grid-header-column-content .collapsible-btn {
@@ -750,6 +822,10 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 .bubbles .spinner {
   @apply --absolute-center-y-theme;
 }
+.editor_bubble .bubbles .bubbles__caret{
+  line-height: 12px;
+}
+
 .bubbles .bubble-doc_icon{
   /* @apply --relative-center-y-theme; this stuff not working! */
   position: relative;
@@ -758,7 +834,6 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   margin-right: 10px;
 }
 .bubbles .bubble-doc_text{
-  height: 100%;
   line-height: 100%;
   flex: 0 1 auto;
 }
@@ -809,25 +884,32 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 }
 
 /* button */
-.btn{
+.btn,
+.toolbar-btn.btn{
   @apply --button-theme;
 }
-.btn-strong{
+.btn-strong,
+.toolbar-btn.btn-strong{
   @apply --button-strong;
 }
-.btn-pale{
+.btn-pale,
+.toolbar-btn.btn-pale{
   @apply --button-pale;
 }
-.btn-strong:hover{
+.btn-strong:hover,
+.toolbar-btn.btn-strong:hover{
   @apply --button-strong-hover-theme;
 }
-.btn-strong:active{
+.btn-strong:active,
+.toolbar-btn.btn-strong:active{
   @apply --button-strong-active-theme;
 }
-.btn-pale:hover{
+.btn-pale:hover,
+.toolbar-btn.btn-pale:hover{
   @apply --button-pale-hover-theme;
 }
-.btn-pale:active{
+.btn-pale:active,
+.toolbar-btn.btn-pale:active{
   @apply --button-pale-active-theme;
 }
 .layout__button .btn:focus{
@@ -909,6 +991,11 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
   @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
+  padding: 3px 15px;
+}
+.toolbar-btn > .toolbar__icons > i {
+  width: 100%;
+  height: auto;
 }
 .toolbar-items-wrp > div:last-child.toolbar-btn,
 .toolbar-items-wrp > div:last-child .toolbar-btn{
@@ -1003,6 +1090,8 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 
 .toolbar__icons {
   display: inline-block;
+  width: 20px;
+  flex: none;
 }
 
 .toolbar__icons .fa {
@@ -1231,7 +1320,7 @@ tr:hover, tr:hover .cell_selection, tr:hover .cell_selection-index {
 
 
 .task-links__link {
-  color: var(--text-color);
+  color:var(--theme-colors__text_fade);
 }
 
 .task-links__link:hover {

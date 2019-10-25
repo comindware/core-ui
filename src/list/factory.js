@@ -73,16 +73,14 @@ const factory = {
             comparator: getDefaultComparator(options.columns || options.gridViewOptions.columns || [])
         });
 
-        const gridViewOptions = Object.assign(
-            {
-                collection,
-                onColumnSort: options.onColumnSort,
-                headerView: options.headerView,
-                childView: options.childView,
-                childViewSelector: options.childViewSelector
-            },
-            options.gridViewOptions
-        );
+        const gridViewOptions = {
+            collection,
+            onColumnSort: options.onColumnSort,
+            headerView: options.headerView,
+            childView: options.childView,
+            childViewSelector: options.childViewSelector,
+            ...options.gridViewOptions
+        };
 
         return new GridView(gridViewOptions);
     },

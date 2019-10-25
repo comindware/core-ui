@@ -121,7 +121,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should remove value on click in selected container', done => {
+        xit('should remove value on click in selected container', done => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });

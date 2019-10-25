@@ -4,6 +4,8 @@ import meta from '../meta';
 export default Marionette.CollectionView.extend({
     className: 'toolbar-items-wrp',
 
+    viewComparator: 'order',
+
     childView(model) {
         return meta.getViewByModel(model);
     },

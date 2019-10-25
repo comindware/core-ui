@@ -6,7 +6,7 @@ install: ./build/npm-install.sh
 script:
   - npm run deploy
 after_script:
-  - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
+  - node ./node_modules/coveralls/bin/coveralls.js < ./reports/lcov.info
 sudo: required
 deploy:
   - provider: npm

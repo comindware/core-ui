@@ -24,8 +24,9 @@ export default function() {
         {
             key: 'textCell',
             type: 'String',
-            title: 'Text Cell',
-            sorting: 'desc'
+            title: 'Hidden Column',
+            sorting: 'desc',
+            isHidden: true
         },
         {
             key: 'numberCell',
@@ -37,38 +38,42 @@ export default function() {
             type: 'DateTime',
             title: 'DateTime Cell'
         },
-        {
-            key: 'durationCell',
-            type: 'Duration',
-            title: 'Duration Cell'
-        },
-        {
-            key: 'booleanCell',
-            type: 'Boolean',
-            title: 'Boolean Cell'
-        },
-        {
-            key: 'referenceCell',
-            type: 'Instance',
-            title: 'Reference Cell'
-        },
-        {
-            key: 'documentCell',
-            type: 'Document',
-            title: 'Document Cell'
-        }
+        // {
+        //     key: 'durationCell',
+        //     type: 'Duration',
+        //     title: 'Duration Cell'
+        // },
+        // {
+        //     key: 'booleanCell',
+        //     type: 'Boolean',
+        //     title: 'Boolean Cell'
+        // },
+        // {
+        //     key: 'referenceCell',
+        //     type: 'Instance',
+        //     title: 'Reference Cell'
+        // },
+        // {
+        //     key: 'documentCell',
+        //     type: 'Document',
+        //     title: 'Document Cell'
+        // }
     ];
 
+    const collection = new Backbone.Collection();
     // 4. Create grid
     const gridView = Core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
+            showToolbar: true,
             childHeight: 35,
             useDefaultRowView: true,
             minimumVisibleRows: 100
         },
-        collection: dataArray
+        collection
     });
+
+    gridView.on('execute', () => collection.add({}));
 
     // 7. Show created views
     return new ListCanvasView({

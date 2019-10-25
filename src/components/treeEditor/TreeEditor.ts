@@ -1,43 +1,35 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
+import DiffController from './controllers/DiffController';
+import { TTreeEditorOptions, GraphModel } from './types';
+import ConfigDiff from './classes/ConfigDiff';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
     closedEyeIconClass: 'eye-slash',
-    configDiff: {},
-    getNodeName: undefined
-};
-
-interface TConfigDiff {
-    [key: string]: {
-        index?: number,
-        isHidden?: boolean
-    };
-}
-
-type TTreeEditorOptions = {
-    model: any,
-    hidden?: boolean,
-    eyeIconClass?: string,
-    closedEyeIconClass?: string,
-    configDiff?: TConfigDiff,
-    unNamedType?: string,
-    stopNestingType?: string,
-    forceBranchType?: string,
-    getNodeName?: (model: any) => string
+    configDiff: new Map(),
+    getNodeName: undefined,
+    showToolbar: false,
+    showResetButton: true,
+    childsFilter: undefined,
+    nestingOptions: {}
 };
 
 export default class TreeEditor {
-    configDiff: TConfigDiff;
-    oldConfigDiff: TConfigDiff;
-    model: any;
+    configDiff: ConfigDiff;
+    model: GraphModel;
+    view: Backbone.View;
+    controller: DiffController;
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
+        this.storageConfigDiff = options.configDiff;
         this.configDiff = options.configDiff;
-        this.oldConfigDiff = options.configDiff;
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
+        const nestingOptions = options.nestingOptions;
+
+        this.controller = new DiffController({ configDiff: this.configDiff, graphModel: this.model, reqres, nestingOptions });
 
         const popoutView = Core.dropdown.factory.createPopout({
             buttonView: TEButtonView,
@@ -45,37 +37,85 @@ export default class TreeEditor {
                 iconClass: options.eyeIconClass
             },
 
-            panelView: NodeViewFactory.getNodeView({
+            panelView: NodeViewFactory.getRootView({
                 model: this.model,
                 unNamedType: options.unNamedType,
-                stopNestingType: options.stopNestingType,
-                forceBranchType: options.forceBranchType
+                nestingOptions,
+                showToolbar: options.showToolbar,
+                showResetButton: options.showResetButton
             }),
-            panelViewOptions: Object.assign({}, options, {
+            panelViewOptions: {
+                ...options,
                 reqres,
                 maxWidth: 300
-            })
+            }
         });
 
-        reqres.reply('treeEditor:setWidgetConfig', (id, config) => this.applyConfigDiff(id, config));
-        popoutView.listenTo(popoutView, 'close', () => this.__onSave(popoutView));
+        reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
+        popoutView.listenTo(reqres, 'treeEditor:diffApplied', () => popoutView.trigger('treeEditor:diffApplied'));
+
+        popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
+
+        if (options.showToolbar) {
+            reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
+        } else {
+            popoutView.listenTo(popoutView, 'close', () => this.__onSave());
+        }
 
         if (options.hidden) {
             popoutView.el.setAttribute('hidden', true);
         }
 
-        return popoutView;
+        popoutView.getConfigDiff = this.__getConfigDiff.bind(this);
+        popoutView.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
+        popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
+        popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
+        popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
+        popoutView.getRootCollection = this.__getRootCollection.bind(this);
+
+        return (this.view = popoutView);
     }
 
-    applyConfigDiff(id: string, config: TConfigDiff) {
-        if (this.configDiff[id]) {
-            Object.assign(this.configDiff[id], config);
-        } else {
-            this.configDiff[id] = config;
+    __setVisibleConfigDiffInit() {
+        this.controller.setVisibleConfigDiffInit();
+    }
+
+    __getRootCollection() {
+        return this.model.get(this.model.childrenAttribute);
+    }
+
+    __getConfigDiff() {
+        return this.controller.configDiff.__mapChildsToObjects();
+    }
+
+    __setConfigDiff(configDiff: ConfigDiff) {
+        this.controller.set(configDiff);
+    }
+
+    __resetConfigDiff() {
+        this.controller.reset();
+        this.controller.setVisibleConfigDiffInit();
+        this.view.trigger('reset');
+    }
+
+    __onSave() {
+        this.view.trigger('save', this.__getConfigDiff());
+    }
+
+    __onReset() {
+        this.__resetConfigDiff();
+    }
+
+    __commandExecute(actionModel: Backbone.Model) {
+        switch (actionModel.id) {
+            case 'reset':
+                this.__onReset();
+                break;
+            case 'apply':
+                this.__onSave();
+                break;
+            default:
+                break;
         }
-    }
-
-    __onSave(popoutView) {
-        popoutView.trigger('save', this.configDiff);
     }
 }

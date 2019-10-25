@@ -9,7 +9,7 @@ export default {
 
         if (Array.isArray(pureJSType)) {
             out = [];
-            for (i = pureJSType.length; i; ) {
+            for (i = pureJSType.length; i;) {
                 --i;
                 // @ts-ignore
                 out[i] = _.cloneDeep(pureJSType[i]);
@@ -54,5 +54,13 @@ export default {
 
     unCapitalize(string: string): string {
         return string.charAt(0).toLowerCase() + string.slice(1);
+    },
+
+    getResult(value: any, context: object, ...args: Array<any>): any {
+        return typeof value === 'function' ? value.call(context, ...args) : value;
+    },
+
+    onlyUnique(array: Array<any>): Array<any> {
+        return array.filter((value, index, self) => self.indexOf(value) === index);
     }
 };

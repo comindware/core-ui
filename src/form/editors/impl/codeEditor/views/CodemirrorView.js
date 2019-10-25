@@ -6,6 +6,7 @@ import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import LocalizationService from '../../../../../services/LocalizationService';
 import GlobalEventService from '../../../../../services/GlobalEventService';
+import LoadingBehavior from '../../../../../views/behaviors/LoadingBehavior';
 
 const modes = {
     expression: 'text/comindware_expression',
@@ -13,11 +14,13 @@ const modes = {
 };
 
 const TOOLTIP_PADDING_PX = 15;
-
+const TOOLTIP_MARGIN = 10;
 const CHECK_VISIBILITY_DELAY = 200;
 
 const classes = constants.classes;
 const types = constants.types;
+
+const lineSeparator = '\r\n';
 
 export default Marionette.View.extend({
     initialize(options = {}) {
@@ -40,23 +43,21 @@ export default Marionette.View.extend({
             '__onMinimize',
             '__countOffset',
             '__showCSharpHint',
-            '__getCSharpHints',
             '__jumpToLine',
             '__compile',
             '__noSuggestionHint',
             '__checkComments',
             '__countLineAndColumn',
-            '__hideHintOnClick'
+            '__hideHintOnClick',
+            '__getTooltipCsharpModel'
         );
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
             if (options.ontologyService) {
                 options.ontologyService.getOntology().then(ontologyModel => {
                     this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
-
                     if (this.codemirror) {
                         this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
-
                         //retokenize codemirror with ontology model
                         this.setValue(this.getValue());
                     }
@@ -69,7 +70,15 @@ export default Marionette.View.extend({
         }
     },
 
+    behaviors: {
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
+        }
+    },
+
     regions: {
+        loadingRegion: '.js-loading-region',
         ediorHeaderContainer: {
             replaceElement: true,
             el: '.js-code-header-container'
@@ -96,7 +105,8 @@ export default Marionette.View.extend({
 
     ui: {
         toolbar: '.js-code-toolbar-container',
-        editor: '.js-code-editor-container'
+        editor: '.js-code-editor-container',
+        hints: 'CodeMirror-hints'
     },
 
     template: Handlebars.compile(template),
@@ -122,6 +132,7 @@ export default Marionette.View.extend({
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
+            this.tt.set('info', new Backbone.Collection([]));
             this.output = new OutputView({
                 editor: this.editor,
                 model: this.tt
@@ -139,7 +150,7 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            lineSeparator: this.options.lineSeparator || '\r\n',
+            lineSeparator,
             mode: modes[this.options.mode],
             ontologyObjects: this.autoCompleteArray,
             matchBrackets: true,
@@ -148,6 +159,7 @@ export default Marionette.View.extend({
             lint: true,
             indentUnit: 4,
             foldGutter: true,
+            theme: Core.services.ThemeService.isThemeShadeIsDark() ? 'pastel-on-dark' : 'default',
             selectionPointer: true,
             showTrailingSpace: true,
             fixedGutter: true,
@@ -217,7 +229,7 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.codemirror.setValue(value || '');
+        this.codemirror.setValue(value?.replace(/[^\r]\n/g, lineSeparator) || '');
         this.refresh();
     },
 
@@ -258,8 +270,11 @@ export default Marionette.View.extend({
         }
     },
 
-    __hideHintOnClick(event) {
-        if (this.hintIsShown && !event.target.contains('.js-code-editor-container')) {
+    __hideHintOnClick(target) {
+        if ( !this.ui.hints.length) {
+            return;
+        }
+        if (this.hintIsShown && !this.ui.hints.get(0).contains(target)) {
             this.__hideHint();
         }
     },
@@ -301,10 +316,12 @@ export default Marionette.View.extend({
     },
 
     __onChange() {
-        if (!this.isExternalChange) {
-            if (this.options.mode === 'expression') {
-                this.__showHint();
-            }
+        if (this.isExternalChange) {
+            this.isExternalChange = false;
+            return;
+        }
+        if (this.options.mode === 'expression') {
+            this.__showHint();
         }
         this.__change();
     },
@@ -340,8 +357,8 @@ export default Marionette.View.extend({
         return offset;
     },
 
-    __countLineAndColumn(itemOffset, userCodeOffset) {
-        const userOffset = itemOffset - userCodeOffset;
+    __countLineAndColumn(itemOffset) {
+        const userOffset = itemOffset;
         const content = this.codemirror.getValue();
         let curLine = 1;
         let curColumn = 1;
@@ -363,50 +380,134 @@ export default Marionette.View.extend({
         }
     },
 
-    __getCSharpHints() {
-        const completeHoverQuery = {
-            SourceCode: this.codemirror.getValue(),
-            CursorOffset: this.__countOffset(),
-            SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
-        };
-        let newArr = [];
-        this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
+    async __showCSharpHint() {
+        if (!this.intelliAssist) {
+            return;
+        }
+        this.setLoading(true);
+        try {
+            const completeHoverQuery = {
+                SourceCode: this.codemirror.getValue(),
+                CursorOffset: this.__countOffset(),
+                SourceType: 'CSharp',
+                QueryCompleteHoverType: 'Completion',
+                UseOntologyLibriary: this.options.config.useOntologyLibriary
+            };
+            const ontologyModel = await this.intelliAssist.getCSharpOntology(completeHoverQuery);
+            this.newArr = [];
             if (ontologyModel) {
-                ontologyModel.get('infoList').forEach(el => {
-                    newArr = newArr.concat([el.name]);
+                ontologyModel.get('infoList').forEach(item => {
+                    item.text = item.name;
+                    if (item.description) {
+                        const rowTooltip = item.description.split('\n');
+                        if (rowTooltip.length > 1) {
+                            item.title = rowTooltip[0];
+                            item.description = rowTooltip[1];
+                        }
+                    }
                 });
+                this.CSharpInfoList = ontologyModel.get('infoList');
             } else {
-                newArr = [];
+                this.CSharpInfoList = [];
             }
-        });
-        return newArr;
+            this.codemirror.showHint({ hint: this.__getTooltipCsharpModel });
+        } finally {
+            this.setLoading(false);
+        }
     },
 
-    __showCSharpHint() {
-        const completeHoverQuery = {
-            SourceCode: this.codemirror.getValue(),
-            CursorOffset: this.__countOffset(),
-            SourceType: 'CSharp',
-            UQueryCompleteHoverType: 'Completion'
-        };
-
-        this.intelliAssist.getCSharpOntology(completeHoverQuery).then(ontologyModel => {
-            let newArr = [];
-            if (ontologyModel) {
-                ontologyModel.get('infoList').forEach(el => {
-                    newArr = newArr.concat([el.name]);
-                });
-                if (newArr.length === 0) {
-                    this.codemirror.showHint({ hint: this.__noSuggestionHint });
-                } else {
-                    codemirror.hintWords['text/x-csharp'] = newArr;
-                    this.codemirror.showHint();
+    __getTooltipCsharpModel() {
+        let autoCompleteObject = {};
+        const cursor = this.codemirror.getCursor();
+        const token = this.codemirror.getTokenAt(cursor);
+        this.hintsBehindDot = this.codemirror.getLine(cursor.line)[token.start] === '.';
+        if (!this.CSharpInfoList.length) {
+            autoCompleteObject = {
+                from: cursor,
+                to: cursor,
+                list: [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }]
+            };
+        } else {
+            autoCompleteObject = {
+                from: {
+                    line: cursor.line,
+                    ch: this.hintsBehindDot ? token.start + 1 : token.start
+                },
+                to: {
+                    line: cursor.line,
+                    ch: this.hintsBehindDot ? token.end + 1 : token.end
+                },
+                list: this.CSharpInfoList
+            };
+        }
+        if (!this.hintsBehindDot) {
+            if (this.previousHintName) {
+                const indexBehhindHint = this.CSharpInfoList.findIndex(item => item.name === this.previousHintName);
+                if (indexBehhindHint >= 0) {
+                    autoCompleteObject.selectedHint = indexBehhindHint;
                 }
-            } else {
-                newArr = [];
             }
-        });
+        } else {
+            this.previousHintName = null;
+        }
+        codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
+        this.hintIsShown = true;
+        return autoCompleteObject;
+    },
+
+    __getPositionTooltip(hintEl) {
+        const hintPanel = hintEl.parentNode;
+        const hintPanelPosition = hintPanel.getBoundingClientRect();
+        const hintPanelWidth = hintPanelPosition.width;
+        const codemirrorEditorWidth = hintPanel.parentElement.offsetWidth;
+        const top = hintPanel.offsetTop;
+
+        const half = codemirrorEditorWidth / 2;
+        const isMoreHalf = (hintPanel.offsetLeft + hintPanelWidth) > half;
+
+        let left;
+        let right;
+
+        if (isMoreHalf) {
+            right = codemirrorEditorWidth - hintPanel.offsetLeft + TOOLTIP_MARGIN;
+            left = TOOLTIP_MARGIN;
+        } else {
+            left = hintPanel.offsetLeft + hintPanelWidth + TOOLTIP_MARGIN;
+            right = TOOLTIP_MARGIN;
+        }
+        return { top, left, right };
+    },
+
+    __showTooltip(token, hintEl) {
+        hintEl.focus();
+        const tooltipTypeCSharp = constants.types.function;
+        this.previousHintName = token.text;
+        let options;
+        if (!token.description) {
+            return;
+        }
+        switch (this.options.mode) {
+            case constants.mode.script:
+                options = {
+                    model: new Backbone.Model(token)
+                };
+                break;
+            case constants.mode.expression:
+                options = {
+                    model: new Backbone.Model(this.__findObjectByText(token.text)),
+                    isFull: true
+                };
+            default:
+                break;
+        }
+        const TooltipView = MappingService.getTooltipView(tooltipTypeCSharp);
+        this.tooltip = new TooltipView(options);
+
+        this.listenTo(this.tooltip, 'syntax:changed', syntax => (token.currentSyntax = syntax));
+        this.listenTo(this.tooltip, 'peek', this.__onTooltipPeek);
+
+        this.showChildView('tooltipContainer', this.tooltip);
+        this.tooltip.setPosition(this.__getPositionTooltip(hintEl));
     },
 
     __showHint() {
@@ -447,53 +548,68 @@ export default Marionette.View.extend({
     __find() {
         this.codemirror.execCommand('find');
     },
-
-    __compile() {
+    async __compile() {
+        if (!this.intelliAssist) {
+            return;
+        }
         if (this.currentHighlightedLine) {
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
         }
+
+        const ERROR = 'Error';
+        const WARNING = 'Warning';
+
         let newArrErr = [];
         let newArrWarn = [];
-        const userCompileQuery = {
-            UserCode: this.codemirror.getValue(),
-            SourceType: 'CSharp'
-        };
-        if (this.intelliAssist) {
-            this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
-                if (ontologyModel) {
-                    const userCodeOffset = ontologyModel.get('userCodeOffsetStart');
-                    if (ontologyModel.get('compilerRemarks').length > 0) {
-                        ontologyModel.get('compilerRemarks').forEach(el => {
-                            if (el.offsetStart > userCodeOffset) {
-                                if (el.severity === 'Error') {
-                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
-                                    el.line = obj.line;
-                                    el.column = obj.column;
-                                    newArrErr = newArrErr.concat([el]);
-                                }
-                                if (el.severity === 'Warning') {
-                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
-                                    el.line = obj.line;
-                                    el.column = obj.column;
-                                    newArrWarn = newArrWarn.concat([el]);
-                                }
-                            }
-                        });
-                    } else {
-                        Core.ToastNotifications.add(Localizer.get('CORE.FORM.EDITORS.CODE.SUCCESSFULCOMPILE'));
-                    }
-                } else {
-                    newArrErr = [];
-                    newArrWarn = [];
-                }
-                const OutputObj = {
-                    errors: newArrErr,
-                    warnings: newArrWarn
-                };
+        let newArrInfo = [];
 
-                this.trigger('compile', OutputObj);
-            });
+        const userCompileQuery = {
+            SourceCode: this.codemirror.getValue(),
+            SourceType: 'CSharp',
+            UseOntologyLibriary: this.options.config?.useOntologyLibriary
+        };
+        const content = this.codemirror.getValue();
+        this.setLoading(true);
+        try {
+            const ontologyModel = await this.intelliAssist.getCompile(userCompileQuery);
+            if (ontologyModel) {
+                if (ontologyModel.get('compilerRemarks').length > 0) {
+                    ontologyModel.get('compilerRemarks').forEach(el => {
+                        const offsetStart = el.offsetStart;
+                        if ((el.offsetStart != null) && (content.length >= offsetStart)) {
+                            const obj = this.__countLineAndColumn(offsetStart, content);
+                            el.line = obj.line;
+                            el.column = obj.column;
+                            switch (el.severity) {
+                                case ERROR:
+                                    newArrErr = newArrErr.concat([el]);
+                                    break;
+                                case WARNING:
+                                    newArrWarn = newArrWarn.concat([el]);
+                                    break;
+                                default:
+                                    newArrInfo = newArrInfo.concat([el]);
+                                    break;
+                            }
+                        }
+                    });
+                } else {
+                    Core.ToastNotifications.add(Localizer.get('CORE.FORM.EDITORS.CODE.SUCCESSFULCOMPILE'));
+                }
+            } else {
+                newArrErr = [];
+                newArrWarn = [];
+                newArrInfo = [];
+            }
+            const outputObj = {
+                errors: newArrErr,
+                warnings: newArrWarn,
+                info: newArrInfo
+            };
+            this.trigger('compile', outputObj);
+        } finally {
+            this.setLoading(false);
         }
     },
 
@@ -503,7 +619,7 @@ export default Marionette.View.extend({
         this.codemirror.scrollTo(null, t - middleHeight - 5);
     },
 
-    __format() {
+    async __format() {
         if (this.codemirror.isReadOnly()) {
             return;
         }
@@ -556,14 +672,19 @@ export default Marionette.View.extend({
         }
         if (this.options.mode === 'script') {
             const formatQuery = {
-                UserCode: {
-                    SourceCode: this.codemirror.getValue(),
-                    SourceType: 'CSharp'
-                }
+                SourceCode: this.codemirror.getValue(),
+                SourceType: 'CSharp',
+                UseOntologyLibriary: this.options.config?.useOntologyLibriary
             };
-            this.intelliAssist.getFormatCSharp(formatQuery).then(ontologyModel => {
-                this.codemirror.setValue(ontologyModel.get('userCode').sourceCode);
-            });
+            if (this.intelliAssist) {
+                this.setLoading(true);
+                try {
+                    const ontologyModel = await this.intelliAssist.getFormatCSharp(formatQuery);
+                    this.codemirror.setValue(ontologyModel.get('sourceCode'));
+                } finally {
+                    this.setLoading(false);
+                }
+            }
         }
     },
 
@@ -619,35 +740,6 @@ export default Marionette.View.extend({
         return autoCompleteObject;
     },
 
-    __showTooltip(token, hintEl) {
-        hintEl.focus();
-        const tooltipModel = new Backbone.Model(this.__findObjectByText(token.text));
-        const tooltipView = MappingService.getTooltipView(tooltipModel.get('type'));
-        if (!tooltipView) {
-            this.__hideTooltip();
-            return;
-        }
-        this.tooltip = new tooltipView({
-            model: tooltipModel,
-            isFull: true
-        });
-        this.listenTo(this.tooltip, 'syntax:changed', syntax => (token.currentSyntax = syntax));
-        this.listenTo(this.tooltip, 'peek', this.__onTooltipPeek);
-        this.showChildView('tooltipContainer', this.tooltip);
-
-        const tooltipMargin = 10;
-        const hintPanel = hintEl.parentNode;
-        const hintPanelPosition = hintPanel.position();
-        const hintPanelWidth = hintPanel.width();
-        const tooltipWidth = this.tooltip.$el.width();
-
-        let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
-        if (left + tooltipWidth > window.innerWidth) {
-            left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
-        }
-        this.tooltip.setPosition({ top: hintPanelPosition.top, left });
-    },
-
     __hideTooltip() {
         if (this.tooltip) {
             this.tooltip.destroy();
@@ -658,10 +750,10 @@ export default Marionette.View.extend({
     __onKeyDown(editor, event) {
         const charCode = event.which === null ? event.keyCode : event.which;
         this.isExternalChange = !(
-            !event.altKey &&
-            !event.ctrlKey &&
-            !event.metaKey &&
-            (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
+            !event.altKey
+            && !event.ctrlKey
+            && !event.metaKey
+            && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
         );
         if (charCode === 27 && !this.hintIsShown) {
             if (!this.isDestroyed()) {
@@ -764,5 +856,11 @@ export default Marionette.View.extend({
             }
         }
         return totalChars / totalCommentsChars <= 4;
+    },
+
+    setLoading(loading) {
+        if (!this.isDestroyed()) {
+            this.loading.setLoading(loading);
+        }
     }
 });

@@ -22,6 +22,8 @@ import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrosPanelView from '../../views/ErrosPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
+import { GraphModel } from '../../components/treeEditor/types';
+import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 
 const classes = {
     REQUIRED: 'required',
@@ -53,13 +55,15 @@ const defaultOptions = options => ({
     updateToolbarEvents: '',
     childHeight: 35,
     showTreeEditor: false,
-    treeEditorIsHidden: false
+    treeEditorIsHidden: false,
+    treeEditorConfig: new Map(),
+    headerHeight: 36
 });
 
-const config = {
-    VISIBLE_COLLECTION_RESERVE: 20,
-    VISIBLE_COLLECTION_RESERVE_HALF: 10,
-    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+const configConstants = {
+    // VISIBLE_COLLECTION_RESERVE: 20,
+    VISIBLE_COLLECTION_RESERVE_HALF: 10
+    // VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
 };
 
 /**
@@ -92,20 +96,17 @@ export default Marionette.View.extend({
     initialize(options) {
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-
-        this.collection = factory.createWrappedCollection(Object.assign({}, this.options, { comparator }));
+        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.columnCollectionDefault = this.columnsCollection.clone();
+        this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
         }
-
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.setOptionsToFieldsOfNewSchema(this.options.columns, this.options.transliteratedFields);
         }
 
         this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
-
-        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
 
         this.uniqueId = _.uniqueId('native-grid');
         this.childHeight = options.childHeight || 35; //todo fix it
@@ -151,64 +152,8 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
 
-        this.__updateActions(allToolbarActions, this.collection);
-        if (this.options.showToolbar || this.options.draggable) {
-            if (this.options.showCheckbox) {
-                this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
-            } else {
-                this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
-            }
-            if (this.options.updateToolbarEvents) {
-                this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
-            }
-        }
-        /*
-	 const draggable = this.getOption('draggable');
-        if (this.options.showCheckbox || draggable) {
-           
-            let checkboxColumnClass = '';
-            if (showRowIndex) {
-                this.on('update:top update:index', this.__setCheckBoxColummWidth);
-                checkboxColumnClass = `${this.uniqueId}-checkbox-column`;
-                this.columnClasses.push(checkboxColumnClass);
-            }
-            this.selectionPanelView = new SelectionPanelView({
-                collection: this.listView.collection,
-                gridEventAggregator: this,
-                checkboxColumnClass,
-                showRowIndex: this.options.showRowIndex,
-                childViewOptions: {
-                    draggable,
-                    showRowIndex,
-                    bindSelection: this.getOption('bindSelection'),
-                    checkboxColumnClass
-                }
-            });
+        this.__initializeToolbar();
 
-            this.selectionHeaderView = new SelectionCellView({
-                collection: this.collection,
-                selectionType: 'all',
-                gridEventAggregator: this,
-                checkboxColumnClass,
-                showRowIndex
-            });
-
-            if (draggable) {
-                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
-                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
-            }
-
-            if (this.options.showConfigurationPanel) {
-                this.__initializeConfigurationPanel();
-            }
-        }
-        */
-        if (this.options.showToolbar) {
-            this.toolbarView = new ToolbarView({
-                allItemsCollection: allToolbarActions || new Backbone.Collection()
-            });
-            this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
-        }
         if (this.options.showSearch) {
             this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
@@ -218,11 +163,38 @@ export default Marionette.View.extend({
         }
     },
 
+    __initializeToolbar() {
+        if (!this.options.showToolbar) {
+            return;
+        }
+
+        this.toolbarView = new ToolbarView({
+            toolbarItems: this.__getToolbarActions() || []
+        });
+
+        const allToolbarActions = this.toolbarView.getToolbarItems();
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
+        this.__updateActions(allToolbarActions, this.collection);
+
+        if (this.options.showCheckbox) {
+            this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
+        } else {
+            this.listenTo(this.collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+        }
+        if (this.options.updateToolbarEvents) {
+            this.listenTo(this.collection.parentCollection, this.options.updateToolbarEvents, debounceUpdateAction);
+        }
+
+        this.listenTo(this.toolbarView, 'command:execute', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
+    },
+
     __handleColumnWidthChange(config: { index: number, newColumnWidth: number }) {
         const { index, newColumnWidth } = config;
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
-            this.trigger('treeEditor:save', { [this.options.columns[index].columnModel.id]: { width: newColumnWidth } });
+            const configWidthColumn = new Map();
+            configWidthColumn.set(this.options.columns[index].columnModel.id, { width: newColumnWidth });
+            this.trigger('treeEditor:save', configWidthColumn);
         }
     },
 
@@ -232,7 +204,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.collection.updatePosition(Math.max(0, newPosition - configConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.__updateTop();
 
         this.listView.state.position = newPosition;
@@ -263,11 +235,11 @@ export default Marionette.View.extend({
     __onScroll() {
         const nextScroll = this.ui.tableTopMostWrapper[0].scrollTop;
         if (
-            this.listView.state.viewportHeight === undefined ||
-            this.__prevScroll === nextScroll ||
-            this.isDestroyed() ||
-            this.collection.length <= this.listView.state.viewportHeight ||
-            this.internalScroll
+            this.listView.state.viewportHeight === undefined
+            || this.__prevScroll === nextScroll
+            || this.isDestroyed()
+            || this.collection.length <= this.listView.state.viewportHeight
+            || this.internalScroll
         ) {
             return;
         }
@@ -277,18 +249,25 @@ export default Marionette.View.extend({
     },
 
     __onCursorMove(delta, options = {}) {
-        const maxIndex = this.editableCellsIndexes.length - 1;
-        const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
+        const rangeVisibleCellIndex = this.editableCellsIndexes.filter((indexColumn : number) => {
+            const column = this.options.columns[indexColumn];
+            if (column && column.getStateHidden) {
+                return !column.getStateHidden();
+            }
+            return true;
+        });
+        const maxIndex = rangeVisibleCellIndex.length - 1;
+        const currentSelectedIndex = rangeVisibleCellIndex.indexOf(this.pointedCell);
         const newPosition = Math.min(maxIndex, Math.max(0, currentSelectedIndex + delta));
 
-        const currentSelectedValue = this.editableCellsIndexes[currentSelectedIndex];
-        const newSelectedValue = this.editableCellsIndexes[newPosition];
+        const currentSelectedValue = rangeVisibleCellIndex[currentSelectedIndex];
+        const newSelectedValue = rangeVisibleCellIndex[newPosition];
         const currentModel = this.collection.find(model => model.cid === this.collection.cursorCid);
 
         if (currentModel) {
             if (newSelectedValue === currentSelectedValue && delta !== 0) {
                 const isPositiveDelta = delta >= 1;
-                this.pointedCell = isPositiveDelta ? 0 : this.editableCellsIndexes[this.editableCellsIndexes.length - 1];
+                this.pointedCell = isPositiveDelta ? 0 : rangeVisibleCellIndex[rangeVisibleCellIndex.length - 1];
                 this.collection.trigger(isPositiveDelta ? 'nextModel' : 'prevModel');
                 return;
             }
@@ -344,7 +323,7 @@ export default Marionette.View.extend({
         tools: '.js-grid-tools',
         header: '.js-grid-header-view',
         content: '.js-grid-content',
-        tableWrapper: '.grid-table-wrapper',
+        tableWrapper: '.js-grid-table-wrapper',
         table: '.grid-content-wrp',
         tableTopMostWrapper: '.grid-table-wrapper-war'
     },
@@ -372,7 +351,6 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
-            this.options.columns.forEach(column => this.__toggleColumnVisibility(column.key, column.isHidden));
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -425,11 +403,14 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
+        if (this.options.maxHeight) {
+            this.ui.tableWrapper.get(0).style.maxHeight = `${this.options.maxHeight}px`;
+        }
         const childView = this.options.childView || RowView;
 
         const showRowIndex = this.getOption('showRowIndex');
 
-        const childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+        const childViewOptions = this.childViewOptions = Object.assign(this.options.childViewOptions || {}, {
             columns: this.options.columns,
             transliteratedFields: this.options.transliteratedFields,
             gridEventAggregator: this,
@@ -458,7 +439,8 @@ export default Marionette.View.extend({
             parent$el: this.ui.tableWrapper,
             table$el: this.ui.table,
             minimumVisibleRows: this.options.minimumVisibleRows,
-            selectOnCursor: this.options.selectOnCursor
+            selectOnCursor: this.options.selectOnCursor,
+            headerHeight: this.options.showHeader ? this.options.headerHeight : 0
         });
         this.listenTo(this.listView, 'update:position:internal', state => this.updatePosition(state.topIndex, state.shouldScrollElement));
 
@@ -470,6 +452,10 @@ export default Marionette.View.extend({
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
         this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
+
+        if (this.options.showTreeEditor && this.options.showHeader) {
+            this.__onDiffApplied();
+        }
 
         if (this.options.columns.length) {
             this.__toggleNoColumnsMessage(this.options.columns);
@@ -486,17 +472,20 @@ export default Marionette.View.extend({
 
     updateListViewResize(options) {
         if (options.newMaxHeight) {
-            this.ui.content.css('maxHeight', options.newMaxHeight);
+            this.ui.tableWrapper.get(0).style.maxHeight = `${options.newMaxHeight}px`;
         }
         this.listView.handleResize(options.shouldUpdateScroll);
     },
 
     onBeforeDestroy() {
         this.__configurationPanel && this.__configurationPanel.destroy();
-        if (Core.services.MobileService.isIE) {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
-        } else {
-            this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+
+        if (this.isRendered()) {
+            if (Core.services.MobileService.isIE) {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+            } else {
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+            }
         }
     },
 
@@ -615,6 +604,24 @@ export default Marionette.View.extend({
         }
 
         return error;
+    },
+
+    setDraggable(draggable: boolean): void {
+        this.childViewOptions.draggable = draggable;
+        this.trigger('set:draggable', draggable);
+    },
+
+    replaceColumns(newColumns = []) {
+        const columns = this.options.columns;
+
+        newColumns.forEach(newColumn => {
+            const index = columns.findIndex(column => column.key === newColumn.key);
+            const [oldColumn] = columns.splice(index, 1, newColumn);
+
+            newColumn.columnClass = oldColumn.columnClass;
+        });
+
+        this.listView.render();
     },
 
     __handleDragLeave(event) {
@@ -822,7 +829,7 @@ export default Marionette.View.extend({
     __applyFilter(regexp, columns, collection) {
         collection.filter(model => {
             let result = false;
-            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
+            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.key);
             searchableColumns.forEach(column => {
                 const values = model.get(column);
                 const testValueFunction = value => {
@@ -908,43 +915,81 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        const columnsCollection = new Backbone.Collection(this.options.columns);
-        columnsCollection.map(model => {
-            model.id = model.get('key');
-            this.listenTo(model, 'change:isHidden', model => this.__toggleColumnVisibility(model.id, model.get('isHidden')));
+        const columnsCollection = this.columnsCollection;
 
-            return model;
-        });
         this.treeModel = new Backbone.Model({
             title: this.options.title,
             columnsCollection
         });
 
+        this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
+
         this.treeModel.id = _.uniqueId('treeModelRoot');
         this.treeModel.isContainer = !!this.options.columns.length;
         this.treeModel.childrenAttribute = 'columnsCollection';
+
         this.treeEditorView = new Core.components.TreeEditor({
             hidden: this.options.treeEditorIsHidden,
             model: this.treeModel,
-            getNodeName(model) {
+            configDiff: this.options.treeEditorConfig,
+            getNodeName(model: GraphModel) {
                 return model.get('title');
             }
         });
 
-        this.listenTo(columnsCollection, 'add', model => {
-            const config = {
-                oldIndex: this.options.columns.findIndex(col => col.key === model.id),
+        this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
+            const configDiff = {
+                oldIndex: this.options.columns.findIndex(col => col.id === model.id),
                 newIndex: columnsCollection.indexOf(model)
             };
-            this.__moveColumn(config);
+            this.__moveColumn(configDiff);
         });
 
-        this.listenTo(this.treeEditorView, 'save', config => this.trigger('treeEditor:save', config));
+        this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
+        this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
+
+        this.listenTo(columnsCollection, 'change:isHidden', model => {
+            this.__setColumnVisibility(model.id, !model.get('isHidden'));
+        });
+        this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
+    },
+
+    setConfigDiff(configDiff) {
+        this.treeEditorView.setConfigDiff(configDiff);
+    },
+
+    resetConfigDiff() {
+        this.treeEditorView.resetConfigDiff();
+    },
+
+    getConfigDiff() {
+        return this.treeEditorView.getConfigDiff();
+    },
+
+    setVisibleConfigDiffInit() {
+        this.treeEditorView.setVisibleConfigDiffInit();
+    },
+
+    __setVisibilityAllColumns() {
+        this.options.columns.forEach(column => this.__setColumnVisibility(column.id, !column.isHidden));
+    },
+
+    __onDiffApplied() {
+        const columnsCollection = this.columnsCollection;
+        this.options.columns.forEach(column => {
+            const model = columnsCollection.get(column.id);
+            Object.entries(model.pick('width', 'isHidden')).forEach(([id, value]) => (column[id] = value));
+        });
+        this.__setVisibilityAllColumns();
+    },
+
+    __reorderColumns(config: string[]) {
+        this.options.columns.sort((a, b) => config.indexOf(a.key) - config.indexOf(b.key)); // TODO a, b type: Column
     },
 
     __moveColumn(options: { oldIndex: number, newIndex: number }) {
         const { oldIndex, newIndex } = options;
-        const one = Number(!!this.el.querySelector('.cell_selection-index'));
+        const one = Number(!!this.el.querySelector('.js-cell_selection'));
         const headerElementsCollection = this.el.querySelectorAll('.grid-header-column');
 
         if (newIndex === oldIndex) {
@@ -960,15 +1005,14 @@ export default Marionette.View.extend({
             parentElement.insertBefore(el, parentElement.children[newIndex + one]);
         };
         const element = headerElementsCollection[oldIndex];
+        if (element) {
+            moveElement(element);
 
-        moveElement(element);
+            const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
+            cells.forEach(row => moveElement(row));
 
-        const cells = Array.from(this.el.querySelectorAll(`tbody tr > td:nth-child(${oldIndex + 1 + one})`));
-        cells.forEach(row => moveElement(row));
-
-        this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
-
-        this.trigger('column:move', config);
+            this.__moveArrayElement(this.options.columns, oldIndex, newIndex);
+        }
     },
 
     __moveArrayElement(array: any[], oldIndex: number, newIndex: number) {
@@ -978,52 +1022,68 @@ export default Marionette.View.extend({
         array.splice(start, deleteCount, item);
     },
 
-    __toggleColumnVisibility(key: string, isHidden = false) {
+    __setColumnVisibility(id: string, visibility = true) {
+        const isHidden = !visibility;
         const columns = this.options.columns;
-        const index = columns.findIndex(item => item.key === key);
+        const index = columns.findIndex(item => item.id === id);
         const columnToBeHidden = columns[index];
-
         if (isHidden) {
             columnToBeHidden.isHidden = isHidden;
         } else {
             delete columnToBeHidden.isHidden;
         }
 
+        this.trigger('column:set:isHidden', { id, isHidden });
+
+        this.setClassToColumn(id, isHidden, index, meta.classes.hiddenByTreeEditorClass);
+    },
+
+    setClassToColumn(id: string, state = false, index: number, classCell: string) {
+        const columns = this.options.columns;
         let elementIndex = index + 1;
-        if (this.el.querySelector('.cell_selection-index')) {
+        if (this.el.querySelector('.js-cell_selection')) {
             elementIndex += 1;
         }
 
         const headerSelector = `.js-grid-header-view tr > *:nth-child(${elementIndex})`;
-        this.el.querySelector(headerSelector).classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+        this.el.querySelector(headerSelector).classList.toggle(classCell, state);
 
-        const cellSelector = `.visible-collection tr > *:nth-child(${elementIndex})`;
+        const cellSelector = `.js-visible-collection tr > *:nth-child(${elementIndex})`;
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
-            element.classList.toggle(meta.hiddenByTreeEditorClass, isHidden);
+            element.classList.toggle(classCell, state);
         });
-
         if (this.isAttached()) {
             this.__toggleNoColumnsMessage(columns);
         }
     },
 
+    updateTreeEditorConfig(arrIdVisibleColumns) {
+        const newColumnsTreeEditor = this.columnCollectionDefault.filter(model => arrIdVisibleColumns.includes(model.get('id')));
+        this.columnsCollection.reset(newColumnsTreeEditor);
+    },
+
     __toggleNoColumnsMessage(columns: Array<object>) {
         let hiddenColumnsCounter = 0;
+        let isHidden;
         columns.forEach(col => {
-            if (col.isHidden) {
+            isHidden = col.getStateHidden ? col.getStateHidden() : col.isHidden;
+            if (isHidden) {
                 hiddenColumnsCounter++;
             }
         });
         if (hiddenColumnsCounter === columns.length) {
-            const noColumnsMessage = document.createElement('div');
-            noColumnsMessage.innerText = 'All columns are hidden'; //TODO localize
-            noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
-
-            this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
-            this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+            if (this.el.querySelectorAll('.tree-editor-no-columns-message').length < 1) {
+                const noColumnsMessage = document.createElement('div');
+                noColumnsMessage.innerText = Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN');
+                noColumnsMessage.classList.add('tree-editor-no-columns-message', 'empty-view', 'empty-view_text');
+                this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
+                this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
+                this.el.querySelector('.grid-header').classList.add('hidden-by-tree-editor');
+            }
         } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
             this.el.querySelector('.tree-editor-no-columns-message').remove();
             this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
+            this.el.querySelector('.grid-header').classList.remove('hidden-by-tree-editor');
         }
     }
 });

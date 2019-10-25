@@ -1,20 +1,5 @@
 import 'core-js/stable';
-import '../resources/styles/date-picker.css';
-import '../resources/styles/fonts.css';
-import '../resources/styles/common.css';
-import '../resources/styles/gallery.css';
-import '../resources/styles/services/messageService.css';
-import '../resources/styles/services/windowService.css';
-import '../resources/styles/form.css';
-import '../resources/styles/dropdown.css';
-import '../resources/styles/popout.css';
-import '../resources/styles/list.css';
-import '../resources/styles/codemirror.css';
-import '../resources/styles/notifications.css';
-import '../resources/styles/blink-checkbox.css';
-import '../resources/styles/treeEditor.css';
-import '../resources/styles/icon-editor.css';
-import '../node_modules/spectrum-colorpicker/spectrum.css';
+import '../resources/styles';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
@@ -55,7 +40,8 @@ import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
 import Toolbar from './components/toolbar/ToolbarView';
 import VideoChat from './components/videoChat/VideoChat';
-import TreeEditor from './components/treeEditor/TreeEditor';
+
+import TreeEditor from './components/treeEditor';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.

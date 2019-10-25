@@ -164,7 +164,8 @@ export default Marionette.MnObject.extend({
                       memberService: this.options.memberService,
                       filterFns: this.filterFns,
                       filterState: this.filterState,
-                      title: availableText
+                      title: availableText,
+                      textFilterDelay: this.options.textFilterDelay
                   })
               )
             : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
@@ -183,7 +184,7 @@ export default Marionette.MnObject.extend({
         this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
 
         [availableGridView, selectedGridView].forEach(view => {
-            this.listenTo(view.gridView, 'execute:action', act => this.__executeAction(view, act));
+            this.listenTo(view.gridView, 'execute', act => this.__executeAction(view, act));
             this.listenTo(view.gridView, 'click', model => this.__moveItems(view, model));
         });
         if (this.isMemberService) {
@@ -324,8 +325,8 @@ export default Marionette.MnObject.extend({
 
         const availableItems = Object.values(items);
 
-        this.model.get('available').set(availableItems);
-        this.model.get('selected').set(selectedItems);
+        this.model.get('available').reset(availableItems);
+        this.model.get('selected').reset(selectedItems);
     },
 
     __moveItems(gridView, model) {

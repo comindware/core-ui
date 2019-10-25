@@ -1,5 +1,5 @@
+import form from 'form';
 import FilterEditorsFactory from '../../services/FilterEditorsFactory';
-import { Field } from '../../../form';
 
 export default Marionette.CollectionView.extend({
     className: 'dataset-options-editor dev-dataset-options-editor',
@@ -17,16 +17,16 @@ export default Marionette.CollectionView.extend({
         this.stopListening(fieldView.editor, 'change');
     },
 
-    childView: Field,
+    childView() {
+        return form.Field;
+    },
 
     childViewOptions(model) {
         const filtersConfigurationModel = this.getOption('filtersConfigurationModel');
         const editorOptions = FilterEditorsFactory.getFilterEditorOptions(filtersConfigurationModel, model, this.options.parentModel);
-        return Object.assign(
-            {
-                schema: editorOptions
-            },
-            editorOptions
-        );
+        return {
+            schema: editorOptions,
+            ...editorOptions
+        };
     }
 });

@@ -1,6 +1,6 @@
 const webpackConfigFactory = require('./build/webpack.config.js');
 
-module.exports = function(config) {
+module.exports = config => {
     const TEST_COVERAGE = config.coverage === true;
 
     const result = {
@@ -73,27 +73,24 @@ module.exports = function(config) {
         webpackMiddleware: {
             noInfo: true,
             stats: 'minimal'
-        },
-
-        rules: [
-            {
-                test: /\.js/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-            }
-        ]
+        }
     };
 
     if (TEST_COVERAGE) {
-        result.plugins.push('karma-coverage');
+        result.plugins.push('karma-coverage-istanbul-reporter');
 
-        result.reporters.push('coverage');
+        result.reporters.push('coverage-istanbul');
 
-        result.coverageReporter = {
-            dir: 'reports/',
-            reporters: [{ type: 'html', subdir: 'report-html' }, { type: 'lcov', subdir: 'report-lcov' }, { type: 'teamcity', subdir: '.', file: 'teamcity.txt' }],
-            instrumenterOptions: {
-                istanbul: { noCompact: true, embedSource: true }
+        result.coverageIstanbulReporter = {
+            reports: ['lcov', 'teamcity', 'text-summary'],
+            fixWebpackSourcePaths: true,
+            combineBrowserReports: true,
+            dir: '../reports',
+            'report-config': {
+                teamcity: {
+                    subdir: '.',
+                    file: 'teamcity.txt'
+                }
             }
         };
 

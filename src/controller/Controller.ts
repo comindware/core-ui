@@ -40,7 +40,7 @@ export default class Controller {
     static setLoading(isLoading: boolean, message: string | undefined): void {
         RoutingService.setModuleLoading(isLoading, { message });
         if (isLoading === false) {
-            this.__onModuleReady();
+            Core.Controller.__onModuleReady();
         }
     }
 
@@ -92,7 +92,7 @@ export default class Controller {
                 viewParams.currentState = callParams;
                 const presentingView = new view(viewParams);
                 if (viewEvents) {
-                    Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key]));
+                    Object.keys(viewEvents).forEach(key => presentingView.listenTo(presentingView, key, viewEvents[key].bind(this)));
                 }
                 presentingView.request = this.__handleViewResourceRequest.bind(this);
                 this.moduleRegion.show(presentingView);

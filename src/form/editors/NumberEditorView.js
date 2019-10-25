@@ -49,14 +49,14 @@ const defaultOptions = {
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=null] Минимальное возможное значение. Если <code>null</code>, не ограничено.
- * 
+ *
  * !!!Deprecated @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * @param {Object} [options.intlOptions=null] options for new Intl.NumberFormat([locales[, options]]) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
- * 
+ *
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.Number = BaseEditorView.extend({
+export default formRepository.editors.Number = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     focusElement: '.js-input',
@@ -66,26 +66,26 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
     initialize(options) {
         this.__applyOptions(options, defaultOptions);
 
-        this.format = options.format || options.intlOptions || options.allowFloat;
+        this.format = this.options.format || this.options.intlOptions || this.options.allowFloat;
         this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         if (this.format) {
-            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, options.intlOptions);
+            this.intl = new Intl.NumberFormat(Core.services.LocalizationService.langCode, this.options.intlOptions);
             this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
-            if (options.intlOptions && options.intlOptions.useGrouping === false) {
+            if (this.options.intlOptions && this.options.intlOptions.useGrouping === false) {
                 this.thousandsSeparator = '';
             }
             this.numberMask = createNumberMask({
                 prefix: '',
                 suffix: '',
-                includeThousandsSeparator: options.intlOptions.useGrouping,
+                includeThousandsSeparator: this.options.intlOptions.useGrouping,
                 thousandsSeparatorSymbol: this.thousandsSeparator,
-                allowDecimal: options.allowFloat,
+                allowDecimal: this.options.allowFloat,
                 decimalSymbol: this.decimalSymbol,
-                decimalLimit: options.intlOptions.maximumFractionDigits,
-                integerLimit: options.intlOptions.maximumSignificantDigits || null,
-                requireDecimal: options.requireDecimal,
-                allowNegative: options.allowNegative,
-                allowLeadingZeroes: options.allowLeadingZeroes
+                decimalLimit: this.options.intlOptions.maximumFractionDigits,
+                integerLimit: this.options.intlOptions.maximumSignificantDigits || null,
+                requireDecimal: this.options.requireDecimal,
+                allowNegative: this.options.allowNegative,
+                allowLeadingZeroes: this.options.allowLeadingZeroes
             });
         }
         this.isChangeModeKeydown = this.options.changeMode === changeMode.keydown;
@@ -93,7 +93,7 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     ui: {
         input: '.js-input',
-        clearButton: '.js-clear-button',
+        clearButton: '.js-clear-button'
     },
 
     events() {
@@ -184,14 +184,14 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     __setEnabled(enabled) {
         BaseEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
+        this.ui.input.prop?.('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
         BaseEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
+            this.ui.input.prop?.('readonly', readonly);
+            this.ui.input.prop?.('tabindex', readonly ? -1 : 0);
         }
     },
 
@@ -203,7 +203,8 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if ((value === this.value && !force) || (typeof value === 'string' && [this.decimalSymbol, '_', '-'].includes(value.slice(-1)))) { // '_' - placeholder from mask
+        if ((value === this.value && !force) || (typeof value === 'string' && [this.decimalSymbol, '_', '-'].includes(value.slice(-1)))) {
+            // '_' - placeholder from mask
             return;
         }
 
@@ -227,7 +228,7 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
         this.__updateEmpty();
 
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.$editorEl.prop('title', value);
         }
 
         if (!this.format || this.value === null) {
@@ -273,14 +274,14 @@ export default (formRepository.editors.Number = BaseEditorView.extend({
     },
 
     __parseToString(number) {
-        return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);     
+        return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);
     },
 
     __onMouseenter() {
-        this.$el.off('mouseenter');
+        this.$editorEl.off('mouseenter');
 
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapNumber, iconWrapRemove);
         }
     }
-}));
+});

@@ -1,6 +1,6 @@
-import meta from '../../form/editors/impl/document/meta';
+import ExtensionIconService from '../../form/editors/impl/document/services/ExtensionIconService';
 
 export default iconPrefixer => context => {
-    const icon = meta.getExtIcon(context?.data?.root);
+    const icon = ExtensionIconService.getIconForDocument(context?.data?.root);
     return iconPrefixer(icon);
 };

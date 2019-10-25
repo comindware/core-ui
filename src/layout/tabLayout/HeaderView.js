@@ -1,6 +1,6 @@
 // @flow
 import { helpers } from 'utils';
-import HeaderView from './HeaderItemView';
+import HeaderItemView from './HeaderItemView';
 
 const defaultOptions = {
     headerClass: ''
@@ -15,10 +15,10 @@ export default Marionette.CollectionView.extend({
     tagName: 'ul',
 
     className() {
-        return `layout__tab-layout__header-view ${this.getOption('headerClass')}`;
+        return `layout__tab-layout__header-view ${this.getOption('headerClass') || ''}`;
     },
 
-    childView: HeaderView,
+    childView: HeaderItemView,
 
     childViewEvents: {
         select(model) {

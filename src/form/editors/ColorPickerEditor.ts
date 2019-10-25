@@ -96,7 +96,7 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
         this.value = value;
 
         if (this.getOption('showTitle')) {
-            this.ui.input.prop('title', value);
+            this.ui.input.prop?.('title', value);
         }
 
         if (triggerChange) {

@@ -53,15 +53,17 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
         if (!this.lastSelectedModel) {
             return;
         }
+        const lastSelectedModel = this.selected[this.lastSelectedModel];
 
-        if (this.selected[this.lastSelectedModel] !== model) {
+        if (!lastSelectedModel || lastSelectedModel !== model) {
             return;
         }
 
-        this.selected[this.lastSelectedModel].deselect(options);
+        lastSelectedModel.deselect(options);
         this.cursorCid = undefined;
 
         if (this.selected[this.lastSelectedModel] !== undefined) {
+            //todo why we need to do this!?
             this.trigger('deselect:one', this.selected[this.lastSelectedModel], options);
             delete this.selected[this.lastSelectedModel];
             this.lastSelectedModel = undefined;

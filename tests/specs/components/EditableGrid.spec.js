@@ -234,7 +234,7 @@ describe('Components', () => {
                    const firstChechbox = gridController.view.$('.checkbox:eq(1)');
                    const secondChechbox = gridController.view.$('.checkbox:eq(2)');
                    const gridCollection = gridController.view.collection;
-                   const allItemsCollection = gridController.view.toolbarView.allItemsCollection;
+                   const toolbarItems = gridController.view.toolbarView.toolbarItems;
                    const checkSomeCallback = jasmine.createSpy('checkSomeCallback');
                    gridCollection.on('check:some', checkSomeCallback);
 
@@ -260,9 +260,9 @@ describe('Components', () => {
                        characterData: false
                    });
 
-                   allItemsCollection.on('update:child:top', () => {
+                   toolbarItems.on('update:child:top', () => {
                        expect(checkSomeCallback).toHaveBeenCalledTimes(1);
-                       expect(gridController.view.toolbarView.allItemsCollection.length).toBe(4);
+                       expect(gridController.view.toolbarView.toolbarItems.length).toBe(4);
                        done();
                    });
 

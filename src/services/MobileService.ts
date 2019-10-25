@@ -1,31 +1,24 @@
 import IEService from './IEService';
+import EdgeService from './EdgeService';
 
 export default class MobileService {
-    static isMobile: boolean;
+    static isEdge: boolean;
     static isIE: boolean;
+    static isMobile: boolean;
+    static isPhone: boolean;
+    static isTablet: boolean;
     static initialize() {
-        if (
-            navigator.userAgent.match(/Android/i) ||
-            navigator.userAgent.match(/webOS/i) ||
-            navigator.userAgent.match(/iPhone/i) ||
-            navigator.userAgent.match(/iPad/i) ||
-            navigator.userAgent.match(/iPod/i) ||
-            navigator.userAgent.match(/BlackBerry/i) ||
-            navigator.userAgent.match(/Windows Phone/i)
-        ) {
-            this.isMobile = true;
-        } else {
-            this.isMobile = false;
-        }
-        if (
-            navigator.appName === 'Microsoft Internet Explorer' ||
-            !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
-            (typeof $.browser !== 'undefined' && $.browser.msie === 1)
-        ) {
-            this.isIE = true;
-            IEService.initialize();
-        } else {
-            this.isIE = false;
-        }
+        const userAgent = navigator.userAgent;
+        this.isPhone = /Android|webOS|iPhone|iPod|Blackberry|Windows Phone/i.test(userAgent)
+            && window.innerWidth <= 414 
+            && window.innerHeight <= 896;
+        this.isTablet = /iPad|Android/i.test(userAgent) && window.innerWidth <= 1280 && window.innerHeight <= 1366;
+        this.isMobile = this.isPhone || this.isTablet;
+
+        this.isIE = navigator.appName === 'Microsoft Internet Explorer' || /MSIE|Trident/i.test(userAgent);
+        this.isIE && IEService.initialize();
+
+        this.isEdge = /Edge\//.test(userAgent);
+        this.isEdge && EdgeService.initialize();
     }
 }

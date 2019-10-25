@@ -30,10 +30,7 @@
  
  body {
    margin: 0;
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-   font-size: 1rem;
-   font-weight: 400;
-   line-height: 1.5;
+   font: normal 14px/1.4 OpenSans,Arial,sans-serif;
    color: #212529;
    text-align: left;
    background-color: #fff;
@@ -410,7 +407,7 @@ a:hover {
 }
 
 
-.dropdown__wrp_reference .l-loader:not(:empty)  {
+.datalist-panel .l-loader:not(:empty)  {
     z-index: 601;
 }
 
@@ -492,7 +489,6 @@ a:hover {
 
 .tr-search__clear {
     position: absolute;
-    top: 50%;
     cursor: pointer;
     transform: translateY(-50%);
 }
@@ -830,8 +826,23 @@ a:hover {
 
 
 .toolbar-items-wrp {
-    display: flex;
+    width: 100%;
 }
+
+.toolbar-items-wrp > * {
+    display: inline-block;
+    flex: 0 0 auto;
+}
+
+/* Its a key part of secret CSS-js magic trick, so do not remove or modify it please. Thanks. */
+.toolbar-items-wrp {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: 30px;
+}
+/* end secret CSS-js magic trick */
 
 .toolbar-btn__text {
     user-select: none;
@@ -857,6 +868,7 @@ a:hover {
 .toolbar-container {
     width: 100%;
     display: inline-flex;
+    justify-content: space-between;
 }
 
 .toolbar-container .tr-search__input{
@@ -866,10 +878,11 @@ a:hover {
 .toolbar-buttons_container {
     align-items: center;
     display: flex;
+    overflow: hidden;
 }
 
 .toolbar-buttons_container__const{
-    margin-left: auto;
+    flex: 0 0 auto;
 }
 
 .toolbar-panel_container {
@@ -917,6 +930,12 @@ a:hover {
 
 .toolbar-panel_container__select-state .toolbar-btn .editor_checked.editor_checkbox .checkbox{
     background: unset;
+}
+
+.toolbar-menu-actions {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
 }
 
 .toolbar-menu-actions .toolbar-btn,
@@ -1009,7 +1028,6 @@ a:hover {
 
 /* -------- context select ------*/
 .data-source-popout-view {
-    min-width: 165px;
     max-width: 400px;
     overflow: hidden;
     position: fixed;
@@ -1036,16 +1054,23 @@ a:hover {
     display: flex;
 }
 
-.split-panel_container.split-panel_vertical {
-    flex-wrap: wrap;
+.split-panel_container.split-panel__vertical {
+    flex-direction: row;
+    flex-wrap: wrap; 
 }
 
-.split-panel_container.split-panel_horizontal {
+.split-panel_container.split-panel__horizontal {
     flex-direction: column;
 }
 
-.split-panel_tile {
+.split-panel__general .split-panel__tile:not(.general) {
+    display: none;
+}
+
+.split-panel__tile {
     flex: 1;
+    width: 100%;
+    height: 100%;
     min-width: 500px;
     min-height: 300px;
 }
@@ -1120,10 +1145,10 @@ a:hover {
 
 .member-split-wrp {
     overflow: hidden;
-    background-color: white;
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
 }
 
 .member-split-wrp .member-split-grid {

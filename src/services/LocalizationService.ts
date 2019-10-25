@@ -35,7 +35,7 @@ const service: LocalizationService = {
     initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
-        this.localizationMap = options.localizationMap;
+        this.localizationMap = options.localizationMap || {};
 
         const formattedNumber = new Intl.NumberFormat(this.langCode, {
             minimumFractionDigits: 2
@@ -62,6 +62,7 @@ const service: LocalizationService = {
     },
 
     get(locId: string) {
+        this.localizationMap = this.localizationMap || {};
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }

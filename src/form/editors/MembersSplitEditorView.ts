@@ -24,13 +24,14 @@ const defaultOptions = () => ({
     groups: [],
     showMode: null,
     memberService: undefined,
-    getDisplayText: null
+    getDisplayText: null,
+    textFilterDelay: 500
 });
 
 export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        this.__initializeController(options);
+        this.__initializeController(this.options);
     },
 
     className: 'member-split',

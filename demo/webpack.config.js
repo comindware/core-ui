@@ -86,23 +86,14 @@ module.exports = () => {
                     }
                 },
                 {
-                    test: /\.woff(\?.*)?$/,
+                    test: /\.woff2?(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
                         prefix: 'fonts/',
-                        name: '[path][name].[ext]',
+                        name: '[name].[ext]',
                         limit: FONT_LIMIT,
-                        mimetype: 'application/font-woff'
-                    }
-                },
-                {
-                    test: /\.woff2(\?.*)?$/,
-                    loader: 'url-loader',
-                    options: {
-                        prefix: 'fonts/',
-                        name: '[path][name].[ext]',
-                        limit: FONT_LIMIT,
-                        mimetype: 'application/font-woff2'
+                        mimetype: 'application/font-woff',
+                        outputPath: 'fonts'
                     }
                 },
                 {
@@ -110,7 +101,13 @@ module.exports = () => {
                     loader: 'url-loader',
                     options: {
                         prefix: 'fonts/',
-                        name: '[path][name].[ext]',
+                        outputPath: (url, resourcePath, context) => {
+                            if (/@fortawesome/.test(resourcePath)) {
+                                return `fonts/${url}`;
+                            }
+
+                            return url;
+                        },
                         limit: GRAPHICS_LIMIT,
                         mimetype: 'image/svg+xml'
                     }

@@ -1,35 +1,31 @@
-import TreeEditorBehavior from '../behaviors/TreeEditorBehavior';
-
-const requiredIconClass = 'star-of-life';
+const requiredIconClass = 'lock';
+const requiredClassName = 'required';
 
 const getConfig = (template: string, className: string) => ({
     template: Handlebars.compile(template),
 
-    templateContext() {
-        return {
-            text: typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '',
-            eyeIconClass: this.__getIconClass(),
-            elementId: _.uniqueId('treeEditor_'),
-            isDraggable: !!this.model.collection
-        };
+    attributes: {
+        draggable: 'true'
     },
 
     className() {
-        return `${className} ${this.model.get('required') ? 'required' : ''}`;
+        return `${className} ${this.model.get('required') ? requiredClassName : ''}`;
     },
 
     id() {
         return _.uniqueId('treeEditor_');
     },
 
-    __getIconClass() {
-        return this.model.get('required') ? requiredIconClass : this.model.get('isHidden') ? this.options.closedEyeIconClass : this.options.eyeIconClass;
+    __getNodeName() {
+        return typeof this.options.getNodeName === 'function' ? this.options.getNodeName(this.model) : this.model.get('name') || '';
     },
 
-    behaviors: {
-        TreeEditorBehavior: {
-            behaviorClass: TreeEditorBehavior
+    __getIconClass(isHidden = this.model.get('isHidden')) {
+        if (this.model.get('required')) {
+            return requiredIconClass;
         }
+
+        return isHidden ? this.options.closedEyeIconClass : this.options.eyeIconClass;
     }
 });
 

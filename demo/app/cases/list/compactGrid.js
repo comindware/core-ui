@@ -1,7 +1,7 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
 // 1. Get some data
-export default function () {
+export default function() {
     const data = [];
     const childLength = 3;
     const treeHeight = 4;
@@ -86,8 +86,8 @@ export default function () {
         },
         {
             key: 'propertyRule',
-            type: 'NewExpression',
-            title: 'Expression',
+            type: 'Complex',
+            title: 'Complex',
             required: false,
             autocommit: true,
             usePropertyTypes: true,
@@ -101,7 +101,7 @@ export default function () {
             editable: true,
             width: 300,
             ontologyService: null,
-            id: "pa.7",
+            id: 'pa.7',
             schemaExtension: () => ({
                 propertyTypes: [_.uniqueId('type')]
             }),

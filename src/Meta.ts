@@ -15,6 +15,7 @@ export const contextIconType = {
     contextIconType: 'list-ul',
     grouppanel: 'list-alt',
     horizontallayout: 'columns',
+    integer: 'superscript',
     staticcontent: 'stream',
     date: 'calendar-alt',
     datetime: 'calendar-alt',
@@ -119,10 +120,18 @@ export const virtualCollectionFilterActions = {
     REMOVE: 'remove'
 };
 
+export const splitViewTypes = {
+    UNDEFINED: 'Undefined',
+    GENERAL: 'General',
+    VERTICAL: 'SplitVertical',
+    HORIZONTAL: 'SplitHorizontal',
+};
+
 export default {
     objectPropertyTypes,
     contextIconType,
     presentingComponentsTypes,
+    splitViewTypes,
     iconsNames,
     coreIcons,
     objectPropertyFormats

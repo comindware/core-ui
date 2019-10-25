@@ -85,42 +85,54 @@ export default Marionette.View.extend({
             this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView());
         }
 
+        const toolbarItems = new Backbone.Collection([
+            {
+                iconClass: 'plus',
+                id: 'component',
+                name: 'Component',
+                type: 'Checkbox',
+                severity: 'Low',
+                resultType: 'CustomClientAction',
+                context: 'Void',
+                isChecked: this.__getIsChecked('component')
+            },
+            {
+                iconType: 'Undefined',
+                id: 'attributes',
+                name: 'Attributes',
+                severity: 'None',
+                defaultTheme: true,
+                type: 'Checkbox',
+                isChecked: this.__getIsChecked('attributes')
+            },
+            {
+                iconType: 'Undefined',
+                id: 'code',
+                name: 'Code',
+                severity: 'None',
+                defaultTheme: true,
+                type: 'Checkbox',
+                isChecked: this.__getIsChecked('code', !Core.services.MobileService.isMobile)
+            }
+        ]);
+
+        this.toolbarItems = toolbarItems;
+
         const toolbar = new Core.components.Toolbar({
-            allItemsCollection: new Backbone.Collection([
-                {
-                    iconClass: 'plus',
-                    id: 'component',
-                    name: 'Component',
-                    type: 'Checkbox',
-                    severity: 'Low',
-                    resultType: 'CustomClientAction',
-                    context: 'Void',
-                    isChecked: true
-                },
-                {
-                    iconType: 'Undefined',
-                    id: 'attributes',
-                    name: 'Attributes',
-                    severity: 'None',
-                    defaultTheme: true,
-                    type: 'Checkbox',
-                    isChecked: true
-                },
-                {
-                    iconType: 'Undefined',
-                    id: 'code',
-                    name: 'Code',
-                    severity: 'None',
-                    defaultTheme: true,
-                    type: 'Checkbox',
-                    isChecked: !Core.services.MobileService.isMobile
-                }
-            ])
+            toolbarItems
         });
 
         this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
-
         this.showChildView('toolbarRegion', toolbar);
+    },
+
+    __getIsChecked(id, defaultValue = true) {
+        const isChecked = sessionStorage.getItem(`demoToolbar:${id}`);
+        return isChecked == null ? defaultValue : isChecked === 'true';
+    },
+
+    __saveIsChecked(id, value) {
+        sessionStorage.setItem(`demoToolbar:${id}`, value);
     },
 
     onAttach() {
@@ -152,7 +164,7 @@ export default Marionette.View.extend({
         textView.setReadonly(true);
         this.__reloadEditor();
 
-        this.$('.demo-content__code').toggle(!Core.services.MobileService.isMobile);
+        this.toolbarItems.forEach(model => this.__handleToolbarClick(model));
     },
 
     __createAttributesConfigurationView() {
@@ -302,6 +314,8 @@ export default Marionette.View.extend({
     },
 
     __handleToolbarClick(model) {
+        const modelIsChecked = model.get('isChecked');
+        this.__saveIsChecked(model.id, modelIsChecked);
         switch (model.id) {
             case 'component':
                 this.$('.js-case-representation-region').toggle(model.get('isChecked'));
