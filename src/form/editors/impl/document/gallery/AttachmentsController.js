@@ -15,7 +15,7 @@ export default Marionette.MnObject.extend({
     },
 
     showGallery(model) {
-        if (model.get('previewTag')) {
+        if (this.isModelHasPreview(model)) {
             this.imagesCollection = new SelectableDocsCollection(model.collection.filter(item => item.get('previewTag')));
             this.view = new GalleryWindowView({
                 reqres: this.reqres,
@@ -27,6 +27,10 @@ export default Marionette.MnObject.extend({
             return false;
         }
         return true;
+    },
+
+    isModelHasPreview(model) {
+        return model.has('previewTag');
     },
 
     __closeGallery() {

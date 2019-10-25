@@ -674,6 +674,10 @@ input[type="color"], .colorpicker{
     padding: 0px 5px;
 }
 
+.editor-icons__preview-icon{
+    font-size: 12px;
+}
+
 .svg-icons-wrp_checked{
     width:14px;
     height: 14px;
@@ -776,7 +780,7 @@ input[type="color"], .colorpicker{
 }
 
 .task-links__i {
-    padding: 0 18px 0 0;
+    padding: 0 24px 0 0;
     position: relative;
     display: flex;
     align-items: center;
@@ -841,14 +845,19 @@ input[type="color"], .colorpicker{
     display: none;
 }
 
-.dev-btn-document-revise{
-    width: 20px;
+.dev-btn-document-revise,
+.editor-document__preview-btn:not(:empty){
+    width: 16px;
     font-size: 16px;
     position: relative;
     display: inline-block;
     cursor: pointer;
     text-align: center;
     line-height: 1;
+}
+
+.editor-document__preview-btn:not(:empty){
+    line-height: 0;
 }
 
 .cell.editor_document .documents > .dev-btn-document-revise{

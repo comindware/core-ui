@@ -6,7 +6,7 @@ import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
 import PanelView from './impl/datalist/views/PanelView';
-import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView.js';
+import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 import DocumentsCollection from './impl/document/collections/DocumentsCollection';
 
