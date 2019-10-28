@@ -659,7 +659,7 @@ tr:hover .cell_selection-index {
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: var(--collapse-icon);
+  /* background-image: var(--collapse-icon); */
   vertical-align: middle;
   transition-property: transform;
   transition-duration: 300ms;
@@ -676,7 +676,7 @@ tr:hover .cell_selection-index {
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
 }
 
 .cell .collapsible-btn{
