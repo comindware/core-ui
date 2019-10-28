@@ -780,6 +780,7 @@ tr.dragover td{
 .composite-user-abr__name {
     margin-left: 0.5rem;
     text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 }
 
