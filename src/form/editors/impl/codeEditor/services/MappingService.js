@@ -108,7 +108,6 @@ export default {
             attributes.forEach(attribute => {
                 const item = {};
                 item.text = attribute.alias;
-                //item.description = attribute.description;
                 item.syntax = `${item.text}`;
                 item.className = classes.attribute;
                 item.type = types.attribute;
@@ -123,8 +122,7 @@ export default {
         if (templates) {
             templates.forEach(template => {
                 const item = {};
-                item.text = template.name; //alias
-                //item.description = attribute.description;
+                item.text = template.name; //alias, necessary rename this field to the backend
                 item.syntax = `${item.text}`;
                 item.className = classes.template;
                 item.type = types.template;
@@ -134,7 +132,6 @@ export default {
                 autoCompleteArray.push(item);
             });
         }
-        //return mapperModel;
         return autoCompleteArray;
     },
 

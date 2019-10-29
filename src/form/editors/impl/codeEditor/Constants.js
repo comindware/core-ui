@@ -18,7 +18,7 @@ export default {
         literal: 'dev-code-editor-literal',
         operator: 'dev-code-editor-operator',
         attribute: 'dev-code-editor-attribute',
-        template: 'dev-code-editor-attribute' //'dev-code-editor-template'
+        template: 'dev-code-editor-template'
     },
 
     types: {
@@ -41,6 +41,6 @@ export default {
         literals: 'literals',
         operators: 'operators',
         attributes: 'attributes',
-        templates: 'templates' 
+        templates: 'templates'
     }
 };
