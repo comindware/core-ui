@@ -1080,7 +1080,7 @@ export default Marionette.View.extend({
                 this.el.querySelector('tbody').classList.add('hidden-by-tree-editor');
                 this.el.querySelector('.grid-header').classList.add('hidden-by-tree-editor');
             }
-        } else if (hiddenColumnsCounter === columns.length - 1 && this.el.querySelector('.tree-editor-no-columns-message')) {
+        } else if (this.el.querySelector('.tree-editor-no-columns-message')) {
             this.el.querySelector('.tree-editor-no-columns-message').remove();
             this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
             this.el.querySelector('.grid-header').classList.remove('hidden-by-tree-editor');
