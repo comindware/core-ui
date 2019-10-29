@@ -24,6 +24,7 @@ const defaultOptions = () => ({
 export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
+        this.recordTypeId = options.recordTypeId;
 
         if (this.options.contextModel) {
             this.listenTo(this.options.contextModel, 'change:items', (model, value) => this.__onContextChange(value));
@@ -33,7 +34,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         }
 
         const model = new Backbone.Model({
-            instanceTypeId: this.options.recordTypeId,
+            instanceTypeId: this.recordTypeId,
             propertyTypes: this.options.propertyTypes,
             usePropertyTypes: this.options.usePropertyTypes,
             instanceRecordTypeId: this.options.instanceRecordTypeId,
@@ -112,6 +113,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
 
         panelModel.set('instanceTypeId', recordTypeId);
+        this.recordTypeId = recordTypeId;
 
         if (this.__isInstanceInContext(this.value)) {
             this.__updateDisplayValue();
@@ -139,7 +141,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         if (typeof value === 'string') {
             return value;
         }
-        let instanceTypeId = this.options.recordTypeId;
+        let instanceTypeId = this.recordTypeId;
         let text = '';
 
         value.forEach((item, index) => {
@@ -180,13 +182,13 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
 
     __onContextChange(newData) {
         this.context = newData;
-        this.updateContext(this.options.recordTypeId, newData);
+        this.updateContext(this.recordTypeId, newData);
     },
 
     __onBeforeOpen() {
         const panelModel = this.viewModel.get('panel');
         if (!panelModel.get('context')) {
-            panelModel.set('context', this.__createTreeCollection(this.context, this.options.recordTypeId));
+            panelModel.set('context', this.__createTreeCollection(this.context, this.recordTypeId));
         }
     },
 
