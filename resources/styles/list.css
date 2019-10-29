@@ -308,6 +308,8 @@
     font-weight: 300;
     color: #70787F;
     min-height: 25px;
+    display: flex;
+    justify-content: center;
 }
 .empty-view_text {
     text-align: center;
