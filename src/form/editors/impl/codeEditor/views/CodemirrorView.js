@@ -456,26 +456,23 @@ export default Marionette.View.extend({
     },
 
     __getPositionTooltip(hintEl) {
+        const tooltipMargin = 10;
         const hintPanel = hintEl.parentNode;
         const hintPanelPosition = hintPanel.getBoundingClientRect();
         const hintPanelWidth = hintPanelPosition.width;
-        const codemirrorEditorWidth = hintPanel.parentElement.offsetWidth;
-        const top = hintPanel.offsetTop;
-
-        const half = codemirrorEditorWidth / 2;
-        const isMoreHalf = (hintPanel.offsetLeft + hintPanelWidth) > half;
-
-        let left;
+        const tooltipWidth = this.tooltip.$el.width;
         let right;
-
-        if (isMoreHalf) {
-            right = codemirrorEditorWidth - hintPanel.offsetLeft + TOOLTIP_MARGIN;
-            left = TOOLTIP_MARGIN;
+        const indentRightEdge = document.body.offsetWidth - hintPanelPosition.right;
+        if (indentRightEdge < hintPanelWidth) {
+            right = indentRightEdge + hintPanelWidth + tooltipMargin;
+            return { top: hintPanelPosition.top, right };
         } else {
-            left = hintPanel.offsetLeft + hintPanelWidth + TOOLTIP_MARGIN;
-            right = TOOLTIP_MARGIN;
+            let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
+            if (left + tooltipWidth > window.innerWidth) {
+                left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
+            }
+            return { top: hintPanelPosition.top, left };
         }
-        return { top, left, right };
     },
 
     __showTooltip(token, hintEl) {
