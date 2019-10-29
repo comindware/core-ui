@@ -17,7 +17,8 @@ export default {
         user: 'dev-code-editor-user',
         literal: 'dev-code-editor-literal',
         operator: 'dev-code-editor-operator',
-        attribute: 'dev-code-editor-attribute'
+        attribute: 'dev-code-editor-attribute',
+        template: 'dev-code-editor-attribute' //'dev-code-editor-template'
     },
 
     types: {
@@ -25,11 +26,21 @@ export default {
         user: 'user',
         literal: 'literal',
         operator: 'operator',
-        attribute: 'attribute'
+        attribute: 'attribute',
+        template: 'template'
     },
 
     mode: {
         script: 'script',
         expression: 'expression'
+    },
+
+    toolbarContext: {
+        functions: 'functions',
+        users: 'users',
+        literals: 'literals',
+        operators: 'operators',
+        attributes: 'attributes',
+        templates: 'templates' 
     }
 };

@@ -3,6 +3,7 @@ import ToolbarView from './ToolbarView';
 import OutputView from './OutputView';
 import template from '../templates/codemirror.html';
 import MappingService from '../services/MappingService';
+import CmwCodeAssistantServices from '../services/CmwCodeAssistantServices';
 import constants from '../Constants';
 import LocalizationService from '../../../../../services/LocalizationService';
 import GlobalEventService from '../../../../../services/GlobalEventService';
@@ -52,20 +53,24 @@ export default Marionette.View.extend({
             '__getTooltipCsharpModel'
         );
         if (options.mode === 'expression') {
-            this.autoCompleteArray = [];
+            this.autoCompleteModel = new Backbone.Model();
+            this.autoCompleteModel.set({ functions: [], attributes: [], templates: [] });
+            this.toolbarContext = constants.toolbarContext.functions;
             if (options.ontologyService) {
-                options.ontologyService.getOntology().then(ontologyModel => {
-                    this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                this.currentId = options.model.get('id');
+                options.ontologyService.getAutoCompleteModel().then(ontologyModel => {
+                    this.autoCompleteModel.set({ functions: MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel) });
                     if (this.codemirror) {
-                        this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
+                        this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get('functions');
                         //retokenize codemirror with ontology model
                         this.setValue(this.getValue());
                     }
                 });
             }
         }
+        this.elementLength = 0;
+        this.intelliAssist = options.ontologyService;
         if (options.mode === 'script') {
-            this.intelliAssist = options.ontologyService;
             codemirror.hintWords['text/x-csharp'] = [];
         }
     },
@@ -152,7 +157,7 @@ export default Marionette.View.extend({
             lineNumbers: true,
             lineSeparator,
             mode: modes[this.options.mode],
-            ontologyObjects: this.autoCompleteArray,
+            ontologyObjects: [], //this.autoCompleteModel.get('functions'),
             matchBrackets: true,
             autoCloseBrackets: true,
             styleActiveLine: true,
@@ -687,55 +692,34 @@ export default Marionette.View.extend({
         }
     },
 
-    __cmwHint() {
-        const completion = [];
+    async __cmwHint() {
+        const completeHoverQuery = {
+            SourceCode: this.codemirror.getValue(),
+            CursorOffset: this.__countOffset(),
+            SourceType: 'expression',
+            QueryCompleteHoverType: [],
+            UseOntologyLibriary: false //this.options.config.useOntologyLibriary
+        };
+
         let autoCompleteObject = {};
+
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
-        if (token.type === 'identifier' || types[token.type]) {
-            this.autoCompleteArray.forEach(item => {
-                if (item.text.toLowerCase().indexOf(token.string.toLowerCase()) > -1) {
-                    completion.push(item);
-                }
-            });
-            autoCompleteObject = {
-                from: {
-                    line: cursor.line,
-                    ch: token.start
-                },
-                to: {
-                    line: cursor.line,
-                    ch: token.end
-                },
-                list: completion
-            };
-        } else if (token.string === '$' || token.string === '->') {
-            this.autoCompleteArray.forEach(item => {
-                if (item.type === types.attribute) {
-                    completion.push(item);
-                }
-                autoCompleteObject = {
-                    from: cursor,
-                    to: cursor,
-                    list: completion
-                };
-            });
-        } else if (token.string === '(' || this.codemirror.getValue().trim() === '') {
-            autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: this.autoCompleteArray
-            };
+       
+        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(token, types, cursor, this.autoCompleteModel, completeHoverQuery, this.intelliAssist, this.codemirror, this.currentId);
+        if (token.string === '$') {
+            this.autoCompleteModel.set({ attributes: autoCompleteObject.list });
+            this.toolbarContext = constants.toolbarContext.attributes;
+        } else if (token.string === '->') {
+            this.autoCompleteModel.set({ templates: autoCompleteObject.list });
+            this.toolbarContext = constants.toolbarContext.templates;
         } else {
-            autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: completion
-            };
+            this.toolbarContext = constants.toolbarContext.functions;
         }
-
+        this.codemirror.getMode().ontologyObjects = autoCompleteObject.list;
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
         this.hintIsShown = true;
+        
         return autoCompleteObject;
     },
 
@@ -752,7 +736,7 @@ export default Marionette.View.extend({
             !event.altKey
             && !event.ctrlKey
             && !event.metaKey
-            && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
+            && (charCode === 62 || charCode === 36 || (charCode > 47 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8 || charCode === 190)
         );
         if (charCode === 27 && !this.hintIsShown) {
             if (!this.isDestroyed()) {
@@ -816,7 +800,7 @@ export default Marionette.View.extend({
     },
 
     __findObjectByText(text) {
-        return this.autoCompleteArray.find(item => item.text === text);
+        return this.autoCompleteModel.get(this.toolbarContext).find(item => item.text === text);
     },
 
     __highlightItem(el) {

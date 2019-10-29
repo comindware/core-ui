@@ -107,8 +107,9 @@ export default {
         if (attributes) {
             attributes.forEach(attribute => {
                 const item = {};
-                item.text = attribute.name;
-                item.syntax = attribute.syntax;
+                item.text = attribute.alias;
+                //item.description = attribute.description;
+                item.syntax = `${item.text}`;
                 item.className = classes.attribute;
                 item.type = types.attribute;
                 item.hint = (cm, data, completion) => {
@@ -118,6 +119,22 @@ export default {
             });
         }
 
+        const templates = ontologyModel.get('templates');
+        if (templates) {
+            templates.forEach(template => {
+                const item = {};
+                item.text = template.name; //alias
+                //item.description = attribute.description;
+                item.syntax = `${item.text}`;
+                item.className = classes.template;
+                item.type = types.template;
+                item.hint = (cm, data, completion) => {
+                    cm.replaceRange(completion.syntax, data.from, data.to);
+                };
+                autoCompleteArray.push(item);
+            });
+        }
+        //return mapperModel;
         return autoCompleteArray;
     },
 
