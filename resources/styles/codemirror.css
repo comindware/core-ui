@@ -595,7 +595,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-tooltip {
-    position: absolute;
+    position: fixed;
     z-index: 102;
     border: 1px solid silver;
     border-radius: 3px;
