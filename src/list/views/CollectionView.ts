@@ -155,7 +155,7 @@ export default Marionette.PartialCollectionView.extend({
 
         let childHeight = firstChild.offsetHeight;
         if (!childHeight) {
-            const element = firstChild.cloneNode();
+            const element = firstChild.cloneNode(true);
             document.body.appendChild(element);
             childHeight = element.offsetHeight;
             document.body.removeChild(element);
