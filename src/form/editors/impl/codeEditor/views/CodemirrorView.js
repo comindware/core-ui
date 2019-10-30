@@ -468,13 +468,13 @@ export default Marionette.View.extend({
         if (indentRightEdge < hintPanelWidth) {
             right = indentRightEdge + hintPanelWidth + tooltipMargin;
             return { top: hintPanelPosition.top, right };
-        } else {
-            let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
-            if (left + tooltipWidth > window.innerWidth) {
-                left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
-            }
-            return { top: hintPanelPosition.top, left };
+        } 
+        let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
+        if (left + tooltipWidth > window.innerWidth) {
+            left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
         }
+        return { top: hintPanelPosition.top, left };
+
     },
 
     __showTooltip(token, hintEl) {
