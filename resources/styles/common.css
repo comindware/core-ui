@@ -1099,12 +1099,16 @@ a:hover {
 }
 
 .split-panel-resizer_container {
-    background-color: #4d4d4d;
+    background-color: #e2e2e2;
     position: absolute !important;
     z-index: 60;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.split-panel-resizer_container:hover {
+    background-color: #4d4d4d;;
 }
 
 .split-panel-resizer_container.split-panel-resizer_vertical {
