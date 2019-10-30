@@ -1,64 +1,62 @@
 import MappingService from '../services/MappingService';
+import constants from '../Constants';
+
 export default {
-    async getAutoCompleteObject(token, types, cursor, autoCompleteModel, completeHoverQuery, intelliAssist, codemirror, currentId) {
-        const completion = [];
+    async getAutoCompleteObject(options = {}) {
+        let completion = [];
         let currentArray = [];
         let autoCompleteObject = {};
-        if (token.type === 'identifier' || types[token.type]) {
-            if (completeHoverQuery.SourceCode[token.start - 1] === '$') {
-                currentArray = autoCompleteModel.get('attributes');
-            } else if (completeHoverQuery.SourceCode[token.start - 1] === '>') {
-                currentArray = autoCompleteModel.get('templates');
+        if (options.token.type === constants.tokenTypes.identifier || options.types[options.token.type]) {
+            if (options.completeHoverQuery.SourceCode[options.token.start - 1] === constants.activeSymbol.$) {
+                currentArray = options.autoCompleteModel.get('attributes');
+            } else if (options.completeHoverQuery.SourceCode[options.token.start - 1] === constants.activeSymbol['>']) {
+                currentArray = options.autoCompleteModel.get('templates');
             } else {
-                currentArray = autoCompleteModel.get('functions');
+                currentArray = options.autoCompleteModel.get('functions');
             }
-            currentArray.forEach(item => {
-                if (item.text.toLowerCase().indexOf(token.string.toLowerCase()) > -1) {
-                    completion.push(item);
-                }
-            });
+            completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
             autoCompleteObject = {
                 from: {
-                    line: cursor.line,
-                    ch: token.start
+                    line: options.cursor.line,
+                    ch: options.token.start
                 },
                 to: {
-                    line: cursor.line,
-                    ch: token.end
+                    line: options.cursor.line,
+                    ch: options.token.end
                 },
                 list: completion
             };
-        } else if (token.string === '$') {
-            const result = await intelliAssist.getAttributes(currentId);
+        } else if (options.token.string === constants.activeSymbol.$) {
+            const result = await options.intelliAssist.getAttributes(options.currentId);
             const model = new Backbone.Model();
             model.set({ attributes: result });
             const arr = MappingService.mapOntologyModelToAutoCompleteArray(model);
             this.autoCompleteAttributes = arr;
             autoCompleteObject = {
-                from: cursor,
-                to: cursor,
+                from: options.cursor,
+                to: options.cursor,
                 list: arr
             };
-        } else if (token.string === '->') {
-            const result = await intelliAssist.getTemplates(completeHoverQuery);
+        } else if (options.token.string === constants.activeSymbol['->']) {
+            const result = await options.intelliAssist.getTemplates(options.completeHoverQuery);
             const model = new Backbone.Model();
             model.set({ templates: result });
             const arr = MappingService.mapOntologyModelToAutoCompleteArray(model);
             autoCompleteObject = {
-                from: cursor,
-                to: cursor,
+                from: options.cursor,
+                to: options.cursor,
                 list: arr
             };
-        } else if (token.string === '(' || codemirror.getValue().trim() === '') {
+        } else if (options.token.string === constants.activeSymbol['('] || options.codemirror.getValue().trim() === '') {
             autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: autoCompleteModel.get('functions')
+                from: options.cursor,
+                to: options.cursor,
+                list: options.autoCompleteModel.get('functions')
             };
         } else {
             autoCompleteObject = {
-                from: cursor,
-                to: cursor,
+                from: options.cursor,
+                to: options.cursor,
                 list: completion
             };
         }

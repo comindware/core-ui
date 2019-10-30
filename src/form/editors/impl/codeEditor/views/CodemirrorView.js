@@ -1,4 +1,5 @@
 import { codemirror } from 'lib';
+import { keyCode } from 'utils';
 import ToolbarView from './ToolbarView';
 import OutputView from './OutputView';
 import template from '../templates/codemirror.html';
@@ -53,8 +54,7 @@ export default Marionette.View.extend({
             '__getTooltipCsharpModel'
         );
         if (options.mode === 'expression') {
-            this.autoCompleteModel = new Backbone.Model();
-            this.autoCompleteModel.set({ functions: [], attributes: [], templates: [] });
+            this.autoCompleteModel = new Backbone.Model({ functions: [], attributes: [], templates: [] });
             this.toolbarContext = constants.toolbarContext.functions;
             if (options.ontologyService) {
                 this.currentId = options.model.get('id');
@@ -706,11 +706,11 @@ export default Marionette.View.extend({
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
        
-        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(token, types, cursor, this.autoCompleteModel, completeHoverQuery, this.intelliAssist, this.codemirror, this.currentId);
-        if (token.string === '$') {
+        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject({ token, types, cursor, autoCompleteModel: this.autoCompleteModel, completeHoverQuery, intelliAssist: this.intelliAssist, codemirror: this.codemirror, currentId: this.currentId });
+        if (token.string === constants.activeSymbol.$) {
             this.autoCompleteModel.set({ attributes: autoCompleteObject.list });
             this.toolbarContext = constants.toolbarContext.attributes;
-        } else if (token.string === '->') {
+        } else if (token.string === constants.activeSymbol['->']) {
             this.autoCompleteModel.set({ templates: autoCompleteObject.list });
             this.toolbarContext = constants.toolbarContext.templates;
         } else {
@@ -736,9 +736,9 @@ export default Marionette.View.extend({
             !event.altKey
             && !event.ctrlKey
             && !event.metaKey
-            && (charCode === 62 || charCode === 36 || (charCode > 47 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8 || charCode === 190)
+            && (charCode === keyCode['>'] || charCode === keyCode.HOME || (charCode >= keyCode[0] && charCode <= keyCode.Z) || (charCode > keyCode._ && charCode < keyCode['{']) || charCode === keyCode.BACKSPACE || charCode === keyCode.PERIOD)
         );
-        if (charCode === 27 && !this.hintIsShown) {
+        if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {
                 this.minimize();
             }

@@ -42,5 +42,16 @@ export default {
         operators: 'operators',
         attributes: 'attributes',
         templates: 'templates'
+    },
+
+    activeSymbol: {
+        $: '$',
+        '->': '->',
+        '>': '>',
+        '(': '('
+    },
+
+    tokenTypes: {
+        identifier: 'identifier',
     }
 };
