@@ -118,6 +118,7 @@ const variables = {
     'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 1px 0 0 var(--grey-300)',
     'grid-cell-height': '34px',
     'grid-cell-padding': '0 15px',
+    'grid-cell-size': '13px',
     'grid-cell-input-padding': '0',
     'grid-row-selected-color': 'var(--blue-100)',
     'grid-row-hover-color': 'var(--grid-row-selected-color)',
