@@ -1055,10 +1055,13 @@ a:hover {
 }
 
 .split-panel_container.split-panel__vertical {
-    flex-direction: row;
-    flex-wrap: wrap; 
+    flex-flow: row nowrap;
 }
-
+@media (max-width: 720px) {
+    .split-panel_container.split-panel__vertical {
+        flex-wrap: wrap;
+    }
+}
 .split-panel_container.split-panel__horizontal {
     flex-direction: column;
 }
