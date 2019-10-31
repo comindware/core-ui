@@ -15,17 +15,29 @@ const classes = {
 const WINDOW_BORDER_OFFSET = 10;
 const MIN_DROPDOWN_PANEL_WIDTH = 100;
 
-const popoutFlow = {
-    LEFT: 'left',
-    RIGHT: 'right'
+enum popoutFlow {
+    LEFT = 'left',
+    RIGHT = 'right'
 };
 
-const panelPosition = {
-    DOWN: 'down',
-    UP: 'up'
+enum panelPosition {
+    DOWN = 'down',
+    UP = 'up'
 };
 
-const defaultOptions = {
+type optionsType = {
+    popoutFlow?: popoutFlow,
+    autoOpen?: boolean,
+    renderAfterClose?: boolean,
+    panelPosition?: panelPosition,
+    panelMinWidth?: number,
+    allowNestedFocus?: boolean,
+    externalBlurHandler?: Function,
+    panelViewOptions?: object,
+    buttonViewOptions?: object
+};
+
+const defaultOptions: optionsType = {
     popoutFlow: popoutFlow.LEFT,
     autoOpen: true,
     renderAfterClose: true,
@@ -72,7 +84,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-const getClass = options => {
+const getClass = (options: optionsType) => {
     const classList = [];
     if (options.buttonViewOptions?.class) {
         classList.push(options.buttonViewOptions.class);
@@ -84,7 +96,7 @@ const getClass = options => {
 };
 
 export default class DropdownView {
-    constructor(options) {
+    constructor(options: optionsType) {
         this.options = _.defaults({}, options, defaultOptions);
 
         this.__observedEntities = [];
@@ -124,11 +136,16 @@ export default class DropdownView {
         return this.button;
     }
 
-    adjustPosition(isNeedToRefreshAnchorPosition) {
+    panelEl: Element
+    options: optionsType
+    maxWidth: number
+    __observedEntities: Array<object>
+
+    adjustPosition(isNeedToRefreshAnchorPosition?: boolean): void {
         this.__adjustPosition(isNeedToRefreshAnchorPosition);
     }
 
-    __adjustPosition(isNeedToRefreshAnchorPosition) {
+    __adjustPosition(isNeedToRefreshAnchorPosition?: boolean): void {
         if (!this.button.isOpen || !this.panelEl) {
             return;
         }
@@ -169,36 +186,36 @@ export default class DropdownView {
 
         const panelRect = this.panelEl.getBoundingClientRect();
 
-        const css: {
-            left?: number,
-            right?: number
-        } = {};
+        this.panelEl.style.width = `${panelRect.width}px`;
+
+        let left: number;
+        let right: number;
 
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
                 if (buttonRect.left < WINDOW_BORDER_OFFSET) {
-                    css.left = WINDOW_BORDER_OFFSET;
+                    left = WINDOW_BORDER_OFFSET;
                 } else if (buttonRect.left + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
-                    css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                    left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
                 } else {
-                    css.left = buttonRect.left;
+                    left = buttonRect.left;
                 }
 
-                this.panelEl.style.left = `${css.left}px`;
+                this.panelEl.style.left = `${left}px`;
                 break;
             }
             case popoutFlow.LEFT: {
                 const anchorRightCenter = viewport.width - (buttonRect.left + buttonRect.width);
 
                 if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
-                    css.right = WINDOW_BORDER_OFFSET;
+                    right = WINDOW_BORDER_OFFSET;
                 } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
-                    css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                    right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
                 } else {
-                    css.right = anchorRightCenter;
+                    right = anchorRightCenter;
                 }
 
-                this.panelEl.style.right = `${css.right}px`;
+                this.panelEl.style.right = `${right}px`;
                 break;
             }
             default:
