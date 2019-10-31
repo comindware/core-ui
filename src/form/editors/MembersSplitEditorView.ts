@@ -3,7 +3,6 @@ import MembersSplitController from './impl/membersSplit/controller/MembersSplitC
 import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import WindowService from '../../services/WindowService';
-import helpers from 'utils/helpers';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
@@ -70,8 +69,8 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     onRender() {
+        this.controller.model.initialized = this.controller.updateItems(this.controller.filterState);
         if (this.getOption('showMode') !== 'button') {
-            this.controller.initItems();
 
             this.showChildView('splitPanelRegion', this.controller.view);
         }
@@ -80,8 +79,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
         this.options.users = users;
         this.options.groups = groups;
-        this.controller.fillInModel();
-        this.controller.initItems();
+        this.controller.updateItems(this.controller.filterState);
     },
 
     __initializeController(options) {
@@ -107,7 +105,8 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
             return;
         }
         this.options.selected = this.getValue();
-        this.controller.initItems();
+        this.controller.createView();
+        this.controller.processValues();
 
         const popup = new Core.layout.Popup({
             size: {

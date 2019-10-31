@@ -9,6 +9,8 @@ export default BaseMembersGridView.extend({
         const toggleQuantityWarning = _.debounce(() => this.__toggleQuantityWarning(), 300);
         this.listenTo(this.collection, 'reset update filter', toggleQuantityWarning);
 
+        this.__debounceMembersUpdate = _.debounce((...args) => this.__membersUpdate(...args), this.options.textFilterDelay);
+
         BaseMembersGridView.prototype.initialize.call(this, options);
         this.filterState = options.filterState;
     },
@@ -30,8 +32,12 @@ export default BaseMembersGridView.extend({
     onAttach() {
         this.listenTo(this.gridView, 'search', text => {
             this.filterState.setSearchString(text);
-            this.trigger('members:update', this.filterState);
+            this.__debounceMembersUpdate();
         });
+    },
+
+    __membersUpdate() {
+        this.trigger('members:update', this.filterState);
     },
 
     __toggleQuantityWarning() {
