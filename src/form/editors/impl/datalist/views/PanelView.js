@@ -26,7 +26,7 @@ export default Marionette.View.extend({
         return {
             showAddNewButton: Boolean(this.options.showAddNewButton),
             showSelectedCollection,
-            addNewButtonText: this.options.addNewButtonText,
+            addNewButtonText: this.options.addNewButtonTextWrapper(),
             showCollection: this.options.showCollection
         };
     },
