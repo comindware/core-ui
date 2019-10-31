@@ -19,7 +19,7 @@ describe('Editors', () => {
         });
 
         const findButton = function(view) {
-            return view.$el;
+            return view.ui.toggleButton;
         };
 
         it('should have `value` matched with initial value', () => {

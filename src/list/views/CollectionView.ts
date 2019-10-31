@@ -236,7 +236,11 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     __handleKeydown(e: KeyboardEvent) {
-        if (!e || [keyCode.CTRL, keyCode.SHIFT].includes(e.keyCode) || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
+        if (!e
+            || [keyCode.CTRL, keyCode.SHIFT].includes(e.keyCode)
+            || !e.target
+            || ((e.target.tagName === 'INPUT' || e.target.classList.contains('editor'))
+                && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
             return;
         }
         e.stopPropagation();
