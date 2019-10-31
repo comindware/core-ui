@@ -136,6 +136,10 @@
     line-height: 1.6;
 }
 
+.layout__tab-layout .tree-editor-btn >.toolbar-btn {
+    line-height: 21px;
+}
+
 .tree-item .collapse-btn, .tree-item .eye-btn {
     display: flex;
     align-items: center;
