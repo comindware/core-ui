@@ -108,7 +108,6 @@ export default Marionette.View.extend({
         this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
         this.uniqueId = _.uniqueId('native-grid');
-        this.childHeight = options.childHeight || 35; //todo fix it
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
@@ -210,7 +209,7 @@ export default Marionette.View.extend({
         if (shouldScrollElement) {
             this.internalScroll = true;
 
-            this.ui.tableTopMostWrapper.get(0).scrollTop = (newPosition + this.listView.state.viewportHeight) * this.childHeight;
+            this.ui.tableTopMostWrapper.get(0).scrollTop = (newPosition + this.listView.state.viewportHeight) * this.listView.childHeight;
         
             _.delay(() => (this.internalScroll = false), 100);
         }
@@ -220,7 +219,7 @@ export default Marionette.View.extend({
 
     __updateTop() {
         requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
             this.ui.tableWrapper[0].style.paddingTop = `${top}px`; //todo use transforme
         });
     },

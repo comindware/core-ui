@@ -1,6 +1,6 @@
 // @flow
 import keyCode from '../../utils/keyCode';
-import template from './templates/booleanEditor.html';
+import template from './templates/booleanEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 
@@ -32,11 +32,12 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
         },
 
         ui: {
-            displayText: '.js-display-text'
+            displayText: '.js-editor-checkbox__display-text',
+            toggleButton: '.js-editor-checkbox__toggle-button'
         },
 
         events: {
-            click: '__toggle',
+            'click @ui.toggleButton': '__toggle',
             'click @ui.displayText': '__toggle',
             keydown: '__onKeyDown'
         },
@@ -64,7 +65,6 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
             }
             this.setValue(!this.getValue());
             this.__triggerChange();
-            return false;
         },
 
         onRender() {

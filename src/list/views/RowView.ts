@@ -524,7 +524,7 @@ export default Marionette.View.extend({
 
         if (editors.length) {
             const view = this.cellViews[pointed];
-            if (view && view.editor && view.editor.hidden) {
+            if (view?.getHidden?.()) {
                 view.model.trigger('select:hidden');
                 return false;
             }
