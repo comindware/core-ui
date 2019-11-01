@@ -112,13 +112,15 @@
 
 <http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
 
+<http://comindware.com/text/core/form/editors/document#preview> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Просмотр"; l10n:originalData "Preview"].
+
 <http://comindware.com/text/core/form/editors/document#remove> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Remove"].
 
 <http://comindware.com/text/core/form/editors/document#replaceDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить документ"; l10n:originalData "Replace document"].
 
 <http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отобразить больше..."; l10n:originalData "Show more..."].
 
-<http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать историю"; l10n:originalData "Show revision"].
+<http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "История"; l10n:originalData "History"].
 
 <http://comindware.com/text/core/form/editors/document#validationError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка прервана. Следующие файлы имеют некорректное расширение: "; l10n:originalData "Uploading faild. The folowing files have incorrect extension: "].
 
