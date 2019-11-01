@@ -35,7 +35,7 @@ export default {
         expression: 'expression'
     },
 
-    toolbarContext: {
+    autoCompleteContext: {
         functions: 'functions',
         users: 'users',
         literals: 'literals',
@@ -45,10 +45,11 @@ export default {
     },
 
     activeSymbol: {
-        $: '$',
-        '->': '->',
-        '>': '>',
-        '(': '('
+        dollar: '$',
+        arrayRight: '->',
+        rightAngleBracket: '>',
+        openParenthesis: '(',
+        dbArrayRight: 'db->'
     },
 
     tokenTypes: {

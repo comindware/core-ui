@@ -1,6 +1,4 @@
-import ontology from './codeEditorData';
-
-export default class OntologyService {
+export default class OntologyService { //CodeAssistantService
     static initialize() {
         this.model = null;
     }
@@ -9,24 +7,51 @@ export default class OntologyService {
         this.model = null;
     }
 
-    static async getOntology() {
+    static async getAutoCompleteModel() {
+        let model;
         if (this.model) {
-            return this.model;
+            model = this.model;
         }
-        return await this.__loadOntology();
+        const functions = await this.__getFunctions();
+        model = new Backbone.Model(functions);
+        return model;
     }
 
-    static async __loadOntology() {
+    static async __getFunctions() {
         if (!this.isLoading) {
             this.isLoading = true;
+            this.promise = Ajax.Ontology.GetOntology();
         }
+        const functions = await this.promise;
+        this.isLoading = false;
+        return functions;
+    }
 
-        if (!this.model) {
-            this.model = new Backbone.Model(ontology);
-        }
+    static async getTemplates(completeHoverQuery) {
+        this.isLoading = true;
+        this.promise = Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+        const result = await this.promise;
+        const array = [];
+        result.infoList.forEach(element => {
+            array.push(element);
+        });
+        return array;
+    }
+
+    static async getAttributes(templateId) {
+        this.isLoading = true;
+        const url = `api/RecordTypeContextApi?recordTypeId=${templateId}`;
+        this.promise = Ajax.getResponse('GET', url);
+        const result = await this.promise;
+        const array = [];
+        result.forEach(element => {
+            if (element.obsolete !== true) {
+                array.push(element);
+            }
+        });
         this.isLoading = false;
 
-        return this.model;
+        return array;
     }
 
     static async getCSharpOntology(completeHoverQuery) {

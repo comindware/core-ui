@@ -54,18 +54,19 @@ export default Marionette.View.extend({
             '__getTooltipCsharpModel'
         );
         if (options.mode === 'expression') {
-            this.autoCompleteModel = new Backbone.Model({ functions: [], attributes: [], templates: [] });
-            this.toolbarContext = constants.toolbarContext.functions;
+            this.autoCompleteModel = new Backbone.Model();
+            this.autoCompleteContext = constants.autoCompleteContext.functions;
             if (options.ontologyService) {
-                this.currentId = options.model.get('id');
+                this.templateId = options.templateId;
                 options.ontologyService.getAutoCompleteModel().then(ontologyModel => {
-                    this.autoCompleteModel.set({ functions: MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel) });
+                    this.autoCompleteModel = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
                     if (this.codemirror) {
                         this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get('functions');
                         //retokenize codemirror with ontology model
                         this.setValue(this.getValue());
                     }
                 });
+                this.autoCompleteModel.set({ templates: [] });
             }
         }
         this.elementLength = 0;
@@ -157,7 +158,7 @@ export default Marionette.View.extend({
             lineNumbers: true,
             lineSeparator,
             mode: modes[this.options.mode],
-            ontologyObjects: [], //this.autoCompleteModel.get('functions'),
+            ontologyObjects: [],
             matchBrackets: true,
             autoCloseBrackets: true,
             styleActiveLine: true,
@@ -394,11 +395,11 @@ export default Marionette.View.extend({
         this.setLoading(true);
         try {
             const completeHoverQuery = {
-                SourceCode: this.codemirror.getValue(),
-                CursorOffset: this.__countOffset(),
-                SourceType: 'CSharp',
-                QueryCompleteHoverType: 'Completion',
-                UseOntologyLibriary: this.options.config.useOntologyLibriary
+                sourceCode: this.codemirror.getValue(),
+                cursorOffset: this.__countOffset(),
+                sourceType: 'CSharp',
+                queryCompleteHoverType: 'Completion',
+                useOntologyLibriary: this.options.config.useOntologyLibriary
             };
             const ontologyModel = await this.intelliAssist.getCSharpOntology(completeHoverQuery);
             this.newArr = [];
@@ -473,13 +474,12 @@ export default Marionette.View.extend({
         if (indentRightEdge < hintPanelWidth) {
             right = indentRightEdge + hintPanelWidth + tooltipMargin;
             return { top: hintPanelPosition.top, right };
-        } else {
-            let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
-            if (left + tooltipWidth > window.innerWidth) {
-                left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
-            }
-            return { top: hintPanelPosition.top, left };
+        } 
+        let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
+        if (left + tooltipWidth > window.innerWidth) {
+            left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
         }
+        return { top: hintPanelPosition.top, left };
     },
 
     __showTooltip(token, hintEl) {
@@ -569,9 +569,9 @@ export default Marionette.View.extend({
         let newArrInfo = [];
 
         const userCompileQuery = {
-            SourceCode: this.codemirror.getValue(),
-            SourceType: 'CSharp',
-            UseOntologyLibriary: this.options.config?.useOntologyLibriary
+            sourceCode: this.codemirror.getValue(),
+            sourceType: 'CSharp',
+            useOntologyLibriary: this.options.config?.useOntologyLibriary
         };
         const content = this.codemirror.getValue();
         this.setLoading(true);
@@ -694,29 +694,31 @@ export default Marionette.View.extend({
 
     async __cmwHint() {
         const completeHoverQuery = {
-            SourceCode: this.codemirror.getValue(),
-            CursorOffset: this.__countOffset(),
-            SourceType: 'expression',
-            QueryCompleteHoverType: [],
-            UseOntologyLibriary: false //this.options.config.useOntologyLibriary
+            sourceCode: this.codemirror.getValue(),
+            cursorOffset: this.__countOffset(),
+            sourceType: 'expression',
+            queryCompleteHoverType: 'Completion',
+            useOntologyLibriary: false //this.options.config.useOntologyLibriary
         };
 
         let autoCompleteObject = {};
 
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
-       
-        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject({ token, types, cursor, autoCompleteModel: this.autoCompleteModel, completeHoverQuery, intelliAssist: this.intelliAssist, codemirror: this.codemirror, currentId: this.currentId });
-        if (token.string === constants.activeSymbol.$) {
-            this.autoCompleteModel.set({ attributes: autoCompleteObject.list });
-            this.toolbarContext = constants.toolbarContext.attributes;
-        } else if (token.string === constants.activeSymbol['->']) {
-            this.autoCompleteModel.set({ templates: autoCompleteObject.list });
-            this.toolbarContext = constants.toolbarContext.templates;
-        } else {
-            this.toolbarContext = constants.toolbarContext.functions;
-        }
-        this.codemirror.getMode().ontologyObjects = autoCompleteObject.list;
+
+        const options = {
+            token,
+            types,
+            cursor,
+            autoCompleteModel: this.autoCompleteModel,
+            completeHoverQuery,
+            intelliAssist: this.intelliAssist,
+            codemirror: this.codemirror,
+            templateId: this.templateId
+        };
+            
+        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
+        this.autoCompleteContext = CmwCodeAssistantServices.getAutoCompleteContext();
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
         this.hintIsShown = true;
         
@@ -800,7 +802,7 @@ export default Marionette.View.extend({
     },
 
     __findObjectByText(text) {
-        return this.autoCompleteModel.get(this.toolbarContext).find(item => item.text === text);
+        return this.autoCompleteModel.get(this.autoCompleteContext).find(item => item.text === text);
     },
 
     __highlightItem(el) {
