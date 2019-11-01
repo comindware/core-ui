@@ -48,7 +48,10 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        headerRegion: '.js-header-region',
+        headerRegion: {
+            el: '.js-header-region',
+            replaceElement: true
+        },
         treeEditorRegion: '.js-tree-editor-region',
         stepperRegion: '.js-stepper-region',
         loadingRegion: '.js-loading-region'
