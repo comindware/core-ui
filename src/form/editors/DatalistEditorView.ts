@@ -146,9 +146,16 @@ const presetsDefaults = {
         boundEditorOptions: {
             multiple: options.maxQuantitySelected !== 1
         },
-        addNewButtonText: LocalizationService.get(
-            options.maxQuantitySelected !== 1 ? 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT' : 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT'
-        )
+        addNewButtonText: (isEmpty : boolean) : string => {
+            let addNameButtonText = 'CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT';
+            if (options.maxQuantitySelected === 1) {
+                if (!isEmpty) {
+                    addNameButtonText = 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT';
+                }
+                return LocalizationService.get(addNameButtonText);
+            }
+            return LocalizationService.get(addNameButtonText);
+        }
     }),
     user: (options: optionsType) => ({
         listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
@@ -250,6 +257,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showCollection: this.options.showCollection,
                 selectedCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 addNewItem: this.options.addNewItem && this.__panelAddNewItem.bind(this),
+                addNewButtonTextWrapper: () => _.getResult(this.options.addNewButtonText, this, this.isEmptyValue()),
                 showAddNewButton: this.options.showAddNewButton,
                 addNewButtonText: this.options.addNewButtonText,
                 bubbleItemViewOptions: Object.assign(

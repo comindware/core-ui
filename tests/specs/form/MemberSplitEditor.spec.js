@@ -59,6 +59,69 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
+        it('should count correctly', done => {
+            const model = new Backbone.Model({
+                selected: ['user.1', 'user.2', 'user.4']
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selected',
+                autocommit: true,
+                users: core.services.UserService.listUsers(),
+                groups: new Backbone.Collection(),
+                hideUsers: false,
+                hideGroups: false,
+                showMode: 'button'
+            });
+
+            view.on('render', () => {
+                setTimeout(() => {
+                    expect(view.$('.js-members-text')).toContainText('3'); // 3 users selected
+                    view.setValue(['user.1', 'user.2', 'user.4', 'user.5']);
+                    setTimeout(() => {
+                        expect(view.$('.js-members-text')).toContainText('4'); // 4 users selected
+                        done();
+                    }, 500);
+                }, 500);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should count correctly on hide users or groups', done => {
+            const model = new Backbone.Model({
+                selected: ['user.2', 'user.3', 'user.4']
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selected',
+                autocommit: true,
+                users: core.services.UserService.listUsers(),
+                groups: new Backbone.Collection(),
+                hideUsers: true,
+                hideGroups: true,
+                getDisplayText: true,
+                showMode: 'button'
+            });
+
+            view.on('render', () => {
+                setTimeout(() => {
+                    expect(view.$('.js-members-text')).not.toContainText('3'); // 3 users selected (hidden)
+                    done();
+                }, 500);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
         it('should set initial value', () => {
             const model = new Backbone.Model({
                 selected: ['user.1']
@@ -362,6 +425,55 @@ describe('Editors', () => {
                         }
                     }, 10);
                 });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly set loading', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const listGroups = core.services.UserService.listGroups();
+            const listUsers = core.services.UserService.listUsers();
+            const data = {
+                available: [],
+                selected: []
+            };
+            const memberService = {
+                filterFnParameters: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                memberTypes: {
+                    users: 'users',
+                    groups: 'groups'
+                },
+                getMembers: () => new Promise(res => {
+                    setTimeout(() => res(data), 100);
+                })
+            };
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selectes',
+                autocommit: true,
+                users: listUsers,
+                groups: listGroups,
+                memberService
+            });
+
+            view.on('render', async() => {
+                view.controller.view.on('attach', () => {
+                    expect(view.$('.visible-loader')).toExist();
+                });
+                await view.controller.model.initialized;
+                expect(view.$('.visible-loader')).not.toExist();
+                done();
             });
 
             window.app

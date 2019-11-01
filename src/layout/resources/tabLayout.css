@@ -9,12 +9,8 @@
 
 .layout__tab-layout__header-region {
     flex: 0 0 auto;
-}
-
-.layout__tab-layout__tree-editor {
-    position: absolute;
-    right: 0px;
-    top: -5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .layout__tab-layout__header-view {
@@ -23,6 +19,13 @@
     flex-wrap: nowrap;
     padding-left: 0;
     margin-bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.layout__tab-layout__tree-editor .toolbar-btn {
+    margin-right: 0px;
+    margin-left: 5px;
 }
 
 .layout__tab-layout__header-view-item {

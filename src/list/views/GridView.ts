@@ -3,7 +3,7 @@ import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
 import template from '../templates/grid.hbs';
-import ListView from './CollectionView';
+import CollectionView from './CollectionView';
 import RowView from './RowView';
 import GridHeaderView from './header/GridHeaderView';
 import LoadingChildView from './LoadingRowView';
@@ -15,7 +15,6 @@ import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 import meta from '../meta';
-import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
@@ -109,7 +108,6 @@ export default Marionette.View.extend({
         this.options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
         this.uniqueId = _.uniqueId('native-grid');
-        this.childHeight = options.childHeight || 35; //todo fix it
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
@@ -211,8 +209,8 @@ export default Marionette.View.extend({
         if (shouldScrollElement) {
             this.internalScroll = true;
 
-            this.ui.tableWrapper[0].scrollTop = `${newPosition * this.childHeight}px`;
-
+            this.ui.tableTopMostWrapper.get(0).scrollTop = (newPosition + this.listView.state.viewportHeight) * this.listView.childHeight;
+        
             _.delay(() => (this.internalScroll = false), 100);
         }
 
@@ -221,7 +219,7 @@ export default Marionette.View.extend({
 
     __updateTop() {
         requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
             this.ui.tableWrapper[0].style.paddingTop = `${top}px`; //todo use transforme
         });
     },
@@ -244,7 +242,7 @@ export default Marionette.View.extend({
             return;
         }
         this.__prevScroll = nextScroll;
-        const newPosition = Math.max(0, Math.ceil(nextScroll / this.listView.childHeight));
+        const newPosition = Math.max(0, Math.floor(nextScroll / this.listView.childHeight));
         this.updatePosition(newPosition, false);
     },
 
@@ -404,7 +402,7 @@ export default Marionette.View.extend({
 
     onAttach() {
         if (this.options.maxHeight) {
-            this.ui.tableWrapper.get(0).style.maxHeight = `${this.options.maxHeight}px`;
+            this.ui.tableTopMostWrapper.get(0).style.maxHeight = `${this.options.maxHeight}px`;
         }
         const childView = this.options.childView || RowView;
 
@@ -420,7 +418,7 @@ export default Marionette.View.extend({
             showRowIndex
         });
 
-        this.listView = new ListView({
+        this.listView = new CollectionView({
             collection: this.collection,
             gridEventAggregator: this,
             childView,
@@ -433,7 +431,8 @@ export default Marionette.View.extend({
             maxRows: this.options.maxRows,
             height: this.options.height,
             isTree: this.options.isTree,
-            isEditable: this.isEditable,
+            isEditable: this.isEditable,            
+            showCheckbox: this.options.showCheckbox,
             showRowIndex,
             parentEl: this.ui.tableWrapper[0],
             parent$el: this.ui.tableWrapper,
@@ -472,7 +471,7 @@ export default Marionette.View.extend({
 
     updateListViewResize(options) {
         if (options.newMaxHeight) {
-            this.ui.tableWrapper.get(0).style.maxHeight = `${options.newMaxHeight}px`;
+            this.ui.tableTopMostWrapper.get(0).style.maxHeight = `${options.newMaxHeight}px`;
         }
         this.listView.handleResize(options.shouldUpdateScroll);
     },

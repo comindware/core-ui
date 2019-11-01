@@ -479,6 +479,7 @@ export default Marionette.View.extend({
         if (left + tooltipWidth > window.innerWidth) {
             left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
         }
+
         return { top: hintPanelPosition.top, left };
     },
 

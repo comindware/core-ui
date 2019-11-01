@@ -1,5 +1,4 @@
 import { objectPropertyTypes, iconsNames } from 'Meta';
-import MembersListItemView from './MembersListItemView';
 import template from '../templates/baseMembersGrid.hbs';
 import Marionette from 'backbone.marionette';
 
@@ -116,7 +115,6 @@ export default Marionette.View.extend({
     },
 
     setLoading(state) {
-        const controller = this.controller;
-        controller && !controller.isDestroyed() && controller.setLoading(state);
+        this.gridView.setLoading(state);
     }
 });

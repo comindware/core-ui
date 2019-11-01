@@ -105,6 +105,10 @@ export default Marionette.PartialCollectionView.extend({
             return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { scroll: collection.scroll })); //magic from prod collection
         });
 
+        if (!this.__isChildHeightSpecified) {
+            this.listenTo(this.collection.parentCollection, 'add remove reset ', this.__specifyChildHeight);
+        }
+
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
@@ -135,6 +139,7 @@ export default Marionette.PartialCollectionView.extend({
     onBeforeAttach() {
         this.parent$el = this.options.parent$el;
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
+        this.__specifyChildHeight();
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
     },
@@ -144,14 +149,13 @@ export default Marionette.PartialCollectionView.extend({
             return;
         }
         const firstChild = this.el.children[0];
-        if (!(firstChild && firstChild.classList.contains('row'))) {
+        if (!(firstChild && firstChild.tagName === 'TR')) { // TODO: remove?
             return;
         }
 
         let childHeight = firstChild.offsetHeight;
         if (!childHeight) {
-            const element = document.createElement('div');
-            element.innerHTML = firstChild.outerHTML;
+            const element = firstChild.cloneNode(true);
             document.body.appendChild(element);
             childHeight = element.offsetHeight;
             document.body.removeChild(element);
@@ -159,6 +163,7 @@ export default Marionette.PartialCollectionView.extend({
         if (childHeight > 0) {
             this.childHeight = childHeight;
             this.__isChildHeightSpecified = true;
+            this.stopListening(this.collection.parentCollection, 'add remove reset ', this.__specifyChildHeight);
         }
     },
 
@@ -231,7 +236,11 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     __handleKeydown(e: KeyboardEvent) {
-        if (!e || [keyCode.CTRL, keyCode.SHIFT].includes(e.keyCode) || !e.target || (e.target.tagName === 'INPUT' && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
+        if (!e
+            || [keyCode.CTRL, keyCode.SHIFT].includes(e.keyCode)
+            || !e.target
+            || ((e.target.tagName === 'INPUT' || e.target.classList.contains('editor'))
+                && ![keyCode.ENTER, keyCode.ESCAPE, keyCode.TAB].includes(e.keyCode))) {
             return;
         }
         e.stopPropagation();

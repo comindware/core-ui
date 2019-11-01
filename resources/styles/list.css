@@ -52,7 +52,7 @@
 .grid-content-wrp {
     display: table;
     min-width: 100%;
-    border-collapse: collapse;
+    /*border-collapse: collapse; fo fix border in stiky*/
     table-layout: fixed;
 }
 
@@ -308,6 +308,8 @@
     font-weight: 300;
     color: #70787F;
     min-height: 25px;
+    display: flex;
+    justify-content: center;
 }
 .empty-view_text {
     text-align: center;
@@ -321,6 +323,7 @@
     flex-direction: column;
     flex: 1;
     max-width: 100%;
+    max-height: 100%;
 }
 
 .modal-window-wrapper .grid-container{

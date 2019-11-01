@@ -437,10 +437,14 @@ svg.svg-grid-icons {
 .cell {
   height: var(--grid-cell-height);
   line-height: var(--grid-cell-height);
-  font-size: 13px;
+  font-size: var(--grid-cell-size);
   padding: var(--grid-cell-padding);
   border: 1px solid #e2e2e2;
+  border-top: none;
   position: relative;
+}
+.cell:not(:last-child) {
+  border-right: none;
 }
 
 .cell.editor {
@@ -556,8 +560,8 @@ tr:hover .cell_selection-index {
   height: var(--grid-checkbox-size);
   position: absolute;
   right: 5px;
-  top: 0;
-  margin-top: 10px;
+  top: 50%;
+  margin-top: -8px;
 }
 
 .cell .input {
@@ -584,6 +588,7 @@ tr:hover .cell_selection-index {
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   border: 1px solid #e2e2e2;
+  border-top: none;
   white-space: nowrap;
   position: sticky;
   left: 0;
@@ -659,7 +664,7 @@ tr:hover .cell_selection-index {
   cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: var(--collapse-icon);
+  /* background-image: var(--collapse-icon); */
   vertical-align: middle;
   transition-property: transform;
   transition-duration: 300ms;
@@ -676,7 +681,7 @@ tr:hover .cell_selection-index {
 }
 
 .context-collapsible-btn.collapsible-btn_expanded{
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
 }
 
 .cell .collapsible-btn{
