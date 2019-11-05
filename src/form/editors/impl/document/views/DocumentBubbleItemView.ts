@@ -5,7 +5,7 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
-import iconWrapDownload from '../../../iconsWraps/iconWrapPreview.html';
+import iconWrapPreview from '../../../iconsWraps/iconWrapPreview.html';
 import ExtensionIconService from '../services/ExtensionIconService';
 import UIService from '../../../../../services/UIService';
 
@@ -119,7 +119,7 @@ export default Marionette.View.extend({
         if (!this.attachmentsController.isModelHasPreview(this.model)) {
             return;
         }
-        this.__previewElement = UIService.createElementsFromHTML(iconWrapDownload, { preview: iconsNames.preview })[0];
+        this.__previewElement = UIService.createElementsFromHTML(iconWrapPreview, { preview: iconsNames.preview })[0];
         this.ui.previewButton.get(0).insertAdjacentElement('beforeend', this.__previewElement);
     },
 
