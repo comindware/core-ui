@@ -69,7 +69,7 @@ const variables = {
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '4px 24px 4px var(--form-input-padding)',
+    'input-search-padding': '4px 4px 4px 24px',
 
     // textarea
     'textarea-padding': '4px 20px 4px 10px',

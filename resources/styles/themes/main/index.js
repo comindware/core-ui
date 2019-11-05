@@ -37,6 +37,8 @@ const variables = {
     'line-height': '1.3',
     font: "normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif",
 
+    'form-input-padding': '10px',
+
     'form-field-margin': '10px',
     'form-label-font-size': '11px',
     'form-label-font-weight': '400',
@@ -59,7 +61,7 @@ const variables = {
     'input-padding': '0 20px 0 0',
     'input-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
-    'input-search-padding': '0 0 0 25px',
+    'input-search-padding': '2px 4px 2px 24px',
     'input-search-bg':
         'no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC)',
 
@@ -130,7 +132,7 @@ const variables = {
     'columns-select-border': 'var(--border)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
 
-    'dropdown-padding': 'var(--input-padding)',
+    'dropdown-padding': '2px 20px 2px var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '11px',
     'dropdown-group-color': '#000',
@@ -145,11 +147,11 @@ const variables = {
         'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlFRUI4RTM2NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlFRUI4RTM3NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUVFQjhFMzQ0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUVFQjhFMzU0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz42Z48yAAAAeklEQVR42mL8//8/AzmAiYFMwILMYWRkxKsY2XW4bPwHxH0gs/CaAsNIIAyIfwDxSiBmx6oWh0YQcADi90C8H4gFSNEIAjpA/AiIL6NrJBSqIGeykeJHEHAG4k+kOjUKiH+SEzig6OhHjy5ktSzkpiiykxwjuYkcIMAA6W6BsPef8/UAAAAASUVORK5CYII=)',
 
     // tabs
-    'tab-item-padding': '10px 0',
-    'tab-item-font-size': '13px',
-    'tab-panel-container-padding': '10px 5px',
-    'tab-header-justify': 'space-between',
-    'tab-header-padding-with-move': '0 20px',
+    'tab-item-padding': '4px 15px',
+    'tab-item-font-size': 'var(--base-font-size)',
+    'tab-panel-container-padding': '20px 15px',
+    'tab-header-justify': 'flex-start',
+    'tab-header-padding-with-move': '0 30px',
 
     'btn-separator-width': '20px',
 
@@ -179,33 +181,28 @@ module.exports.apply = {
         padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
+        'line-height': '1.5',
         overflow: 'hidden',
-        border: `1px solid ${variables['grey-400']}`,
-        'border-radius': '2px'
+        'border-radius': '4px',
+        height: '28px'
     },
     'button-strong': {
-        'background-color': variables['grey-100'],
-        color: variables['text-color']
+
     },
     'button-pale': {
-        'background-color': variables['text-color'],
-        color: variables['grey-100']
+
     },
     'button-strong-hover-theme': {
-        'border-color': variables['grey-600'],
-        'box-shadow': 'inset 0 2px 3px #fff'
+
     },
     'button-strong-active-theme': {
-        'border-color': variables['grey-800'],
-        'box-shadow': 'inset 0 1px 5px rgba(180,180,180,.5)'
+
     },
     'button-pale-hover-theme': {
-        'border-color': variables['grey-600'],
-        'box-shadow': 'inset 0 2px 3px #fff'
+
     },
     'button-pale-active-theme': {
-        'border-color': variables['grey-800'],
-        'box-shadow': 'inset 0 1px 5px rgba(180,180,180,.5)'
+
     },
     'dropdown-theme': {
         'min-height': '20px'
@@ -214,21 +211,13 @@ module.exports.apply = {
         display: 'none'
     },
     'bubbles-item-theme': {
-        color: variables['text-color'],
-        margin: '0 2px 2px 0',
-        'border-radius': '5px',
-        padding: '2px 5px',
-        transition: 'padding-right .2s'
+
     },
     'input-theme': {
-        'border-bottom': `1px solid ${variables['grey-200']}`,
-        border: '0',
-        background: 'transparent none 100% 50% no-repeat',
-        'line-height': variables['line-height']
+
     },
     'input-disabled-theme': {
-        'background-color': 'transparent',
-        'border-color': 'transparent'
+
     },
     'input-search-clear-theme': {
         width: '20px',
@@ -239,8 +228,7 @@ module.exports.apply = {
         'font-size': '16px'
     },
     'textarea-theme': {
-        'border-bottom': `1px solid ${variables['grey-200']}`,
-        border: '0'
+
     },
     'custom-cotrol-disabled-theme': {
         filter: 'alpha(opacity=60)',
@@ -264,78 +252,49 @@ module.exports.apply = {
         'pointer-events': 'none'
     },
     'tab-item-theme': {
-        flex: '1 1'
+
     },
     'tab-item-active-theme': {
-        color: variables['blue-200'],
-        'border-bottom': `2px solid ${variables['blue-200']}`
+
     },
     'tab-item-error-theme': {
-        color: variables.red,
-        'border-bottom-color': variables.red
+
     },
     'tab-item-disabled-theme': {
-        color: variables['grey-500'],
-        'border-bottom-color': variables['grey-500']
+
     },
     'tab-item-hidden-theme': {
-        dispay: 'none'
+
     },
-    'tab-panel-container-theme': {},
-    'tab-move-btn-theme': {
-        width: '20px',
-        right: '0',
-        padding: '0 2px'
-    },
+
     'tab-move-btn-prev-theme': {
-        left: '0',
-        right: 'auto'
+
     },
     'columns-select-list-theme': {},
     'columns-header-theme': {
         'font-size': '13px',
         'font-weight': '600',
-        color: '#182026'
+
     },
 
     'toolbar-btn-theme': {},
-    'toolbar-btn-low-theme': {
-        'background-color': '#e1e1e1',
-        'border-color': '#e1e1e1'
-    },
+    'toolbar-btn-low-theme': {},
     'toolbar-btn-low-hover-theme': {},
     'toolbar-btn-low-active-theme': {},
-
-    'toolbar-btn-normal-theme': {
-        'background-color': '#d7fdf4',
-        'border-color': '#d7fdf4'
-    },
+    'toolbar-btn-normal-theme': {},
     'toolbar-btn-normal-hover-theme': {},
     'toolbar-btn-normal-active-theme': {},
-
-    'toolbar-btn-major-theme': {
-        'background-color': '#d6f4fa',
-        'border-color': '#d6f4fa'
-    },
+    'toolbar-btn-major-theme': {},
     'toolbar-btn-major-hover-theme': {},
     'toolbar-btn-major-active-theme': {},
-
-    'toolbar-btn-critical-theme': {
-        'background-color': '#f9f8c9',
-        'border-color': '#f9f8c9'
-    },
+    'toolbar-btn-critical-theme': {},
     'toolbar-btn-critical-hover-theme': {},
     'toolbar-btn-critical-active-theme': {},
-
-    'toolbar-btn-fatal-theme': {
-        'background-color': '#fbe2e2',
-        'border-color': '#fbe2e2'
-    },
+    'toolbar-btn-fatal-theme': {},
     'toolbar-btn-fatal-hover-theme': {},
     'toolbar-btn-fatal-active-theme': {},
 
     'group-theme': {
-        border: `1px solid ${variables['grey-600']}`,
         padding: '10px',
         'margin-top': '5px'
     },
@@ -343,27 +302,20 @@ module.exports.apply = {
         height: '16px',
         'line-height': '16px',
         'max-width': 'calc(100% - 20px)',
-        'background-color': '#fff',
         padding: '0 5px',
         position: 'absolute',
         top: '-8px'
     },
-    'group-title-theme': {
-        color: variables['grey-800'],
-        cursor: 'pointer'
-    },
+    'group-title-theme': {},
     'group-content-theme': {},
 
     'popup-header-theme': {
         padding: '5px 40px',
         'font-size': '18px',
-        color: variables['grey-800'],
         'text-align': 'center'
     },
     'popup-footer-theme': {
         padding: '7px',
-        'background-color': variables['grey-100'],
-        'border-top': `1px solid ${variables['grey-400']}`
     },
     'popup-close-theme': {
         'font-size': '35px',
@@ -371,14 +323,10 @@ module.exports.apply = {
         position: 'absolute',
         right: '4px',
         top: '4px',
-        border: '1px solid transparent',
         'border-radius': '2px'
     },
     'drop-zone-theme': {
-        'background-color': variables['grey-100'],
         padding: '6px'
     },
-    'drop-zone-active-theme': {
-        'background-color': variables['grey-500']
-    }
+    'drop-zone-active-theme': {}
 };

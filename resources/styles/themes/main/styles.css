@@ -1,7 +1,5 @@
 /*------------------ Form Editor ------------------*/
 .editor {
-  height: var(--editor-height);
-  line-height: var(--editor-line-height);
   font-size: var(--editor-font-size);
   color: var(--editor-text-color);
 }
@@ -16,6 +14,7 @@
 .editor_code {
   height: inherit;
 }
+/*
 .editor_code:after{
   display: none;
 }
@@ -41,7 +40,7 @@
 .editor_checkbox:after,
 .editor_radiobutton:after {
   width: 0;
-}
+}*/
 
 .editor_checkbox {
   height: 18px;
@@ -91,12 +90,11 @@
 
 /* textarea */
 .editor_textarea {
-  height: var(--editor-textarea-height);
-  line-height: var(--editor-textarea-line-height);
+
 }
 
 .textarea {
-  line-height: var(--textarea-line-height);
+
 }
 
 /*------------------ SVG Icons ------------------*/
@@ -127,8 +125,8 @@
   transform: scale(1.7) translate(2px, 3px);
 }
 
-svg.svg-grid-icons {
-  height: 45px;
+.cell svg.svg-grid-icons {
+  height: 17px;
 }
 
 .svg-icons_multiselect{
@@ -237,13 +235,7 @@ svg.svg-grid-icons {
 }
 
 /* Tabs */
-.layout__tab-layout__header-view {
-  border-bottom: var(--border);
-}
-.layout__tab-layout__header-view-item:not(.layout__tab-layout__header-view-item_disabled):hover,
-.tabs__i:not(.disabled):hover {
-  color: #009bfe;
-}
+
 
 .layout__tab-layout_move-button {
   @apply --tab-move-btn-theme;
@@ -386,4 +378,76 @@ svg.svg-grid-icons {
 .layout__horizontal-layout-list-item {
   padding-left: 10px;
   padding-right: 10px;
+}
+
+
+
+
+
+.grid-header-column{
+  height: 26px;
+}
+
+.toolbar {
+  height: 35px;
+  padding: 0 10px;
+}
+.toolbar-items-wrp, .toolbar-btn, .tree-editor-btn {
+  height: 28px;
+}
+.split-button-wrp {
+  border: none;
+  height: 28px;
+}
+
+.toolbar .toolbar-btn, .toolbar-dataset .toolbar-btn {
+  line-height: 1.5
+}
+
+.toolbar-btn__text {
+  vertical-align: initial;
+}
+.dataset-footer {
+  height: 27px;
+}
+
+
+.top-nav{
+  height: 35px;
+  line-height: 34px;
+}
+.top-nav_icon {
+  min-width: 35px;
+}
+.top-nav_icon > .icon_icon {
+  font-size: 16px;
+}
+.composite-user-abr__container, .composite-user-abr__container img {
+  height: 21px;
+  width: 21px;
+  flex-basis: 21px;
+  line-height: 21px;
+}
+
+
+.left-menu__logo {
+  min-height: 70px;
+}
+.left-menu-logo_comindware {
+  height: 50px;
+}
+
+
+.left-menu-i {
+  padding: 4px 5px 5px 10px;
+}
+.left-menu-i__icon {
+  font-size: 17px;
+  margin-right: 5px;
+}
+.left-menu-i__text {
+  font-size: 14px;
+}
+.left-menu-i-group {
+  padding-left: 10px;
 }
