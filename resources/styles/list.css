@@ -31,6 +31,12 @@
     width: auto;
 }
 
+/* Fix table rows on lists (for IE, edge) */
+.grid-content-wrp .visible-collection tr {
+    outline: 1px solid #e2e2e2;
+}
+/* End fix table rows on lists (for IE, edge) */
+
 .visible-collection-wrp, .selection-panel-wrp {
     position: relative;
     will-change: top;
