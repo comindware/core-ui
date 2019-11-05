@@ -79,7 +79,7 @@ export default formRepository.editors.Code = BaseEditorView.extend({
             this.showEditor();
             this.ui.editBtn.hide();
             this.ui.clearBtn.hide();
-	    this.editorEl.classList.remove(classes.buttonMode);
+            this.editorEl.classList.remove(classes.buttonMode);
         }
     },
 
@@ -113,7 +113,7 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
         this.__setEditBtnText();
 
-        if (updateUi) {
+        if (updateUi && this.editor) {
             this.editor.setValue(value);
         }
 
