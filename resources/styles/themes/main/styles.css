@@ -53,6 +53,11 @@
     border-bottom-color:transparent;
     background: transparent;
 }
+.cell > .editor {
+  height: 25px;
+  padding: 0 5px;
+}
+
 /*------------------ Input ------------------*/
 .input:hover {
   border-color: var(--input-hover-color);
@@ -60,7 +65,6 @@
 
 .tr-search {
   padding: 8px 10px 8px 0;
-  border-right: 1px solid #dfe4e8;
 }
 
 .textarea:hover {
@@ -451,3 +455,4 @@
 .left-menu-i-group {
   padding-left: 10px;
 }
+
