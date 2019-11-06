@@ -341,6 +341,12 @@
   display:none;
 }
 
+.layout__vertical-layout > div,
+.layout__vertical-layout-item{
+  margin-bottom: 10px;
+}
+
+
 .group-toggle svg{
   transform: translateY(2px);
 }
