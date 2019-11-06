@@ -131,6 +131,7 @@
 
 .cell svg.svg-grid-icons {
   height: 17px;
+  transform: translateY(50%);
 }
 
 .svg-icons_multiselect{

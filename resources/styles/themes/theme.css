@@ -1210,6 +1210,14 @@ tr:hover .cell_selection-index {
   width: auto;
 }
 
+.cell .editor.context_select {
+  margin: 0;
+  padding:0;
+  border: none;
+  background: transparent;
+  text-align: center;
+  width: auto;
+}
 /* color picker */
 .sp-container, .sp-container * {
   box-sizing: border-box;
