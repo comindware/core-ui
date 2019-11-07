@@ -169,7 +169,7 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .editor_document{
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
