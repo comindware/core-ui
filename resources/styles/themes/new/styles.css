@@ -401,7 +401,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   margin-bottom: 10px;
 }
 .btn.field-documents__more {
-  width: 100%;
+  width: auto;
   text-align: center;
   background-color: var(--grey-200);
 }

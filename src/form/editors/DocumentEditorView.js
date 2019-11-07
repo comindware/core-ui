@@ -34,6 +34,8 @@ const defaultOptions = options => ({
     isCell: false
 });
 
+const MAX_NUMBER_VISIBLE_DOCS = 2;
+
 export default formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
@@ -116,6 +118,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     setValue(value) {
         this.__value(value);
+        this.update();
     },
 
     getValue() {
@@ -486,6 +489,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     update() {
         if (this.collapsed && !this.options.showAll) {
+            this.$container.children().show();
             this.collapseShowMore();
         }
     },
@@ -499,23 +503,15 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             this.ui.showMore.hide();
             return;
         }
-        const affordabletWidth = this.$editorEl.width();
         const childViews = documentElements;
-        let visibleCounter = 1;
-        let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
         const length = this.collection.length;
-        // visible children
-        while (visibleCounter < length && visibleWidth + childViews[visibleCounter].clientWidth < affordabletWidth) {
-            visibleWidth += childViews[visibleCounter].clientWidth;
-            visibleCounter++;
-        }
         // invisible children
-        for (let i = visibleCounter; i < length; i++) {
+        for (let i = MAX_NUMBER_VISIBLE_DOCS; i < length; i++) {
             childViews[i].style.display = 'none';
         }
-        if (length - visibleCounter > 0) {
+        if (length - MAX_NUMBER_VISIBLE_DOCS > 0) {
             this.ui.showMore.show();
-            this.ui.invisibleCount.html(length - visibleCounter);
+            this.ui.invisibleCount.html(length - MAX_NUMBER_VISIBLE_DOCS);
             this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
         } else {
             this.ui.showMore.hide();
