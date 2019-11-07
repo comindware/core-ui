@@ -444,7 +444,7 @@
 .left-menu__logo {
   min-height: 60px;
 }
-.left-menu-logo > .left-menu-logo_comindware {
+.left-menu-logo.left-menu-logo_comindware {
   height: 40px;
 }
 
