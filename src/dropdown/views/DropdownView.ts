@@ -9,7 +9,10 @@ const classes = {
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
     DROPDOWN_UP_OVER: 'dropdown__wrp_up-over',
-    VISIBLE_COLLECTION: 'visible-collection'
+    VISIBLE_COLLECTION: 'visible-collection',
+    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
+    DEFAULT_ANCHOR_BUTTON: 'popout__action',
+    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
@@ -34,7 +37,9 @@ type optionsType = {
     allowNestedFocus?: boolean,
     externalBlurHandler?: Function,
     panelViewOptions?: object,
-    buttonViewOptions?: object
+    buttonViewOptions?: object,
+    showDropdownAnchor?: boolean,
+    customAnchor?: boolean
 };
 
 const defaultOptions: optionsType = {
@@ -44,7 +49,9 @@ const defaultOptions: optionsType = {
     panelPosition: panelPosition.DOWN,
     panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
-    externalBlurHandler: () => false
+    externalBlurHandler: () => false,
+    showDropdownAnchor: false,
+    customAnchor: false
 };
 
 /**
@@ -118,18 +125,23 @@ export default class DropdownView {
         this.button.open = this.open.bind(this);
         this.button.adjustPosition = this.adjustPosition.bind(this);
 
+        const buttonEl: Element = this.button.el;
+
         this.button.once('render', () => {
             this.isShown = true;
             this.button.on('change:content', () => this.__adjustPosition(true));
             this.button.on('toggle', () => this.toggle());
-            this.button.el.addEventListener('click', this.__handleClick.bind(this));
-            this.button.el.addEventListener('blur', this.__onBlur.bind(this));
-
-            if (!this.options.customAnchor && this.options.showDropdownAnchor) {
-                //todo add cutom anchor
-                //this.$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
-            }
+            buttonEl.addEventListener('click', this.__handleClick.bind(this));
+            buttonEl.addEventListener('blur', this.__onBlur.bind(this));
         });
+
+        buttonEl.classList.toggle(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
+        buttonEl.classList.toggle(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
+        if (!this.options.customAnchor && this.options.showDropdownAnchor) {
+            this.button.on('render', () => {
+                buttonEl.insertAdjacentHTML('beforeend', `<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+            });
+        }
 
         this.button.on('destroy', this.__onDestroy, this);
 

@@ -149,4 +149,8 @@ export default class UIService {
 
         return Array.from(div.children);
     }
+
+    static createElementFromHTML(htmlString: string, context?: Object): Element {
+        return this.createElementsFromHTML(htmlString, context)[0];
+    }
 }
