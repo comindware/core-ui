@@ -2,8 +2,8 @@ import { Model } from 'backbone';
 import _ from 'underscore';
 
 export default {
-    cloneDeep(obj: Array<any> | object | Model): Array<any> | object {
-        let out: Array<any> | object;
+    cloneDeep(obj: Array<any> | Object | Model): Array<any> | Object {
+        let out: Array<any> | Object;
         let i;
         const pureJSType = obj instanceof Model ? obj.toJSON() : obj; //converting Backbone to js
 
@@ -40,7 +40,7 @@ export default {
         });
     },
 
-    defaultsPure(...args: Array<any>): object {
+    defaultsPure(...args: Array<any>): Object {
         return Object.assign({}, ...args.reverse());
     },
 
@@ -56,7 +56,7 @@ export default {
         return string.charAt(0).toLowerCase() + string.slice(1);
     },
 
-    getResult(value: any, context: object, ...args: Array<any>): any {
+    getResult(value: any, context?: Object, ...args: Array<any>): any {
         return typeof value === 'function' ? value.call(context, ...args) : value;
     },
 

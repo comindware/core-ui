@@ -18,7 +18,7 @@ export default function ({ type = 'required', message = LocalizationService.get(
     };
 
     const required = function required(value: any) {
-        return _.getResult(enabled) ? requiredValidator(value) : undefined;
+        return _.getResult(enabled, this, value) ? requiredValidator(value) : undefined;
     };
 
     return required;
