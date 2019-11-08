@@ -53,25 +53,24 @@ export default Marionette.View.extend({
             '__hideHintOnClick',
             '__getTooltipCsharpModel'
         );
-        if (options.mode === 'expression') {
+        if (options.mode === constants.mode.expression) {
             this.autoCompleteModel = new Backbone.Model();
             this.autoCompleteContext = constants.autoCompleteContext.functions;
             if (options.ontologyService) {
                 this.templateId = options.templateId;
-                options.ontologyService.getAutoCompleteModel().then(ontologyModel => {
-                    this.autoCompleteModel = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                options.ontologyService.getFunctions().then(ontologyModel => {
+                    this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, constants.autoCompleteContext.functions) });
                     if (this.codemirror) {
-                        this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get('functions');
+                        this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
                         //retokenize codemirror with ontology model
                         this.setValue(this.getValue());
                     }
                 });
-                this.autoCompleteModel.set({ templates: [] });
             }
         }
         this.elementLength = 0;
         this.intelliAssist = options.ontologyService;
-        if (options.mode === 'script') {
+        if (options.mode === constants.mode.script) {
             codemirror.hintWords['text/x-csharp'] = [];
         }
     },
@@ -134,7 +133,7 @@ export default Marionette.View.extend({
         this.toolbar.on('minimize', this.__onMinimize);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
-        if (this.options.mode === 'script' && this.options.showDebug !== false) {
+        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
@@ -192,7 +191,7 @@ export default Marionette.View.extend({
             this.isExternalChange = true;
             this.hintIsShown = false;
         });
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
@@ -298,7 +297,7 @@ export default Marionette.View.extend({
             this.el.querySelector(this.regions.editorOutputContainer.el).style.height = '30%';
         }
         document.querySelector(this.regions.output).style.height = '100%';
-        if (this.options.mode === 'script' && this.options.showDebug !== false) {
+        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
             document.querySelector(this.regions.outputTabs).style.height = '100%';
         }
         this.$el.appendTo('body');
@@ -328,7 +327,7 @@ export default Marionette.View.extend({
             this.isExternalChange = false;
             return;
         }
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.__showHint();
         }
         this.__change();
@@ -520,10 +519,10 @@ export default Marionette.View.extend({
             return;
         }
         this.hintIsShown = true;
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.codemirror.showHint({ hint: this.__cmwHint });
         }
-        if (this.options.mode === 'script') {
+        if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
         }
     },
@@ -628,7 +627,7 @@ export default Marionette.View.extend({
         if (this.codemirror.isReadOnly()) {
             return;
         }
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             const cm = this.codemirror;
             cm.execCommand('selectAll');
             const from = cm.getCursor(true);
@@ -675,7 +674,7 @@ export default Marionette.View.extend({
                 }
             });
         }
-        if (this.options.mode === 'script') {
+        if (this.options.mode === constants.mode.script) {
             const formatQuery = {
                 SourceCode: this.codemirror.getValue(),
                 SourceType: 'CSharp',
@@ -697,8 +696,8 @@ export default Marionette.View.extend({
         const completeHoverQuery = {
             sourceCode: this.codemirror.getValue(),
             cursorOffset: this.__countOffset(),
-            sourceType: 'expression',
-            queryCompleteHoverType: 'Completion',
+            sourceType: constants.mode.expression,
+            queryCompleteHoverType: constants.queryCompleteHoverType.completion,
             useOntologyLibriary: false //this.options.config.useOntologyLibriary
         };
 
@@ -715,7 +714,7 @@ export default Marionette.View.extend({
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
-            templateId: this.templateId
+            templateId: this.templateId,
         };
             
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
@@ -803,6 +802,9 @@ export default Marionette.View.extend({
     },
 
     __findObjectByText(text) {
+        if (this.autoCompleteContext === null) {
+            return;
+        }
         return this.autoCompleteModel.get(this.autoCompleteContext).find(item => item.text === text);
     },
 

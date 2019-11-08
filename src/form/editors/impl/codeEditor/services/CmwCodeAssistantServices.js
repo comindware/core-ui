@@ -3,31 +3,42 @@ import constants from '../Constants';
 
 export default {
     getAutoCompleteContext() {
-        return this.autoCompleteContext;
+        let result;
+        switch (this.autoCompleteContext) {
+            case constants.autoCompleteContext.functions:
+                result = constants.autoCompleteContext.functions;
+                break;
+            case constants.autoCompleteContext.attributes:
+                result = constants.autoCompleteContext.attributes;
+                break;
+            case constants.autoCompleteContext.templates:
+                result = constants.autoCompleteContext.templates;
+                break;
+            default: result = null;
+        }
+
+        return result;
     },
 
     findAutoCompleteContext(sourceCode, pos, autoCompleteModel) {
         const str = sourceCode.substr(pos - 3, 4);
         if (str === constants.activeSymbol.dbArrayRight) {
             this.autoCompleteContext = constants.autoCompleteContext.templates;
-            return autoCompleteModel.get('templates');
+            return autoCompleteModel.get(constants.autoCompleteContext.templates);
         }
         this.autoCompleteContext = constants.autoCompleteContext.attributes;
-        return autoCompleteModel.get('attributes');
+        return autoCompleteModel.get(constants.autoCompleteContext.attributes);
     },
 
     async getDataRequest(options, type) {
         let result;
-        const model = new Backbone.Model();
         if (type === constants.autoCompleteContext.attributes) {
             result = await options.intelliAssist.getAttributes(options.templateId);
-            model.set({ attributes: result });
         }
         if (type === constants.autoCompleteContext.templates) {
             result = await options.intelliAssist.getTemplates(options.completeHoverQuery);
-            model.set({ templates: result });
         }
-        const arr = MappingService.mapOntologyModelToAutoCompleteArray(model).get(type);
+        const arr = MappingService.mapOntologyArrayToAutoCompleteArray(result, type);
         return arr;
     },
 
@@ -37,12 +48,15 @@ export default {
         let autoCompleteObject = {};
         if (options.token.type === constants.tokenTypes.identifier || options.types[options.token.type]) {
             if (options.completeHoverQuery.sourceCode[options.token.start - 1] === constants.activeSymbol.dollar) {
-                currentArray = options.autoCompleteModel.get('attributes');
+                currentArray = options.autoCompleteModel.get(constants.autoCompleteContext.attributes);
             } else if (options.completeHoverQuery.sourceCode[options.token.start - 1] === constants.activeSymbol.rightAngleBracket) {
                 currentArray = this.findAutoCompleteContext(options.completeHoverQuery.sourceCode, options.token.start - 1, options.autoCompleteModel);
             } else {
-                currentArray = options.autoCompleteModel.get('functions');
+                currentArray = options.autoCompleteModel.get(constants.autoCompleteContext.functions);
                 this.autoCompleteContext = constants.autoCompleteContext.functions;
+            }
+            if (options.token.string === null) {
+                return;
             }
             completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
             autoCompleteObject = {
@@ -78,7 +92,7 @@ export default {
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: options.autoCompleteModel.get('functions')
+                list: options.autoCompleteModel.get(constants.autoCompleteContext.functions)
             };
         } else {
             autoCompleteObject = {

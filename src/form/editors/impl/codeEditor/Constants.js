@@ -54,5 +54,9 @@ export default {
 
     tokenTypes: {
         identifier: 'identifier',
+    },
+     
+    queryCompleteHoverType: {
+        completion: 'Completion'
     }
 };

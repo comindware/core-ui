@@ -6,13 +6,11 @@ const classes = constants.classes;
 const HTTP_PREFIX = /http:\/\//;
 
 export default {
-    mapOntologyModelToAutoCompleteArray(ontologyModel) {
-        this.autoCompleteModel = new Backbone.Model();
-
-        const functions1 = ontologyModel.get('functions');
-        if (functions1) {
+    __getMappedFunctions(array) {
+        if (array) {
+            const functions = array;
             const functionsArray = [];
-            functions1.forEach(func => {
+            functions.forEach(func => {
                 const item = {};
                 const parameters = func.parameters || [];
                 item.text = func.name;
@@ -50,10 +48,11 @@ export default {
                     functionsArray.push(item);
                 }
             });
-            this.autoCompleteModel.set({ functions: functionsArray });
+            return functionsArray;
         }
+    },
 
-        const users = ontologyModel.get('users');
+    __getMappedUsers(users) {
         if (users) {
             const usersArray = [];
             users.forEach(user => {
@@ -67,10 +66,11 @@ export default {
                 };
                 usersArray.push(item);
             });
-            this.autoCompleteModel.set({ users: usersArray });
+            return usersArray;
         }
+    },
 
-        const literals = ontologyModel.get('literals');
+    __getMappedLiterals(literals) {
         if (literals) {
             const literalsArray = [];
             literals.forEach(literal => {
@@ -89,10 +89,11 @@ export default {
                 };
                 literalsArray.push(item);
             });
-            this.autoCompleteModel.set({ literals: literalsArray });
+            return literalsArray;
         }
+    },
 
-        const operators = ontologyModel.get('operators');
+    __getMappedOperators(operators) {
         if (operators) {
             const operatorsArray = [];
             operators.forEach(operator => {
@@ -108,10 +109,11 @@ export default {
                 };
                 operatorsArray.push(item);
             });
-            this.autoCompleteModel.set({ operators: operatorsArray });
+            return operatorsArray;
         }
+    },
 
-        const attributes = ontologyModel.get('attributes');
+    __getMappedAttributes(attributes) {
         if (attributes) {
             const attributesArray = [];
             attributes.forEach(attribute => {
@@ -125,10 +127,11 @@ export default {
                 };
                 attributesArray.push(item);
             });
-            this.autoCompleteModel.set({ attributes: attributesArray });
+            return attributesArray;
         }
+    },
 
-        const templates = ontologyModel.get('templates');
+    __getMappedTemplates(templates) {
         if (templates) {
             const templatesArray = [];
             templates.forEach(template => {
@@ -142,9 +145,36 @@ export default {
                 };
                 templatesArray.push(item);
             });
-            this.autoCompleteModel.set({ templates: templatesArray });
+            return templatesArray;
         }
-        return this.autoCompleteModel;
+    },
+
+    mapOntologyArrayToAutoCompleteArray(array, type) {
+        let mappedArray = [];
+        switch (type) {
+            case constants.autoCompleteContext.functions:
+                mappedArray = this.__getMappedFunctions(array);
+                break;
+            case constants.autoCompleteContext.users:
+                mappedArray = this.__getMappedUsers(array);
+                break;
+            case constants.autoCompleteContext.literals:
+                mappedArray = this.__getMappedLiterals(array);
+                break;
+            case constants.autoCompleteContext.operators:
+                mappedArray = this.__getMappedOperators(array);
+                break;
+            case constants.autoCompleteContext.attributes:
+                mappedArray = this.__getMappedAttributes(array);
+                break;
+            case constants.autoCompleteContext.templates:
+                mappedArray = this.__getMappedTemplates(array);
+                break;
+            default:
+                mappedArray = [];
+        }
+
+        return mappedArray;
     },
 
     getTooltipView(type) {
