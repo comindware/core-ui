@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+
 import EdgeService from './EdgeService';
 import 'innersvg-polyfill';
 import cssVars from 'css-vars-ponyfill';
@@ -34,6 +36,8 @@ export default class IEService extends EdgeService {
         this.__addDOMClassListToggle();
         this.__addSVGClassList();
         this.__addChildNodeRemove();
+        this.__addDocumentContains();
+        this.__addParendAppend();
     }
 
     static __addCssVariables() {
@@ -73,23 +77,56 @@ export default class IEService extends EdgeService {
     }
 
     static __addChildNodeRemove() {
-        (function (prototypes) {
-            prototypes.forEach(function (prototype) {
-                if (prototype.hasOwnProperty('remove')) {
-                    return;
-                }
-                Object.defineProperty(prototype, 'remove', {
-                    configurable: true,
-                    enumerable: true,
-                    writable: true,
-                    value: function remove() {
-                        if (this.parentNode === null) {
-                            return;
-                        }
-                        this.parentNode.removeChild(this);
+        [Element.prototype, CharacterData.prototype, DocumentType.prototype].forEach(function polyfill(prototype) {
+            if (prototype.hasOwnProperty('remove')) { //eslint-disable-line no-prototype-builtins
+                return;
+            }
+            Object.defineProperty(prototype, 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                        return;
                     }
-                });
+                    this.parentNode.removeChild(this);
+                }
             });
-          })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+        });
+    }
+
+    static __addDocumentContains() {
+        if ('contains' in document) {
+            return;
+        }
+        Object.defineProperty(document, 'contains', {
+            get() {
+                return (otherNode: Node) => document.body.contains(otherNode);
+            }
+        });
+    }
+
+    static __addParendAppend() {
+        [Element.prototype, Document.prototype, DocumentFragment.prototype].forEach(function polyfill(item) {
+            if (item.hasOwnProperty('append')) { //eslint-disable-line no-prototype-builtins
+                return;
+            }
+            Object.defineProperty(item, 'append', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function append() {
+                    const argArr = Array.prototype.slice.call(arguments);
+                    const docFrag = document.createDocumentFragment();
+
+                    argArr.forEach(function callback(argItem: Node) {
+                        const isNode = argItem instanceof Node;
+                        docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+                    });
+
+                    this.appendChild(docFrag);
+                }
+            });
+        });
     }
 }

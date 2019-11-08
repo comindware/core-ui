@@ -48,7 +48,8 @@ export default class TreeEditor {
                 ...options,
                 reqres,
                 maxWidth: 300
-            }
+            },
+            showDropdownAnchor: false
         });
 
         reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
