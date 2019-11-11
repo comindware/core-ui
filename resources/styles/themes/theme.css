@@ -289,6 +289,11 @@ body {
   margin-bottom: var(--custom-control-spacer-y);
 }
 
+.aggregation-panel .editor_radiobutton,
+.dev-button-group .editor_radiobutton{
+  margin: var(--radio-margin_reduced);
+}
+
 .editor_disabled .editor_radiobutton,
 .editor_readonly .editor_radiobutton{
   padding: var(--form-label-padding);
@@ -303,7 +308,7 @@ body {
 .radiobutton {
   width: var(--radio-size);
   height: var(--radio-size);
-  margin-right: var(--radio-right-margin);
+  margin: var(--radio-margin);
   border: 1px solid var(--checkbox-border-color);
   flex-shrink: 0;
 }
