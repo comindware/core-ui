@@ -15,6 +15,7 @@
         "esModuleInterop": true,
         "strictNullChecks": true,
         "declaration": true,
+        "allowUmdGlobalAccess": true
     },
     "exclude": [
         "node_modules",
