@@ -433,11 +433,17 @@
 .top-nav_icon > .icon_icon {
   font-size: 16px;
 }
-.composite-user-abr__container, .composite-user-abr__container img {
-  height: 21px;
-  width: 21px;
-  flex-basis: 21px;
-  line-height: 21px;
+
+.top-nav__i_person {
+  width: 40px;
+}
+
+.top-nav .composite-user-abr__container, .top-nav .composite-user-abr__container img,
+.bubbles__i .composite-user-abr__container, .bubbles__i .composite-user-abr__container img {
+  height: 19px;
+  width: 19px;
+  flex-basis: 19px;
+  line-height: 19px;
 }
 
 
