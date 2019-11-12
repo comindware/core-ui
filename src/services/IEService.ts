@@ -17,6 +17,18 @@ type classList = {
 
 export default class IEService extends EdgeService {
     static initialize() {
+        this.__fixClassListBehaviour();
+        this.__addCssVariables();
+        this.__addDOMClassListToggle();
+        this.__addSVGClassList();
+        this.__addChildNodeRemove();
+        this.__addDocumentContains();
+        this.__addParendAppend();
+
+        super.initialize();
+    }
+
+    static __fixClassListBehaviour() {
         DOMTokenList.prototype.toggle = function(name, flag = !this.contains(name)) {
             return flag ? (this.add(name), true) : (this.remove(name), false);
         };
@@ -30,14 +42,6 @@ export default class IEService extends EdgeService {
         DOMTokenList.prototype.remove = function() {
             [...arguments].map(name => oldRemove.call(this, name));
         };
-        this.__addCssVariables();
-        this.__addDOMClassListToggle();
-        this.__addSVGClassList();
-        this.__addChildNodeRemove();
-        this.__addDocumentContains();
-        this.__addParendAppend();
-
-        super.initialize();
     }
 
     static __addCssVariables() {
