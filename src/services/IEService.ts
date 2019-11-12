@@ -30,14 +30,14 @@ export default class IEService extends EdgeService {
         DOMTokenList.prototype.remove = function() {
             [...arguments].map(name => oldRemove.call(this, name));
         };
-
-        super.initialize();
         this.__addCssVariables();
         this.__addDOMClassListToggle();
         this.__addSVGClassList();
         this.__addChildNodeRemove();
         this.__addDocumentContains();
         this.__addParendAppend();
+
+        super.initialize();
     }
 
     static __addCssVariables() {
