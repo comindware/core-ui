@@ -4,7 +4,7 @@ import dropdown from 'dropdown';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
-import ErrosPanelView from '../../views/ErrosPanelView';
+import ErrorsPanelView from '../../views/ErrorsPanelView';
 import formRepository from '../formRepository';
 import SimplifiedButtonView from './views/SimplifiedButtonView';
 import SimplifiedPanelView from './views/SimplifiedPanelView';

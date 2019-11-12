@@ -4,7 +4,7 @@ import dropdown from 'dropdown';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
-import ErrosPanelView from '../../views/ErrosPanelView';
+import ErrorsPanelView from '../../views/ErrorsPanelView';
 import formRepository from '../formRepository';
 
 const classes = {
@@ -97,7 +97,7 @@ export default Marionette.View.extend({
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
+                panelView: ErrorsPanelView,
                 panelViewOptions: {
                     collection: this.errorCollection
                 },
