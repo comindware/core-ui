@@ -26,7 +26,8 @@ import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 
 const classes = {
     REQUIRED: 'required',
-    ERROR: 'error'
+    ERROR: 'error',
+    TABLE_WIDTH_AUTO: 'grid-content-wrp_width-auto'
 };
 
 /*
@@ -133,6 +134,7 @@ export default Marionette.View.extend({
 
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', (config: { index: number, newColumnWidth: number }) => this.__handleColumnWidthChange(config));
+            this.listenTo(this.headerView, 'change:isEveryColumnSetPxWidth', () => this.__toggleTableWidth());
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -349,6 +351,8 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
+
+            this.__toggleTableWidth();
         } else {
             this.el.classList.add('grid__headless');
         }
@@ -1084,5 +1088,9 @@ export default Marionette.View.extend({
             this.el.querySelector('tbody').classList.remove('hidden-by-tree-editor');
             this.el.querySelector('.grid-header').classList.remove('hidden-by-tree-editor');
         }
+    },
+
+    __toggleTableWidth() {
+        this.ui.table.get(0).classList.toggle(classes.TABLE_WIDTH_AUTO, this.headerView.isEveryColumnSetPxWidth);
     }
 });

@@ -55,6 +55,9 @@
     /*border-collapse: collapse; fo fix border in stiky*/
     table-layout: fixed;
 }
+.grid-content-wrp.grid-content-wrp_width-auto {
+    min-width: auto;
+}
 
 .grid-header-wrp {
     display: flex;

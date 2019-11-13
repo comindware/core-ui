@@ -70,19 +70,33 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     templateContext() {
+        this.isEveryColumnSetPxWidth = true;
         return {
             columns: this.options.columns.map(column =>
                 ({
                     ...column,
                     sortingAsc: column.sorting === 'asc',
                     sortingDesc: column.sorting === 'desc',
-                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : '',
+                    width: this.__getColumnWidth(column),
                     hiddenClass: classes.hiddenByTreeEditorClass
                 })
             ),
             showCheckbox: this.options.showCheckbox && !!this.options.columns.length,
             cellClass: `js-cell_selection ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`
         };
+    },
+
+    __getColumnWidth(column): string {
+        const width = column.width;
+        if (!width) {
+            this.isEveryColumnSetPxWidth = false;
+            return '';
+        }
+        if (width > 1) {
+            return `${width}px`;
+        }
+        this.isEveryColumnSetPxWidth = false;
+        return `${column.width * 100}%`;
     },
 
     onRender() {
@@ -229,17 +243,19 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __setColumnWidth(index: number, newColumnWidth: number) {
-        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
+        const currentWidth = this.options.columns[index].width;
+        const newColumnWidthPX = `${newColumnWidth}px`;
+
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidthPX === currentWidth) {
             return;
         }
 
-        const newColumnWidthPX = `${newColumnWidth}px`;
         this.el.children[index + this.columnIndexOffset].style.minWidth = newColumnWidthPX;
         this.el.children[index + this.columnIndexOffset].style.width = newColumnWidthPX;
         this.options.columns[index].width = newColumnWidth;
 
         //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
-        //this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
         // this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
     },
 
@@ -251,12 +267,12 @@ const GridHeaderView = Marionette.View.extend({
             if (child === column) {
                 this.dragContext.draggedColumn.index = i;
                 this.dragContext.draggedColumn.initialWidth = width;
-                break;
-            } else if (!this.options.columns[i].width) {
-                // freeze width to previous columns
-                this.__setColumnWidth(i, width);
             }
+            // freeze width all columns in pix
+            this.__setColumnWidth(i, width);
         }
+        this.isEveryColumnSetPxWidth = true;
+        this.trigger('change:isEveryColumnSetPxWidth');
     },
 
     __toggleCollapseAll() {
