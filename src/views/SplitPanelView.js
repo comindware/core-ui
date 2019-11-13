@@ -37,9 +37,9 @@ export default Marionette.View.extend({
 
     toggleOrientation(viewType = defaultOptions.viewType) {
         this.options.viewType = viewType;
-        this.__showPanels();
-        this.el.className = this.className();
         this.resisersList.forEach(resizer => resizer.toggleOrientation(this.options.viewType));
+        this.el.className = this.className();
+        this.__showPanels();
     },
 
     onAttach() {
@@ -102,7 +102,7 @@ export default Marionette.View.extend({
             resizer.el.removeAttribute('hidden');
             regions[i].el.removeAttribute('hidden');
 
-            resizer.doManualResize();
+            resizer.render();
         }
     }
 });

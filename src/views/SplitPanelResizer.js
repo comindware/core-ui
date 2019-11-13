@@ -4,14 +4,16 @@ const constants = {
     DEFAULT_MODE_WIDTH: 250,
     COMPACT_MODE_WIDTH: 50,
     MODE_CHANGE_DURATION_MS: 200,
-    MIN_WIDTH: 500,
-    MIN_HEIGHT: 300
+    MIN_WIDTH: 200,
+    MIN_HEIGHT: 200
 };
 
 export default Marionette.View.extend({
     initialize(options) {
         this.firstPanel = options.firstPanel;
         this.secondPanel = options.secondPanel;
+        this.__debounceOnResize = _.debounce(this.__handleWindowResize, 50);
+        this.__resetListeners();
     },
 
     className: 'split-panel-resizer_container',
@@ -20,82 +22,102 @@ export default Marionette.View.extend({
 
     onRender() {
         Core.services.UIService.undraggable({ el: this.el });
+        const rect = this.firstPanel.el.getBoundingClientRect();
+        const parentRect = this.firstPanel.parentEl().getBoundingClientRect();
         if (this.options.orientation === splitViewTypes.HORIZONTAL) {
-            const originalPanel1Height = this.firstPanel.el.getBoundingClientRect().height;
-
-            this.$el.css('left', '');
-            this.$el.css('top', `${originalPanel1Height + this.firstPanel.el.offsetTop}px`);
-            this.originalParentHeight = this.firstPanel.parentEl().offsetHeight + this.firstPanel.parentEl().getBoundingClientRect().top;
-            this.minimumTop = this.firstPanel.el.offsetTop + constants.MIN_HEIGHT;
+            const originalPanelHeight = rect.height;
+            this.topOffset = rect.top;
+            this.originalParentHeight = parentRect.height + parentRect.top;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
+            this.__setTopPosition(originalPanelHeight);
 
             Core.services.UIService.draggable({
                 el: this.el,
                 axis: 'y',
                 drag: (event, ui) => this.__onResizerDragHorizontal(ui)
             });
-        } else {
-            const originalPanelWidth = this.firstPanel.el.getBoundingClientRect().width;
-
-            this.leftOffset = this.firstPanel.el.offsetLeft;
-            this.$el.css('top', '');
-            this.$el.css('left', `${originalPanelWidth + this.firstPanel.el.offsetLeft}px`);
-            this.originalParentWidth = this.firstPanel.parentEl().offsetWidth;
-            this.minimumLeft = this.firstPanel.el.offsetLeft + constants.MIN_WIDTH;
+        } else if (this.options.orientation === splitViewTypes.VERTICAL) {
+            const originalPanelWidth = rect.width;
+            this.leftOffset = rect.left;
+            this.originalParentWidth = parentRect.width;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
+            this.__setLeftPosition(originalPanelWidth);
 
             Core.services.UIService.draggable({
                 el: this.el,
                 axis: 'x',
                 drag: (event, ui) => this.__onResizerDragVertical(ui)
             });
+        } else {
+            this.el.className = 'split-panel-resizer_container split-panel-resizer_general';
         }
     },
 
     toggleOrientation(type) {
         this.options.orientation = type;
-        this.render();
+        this.__resetListeners();
     },
 
-    doManualResize() {
-        this.render();
+    __resetListeners() {
+        this.stopListening(Core.services.GlobalEventService, 'window:resize', this.__debounceOnResize);
+        if (this.options.orientation === splitViewTypes.HORIZONTAL || this.options.orientation === splitViewTypes.VERTICAL) {
+            this.listenTo(Core.services.GlobalEventService, 'window:resize', this.__debounceOnResize);
+        }
     },
 
     __onResizerDragVertical(ui) {
-        const totalWidth = this.originalParentWidth;
-        let width = ui.position.left - this.leftOffset;
-
-        if (width < constants.MIN_WIDTH) {
-            width = constants.MIN_WIDTH;
-            this.el.style.left = `${this.minimumLeft}px`;
-        }
-
-        const maxWidth = totalWidth - constants.MIN_WIDTH;
-
-        if (width > maxWidth) {
-            width = maxWidth;
-            this.el.style.left = `${this.firstPanel.el.offsetLeft + maxWidth}px`;
-        }
-
-        this.firstPanel.$el.css('flex', `0 0 ${width}px`);
+        const width = ui.position.left - this.leftOffset;
+        this.__alignVerticalSplitter(width);
         Core.services.GlobalEventService.trigger('window:resize');
     },
 
     __onResizerDragHorizontal(ui) {
-        let top = ui.position.top;
-
-        if (top < constants.MIN_HEIGHT) {
-            top = constants.MIN_HEIGHT;
-            this.el.style.top = `${this.minimumTop}px`;
+        const height = ui.position.top - this.topOffset;
+        this.__alignHorizontalSplitter(height);
+        Core.services.GlobalEventService.trigger('window:resize');
+    },
+    __handleWindowResize() {
+        const rect = this.firstPanel.el.getBoundingClientRect();
+        if (this.options.orientation === splitViewTypes.HORIZONTAL) {
+            this.el.style.top = rect.bottom;
+        } else {
+            this.el.style.left = rect.right;
         }
+    },
 
+    __alignVerticalSplitter(value) {
+        let width = value;
+        if (width < constants.MIN_WIDTH) {
+            width = constants.MIN_WIDTH;
+        }
+        const maxWidth = this.originalParentWidth - constants.MIN_WIDTH;
+        if (width > maxWidth) {
+            width = maxWidth;
+        }
+        this.__setLeftPosition(width);
+    },
+
+    __alignHorizontalSplitter(value) {
+        let height = value;
+        if (height < constants.MIN_HEIGHT) {
+            height = constants.MIN_HEIGHT;
+        }
         const maxHeight = this.originalParentHeight - constants.MIN_HEIGHT;
-
-        if (top > maxHeight) {
-            top = maxHeight;
-            this.el.style.top = `${maxHeight}px`;
+        if (height > maxHeight) {
+            height = maxHeight;
         }
+        this.__setTopPosition(height);
+    },
 
-        this.firstPanel.$el.css('flex', `0 0 ${top}px`);
+    __setTopPosition(value) {
+        this.$el.css('left', '');
+        this.el.style.top = `${value + this.topOffset}px`;
+        this.firstPanel.$el.css('flex', `0 0 ${value + this.topOffset}px`);
+    },
+
+    __setLeftPosition(value) {
+        this.$el.css('top', '');
+        this.el.style.left = `${value + this.leftOffset}px`;
+        this.firstPanel.$el.css('flex', `0 0 ${value + this.leftOffset}px`);
     }
 });
