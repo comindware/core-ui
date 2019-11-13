@@ -740,7 +740,7 @@ describe('Editors', () => {
                 });
 
                 const view = new core.form.editors.DatalistEditor({
-                    model: model,
+                    model,
                     key: 'DatalistValue',
                     autocommit: true,
                     showEditButton: true,
@@ -779,7 +779,7 @@ describe('Editors', () => {
                 });
 
                 const view = new core.form.editors.DatalistEditor({
-                    model: model,
+                    model,
                     key: 'DatalistValue',
                     autocommit: true,
                     showEditButton: true,
@@ -811,7 +811,6 @@ describe('Editors', () => {
                     model,
                     key: 'dropdownValue',
                     autocommit: true,
-                    collection: arrayObjects15,
                     maxQuantitySelected: Infinity,
                     valueType: 'id',
                     allowEmptyValue: true,
@@ -828,9 +827,67 @@ describe('Editors', () => {
                     actionForOpen(view);
                 });
 
-                model.on('change:dropdownValue', (model, dropdownValue) => {
+                model.on('change:dropdownValue', (m, dropdownValue) => {
                     expect(dropdownValue).toBeArrayOfSize(4);
                     expect(dropdownValue.some(value => value.includes('8'))).toBeTrue();
+                });
+
+                show(view);
+            });
+
+            it('should has Excess Warning if totalCount greater than collection length', done => {
+                const model = new Backbone.Model({
+                    dropdownValue: ['1', '3', '5']
+                });
+
+                const collection = new DemoReferenceCollection(); //DemoReferenceCollection default created 1000 items.
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    key: 'dropdownValue',
+                    autocommit: true,
+                    maxQuantitySelected: Infinity,
+                    valueType: 'id',
+                    allowEmptyValue: true,
+                    fetchFiltered: true,
+                    collection
+                });
+
+                view.once('attach', () => {
+                    view.once('view:ready', () => {
+                        expect(Backbone.$('.js-warning')).toBeVisible();
+                        done();
+                    });
+                    actionForOpen(view);
+                });
+
+                show(view);
+            });
+
+            it('should has no Excess Warning if totalCount less than collection length', done => {
+                const model = new Backbone.Model({
+                    dropdownValue: ['1', '3', '5']
+                });
+
+                const collection = new DemoReferenceCollection(arrayObjects15, { maxFetchedQuantity: 50 }); //DemoReferenceCollection default created 1000 items.
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    key: 'dropdownValue',
+                    autocommit: true,
+                    maxQuantitySelected: Infinity,
+                    valueType: 'id',
+                    allowEmptyValue: true,
+                    fetchFiltered: true,
+                    collection
+                });
+
+                view.once('attach', () => {
+                    view.once('view:ready', () => {
+                        expect(Backbone.$('.js-warning')).toBeHidden();
+                        done();
+                    });
+                    actionForOpen(view);
                 });
 
                 show(view);

@@ -11,7 +11,8 @@ const createDemoData = function () {
 };
 
 export default Backbone.Collection.extend({
-    initialize(models, options) {
+    initialize(models, options = {}) {
+        this.__maxFetchedQuantity = options.maxFetchedQuantity || 50;
         this.__inilialModels = models || createDemoData();
     },
     
@@ -25,11 +26,14 @@ export default Backbone.Collection.extend({
                     return;
                 }
 
+                const filteredModels = this.__inilialModels
+                .filter(attrubutes => 
+                    String(attrubutes.text || attrubutes.name || attrubutes.id).includes(filter)
+                );
+                this.totalCount = filteredModels.length;
+
                 this.reset(
-                    this.__inilialModels
-                        .filter(attrubutes => 
-                            String(attrubutes.text || attrubutes.name || attrubutes.id).includes(filter)
-                        )
+                    filteredModels.slice(0, this.__maxFetchedQuantity)
                 );
  
                 this.trigger('sync');
