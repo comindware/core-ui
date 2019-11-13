@@ -6,10 +6,10 @@ const classes = constants.classes;
 const HTTP_PREFIX = /http:\/\//;
 
 export default {
-    mapOntologyModelToAutoCompleteArray(ontologyModel) {
-        const autoCompleteArray = [];
-        const functions = ontologyModel.get('functions');
-        if (functions) {
+    __getMappedFunctions(array) {
+        if (array) {
+            const functions = array;
+            const functionsArray = [];
             functions.forEach(func => {
                 const item = {};
                 const parameters = func.parameters || [];
@@ -29,8 +29,7 @@ export default {
                         parameter.description = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTYDESCRIPTION');
                     }
                 });
-
-                const justAdded = autoCompleteArray.find(autoCompleteItem => autoCompleteItem.text === func.name);
+                const justAdded = functionsArray.find(autoCompleteItem => autoCompleteItem.text === func.name);
                 if (justAdded) {
                     justAdded.overloads.push({
                         parameters,
@@ -46,13 +45,16 @@ export default {
                         text: func.name,
                         returns: func.returns
                     });
-                    autoCompleteArray.push(item);
+                    functionsArray.push(item);
                 }
             });
+            return functionsArray;
         }
+    },
 
-        const users = ontologyModel.get('users');
+    __getMappedUsers(users) {
         if (users) {
+            const usersArray = [];
             users.forEach(user => {
                 const item = {};
                 item.text = user.name;
@@ -62,12 +64,15 @@ export default {
                 item.hint = (cm, data, completion) => {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
-                autoCompleteArray.push(item);
+                usersArray.push(item);
             });
+            return usersArray;
         }
+    },
 
-        const literals = ontologyModel.get('literals');
+    __getMappedLiterals(literals) {
         if (literals) {
+            const literalsArray = [];
             literals.forEach(literal => {
                 const item = {};
                 item.text = literal.name;
@@ -82,12 +87,15 @@ export default {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                     cm.execCommand('goCharLeft');
                 };
-                autoCompleteArray.push(item);
+                literalsArray.push(item);
             });
+            return literalsArray;
         }
+    },
 
-        const operators = ontologyModel.get('operators');
+    __getMappedOperators(operators) {
         if (operators) {
+            const operatorsArray = [];
             operators.forEach(operator => {
                 const item = {};
                 item.text = operator.name;
@@ -99,26 +107,74 @@ export default {
                 item.hint = (cm, data, completion) => {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
-                autoCompleteArray.push(item);
+                operatorsArray.push(item);
             });
+            return operatorsArray;
         }
+    },
 
-        const attributes = ontologyModel.get('attributes');
+    __getMappedAttributes(attributes) {
         if (attributes) {
+            const attributesArray = [];
             attributes.forEach(attribute => {
                 const item = {};
-                item.text = attribute.name;
-                item.syntax = attribute.syntax;
+                item.text = attribute.alias;
+                item.syntax = item.text;
                 item.className = classes.attribute;
                 item.type = types.attribute;
                 item.hint = (cm, data, completion) => {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
-                autoCompleteArray.push(item);
+                attributesArray.push(item);
             });
+            return attributesArray;
+        }
+    },
+
+    __getMappedTemplates(templates) {
+        if (templates) {
+            const templatesArray = [];
+            templates.forEach(template => {
+                const item = {};
+                item.text = template.name; //alias, necessary rename this field to the backend
+                item.syntax = item.text;
+                item.className = classes.template;
+                item.type = types.template;
+                item.hint = (cm, data, completion) => {
+                    cm.replaceRange(completion.syntax, data.from, data.to);
+                };
+                templatesArray.push(item);
+            });
+            return templatesArray;
+        }
+    },
+
+    mapOntologyArrayToAutoCompleteArray(array, type) {
+        let mappedArray = [];
+        switch (type) {
+            case constants.autoCompleteContext.functions:
+                mappedArray = this.__getMappedFunctions(array);
+                break;
+            case constants.autoCompleteContext.users:
+                mappedArray = this.__getMappedUsers(array);
+                break;
+            case constants.autoCompleteContext.literals:
+                mappedArray = this.__getMappedLiterals(array);
+                break;
+            case constants.autoCompleteContext.operators:
+                mappedArray = this.__getMappedOperators(array);
+                break;
+            case constants.autoCompleteContext.attributes:
+                mappedArray = this.__getMappedAttributes(array);
+                break;
+            case constants.autoCompleteContext.templates:
+                mappedArray = this.__getMappedTemplates(array);
+                break;
+            default:
+                mappedArray = [];
         }
 
-        return autoCompleteArray;
+        return mappedArray;
     },
 
     getTooltipView(type) {

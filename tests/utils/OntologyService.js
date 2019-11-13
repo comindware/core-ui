@@ -1,6 +1,4 @@
-import ontology from './codeEditorData';
-
-export default class OntologyService {
+export default class OntologyService { //CodeAssistantService
     static initialize() {
         this.model = null;
     }
@@ -9,24 +7,50 @@ export default class OntologyService {
         this.model = null;
     }
 
-    static async getOntology() {
-        if (this.model) {
-            return this.model;
+    static async getFunctions() {
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                result = await Ajax.Ontology.GetOntology();
+                this.isLoading = false;
+            }
+        } finally {
+            //
         }
-        return await this.__loadOntology();
+        return result;
     }
 
-    static async __loadOntology() {
-        if (!this.isLoading) {
-            this.isLoading = true;
+    static async getTemplates(completeHoverQuery) {
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                const response = await Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+                result = response.infoList;
+                this.isLoading = false;
+            }
+        } finally {
+            //
+        }
+        return result;
+    }
+
+    static async getAttributes(templateId) {
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                const url = `api/RecordTypeContextApi?recordTypeId=${templateId}`;
+                const response = await Ajax.getResponse('GET', url);
+                result = response.filter(item => item.obsolete !== true);
+                this.isLoading = false;
+            }
+        } finally {
+            //
         }
 
-        if (!this.model) {
-            this.model = new Backbone.Model(ontology);
-        }
-        this.isLoading = false;
-
-        return this.model;
+        return result;
     }
 
     static async getCSharpOntology(completeHoverQuery) {
@@ -34,15 +58,16 @@ export default class OntologyService {
     }
 
     static async __loadSCharpOntology(completeHoverQuery) {
-        if (!this.isLoading) {
-            this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                result = await Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+            }
+            this.model = new Backbone.Model(result);
+        } finally {
+            //
         }
-        const result = await this.promise;
-        this.model = new Backbone.Model(result);
-
-        this.isLoading = false;
-
         return this.model;
     }
 
@@ -51,14 +76,17 @@ export default class OntologyService {
     }
 
     static async __loadCompile(userCompileQuery) {
-        if (!this.isLoading) {
-            this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessCompile(userCompileQuery);
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                result = await Ajax.CodeAssistant.ProcessCompile(userCompileQuery);
+            }
+            this.model = new Backbone.Model(result);
+            this.isLoading = false;
+        } finally {
+            //
         }
-        const result = await this.promise;
-        this.model = new Backbone.Model(result);
-        this.isLoading = false;
-
         return this.model;
     }
 
@@ -67,15 +95,17 @@ export default class OntologyService {
     }
 
     static async __loadFormatCSharp(formatQuery) {
-        if (!this.isLoading) {
-            this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessFormatRefactor(formatQuery);
+        let result;
+        try {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                result = await Ajax.CodeAssistant.ProcessFormatRefactor(formatQuery);
+            }
+            this.model = new Backbone.Model(result);
+            this.isLoading = false;
+        } finally {
+            //
         }
-        const result = await this.promise;
-        this.model = new Backbone.Model(result);
-
-        this.isLoading = false;
-
         return this.model;
     }
 }

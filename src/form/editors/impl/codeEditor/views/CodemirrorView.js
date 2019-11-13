@@ -1,8 +1,10 @@
 import { codemirror } from 'lib';
+import { keyCode } from 'utils';
 import ToolbarView from './ToolbarView';
 import OutputView from './OutputView';
 import template from '../templates/codemirror.html';
 import MappingService from '../services/MappingService';
+import CmwCodeAssistantServices from '../services/CmwCodeAssistantServices';
 import constants from '../Constants';
 import LocalizationService from '../../../../../services/LocalizationService';
 import GlobalEventService from '../../../../../services/GlobalEventService';
@@ -51,21 +53,24 @@ export default Marionette.View.extend({
             '__hideHintOnClick',
             '__getTooltipCsharpModel'
         );
-        if (options.mode === 'expression') {
-            this.autoCompleteArray = [];
+        if (options.mode === constants.mode.expression) {
+            this.autoCompleteModel = new Backbone.Model();
+            this.autoCompleteContext = constants.autoCompleteContext.functions;
             if (options.ontologyService) {
-                options.ontologyService.getOntology().then(ontologyModel => {
-                    this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                this.templateId = options.templateId;
+                options.ontologyService.getFunctions().then(ontologyModel => {
+                    this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, constants.autoCompleteContext.functions) });
                     if (this.codemirror) {
-                        this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
+                        this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
                         //retokenize codemirror with ontology model
                         this.setValue(this.getValue());
                     }
                 });
             }
         }
-        if (options.mode === 'script') {
-            this.intelliAssist = options.ontologyService;
+        this.elementLength = 0;
+        this.intelliAssist = options.ontologyService;
+        if (options.mode === constants.mode.script) {
             codemirror.hintWords['text/x-csharp'] = [];
         }
     },
@@ -128,7 +133,7 @@ export default Marionette.View.extend({
         this.toolbar.on('minimize', this.__onMinimize);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
-        if (this.options.mode === 'script' && this.options.showDebug !== false) {
+        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
@@ -152,7 +157,7 @@ export default Marionette.View.extend({
             lineNumbers: true,
             lineSeparator,
             mode: modes[this.options.mode],
-            ontologyObjects: this.autoCompleteArray,
+            ontologyObjects: [],
             matchBrackets: true,
             autoCloseBrackets: true,
             styleActiveLine: true,
@@ -186,7 +191,7 @@ export default Marionette.View.extend({
             this.isExternalChange = true;
             this.hintIsShown = false;
         });
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
@@ -292,7 +297,7 @@ export default Marionette.View.extend({
             this.el.querySelector(this.regions.editorOutputContainer.el).style.height = '30%';
         }
         document.querySelector(this.regions.output).style.height = '100%';
-        if (this.options.mode === 'script' && this.options.showDebug !== false) {
+        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
             document.querySelector(this.regions.outputTabs).style.height = '100%';
         }
         this.$el.appendTo('body');
@@ -322,7 +327,7 @@ export default Marionette.View.extend({
             this.isExternalChange = false;
             return;
         }
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.__showHint();
         }
         this.__change();
@@ -389,11 +394,11 @@ export default Marionette.View.extend({
         this.setLoading(true);
         try {
             const completeHoverQuery = {
-                SourceCode: this.codemirror.getValue(),
-                CursorOffset: this.__countOffset(),
-                SourceType: 'CSharp',
-                QueryCompleteHoverType: 'Completion',
-                UseOntologyLibriary: this.options.config.useOntologyLibriary
+                sourceCode: this.codemirror.getValue(),
+                cursorOffset: this.__countOffset(),
+                sourceType: 'CSharp',
+                queryCompleteHoverType: 'Completion',
+                useOntologyLibriary: this.options.config.useOntologyLibriary
             };
             const ontologyModel = await this.intelliAssist.getCSharpOntology(completeHoverQuery);
             this.newArr = [];
@@ -468,12 +473,12 @@ export default Marionette.View.extend({
         if (indentRightEdge < hintPanelWidth) {
             right = indentRightEdge + hintPanelWidth + tooltipMargin;
             return { top: hintPanelPosition.top, right };
-        }
-         
+        } 
         let left = hintPanelPosition.left + hintPanelWidth + tooltipMargin;
         if (left + tooltipWidth > window.innerWidth) {
             left = hintPanelPosition.left - tooltipWidth - tooltipMargin;
         }
+
         return { top: hintPanelPosition.top, left };
     },
 
@@ -514,10 +519,10 @@ export default Marionette.View.extend({
             return;
         }
         this.hintIsShown = true;
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             this.codemirror.showHint({ hint: this.__cmwHint });
         }
-        if (this.options.mode === 'script') {
+        if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
         }
     },
@@ -564,9 +569,9 @@ export default Marionette.View.extend({
         let newArrInfo = [];
 
         const userCompileQuery = {
-            SourceCode: this.codemirror.getValue(),
-            SourceType: 'CSharp',
-            UseOntologyLibriary: this.options.config?.useOntologyLibriary
+            sourceCode: this.codemirror.getValue(),
+            sourceType: 'CSharp',
+            useOntologyLibriary: this.options.config?.useOntologyLibriary
         };
         const content = this.codemirror.getValue();
         this.setLoading(true);
@@ -622,7 +627,7 @@ export default Marionette.View.extend({
         if (this.codemirror.isReadOnly()) {
             return;
         }
-        if (this.options.mode === 'expression') {
+        if (this.options.mode === constants.mode.expression) {
             const cm = this.codemirror;
             cm.execCommand('selectAll');
             const from = cm.getCursor(true);
@@ -669,7 +674,7 @@ export default Marionette.View.extend({
                 }
             });
         }
-        if (this.options.mode === 'script') {
+        if (this.options.mode === constants.mode.script) {
             const formatQuery = {
                 SourceCode: this.codemirror.getValue(),
                 SourceType: 'CSharp',
@@ -687,55 +692,36 @@ export default Marionette.View.extend({
         }
     },
 
-    __cmwHint() {
-        const completion = [];
+    async __cmwHint() {
+        const completeHoverQuery = {
+            sourceCode: this.codemirror.getValue(),
+            cursorOffset: this.__countOffset(),
+            sourceType: constants.mode.expression,
+            queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+            useOntologyLibriary: false //this.options.config.useOntologyLibriary
+        };
+
         let autoCompleteObject = {};
+
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
-        if (token.type === 'identifier' || types[token.type]) {
-            this.autoCompleteArray.forEach(item => {
-                if (item.text.toLowerCase().indexOf(token.string.toLowerCase()) > -1) {
-                    completion.push(item);
-                }
-            });
-            autoCompleteObject = {
-                from: {
-                    line: cursor.line,
-                    ch: token.start
-                },
-                to: {
-                    line: cursor.line,
-                    ch: token.end
-                },
-                list: completion
-            };
-        } else if (token.string === '$' || token.string === '->') {
-            this.autoCompleteArray.forEach(item => {
-                if (item.type === types.attribute) {
-                    completion.push(item);
-                }
-                autoCompleteObject = {
-                    from: cursor,
-                    to: cursor,
-                    list: completion
-                };
-            });
-        } else if (token.string === '(' || this.codemirror.getValue().trim() === '') {
-            autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: this.autoCompleteArray
-            };
-        } else {
-            autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: completion
-            };
-        }
 
+        const options = {
+            token,
+            types,
+            cursor,
+            autoCompleteModel: this.autoCompleteModel,
+            completeHoverQuery,
+            intelliAssist: this.intelliAssist,
+            codemirror: this.codemirror,
+            templateId: this.templateId,
+        };
+            
+        autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
+        this.autoCompleteContext = CmwCodeAssistantServices.getAutoCompleteContext();
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
         this.hintIsShown = true;
+        
         return autoCompleteObject;
     },
 
@@ -752,9 +738,9 @@ export default Marionette.View.extend({
             !event.altKey
             && !event.ctrlKey
             && !event.metaKey
-            && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
+            && (charCode === keyCode['>'] || charCode === keyCode.HOME || (charCode >= keyCode[0] && charCode <= keyCode.Z) || (charCode > keyCode._ && charCode < keyCode['{']) || charCode === keyCode.BACKSPACE || charCode === keyCode.PERIOD)
         );
-        if (charCode === 27 && !this.hintIsShown) {
+        if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {
                 this.minimize();
             }
@@ -816,7 +802,10 @@ export default Marionette.View.extend({
     },
 
     __findObjectByText(text) {
-        return this.autoCompleteArray.find(item => item.text === text);
+        if (this.autoCompleteContext === null) {
+            return;
+        }
+        return this.autoCompleteModel.get(this.autoCompleteContext).find(item => item.text === text);
     },
 
     __highlightItem(el) {
