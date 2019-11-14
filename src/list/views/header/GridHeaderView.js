@@ -17,7 +17,9 @@ import InfoMessageView from './InfoMessageView';
 
 const classes = {
     expanded: 'collapsible-btn_expanded',
-    dragover: 'dragover'
+    dragover: 'dragover',
+    sortingUp: 'sort_up',
+    sortingDown: 'sort_down'
 };
 
 const GridHeaderView = Marionette.View.extend({
@@ -68,12 +70,7 @@ const GridHeaderView = Marionette.View.extend({
 
     templateContext() {
         return {
-            columns: this.options.columns.map(column =>
-                Object.assign({}, column, {
-                    sortingAsc: column.sorting === 'asc',
-                    sortingDesc: column.sorting === 'desc'
-                })
-            )
+            columns: this.options.columns
         };
     },
 
@@ -106,11 +103,15 @@ const GridHeaderView = Marionette.View.extend({
                 });
                 this.showChildView(`popoutRegion${i}`, infoPopout);
             }
+            this.__updateColumnSorting(column, el);
         });
     },
 
     updateSorting() {
-        this.render();
+        this.ui.gridHeaderColumn.each((i, el) => {
+            const column = this.options.columns[i];
+            this.__updateColumnSorting(column, el);
+        });
     },
 
     __handleColumnSort(event) {
@@ -298,6 +299,17 @@ const GridHeaderView = Marionette.View.extend({
 
     __onMouseLeaveHeader(event) {
         this.trigger('handleLeave', event);
+    },
+
+    __updateColumnSorting(column, el) {
+        const oldSortingEl = el.querySelector('.js-sorting');
+        if (oldSortingEl) {
+            oldSortingEl.parentElement.removeChild(oldSortingEl);
+        }
+        if (column.sorting) {
+            const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', `<span class="js-sorting ${sortingClass}"></span>`);
+        }
     }
 });
 
