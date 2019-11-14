@@ -181,7 +181,6 @@ module.exports.apply = {
         'vertical-align': 'middle',
         cursor: 'pointer',
         'font-size': '15px',
-        'line-height': '1.5',
         padding: '3px 15px',
         'border-radius': '4px'
     },
@@ -446,7 +445,7 @@ module.exports.apply = {
     },
     'group-content-theme': {
         padding: '20px',
-        'border-radius': '7px',
+        'border-radius': '4px',
         'background-color': variables['grey-50']
     },
 

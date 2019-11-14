@@ -181,7 +181,6 @@ module.exports.apply = {
         padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
-        'line-height': '1.5',
         overflow: 'hidden',
         'border-radius': '4px',
         height: '28px'
@@ -298,19 +297,18 @@ module.exports.apply = {
     'toolbar-btn-fatal-active-theme': {},
 
     'group-theme': {
-        padding: '10px',
+        padding: '5px 0',
         'margin-top': '5px'
     },
     'group-head-theme': {
-        height: '16px',
-        'line-height': '16px',
-        'max-width': 'calc(100% - 20px)',
-        padding: '0 5px',
-        position: 'absolute',
-        top: '-8px'
+        'max-width': 'calc(100% - 5px)',
+        'font-size': '16px',
+        'margin-bottom': '5px',
     },
     'group-title-theme': {},
-    'group-content-theme': {},
+    'group-content-theme': {
+        padding: '10px'
+    },
 
     'popup-header-theme': {
         'font-size': '16px',

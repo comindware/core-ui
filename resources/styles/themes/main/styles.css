@@ -310,6 +310,12 @@
   opacity: 1;
 }
 
+.form-label:not(.form-label--empty) + .editor_document,
+.form-label:not(.form-label--empty) + .editor_checkbox {
+  padding-left: var(--form-input-padding);
+}
+
+
 .required .form-label {
   padding-left: 10px;
 }
@@ -411,10 +417,11 @@
   height: 24px;
 }
 
+/*
 .toolbar .toolbar-btn, .toolbar-dataset .toolbar-btn {
   line-height: 1.3
 }
-
+*/
 .toolbar-btn__text {
   vertical-align: initial;
 }
