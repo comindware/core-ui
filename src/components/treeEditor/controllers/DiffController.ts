@@ -18,9 +18,7 @@ const findDuplicates = (array: string[]): string[] => {
     const duplicates  = (dict: { [name: string] }) => Object.keys(dict).filter((a: string) => dict[a] > 1);
 
     return duplicates(count(array));
-}
-
-const personalConfigProps = ['index', 'width', 'isHidden']; //TODO add them dynamically (i.e. something like personalConfigProps aggregator)
+};
 
 const findAllDescendants = (model: GraphModel, predicate?: (model: GraphModel) => boolean) => {
     if (!model.isContainer) {
@@ -166,7 +164,7 @@ export default class TreeDiffController {
                 const pick = {
                     index: model.collection?.indexOf(model),
                     isHidden: false,
-                    width: 0
+                    width: model.get('width') || 0
                 };
                 Object.defineProperty(model, 'initialConfig' , {
                     writable: false,
@@ -197,8 +195,9 @@ export default class TreeDiffController {
 
             if (configMap.size) {
                 model.set(configObject);
+            } else {
+                model.set(configMap.initialConfig);
             }
-            personalConfigProps.filter(prop => configObject[prop] == null).map(prop => model.unset(prop));
             const collection = model.collection;
             if (collection) {
                 const configIndex = configObject.index == null ? collection.initialConfig.indexOf(model.id) : configObject.index;
