@@ -49,7 +49,7 @@ const onChange = function() {
     if (this.model && this.options.autocommit) {
         this.commit();
     }
-    if (this.__validatedOnce) {
+    if (this.hasErrors()) {
         if (this.form) {
             this.form.validate();
         } else {
@@ -130,7 +130,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             this.key = options.key;
             this.form = options.form;
 
-            this.__validatedOnce = false;
+            this.__hasErrors = false;
 
             this.on('render', this.__onEditorRender.bind(this));
             this.on('change', onChange.bind(this));
@@ -508,27 +508,23 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
          */
         validate({ internal } = {}) {
-            const errors = [];
+            const errors: Array<Object> = [];
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;
             const getValidator = this.getValidator;
 
-            if (!internal) {
-                this.__validatedOnce = true;
-            }
-
             if (validators) {
                 validators.forEach(validatorOptions => {
                     const validator = getValidator(validatorOptions);
-                    let error = validator.call(this, value, formValues);
+                    const error = validator.call(this, value, formValues);
                     if (error) {
                         errors.push(error)
                     }
                 });
             }
 
-            if (!internal && this.isRendered() && !this.isDestroyed()) {
+            if (this.isRendered() && !this.isDestroyed()) {
                 this.$editorEl.toggleClass(classes.ERROR, !!errors.length);
                 if (errors.length) {
                     this.setError(errors);
@@ -650,6 +646,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
         },
 
         setError(errors: Array<any>): void {
+            this.__hasErrors = true;
             if (!this.__checkUiReady() || !this.isField) {
                 return;
             }
@@ -679,11 +676,16 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
         },
 
         clearError(): void {
+            this.__hasErrors = false;
             if (!this.__checkUiReady() || !this.isField) {
                 return;
             }
             this.el.classList.remove(...this.classes.ERROR.split(' '));
             this.errorCollection && this.errorCollection.reset();
+        },
+
+        hasErrors(): boolean {
+            return this.__hasErrors;
         },
 
         __checkUiReady() {
