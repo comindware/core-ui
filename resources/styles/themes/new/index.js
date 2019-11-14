@@ -69,7 +69,7 @@ const variables = {
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '4px 4px 4px 24px',
+    'input-search-padding': '4px 20px 4px 24px',
 
     // textarea
     'textarea-padding': '4px 20px 4px 10px',
@@ -264,7 +264,8 @@ module.exports.apply = {
         opacity: '.8',
         right: '0',
         top: '17px',
-        'font-size': '16px'
+        'font-size': '16px',
+        'text-align': 'center'
     },
     'textarea-theme': {
         border: variables.border,

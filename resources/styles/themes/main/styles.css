@@ -64,7 +64,7 @@
 }
 
 .tr-search {
-  padding: 8px 10px 8px 0;
+  position: relative;
 }
 
 .textarea:hover {

@@ -43,6 +43,7 @@
   @apply --input-theme;
   height: var(--input-height);
   background-size: 14px 14px;
+  text-overflow: ellipsis;
 }
 
 .checkbox,

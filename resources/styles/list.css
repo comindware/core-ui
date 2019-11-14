@@ -313,8 +313,12 @@
     text-align: center;
     min-height: 25px;
 }
+tr.empty-view {
+    display: table-row;
+}
 .empty-view_text {
     text-align: center;
+    white-space: nowrap;
 }
 /* /Empty View */
 
