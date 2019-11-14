@@ -206,9 +206,7 @@ module.exports.apply = {
     'dropdown-theme': {
         'min-height': '20px'
     },
-    'dropdown-caret-theme': {
-        display: 'none'
-    },
+    'dropdown-caret-theme': {},
     'bubbles-item-theme': {
 
     },
