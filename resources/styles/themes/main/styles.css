@@ -326,17 +326,7 @@
     padding-left: 10px;
     position: relative;
 }
-.required .form-label::before, .form-label_required:before, .cell.required::before {
-  content: '*';
-  margin: -5px 0 0;
-  color: #c85e44;
-  font-size: 14px;
-  line-height: 14px;
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  left: 0;
-}
+
 
 .cell.required::before {
   margin: 0 0 0 1px;
