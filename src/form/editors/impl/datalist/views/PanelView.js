@@ -129,9 +129,9 @@ export default Marionette.View.extend({
             return;
         }
         const collectionLength = this.collection.length;
-        const count = this.collection.totalCount;
+        const totalCount = this.collection.parentCollection.totalCount;
 
-        if (count > collectionLength) {
+        if (totalCount > collectionLength) {
             this.ui.warning[0].removeAttribute('hidden');
         } else {
             this.ui.warning[0].setAttribute('hidden', '');

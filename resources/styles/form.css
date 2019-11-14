@@ -713,10 +713,6 @@ input[type="color"], .colorpicker{
     top: auto;
 }
 
-.dd-list__filter_reference:hover .editor__icons.icon-remove {
-    display: inline-block;
-}
-
 /* /svg icons/ */
 
 
