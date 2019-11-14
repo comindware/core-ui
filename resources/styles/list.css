@@ -824,6 +824,10 @@ tr.dragover td{
     align-items: center;
     overflow: hidden;
 }
+.cell .js-tree-first-cell + .composite-cell__wrp {
+    display: inline-flex;
+    max-width: calc(100% - 35px);
+}
 
 .composite-cell__wrp .bubbles__caret{
     margin-left: 0.5rem;
