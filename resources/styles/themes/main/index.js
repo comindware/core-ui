@@ -303,7 +303,9 @@ module.exports.apply = {
         'font-size': '16px',
         'margin-bottom': '5px',
     },
-    'group-title-theme': {},
+    'group-title-theme': {
+        'padding-left': '15px'
+    },
     'group-content-theme': {
         padding: '10px'
     },

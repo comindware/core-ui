@@ -466,3 +466,19 @@
   padding-left: 10px;
 }
 
+.top-nav_icon > .icon_text {
+  font-size: 11px;
+  padding: 0 4px;
+  min-height: 16px;
+  line-height: 15px;
+  left: 19px;
+  top: 3px;
+}
+
+
+.history-panel__list .grid-content-wrp.grid-content-wrp_width-auto{
+  width: 100%;
+}
+.history-panel_history .history_data {
+  margin: 0 0 0 3px;
+}
