@@ -95,10 +95,16 @@
     position: absolute;
     right: 15px;
     font-size: 21px;
+    display: flex;
+    align-items: center;
+}
+
+.gallery-top-menu-buttons-wrp .gallery-top-menu-close {
+    font-size: 29px;
 }
 
 .gallery-top-menu-buttons-wrp > * {
-    margin-left: 10px;
+    margin-left: 18px;
 }
 
 .gallery-btn {
