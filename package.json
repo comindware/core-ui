@@ -95,7 +95,7 @@
         "gulp-svgmin": "^2.2.0",
         "gulp-svgstore": "^7.0.1",
         "gulp-util": "^3.0.8",
-        "handlebars": "^4.5.1",
+        "handlebars": "^4.5.2",
         "handlebars-loader": "^1.7.1",
         "html-loader": "^0.5.5",
         "imports-loader": "^0.8.0",

@@ -3,7 +3,7 @@ import dropdown from 'dropdown';
 import ErrorButtonView from '../../../views/ErrorButtonView';
 import InfoButtonView from '../../../views/InfoButtonView';
 import TooltipPanelView from '../../../views/TooltipPanelView';
-import ErrosPanelView from '../../../views/ErrosPanelView';
+import ErrorsPanelView from '../../../views/ErrorsPanelView';
 import Backbone from 'backbone';
 import _ from 'underscore';
 import Marionette from 'backbone.marionette';
@@ -657,7 +657,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             if (!this.isErrorShown) {
                 const errorPopout = dropdown.factory.createPopout({
                     buttonView: ErrorButtonView,
-                    panelView: ErrosPanelView,
+                    panelView: ErrorsPanelView,
                     panelViewOptions: {
                         collection: this.errorCollection
                     },

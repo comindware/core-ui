@@ -548,16 +548,6 @@ tr:hover .cell_selection-index {
   transition: background-color 300ms ease-in-out;
 }
 
-.sort_down, .sort_up {
-  width: var(--grid-sort-icon-size);
-  height: var(--grid-sort-icon-size);
-  top: var(--grid-sort-icon-offset-y);
-}
-
-.sort_up {
-  transform: rotate(180deg);
-}
-
 .cell_selection-index > .checkbox,
 .cell_selection > .checkbox {
   font-size: var(--grid-checkbox-icon-size);

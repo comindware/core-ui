@@ -147,7 +147,9 @@ export const classes = {
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
     cell: 'cell',
-    hiddenByTreeEditorClass: 'hidden-by-tree-editor'
+    hiddenByTreeEditorClass: 'hidden-by-tree-editor',    
+    sortingUp: 'arrow-up',
+    sortingDown: 'arrow-down'
 };
 
 export default {

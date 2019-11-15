@@ -17,6 +17,8 @@ import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
+import ErrorsPanelView from './views/ErrorsPanelView';
+import ErrorButtonView from './views/ErrorButtonView';
 
 import RoutingService from './services/RoutingService';
 import ToastNotifications from './services/ToastNotificationService';
@@ -107,7 +109,9 @@ const core = {
         },
         LoadingView,
         SearchBarView,
-        SplitPanelView
+        SplitPanelView,
+        ErrorButtonView,
+        ErrorsPanelView
     },
     /**
      * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.
