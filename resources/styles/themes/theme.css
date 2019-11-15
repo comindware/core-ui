@@ -179,6 +179,11 @@ body {
   border-color: var(--error-color);
 }
 
+.cell.error {
+  outline: 1px solid #e61212;
+  outline-offset: -1px;
+}
+
 .editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
   width: var(--checkbox-intermediate-size);
   height: var(--checkbox-intermediate-size);
@@ -604,13 +609,12 @@ tr:hover .cell_selection-index {
       position:relative;
       background-clip: padding-box;
   }
-
-
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
   width: calc(100% - var(--grid-selection-width));
 }
+
 .cell_selection-index:not(:empty) + .grid-header-view {
   width: calc(100% - var(--grid-selection-index-width));
 }
@@ -628,13 +632,17 @@ tr:hover .cell_selection-index {
 
 .cell-focused {
   outline: var(--focus) !important;
+  outline-offset: -1px;
 }
+
+.cell-focused.error {
+  outline-color: #e61212 !important;
+}
+
 .cell.selected:not(.cell_selection){
   outline: var(--focus) !important;
 }
-.cell-focused.error{
-  outline-color: #e61212 !important;
-}
+
 .cell_selection.cell-focused{
   outline: none !important;
 }
