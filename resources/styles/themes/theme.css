@@ -1358,7 +1358,7 @@ tr:hover .cell_selection-index {
   justify-content: center;
   border-radius: 6px;
   text-align: center;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
 }
 .documents__drop-zone.documents__drop-zone--active {
   @apply --drop-zone-active-theme;

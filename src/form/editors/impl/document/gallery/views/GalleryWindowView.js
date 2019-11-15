@@ -8,7 +8,7 @@ import InfoWidgetView from './InfoWidgetView';
 import { iconsNames } from 'Meta';
 
 const classes = {
-    GALLERY_WINDOW: 'galleryWindow',
+    GALLERY_WINDOW: 'gallery-window',
     ZOOMED_IN: 'zoomed-in',
     HIDDEN: 'hidden',
     FULL_SCREEN_MODE: 'fullscreen-mode'
@@ -69,9 +69,17 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        downloadPanelRegion: { el: '.js-download-panel', replaceElement: true },
-        infoWidgetRegion: { el: '.js-info-widget-region', replaceElement: true },
-        mainImageRegion: '.js-image-region',
+        downloadPanelRegion: {
+            el: '.js-download-panel', replaceElement: true
+        },
+        infoWidgetRegion: {
+            el: '.js-info-widget-region',
+            replaceElement: true
+        },
+        mainImageRegion: {
+            el: '.js-image-region',
+            replaceElement: true
+        },
         collectionRegion: '.js-previews-collection-region'
     },
 
@@ -144,7 +152,7 @@ export default Marionette.View.extend({
     },
 
     __toggleZoomMode(isZoomedIn) {
-        this.__toggleClass(this.getRegion('mainImageRegion').el, classes.ZOOMED_IN, isZoomedIn);
+        this.__toggleClass(this.el, classes.ZOOMED_IN, isZoomedIn);
         this.__toggleClass(this.ui.zoomInButton[0], classes.HIDDEN, isZoomedIn);
         this.__toggleClass(this.ui.zoomOutButton[0], classes.HIDDEN, !isZoomedIn);
     },
