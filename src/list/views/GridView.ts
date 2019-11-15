@@ -19,7 +19,7 @@ import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
-import ErrosPanelView from '../../views/ErrosPanelView';
+import ErrorsPanelView from '../../views/ErrorsPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
 import { GraphModel } from '../../components/treeEditor/types';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
@@ -756,7 +756,7 @@ export default Marionette.View.extend({
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,
-                panelView: ErrosPanelView,
+                panelView: ErrorsPanelView,
                 panelViewOptions: {
                     collection: this.errorCollection
                 },
