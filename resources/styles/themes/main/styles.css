@@ -327,6 +327,10 @@
     position: relative;
 }
 
+.required .form-label__txt,
+.form-label_required .form-label__txt{
+  padding-right: 7px;
+}
 
 .cell.required::before {
   margin: 0 0 0 1px;
