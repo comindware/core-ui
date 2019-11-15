@@ -492,7 +492,7 @@ svg.svg-grid-icons {
 .cell_selection {
   color: var(--grid-selection-color);
   width: var(--grid-selection-width);
-  padding-left: 10px;
+  padding: 0;
 }
 
 .cell_draggable {
@@ -553,10 +553,7 @@ tr:hover .cell_selection-index {
   font-size: var(--grid-checkbox-icon-size);
   width: var(--grid-checkbox-size);
   height: var(--grid-checkbox-size);
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  margin-top: -8px;
+  margin: 0 auto;
 }
 
 .cell .input {
@@ -579,7 +576,7 @@ tr:hover .cell_selection-index {
 }
 
 .cell_selection, .cell_selection-index {
-  padding: 0 var(--grid-selection-index-padding-checkbox) 0 var(--grid-selection-index-padding-x);
+  padding: 0;
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   border: 1px solid #e2e2e2;
@@ -591,6 +588,17 @@ tr:hover .cell_selection-index {
   width: 47px;
   min-width: 47px;
   background-clip: padding-box;
+  vertical-align: middle;
+}
+
+.cell_selection-index > .checkbox {
+  float: right;
+  margin: 2px 8px 0 0;
+}
+
+.cell_selection-index {
+  width: 20px;
+  min-width: 20px;
 }
 
 /* for IE*/
@@ -599,8 +607,6 @@ tr:hover .cell_selection-index {
       position:relative;
       background-clip: padding-box;
   }
-
-
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
