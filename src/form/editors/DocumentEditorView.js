@@ -41,6 +41,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this.__applyOptions(options, defaultOptions);
 
         this.collection = new DocumentsCollection(this.value);
+        this.listenTo(this.collection, 'attachments:remove', this.removeItem);
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -110,10 +111,6 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             'dragleave @ui.form': '__onDragleave',
             'drop @ui.form': '__onDrop'
         };
-    },
-
-    childViewEvents: {
-        remove: 'removeItem'
     },
 
     setValue(value) {
@@ -198,19 +195,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this.__updateEmpty();
     },
 
-    removeItem(view) {
-        this.collection.remove(view.model);
-        this.options.removeDocument?.(view.model.id);
+    removeItem(model) {
+        this.collection.remove(model);
+        this.options.removeDocument?.(model.id);
         this.__triggerChange();
-        this.__onCollectionLengthChange();
-    },
-
-    __onCollectionLengthChange() {
-        if (this.collection?.length) {
-            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'none';
-        } else if (this.collection?.length === 0) {
-            this.editorEl.getElementsByClassName('emptyDocumentPlaceholder')[0].style.display = 'block';
-        }
     },
 
     __value(value, triggerChange) {
