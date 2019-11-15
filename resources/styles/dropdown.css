@@ -375,8 +375,11 @@
 }
 
 .bubbles__list .bubbles__i .editor__icons{
-    position: static;
+    position: absolute;
     flex: none;
+    right: -17px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .bubbles__list .bubbles-subtext {
