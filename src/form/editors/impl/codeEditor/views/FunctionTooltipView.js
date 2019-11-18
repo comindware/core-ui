@@ -40,10 +40,9 @@ export default Marionette.View.extend({
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
         if (collection.length > 0) {
             this.showChildView('functionOverloadsRegion', this.functionOverloads);
-        }
-
-        if (this.options.isFull) {
-            collection.at(0).select();
+            if (this.options.isFull) {
+                collection.at(0).select();
+            }
         }
     },
 
