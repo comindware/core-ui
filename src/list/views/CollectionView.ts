@@ -76,7 +76,7 @@ export default Marionette.PartialCollectionView.extend({
 
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
 
-        this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
+        this.listenTo(this.collection, 'toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
         this.height = options.height;
