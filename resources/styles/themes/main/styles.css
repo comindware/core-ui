@@ -199,7 +199,7 @@
 } */
 
 .cell .svg-icons_checked{
-  margin: -1px 0 0 -1px;
+  margin: -1px 0 0 1px;
 }
 
 .cell .svg-icons_attach{
