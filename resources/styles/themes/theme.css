@@ -553,6 +553,7 @@ tr:hover .cell_selection-index {
   transition: background-color 300ms ease-in-out;
 }
 
+.cell .checkbox,
 .cell_selection-index > .checkbox,
 .cell_selection > .checkbox {
   font-size: var(--grid-checkbox-icon-size);
@@ -590,7 +591,6 @@ tr:hover .cell_selection-index {
   position: sticky;
   left: 0;
   z-index: 10;
-  width: 47px;
   min-width: 47px;
   background-clip: padding-box;
   vertical-align: middle;
@@ -699,6 +699,10 @@ tr:hover .cell_selection-index {
 
 .cell .collapsible-btn svg{
   transform: translate(3px, 2px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded svg {
+  transform: translate(3px, 1px);
 }
 
 .cell .collapsible-btn.collapsible-btn_expanded{
