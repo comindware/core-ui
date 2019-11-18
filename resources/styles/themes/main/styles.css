@@ -399,7 +399,7 @@
   height: 26px;
 }
 
-.toolbar {
+.toolbar, .toolbar-dataset {
   height: 30px;
   padding: 0 10px;
 }
@@ -479,7 +479,15 @@
   top: 3px;
 }
 
-
+/* history */
+/* TODO delete this*/
+.history-panel__header {
+    height: 30px;
+}
+.history-panel__header .header__main {
+    height: 25px;
+    line-height: 25px;
+}
 .history-panel__list .grid-content-wrp.grid-content-wrp_width-auto{
   width: 100%;
 }
