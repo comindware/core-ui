@@ -41,7 +41,7 @@ export default Marionette.View.extend({
                 showHeader: false,
                 expandOnShow: false,
                 class: 'compact',
-                maxHeight: '400px'
+                maxHeight: 400
             },
             collection: this.model.get('context')
         });

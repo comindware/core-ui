@@ -691,6 +691,7 @@ tr.dragover td{
     width: 30px;
     padding-top: 16px;
     right: 1px;
+    top: 0;
     padding-left: 6px;
 }
 
