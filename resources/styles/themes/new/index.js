@@ -69,7 +69,7 @@ const variables = {
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '4px 4px 4px 24px',
+    'input-search-padding': '4px 20px 4px 24px',
 
     // textarea
     'textarea-padding': '4px 20px 4px 10px',
@@ -89,10 +89,11 @@ const variables = {
 
     // radio
     'radio-size': 'var(--checkbox-size)',
-    'radio-right-margin': '10px',
+    'radio-margin': '0 10px 0 0',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
     'radio-checked-disabled-color': 'var(--grey-400)',
+    'radio-margin_reduced': '5px 0',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',
@@ -180,7 +181,6 @@ module.exports.apply = {
         'vertical-align': 'middle',
         cursor: 'pointer',
         'font-size': '15px',
-        'line-height': '1.5',
         padding: '3px 15px',
         'border-radius': '4px'
     },
@@ -264,7 +264,8 @@ module.exports.apply = {
         opacity: '.8',
         right: '0',
         top: '17px',
-        'font-size': '16px'
+        'font-size': '16px',
+        'text-align': 'center'
     },
     'textarea-theme': {
         border: variables.border,
@@ -445,7 +446,7 @@ module.exports.apply = {
     },
     'group-content-theme': {
         padding: '20px',
-        'border-radius': '7px',
+        'border-radius': '4px',
         'background-color': variables['grey-50']
     },
 

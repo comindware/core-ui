@@ -52,8 +52,11 @@
 .grid-content-wrp {
     display: table;
     min-width: 100%;
-    /*border-collapse: collapse; fo fix border in stiky*/
+    border-collapse: collapse;
     table-layout: fixed;
+}
+.grid-content-wrp.grid-content-wrp_width-auto {
+    min-width: auto;
 }
 
 .grid-header-wrp {
@@ -307,12 +310,15 @@
     font-size: 18px;
     font-weight: 300;
     color: #70787F;
+    text-align: center;
     min-height: 25px;
-    display: flex;
-    justify-content: center;
+}
+tr.empty-view {
+    display: table-row;
 }
 .empty-view_text {
     text-align: center;
+    white-space: nowrap;
 }
 /* /Empty View */
 
@@ -485,9 +491,6 @@ tr:hover .cell_selection {
     background-color: #efefef
 }
 
-.cell-focused {
-    outline-offset: -1px;
-}
 .disabled.cell-focused {
     outline: none;
 }
@@ -816,6 +819,10 @@ tr.dragover td{
     display: flex;
     align-items: center;
     overflow: hidden;
+}
+.cell .js-tree-first-cell + .composite-cell__wrp {
+    display: inline-flex;
+    max-width: calc(100% - 35px);
 }
 
 .composite-cell__wrp .bubbles__caret{

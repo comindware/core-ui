@@ -23,10 +23,10 @@ export default Marionette.MnObject.extend({
                 model
             });
 
-            Core.services.WindowService.showPopup(this.view);
-            return false;
+            this.__popupId = Core.services.WindowService.showPopup(this.view);
+            return true;
         }
-        return true;
+        return false;
     },
 
     isModelHasPreview(model) {
@@ -34,14 +34,11 @@ export default Marionette.MnObject.extend({
     },
 
     __closeGallery() {
-        Core.services.WindowService.closePopup();
+        Core.services.WindowService.closePopup(this.__popupId, true);
     },
 
     __onDownload(model) {
-        const url = model.get('url');
-        if (url) {
-            window.open(url);
-        }
+        model.trigger('attachments:download');
     },
 
     __onDelete(cloneModel) {
@@ -50,5 +47,7 @@ export default Marionette.MnObject.extend({
         this.__closeGallery();
     },
 
-    __deleteDocument(modelToDelete) {} //TODO
+    __deleteDocument(model) {
+        model.trigger('attachments:remove', model);
+    }
 });

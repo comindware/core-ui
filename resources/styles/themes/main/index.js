@@ -61,14 +61,14 @@ const variables = {
     'input-padding': '3px 18px 3px 5px',
     'input-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
-    'input-search-padding': '2px 4px 2px 24px',
+    'input-search-padding': '2px 20px 2px 24px',
     'input-search-bg':
         'no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC)',
 
     // textarea
-    'textarea-padding': '0 0 2px',
+    'textarea-padding': '3px 5px',
     'textarea-line-height': 'inherit',
-    'textarea-min-height': '26px',
+    'textarea-min-height': '24px',
 
     // custom control
     'custom-control-spacer-y': '0',
@@ -82,7 +82,7 @@ const variables = {
 
     // radio
     'radio-size': '12px',
-    'radio-right-margin': '5px',
+    'radio-margin': '0 5px 0 0',
     'radio-checked-color': 'var(--blue-200)',
     'radio-inner-size': '6px',
     'radio-checked-disabled-color': 'var(--grey-800)',
@@ -181,7 +181,6 @@ module.exports.apply = {
         padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
-        'line-height': '1.5',
         overflow: 'hidden',
         'border-radius': '4px',
         height: '28px'
@@ -207,9 +206,7 @@ module.exports.apply = {
     'dropdown-theme': {
         'min-height': '20px'
     },
-    'dropdown-caret-theme': {
-        display: 'none'
-    },
+    'dropdown-caret-theme': {},
     'bubbles-item-theme': {
 
     },
@@ -221,11 +218,11 @@ module.exports.apply = {
     },
     'input-search-clear-theme': {
         width: '20px',
-        height: '29px',
-        opacity: '.8',
+        height: '20px',
         right: '0',
-        top: '17px',
-        'font-size': '16px'
+        top: '50%',
+        'line-height': '20px',
+        'font-size': '14px'
     },
     'textarea-theme': {
 
@@ -298,19 +295,20 @@ module.exports.apply = {
     'toolbar-btn-fatal-active-theme': {},
 
     'group-theme': {
-        padding: '10px',
+        padding: '5px 0',
         'margin-top': '5px'
     },
     'group-head-theme': {
-        height: '16px',
-        'line-height': '16px',
-        'max-width': 'calc(100% - 20px)',
-        padding: '0 5px',
-        position: 'absolute',
-        top: '-8px'
+        'max-width': 'calc(100% - 5px)',
+        'font-size': '16px',
+        'margin-bottom': '5px',
     },
-    'group-title-theme': {},
-    'group-content-theme': {},
+    'group-title-theme': {
+        'padding-left': '15px'
+    },
+    'group-content-theme': {
+        padding: '10px'
+    },
 
     'popup-header-theme': {
         'font-size': '16px',

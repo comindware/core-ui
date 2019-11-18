@@ -1,11 +1,10 @@
-//@flow
 import dropdown from 'dropdown';
 import template from '../templates/documentBubbleItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
-import iconWrapPreview from '../../../iconsWraps/iconWrapPreview.html';
+import iconWrapDownload from '../../../iconsWraps/iconWrapDownload.html';
 import ExtensionIconService from '../services/ExtensionIconService';
 import UIService from '../../../../../services/UIService';
 
@@ -19,6 +18,7 @@ export default Marionette.View.extend({
         this.reqres = controller.reqres;
 
         this.attachmentsController = options.attachmentsController;
+        this.listenTo(this.model, 'attachments:download', this.__download);
     },
 
     regions: {
@@ -43,7 +43,7 @@ export default Marionette.View.extend({
         remove: '.js-bubble-delete',
         revise: '.js-revise-button-region',
         link: '.js-link',
-        previewButton: '.js-preview-button'
+        downloadButton: '.js-download-button'
     },
 
     triggers: {
@@ -55,36 +55,69 @@ export default Marionette.View.extend({
         'click @ui.link': '__onLinkClick',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave',
-        'click @ui.previewButton': '__showPreview'
+        'click @ui.downloadButton': '__download',
+        'click @ui.remove': '__remove'
     },
 
     modelEvents: {
         'change:isLoading': 'render'
     },
 
-    __onLinkClick(event: MouseEvent): void {
-        if (this.__isNew() && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
-            event.preventDefault();
+    onRender() {
+        this.__removeButtons();
+        if (this.__isMouseenter) {
+            this.__addButtons();
         }
     },
 
     __getDocumentRevision() {
         this.isRevisionButtonClicked = true;
-        this.reqres.request('document:revise', this.model.id).then(revisionList => {
+        this.reqres.request('document:revise', this.model.id).then((revisionList: Array<any>) => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
             this.documentRevisionPopout.open();
         });
     },
 
-    __showPreview() {
-        this.attachmentsController.showGallery(this.model);
+    __onLinkClick(linkDownloadEvent: MouseEvent) {
+        if (this.__isDownload) {
+            this.__isDownload = false;
+            this.__executeDownload(linkDownloadEvent);
+            return;
+        }
+
+        if (this.attachmentsController.isModelHasPreview(this.model)) {
+            this.attachmentsController.showGallery(this.model);
+            linkDownloadEvent.preventDefault();
+        } else {
+            this.__executeDownload(linkDownloadEvent);
+        }
+    },
+
+    __download(e: MouseEvent) {
+        this.__isDownload = true;
+        this.ui.link.get(0).click();
+    },
+
+    __remove() {
+        this.model.trigger('attachments:remove', this.model);
+    },
+
+    __executeDownload(linkDownloadEvent: MouseEvent) {
+        if (this.__isNew() && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
+            linkDownloadEvent.preventDefault();
+        }
     },
 
     __onMouseenter() {
+        this.__isMouseenter = true;
+        this.__addButtons();
+    },
+
+    __addButtons() {
         this.__addRemoveButton();
         this.__addRevisionButton();
-        this.__addPreviewButton();
+        this.__addDownloadButton();
     },
 
     __addRemoveButton() {
@@ -115,12 +148,12 @@ export default Marionette.View.extend({
         }
     },
 
-    __addPreviewButton() {
-        if (!this.attachmentsController.isModelHasPreview(this.model)) {
+    __addDownloadButton() {
+        if (this.__downloadElement) {
             return;
         }
-        this.__previewElement = UIService.createElementsFromHTML(iconWrapPreview, { preview: iconsNames.preview })[0];
-        this.ui.previewButton.get(0).insertAdjacentElement('beforeend', this.__previewElement);
+        this.__downloadElement = UIService.createElementsFromHTML(iconWrapDownload, { download: iconsNames.download })[0];
+        this.ui.downloadButton.get(0).insertAdjacentElement('beforeend', this.__downloadElement);
     },
 
     __isNew() {
@@ -128,9 +161,14 @@ export default Marionette.View.extend({
     },
 
     __onMouseleave() {
+        this.__isMouseenter = true;
+        this.__removeButtons();
+    },
+
+    __removeButtons() {
         this.__removeRemoveButton();
         this.__removeRevisionButton();
-        this.__removePreviewButton();
+        this.__removeDownloadButton();
     },
 
     __removeRemoveButton() {
@@ -147,11 +185,11 @@ export default Marionette.View.extend({
         }
     },
 
-    __removePreviewButton() {
-        if (!this.__previewElement) {
+    __removeDownloadButton() {
+        if (!this.__downloadElement) {
             return;
         }
-        this.ui.previewButton.get(0).removeChild(this.__previewElement);
-        delete this.__previewElement;
+        this.ui.downloadButton.get(0).removeChild(this.__downloadElement);
+        delete this.__downloadElement;
     }
 });

@@ -480,11 +480,6 @@ input[type="checkbox"].checkbox {
     align-self: center;
 }
 
-.editor_disabled .bubbles__form,
-.editor_readonly .bubbles__form {
-    display: none;
-}
-
 .bubbles__input {
     width: 100%;
     height: 100%;
@@ -716,10 +711,6 @@ input[type="color"], .colorpicker{
     display: inline-block;
     position: relative;
     top: auto;
-}
-
-.dd-list__filter_reference:hover .editor__icons.icon-remove {
-    display: inline-block;
 }
 
 /* /svg icons/ */

@@ -179,6 +179,11 @@ body {
   border-color: var(--error-color);
 }
 
+.cell.error {
+  outline: 1px solid #e61212;
+  outline-offset: -1px;
+}
+
 .editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
   width: var(--checkbox-intermediate-size);
   height: var(--checkbox-intermediate-size);
@@ -278,8 +283,8 @@ body {
 .editor_disabled .checkbox {
   @apply --custom-cotrol-disabled-theme;
 }
-.editor_checked.editor_readonly .checkbox,
-.editor_checked.editor_disabled .checkbox {
+.editor_checkbox.editor_readonly .checkbox,
+.editor_checkbox.editor_disabled .checkbox {
   @apply --checkbox-disabled-theme;
 }
 /* /checkbox */
@@ -287,6 +292,11 @@ body {
 /* radiobutton */
 .editor_radiobutton {
   margin-bottom: var(--custom-control-spacer-y);
+}
+
+.aggregation-panel .editor_radiobutton,
+.dev-button-group .editor_radiobutton{
+  margin: var(--radio-margin_reduced);
 }
 
 .editor_disabled .editor_radiobutton,
@@ -303,7 +313,7 @@ body {
 .radiobutton {
   width: var(--radio-size);
   height: var(--radio-size);
-  margin-right: var(--radio-right-margin);
+  margin: var(--radio-margin);
   border: 1px solid var(--checkbox-border-color);
   flex-shrink: 0;
 }
@@ -543,16 +553,6 @@ tr:hover .cell_selection-index {
   transition: background-color 300ms ease-in-out;
 }
 
-.sort_down, .sort_up {
-  width: var(--grid-sort-icon-size);
-  height: var(--grid-sort-icon-size);
-  top: var(--grid-sort-icon-offset-y);
-}
-
-.sort_up {
-  transform: rotate(180deg);
-}
-
 .cell_selection-index > .checkbox,
 .cell_selection > .checkbox {
   font-size: var(--grid-checkbox-icon-size);
@@ -612,6 +612,7 @@ tr:hover .cell_selection-index {
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
   width: calc(100% - var(--grid-selection-width));
 }
+
 .cell_selection-index:not(:empty) + .grid-header-view {
   width: calc(100% - var(--grid-selection-index-width));
 }
@@ -629,13 +630,17 @@ tr:hover .cell_selection-index {
 
 .cell-focused {
   outline: var(--focus) !important;
+  outline-offset: -1px;
 }
+
+.cell-focused.error {
+  outline-color: #e61212 !important;
+}
+
 .cell.selected:not(.cell_selection){
   outline: var(--focus) !important;
 }
-.cell-focused.error{
-  outline-color: #e61212 !important;
-}
+
 .cell_selection.cell-focused{
   outline: none !important;
 }
@@ -801,8 +806,8 @@ tr:hover .cell_selection-index {
   /*@apply --bubbles-item-theme-hover;*/
 }
 
-.bubbles__list .bubbles__i + .bubbles__i{
-  margin-left: 5px;
+.bubbles__list .bubbles__i{
+  margin-right: 12px;
 }
 .bubbles__i a,
 .bubbles__i span {
@@ -1348,7 +1353,7 @@ tr:hover .cell_selection-index {
   justify-content: center;
   border-radius: 6px;
   text-align: center;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
 }
 .documents__drop-zone.documents__drop-zone--active {
   @apply --drop-zone-active-theme;

@@ -33,6 +33,7 @@
     overflow: hidden;
     vertical-align: middle;
     display: flex;
+    align-items: center;
 }
 .popout-menu__i:hover {
     background: #edf3fb;

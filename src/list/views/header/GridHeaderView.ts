@@ -70,19 +70,31 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     templateContext() {
+        this.isEveryColumnSetPxWidth = true;
         return {
             columns: this.options.columns.map(column =>
                 ({
                     ...column,
-                    sortingAsc: column.sorting === 'asc',
-                    sortingDesc: column.sorting === 'desc',
-                    width: column.width ? (column.width > 1 ? `${column.width}px` : `${column.width * 100}%`) : '',
+                    width: this.__getColumnWidth(column),
                     hiddenClass: classes.hiddenByTreeEditorClass
                 })
             ),
             showCheckbox: this.options.showCheckbox && !!this.options.columns.length,
             cellClass: `js-cell_selection ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}`
         };
+    },
+
+    __getColumnWidth(column): string {
+        const width = column.width;
+        if (!width) {
+            this.isEveryColumnSetPxWidth = false;
+            return '';
+        }
+        if (width > 1) {
+            return `${width}px`;
+        }
+        this.isEveryColumnSetPxWidth = false;
+        return `${column.width * 100}%`;
     },
 
     onRender() {
@@ -114,11 +126,15 @@ const GridHeaderView = Marionette.View.extend({
                 });
                 this.showChildView(`popoutRegion${i}`, infoPopout);
             }
+            this.__updateColumnSorting(column, el);
         });
     },
 
     updateSorting() {
-        this.render();
+        this.ui.gridHeaderColumn.each((i, el) => {
+            const column = this.options.columns[i];
+            this.__updateColumnSorting(column, el);
+        });
     },
 
     __handleCheckboxClick() {
@@ -229,17 +245,19 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __setColumnWidth(index: number, newColumnWidth: number) {
-        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
+        const currentWidth = this.options.columns[index].width;
+        const newColumnWidthPX = `${newColumnWidth}px`;
+
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidthPX === currentWidth) {
             return;
         }
 
-        const newColumnWidthPX = `${newColumnWidth}px`;
         this.el.children[index + this.columnIndexOffset].style.minWidth = newColumnWidthPX;
         this.el.children[index + this.columnIndexOffset].style.width = newColumnWidthPX;
         this.options.columns[index].width = newColumnWidth;
 
         //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
-        //this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
         // this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
     },
 
@@ -251,12 +269,12 @@ const GridHeaderView = Marionette.View.extend({
             if (child === column) {
                 this.dragContext.draggedColumn.index = i;
                 this.dragContext.draggedColumn.initialWidth = width;
-                break;
-            } else if (!this.options.columns[i].width) {
-                // freeze width to previous columns
-                this.__setColumnWidth(i, width);
             }
+            // freeze width all columns in pix
+            this.__setColumnWidth(i, width);
         }
+        this.isEveryColumnSetPxWidth = true;
+        this.trigger('change:isEveryColumnSetPxWidth');
     },
 
     __toggleCollapseAll() {
@@ -317,6 +335,18 @@ const GridHeaderView = Marionette.View.extend({
         this.trigger('handleLeave', event);
     },
 
+    __updateColumnSorting(column, el) {
+        const oldSortingEl = el.querySelector('.js-sorting');
+        if (oldSortingEl) {
+            oldSortingEl.parentElement.removeChild(oldSortingEl);
+        }
+        if (column.sorting) {
+            const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+            const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
+        }
+    },
+
     __updateState(collection, checkedState) {
         switch (checkedState) {
             case 'checked':
@@ -333,7 +363,7 @@ const GridHeaderView = Marionette.View.extend({
                 this.ui.checkbox.removeClass(classes.checked_some);
                 break;
         }
-    }
+    }		
 });
 
 export default GridHeaderView;

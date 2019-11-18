@@ -52,17 +52,36 @@
     flex-direction: column;
 }
 
-.datalist-panel.dropdown__wrp_down {
-    flex-direction: column;
+.datalist-panel.dropdown__wrp_down .datalist_selected-panel {
+    order: 1;
+}
+.datalist-panel.dropdown__wrp_down .datalist-panel__list-splitter {
+    order: 2;
+}
+.datalist-panel.dropdown__wrp_down .bubble_editor__elements_quantity_warning {
+    order: 3;
+}
+.datalist-panel.dropdown__wrp_down .datalist_collection-panel {
+    order: 4;
+}
+.datalist-panel.dropdown__wrp_down .dd-list__btn {
+    order: 5;
 }
 
-.datalist-panel.dropdown__wrp_up {
-    flex-direction: column-reverse;
+.datalist-panel.dropdown__wrp_up .datalist_selected-panel {
+    order: 5;
 }
-
-.dd-list__filter {
-    opacity: 1;
-    flex: 0 0 auto
+.datalist-panel.dropdown__wrp_up .datalist-panel__list-splitter {
+    order: 4;
+}
+.datalist-panel.dropdown__wrp_up .bubble_editor__elements_quantity_warning {
+    order: 2;
+}
+.datalist-panel.dropdown__wrp_up .datalist_collection-panel {
+    order: 1;
+}
+.datalist-panel.dropdown__wrp_up .dd-list__btn {
+    order: 3;
 }
 
 .dd-list__list {
@@ -356,8 +375,11 @@
 }
 
 .bubbles__list .bubbles__i .editor__icons{
-    position: static;
+    position: absolute;
     flex: none;
+    right: -17px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .bubbles__list .bubbles-subtext {
