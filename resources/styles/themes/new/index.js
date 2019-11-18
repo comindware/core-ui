@@ -240,8 +240,7 @@ module.exports.apply = {
         color: variables['blue-300']
     },
     'bubbles-item-theme': {
-        color: variables['text-color'],
-        padding: '1px 0'
+        color: variables['text-color']
     },
     'bubbles-item-theme-hover': {
         padding: '2px 20px 2px 0'
