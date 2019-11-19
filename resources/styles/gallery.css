@@ -14,7 +14,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.gallery-window  img, .gallery-window  video {
+.gallery-window img, .gallery-window video {
     max-height: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -29,7 +29,11 @@
 
 .previews-collection-wrp {
     display: flex;
-    margin-bottom: 20px;
+}
+
+.previews-collection-wrp .gallery-window img,
+.previews-collection-wrp .gallery-window video {
+    flex: none;
 }
 
 .previews-collection-wrp .gallery-image {
@@ -50,8 +54,7 @@
     min-height: 0;
     display: flex;
     flex-flow: row nowrap;
-    margin-bottom: 20px;
-    margin-top: 100px;
+    padding: 15px 0;
     z-index: -1;
 }
 
@@ -87,11 +90,12 @@
 .gallery-top-menu{
     width: 100%;
     height: 50px;
-    position: fixed;
+    position: relative;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    align-items: center;
+    flex: none;
+    padding: 0 15px;
 }
 
 .gallery-nav-btn {
@@ -101,8 +105,6 @@
 .gallery-top-menu-buttons-wrp{
     justify-content: space-between;
     width: max-content;
-    position: absolute;
-    right: 15px;
     font-size: 21px;
     display: flex;
     align-items: center;
@@ -137,7 +139,7 @@
     display: flex;
     width: 50%;
     justify-content: space-between;
-    margin-bottom: 40px;
+    flex: none;
 }
 
 .gallery-controls-menu-wrp span {
@@ -151,7 +153,13 @@
 }
 
 .gallery-previews-collection{
-    margin-top: auto;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    flex: none;
 }
 
 .gallery-info-widget {
