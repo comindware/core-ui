@@ -1,6 +1,6 @@
 ﻿.fr-alert {
     max-width: 475px;
-    font-size: 18px;
+    font-size: 13px;
     color: #fff;
     border-radius: 5px;
     background: #eb6c16;
@@ -38,6 +38,7 @@
     align-items: flex-start;
     overflow-y: auto;
     max-height: calc(2em + 1rem);
+    overflow-x: hidden;
     white-space: normal;
     padding-right: 0.75rem;
 }
