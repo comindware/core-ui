@@ -354,13 +354,12 @@ span.CodeMirror-selectedtext { background: none; }
     line-height: 25px;
 }
 
-.CodeMirror-hint:before {
-    content: ' ';
-    display: inline-block;
-    height: 25px;
-    width: 25px;
-    /*background: transparent no-repeat url(../icons/icons-code_editor.png);*/
-    background-position:  -75px -25px;
+.CodeMirror-hint > span {
+    margin-left: 5px;
+}
+
+.CodeMirror-hint > i {
+    margin-left: 5px;
 }
 
 li.CodeMirror-hint-active {

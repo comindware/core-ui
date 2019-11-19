@@ -1,6 +1,4 @@
-import ontology from './codeEditorData';
-
-export default class OntologyService {
+export default class OntologyService { //CodeAssistantService
     static initialize() {
         this.model = null;
     }
@@ -9,24 +7,37 @@ export default class OntologyService {
         this.model = null;
     }
 
-    static async getOntology() {
-        if (this.model) {
-            return this.model;
-        }
-        return await this.__loadOntology();
-    }
-
-    static async __loadOntology() {
+    static async getFunctions() {
+        let result;
         if (!this.isLoading) {
             this.isLoading = true;
+            result = await Ajax.Ontology.GetOntology();
+            this.isLoading = false;
         }
+        return result;
+    }
 
-        if (!this.model) {
-            this.model = new Backbone.Model(ontology);
+    static async getTemplates(completeHoverQuery) {
+        let result;
+        if (!this.isLoading) {
+            this.isLoading = true;
+            const response = await Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+            result = response.infoList;
+            this.isLoading = false;
         }
-        this.isLoading = false;
+        return result;
+    }
 
-        return this.model;
+    static async getAttributes(templateId) {
+        let result;
+        if (!this.isLoading) {
+            this.isLoading = true;
+            const url = `api/RecordTypeContextApi?recordTypeId=${templateId}`;
+            const response = await Ajax.getResponse('GET', url);
+            result = response.filter(item => item.obsolete !== true);
+            this.isLoading = false;
+        }
+        return result;
     }
 
     static async getCSharpOntology(completeHoverQuery) {
@@ -34,15 +45,12 @@ export default class OntologyService {
     }
 
     static async __loadSCharpOntology(completeHoverQuery) {
+        let result;
         if (!this.isLoading) {
             this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
+            result = await Ajax.CodeAssistant.ProcessCompleteHover(completeHoverQuery);
         }
-        const result = await this.promise;
         this.model = new Backbone.Model(result);
-
-        this.isLoading = false;
-
         return this.model;
     }
 
@@ -51,14 +59,13 @@ export default class OntologyService {
     }
 
     static async __loadCompile(userCompileQuery) {
+        let result;
         if (!this.isLoading) {
             this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessCompile(userCompileQuery);
+            result = await Ajax.CodeAssistant.ProcessCompile(userCompileQuery);
         }
-        const result = await this.promise;
         this.model = new Backbone.Model(result);
         this.isLoading = false;
-
         return this.model;
     }
 
@@ -67,15 +74,13 @@ export default class OntologyService {
     }
 
     static async __loadFormatCSharp(formatQuery) {
+        let result;
         if (!this.isLoading) {
             this.isLoading = true;
-            this.promise = Ajax.CodeAssistant.ProcessFormatRefactor(formatQuery);
+            result = await Ajax.CodeAssistant.ProcessFormatRefactor(formatQuery);
         }
-        const result = await this.promise;
         this.model = new Backbone.Model(result);
-
         this.isLoading = false;
-
         return this.model;
     }
 }
