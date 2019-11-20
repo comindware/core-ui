@@ -18,6 +18,10 @@ import { classes } from '../../meta';
  * @param {Object} options.gridEventAggregator ?
  * */
 
+ // for manual selectionCellWidth calculating
+ const baseSelectionCellWidth = 28;
+ const oneSymbolWidth = 10;
+
 const GridHeaderView = Marionette.View.extend({
     initialize(options) {
         if (!options.columns) {
@@ -35,6 +39,9 @@ const GridHeaderView = Marionette.View.extend({
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
+        if (options.showRowIndex) {
+            this.listenTo(this.collection, 'add remove update', this.__updateIndexCellWidth);
+        }
     },
 
     template: Handlebars.compile(template),
@@ -128,6 +135,9 @@ const GridHeaderView = Marionette.View.extend({
             }
             this.__updateColumnSorting(column, el);
         });
+        if (this.options.showRowIndex) {
+            this.__updateIndexCellWidth();
+        }
     },
 
     updateSorting() {
@@ -363,7 +373,18 @@ const GridHeaderView = Marionette.View.extend({
                 this.ui.checkbox.removeClass(classes.checked_some);
                 break;
         }
-    }		
+    },
+    
+    __updateIndexCellWidth() {
+        const selectionCellEl = this.el.firstElementChild;
+
+        if (!this.collection.length) {
+            selectionCellEl.style.width = '';
+            return;
+        } 
+        const lengthSymbolCount = this.collection.length.toString().length;
+        selectionCellEl.style.width = `${baseSelectionCellWidth + (lengthSymbolCount) * oneSymbolWidth}px`;        
+    }
 });
 
 export default GridHeaderView;

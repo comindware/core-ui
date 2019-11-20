@@ -5,14 +5,26 @@
     justify-content: stretch;
     align-items: stretch;
     flex-shrink: 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .layout__horizontal-layout > * {
-    flex: 1 1 200px;
+    flex: 1 1 auto;
     overflow-x: auto;
-    min-width: 200px;
+    min-width: 0;
 }
+
+@media (max-width: 720px) {
+    .layout__horizontal-layout {
+        flex-wrap: wrap;
+    }
+
+    .layout__horizontal-layout > * {
+        flex-basis: 200px;
+        min-width: 200px;
+    }
+}
+
 .layout__horizontal-layout > .layout__button {
     min-width: auto;
 }
