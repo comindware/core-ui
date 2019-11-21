@@ -286,7 +286,7 @@ export default factory = {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <td class="js-extend_cell_content extend_cell_content " title="${this.__getTitle({ values, column, model })}">
+            <td class="js-extend_cell_content extend_cell_content ${model.get('isDisabled') ? 'archiveTemplate' : ''}" title="${this.__getTitle({ values, column, model })}">
             <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
             <div class="extend_cell_text">
                 <span class="extend_cell_header">${values.join(', ')}</span>

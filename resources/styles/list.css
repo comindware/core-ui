@@ -657,7 +657,7 @@ tr.dragover td{
 
 .context-icon {
     font-size: 19px;
-    color: #cfcfd0;
+    color: #404040;
     width: 16px;
 }
 
@@ -682,6 +682,12 @@ tr.dragover td{
 .extend_cell_content:hover > .context-collapse-button {
     cursor: pointer;
     background-color: #cbdce7;
+}
+
+.visible-collection .archiveTemplate .extend_cell_header,
+.visible-collection .archiveTemplate .extend_info,
+.visible-collection .archiveTemplate .context-icon {
+    color: #cfcfd0;
 }
 
 .context-collapse-button {
@@ -712,7 +718,7 @@ tr.dragover td{
 }
 
 .extend_info {
-    color: #cfcfd0;
+    color: #404040;;
     font-size: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
