@@ -40,7 +40,7 @@ const GridHeaderView = Marionette.View.extend({
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
         if (options.showRowIndex) {
-            this.listenTo(this.collection, 'add remove update', this.__updateIndexCellWidth);
+            this.listenTo(this.collection, 'reset update', this.__updateIndexCellWidth);
         }
     },
 
