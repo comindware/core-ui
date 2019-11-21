@@ -19,8 +19,8 @@ import { classes } from '../../meta';
  * */
 
  // for manual selectionCellWidth calculating
- const baseSelectionCellWidth = 28;
- const oneSymbolWidth = 10;
+ const baseSelectionCellWidth = 34;
+ const oneSymbolWidth = 8;
 
 const GridHeaderView = Marionette.View.extend({
     initialize(options) {
@@ -380,10 +380,13 @@ const GridHeaderView = Marionette.View.extend({
 
         if (!this.collection.length) {
             selectionCellEl.style.width = '';
+            selectionCellEl.style.minWidth = '';
             return;
         } 
         const lengthSymbolCount = this.collection.length.toString().length;
-        selectionCellEl.style.width = `${baseSelectionCellWidth + (lengthSymbolCount) * oneSymbolWidth}px`;        
+        const width = `${baseSelectionCellWidth + (lengthSymbolCount) * oneSymbolWidth}px`;
+        selectionCellEl.style.width = width;        
+        selectionCellEl.style.minWidth = width;        
     }
 });
 
