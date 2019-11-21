@@ -67,7 +67,12 @@ rgba(5,117,189,.5) // user avatar btn
 
 .form-group {
     position: relative;
-    min-width: 200px;
+}
+
+@media (max-width: 720px) {
+    .form-group {
+        min-width: 200px;
+    }
 }
 
 /*------------------ Form Label ------------------*/

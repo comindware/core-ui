@@ -591,6 +591,7 @@ tr:hover .cell_selection-index {
   position: sticky;
   left: 0;
   z-index: 10;
+  width: 47px;
   min-width: 47px;
   background-clip: padding-box;
   vertical-align: middle;
