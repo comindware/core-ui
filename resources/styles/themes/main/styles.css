@@ -455,19 +455,33 @@
   height: 40px;
 }
 
-
 .left-menu-i {
-  padding: 4px 5px 5px 10px;
+  padding: 3px 10px 4px;
 }
-.left-menu-i__icon {
+
+.left-menu-i__icon,
+.left-menu-collapse,
+.left-menu-switcher__icon {
   font-size: 17px;
-  margin-right: 5px;
 }
-.left-menu-i__text {
+
+.left-menu-i.workspace > .left-menu-i__text {
   font-size: 14px;
 }
-.left-menu-i-group {
-  padding-left: 10px;
+
+.left-menu-i__text,
+.left-menu-switcher__text,
+.left-menu-search .tr-search__input {
+  font-size: 13px;
+}
+
+.left-menu-view-switcher .toolbar__icons_arrow {
+  margin: 2px 0 0 0;
+}
+
+.left-menu-view-switcher__container .toolbar-btn {
+  font-size: 13px;
+  padding: 3px 15px;
 }
 
 .top-nav_icon > .icon_text {
