@@ -136,7 +136,7 @@ export default Marionette.PartialCollectionView.extend({
 
     tagName: 'tbody',
 
-    onBeforeAttach() {
+    onAttach() {
         this.parent$el = this.options.parent$el;
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.__specifyChildHeight();
@@ -155,9 +155,11 @@ export default Marionette.PartialCollectionView.extend({
 
         let childHeight = firstChild.offsetHeight;
         if (!childHeight) {
-            const element = firstChild.cloneNode(true);
+            const element = document.createElement('div');
+            const rowClone = firstChild.cloneNode(true);
+            element.appendChild(rowClone);
             document.body.appendChild(element);
-            childHeight = element.offsetHeight;
+            childHeight = rowClone.offsetHeight;
             document.body.removeChild(element);
         }
         if (childHeight > 0) {
