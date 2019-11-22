@@ -8,13 +8,30 @@ export default class OntologyService { //CodeAssistantService
     }
 
     static async getFunctions() {
-        let result;
-        if (!this.isLoading) {
-            this.isLoading = true;
-            result = await Ajax.Ontology.GetOntology();
-            this.isLoading = false;
-        }
-        return result;
+        const responseData = {
+            data: {
+                attributes: [],
+                literals: [],
+                operators: [],
+                users: [],
+                functions: {
+                    description: 'Суммирует два значения. Конкатенация строк не поддерживается.',
+                    name: 'ADD',
+                    parameters: [
+                        {
+                            name: 'value1',
+                            description: 'аргумент1',
+                            type: 'Number'
+                        }
+                    ],
+                    returnDescription: 'cmw.xmlns:.http://comindware&#46;com/text/cmw/platform/expressions/functions/ADD#.return',
+                    returns: 'Number',
+                    sample: 'cmw.xmlns:.http://comindware&#46;com/text/cmw/platform/expressions/functions/ADD#.sample'
+                }
+            },
+            success: true
+        };
+        return responseData;
     }
 
     static async getTemplates(completeHoverQuery) {
