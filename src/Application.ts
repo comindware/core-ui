@@ -68,7 +68,6 @@ export default {
 
         if (options.navigationConfiguration) {
             marionetteApp.navigationController = new options.navigationConfiguration.controller({
-                context: options.navigationConfiguration.context,
                 configurationKey: options.navigationConfiguration.configurationKey
             });
 
