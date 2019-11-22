@@ -63,41 +63,42 @@ export default function() {
     const tabs = [
         {
             id: 'tab1',
-            name: 'Tab 1',
+            name: 'Tab lg 1',
             view
         },
         {
             id: 'tab2',
-            name: 'Tab 2',
-            view: new Core.form.editors.MembersSplitEditor({
-                key: 'title', //wrong key, expect [''] structure in title,
-                model,
-                autocommit: true,
-                filterFnParameters: {
-                    users: 'users',
-                    groups: 'groups',
-                    all: 'all'
-                },
-                memberTypes: {
-                    users: 'users',
-                    groups: 'groups'
-                },
-                users: Core.services.UserService.listUsers(),
-                groups: Core.services.UserService.listGroups(),
-                showMode: 'button'
-            })
+            name: 'Tab looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong 2',
+            view
+            // view: new Core.form.editors.MembersSplitEditor({
+            //     key: 'title', //wrong key, expect [''] structure in title,
+            //     model,
+            //     autocommit: true,
+            //     filterFnParameters: {
+            //         users: 'users',
+            //         groups: 'groups',
+            //         all: 'all'
+            //     },
+            //     memberTypes: {
+            //         users: 'users',
+            //         groups: 'groups'
+            //     },
+            //     users: Core.services.UserService.listUsers(),
+            //     groups: Core.services.UserService.listGroups(),
+            //     showMode: 'button'
+            // })
         },
         {
             id: 'tab3',
-            name: 'Tab 3',
-            enabled: false,
+            name: 'Tab looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong 3',
+            enabled: true,
             view: new Core.form.editors.TextAreaEditor({
                 value: 'Content 3'
             })
         },
         {
             id: 'tab4',
-            name: 'Tab 4',
+            name: 'Tab looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong 4',
             error: 'Validation Error',
             view: new Core.layout.Form({
                 model,
@@ -105,15 +106,15 @@ export default function() {
                     {
                         type: 'v-container',
                         items: [
-                            {
-                                type: 'MembersSplit-field',
-                                key: 'title', //wrong key, expect [''] structure in title,
-                                model,
-                                autocommit: true,
-                                users: Core.services.UserService.listUsers(),
-                                groups: Core.services.UserService.listGroups(),
-                                showMode: 'button'
-                            }
+                            // {
+                            //     type: 'MembersSplit-field',
+                            //     key: 'title', //wrong key, expect [''] structure in title,
+                            //     model,
+                            //     autocommit: true,
+                            //     users: Core.services.UserService.listUsers(),
+                            //     groups: Core.services.UserService.listGroups(),
+                            //     showMode: 'button'
+                            // }
                         ]
                     }
                 ]
@@ -122,16 +123,16 @@ export default function() {
         {
             id: 'tab5',
             name: 'Tab 5',
-            enabled: false,
+            enabled: true,
             view: new Core.form.editors.TextAreaEditor({
                 value: 'Content 5'
             }),
-            visible: false
+            visible: true
         },
         {
             id: 'tab6',
             name: 'Tab 6',
-            enabled: false,
+            enabled: true,
             view: new Core.form.editors.TextAreaEditor({
                 value: 'Content 6'
             })
@@ -142,10 +143,9 @@ export default function() {
         view: new Core.layout.TabLayout({
             showTreeEditor: true,
             treeEditorIsHidden: false,
-            treeEditorConfig: new Map([['tab2', { index: 2 }], ['tab3', { index: 3, isHidden: true }], ['tab4', { index: 1 }]]),
+            treeEditorConfig: new Map([['tab2', { index: 2 }], ['tab3', { index: 3, isHidden: false }], ['tab4', { index: 1 }]]),
             tabs,
-            showStepper: true,
-            showMoveButtons: true
+            showStepper: false
         }),
         canvas: {
             height: '400px',

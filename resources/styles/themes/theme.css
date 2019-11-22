@@ -959,7 +959,7 @@ tr:hover .cell_selection-index {
   @apply --tab-item-hidden-theme;
 }
 
-.layout__tab-layout__header-view {
+.layout__tab-layout__header-view ul{
   justify-content: var(--tab-header-justify);
 }
 
@@ -993,12 +993,6 @@ tr:hover .cell_selection-index {
 .layout__tab-layout_move-button.prev-layout_move-button{
   @apply --tab-move-btn-prev-theme;
 }
-
-/* tabs with move button */
-.layout__tab-layout--move .layout__tab-layout__header-region {
-  padding: var(--tab-header-padding-with-move);
-}
-
 
 /* Toolbar component */
 
