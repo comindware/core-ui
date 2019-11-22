@@ -1,7 +1,7 @@
 // @flow
 import { helpers } from 'utils';
 import template from './templates/tabLayout.hbs';
-import HeaderView from './HeaderView';
+import HeaderView from './TabHeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
@@ -53,7 +53,6 @@ export default Marionette.View.extend({
     className() {
         const classList = [];
         classList.push(this.getOption('bodyClass') || '');
-        classList.push(this.getOption('showMoveButtons') ? 'layout__tab-layout--move' : '');
 
         return `${classes.CLASS_NAME} ${classList.join(' ')}`;
     },
@@ -64,14 +63,7 @@ export default Marionette.View.extend({
     },
 
     ui: {
-        panelContainer: '.js-panel-container',
-        buttonMoveNext: '.js-button_move-next',
-        buttonMovePrevious: '.js-button_move-previous'
-    },
-
-    events: {
-        'click @ui.buttonMoveNext': 'moveToNextTab',
-        'click @ui.buttonMovePrevious': 'moveToPreviousTab'
+        panelContainer: '.js-panel-container'
     },
 
     behaviors: {
@@ -113,10 +105,6 @@ export default Marionette.View.extend({
             const stepperView = new StepperView({ collection: this.__tabsCollection });
             this.showChildView('stepperRegion', stepperView);
             this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
-        }
-        if (!this.getOption('showMoveButtons')) {
-            this.ui.buttonMoveNext.hide();
-            this.ui.buttonMovePrevious.hide();
         }
     },
 
@@ -247,50 +235,6 @@ export default Marionette.View.extend({
 
     setTabError(tabId: string, error) {
         this.__findTab(tabId).set({ error });
-    },
-
-    moveToNextTab() {
-        let errors = null;
-        if (this.getOption('validateBeforeMove')) {
-            const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
-            return this.setTabError(selectedTab.id, errors);
-        }
-        if (!errors) {
-            let newIndex = this.selectTabIndex + 1;
-            if (this.__tabsCollection.length - 1 < newIndex) {
-                newIndex = 0;
-            }
-            const newTab = this.__tabsCollection.at(newIndex);
-            if (newTab.get('enabled')) {
-                this.selectTab(newTab.id);
-            } else {
-                this.selectTabIndex++;
-                this.moveToNextTab();
-            }
-        }
-    },
-
-    moveToPreviousTab() {
-        let errors = null;
-        if (this.getOption('validateBeforeMove')) {
-            const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
-            return this.setTabError(selectedTab.id, errors);
-        }
-        if (!errors) {
-            let newIndex = this.selectTabIndex - 1;
-            if (newIndex < 0) {
-                newIndex = this.__tabsCollection.length - 1;
-            }
-            const newTab = this.__tabsCollection.at(newIndex);
-            if (newTab.get('enabled')) {
-                this.selectTab(this.__tabsCollection.at(newIndex).id);
-            } else {
-                this.selectTabIndex--;
-                this.moveToPreviousTab();
-            }
-        }
     },
 
     __findSelectedTab() {
