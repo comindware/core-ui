@@ -23,7 +23,8 @@ const CHECK_VISIBILITY_DELAY = 200;
 const classes = constants.classes;
 const types = constants.types;
 
-const lineSeparator = '\r\n';
+const lineSeparatorCR_LF = '\r\n';
+const lineSeparatorLF = '\n';
 
 export default Marionette.View.extend({
     initialize(options = {}) {
@@ -60,11 +61,12 @@ export default Marionette.View.extend({
             if (options.ontologyService) {
                 this.templateId = options.templateId;
                 options.ontologyService.getFunctions().then(ontologyModel => {
-                    this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, constants.autoCompleteContext.functions) });
-                    if (this.codemirror) {
-                        this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
-                        //retokenize codemirror with ontology model
-                        this.setValue(this.getValue());
+                    if (ontologyModel.functions && constants.autoCompleteContext?.functions) {
+                        this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, constants.autoCompleteContext.functions) });
+                        if (this.codemirror) {
+                            this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
+                            this.setValue(this.getValue());
+                        }
                     }
                 });
             }
@@ -156,7 +158,6 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            lineSeparator,
             mode: modes[this.options.mode],
             ontologyObjects: [],
             matchBrackets: true,
@@ -235,8 +236,26 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.codemirror.setValue(value?.replace(/[^\r]\n/g, lineSeparator) || '');
+        this.setConfigLineSeparator(value);
+        this.codemirror.setValue(value || '');
         this.refresh();
+    },
+
+    setOption(option, value) {
+        this.codemirror.setOption(option, value);
+    },
+
+    getOption(option) {
+        this.codemirror.getOption(option);
+    },
+
+    setConfigLineSeparator(value) {
+        const CR_LF = value.match(/\r\n/g);
+        if (CR_LF) {
+            this.codemirror.setOption('lineSeparator', lineSeparatorCR_LF);
+        } else {
+            this.codemirror.setOption('lineSeparator', lineSeparatorLF);
+        }
     },
 
     refresh() {
@@ -830,11 +849,11 @@ export default Marionette.View.extend({
 
     __highlightItem(el) {
         if (this.highlightedItem) {
-            this.highlightedItem.removeClass(classes.highlighted);
+            this.highlightedItem.classList.remove(classes.highlighted);
         }
         if (el) {
             this.highlightedItem = el;
-            this.highlightedItem.addClass(classes.highlighted);
+            this.highlightedItem.classList.remove(classes.highlighted);
         }
     },
 
