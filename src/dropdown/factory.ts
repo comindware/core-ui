@@ -41,22 +41,18 @@ export default /** @lends module:core.dropdown.factory */ {
             }
         }
 
-        return this.createDropdown(
-            Object.assign(
-                {
-                    buttonView: DefaultButtonView,
-                    buttonViewOptions: {
-                        model: effectiveButtonModel
-                    },
-                    panelView: MenuPanelView,
-                    panelViewOptions: {
-                        collection
-                    },
-                    showDropdownAnchor: true
-                },
-                options
-            )
-        );
+        return this.createDropdown({
+            buttonView: DefaultButtonView,
+            buttonViewOptions: {
+                model: effectiveButtonModel
+            },
+            panelView: MenuPanelView,
+            panelViewOptions: {
+                collection
+            },
+            showDropdownAnchor: true,
+            ...options
+        });
     },
 
     /**

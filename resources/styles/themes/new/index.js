@@ -161,7 +161,6 @@ const variables = {
     'tab-item-font-size': 'var(--base-font-size)',
     'tab-panel-container-padding': '20px 15px',
     'tab-header-justify': 'flex-start',
-    'tab-header-padding-with-move': '0 30px',
 
     'btn-separator-width': '15px',
 
@@ -311,9 +310,9 @@ module.exports.apply = {
         'z-index': '1',
         'background-color': variables['grey-100'],
         'margin-right': '5px',
-        'margin-bottom': '-1px',
+        'margin-bottom': '0px',
         'border-radius': '4px 4px 0 0',
-        flex: '0 1 auto',
+        flex: '0 0 auto',
         'min-height': '30px'
     },
     'tab-item-active-theme': {
@@ -321,7 +320,10 @@ module.exports.apply = {
         'border-bottom-color': variables.white
     },
     'tab-item-error-theme': {
-        color: variables.red
+        color: variables.red,
+        'border-top-color': variables.red,
+        'border-right-color': variables.red,
+        'border-left-color': variables.red
     },
     'tab-item-disabled-theme': {
         color: variables['grey-400'],

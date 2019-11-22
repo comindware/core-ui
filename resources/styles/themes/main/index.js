@@ -151,7 +151,6 @@ const variables = {
     'tab-item-font-size': 'var(--base-font-size)',
     'tab-panel-container-padding': '20px 15px',
     'tab-header-justify': 'flex-start',
-    'tab-header-padding-with-move': '0 30px',
 
     'btn-separator-width': '20px',
 
