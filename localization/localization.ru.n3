@@ -208,6 +208,8 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди или группы не найдены"; l10n:originalData "No people or group found"].
 
+<http://comindware.com/text/core/form/editors/memberSplit#emptyText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет пользователей или групп для отображения"; l10n:originalData "No users or groups to display"].
+
 <http://comindware.com/text/core/form/editors/memberSplit#group> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Группы"; l10n:originalData "group"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#groups> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} группа, {0} группы, {0} групп"; l10n:originalData "{0} groups, {0} groups"].

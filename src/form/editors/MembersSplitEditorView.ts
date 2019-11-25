@@ -61,6 +61,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     setValue(value) {
+        this.controller.updateItems(this.controller.fliterState, value);
         this.__value(value, false);
     },
 
@@ -69,17 +70,17 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     onRender() {
-        this.controller.model.initialized = this.controller.updateItems(this.controller.filterState);
         if (this.getOption('showMode') !== 'button') {
-
             this.showChildView('splitPanelRegion', this.controller.view);
+        } else {
+            this.__updateText(Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYTEXT'));
         }
     },
 
     reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
         this.options.users = users;
         this.options.groups = groups;
-        this.controller.updateItems(this.controller.filterState);
+        this.setValue([]);
     },
 
     __initializeController(options) {
@@ -90,14 +91,13 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
             });
         }
 
-        this.options.selected = this.getValue();
-
         this.controller = new MembersSplitController(this.options);
         if (this.getOption('showMode') !== 'button') {
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
             });
         }
+        this.listenTo(this.controller, 'update:text', this.__updateText);
     },
 
     __showPopup() {
@@ -141,15 +141,12 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         WindowService.showPopup(popup);
     },
 
-    async updateText() {
-        this.ui.membersText.text(await this.controller.getDisplayText());
+    __updateText(text) {
+        this.ui.membersText.text(text);
     },
 
     __value(value, triggerChange) {
         this.options.selected = value;
-        if (this.getOption('showMode') === 'button') {
-            this.updateText();
-        }
         this.value = value;
 
         if (triggerChange) {
