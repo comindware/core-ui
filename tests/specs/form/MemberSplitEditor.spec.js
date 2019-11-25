@@ -5,6 +5,7 @@ import 'jasmine-jquery';
 import FocusTests from './FocusTests';
 import { memberService, data } from '../../utils/memberService';
 
+
 describe('Editors', () => {
     describe('Member Split Editor', () => {
         FocusTests.runFocusTests({
@@ -497,6 +498,7 @@ describe('Editors', () => {
                 selected: []
             });
 
+
             const view = new core.form.editors.MembersSplitEditor({
                 key: 'selected',
                 autocommit: true,
@@ -544,6 +546,7 @@ describe('Editors', () => {
                     expect(view.$('.visible-loader')).not.toExist();
                     done();
                 }, 200);
+
             });
 
             window.app
