@@ -33,10 +33,6 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateContext() {
-        return { title: this.title };
-    },
-
     regions: {
         gridRegion: {
             el: '.js-grid-region',

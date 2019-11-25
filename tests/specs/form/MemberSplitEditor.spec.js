@@ -3,6 +3,7 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 import FocusTests from './FocusTests';
+import { memberService, data } from '../../utils/memberService';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
@@ -59,6 +60,63 @@ describe('Editors', () => {
             expect(true).toEqual(true);
         });
 
+        it('should render in showMode: button, even setValue null', done => {
+            const view = new core.form.editors.MembersSplitEditor({
+                autocommit: true,
+                showMode: 'button',
+                getDisplayText: true
+            });
+
+            view.on('render', () => {
+                setTimeout(() => {
+                    expect(view.$('.js-members-text')).toContainText('groups');
+                    view.setValue(null);
+                    setTimeout(() => {
+                        expect(view.$('.js-members-text')).toContainText('groups');
+                    }, 100);
+                    done();
+                }, 100);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should work with custom display text', done => {
+            const model = new Backbone.Model({
+                selected: ['dog.1', 'dog.2', 'dog.4']
+            });
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selected',
+                autocommit: true,
+                showMode: 'button',
+                getDisplayText: dogs => `Here I have ${dogs.length} dogs`
+            });
+
+            view.on('render', () => {
+                setTimeout(() => {
+                    expect(view.$('.js-members-text')).toContainText('Here I have 3 dogs');
+                    view.setValue(['dog.1', 'dog.2', 'dog.4', 'dog.7']);
+                    setTimeout(() => {
+                        expect(view.$('.js-members-text')).toContainText('Here I have 4 dogs');
+                        view.setValue(null);
+                        setTimeout(() => {
+                            expect(view.$('.js-members-text')).toContainText('Here I have 0 dogs');
+                            done();
+                        }, 100);
+                    }, 100);
+                }, 100);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
         it('should count correctly', done => {
             const model = new Backbone.Model({
                 selected: ['user.1', 'user.2', 'user.4']
@@ -77,13 +135,13 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 setTimeout(() => {
-                    expect(view.$('.js-members-text')).toContainText('3'); // 3 users selected
+                    expect(view.$('.js-members-text')).toContainText('3 people'); // 3 users selected
                     view.setValue(['user.1', 'user.2', 'user.4', 'user.5']);
                     setTimeout(() => {
-                        expect(view.$('.js-members-text')).toContainText('4'); // 4 users selected
+                        expect(view.$('.js-members-text')).toContainText('4 people'); // 4 users selected
                         done();
-                    }, 500);
-                }, 500);
+                    }, 100);
+                }, 100);
             });
 
             window.app
@@ -113,7 +171,7 @@ describe('Editors', () => {
                 setTimeout(() => {
                     expect(view.$('.js-members-text')).not.toContainText('3'); // 3 users selected (hidden)
                     done();
-                }, 500);
+                }, 100);
             });
 
             window.app
@@ -393,7 +451,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.MembersSplitEditor({
                 model,
-                key: 'selectes',
+                key: 'selected',
                 autocommit: true,
                 users: listUsers,
                 groups: listGroups,
@@ -433,47 +491,122 @@ describe('Editors', () => {
                 .show(view);
         });
 
+        it('should correctly process member items', done => {
+            const model = new Backbone.Model({
+                available: [], // No initial values (should get data from server)
+                selected: []
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                key: 'selected',
+                autocommit: true,
+                model,
+                showMode: 'button',
+                getDisplayText: true,
+                memberService
+            });
+
+            view.on('render', () => {
+                view.setValue(['account.7', 'account.8', 'group.9']);
+                setTimeout(() => {
+                    expect(view.$('.js-members-text')).toContainText('2 people 1 group');
+                    view.setValue(null);
+                    setTimeout(() => {
+                        expect(view.$('.js-members-text')).toContainText('0 people');
+                        done();
+                    }, 200);
+                }, 200);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
         it('should correctly set loading', done => {
             const model = new Backbone.Model({
                 selected: []
             });
 
-            const listGroups = core.services.UserService.listGroups();
-            const listUsers = core.services.UserService.listUsers();
-            const data = {
-                available: [],
-                selected: []
-            };
-            const memberService = {
-                filterFnParameters: {
-                    users: 'users',
-                    groups: 'groups'
-                },
-                memberTypes: {
-                    users: 'users',
-                    groups: 'groups'
-                },
-                getMembers: () => new Promise(res => {
-                    setTimeout(() => res(data), 100);
-                })
-            };
-
             const view = new core.form.editors.MembersSplitEditor({
                 model,
-                key: 'selectes',
+                key: 'selected',
                 autocommit: true,
-                users: listUsers,
-                groups: listGroups,
                 memberService
             });
 
-            view.on('render', async() => {
+            view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     expect(view.$('.visible-loader')).toExist();
                 });
-                await view.controller.model.initialized;
-                expect(view.$('.visible-loader')).not.toExist();
-                done();
+                setTimeout(() => {
+                    expect(view.$('.visible-loader')).not.toExist();
+                    done();
+                }, 200);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly set quantity warning', done => {
+            const model = new Backbone.Model({
+                available: [],
+                selected: []
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                autocommit: true,
+                getDisplayText: true,
+                showMode: null,
+                memberService
+            });
+
+            view.on('render', () => {
+                view.setValue(['account.7', 'account.8', 'group.9']);
+                setTimeout(() => {
+                    expect(view.$('.js-quantity-warning-region')).toBeHidden();
+                    done();
+                }, 500);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly set quantity warning', done => {
+            const model = new Backbone.Model({
+                available: [],
+                selected: []
+            });
+
+            const newData = Object.assign({}, data);
+            newData.totalCount = 20;
+            const newMemberService = Object.assign({}, memberService);
+            newMemberService.getMembers = () => new Promise(res => {
+                setTimeout(() => res(newData), 100);
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                autocommit: true,
+                getDisplayText: true,
+                showMode: null,
+                newMemberService
+            });
+
+            view.on('render', () => {
+                view.setValue(['account.7', 'account.8', 'group.9']);
+                setTimeout(() => {
+                    expect(view.$('.js-quantity-warning-region')).not.toBeHidden();
+                    done();
+                }, 500);
             });
 
             window.app
