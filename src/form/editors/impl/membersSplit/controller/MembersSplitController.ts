@@ -22,6 +22,15 @@ const debounceInterval = {
     medium: 300
 };
 
+function convertToArray(value : null | string | string[]): string[] {
+    if (typeof value === 'string') {
+        return Array(value);
+    } else if (Array.isArray(value)) {
+        return value;
+    }
+    return [];
+}
+
 export default Marionette.MnObject.extend({
     initialize(options) {
         this.options = options;
@@ -51,20 +60,14 @@ export default Marionette.MnObject.extend({
         this.createView();
     },
 
-    async getDisplayText() {
-        await this.model.initialized;
+    __getDisplayText() {
         const membersCount = {
             users: 0,
             groups: 0
         };
         const members = this.members;
-        const selected = this.options.selected;
-        if (typeof selected === 'string') {
-            membersCount[members[selected].type]++; 
-        }
-        if (Array.isArray(selected)) {
-            selected.forEach(id => membersCount[members[id].type]++);
-        }
+        const selected = convertToArray(this.options.selected);
+        selected.forEach(id => membersCount[members[id]?.type]++);
         if (typeof this.options.getDisplayText === 'function') {
             return this.options.getDisplayText(selected);
         }
@@ -73,41 +76,58 @@ export default Marionette.MnObject.extend({
         return usersResultText.concat(' ').concat(groupsResultText);
     },
 
-    async updateItems(filterState) {
+    async updateItems(filterState, selectedItems = this.options.selected) {
+        this.options.selected = selectedItems;
+        if (this.isMemberService) {
+            await this.__updateMemberItems(filterState, selectedItems);
+        } else {
+            await this.__updateGeneralItems();
+        }
+        this.trigger('update:text', this.__getDisplayText());
+    },
+
+    async __updateMemberItems(filterState = this.filterState, selectedItems = this.options.selected) {
+        this.members = {};
+        this.__setLoading(true, { both: true });
+        try {
+            const data = await this.options.memberService.getMembers(this.__getSettings(filterState, selectedItems));
+            data.available.forEach(item => (this.members[item.id] = item));
+            data.selected.forEach(item => (this.members[item.id] = item));
+            this.processValues(selectedItems);
+            this.model.get('available').totalCount = data.totalCount;
+        } catch (e) {
+            console.log(e);
+        } finally {
+            this.__setLoading(false);
+        }
+    },
+
+    async __updateGeneralItems() {
         this.members = {};
         this.__setLoading(true, { both: false });
-        if (this.isMemberService) {
-            try {
-                const data = await this.options.memberService.getMembers(this.__getSettings(filterState));
-                data.available.forEach(item => (this.members[item.id] = item));
-                data.selected.forEach(item => (this.members[item.id] = item));
-                this.processValues();
-                this.model.get('available').totalCount = data.totalCount;
-            } catch (e) {
-                console.log(e);
-            } finally {
-                this.__setLoading(false);
-            }
-        } else {
+        try {
             const users = await this.options.users;
             const groups = await this.options.groups;
             users.forEach(model => (this.members[model.id] = model));
             groups.forEach(model => (this.members[model.id] = model));
             this.processValues();
+        } catch {
+            console.log(e);
+        } finally {
             this.__setLoading(false);
         }
     },
 
-    __getSettings(filterState) {
-        const selectedModels = this.model.initialized ? this.model.get('selected').parentCollection.map(item => item.id) : this.options.selected;
+    __getSettings(filterState, selectedItems) {
+        const selectedModels = convertToArray(selectedItems);
         const defaultSettings = {
             filterText: '',
             filterType: '',
             selected: []
         };
         const settings = {
-            filterText: filterState.searchString,
-            filterType: filterState.filterType,
+            filterText: filterState?.searchString,
+            filterType: filterState?.filterType,
             selected: selectedModels
         };
         return Object.assign(defaultSettings, settings)
@@ -166,7 +186,7 @@ export default Marionette.MnObject.extend({
         if (this.isMemberService) {
             this.listenTo(availableGridView, 'members:update', async filterState => {
                 availableGridView.gridView.toggleSearchActivity(false);
-                await this.updateItems(filterState);
+                await this.__updateMemberItems(filterState);
                 availableGridView.gridView.toggleSearchActivity(true);
             });
         }
@@ -201,7 +221,7 @@ export default Marionette.MnObject.extend({
 
         if (filterState.filterType) {
             gridView.collection.filter();
-            this.updateItems(filterState);
+            this.__updateMemberItems(filterState);
         } else {
             gridView.collection.filter(() => false);
         }
@@ -226,6 +246,7 @@ export default Marionette.MnObject.extend({
     updateMembers() {
         const allSelectedModels = Object.assign({}, this.model.get('selected').parentCollection);
         this.options.selected = allSelectedModels.models.map(model => model.id);
+        this.trigger('update:text', this.__getDisplayText());
         this.trigger('popup:ok');
     },
 
@@ -261,7 +282,7 @@ export default Marionette.MnObject.extend({
         this.model.set('allowRemove', this.options.allowRemove);
     },
 
-    processValues() {
+    processValues(selected = this.options.selected) {
         const items = Object.assign({}, this.members);
         this.options.exclude.forEach(id => {
             if (items[id]) {
@@ -269,20 +290,11 @@ export default Marionette.MnObject.extend({
             }
         });
 
-        const selectedItems =
-            Array.isArray(this.options.selected)
-                ? this.options.selected.map(id => {
+        const selectedItems = convertToArray(selected).map(id => {
                     const model = items[id];
                     delete items[id];
                     return model;
-                })
-                : this.options.selected
-                    ? Object.assign({}, items[this.options.selected])
-                    : [];
-
-        if (typeof this.options.selected === 'string') {
-            delete items[this.options.selected];
-        }
+                });
         const availableItems = Object.values(items);
 
         this.model.get('available').reset(availableItems);
