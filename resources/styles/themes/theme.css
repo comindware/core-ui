@@ -409,6 +409,10 @@ svg.svg-grid-icons {
   vertical-align: top;
 }
 
+.grid-header-column.selected {
+  background-color: #04619d;
+}
+
 .datalist-panel .form-label{
   padding: var(--grid-header-padding);
 }
