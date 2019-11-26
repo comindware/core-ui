@@ -3,7 +3,7 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 import FocusTests from './FocusTests';
-import { memberData } from '../../utils/memberData';
+import { memberService, data } from '../../utils/memberService';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
@@ -497,8 +497,6 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const memberService = memberData;
-
             const view = new core.form.editors.MembersSplitEditor({
                 key: 'selected',
                 autocommit: true,
@@ -531,8 +529,6 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const memberService = memberData;
-
             const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
@@ -540,7 +536,7 @@ describe('Editors', () => {
                 memberService
             });
 
-            view.on('render', async() => {
+            view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     expect(view.$('.visible-loader')).toExist();
                 });
@@ -548,6 +544,69 @@ describe('Editors', () => {
                     expect(view.$('.visible-loader')).not.toExist();
                     done();
                 }, 200);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly set quantity warning', done => {
+            const model = new Backbone.Model({
+                available: [],
+                selected: []
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                autocommit: true,
+                getDisplayText: true,
+                showMode: null,
+                memberService
+            });
+
+            view.on('render', () => {
+                view.setValue(['account.7', 'account.8', 'group.9']);
+                setTimeout(() => {
+                    expect(view.$('.js-quantity-warning-region')).toBeHidden();
+                    done();
+                }, 500);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly set quantity warning', done => {
+            const model = new Backbone.Model({
+                available: [],
+                selected: []
+            });
+
+            const newData = Object.assign({}, data);
+            newData.totalCount = 20;
+            const newMemberService = Object.assign({}, memberService);
+            newMemberService.getMembers = () => new Promise(res => {
+                setTimeout(() => res(newData), 100);
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                autocommit: true,
+                getDisplayText: true,
+                showMode: null,
+                newMemberService
+            });
+
+            view.on('render', () => {
+                view.setValue(['account.7', 'account.8', 'group.9']);
+                setTimeout(() => {
+                    expect(view.$('.js-quantity-warning-region')).not.toBeHidden();
+                    done();
+                }, 500);
             });
 
             window.app

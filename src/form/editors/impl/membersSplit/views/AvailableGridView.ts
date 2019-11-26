@@ -42,7 +42,7 @@ export default BaseMembersGridView.extend({
 
     __toggleQuantityWarning() {
         if (!this.isDestroyed()) {
-            if (this.collection.length < this.collection.totalCount) {
+            if (this.model.get('available').length + this.model.get('selected').length < this.collection.totalCount) {
                 this.getRegion('quantityWarningRegion').$el.show();
             } else {
                 this.getRegion('quantityWarningRegion').$el.hide();
