@@ -40,7 +40,24 @@ export default Marionette.View.extend({
 
     __onSelectedChange(model: Backbone.Model, selected: boolean) {
         if (selected) {
-            this.el.scrollIntoView({ behaviour: 'smooth' });
+            this.__scrollIntoView();
         }
+    },
+
+    // native scrollIntoView causing the whole page to move,
+    // to prevent that behaviour we need to use scrollIntoViewOptions,
+    // but Edge, IE, and Safari doesn't support scrollIntoViewOptions.
+    __scrollIntoView() {
+        if (!this.__isUiReady()) {
+            return;
+        }
+        const offsetParent = this.el.offsetParent;
+        const offsetLeft = this.el.offsetLeft;
+
+        offsetParent.scrollLeft = offsetLeft;
+    },
+
+    __isUiReady() {
+        return this.isRendered() && !this.isDestroyed() && this.isAttached();
     }
 });

@@ -29,6 +29,7 @@
     min-width: 0;
     margin: 0;
     overflow: hidden;
+    position: relative; /* for __scrollIntoView */
 }
 
 .layout__tab-layout__header-view-item ul:last-child {
