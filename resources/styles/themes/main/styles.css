@@ -315,13 +315,10 @@
   padding-left: var(--form-input-padding);
 }
 
-
-.required .form-label {
-  padding-left: 10px;
-}
 .disabled .form-label {
   color: var(--grey-800);
 }
+
 .form-label_required {
     padding-left: 10px;
     position: relative;
