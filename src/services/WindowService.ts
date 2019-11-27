@@ -44,12 +44,13 @@ export default {
      * @param {DOMNode} el A DOM node.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showElInPopup(view) {
+    showElInPopup(view, options = { immediateClosing: false }) {
         return this.__popupStackView.showElInPopup(view, {
             fadeBackground: true,
             transient: false,
             hostEl: null,
-            showedInEl: true
+            showedInEl: true,
+            immediateClosing: options.immediateClosing
         });
     },
 
