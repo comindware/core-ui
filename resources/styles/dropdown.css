@@ -377,9 +377,17 @@
 .bubbles__list .bubbles__i .editor__icons{
     position: absolute;
     flex: none;
-    right: -17px;
+    right: -5px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.bubbles__list .bubbles__i.bubbles__i-edit-btn .icon-edit {
+    right: 12px;
+}
+
+.bubbles__list .bubbles__i.bubbles__i-edit-btn .icon-remove {
+    right: -5px;
 }
 
 .bubbles__list .bubbles-subtext {

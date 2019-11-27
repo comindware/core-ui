@@ -817,9 +817,14 @@ tr:hover .cell_selection-index {
   /*@apply --bubbles-item-theme-hover;*/
 }
 
-.bubbles__list .bubbles__i{
-  margin-right: 12px;
+.bubbles__list .bubbles__i {
+  padding-right: 12px;
 }
+
+.bubbles__list .bubbles__i-edit-btn {
+  padding-right: 32px;
+}
+
 .bubbles__i a,
 .bubbles__i span {
   display: inline-block;
