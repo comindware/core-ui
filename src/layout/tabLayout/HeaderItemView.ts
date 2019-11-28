@@ -51,10 +51,8 @@ export default Marionette.View.extend({
         if (!this.__isUiReady()) {
             return;
         }
-        const offsetParent = this.el.offsetParent;
         const offsetLeft = this.el.offsetLeft;
-
-        offsetParent.scrollLeft = offsetLeft;
+        this.$el.offsetParent().animate({ scrollLeft: offsetLeft }, 1000);
     },
 
     __isUiReady() {
