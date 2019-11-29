@@ -969,19 +969,45 @@ tr:hover .cell_selection-index {
   font-size: var(--tab-item-font-size);
 }
 
+.layout__tab-layout__header-view-item:hover {
+  background: #d6e7f2;
+  color: #0575bd;
+}
+
+.layout__tab-layout__header-view-item_selected:hover {
+  background-color: #fff;
+  color: #404040;
+}
+
 .layout__tab-layout__header-view-item_selected {
   @apply --tab-item-active-theme;
 }
 
 .layout__tab-layout__header-view-item_error {
   @apply --tab-item-error-theme;
+  background: #e1462c !important;
 }
 
-.layout__tab-layout__header-view-item_disabled {
+.popout-menu__i_error .popout-menu__txt,
+.popout-menu__i_error .popout-menu__txt:hover {
+  color: #e1462c;
+}
+
+.layout__tab-layout__header-view-item_error .layout__tab-layout__header-view-item-text {
+  color: #fff;
+}
+
+.layout__tab-layout__header-view-item_error .layout__tab-layout__header-view-item-text:hover {
+  color: #404040;
+}
+
+.layout__tab-layout__header-view-item_disabled,
+.popout-menu__i_disabled {
   @apply --tab-item-disabled-theme;
 }
 
-.layout__tab-layout__header-view-item_hidden {
+.layout__tab-layout__header-view-item_hidden,
+.popout-menu__i_hidden {
   @apply --tab-item-hidden-theme;
 }
 
