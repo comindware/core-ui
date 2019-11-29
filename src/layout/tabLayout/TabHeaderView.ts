@@ -1,6 +1,7 @@
 import { helpers } from 'utils';
 import dropdown from 'dropdown';
 import HeaderMenuButtonView from './HeaderMenuButtonView';
+import HeaderMenuPanelView from './HeaderMenuPanelView';
 import template from './templates/tabHeader.hbs';
 import TabHeadersView from './TabHeadersView';
 
@@ -42,6 +43,7 @@ export default Marionette.View.extend({
 
         const menuView = dropdown.factory.createMenu({
             buttonView: HeaderMenuButtonView,
+            panelView: HeaderMenuPanelView, 
             items: this.options.collection,
             showDropdownAnchor: false
         });
