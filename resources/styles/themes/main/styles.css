@@ -341,6 +341,10 @@
   display:none;
 }
 
+.cell .toolbar-btn {
+  padding: 0 15px;
+}
+
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
   margin-bottom: 10px;
