@@ -331,7 +331,6 @@
 
 .cell.required::before {
   margin: 0 0 0 1px;
-  top: 0;
 }
 
 .cell.error.required::before {
