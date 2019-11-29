@@ -8,7 +8,7 @@ export const data = {
         { id: 'account.8', type: 'users' },
         { id: 'group.9', type: 'groups' }
     ],
-    totalCount: 5
+    hasExtraMembers: false
 };
 
 export const memberService = {

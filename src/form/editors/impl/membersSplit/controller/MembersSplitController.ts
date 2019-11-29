@@ -94,7 +94,7 @@ export default Marionette.MnObject.extend({
             data.available.forEach(item => (this.members[item.id] = item));
             data.selected.forEach(item => (this.members[item.id] = item));
             this.processValues(selectedItems);
-            this.model.get('available').totalCount = data.totalCount;
+            this.model.get('available').hasExtraMembers = data.hasExtraMembers;
         } catch (e) {
             console.log(e);
         } finally {
@@ -265,7 +265,7 @@ export default Marionette.MnObject.extend({
         if (this.groupConfig) {
             availableModels.group(this.groupConfig);
         }
-        availableModels.totalCount = 0;
+        availableModels.hasExtraMembers = false;
         this.model.set('available', availableModels);
 
         const selectedComparator = this.options.orderEnabled

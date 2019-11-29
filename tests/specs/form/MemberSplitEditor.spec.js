@@ -587,7 +587,7 @@ describe('Editors', () => {
             });
 
             const newData = Object.assign({}, data);
-            newData.totalCount = 20;
+            newData.hasExtraMembers = true;
             const newMemberService = Object.assign({}, memberService);
             newMemberService.getMembers = () => new Promise(res => {
                 setTimeout(() => res(newData), 100);
