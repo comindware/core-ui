@@ -983,9 +983,9 @@ tr:hover .cell_selection-index {
   @apply --tab-item-active-theme;
 }
 
-.layout__tab-layout__header-view-item_error {
+.layout__tab-layout__header-view  .layout__tab-layout__header-view-item_error {
   @apply --tab-item-error-theme;
-  background: #e1462c !important;
+  background: #e1462c;
 }
 
 .popout-menu__i_error .popout-menu__txt,

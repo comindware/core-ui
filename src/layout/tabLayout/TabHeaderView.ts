@@ -43,6 +43,9 @@ export default Marionette.View.extend({
 
         const menuView = dropdown.factory.createMenu({
             buttonView: HeaderMenuButtonView,
+            buttonViewOptions: {
+                collection: this.options.collection
+            },
             panelView: HeaderMenuPanelView, 
             items: this.options.collection,
             showDropdownAnchor: false
