@@ -147,7 +147,6 @@ const variables = {
     'tab-item-font-size': '13px',
     'tab-panel-container-padding': '10px 5px',
     'tab-header-justify': 'space-between',
-    'tab-header-padding-with-move': '0 20px',
 
     'btn-separator-width': '20px',
 

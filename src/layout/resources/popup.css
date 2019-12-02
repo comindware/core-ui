@@ -126,3 +126,7 @@
     height: 100%;
     width: 100%;
 }
+
+.presented-modal-window .popout-menu__i:hover {
+    background: #d6e7f2;
+}
