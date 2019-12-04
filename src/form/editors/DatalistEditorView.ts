@@ -1199,7 +1199,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __onDropdownClose() {
         this.stopListening(this.panelCollection, 'selected', this.__onPanelSelected);
         this.stopListening(this.panelCollection, 'deselected', this.__onPanelDeselected);
-        this.blur();
         this.trigger('dropdown:close');
     }
 }));
