@@ -122,7 +122,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly});
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
@@ -200,7 +200,15 @@ export default Marionette.View.extend({
         this.codemirror.on('inputRead', (editor, change) => {
             if (this.intelliAssist) {
                 if (change.text[0] === '.') {
+                    this.filterList = null;
                     this.__showCSharpHint();
+                } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
+                    const nameEntity = this.__getObjectNameEntity();
+                    if (nameEntity && nameEntity.length) {
+                        this.__showFilterCSharpHint(nameEntity);
+                    } else {
+                        this.filterList = null;
+                    }
                 }
             }
         });
@@ -250,11 +258,13 @@ export default Marionette.View.extend({
     },
 
     setConfigLineSeparator(value) {
-        const CR_LF = value.match(/\r\n/g);
-        if (CR_LF) {
-            this.codemirror.setOption('lineSeparator', lineSeparatorCR_LF);
-        } else {
-            this.codemirror.setOption('lineSeparator', lineSeparatorLF);
+        if (value && value.length) {
+            const CR_LF = value.match(/\r\n/g);
+            if (CR_LF) {
+                this.codemirror.setOption('lineSeparator', lineSeparatorCR_LF);
+            } else {
+                this.codemirror.setOption('lineSeparator', lineSeparatorLF);
+            }
         }
     },
 
@@ -278,6 +288,12 @@ export default Marionette.View.extend({
         if (this.codemirror) {
             this.codemirror.setOption('readOnly', readonly);
         }
+    },
+
+    __getCompilationErrors() {
+        this.__compile();
+        const isSuccess = Boolean(this.editor.output.model.get('errors').length);
+        return isSuccess;
     },
 
     onAttach() {
@@ -434,6 +450,7 @@ export default Marionette.View.extend({
                     }
                 });
                 this.CSharpInfoList = ontologyModel.get('infoList');
+                this.line = this.codemirror.getCursor().line;
             } else {
                 this.CSharpInfoList = [];
             }
@@ -459,12 +476,42 @@ export default Marionette.View.extend({
         return list;
     },
 
+    __showFilterCSharpHint(nameEntity) {
+        if (nameEntity && nameEntity.match(/\s/g) === null) {
+            const regExpString = `^${nameEntity}`;
+            const re = new RegExp(regExpString, 'ig');
+            this.filterList = this.CSharpInfoList.filter(item => item.name.match(re) !== null);
+            this.codemirror.showHint({ hint: this.__getTooltipCsharpModel });
+        }
+    },
+
+    __getObjectNameEntity() {
+        const lineNumber = this.codemirror.getCursor().line;
+        const line = this.codemirror.getLine(lineNumber);
+        const isFullStop = line.match(/\./g);
+        if (lineNumber !== this.line) {
+            this.filterList = null;
+            return;
+        }
+        if (isFullStop) {
+            let ch = this.codemirror.getCursor().ch;
+            const arraySymbol = [];
+            while (line[ch] !== '.') {
+                arraySymbol.push(line[ch]);
+                ch--;
+            }
+            const nameEntity = arraySymbol.reverse().join('');
+            return nameEntity;
+        }
+    },
+
     __getTooltipCsharpModel() {
         let autoCompleteObject = {};
+        const dataList = this.filterList || this.CSharpInfoList;
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
         this.hintsBehindDot = this.codemirror.getLine(cursor.line)[token.start] === '.';
-        if (!this.CSharpInfoList.length) {
+        if (!dataList.length) {
             autoCompleteObject = {
                 from: cursor,
                 to: cursor,
@@ -480,12 +527,12 @@ export default Marionette.View.extend({
                     line: cursor.line,
                     ch: this.hintsBehindDot ? token.end + 1 : token.end
                 },
-                list: this.__renderConfigListToolbar(this.CSharpInfoList)
+                list: this.__renderConfigListToolbar(dataList)
             };
         }
         if (!this.hintsBehindDot) {
             if (this.previousHintName) {
-                const indexBehhindHint = this.CSharpInfoList.findIndex(item => item.name === this.previousHintName);
+                const indexBehhindHint = dataList.findIndex(item => item.name === this.previousHintName);
                 if (indexBehhindHint >= 0) {
                     autoCompleteObject.selectedHint = indexBehhindHint;
                 }

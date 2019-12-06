@@ -1099,6 +1099,34 @@ describe('Editors', () => {
                 expect(true).toEqual(true);
             });
 
+            it('should not lose focus on close panel', done => {
+                const model = new Backbone.Model({
+                    value: [1, 2]
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: new Backbone.Collection(collectionData3),
+                    autocommit: true,
+                    key: 'value',
+                });
+
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    view.on('dropdown:open', () => {
+                        view.on('dropdown:close', () => {
+                            expect(input).toBeFocused();
+                            done();
+                        });
+                        view.close();
+                    });
+
+                    input.focus();
+                });
+
+                show(view);
+            });
+
             it('should open panel on input get focus', () => {
                 const model = new Backbone.Model({
                     view: [1]

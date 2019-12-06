@@ -14,6 +14,10 @@
 .editor_code {
   height: inherit;
 }
+
+.bubbles__form {
+  height: 26px;
+}
 /*
 .editor_code:after{
   display: none;
@@ -59,6 +63,10 @@
 }
 
 /*------------------ Input ------------------*/
+.input {
+  padding: var(--input-padding);
+}
+
 .input:hover {
   border-color: var(--input-hover-color);
 }
@@ -331,11 +339,14 @@
 
 .cell.required::before {
   margin: 0 0 0 1px;
-  top: 0;
 }
 
 .cell.error.required::before {
   display:none;
+}
+
+.cell .toolbar-btn {
+  padding: 0 15px;
 }
 
 .layout__vertical-layout > div,
