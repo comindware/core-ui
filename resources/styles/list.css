@@ -838,6 +838,17 @@ tr.dragover td{
     margin-left: 0.25rem;
 }
 
+.grid__cell_html-string {
+    vertical-align: middle;
+}
+.grid__cell_html-string > div {
+    height: 35px;
+    overflow: hidden;
+}
+.grid__cell_html-string > div > * {
+    height: 100%;
+}
+
 /* temporary disabled */
 /*--- Fix colletion scroll header ---*/
 /* .dev-collection .grid-table-wrapper-war {

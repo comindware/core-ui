@@ -11,9 +11,11 @@ import compositeReferenceCell from './templates/compositeReferenceCell.html';
 
 let factory;
 
+const HTMLStringClass = 'grid__cell_html-string';
+
 type Column = { key: string, customClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
-type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
+type MultivalueCellOptions = { childTemplate: string, value: Array<any>, title: string, column: Column, className?: string, buttonTabName?: string };
 
 export default factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
@@ -55,6 +57,8 @@ export default factory = {
                 return this.__getDateTimeCell({ values, column, model });
             case objectPropertyTypes.DOCUMENT:
                 return this.__getDocumentCell({ values, column, model });
+            case objectPropertyTypes.HTML:
+                return this.__getHTMLCell({ values, column, model });
             case objectPropertyTypes.STRING:
             default:
                 return this.__getStringCell({ values, column, model });
@@ -63,7 +67,7 @@ export default factory = {
 
     __getStringCell({ values, column, model }) {
         if (values.length === 1) {
-            return `<td class="${this.__getCellClass(column)}" title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
+            return `<td class="${this.__getCellClass(column)} ${HTMLStringClass}" title="${this.__getTitle({ values, column, model })}">${values[0] || ''}</td>`;
         }
 
         return this.__getMultivalueCellView({
@@ -71,6 +75,21 @@ export default factory = {
             childTemplate: '{{{value}}}',
             title: this.__getTitle({ values, column, model }),
             column
+        });
+    },
+
+    __getHTMLCell({ values, column, model }) {
+        if (values.length === 1) {
+            return `<td class="${this.__getCellClass(column)} ${HTMLStringClass}" title="${this.__getTitle({ values, column, model })}">${values[0] ? `<div>${values[0]}</div>` : ''}</td>`;
+        }
+
+        return this.__getMultivalueCellView({
+            values: values.map(v => ({ value: v })),
+            childTemplate: '{{{value}}}',
+            title: this.__getTitle({ values, column, model }),
+            column,
+            className: HTMLStringClass,
+            buttonTagName: 'div'
         });
     },
 
@@ -238,10 +257,10 @@ export default factory = {
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell, column });
     },
 
-    __getMultivalueCellView({ childTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
+    __getMultivalueCellView({ childTemplate, values = [], title, column, className = '', buttonTagName = 'td' }: MultivalueCellOptions = {}): Node {
         const panelViewOptions = {
             collection: new Backbone.Collection(values.slice(1)),
-            className: 'grid-composite_panel',
+            className: `grid-composite_panel ${className}`,
             childView: Marionette.View,
             childViewOptions: {
                 tagName: 'div',
@@ -261,7 +280,7 @@ export default factory = {
 
         const buttonViewOptions = {
             model: new Backbone.Model(buttonViewData),
-            tagName: 'td',
+            tagName: buttonTagName,
             className: `${this.__getCellClass(column)}`,
             attributes: {
                 title
@@ -297,15 +316,21 @@ export default factory = {
 
     __getTitle({ values, column, model }) {
         let title;
-        if (column.format === 'HTML') {
-            title = '';
-        } else if (column.titleAttribute) {
+        if (column.titleAttribute) {
             title = model.get(column.titleAttribute);
         } else {
             title = Array.isArray(values) ? values.join(', ') : values;
         }
+
+        if (column.format === 'HTML') {
+            title = String(title).replace(/<[^>]*>/g, '');
+        }
         title = title !== null && title !== undefined ? title.toString().replace(/"/g, '&quot;') : '';
         return title;
+    },
+
+    __getEscapedTitle(titleString = '') {
+        return String(titleString).replace(/"/g, '&quot;');
     },
 
     __getCellClass(gridColumn: Column) {

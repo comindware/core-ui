@@ -42,6 +42,7 @@ export const contextIconType = {
 
 export const objectPropertyTypes = {
     STRING: 'String',
+    HTML: 'HtmlText',
     EXTENDED_STRING: 'ExtendedString',
     BOOLEAN: 'Boolean',
     DATETIME: 'DateTime',
