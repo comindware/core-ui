@@ -129,6 +129,11 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.__value(value, true, false);
     },
 
+    getCompilationErrors() {
+        const isSuccess = this.editor.__getCompilationErrors();
+        return isSuccess;
+    },
+
     __change() {
         const value = this.editor.getValue() || null;
         this.__value(value, false, true);
