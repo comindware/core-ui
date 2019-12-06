@@ -5,11 +5,7 @@ export default Marionette.View.extend({
     initialize(options) {
         this.model = options.model;
         this.editor = options.editor;
-        this.listenTo(this.editor, 'compile', compileOutput => {
-            this.model.get('errors').reset(compileOutput.errors);
-            this.model.get('warnings').reset(compileOutput.warnings);
-            this.model.get('info').reset(compileOutput.info);
-        });
+        this.listenTo(this.editor, 'compile', compileOutput => this.__setMessageCompile(compileOutput));
     },
 
     template: Handlebars.compile(template),
@@ -71,8 +67,21 @@ export default Marionette.View.extend({
         this.showChildView('tabsRegion', tabsPanelsView);
     },
 
+    __setMessageCompile(compileOutput) {
+        this.model.get('errors').reset(compileOutput.errors);
+        this.model.get('warnings').reset(compileOutput.warnings);
+        this.model.get('info').reset(compileOutput.info);
+    },
+
     __getErrorsColumns() {
         return [
+            {
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.WARNINGLEVEL'),
+                key: 'warningLevel',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.25
+            },
             {
                 title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.ERRORS.LINE'),
                 key: 'line',

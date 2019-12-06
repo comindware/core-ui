@@ -122,7 +122,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly});
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
@@ -278,6 +278,12 @@ export default Marionette.View.extend({
         if (this.codemirror) {
             this.codemirror.setOption('readOnly', readonly);
         }
+    },
+
+    __getCompilationErrors() {
+        this.__compile();
+        const isSuccess = Boolean(this.editor.output.model.get('errors').length);
+        return isSuccess;
     },
 
     onAttach() {
