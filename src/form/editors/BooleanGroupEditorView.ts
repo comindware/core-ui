@@ -31,7 +31,7 @@ export default formRepository.editors.BooleanGroup = BaseCollectionEditorView.ex
 
     childView: BooleanEditorView,
 
-    className: 'editor editor_checkbox',
+    className: 'editor',
 
     attributes() {
         return {
