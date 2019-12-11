@@ -98,8 +98,8 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         this.__isFirstValueSetting = true;
     },
 
-    setValue(oldValue) {
-        let value = oldValue;
+    setValue(newValue) {
+        let value = newValue;
         if (!value || !Object.keys(this.value).length) {
             value = {
                 type: this.options.defaultType,
@@ -109,6 +109,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         if (!this.__isFirstValueSetting && _.isEqual(this.value, value)) {
             return;
         }
+        this.value = value;
         this.__isFirstValueSetting = false;
 
         this.typeEditor?.setValue(value.type || valueTypes.value);
