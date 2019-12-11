@@ -1083,9 +1083,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __getIsQuantityControl(e) {
         return (
-            this.__isQuantityControl ||
-            [keyCode.UP, keyCode.DOWN, keyCode.ENTER, keyCode.SPACE].includes(e.keyCode) || // || this.__checkEntryToPanel(e);
-            this.__checkEntryToBubbles(e)
+            this.__isQuantityControl
+            || [keyCode.UP, keyCode.DOWN, keyCode.ENTER].includes(e.keyCode) // || this.__checkEntryToPanel(e);
+            || this.__checkEntryToBubbles(e)
         );
     },
 
