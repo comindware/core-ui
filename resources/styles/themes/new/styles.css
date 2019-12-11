@@ -235,6 +235,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding-right: 10px;
 }
 
+.layout__vertical-layout .layout__horizontal-layout > * {
+  width: 50%;
+}
+
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
   margin-bottom: 20px;
