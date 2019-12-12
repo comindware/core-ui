@@ -14,6 +14,10 @@
     min-width: 0;
 }
 
+.layout__vertical-layout .layout__horizontal-layout > div[data-fields] {
+    width: 50%;
+}
+
 @media (max-width: 720px) {
     .layout__horizontal-layout {
         flex-wrap: wrap;
