@@ -477,7 +477,7 @@ export default Marionette.View.extend({
     },
 
     __showFilterCSharpHint(nameEntity) {
-        if (nameEntity && nameEntity.match(/\s/g) === null) {
+        if (nameEntity && nameEntity.match(/\W/g) === null) {
             const regExpString = `^${nameEntity}`;
             const re = new RegExp(regExpString, 'ig');
             this.filterList = this.CSharpInfoList.filter(item => item.name.match(re) !== null);
