@@ -584,7 +584,6 @@ tr.dragover td{
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 13px;
-    margin: 0 3px 0 8px;
     background-clip: padding-box;
 }
 
