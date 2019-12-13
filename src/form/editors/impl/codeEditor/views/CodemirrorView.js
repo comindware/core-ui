@@ -160,6 +160,7 @@ export default Marionette.View.extend({
             lineNumbers: true,
             mode: modes[this.options.mode],
             ontologyObjects: [],
+            lineSeparator: lineSeparatorLF,
             matchBrackets: true,
             autoCloseBrackets: true,
             styleActiveLine: true,
@@ -244,8 +245,8 @@ export default Marionette.View.extend({
 
     setValue(value) {
         this.isExternalChange = true;
-        this.setConfigLineSeparator(value);
-        this.codemirror.setValue(value || '');
+        const formatValue = this.replaceLineSeparatorValue(value || '');
+        this.codemirror.setValue(formatValue);
         this.refresh();
     },
 
@@ -257,15 +258,12 @@ export default Marionette.View.extend({
         this.codemirror.getOption(option);
     },
 
-    setConfigLineSeparator(value) {
+    replaceLineSeparatorValue(value) {
         if (value && value.length) {
-            const CR_LF = value.match(/\r\n/g);
-            if (CR_LF) {
-                this.codemirror.setOption('lineSeparator', lineSeparatorCR_LF);
-            } else {
-                this.codemirror.setOption('lineSeparator', lineSeparatorLF);
-            }
+            const format = value.replace(/\r\n/g, lineSeparatorLF);
+            return format;
         }
+        return value;
     },
 
     refresh() {

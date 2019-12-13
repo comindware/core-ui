@@ -16,7 +16,7 @@ const getCodeEditorView = function() {
     return codeEditorView;
 };
 
-const shwowView = function(view) {
+const showView = function(view) {
     window.app
         .getView()
         .getRegion('contentRegion')
@@ -32,12 +32,12 @@ describe('Editors', () => {
 
         it('should initialize', () => {
             const codeEditorView = getCodeEditorView();
-            shwowView(codeEditorView);
+            showView(codeEditorView);
             // assert
             expect(true).toBe(true);
         });
 
-        it('The script should not  lose characters after adding to the editor - (mode LF and CR_LF)', () => {
+        xit('The script should not  lose characters after adding to the editor - (mode LF and CR_LF)', () => {
             const textLF = '"using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Comindware.Data.Enti';
             const textCR_LF = 'test_line_one;\r\ntest_line_two;\r\ntest_line_three;\r\n';
 
@@ -45,7 +45,7 @@ describe('Editors', () => {
             const lineCount = 4;
 
             const codeEditorView = getCodeEditorView();
-            shwowView(codeEditorView);
+            showView(codeEditorView);
 
             //test LF
             //set false options
