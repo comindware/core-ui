@@ -588,7 +588,7 @@ tr:hover .cell_selection-index {
 }
 
 .cell_selection, .cell_selection-index {
-  padding: 0;
+  padding: 0 5px;
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   border: 1px solid #e2e2e2;
@@ -605,7 +605,7 @@ tr:hover .cell_selection-index {
 
 .cell_selection-index > .checkbox {
   float: right;
-  margin: 2px 8px 0 0;
+  margin-top: 2px;
 }
 
 /* for IE*/
