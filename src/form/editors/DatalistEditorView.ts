@@ -236,12 +236,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             buttonViewOptions: {
                 value: '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
-                bubbleItemViewOptions: Object.assign(
-                    {
-                        customTemplate: this.options.buttonBubbleTemplate
-                    },
-                    bubbleItemViewOptions
-                ),
+                bubbleItemViewOptions: {
+                    customTemplate: this.options.buttonBubbleTemplate,
+                    ...bubbleItemViewOptions
+                },
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 emptyPlaceholder: this.__getEmptyPlaceholder(),
                 readonlyPlaceholder: this.__getReadonlyPlaceholder(),
@@ -259,12 +257,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 addNewButtonTextWrapper: () => _.getResult(this.options.addNewButtonText, this, this.isEmptyValue()),
                 showAddNewButton: this.options.showAddNewButton,
                 addNewButtonText: this.options.addNewButtonText,
-                bubbleItemViewOptions: Object.assign(
-                    {
-                        customTemplate: this.options.panelBubbleTemplate
-                    },
-                    bubbleItemViewOptions
-                ),
+                bubbleItemViewOptions: {
+                    customTemplate: this.options.panelBubbleTemplate,
+                    ...bubbleItemViewOptions
+                },
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
