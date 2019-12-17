@@ -290,10 +290,10 @@ export default Marionette.View.extend({
         }
     },
 
-    async __isCompilationError() {
-        await this.__compile();
-        const isErrors = Boolean(this.editor.output.model.get('errors').length);
-        return isErrors;
+    __getCompilationErrors() {
+        this.__compile();
+        const isSuccess = Boolean(this.editor.output.model.get('errors').length);
+        return isSuccess;
     },
 
     onAttach() {

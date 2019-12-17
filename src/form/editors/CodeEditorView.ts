@@ -129,9 +129,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.__value(value, true, false);
     },
 
-    async isCompilationError() {
-        const isErrors = await this.editor.__isCompilationError();
-        return isErrors;
+    getCompilationErrors() {
+        const isSuccess = this.editor.__getCompilationErrors();
+        return isSuccess;
     },
 
     __change() {
