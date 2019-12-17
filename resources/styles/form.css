@@ -426,12 +426,9 @@ input[type="checkbox"].checkbox {
     height: 100%;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex: 0 1 auto;
     overflow: hidden;
-}
-.cell.editor_bubble .bubbles__list {
-    flex-wrap: nowrap;
 }
 
 .bubbles__list > .counter-hidden{
@@ -483,6 +480,7 @@ input[type="checkbox"].checkbox {
     max-width: 100%;
     display: inline-block;
     align-self: center;
+    min-width: 12px;
 }
 
 .bubbles__input {
@@ -923,9 +921,9 @@ input[type="color"], .colorpicker{
     flex-wrap: nowrap;
 }
 
-.cell .open .bubbles__input:focus:not([readonly]) {
+/* .cell .open .bubbles__input:focus:not([readonly]) {
     min-width: 200px;
-}
+} */
 
 .cell .bubbles__i.bubble__pencil-edit .bubble-doc_text{
 
