@@ -40,19 +40,31 @@ export default Marionette.View.extend({
 
     __onSelectedChange(model, selected) {
         if (selected) {
-            this.__scrollIntoView();
+            this.__scrollIntoViewIfNeeded();
         }
     },
 
     // native scrollIntoView causing the whole page to move,
     // to prevent that behaviour we need to use scrollIntoViewOptions,
     // but Edge, IE, and Safari doesn't support scrollIntoViewOptions.
-    __scrollIntoView() {
-        if (!this.__isUiReady()) {
+    __scrollIntoViewIfNeeded() {
+        if (!this.__isUiReady() || this.__isIntoView()) {
             return;
         }
         const offsetLeft = this.el.offsetLeft;
         this.$el.offsetParent().animate({ scrollLeft: offsetLeft }, 300);
+    },
+
+    __isIntoView() {
+        const parentScrollLeft = this.el.parentElement.scrollLeft;
+        const parentOffsetWidth = this.el.parentElement.offsetWidth;
+        const parentScrollRight = parentScrollLeft + parentOffsetWidth;
+
+        const elOffsetLeft = this.el.offsetLeft;
+        const elOffsetWidth = this.el.offsetWidth;
+        const elOffsetRight = elOffsetLeft + elOffsetWidth;
+
+        return elOffsetLeft > parentScrollLeft && elOffsetRight < parentScrollRight;
     },
 
     __isUiReady() {
