@@ -158,7 +158,6 @@ const presetsDefaults = {
         }
     }),
     user: (options: optionsType) => ({
-        listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeUserCell,
