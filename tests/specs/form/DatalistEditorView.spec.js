@@ -934,6 +934,31 @@ describe('Editors', () => {
                 show(view);
             });
 
+            it('should not close dropdown on keydown SPACE', done => {
+                const model = new Backbone.Model({
+                    value: 'a'
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: collectionData3,
+                    key: 'value',
+                    autocommit: true,
+                });
+
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    startSearch(input, 'd');
+                    input.trigger({ type: 'keydown', keyCode: keyCode.SPACE });
+                    setTimeout(() => {
+                        expect(view.dropdownView.isOpen).toBeTrue();
+                        done();
+                    }, 100);
+                });
+
+                show(view);
+            });
+
             xit('should not set value on Enter keyup if search result is empty', done => {
                 const model = new Backbone.Model({
                     value: 3
