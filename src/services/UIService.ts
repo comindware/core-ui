@@ -21,6 +21,13 @@ type position = {
     bottom?: number
 };
 
+type borders = {
+    left?: number,
+    right?: number,
+    top?: number,
+    bottom?: number
+};
+
 let onStart: EventListener;
 
 export default class UIService {
@@ -34,17 +41,17 @@ export default class UIService {
     }
 
     static draggable(
-        { el, start, stop, drag, axis = false, setProperties = this.__getDefaultsSetProperties(axis) }:
-            { el: HTMLElement, start: Function, stop: Function, drag: Function, axis: axis, setProperties: Array<string> }) {
+        { el, start, stop, drag, axis = false, borders = {}, setProperties = this.__getDefaultsSetProperties(axis) }:
+            { el: HTMLElement, start: Function, stop: Function, drag: Function, axis: axis, borders: borders, setProperties: Array<string> }) {
 
         el.ondragstart = () => false;
         let state: state = {};
 
         const eventOutOfClient = function (e: MouseEvent) {
-            return e.clientX > (state.documentWidth || 0)
-                || e.clientY > (state.documentHeight || 0)
-                || e.clientX < 0
-                || e.clientY < 0;
+            return e.clientX > (borders.right || state.documentWidth || 0)
+                || e.clientY > (borders.top || state.documentHeight || 0)
+                || e.clientX < (borders.left || 0)
+                || e.clientY < (borders.bottom || 0);
         };
 
         const onMove = function (e: MouseEvent) {
@@ -95,6 +102,7 @@ export default class UIService {
             document.removeEventListener('pointermove', onMove, true);
             typeof stop === 'function' && stop(event, el);
         };
+        
         onStart = (event: MouseEvent) => {
             const clientRect = el.getBoundingClientRect();
             const documentWidth = document.body.offsetWidth;
