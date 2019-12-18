@@ -426,9 +426,12 @@ input[type="checkbox"].checkbox {
     height: 100%;
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     flex: 0 1 auto;
     overflow: hidden;
+}
+.cell.editor_bubble .bubbles__list {
+    flex-wrap: nowrap;
 }
 
 .bubbles__list > .counter-hidden{
@@ -437,6 +440,10 @@ input[type="checkbox"].checkbox {
 
 .bubbles__list > .counter-hidden:empty{
     padding-right: 0;
+}
+
+.bubbles__list-form-wrapper {
+    flex-wrap: nowrap;
 }
 
 .bubbles__i {
@@ -479,8 +486,9 @@ input[type="checkbox"].checkbox {
     flex: 1 1;
     max-width: 100%;
     display: inline-block;
-    align-self: center;
-    min-width: 12px;
+    align-self: flex-end;
+    padding-left: 4px;
+    min-width: 25px;
 }
 
 .bubbles__input {
