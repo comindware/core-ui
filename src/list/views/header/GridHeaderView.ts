@@ -66,7 +66,7 @@ const GridHeaderView = Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseenter .grid-header-column': '__handleColumnSelect',
-        'pointerup .grid-header-column-title': '__handleColumnSort',
+        'click .grid-header-column-title': '__handleColumnSort',
         'pointerdown .js-help-text-region': '__handleHelpMenuClick',
         mouseleave: '__onMouseLeaveHeader'
     },
