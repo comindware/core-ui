@@ -84,11 +84,13 @@ export default Marionette.View.extend({
 
             const configDiff = this.treeEditorView.getConfigDiff();
             this.__tabsCollection.forEach((model: TabModel) => {
-                const visible = !configDiff.get(model.id)?.isHidden;
-
-                if (visible === true || visible === false) {
-                    model.set({ visible });
+                let visible;
+                if (model.get('visible') === false) {
+                    visible = model.get('visible');
+                } else {
+                    visible = !configDiff.get(model.id)?.isHidden;
                 }
+                model.set({ visible });
             });
         }
 
