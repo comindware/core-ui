@@ -100,7 +100,6 @@ const variables = {
     'grid-header-height': '26px',
     'grid-header-padding': '0 10px 0 5px',
     'grid-header-border': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
-    'grid-header-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'var(--grid-header-border)',
     'grid-header-selection-bg': 'var(--grey-100)',
 

@@ -132,18 +132,6 @@
     min-width: 50px;
 }
 
-.grid-selection-cell-all {
-    flex: none;
-}
-
-.grid-selection-cell-all:empty {
-    display: none;
-}
-
-.grid-selection-cell-all .cell_selection{
-    position: relative;
-}
-
 .selection-cell-wrp {
     display: flex;
     position: absolute;
