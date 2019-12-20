@@ -9,10 +9,22 @@
 }
 
 .layout__horizontal-layout > * {
-    flex: 1 1 auto;
+    flex: 1 1 0;
     overflow-x: auto;
     min-width: 0;
 }
+
+/*for IE */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .layout__horizontal-layout > * {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+    .layout__horizontal-layout > .layout__button {
+        width: auto;
+    }
+ }
+ /* End for IE */
 
 @media (max-width: 720px) {
     .layout__horizontal-layout {
