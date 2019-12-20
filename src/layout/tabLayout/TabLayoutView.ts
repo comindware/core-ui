@@ -16,7 +16,8 @@ type ShowTabOptions = { region: Marionette.Region, tabModel: TabModel, view: Bac
 const classes = {
     CLASS_NAME: 'layout__tab-layout',
     PANEL_REGION: 'layout__tab-layout__panel-region',
-    HIDDEN: 'layout__tab-hidden'
+    HIDDEN: 'layout__tab-hidden',
+    HIDDEN_BY_TREE_EDITOR: 'hidden-by-tree-editor'
 };
 
 const defaultOptions = {
@@ -81,15 +82,6 @@ export default Marionette.View.extend({
 
         if (this.showTreeEditor) {
             this.showChildView('treeEditorRegion', this.treeEditorView);
-
-            const configDiff = this.treeEditorView.getConfigDiff();
-            this.__tabsCollection.forEach((model: TabModel) => {
-                const visible = !configDiff.get(model.id)?.isHidden;
-
-                if (visible === true || visible === false) {
-                    model.set({ visible });
-                }
-            });
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
@@ -113,6 +105,14 @@ export default Marionette.View.extend({
             const stepperView = new StepperView({ collection: this.__tabsCollection });
             this.showChildView('stepperRegion', stepperView);
             this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
+        }
+    },
+
+    onAttach() {
+        this.__tabsCollection.forEach((model: TabModel) => this.__setVisibleTreeEditor(model));
+        const isNotHiddenTabs = this.__tabsCollection.filter((model: TabModel) => model.get('isHidden') === false);
+        if (isNotHiddenTabs) {
+            this.selectTab(isNotHiddenTabs[0].get('id'));
         }
     },
 
@@ -296,10 +296,17 @@ export default Marionette.View.extend({
             this.__initTreeEditor();
 
             this.__tabsCollection.forEach((model: TabModel) => {
-                this.listenTo(model, 'change:isHidden', () => {
-                    this.setVisible(model.id, !model.get('isHidden'));
-                });
+                this.listenTo(model, 'change:isHidden', () => this.__setVisibleTreeEditor(model));
             });
+        }
+    },
+
+    __setVisibleTreeEditor(model: TabModel) {
+        const id = model.get('id');
+        const isHidden = model.get('isHidden') || false;
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle(classes.HIDDEN_BY_TREE_EDITOR, isHidden);
         }
     },
 
