@@ -823,7 +823,7 @@ tr.dragover td{
 .composite-cell__wrp {
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
 }
 .cell .js-tree-first-cell + .composite-cell__wrp {
     display: inline-flex;
