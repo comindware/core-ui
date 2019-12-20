@@ -188,9 +188,6 @@
 .cell:hover .checkbox_cell-selection{
   visibility: visible;
 }
-.grid-selection-cell-all .checkbox_cell-selection{
-  visibility: visible;
-}
 
 .cell .svg-icons {
   margin-top: 2px;

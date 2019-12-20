@@ -94,6 +94,8 @@ const configConstants = {
 
 export default Marionette.View.extend({
     initialize(options) {
+        this.__onScroll = this.__onScroll.bind(this);
+
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
         this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
@@ -232,7 +234,7 @@ export default Marionette.View.extend({
         return Math.max(0, Math.min(maxPosFirstRow, position));
     },
 
-    __onScroll() {
+    __onScroll(event: MouseEvent) {
         const nextScroll = this.ui.tableTopMostWrapper[0].scrollTop;
         if (
             this.listView.state.viewportHeight === undefined
@@ -398,9 +400,9 @@ export default Marionette.View.extend({
         this.setRequired(this.options.required);
         this.__updateState();
         if (Core.services.MobileService.isIE) {
-            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll());
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', this.__onScroll);
         } else {
-            this.ui.tableTopMostWrapper[0].addEventListener('scroll', () => this.__onScroll(), { passive: true });
+            this.ui.tableTopMostWrapper[0].addEventListener('scroll', this.__onScroll, { passive: true });
         }
     },
 
@@ -485,9 +487,9 @@ export default Marionette.View.extend({
 
         if (this.isRendered()) {
             if (Core.services.MobileService.isIE) {
-                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll());
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', this.__onScroll);
             } else {
-                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', () => this.__onScroll(), { passive: true });
+                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', this.__onScroll, { passive: true });
             }
         }
     },
