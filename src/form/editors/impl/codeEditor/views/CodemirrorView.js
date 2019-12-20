@@ -29,9 +29,11 @@ const lineSeparatorLF = '\n';
 export default Marionette.View.extend({
     initialize(options = {}) {
         this.tt = new Backbone.Model();
+        this.isCallMethodAnywhere = false;
         _.bindAll(
             this,
             '__onBlur',
+            '__callMethodAnywere',
             '__onChange',
             '__showHint',
             '__find',
@@ -151,7 +153,7 @@ export default Marionette.View.extend({
         this.hintIsShown = false;
 
         const extraKeys = {
-            'Ctrl-Space': this.__showHint,
+            'Ctrl-Space': this.__callMethodAnywere,
             'Alt-F': this.__format
         };
 
@@ -200,13 +202,19 @@ export default Marionette.View.extend({
         }
         this.codemirror.on('inputRead', (editor, change) => {
             if (this.intelliAssist) {
-                if (change.text[0] === '.') {
+                const inputSymbol = change.text[0];
+                const isNotFilter = !(/\w/).test(inputSymbol);
+                if (inputSymbol === '.') {
                     this.filterList = null;
+                    this.isCallMethodAnywhere = false;
+                    this.lineCallMethod = this.codemirror.getCursor().line;
                     this.__showCSharpHint();
+                } else if(isNotFilter) {
+                    this.CSharpInfoList = [];
                 } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
-                    const nameEntity = this.__getObjectNameEntity();
-                    if (nameEntity && nameEntity.length) {
-                        this.__showFilterCSharpHint(nameEntity);
+                    const nameFilter = this.__getObjectNameFilter();
+                    if (nameFilter && nameFilter.length) {
+                        this.__showFilterCSharpHint(nameFilter);
                     } else {
                         this.filterList = null;
                     }
@@ -241,6 +249,12 @@ export default Marionette.View.extend({
 
     getValue() {
         return this.codemirror.getValue();
+    },
+
+    __callMethodAnywere() {
+        this.lineCallMethod = this.codemirror.getCursor().line;
+        this.isCallMethodAnywhere = true;
+        this.__showHint();
     },
 
     setValue(value) {
@@ -483,24 +497,20 @@ export default Marionette.View.extend({
         }
     },
 
-    __getObjectNameEntity() {
+    __getObjectNameFilter() {
         const lineNumber = this.codemirror.getCursor().line;
         const line = this.codemirror.getLine(lineNumber);
-        const isFullStop = line.match(/\./g);
-        if (lineNumber !== this.line) {
-            this.filterList = null;
-            return;
-        }
-        if (isFullStop) {
-            let ch = this.codemirror.getCursor().ch;
-            const arraySymbol = [];
-            while (line[ch] !== '.') {
-                arraySymbol.push(line[ch]);
-                ch--;
+        const ch = this.codemirror.getCursor().ch;
+        let filterName;
+        const hasDot = (/\./g).test(line);
+        if (this.isCallMethodAnywhere || hasDot) {
+            if (this.lineCallMethod !== lineNumber) {
+                this.CSharpInfoList = [];
+                return;
             }
-            const nameEntity = arraySymbol.reverse().join('');
-            return nameEntity;
+            filterName = line.slice(0, ch).match(/(\w*)$/)[0];
         }
+        return filterName;
     },
 
     __getTooltipCsharpModel() {
@@ -539,6 +549,7 @@ export default Marionette.View.extend({
             this.previousHintName = null;
         }
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
+        codemirror.on(autoCompleteObject, 'pick', () => this.CSharpInfoList = []);
         this.hintIsShown = true;
         return autoCompleteObject;
     },
