@@ -5,12 +5,6 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateContext() {
-        return {
-            isReadonly: this.options.readonly
-        };
-    },
-
     ui: {
         compile: '.js-code-editor-compile',
         undo: '.js-code-editor-undo',

@@ -161,3 +161,7 @@
     opacity: 1!important;
     transition: transform 0.1s linear, opacity 0.1s linear;
 }
+
+.presented-modal-window .popout-menu__i:hover {
+    background: #d6e7f2;
+}

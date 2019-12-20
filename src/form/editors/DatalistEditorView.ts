@@ -158,7 +158,6 @@ const presetsDefaults = {
         }
     }),
     user: (options: optionsType) => ({
-        listTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.ALLUSERS'),
         selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
         buttonBubbleTemplate: compositeUserCell,
@@ -237,12 +236,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             buttonViewOptions: {
                 value: '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
-                bubbleItemViewOptions: Object.assign(
-                    {
-                        customTemplate: this.options.buttonBubbleTemplate
-                    },
-                    bubbleItemViewOptions
-                ),
+                bubbleItemViewOptions: {
+                    customTemplate: this.options.buttonBubbleTemplate,
+                    ...bubbleItemViewOptions
+                },
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 emptyPlaceholder: this.__getEmptyPlaceholder(),
                 readonlyPlaceholder: this.__getReadonlyPlaceholder(),
@@ -260,12 +257,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 addNewButtonTextWrapper: () => _.getResult(this.options.addNewButtonText, this, this.isEmptyValue()),
                 showAddNewButton: this.options.showAddNewButton,
                 addNewButtonText: this.options.addNewButtonText,
-                bubbleItemViewOptions: Object.assign(
-                    {
-                        customTemplate: this.options.panelBubbleTemplate
-                    },
-                    bubbleItemViewOptions
-                ),
+                bubbleItemViewOptions: {
+                    customTemplate: this.options.panelBubbleTemplate,
+                    ...bubbleItemViewOptions
+                },
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
@@ -1083,9 +1078,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     __getIsQuantityControl(e) {
         return (
-            this.__isQuantityControl ||
-            [keyCode.UP, keyCode.DOWN, keyCode.ENTER, keyCode.SPACE].includes(e.keyCode) || // || this.__checkEntryToPanel(e);
-            this.__checkEntryToBubbles(e)
+            this.__isQuantityControl
+            || [keyCode.UP, keyCode.DOWN, keyCode.ENTER].includes(e.keyCode) // || this.__checkEntryToPanel(e);
+            || this.__checkEntryToBubbles(e)
         );
     },
 

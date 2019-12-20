@@ -282,7 +282,6 @@ input[type="checkbox"].checkbox {
 .radiobutton-text {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 90%;
     white-space: nowrap;
 }
 
@@ -442,6 +441,10 @@ input[type="checkbox"].checkbox {
     padding-right: 0;
 }
 
+.bubbles__list-form-wrapper {
+    flex-wrap: nowrap;
+}
+
 .bubbles__i {
     max-width: 100%;
     display: flex;
@@ -482,7 +485,9 @@ input[type="checkbox"].checkbox {
     flex: 1 1;
     max-width: 100%;
     display: inline-block;
-    align-self: center;
+    align-self: flex-end;
+    padding-left: 4px;
+    min-width: 25px;
 }
 
 .bubbles__input {
@@ -923,9 +928,9 @@ input[type="color"], .colorpicker{
     flex-wrap: nowrap;
 }
 
-.cell .open .bubbles__input:focus:not([readonly]) {
+/* .cell .open .bubbles__input:focus:not([readonly]) {
     min-width: 200px;
-}
+} */
 
 .cell .bubbles__i.bubble__pencil-edit .bubble-doc_text{
 
