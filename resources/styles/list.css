@@ -52,7 +52,7 @@
 .grid-content-wrp {
     display: table;
     min-width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
     table-layout: fixed;
 }
 .grid-content-wrp.grid-content-wrp_width-auto {
@@ -188,12 +188,16 @@
     white-space: nowrap;
     text-align: left;
     cursor: default;
-    height: 35px;
     position: sticky;
     top: 0;
     z-index: 2;
     background-clip: padding-box;
     max-width: 0px; /*hack to set width less than cells content */
+}
+.grid-header-column,
+.grid-header .cell_selection,
+.grid-header .cell_selection-index {
+    height: 35px;
 }
 
 .header-column-wrp{
