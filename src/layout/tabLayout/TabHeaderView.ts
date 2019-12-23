@@ -58,6 +58,7 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.listenTo(Core.services.GlobalEventService, 'window:resize', _.debounce(this.__toggleMenu, toggleMenuDelay));
+        this.listenTo(this.options.collection, 'change:visible change:isHidden', _.debounce(this.__toggleMenu, 0));
 
         this.__toggleMenu();
     },
