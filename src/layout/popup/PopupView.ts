@@ -103,7 +103,6 @@ export default Marionette.View.extend({
             this.ui.fullscreenToggle[0].setAttribute('hidden', '');
         }
 
-        this.ui.window[0].ondragstart = () => false;
         this.__debounceOnResize = _.debounce(this.__onResize, 300);
         this.listenTo(GlobalEventService, 'window:resize', this.__debounceOnResize);
     },
