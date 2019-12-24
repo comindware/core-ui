@@ -1,6 +1,6 @@
 import { helpers } from 'utils';
 import template from './templates/tabLayout.hbs';
-import HeaderView from './TabHeaderView';
+import TabHeaderView from './TabHeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
@@ -71,41 +71,45 @@ export default Marionette.View.extend({
     },
 
     onRender(): void {
-        const headerView = new HeaderView({
+        const tabHeaderView = new TabHeaderView({
             collection: this.__tabsCollection,
             headerClass: this.getOption('headerClass')
         });
 
-        this.listenTo(headerView, 'select', this.__handleSelect);
-        this.showChildView('headerRegion', headerView);
+        this.listenTo(tabHeaderView, 'select', this.__handleSelect);
+        this.showChildView('headerRegion', tabHeaderView);
 
         if (this.showTreeEditor) {
             this.showChildView('treeEditorRegion', this.treeEditorView);
 
             const configDiff = this.treeEditorView.getConfigDiff();
             this.__tabsCollection.forEach((model: TabModel) => {
-                const visible = !configDiff.get(model.id)?.isHidden;
+                const isHidden = configDiff.get(model.id)?.isHidden;
 
-                if (visible === true || visible === false) {
-                    model.set({ visible });
+                if (typeof isHidden === 'boolean') {
+                    model.set({ isHidden });
                 }
             });
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
-        this.listenTo(this.__tabsCollection, 'change:visible', this.__onVisibleChanged);
+        this.listenTo(this.__tabsCollection, 'change:isHidden change:visible', this.__onChangeShowing);
 
-        const selectedTab = this.__getSelectedTab();
-        if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
-            this.__renderTab(selectedTab, false);
+        if (this.isAllHiddenTab()) {
+            this.__setNoTabsState(true);
         } else {
-            this.__tabsCollection.forEach(model => {
-                this.__renderTab(model, false);
-            });
-        }
-
-        if (selectedTab) {
-            this.selectTab(selectedTab.id);
+            const selectedTab = this.__getSelectedTab();
+            if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
+                this.__renderTab(selectedTab, false);
+            } else {
+                this.__tabsCollection.forEach(model => {
+                    this.__renderTab(model, false);
+                });
+            }
+    
+            if (selectedTab) {
+                this.selectTab(selectedTab.id);
+            }
         }
 
         this.__updateState();
@@ -162,8 +166,6 @@ export default Marionette.View.extend({
                 }
             }
             selectedTab.set('selected', false);
-
-            this.selectTabIndex = this.__getTabIndex(tab);
         }
 
         if (tab.get('enabled')) {
@@ -171,6 +173,8 @@ export default Marionette.View.extend({
             if (!tab.get('isRendered') && this.isRendered()) {
                 this.__renderTab(tab, Boolean(this.getOption('deferRender')));
             }
+
+            this.selectTabIndex = this.__getTabIndex(tab);
         }
     },
 
@@ -179,7 +183,7 @@ export default Marionette.View.extend({
     },
 
     isAllHiddenTab() {
-        const visibleCollection = this.__tabsCollection.filter('visible');
+        const visibleCollection = this.__tabsCollection.filter(tabModel => tabModel.isShow());
 
         // all tabs hidden: show message instead of tab panel
         if (!visibleCollection.length) {
@@ -188,11 +192,11 @@ export default Marionette.View.extend({
         return false;
     },
 
-    setVisible(tabId: string, visible: boolean): void {
-        const tab = this.__findTab(tabId);
-        const visibleCollection = this.__tabsCollection.filter('visible');
+    __onChangeShowing(tab: Backbone.Model) {
+        const isShow = tab.isShow();
+
+        const visibleCollection = this.__tabsCollection.filter(tabModel => tabModel.isShow());
         let newTabIndex;
-        tab.set({ visible });
 
         let selectedtab = this.__getSelectedTab();
 
@@ -202,7 +206,7 @@ export default Marionette.View.extend({
             return;
         }
         // show first tab, other tabs was hidden before
-        if (visible && this.hasNoVisibleTabs) {
+        if (isShow && this.hasNoVisibleTabs) {
             tab.set('selected', true);
             selectedtab = tab;
             this.__setNoTabsState(false);
@@ -213,7 +217,7 @@ export default Marionette.View.extend({
         this.__setNoTabsState(false);
 
         // if we hide or show another tab, then nothing needs to be done
-        if (tabId !== selectedtab.id) {
+        if (tab.id !== selectedtab.id) {
             return;
         }
 
@@ -283,23 +287,21 @@ export default Marionette.View.extend({
             if (model.get('visible') == null) {
                 model.set('visible', true);
             }
+
+            if (model.isShow == null) {
+                model.isShow = TabModel.prototype.isShow;
+            }
         });
 
-        const selectedTab = this.__getSelectedTab();
+        let selectedTab = this.__getSelectedTab();
         if (!selectedTab) {
-            this.selectTab(this.__tabsCollection.at(0).id);
-            this.selectTabIndex = 0;
+            selectedTab = this.__tabsCollection.find((tabModel: Backbone.Model) => tabModel.isShow() && tabModel.get('enabled')) || this.__tabsCollection.at(0);
+            this.selectTab(selectedTab.id);
         }
         this.selectTabIndex = this.__getTabIndex(selectedTab);
 
         if (this.showTreeEditor) {
             this.__initTreeEditor();
-
-            this.__tabsCollection.forEach((model: TabModel) => {
-                this.listenTo(model, 'change:isHidden', () => {
-                    this.setVisible(model.id, !model.get('isHidden'));
-                });
-            });
         }
     },
 
@@ -343,7 +345,7 @@ export default Marionette.View.extend({
     __getSelectedTab(): TabModel {
         const selectedTab = this.__tabsCollection.find((tabModel: TabModel) => tabModel.get('selected'));
 
-        return selectedTab || this.__tabsCollection.find((tabModel: TabModel) => tabModel.get('visible'));
+        return selectedTab;
     },
 
     __getTabIndex(model: TabModel): number {
@@ -366,10 +368,6 @@ export default Marionette.View.extend({
 
     __onSelectedChanged(model: Backbone.Model): void {
         this.__updateTabRegion(model);
-    },
-
-    __onVisibleChanged(model: Backbone.Model, visible: boolean): void {
-        this.setVisible(model.id, visible);
     },
 
     __updateTabRegion(model: Backbone.Model): void {
