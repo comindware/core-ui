@@ -193,8 +193,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   color: var(--red-dark);
 }
 
-.form-label:not(.form-label--empty) + .editor_document,
-.form-label:not(.form-label--empty) + .editor_checkbox {
+.form-label:not(.form-label--empty) + .editor_document{
   padding-left: var(--form-input-padding);
 }
 
@@ -229,6 +228,14 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .layout__horizontal-layout > div:not(:last-child),
 .layout__horizontal-layout-list-item:not(:last-child) {
   padding-right: 10px;
+}
+
+.firstYearSetting,
+.secondYearSetting,
+.firstMonthSetting,
+.secondMonthSetting,
+.firstDaySettings {
+  padding: var(--textarea-padding);
 }
 
 .layout__vertical-layout > div,

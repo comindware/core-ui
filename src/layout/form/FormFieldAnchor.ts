@@ -7,7 +7,8 @@ export default Marionette.View.extend({
     attributes() {
         return {
             [`data-${this.options.kind}s`]: this.options.key,
-            [`${this.options.kind}-for`]: this.options.uniqueFormId
+            [`${this.options.kind}-for`]: this.options.uniqueFormId,
+            [`class`]: this.options.key
         };
     },
 
