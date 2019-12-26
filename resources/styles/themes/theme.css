@@ -862,7 +862,7 @@ _:-ms-lang(x), .cell .checkbox,
 }
 .bubbles .spinner {
   line-height: 1;
-  right: 0;
+  right: 17px;
 }
 
 .cell .bubbles {

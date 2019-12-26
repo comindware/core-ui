@@ -1,4 +1,3 @@
-// @flow
 import BubbleItemView from './BubbleItemView';
 
 export default Marionette.CollectionView.extend({
