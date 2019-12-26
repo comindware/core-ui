@@ -579,14 +579,13 @@ tr:hover .cell_selection-index {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .cell .checkbox,
-  .cell_selection-index > .checkbox,
-  .cell_selection > .checkbox {
-    position: static;
-    margin: 0 auto;
-    transform: translate(0px, 0px);
-  }
+
+_:-ms-lang(x), .cell .checkbox,
+.cell_selection-index > .checkbox,
+.cell_selection > .checkbox {
+  position: static;
+  margin: 0 auto;
+  transform: translate(0px, 0px);
 }
 
 .cell .input {
