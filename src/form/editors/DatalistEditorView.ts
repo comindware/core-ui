@@ -681,6 +681,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     getIsOpenAllowed(openOnRender) {
+        if (this.preventOpen) {
+            return false;
+        }
         const skipFocusCheck = openOnRender;
         return skipFocusCheck ? this.getEditable() && !this.dropdownView.isOpen : this.getEditable() && !this.dropdownView.isOpen && this.isThisFocus();
     },
@@ -698,6 +701,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     close() {
+        this.preventOpen = true;
+        setTimeout(() => this.preventOpen = false, this.options.textFilterDelay);
         this.dropdownView.close();
         this.__focusButton();
     },
