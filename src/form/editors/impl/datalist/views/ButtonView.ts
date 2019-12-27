@@ -28,11 +28,6 @@ export default TextEditorView.extend({
     },
 
     triggers: {
-        click: {
-            event: 'click',
-            preventDefault: false,
-            stopPropagation: false
-        },
         'keydown @ui.input': {
             event: 'input:keydown',
             preventDefault: false,
