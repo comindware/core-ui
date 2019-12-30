@@ -1,11 +1,19 @@
 import template from './templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 import keyCode from '../utils/keyCode';
+import MobileService from '../services/MobileService';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
     delay: 200
 });
+
+const classes = {
+    defaultSearchClass: 'tr-search tr-search_mselect',
+    compactSearchClass: 'tr-search_compact',
+    open: 'open',
+    closed: 'closed'
+};
 
 export default Marionette.View.extend({
     initialize(options = {}) {
@@ -26,18 +34,30 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'tr-search tr-search_mselect',
+    className() { return this.__getClassName(); },
 
     ui: {
         input: '.js-search-input',
-        clear: '.js-search-clear'
+        clear: '.js-search-clear',
+        compactSearch: '.js-search-icon'
     },
 
-    events: {
-        'keyup @ui.input': '__trySearching',
-        'pointerdown @ui.clear': '__clear',
-        'focus @ui.input': 'onFocus',
-        'blur @ui.input': 'onBlur'
+    events() {
+        const events = {
+            'keyup @ui.input': '__trySearching',
+            'pointerdown @ui.clear': '__clear',
+            'focus @ui.input': 'onFocus',
+            'blur @ui.input': 'onBlur'
+        };
+
+        if (MobileService.isMobile) {
+            const mobileEvents = {
+                'click @ui.compactSearch': '__onClickIconSearch'
+            };
+
+            Object.assign(events, mobileEvents);
+        }
+        return events;
     },
 
     onFocus() {
@@ -46,13 +66,20 @@ export default Marionette.View.extend({
 
     onBlur() {
         this.el.classList.remove('focused');
+        this.__handleClick();
     },
 
     onRender() {
+        if (MobileService.isMobile) {
+            this.$el.addClass(classes.closed);
+        }
+
         if (this.options.searchText) {
             this.ui.input.val(this.options.searchText);
         }
+
         const value = this.ui.input.val();
+
         this.ui.clear.toggle(!!value);
         this.__updateInput(value);
     },
@@ -100,6 +127,13 @@ export default Marionette.View.extend({
         }
     },
 
+    __getClassName({ searchBarIsOpen } = {}) {
+        if (MobileService.isMobile && !searchBarIsOpen) {
+            return classes.compactSearchClass;
+        }
+        return classes.defaultSearchClass;
+    },
+
     __trySearching(event) {
         if (this.options.searchOnEnter === true) {
             if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
@@ -107,6 +141,21 @@ export default Marionette.View.extend({
             }
         } else {
             this.__search();
+        }
+    },
+
+    __onClickIconSearch() {
+        this.$el.addClass(classes.open);
+        const currentClassName = this.__getClassName({ searchBarIsOpen: true });
+        this.el.className = currentClassName;
+        this.focus();
+    },
+
+    __handleClick(eventTarget) {
+        if (MobileService.isMobile && !this.el.contains(eventTarget) && !this.el.classList.contains('closed')) {
+            const currentClassName = this.__getClassName();
+            this.el.className = currentClassName;
+            this.$el.addClass(classes.closed);
         }
     },
 
