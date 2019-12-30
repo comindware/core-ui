@@ -6,7 +6,8 @@
     right: 0;
     text-align: center;
 }
-.msg-popup:before {
+
+.msg-popup::before {
     content: '';
     height: 100%;
     width: 0;
@@ -24,8 +25,9 @@
     overflow: auto;
     display: inline-block;
     vertical-align: middle;
-    background: #fff;
+    background: #ffffff;
 }
+
 .msg-popup__title {
     font-size: 22px;
     line-height: 1.2;
@@ -33,11 +35,13 @@
     font-weight: 300;
     text-align: center;
 }
+
 .msg-popup__desc {
     padding: 20px;
     font-size: 16px;
     font-weight: 300;
 }
+
 .msg-popup__buttons {
     text-align: right;
 }
@@ -50,19 +54,22 @@
     color: #0575bd;
     outline: 0;
     border: 1px solid #ced3d7;
-    background: #fff;
+    background: #ffffff;
     cursor: pointer;
 }
+
 .msg-popup__button:hover {
-    color:#009bfe;
+    color: #009bfe;
     border-color: #009bfe;
 }
+
 .msg-popup__button_default {
-    color: #fff;
-    border-color: #0575BD;
-    background: #0575BD;
+    color: #ffffff;
+    border-color: #0575bd;
+    background: #0575bd;
 }
+
 .msg-popup__button_default:hover {
-    color: #fff;
+    color: #ffffff;
     background-color: #009bfe;
 }
