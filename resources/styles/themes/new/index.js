@@ -261,7 +261,7 @@ module.exports.apply = {
         height: '29px',
         opacity: '.8',
         right: '0',
-        top: '17px',
+        top: '10px',
         'font-size': '16px',
         'text-align': 'center'
     },

@@ -52,7 +52,7 @@ export default Marionette.View.extend({
 
         if (MobileService.isMobile) {
             const mobileEvents = {
-                'click @ui.compactSearch': '__onClickIconSearch'
+                'click @ui.compactSearch': '__showSearchBar'
             };
 
             Object.assign(events, mobileEvents);
@@ -66,7 +66,7 @@ export default Marionette.View.extend({
 
     onBlur() {
         this.el.classList.remove('focused');
-        this.__handleClick();
+        this.__hideSearchBar();
     },
 
     onRender() {
@@ -78,9 +78,7 @@ export default Marionette.View.extend({
             this.ui.input.val(this.options.searchText);
         }
 
-        const value = this.ui.input.val();
-
-        this.ui.clear.toggle(!!value);
+        const value = this.__toggleClearIcon();
         this.__updateInput(value);
     },
 
@@ -106,7 +104,7 @@ export default Marionette.View.extend({
         }
     },
 
-    setReadonly(isEnabled) {
+    setReadonly(isEnabled: Boolean) {
         if (this.isRendered()) {
             if (isEnabled) {
                 this.ui.input[0].removeAttribute('readonly');
@@ -116,11 +114,11 @@ export default Marionette.View.extend({
         }
     },
 
-    clearInput(isClearingSilent) {
+    clearInput(isClearingSilent: Boolean) {
         if (isClearingSilent) {
-            this.ui.input.val('');
+            const value = this.ui.input.val('');
             this.blur();
-            this.ui.clear.toggle();
+            this.ui.clear.toggle(value);
             this.__updateInput();
         } else {
             this.__clear();
@@ -134,25 +132,33 @@ export default Marionette.View.extend({
         return classes.defaultSearchClass;
     },
 
-    __trySearching(event) {
+    __trySearching(event: PointerEvent) {
         if (this.options.searchOnEnter === true) {
             if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
                 this.__search();
+            } else {
+                this.__toggleClearIcon();
             }
-        } else {
-            this.__search();
         }
     },
 
-    __onClickIconSearch() {
+    __toggleClearIcon() {
+        const value = this.ui.input.val();
+        this.ui.clear.toggle(!!value);
+        return value;
+    },
+
+    __showSearchBar() {
         this.$el.addClass(classes.open);
         const currentClassName = this.__getClassName({ searchBarIsOpen: true });
         this.el.className = currentClassName;
+        this.__toggleClearIcon();
         this.focus();
     },
 
-    __handleClick(eventTarget) {
-        if (MobileService.isMobile && !this.el.contains(eventTarget) && !this.el.classList.contains('closed')) {
+    __hideSearchBar() {
+        if (MobileService.isMobile && !this.el.classList.contains(classes.closed)) {
+            this.ui.clear.toggle(false);
             const currentClassName = this.__getClassName();
             this.el.className = currentClassName;
             this.$el.addClass(classes.closed);

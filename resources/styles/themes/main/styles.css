@@ -75,6 +75,10 @@
   position: relative;
 }
 
+.tr-search_compact.closed .tr-search-icon {
+  font-size: 15px;
+}
+
 .textarea:hover {
   border-color: var(--input-hover-color);
 }
