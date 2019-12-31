@@ -67,6 +67,9 @@ rgba(5,117,189,.5) // user avatar btn
 
 .form-group {
     position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-end;
 }
 
 @media (max-width: 720px) {

@@ -26,12 +26,18 @@ body {
   padding: var(--form-label-padding);
 }
 
-.form-label:not(.form-label--empty) .form-label__txt {
+.form-label:not(.form-label--empty) .form-label__txt:not(:empty) {
   margin-bottom: var(--form-label-margin);
 }
 
 .datalist-panel .form-label:not(.form-label--empty) {
   margin-top: var(--form-label-margin);
+}
+
+.form-group .editor_checkbox {
+  padding: 6px 20px 6px 10px;
+  display: flex;
+  align-items: center;
 }
 
 .form-label__info:not(:empty),

@@ -2,7 +2,7 @@
     flex: none;
 }
 .layout__horizontal-layout > .layout__button {
-    align-self: baseline;
+    align-self: flex-end;
 }
 .btn {
     display: inline-block;

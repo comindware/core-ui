@@ -193,8 +193,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   color: var(--red-dark);
 }
 
-.form-label:not(.form-label--empty) + .editor_document,
-.form-label:not(.form-label--empty) + .editor_checkbox {
+.form-label:not(.form-label--empty) + .editor_document {
   padding-left: var(--form-input-padding);
 }
 
