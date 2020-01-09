@@ -1,6 +1,7 @@
 import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
+import LocalizationService from '../../../../../services/LocalizationService';
 
 export default {
     getAutoCompleteContext() {
@@ -34,11 +35,14 @@ export default {
 
     async getDataRequest(options, type) {
         let result;
-        if (type === constants.autoCompleteContext.attributes) {
+        if (type === constants.autoCompleteContext.attributes && options.templateId) {
             result = await options.intelliAssist.getAttributes(options.templateId);
         }
-        if (type === constants.autoCompleteContext.templates) {
+        if (type === constants.autoCompleteContext.templates && options.completeHoverQuery) {
             result = await options.intelliAssist.getTemplates(options.completeHoverQuery);
+        }
+        if (!result) {
+            return [];
         }
         const arr = MappingService.mapOntologyArrayToAutoCompleteArray(result, type);
         return arr;
@@ -60,26 +64,40 @@ export default {
             if (options.token.string === null) {
                 return;
             }
-            completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
-            autoCompleteObject = {
-                from: {
-                    line: options.cursor.line,
-                    ch: options.token.start
-                },
-                to: {
-                    line: options.cursor.line,
-                    ch: options.token.end
-                },
-                list: completion
-            };
+            if (currentArray.length) {
+                completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
+                autoCompleteObject = {
+                    from: {
+                        line: options.cursor.line,
+                        ch: options.token.start
+                    },
+                    to: {
+                        line: options.cursor.line,
+                        ch: options.token.end
+                    },
+                    list: completion
+                };
+            } else {
+                autoCompleteObject = {
+                    from: options.cursor,
+                    to: options.cursor,
+                    list: [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }]
+                };
+            }
         } else if (options.token.string === constants.activeSymbol.dollar) {
+            let listToolbar;
             const result = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
-            options.autoCompleteModel.set({ attributes: result });
-            this.autoCompleteContext = constants.autoCompleteContext.attributes;
+            if (result.length) {
+                options.autoCompleteModel.set({ attributes: result });
+                this.autoCompleteContext = constants.autoCompleteContext.attributes;
+                listToolbar = this.__renderConfigListToolbar(result);
+            } else {
+                listToolbar = [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }];
+            }
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: this.__renderConfigListToolbar(result)
+                list: listToolbar
             };
         } else if (options.token.string === constants.activeSymbol.arrayRight) {
             const result = await this.getDataRequest(options, constants.autoCompleteContext.templates);
