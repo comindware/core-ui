@@ -35,7 +35,6 @@
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
 .editor_checked.checkbox {
   color: var(--checkbox-checked-color);
-  background: var(--light-gradient);
   border-color: var(--checkbox-border-color);
 }
 
