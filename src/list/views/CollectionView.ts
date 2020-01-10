@@ -292,7 +292,8 @@ export default Marionette.PartialCollectionView.extend({
                 this.collection.trigger(e.shiftKey ? 'move:left' : 'move:right');
                 return false;
             case keyCode.ENTER:
-                this.moveCursorBy(1, { shiftPressed: false });
+                delta = (e.shiftKey) ? -1 : 1;
+                this.moveCursorBy(delta, { shiftPressed: false });
                 return false;
             case keyCode.ESCAPE:
                 if (isEditable && handle) {
