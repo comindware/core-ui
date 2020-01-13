@@ -32,10 +32,9 @@
   color: var(--grey-400);
 }
 
-.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
-.editor_checked.checkbox {
+.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox {
   color: var(--checkbox-checked-color);
-  background: var(--light-gradient);
+  background: var(--concave-gradient);
   border-color: var(--checkbox-border-color);
 }
 
@@ -48,8 +47,9 @@
 
 .checkbox,
 .radiobutton {
-  background: var(--light-gradient);
+  background: var(--convex-gradient);
 }
+
 .checkbox .svg-icons {
   width: 0.9em;
   height: 0.9em;
