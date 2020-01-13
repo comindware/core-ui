@@ -1,13 +1,13 @@
-.icons-panel__search{
+.icons-panel__search {
     padding: 10px;
 }
 
-.icons-panel-category{
+.icons-panel-category {
     width: 100%;
     margin-bottom: 20px;
 }
 
-.icons-panel-category__name{
+.icons-panel-category__name {
     margin: 0 10px 5px;
     font-size: 15px;
     color: #182026;
@@ -15,7 +15,7 @@
     padding-bottom: 3px;
 }
 
-.icons-panel-category__palette{
+.icons-panel-category__palette {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -23,7 +23,7 @@
     align-items: flex-start;
 }
 
-.icons-panel-i{
+.icons-panel-i {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -37,49 +37,47 @@
     text-overflow: ellipsis;
 }
 
-.icons-panel-i:hover{
+.icons-panel-i:hover {
     background: #edf3fb;
 }
 
-.icons-panel-i__img{
+.icons-panel-i__img {
     font-size: 18px;
     margin-right: 5px;
 }
 
-.icons-panel-i__text{
+.icons-panel-i__text {
     display: inline-block;
     white-space: nowrap;
-    color:#70787f;
+    color: #70787f;
     font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
 }
 
-
-.icon-editor-wrp{
+.icon-editor-wrp {
     display: flex;
     max-width: 100%;
     padding-right: 20px;
     position: relative;
 }
 
-
-.icon-selector-header{
+.icon-selector-header {
     display: inline-block;
     margin-top: 3px;
 }
 
-.editor_icons{
+.editor_icons {
     display: flex;
     align-items: center;
 }
 
-.editor_icons .editor_icons--preview{
+.editor_icons .editor_icons--preview {
     font-size: 20px;
 }
 
-.svg-icons-remove{
+.svg-icons-remove {
     display: block;
     width: 20px;
     height: 20px;
@@ -89,23 +87,23 @@
     visibility: hidden;
     cursor: pointer;
 }
-.icon-editor-wrp:hover .svg-icons-remove{
+
+.icon-editor-wrp:hover .svg-icons-remove {
     visibility: visible;
 }
 
-
-.ld-setting-dd-panel{
+.ld-setting-dd-panel {
     padding: 5px;
     min-width: 200px;
     max-width: 400px;
     display: flex;
 }
 
-.ld-setting-dd-panel_color{
+.ld-setting-dd-panel_color {
     flex-direction: column;
 }
 
-.ld-setting-dd-panel_color .fr-btn{
+.ld-setting-dd-panel_color .fr-btn {
     margin: 2px;
     width: 100%;
 }
@@ -119,7 +117,7 @@
     height: 100%;
 }
 
-.ld-setting-dd-panel__i{
+.ld-setting-dd-panel__i {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -131,7 +129,7 @@
     overflow: hidden;
 }
 
-.ld-setting-dd-panel__i:hover{
+.ld-setting-dd-panel__i:hover {
     background: #edf3fb;
 }
 

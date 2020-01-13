@@ -1,16 +1,17 @@
-﻿.fr-alert {
+.fr-alert {
     max-width: 475px;
     font-size: 13px;
-    color: #fff;
+    color: #ffffff;
     border-radius: 5px;
     background: #eb6c16;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     z-index: 560;
     overflow: hidden;
     margin: 0.5rem;
     display: flex;
     align-items: stretch;
 }
+
 .fr-alert .icon-container {
     display: flex;
     flex-direction: column;
@@ -20,16 +21,15 @@
     background-color: white;
     color: #eb6c16;
     font-size: 24px;
-
 }
 
-.notification-body_container{
+.notification-body_container {
     padding: 0.75rem 0 0.75rem 0.75rem;
     overflow: auto;
 }
 
-.fr-alert .fr-alert-title{
-    padding-right:  0.5rem;;
+.fr-alert .fr-alert-title {
+    padding-right: 0.5rem;
 }
 
 .fr-alert .text-container {
@@ -43,29 +43,26 @@
     padding-right: 0.75rem;
 }
 
-.fr-alert .fr-alert-title + .text-container{
-
-}
-
 .fr-alert .close-button_container {
     min-width: 20px;
     padding: 3px 6px;
     display: flex;
 }
+
 .fr-alert_error {
-    background:  #eb6c16;
+    background: #eb6c16;
 }
 
-.fr-alert_error .icon-container{
+.fr-alert_error .icon-container {
     color: #eb6c16;
 }
 
 .alert_success {
-    background-color: #74C365;
+    background-color: #74c365;
 }
 
 .fr-alert.alert_success .icon-container {
-    color: #74C365;
+    color: #74c365;
 }
 
 .notification-container {
@@ -81,7 +78,7 @@
     align-items: flex-end;
 }
 
-.notification-container > div{
+.notification-container > div {
     pointer-events: auto;
 }
 
