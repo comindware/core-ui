@@ -9,6 +9,7 @@ const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -222,6 +223,9 @@ module.exports = options => {
                 tsconfig: '../tsconfig.json',
                 experimentalDecorators: true,
                 ignoreCompilerErrors: true
+            }),
+            new StylelintPlugin({
+                files: ['../resources/styles/*.css', '../resources/styles/**/*.css', '../resources/styles/**/**/*.css']
             })
         ],
         resolve: {
