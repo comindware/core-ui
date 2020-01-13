@@ -529,11 +529,7 @@ export default Marionette.View.extend({
             autoCompleteObject = {
                 from: {
                     line: cursor.line,
-                    ch: this.hintsBehindDot ? token.start + 1 : token.start
-                },
-                to: {
-                    line: cursor.line,
-                    ch: this.hintsBehindDot ? token.end + 1 : token.end
+                    ch: token.end
                 },
                 list: this.__renderConfigListToolbar(dataList)
             };
