@@ -168,6 +168,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
 
     __showTypeEditor() {
         if (!this.valueTypeCollection.get(this.value.type)) {
+            console.warn(`Unexpected value.type "${this.value.type}"`);
             this.value.type = this.valueTypeCollection.at(0).id;
         }
         if (!this.options.showTypeEditor) {
