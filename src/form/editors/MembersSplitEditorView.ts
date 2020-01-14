@@ -129,7 +129,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
                     text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
                     customClass: 'btn-small',
                     handler: () => {
-                        this.controller.updateMembers();
+                        this.controller.saveMembers();
                         this.__value(this.options.selected, true);
                         Core.services.WindowService.closePopup();
                     }
@@ -141,7 +141,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         WindowService.showPopup(popup);
     },
 
-    __updateText(text) {
+    __updateText(text: String) {
         this.ui.membersText.text(text);
     },
 

@@ -7,6 +7,10 @@ import { memberService, data } from '../../utils/memberService';
 
 describe('Editors', () => {
     describe('Member Split Editor', () => {
+        let timer;
+        afterEach(() => {
+            clearTimeout(timer);
+        });
         FocusTests.runFocusTests({
             initialize: () => {
                 const model = new Backbone.Model({
@@ -68,10 +72,10 @@ describe('Editors', () => {
             });
 
             view.on('render', () => {
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-members-text')).toContainText('groups');
                     view.setValue(null);
-                    setTimeout(() => {
+                    timer = setTimeout(() => {
                         expect(view.$('.js-members-text')).toContainText('groups');
                     }, 100);
                     done();
@@ -97,13 +101,13 @@ describe('Editors', () => {
             });
 
             view.on('render', () => {
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-members-text')).toContainText('Here I have 3 dogs');
                     view.setValue(['dog.1', 'dog.2', 'dog.4', 'dog.7']);
-                    setTimeout(() => {
+                    timer = setTimeout(() => {
                         expect(view.$('.js-members-text')).toContainText('Here I have 4 dogs');
                         view.setValue(null);
-                        setTimeout(() => {
+                        timer = setTimeout(() => {
                             expect(view.$('.js-members-text')).toContainText('Here I have 0 dogs');
                             done();
                         }, 100);
@@ -134,10 +138,10 @@ describe('Editors', () => {
             });
 
             view.on('render', () => {
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-members-text')).toContainText('3 people'); // 3 users selected
                     view.setValue(['user.1', 'user.2', 'user.4', 'user.5']);
-                    setTimeout(() => {
+                    timer = setTimeout(() => {
                         expect(view.$('.js-members-text')).toContainText('4 people'); // 4 users selected
                         done();
                     }, 100);
@@ -168,7 +172,7 @@ describe('Editors', () => {
             });
 
             view.on('render', () => {
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-members-text')).not.toContainText('3'); // 3 users selected (hidden)
                     done();
                 }, 100);
@@ -508,10 +512,10 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.setValue(['account.7', 'account.8', 'group.9']);
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-members-text')).toContainText('2 people 1 group');
                     view.setValue(null);
-                    setTimeout(() => {
+                    timer = setTimeout(() => {
                         expect(view.$('.js-members-text')).toContainText('0 people');
                         done();
                     }, 200);
@@ -540,7 +544,7 @@ describe('Editors', () => {
                 view.controller.view.on('attach', () => {
                     expect(view.$('.visible-loader')).toExist();
                 });
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.visible-loader')).not.toExist();
                     done();
                 }, 200);
@@ -568,7 +572,7 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.setValue(['account.7', 'account.8', 'group.9']);
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-quantity-warning-region')).toBeHidden();
                     done();
                 }, 500);
@@ -590,7 +594,7 @@ describe('Editors', () => {
             newData.totalCount = 20;
             const newMemberService = Object.assign({}, memberService);
             newMemberService.getMembers = () => new Promise(res => {
-                setTimeout(() => res(newData), 100);
+                timer = setTimeout(() => res(newData), 100);
             });
 
             const view = new core.form.editors.MembersSplitEditor({
@@ -603,7 +607,7 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.setValue(['account.7', 'account.8', 'group.9']);
-                setTimeout(() => {
+                timer = setTimeout(() => {
                     expect(view.$('.js-quantity-warning-region')).not.toBeHidden();
                     done();
                 }, 500);
