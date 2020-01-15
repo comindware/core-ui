@@ -32,7 +32,8 @@ export default {
 
     mode: {
         script: 'script',
-        expression: 'expression'
+        expression: 'expression',
+        notation3: 'notation3'
     },
 
     autoCompleteContext: {
