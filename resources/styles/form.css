@@ -4,7 +4,6 @@
 			// disabled label text
 			// disabled radiobutton circle
 
-
 #cb4e30; 	// eroror label text
 			// eroror border editor
 			// error border textarea
@@ -13,7 +12,6 @@
 			// form error
 
 #c85e44; 	// required color symbol
-
 
 #0575bd		// focus border editor
 			// focus radiobutton circle
@@ -62,7 +60,6 @@ rgba(5,117,189,.5) // user avatar btn
 #ca4e30		// fill svg icons remove
 #4d4d4d		// fill svg icons plus
 
-
 */
 
 .form-group {
@@ -75,7 +72,7 @@ rgba(5,117,189,.5) // user avatar btn
     }
 }
 
-/*------------------ Form Label ------------------*/
+/* ------------------ Form Label ------------------ */
 .form-label {
     max-width: 100%;
     cursor: default;
@@ -93,7 +90,7 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .required .form-label__txt,
-.required .form-group .form-label__txt{
+.required .form-group .form-label__txt {
     padding-right: 10px;
     position: relative;
 }
@@ -108,13 +105,14 @@ rgba(5,117,189,.5) // user avatar btn
     position: relative;
     display: none;
 }
+
 .form-label__info-button-anchor,
-.form-label__error-button-anchor { 
-    position:absolute; 
-    width:0; 
-    top:-2px; 
-    bottom:-4px; 
-    left:5px; 
+.form-label__error-button-anchor {
+    position: absolute;
+    width: 0;
+    top: -2px;
+    bottom: -4px;
+    left: 5px;
 }
 
 .form-label__tooltip-panel {
@@ -137,13 +135,11 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
-/*---------------// End Form Label //-------------*/
+/* ---------------// End Form Label //------------- */
 
-
-
-/*------------------ Form Editor ------------------*/
+/* ------------------ Form Editor ------------------ */
 .form-editor {
-    letter-spacing:normal;
+    letter-spacing: normal;
 }
 
 .editor {
@@ -151,14 +147,15 @@ rgba(5,117,189,.5) // user avatar btn
     width: 100%;
 }
 
-.editor_code{
+.editor_code {
     height: inherit;
 }
-.editor_code:after{
+
+.editor_code::after {
     display: none;
 }
 
-.editor_color{
+.editor_color {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -166,14 +163,15 @@ rgba(5,117,189,.5) // user avatar btn
     justify-content: flex-start;
 }
 
-.editor.editor_color:after {
+.editor.editor_color::after {
     left: 38px;
 }
-.editor_focused.editor_color:after {
+
+.editor_focused.editor_color::after {
     width: calc(100% - 38px);
 }
 
-.editor_document{
+.editor_document {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -182,32 +180,33 @@ rgba(5,117,189,.5) // user avatar btn
     flex: 1 0 auto;
 }
 
-.editor_document .emptyDocumentPlaceholder{
+.editor_document .emptyDocumentPlaceholder {
     display: none;
 }
-.editor_document.editor_empty .emptyDocumentPlaceholder{
+
+.editor_document.editor_empty .emptyDocumentPlaceholder {
     display: block;
 }
 
 .editor_document.editor_readonly .documents__drop-zone,
-.editor_document.editor_disabled .documents__drop-zone{
+.editor_document.editor_disabled .documents__drop-zone {
     display: none;
 }
 
 .editor_document.editor_readonly .documents,
-.editor_document.editor_disabled .documents{
+.editor_document.editor_disabled .documents {
     margin-top: 0;
 }
 
 .editor_readonly,
-.editor_disabled{
+.editor_disabled {
     cursor: default;
 }
 
 .editor_disabled div,
 .editor_disabled span,
 .editor_disabled input,
-.editor_disabled textarea{
+.editor_disabled textarea {
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     user-select: none !important;
@@ -218,11 +217,13 @@ rgba(5,117,189,.5) // user avatar btn
 input[type="checkbox"].checkbox {
     display: none;
 }
+
 .editor_checkbox {
     max-width: 100%;
     display: inline-flex;
     flex-shrink: 0;
 }
+
 .editor_checkbox.cell {
     display: table-cell;
 }
@@ -255,7 +256,6 @@ input[type="checkbox"].checkbox {
 
 /* /checkbox */
 
-
 /* radiobutton */
 .editor_radiobutton {
     display: flex;
@@ -270,7 +270,7 @@ input[type="checkbox"].checkbox {
     border-radius: 50%;
 }
 
-.editor_checked .radiobutton:after {
+.editor_checked .radiobutton::after {
     content: '';
     position: absolute;
     border-radius: 50%;
@@ -291,31 +291,33 @@ input[type="checkbox"].checkbox {
 }
 
 .editor_disabled .editor_radiobutton,
-.editor_readonly .editor_radiobutton{
-  display: none;
-  cursor: auto;
-}
-.editor_disabled .editor_radiobutton.editor_checked,
-.editor_readonly .editor_radiobutton.editor_checked{
-  display: flex;
+.editor_readonly .editor_radiobutton {
+    display: none;
+    cursor: auto;
 }
 
-.editor_radiobutton.radio_empty-view{
-  display: none;
+.editor_disabled .editor_radiobutton.editor_checked,
+.editor_readonly .editor_radiobutton.editor_checked {
+    display: flex;
+}
+
+.editor_radiobutton.radio_empty-view {
+    display: none;
 }
 
 .editor_disabled.editor_empty .editor_radiobutton.radio_empty-view,
-.editor_readonly.editor_empty .editor_radiobutton.radio_empty-view{
-  display: flex;
+.editor_readonly.editor_empty .editor_radiobutton.radio_empty-view {
+    display: flex;
 }
 
 .editor_disabled .editor_radiobutton.editor_checked .radiobutton,
-.editor_readonly .editor_radiobutton.editor_checked .radiobutton{
-  display: none;
+.editor_readonly .editor_radiobutton.editor_checked .radiobutton {
+    display: none;
 }
+
 .editor_disabled .editor_radiobutton.editor_checked .radiobutton-text,
-.editor_readonly .editor_radiobutton.editor_checked .radiobutton-text{
-  max-width: unset;
+.editor_readonly .editor_radiobutton.editor_checked .radiobutton-text {
+    max-width: unset;
 }
 
 /* /radiobutton/ */
@@ -333,12 +335,11 @@ input[type="checkbox"].checkbox {
     transition: background, border-color .2s ease-in-out;
 }
 
-.editor_reference .input{
+.editor_reference .input {
     padding-right: 45px;
 }
+
 /* /input/ */
-
-
 
 /* textarea */
 .textarea {
@@ -354,13 +355,12 @@ input[type="checkbox"].checkbox {
 
 /* /textarea/ */
 
-
-
 /* Date Time */
 .editor_date-time:not(.cell) {
     display: flex;
     align-items: center;
 }
+
 .editor_date-time .editor_date-time_date,
 .editor_date-time .editor_date-time_time {
     flex: 1 1 auto;
@@ -373,20 +373,19 @@ input[type="checkbox"].checkbox {
 
 /* /Date Time/ */
 
-
 /* Dropdown */
-.input_dropdown{
+.input_dropdown {
     position: relative;
 }
 
 .editor_disabled .input_dropdown,
 .editor_disabled .input_dropdown:hover,
 .editor_readonly .input_dropdown,
-.editor_readonly .input_dropdown:hover{
+.editor_readonly .input_dropdown:hover {
     background: transparent;
 }
 
-.dropdown-text{
+.dropdown-text {
     display: inline-block;
     max-width: calc(100% - 16px);
     white-space: nowrap;
@@ -394,15 +393,15 @@ input[type="checkbox"].checkbox {
     text-overflow: ellipsis;
 }
 
-.dropdown_text{
-    flex:1;
+.dropdown_text {
+    flex: 1;
 }
 
-.dropdown_subtext{
+.dropdown_subtext {
     color: #d3d5d6;
 }
-/* /Dropdown/ */
 
+/* /Dropdown/ */
 
 /* Bubbles */
 
@@ -413,7 +412,7 @@ input[type="checkbox"].checkbox {
 }
 
 .bubble_editor__elements_quantity_warning span {
-    color: #999;
+    color: #999999;
     font-size: 11px;
 }
 
@@ -429,15 +428,16 @@ input[type="checkbox"].checkbox {
     flex: 0 1 auto;
     overflow: hidden;
 }
+
 .cell.editor_bubble .bubbles__list {
     flex-wrap: nowrap;
 }
 
-.bubbles__list > .counter-hidden{
+.bubbles__list > .counter-hidden {
     padding-right: 3px;
 }
 
-.bubbles__list > .counter-hidden:empty{
+.bubbles__list > .counter-hidden:empty {
     padding-right: 0;
 }
 
@@ -468,10 +468,9 @@ input[type="checkbox"].checkbox {
     color: #0575bd;
 }
 
-
 .editor_disabled .bubbles__i .svg-icons-wrp,
 .editor_readonly .bubbles__i .svg-icons-wrp {
-   display: none;
+    display: none;
 }
 
 .editor_disabled .bubbles__link:hover,
@@ -504,11 +503,11 @@ input[type="checkbox"].checkbox {
 }
 
 .editor_disabled .bubbles__input,
-.editor_readonly .bubbles__input{
+.editor_readonly .bubbles__input {
     pointer-events: none;
 }
 
-.bubbles__input.empty{
+.bubbles__input.empty {
     color: inherit;
 }
 
@@ -519,17 +518,10 @@ input[type="checkbox"].checkbox {
 
 /* /Bubbles/ */
 
-
-.editor_icon{
-
-}
-
-.icons-wrp{
+.icons-wrp {
     display: inline-block;
     cursor: pointer;
 }
-
-
 
 /* reference-field */
 
@@ -538,21 +530,22 @@ input[type="checkbox"].checkbox {
     width: 100%;
     align-items: center;
     justify-content: center;
-    color: #70787F;
+    color: #70787f;
     min-height: 30px;
     font-size: 12px;
     font-weight: 400;
     height: 25px;
-    background: #fff;
+    background: #ffffff;
     line-height: 25px;
     padding: 0 10px;
 }
+
 /* /reference-field/ */
 
-/*-------------// End Form Editor // -------------*/
+/* -------------// End Form Editor // ------------- */
 
 /* Avatar editor */
-.user-avatar-wrp{
+.user-avatar-wrp {
     display: inline-block;
     position: relative;
     width: 82px;
@@ -560,7 +553,7 @@ input[type="checkbox"].checkbox {
     padding: 2px;
 }
 
-.user-avatar-editor{
+.user-avatar-editor {
     position: relative;
     display: block;
     width: 76px;
@@ -569,18 +562,18 @@ input[type="checkbox"].checkbox {
     line-height: 80px;
     text-decoration: none;
     text-align: center;
-    border: solid 2px #fff;
+    border: solid 2px #ffffff;
     border-radius: 50%;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-    background: #fff no-repeat 50% 50%;
+    background: #ffffff no-repeat 50% 50%;
     background-size: cover;
     -webkit-box-shadow: 0 0 0 1px #d2dbe2;
     box-shadow: 0 0 0 1px #d2dbe2;
 }
 
-.user-avatar-editor__txt{
+.user-avatar-editor__txt {
     font-size: 44px;
     color: #d2dbe2;
     white-space: nowrap;
@@ -590,7 +583,7 @@ input[type="checkbox"].checkbox {
     line-height: 74px;
 }
 
-.user-avatar-editor__btn{
+.user-avatar-editor__btn {
     position: absolute;
     top: -1px;
     left: -1px;
@@ -600,16 +593,17 @@ input[type="checkbox"].checkbox {
     cursor: pointer;
     overflow: hidden;
 }
-.user-avatar-editor-btn{
+
+.user-avatar-editor-btn {
     position: absolute;
     top: 50%;
     left: -3px;
     right: -3px;
     margin-top: -15px;
-    color: #fff;
+    color: #ffffff;
     font-weight: 600;
     font-size: 14px;
-    background: rgba(5,117,189,.8);
+    background: rgba(5, 117, 189, .8);
     display: inline-block;
     white-space: nowrap;
     height: 30px;
@@ -621,7 +615,7 @@ input[type="checkbox"].checkbox {
     background: none;
 }
 
-.user-avatar-editor__empty{
+.user-avatar-editor__empty {
     position: absolute;
     right: -2px;
     top: -2px;
@@ -629,24 +623,26 @@ input[type="checkbox"].checkbox {
     line-height: initial;
     font-weight: 600;
     font-size: 14px;
-    color:#0575BD
+    color: #0575bd;
 }
-.user-avatar-editor__empty:hover{
-    color:#cb4e30
+
+.user-avatar-editor__empty:hover {
+    color: #cb4e30;
 }
 
 .user-avatar-default-icon {
-    color: #70787F;
+    color: #70787f;
     font-size: 46px;
     position: absolute;
     top: -3px;
     left: 18px;
-
 }
+
 /* /Avatar editor/ */
 
-/*------------------ Input Color ------------------*/
-input[type="color"], .colorpicker{
+/* ------------------ Input Color ------------------ */
+input[type="color"],
+.colorpicker {
     height: 28px;
     padding: 0;
     width: 35px;
@@ -657,12 +653,11 @@ input[type="color"], .colorpicker{
     flex: none;
 }
 
-.sp-dd{
-    display:none;
+.sp-dd {
+    display: none;
 }
-/*-------------// Input Color // -------------*/
 
-
+/* -------------// Input Color // ------------- */
 
 /* svg icons */
 .svg-icons-wrp,
@@ -674,30 +669,32 @@ input[type="color"], .colorpicker{
 }
 
 .editor_readonly .svg-icons-wrp,
-.editor_disabled .svg-icons-wrp{
+.editor_disabled .svg-icons-wrp {
     display: none;
 }
 
 .editor__icons.icon-remove {
     overflow: hidden;
     cursor: pointer;
-    padding: 0px 5px;
+    padding: 0 5px;
 }
 
-.editor-icons__preview-icon{
+.editor-icons__preview-icon {
     font-size: 12px;
 }
 
-.svg-icons-wrp_checked{
-    width:14px;
+.svg-icons-wrp_checked {
+    width: 14px;
     height: 14px;
     display: none;
 }
 
-.editor_checked .svg-icons-wrp_checked{
+.editor_checked .svg-icons-wrp_checked {
     display: inline;
 }
-.editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
+
+.editor_checked_some .checkbox::after,
+.checkbox.editor_checked_some::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -705,10 +702,11 @@ input[type="color"], .colorpicker{
     transform: translate(-50%, -50%);
 }
 
-.svg-icons_checked{
+.svg-icons_checked {
     visibility: hidden;
 }
-.editor_checked .svg-icons_checked{
+
+.editor_checked .svg-icons_checked {
     visibility: visible;
 }
 
@@ -718,11 +716,11 @@ input[type="color"], .colorpicker{
 }
 
 .editor:hover.editor_empty:not(.editor_readonly):not(.editor_disabled) .svg-icons-wrp__empty,
-.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .editor__icons.icon-remove{
+.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .editor__icons.icon-remove {
     display: inline-block;
 }
 
-.datalist_selected-panel .editor__icons.icon-remove{
+.datalist_selected-panel .editor__icons.icon-remove {
     display: inline-block;
     position: relative;
     top: auto;
@@ -730,18 +728,13 @@ input[type="color"], .colorpicker{
 
 /* /svg icons/ */
 
-
-
-
 /* ------------------------------ Calendar Bootstrap empty style ------------------------------ */
 .editor_date.editor_empty,
-.editor_date-time.editor_empty{
-    color:inherit;
+.editor_date-time.editor_empty {
+    color: inherit;
 }
 
-/*-----//------*/
-
-
+/* -----//------ */
 
 .input::-ms-clear {
     display: none;
@@ -768,8 +761,9 @@ input[type="color"], .colorpicker{
     -ms-filter: "alpha(opacity=0)";
     filter: alpha(opacity=0);
     opacity: 0;
-    /*line-height: 30px;
-    font-size: 30px;*/
+
+    /* line-height: 30px;
+    font-size: 30px; */
     position: absolute;
     top: 0;
     right: 0;
@@ -809,13 +803,13 @@ input[type="color"], .colorpicker{
     flex: 1 1 auto;
 }
 
-.document-field{
+.document-field {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.field-documents{
+.field-documents {
     flex-grow: 1;
     padding: 0 0 0 10px;
 }
@@ -838,21 +832,23 @@ input[type="color"], .colorpicker{
     justify-content: flex-start;
     padding: 0 15px;
 }
-.cell.editor_document .documents .task-links__i{
+
+.cell.editor_document .documents .task-links__i {
     margin: 0;
 }
 
-.cell.editor_document .documents .task-links__i .fa-li{
+.cell.editor_document .documents .task-links__i .fa-li {
     position: static;
     width: auto;
     margin: 0 5px 0 0;
 }
-.cell.editor_document .emptyDocumentPlaceholder{
+
+.cell.editor_document .emptyDocumentPlaceholder {
     display: none;
 }
 
 .dev-btn-document-revise,
-.editor-document__preview-btn:not(:empty){
+.editor-document__preview-btn:not(:empty) {
     width: 16px;
     font-size: 16px;
     position: relative;
@@ -862,30 +858,30 @@ input[type="color"], .colorpicker{
     line-height: 1;
 }
 
-.editor-document__preview-btn:not(:empty){
+.editor-document__preview-btn:not(:empty) {
     line-height: 0;
 }
 
-.cell.editor_document .documents > .dev-btn-document-revise{
+.cell.editor_document .documents > .dev-btn-document-revise {
     display: none;
 }
 
-.dev-revision-container{
+.dev-revision-container {
     margin: 5px;
 }
 
-.dev-revision-container tr th{
+.dev-revision-container tr th {
     padding: 5px 10px;
     font-weight: 600;
 }
 
-.dev-revision-container tr td{
+.dev-revision-container tr td {
     padding: 5px 10px;
     vertical-align: middle;
     text-align: center;
 }
 
-.dev-revision-container thead{
+.dev-revision-container thead {
     border-bottom: 1px solid;
 }
 
@@ -907,7 +903,7 @@ input[type="color"], .colorpicker{
 }
 
 .group-title__collapsible {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .dev-expression-editor-field-inline {
@@ -916,7 +912,7 @@ input[type="color"], .colorpicker{
 }
 
 .dev-expression-editor-field-inline .editor {
-    position: relative!important;
+    position: relative !important;
 }
 
 .new-expression-editor-field:not(.cell) {
@@ -928,7 +924,7 @@ input[type="color"], .colorpicker{
     padding: 10px;
 }
 
-.cell .bubbles .bubbles__list{
+.cell .bubbles .bubbles__list {
     flex: 0 1 auto;
     flex-wrap: nowrap;
 }
@@ -937,9 +933,6 @@ input[type="color"], .colorpicker{
     min-width: 200px;
 } */
 
-.cell .bubbles__i.bubble__pencil-edit .bubble-doc_text{
-
-}
-.cell .bubbles .bubbles__list .bubbles__i{
+.cell .bubbles .bubbles__list .bubbles__i {
     flex: 0 1 auto;
 }

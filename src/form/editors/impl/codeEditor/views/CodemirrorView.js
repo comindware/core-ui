@@ -201,7 +201,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
         this.codemirror.on('inputRead', (editor, change) => {
-            if (this.intelliAssist) {
+            if (this.intelliAssist && (this.options.mode === constants.mode.script)) {
                 const inputSymbol = change.text[0];
                 const isNotFilter = !(/\w/).test(inputSymbol);
                 if (inputSymbol === '.') {
@@ -375,8 +375,9 @@ export default Marionette.View.extend({
             this.isExternalChange = false;
             return;
         }
-        if (this.options.mode === constants.mode.expression) {
-            this.__showHint();
+        if (this.options.mode === constants.mode.expression || this.options.mode === constants.mode.notation3) {
+            this.__checkModeN3();
+            return;
         }
         this.__change();
     },
@@ -616,6 +617,17 @@ export default Marionette.View.extend({
         }
         if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
+        }
+    },
+
+    __checkModeN3() {
+        const firstSymbol = this.codemirror.getValue().trim()[0];
+        if (firstSymbol === '@' || firstSymbol === '{') {
+            this.options.mode = constants.mode.notation3;
+            this.__hideHint();
+        } else {
+            this.options.mode = constants.mode.expression;
+            this.__showHint();
         }
     },
 

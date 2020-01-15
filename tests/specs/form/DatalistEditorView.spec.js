@@ -1004,6 +1004,67 @@ describe('Editors', () => {
                 show(view);
             });
 
+            it('should create new items on ENTER if placed on a button', done => {
+                const model = new Backbone.Model({
+                    value: 'a'
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: {
+                        id: 'a',
+                        name: 'a'
+                    },
+                    key: 'value',
+                    autocommit: true,
+                    showAddNewButton: true,
+                    addNewItem: () => done(),
+                });
+
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    view.on('dropdown:open', () => {
+                        input.trigger({ type: 'keydown', keyCode: keyCode.DOWN });
+                        input.trigger({ type: 'keydown', keyCode: keyCode.DOWN });
+                        input.trigger({ type: 'keydown', keyCode: keyCode.ENTER });
+                    });
+                    startSearch(input, 'a');
+                });
+
+                show(view);
+            });
+
+            it('should not create new items on ENTER if there is no button', done => {
+                const model = new Backbone.Model({
+                    value: 'a'
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: {
+                        id: 'a',
+                        name: 'a'
+                    },
+                    key: 'value',
+                    autocommit: true,
+                    showAddNewButton: false,
+                    addNewItem: () => expect(false).toBeTrue('addNewItem function should not execute')
+                });
+
+                view.on('attach', () => {
+                    const input = getInput(view);
+                    view.on('dropdown:open', () => {
+                        input.trigger({ type: 'keydown', keyCode: keyCode.DOWN });
+                        input.trigger({ type: 'keydown', keyCode: keyCode.DOWN });
+                        input.trigger({ type: 'keydown', keyCode: keyCode.ENTER });
+                        done();
+                    });
+                    startSearch(input, 'a');
+                });
+
+                show(view);
+            });
+
             xit('should not set value on Enter keyup if search result is empty', done => {
                 const model = new Backbone.Model({
                     value: 3

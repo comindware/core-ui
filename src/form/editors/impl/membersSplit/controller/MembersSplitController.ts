@@ -73,7 +73,7 @@ export default Marionette.MnObject.extend({
         }
         const usersResultText = (this.options.hideUsers) ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
         const groupsResultText = (this.options.hideGroups) ? '' : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
-        return usersResultText.concat(' ').concat(groupsResultText);
+        return `${usersResultText} ${groupsResultText}`;
     },
 
     async updateItems(filterState, selectedItems = this.options.selected) {
@@ -243,11 +243,15 @@ export default Marionette.MnObject.extend({
         }
     },
 
-    updateMembers() {
+    __updateMembers() {
         const allSelectedModels = Object.assign({}, this.model.get('selected').parentCollection);
         this.options.selected = allSelectedModels.models.map(model => model.id);
-        this.trigger('update:text', this.__getDisplayText());
         this.trigger('popup:ok');
+    },
+
+    saveMembers() {
+        this.__updateMembers();
+        this.trigger('update:text', this.__getDisplayText());
     },
 
     cancelMembers() {
@@ -308,7 +312,7 @@ export default Marionette.MnObject.extend({
 
         target.parentCollection.add(movingModels);
         source.parentCollection.remove(movingModels);
-        _.debounce(this.updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
+        _.debounce(this.__updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
         target.rebuild();
         source.rebuild();
         if (!model) {

@@ -4,7 +4,7 @@
 }
 
 .branch-collection.dragover-container {
-    padding: 0px;
+    padding: 0;
 }
 
 .branch-collection {
@@ -36,7 +36,7 @@
 
 .branch-header-name {
     font-weight: 600;
-    font-size: 1.05rem;   
+    font-size: 1.05rem;
 }
 
 .root > .branch-header-name {
@@ -51,7 +51,7 @@
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
-    margin: 2px auto 2px 0px;
+    margin: 2px auto 2px 0;
 }
 
 .branch-item {
@@ -63,15 +63,15 @@
 .unnamed-branch-item:hover,
 .tree-editor-toolbar,
 .root {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
 
 .branch-item:hover,
 .unnamed-branch-item:hover,
 .branch-item.dragover,
-.unnamed-branch-item.dragover  {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+.unnamed-branch-item.dragover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .tree-item:hover {
@@ -93,6 +93,7 @@
 
 .unnamed-branch-item {
     padding-right: 4px;
+    cursor: move;
 }
 
 .unnamed-branch-item:not(:last-child) {
@@ -102,10 +103,6 @@
 .unnamed-branch-item:hover {
     border-right: 4px solid #0575bd;
     padding-right: 0;
-}
-
-.unnamed-branch-item {
-    cursor: move
 }
 
 .hidden-node {
@@ -131,16 +128,17 @@
     overflow: scroll;
 }
 
-.tree-editor-btn >.toolbar-btn {
+.tree-editor-btn > .toolbar-btn {
     height: 100%;
     line-height: inherit;
 }
 
-.layout__tab-layout .tree-editor-btn >.toolbar-btn {
-    line-height: inherit;    
+.layout__tab-layout .tree-editor-btn > .toolbar-btn {
+    line-height: inherit;
 }
 
-.tree-item .collapse-btn, .tree-item .eye-btn {
+.tree-item .collapse-btn,
+.tree-item .eye-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -179,6 +177,7 @@
     width: 100%;
     justify-content: space-evenly;
 }
+
 .tree-editor-toolbar .toolbar-items-wrp:empty {
     margin: 0;
 }
@@ -186,5 +185,3 @@
 .root__header-name {
     margin-right: 5px;
 }
-
-

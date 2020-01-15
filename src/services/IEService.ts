@@ -24,6 +24,7 @@ export default class IEService extends EdgeService {
         this.__addChildNodeRemove();
         this.__addDocumentContains();
         this.__addParendAppend();
+        this.__addOnceListeners();
 
         super.initialize();
     }
@@ -131,6 +132,30 @@ export default class IEService extends EdgeService {
                     this.appendChild(docFrag);
                 }
             });
+        });
+    }
+
+    static __addOnceListeners() {
+        [Element.prototype, document, window].forEach(prototype => {
+            const originAddEventListener = prototype.addEventListener;
+
+            type optionsType = undefined | boolean | { capture?: boolean, once?: boolean, passive?: boolean };
+
+            const addEventListener = function(type: string, listener: EventListener | EventListenerObject, options: optionsType) {
+                const isObject = (obj: any) => typeof obj === 'object' && obj !== null;
+
+                if (!isObject(options) || !(options.once && typeof listener === 'function')) {
+                    return originAddEventListener.call(this, type, listener, options);
+                }
+                const wrapper = function(event: Event) {
+                    prototype.removeEventListener.call(this, type, wrapper, options);
+                    listener.call(this, event);
+                };
+            
+                return originAddEventListener.call(this, type, wrapper, options);
+            };
+
+            prototype.addEventListener = addEventListener;
         });
     }
 }

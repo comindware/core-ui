@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "indentation": 4,
+    "number-leading-zero": null,
+    "unit-whitelist": ["px","%", "s", "deg", "em", "ms", "rem", "pt"],
+    "no-descending-specificity": null,
+    "color-hex-length": "long"
+  },
+  "defaultSeverity": "warning"
+}

@@ -34,7 +34,8 @@ const variables = {
     'selected-background-color': 'var(--grey-100)',
     'disabled-text-color': 'var(--grey-400)',
 
-    'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
+    'convex-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
+    'concave-gradient': 'linear-gradient(#e2e2e2 35%, #ffffff)',
 
     'border-color': 'var(--grey-400)',
     'border-radius': '4px',
@@ -232,7 +233,7 @@ module.exports.apply = {
         'text-align': 'center'
     },
     'dropdown-theme': {
-        background: variables['light-gradient']
+        background: variables['convex-gradient']
     },
     'dropdown-caret-theme': {
         'font-size': '16px',
