@@ -1031,7 +1031,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __addNewItemKeydown(e) {
+    __addNewItemKeydown(e: KeyboardEvent) {
         switch (e.keyCode) {
             case keyCode.DOWN:
             case keyCode.RIGHT:
@@ -1047,7 +1047,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             case keyCode.ENTER:
             case keyCode.SPACE:
                 stop(e);
-                this.__panelAddNewItem();
+                if (this.__isAddNewButtonSelect) {
+                    this.__panelAddNewItem();
+                    this.__toggleSelectAddNewButton(false);
+                }
                 break;
             default:
                 this.__isQuantityControl = false;
@@ -1059,6 +1062,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.options.addNewItem) {
             return;
         }
+
+        if (!this.options.showAddNewButton) {
+            return;
+        }
+
         this.close();
         this.options.addNewItem(this);
     },
