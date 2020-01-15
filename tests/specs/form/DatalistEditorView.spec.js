@@ -835,6 +835,51 @@ describe('Editors', () => {
                 show(view);
             });
 
+            it('should not open repeatedly, after user select value on panel and close dropdown', done => {
+                const model = new Backbone.Model({
+                    dropdownValue: {
+                        id: 1,
+                        text: 'Text 1'
+                    }
+                });
+                const textFilterDelay = 300;
+
+                const collectionFetchDelay = 150;
+                const collection = new DemoReferenceCollection(arrayObjects15, { fetchDelay: collectionFetchDelay });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    key: 'dropdownValue',
+                    autocommit: true,
+                    maxQuantitySelected: 1,
+                    allowEmptyValue: true,
+                    fetchFiltered: true,
+                    textFilterDelay,
+                    collection
+                });
+
+                const userOpenClick = () => {
+                    const input = getInput(view);
+                    input.focus();
+                    input.click();
+                };
+
+                view.once('attach', () => {
+                    view.once('dropdown:open', () => {
+                        view.once('dropdown:close', () => {
+                            setTimeout(() => done(), textFilterDelay + collectionFetchDelay);
+                        });
+                        view.once('dropdown:open', () => {
+                            expect(false).toBeTrue('Dropdown opened repeatedly!');
+                        });
+                        getItemOfList(0).click();
+                    });
+                    userOpenClick();
+                });
+
+                show(view);
+            });
+
             it('should has Excess Warning if totalCount greater than collection length', done => {
                 const model = new Backbone.Model({
                     dropdownValue: ['1', '3', '5']
@@ -1147,7 +1192,7 @@ describe('Editors', () => {
                 });
 
                 const view = new core.form.editors.DatalistEditor({
-                    model: model,
+                    model,
                     key: 'DatalistValue',
                     autocommit: true,
                     showCheckboxes: true,

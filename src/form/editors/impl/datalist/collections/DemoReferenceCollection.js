@@ -10,10 +10,13 @@ const createDemoData = function () {
     });
 };
 
+const fetchDelay = 150;
+
 export default Backbone.Collection.extend({
     initialize(models, options = {}) {
         this.__maxFetchedQuantity = options.maxFetchedQuantity || 50;
         this.__inilialModels = models || createDemoData();
+        this.__fetchDelay = options.fetchDelay || fetchDelay;
     },
     
     model: DefaultReferenceModel,
@@ -39,7 +42,7 @@ export default Backbone.Collection.extend({
                 this.trigger('sync');
                 resolve();
                 this.fetchPromise = null;
-            }, 150);
+            }, this.__fetchDelay);
         });
         this.fetchPromise = promise;
         return promise;
