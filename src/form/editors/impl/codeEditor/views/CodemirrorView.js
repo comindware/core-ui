@@ -201,7 +201,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
         this.codemirror.on('inputRead', (editor, change) => {
-            if (this.intelliAssist) {
+            if (this.intelliAssist && (this.options.mode === constants.mode.script)) {
                 const inputSymbol = change.text[0];
                 const isNotFilter = !(/\w/).test(inputSymbol);
                 if (inputSymbol === '.') {
