@@ -216,10 +216,10 @@ module.exports.apply = {
     },
     'input-search-clear-theme': {
         width: '20px',
-        height: '20px',
+        height: '18px',
         right: '0',
         top: '50%',
-        'line-height': '20px',
+        'line-height': '21px',
         'font-size': '14px'
     },
     'textarea-theme': {

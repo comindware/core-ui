@@ -75,6 +75,10 @@
   position: relative;
 }
 
+.tr-search_compact.closed .tr-search-icon {
+  font-size: 15px;
+}
+
 .textarea:hover {
   border-color: var(--input-hover-color);
 }
@@ -433,9 +437,11 @@
   height: 30px;
   line-height: 29px;
 }
+
 .top-nav_icon {
   min-width: 30px;
 }
+
 .top-nav_icon > .icon_icon {
   font-size: 16px;
 }
@@ -450,6 +456,16 @@
   width: 19px;
   flex-basis: 19px;
   line-height: 19px;
+}
+
+@media (max-width: 720px) {
+  .top-nav_icon {
+    min-width: 0;
+  }
+
+  .top-nav__i_person {
+    width: 25px;
+  }
 }
 
 /*-------------------- Left Menu Header --------------------*/
@@ -472,6 +488,12 @@
 .left-menu-view-switcher__container .toolbar-btn {
   font-size: 13px;
   padding: 3px 15px;
+}
+
+@media (max-width: 720px) {
+  .left-menu.compact {
+    height: 30px;
+  }
 }
 
 /*-------------------- Left Menu List --------------------*/
