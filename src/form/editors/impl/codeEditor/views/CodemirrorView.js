@@ -10,6 +10,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import GlobalEventService from '../../../../../services/GlobalEventService';
 import LoadingBehavior from '../../../../../views/behaviors/LoadingBehavior';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
+import { contextIconType } from '../../../../../Meta';
 
 const modes = {
     expression: 'text/comindware_expression',
@@ -41,6 +42,7 @@ export default Marionette.View.extend({
             '__redo',
             '__format',
             '__cmwHint',
+            '__notation3Hints',
             '__showTooltip',
             '__hideTooltip',
             '__onMouseover',
@@ -124,7 +126,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly});
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
@@ -200,28 +202,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
-        this.codemirror.on('inputRead', (editor, change) => {
-            if (this.intelliAssist && (this.options.mode === constants.mode.script)) {
-                const inputSymbol = change.text[0];
-                const isNotFilter = !(/\w/).test(inputSymbol);
-                if (inputSymbol === '.') {
-                    this.filterList = null;
-                    this.isCallMethodAnywhere = false;
-                    this.lineCallMethod = this.codemirror.getCursor().line;
-                    this.__showCSharpHint();
-                } else if(isNotFilter) {
-                    this.CSharpInfoList = [];
-                } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
-                    const nameFilter = this.__getObjectNameFilter();
-                    if (nameFilter && nameFilter.length) {
-                        this.__showFilterCSharpHint(nameFilter);
-                    } else {
-                        this.filterList = null;
-                    }
-                }
-            }
-        });
-
+        this.codemirror.on('inputRead', (editor, change) => this.__inputСharacterСhecking(editor, change));
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
             document.querySelector('.dev-codemirror').scrollTop = 0;
             if (this.currentHighlightedLine) {
@@ -239,6 +220,56 @@ export default Marionette.View.extend({
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
+    },
+
+    __inputСharacterСhecking(editor, change) {
+        if (this.intelliAssist && (this.options.mode === constants.mode.script)) {
+            const inputSymbol = change.text[0];
+            const isNotFilter = !(/\w/).test(inputSymbol);
+            if (inputSymbol === '.') {
+                this.filterList = null;
+                this.isCallMethodAnywhere = false;
+                this.lineCallMethod = this.codemirror.getCursor().line;
+                this.__showCSharpHint();
+            } else if (isNotFilter) {
+                this.CSharpInfoList = [];
+            } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
+                const nameFilter = this.__getObjectNameFilter();
+                if (nameFilter && nameFilter.length) {
+                    this.__showFilterCSharpHint(nameFilter);
+                } else {
+                    this.filterList = null;
+                }
+            }
+        } else {
+            this.__checkModeN3();
+            if (this.intelliAssist) {
+                if (this.options.mode === constants.mode.notation3) {
+                    const inputSymbol = change.text[0];
+                    this.listVariablesHintsNotation3 = [];
+                    const arrNameVariablesNotation3 = [];
+                    if (inputSymbol === '?') {
+                        const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: change.to.line, ch: change.to.ch });
+                        const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
+                        const regExpFindVariables = /\?\w*/igm;
+                        const variablesN3 =  textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
+
+                        if (variablesN3) {
+                            variablesN3.forEach( variable => {
+                                if (!arrNameVariablesNotation3.includes(variable.substr(1))) {
+                                    arrNameVariablesNotation3.push(variable.substr(1));
+                                }
+                            });
+                            arrNameVariablesNotation3.sort();
+                            arrNameVariablesNotation3.forEach( nameVariable => {
+                                this.listVariablesHintsNotation3.push({ text: nameVariable, icons: contextIconType.case });
+                            });
+                            this.codemirror.showHint({ hint: this.__notation3Hints });
+                        }
+                    }
+                }
+            }
+        }
     },
 
     onDestroy() {
@@ -829,6 +860,20 @@ export default Marionette.View.extend({
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
         this.hintIsShown = true;
 
+        return autoCompleteObject;
+    },
+
+    __notation3Hints() {
+        let autoCompleteObject = {};
+        const cursor = this.codemirror.getCursor();
+        this.__renderConfigListToolbar(this.listVariablesHintsNotation3);
+        autoCompleteObject = {
+            from: {
+                line: cursor.line,
+                ch: cursor.ch
+            },
+            list: this.listVariablesHintsNotation3
+        };
         return autoCompleteObject;
     },
 
