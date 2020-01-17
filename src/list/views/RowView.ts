@@ -614,7 +614,8 @@ export default Marionette.View.extend({
         const isTree = this.getOption('isTree');
         this.cellConfigs[column.key].isHidden = isHidden;
         const oldCellView = this.cellViewsByKey[column.key];
-        const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+        const elementIndex = this.options.showCheckbox ? index - 1 : index;
+        const element = [...this.el.children][elementIndex];
         if (isHidden) {
             element.innerHTML = '';
         } else {
