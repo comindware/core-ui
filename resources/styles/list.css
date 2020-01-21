@@ -32,6 +32,10 @@
     width: auto;
 }
 
+.grid-content-wrp .visible-collection {
+    outline: 1px solid var(--theme-colors__secondary_strong);
+}
+
 .visible-collection-wrp,
 .selection-panel-wrp {
     position: relative;
