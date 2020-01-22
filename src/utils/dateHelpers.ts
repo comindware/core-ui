@@ -4,35 +4,49 @@ import LocalizationService from '../services/LocalizationService';
 import moment from 'moment';
 import _ from 'underscore';
 
+const dateTimeFormatNames = {
+    SHORT_DATE: 'shortDate',
+    LONG_DATE: 'longDate',
+    GENERAL_DATE_SHORT_TIME: 'generalDateShortTime',
+    GENERAL_DATE_LONG_TIME: 'generalDateLongTime',
+    FULL_DATE_SHORT_TIME: 'fullDateShortTime',
+    FULL_DATE_LONG_TIME: 'fullDateLongTime',
+    CONDENSED_DATE_SHORT_TIME: 'condensedDateTime',
+    CONDENSED_DATE: 'condensedDate',
+    MONTH_DAY: 'monthDay',
+    YEAR_MONTH: 'yearMonth',
+    DATE_ISO: 'dateISO'
+};
+
 const dateTimeFormats = {
     en: {
-        shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */ },
-        dateISO: { general: 'MM/DD/YYYY' /* 12/31/2018 */ },
-        condensedDate: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */ },
-        longDate: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */ },
-        monthDay: { general: 'MMMM D' /* June 15 */ },
-        yearMonth: { general: 'MMMM, YYYY' /* June, 2009 */ },
-        fullDateShortTime: {
+        [dateTimeFormatNames.SHORT_DATE]: { general: 'MM/D/YYYY' /* 6/15/2009 */ },
+        [dateTimeFormatNames.DATE_ISO]: { general: 'MM/DD/YYYY' /* 12/31/2018 */ },
+        [dateTimeFormatNames.CONDENSED_DATE]: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */ },
+        [dateTimeFormatNames.LONG_DATE]: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */ },
+        [dateTimeFormatNames.MONTH_DAY]: { general: 'MMMM D' /* June 15 */ },
+        [dateTimeFormatNames.YEAR_MONTH]: { general: 'MMMM, YYYY' /* June, 2009 */ },
+        [dateTimeFormatNames.FULL_DATE_SHORT_TIME]: {
             general: 'dddd, MMMM D, YYYY h:mm A', // Monday, June 15, 2009 1:45 PM
             date: 'dddd, MMMM D, YYYY', // Monday, June 15
             time: 'h:mm A' // 1:45 PM
         },
-        fullDateLongTime: {
+        [dateTimeFormatNames.FULL_DATE_LONG_TIME]: {
             general: 'dddd, MMMM D, YYYY h:mm:ss A', // Monday, June 15, 2009 1:45:30 PM
             date: 'dddd, MMMM D, YYYY', // Monday, June 15, 2009
             time: 'h:mm:ss A' // 1:45:30 PM
         },
-        generalDateShortTime: {
+        [dateTimeFormatNames.GENERAL_DATE_SHORT_TIME]: {
             general: 'MM/DD/YYYY h:mm A', // 6/15/2009 1:45 PM
             date: 'MM/DD/YYYY', // 6/15/2009
             time: 'h:mm A' // 1:45 PM
         },
-        generalDateLongTime: {
+        [dateTimeFormatNames.GENERAL_DATE_LONG_TIME]: {
             general: 'MM/DD/YYYY h:mm:ss A', // 6/15/2009 1:45:30 PM
             date: 'MM/DD/YYYY', // 6/15/2009
             time: 'h:mm:ss A' // 1:45:30 PM
         },
-        condensedDateTime: {
+        [dateTimeFormatNames.CONDENSED_DATE_SHORT_TIME]: {
             general: 'MMM. D, YYYY h:mm A', // Jun. 15, 2009 1:45 PM
             date: 'MMM. D, YYYY', // Jun. 15, 2009
             time: 'h:mm A' // 1:45 PM
@@ -50,33 +64,33 @@ const dateTimeFormats = {
         }
     },
     de: {
-        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2014 */ },
-        dateISO: { general: 'YYYY-MM-DD' /* 2018-12-31 */ },
-        condensedDate: { general: 'DD. MMM YYYY' /* 03. Dez. 2014 */ },
-        longDate: { general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */ },
-        monthDay: { general: 'DD. MMMM' /* 03. Dezember */ },
-        yearMonth: { general: 'MMMM YYYY' /* Dezember 2014 */ },
-        fullDateShortTime: {
+        [dateTimeFormatNames.SHORT_DATE]: { general: 'DD.MM.YYYY' /* 03.12.2014 */ },
+        [dateTimeFormatNames.DATE_ISO]: { general: 'YYYY-MM-DD' /* 2018-12-31 */ },
+        [dateTimeFormatNames.CONDENSED_DATE]: { general: 'DD. MMM YYYY' /* 03. Dez. 2014 */ },
+        [dateTimeFormatNames.LONG_DATE]: { general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */ },
+        [dateTimeFormatNames.MONTH_DAY]: { general: 'DD. MMMM' /* 03. Dezember */ },
+        [dateTimeFormatNames.YEAR_MONTH]: { general: 'MMMM YYYY' /* Dezember 2014 */ },
+        [dateTimeFormatNames.FULL_DATE_SHORT_TIME]: {
             general: 'dddd, DD. MMMM YYYY HH:mm', // Mittwoch, 03. Dezember 2014 19:00
             date: 'dddd, DD. MMMM YYYY', // Mittwoch, 03. Dezember 2014
             time: 'HH:mm' // 19:00
         },
-        fullDateLongTime: {
+        [dateTimeFormatNames.FULL_DATE_LONG_TIME]: {
             general: 'dddd, DD. MMMM YYYY HH:mm:ss', // Mittwoch, 03. Dezember 2014 19:00:00
             date: 'dddd, DD. MMMM YYYY', // Mittwoch, 03. Dezember 2014
             time: 'HH:mm:ss' //19:00:00
         },
-        generalDateShortTime: {
+        [dateTimeFormatNames.GENERAL_DATE_SHORT_TIME]: {
             general: 'DD.MM.YYYY HH:mm', // 03.12.2014 19:00
             date: 'DD.MM.YYYY', // 03.12.2014
             time: 'HH:mm' // 19:00
         },
-        generalDateLongTime: {
+        [dateTimeFormatNames.GENERAL_DATE_LONG_TIME]: {
             general: 'DD.MM.YYYY HH:mm:ss', // 03.11.2014 19:00:00
             date: 'DD.MM.YYYY', // 6/15/2009
             time: 'HH:mm:ss' //1:45:30 PM
         },
-        condensedDateTime: {
+        [dateTimeFormatNames.CONDENSED_DATE_SHORT_TIME]: {
             general: 'MMM D, YYYY h:mm A', // Jun. 15, 2009 1:45 PM
             date: 'MMM D, YYYY', // Jun. 15, 2009
             time: 'h:mm A' // 1:45 PM
@@ -96,33 +110,33 @@ const dateTimeFormats = {
         }
     },
     ru: {
-        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2009 */ },
-        dateISO: { general: 'DD.MM.YYYY' /* 31.12.2018 */ },
-        condensedDate: { general: 'D MMM YYYY' /* 3 Дек 2014 */ },
-        longDate: { general: 'D MMMM YYYY' /* 3 декабря 2014 */ },
-        monthDay: { general: 'D MMMM' /* 3 декабря */ },
-        yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */ },
-        fullDateShortTime: {
+        [dateTimeFormatNames.SHORT_DATE]: { general: 'DD.MM.YYYY' /* 03.12.2009 */ },
+        [dateTimeFormatNames.DATE_ISO]: { general: 'DD.MM.YYYY' /* 31.12.2018 */ },
+        [dateTimeFormatNames.CONDENSED_DATE]: { general: 'D MMM YYYY' /* 3 Дек 2014 */ },
+        [dateTimeFormatNames.LONG_DATE]: { general: 'D MMMM YYYY' /* 3 декабря 2014 */ },
+        [dateTimeFormatNames.MONTH_DAY]: { general: 'D MMMM' /* 3 декабря */ },
+        [dateTimeFormatNames.YEAR_MONTH]: { general: 'MMMM YYYY' /* декабрь 2014 */ },
+        [dateTimeFormatNames.FULL_DATE_SHORT_TIME]: {
             general: 'D MMMM, YYYY HH:mm' /* 3 декабря 2014 19:00 */,
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
-        fullDateLongTime: {
+        [dateTimeFormatNames.FULL_DATE_LONG_TIME]: {
             general: 'D MMMM, YYYY HH:mm:ss', // 3 декабря 2014 19:00:00
             date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm:ss' // 19:00:00
         },
-        generalDateShortTime: {
+        [dateTimeFormatNames.GENERAL_DATE_SHORT_TIME]: {
             general: 'DD.MM.YYYY HH:mm', // 03.11.2014 19:00
             date: 'DD.MM.YYYY', // 03.11.2014
             time: 'HH:mm' // 19:00
         },
-        generalDateLongTime: {
+        [dateTimeFormatNames.GENERAL_DATE_LONG_TIME]: {
             general: 'DD.MM.YYYY HH:mm:ss', // 03.11.2014 19:00:00
             date: 'DD.MM.YYYY', // 03.11.2014
             time: 'HH:mm:ss' // 19:00:00
         },
-        condensedDateTime: {
+        [dateTimeFormatNames.CONDENSED_DATE_SHORT_TIME]: {
             general: 'MMM. D, YYYY h:mm A', // Jun. 15, 2009 1:45 PM
             date: 'MMM. D, YYYY', // Jun. 15, 2009
             time: 'h:mm A' // 1:45 PM
@@ -142,6 +156,8 @@ const dateTimeFormats = {
 };
 
 export default /** @lends module:core.utils.dateHelpers */ {
+    dateTimeFormats: dateTimeFormatNames,
+
     durationISOToObject(duration) {
         if (!duration) {
             return null;
