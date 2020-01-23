@@ -102,11 +102,11 @@ export default Marionette.Object.extend({
                 if (!data.available) {
                     data.available = [];
                 }
-                if (!data.selected) {
-                    data.selected = [];
+                if (!data.selected || !data.selected.length) {
+                    data.selected = this.__getValue(this.options.selected);
                 }
                 data.available.forEach(item => (this.members[item.id] = item));
-                data.selected.forEach(item => (this.members[item.id] = item));
+                // data.selected.forEach(item => (this.members[item.id] = item));
                 this.__processValues(data.selected);
                 this.model.get('available').totalCount = data.totalCount;
             } catch (e) {
@@ -132,6 +132,10 @@ export default Marionette.Object.extend({
             filterType: filterState.filterType,
             selected: selected || []
         };
+    },
+
+    __getValue(value) {
+        return Array.isArray(value) ? value : value ? [value] : [];
     },
 
     __getFullMemberSplitTitle() {
@@ -312,14 +316,11 @@ export default Marionette.Object.extend({
             }
         });
 
-        const selectedItems =
-            Array.isArray(selected) && this.options.selected
-                ? this.options.selected.map(id => {
-                      const model = items[id];
-                      delete items[id];
-                      return model;
-                  })
-                : [];
+        const selectedItems = this.__getValue(selected).map(id => {
+            const model = items[id];
+            delete items[id];
+            return model;
+        });
 
         const availableItems = Object.values(items);
 
