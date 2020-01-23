@@ -219,7 +219,7 @@ module.exports.apply = {
         height: '20px',
         right: '0',
         top: '50%',
-        'line-height': '20px',
+        'line-height': '21px',
         'font-size': '14px'
     },
     'textarea-theme': {
