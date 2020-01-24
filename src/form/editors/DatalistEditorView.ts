@@ -51,8 +51,8 @@ type optionsType = {
     emptyPlaceholder?: string,
 
     class?: string,
-    buttonBubbleTemplate?: string,
-    panelBubbleTemplate?: string,
+    buttonBubbleTemplate?: Function,
+    panelBubbleTemplate?: Function,
 
     format?: 'user' | 'document', //name of preset for editor
 
@@ -74,6 +74,10 @@ type optionsType = {
     controller?: Marionette.Object,
     storeArray?: boolean
 };
+
+const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
+const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
+const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
 
 const defaultOptions = (options: optionsType): optionsType => ({
     displayAttribute: 'name',
@@ -107,8 +111,8 @@ const defaultOptions = (options: optionsType): optionsType => ({
     emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
 
     class: undefined,
-    buttonBubbleTemplate: compositeReferenceCell,
-    panelBubbleTemplate: compositeReferenceCell,
+    buttonBubbleTemplate: compiledCompositeReferenceCell,
+    panelBubbleTemplate: compiledCompositeReferenceCell,
 
     boundEditor: undefined,
     boundEditorOptions: {},
@@ -135,8 +139,8 @@ const presetsDefaults = {
     document: (options: optionsType) => ({
         listTitle: options.title,
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: compositeDocumentCell,
-        panelBubbleTemplate: compositeDocumentCell,
+        buttonBubbleTemplate: compiledCompositeDocumentCell,
+        panelBubbleTemplate: compiledCompositeDocumentCell,
         valueType: 'normal',
         showCollection: false,
         idProperty: 'uniqueId',
@@ -160,8 +164,8 @@ const presetsDefaults = {
     user: (options: optionsType) => ({
         selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: compositeUserCell,
-        panelBubbleTemplate: compositeUserCell
+        buttonBubbleTemplate: compiledCompositeUserCell,
+        panelBubbleTemplate: compiledCompositeUserCell
     })
 };
 
