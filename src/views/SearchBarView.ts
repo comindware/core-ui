@@ -187,6 +187,7 @@ export default Marionette.View.extend({
 
     __clear() {
         this.ui.input.val('');
+        this.__toggleClearIcon();
         this.__search();
         this.ui.input.focus();
     },

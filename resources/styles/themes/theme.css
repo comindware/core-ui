@@ -252,10 +252,6 @@ body {
     display: block;
 }
 
-.tr-search .tr-search__clear {
-    display: none;
-}
-
 .tr-search__clear {
   @apply --input-search-clear-theme;
 }
