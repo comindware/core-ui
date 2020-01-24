@@ -323,14 +323,14 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
         this.listenTo(btn, 'blur', this.__onButtonBlur);
-        this.listenTo(btn, 'click', () => this.__onButtonClick());
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
-        this.listenTo(btn, 'pointerdown', (button, e: PointerEvent) => {
+        this.listenTo(btn, 'click', (e: MouseEvent) => {
             if (e.target.tagName === 'A') {
+                e.preventDefault();
                 e.stopPropagation();
-                return;
             }
+
             this.__onButtonClick();
         });
     },
