@@ -15,7 +15,7 @@ export default Marionette.View.extend({
             text: this.options.getDisplayText(attributes)
         };
         return {
-            customTemplate: Handlebars.compile(this.options.customTemplate)(data),
+            customTemplate: this.options.customTemplate(data),
             subtext: this.options.showButtonSubtext ? this.options.getDisplayText(attributes, this.options.subtextProperty) : null
         };
     },

@@ -117,6 +117,8 @@ export default Marionette.View.extend({
     onDestroy() {
         if (this.cellViews) {
             this.cellViews.forEach(x => x.destroy());
+            this.cellViews = [];
+            this.cellViewsByKey = {};
         }
     },
 
