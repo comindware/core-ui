@@ -117,6 +117,8 @@ export default Marionette.View.extend({
     onDestroy() {
         if (this.cellViews) {
             this.cellViews.forEach(x => x.destroy());
+            this.cellViews = [];
+            this.cellViewsByKey = {};
         }
     },
 
@@ -614,14 +616,15 @@ export default Marionette.View.extend({
         const isTree = this.getOption('isTree');
         this.cellConfigs[column.key].isHidden = isHidden;
         const oldCellView = this.cellViewsByKey[column.key];
-        const element = this.el.querySelector(`.${this.columnClasses[index]}`);
+        const elementIndex = this.options.showCheckbox ? index - 1 : index;
+        const element = [...this.el.children][elementIndex];
         if (isHidden) {
-            element.innerHTML = '';
+            element.outerHTML = `<td class="${classes.cell}"></td>`;
         } else {
             const cell = column.cellView || CellViewFactory.getCellViewForColumn(column, this.model);
             if (typeof cell === 'string') {
-                element.outerHtml = cell;    
-            } else if (typeof cell === 'object') {
+                element.outerHTML = cell;    
+            } else if (cell instanceof Element) {
                 this.el.replaceChild(cell, element);
             } else {
                 const cellView = this.__renderCell({ column, index, CellView: cell });

@@ -9,6 +9,10 @@ import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
 
+const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
+const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
+const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
+
 let factory;
 
 type Column = { key: string, customClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
@@ -204,7 +208,8 @@ export default factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.text) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeReferenceCell}</td>`)(values[0]);
+            const tdContent = compiledCompositeReferenceCell(values[0]);
+            return `<td class="${this.__getCellClass(column)}" title="${title}">${tdContent}</td>`;
         }
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell, column });
     },
@@ -219,7 +224,8 @@ export default factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeDocumentCell}</td>`)(values[0]);
+            const tdContent = compiledCompositeDocumentCell(values[0]);
+            return `<td class="${this.__getCellClass(column)}" title="${title}">${tdContent}</td>`;
         }
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell, column });
     },
@@ -227,12 +233,13 @@ export default factory = {
     __getUserCell({ values, column, model }) {
         values.forEach(value => {
             value.avatar = UserService.getAvatar(value)
-        });;
+        });
 
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
         if (values.length === 1) {
-            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}"><div class="composite-cell__wrp">${compositeUserCell}</div></td>`)(values[0]);
+            const tdContent = compiledCompositeDocumentCell(values[0]);
+            return `<td class="${this.__getCellClass(column)}" title="${title}"><div class="composite-cell__wrp">${tdContent}</div></td>`;
         }
 
         return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell, column });

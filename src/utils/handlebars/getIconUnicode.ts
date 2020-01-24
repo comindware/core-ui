@@ -11,14 +11,13 @@ export default ({ iconsMeta = defaultIconsMeta }: options = { iconsMeta }): Func
             console.warn(`iconsMeta has no '${iconName}' icon`);
             return '';
         }
-        return `&#x${icon.unicode};`
+        return `&#x${icon.unicode};`;
     };
-    const getIconsUnicodes = (iconNames: string): string => {
-        return iconNames
+    const getIconsUnicodes = (iconNames: string): string =>
+        iconNames
             .split(' ')
             .map(getIconUnicode)
             .join(' ');
-    };
 
     return getIconsUnicodes;
 };

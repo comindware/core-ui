@@ -518,7 +518,8 @@ svg.svg-grid-icons {
 
 .cell:first-child,
 .cell_selection:first-child,
-.cell_selection-index:first-child {
+.cell_selection-index:first-child,
+.grid-header:hover .cell_selection:first-child {
     border-left: 1px solid #e2e2e2;
 }
 
