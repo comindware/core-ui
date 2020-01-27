@@ -98,7 +98,7 @@ export default Marionette.View.extend({
 
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id || column.key, ...column })));
         this.columnCollectionDefault = this.columnsCollection.clone();
         this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
@@ -246,6 +246,7 @@ export default Marionette.View.extend({
             return;
         }
         this.__prevScroll = nextScroll;
+        
         const newPosition = Math.max(0, Math.floor(nextScroll / this.listView.childHeight));
         this.updatePosition(newPosition, false);
     },
@@ -982,7 +983,7 @@ export default Marionette.View.extend({
     __onDiffApplied() {
         const columnsCollection = this.columnsCollection;
         this.options.columns.forEach(column => {
-            const model = columnsCollection.get(column.id);
+            const model = columnsCollection.get(column.id || column.key);
             Object.entries(model.pick('width', 'isHidden')).forEach(([id, value]) => (column[id] = value));
         });
         this.__setVisibilityAllColumns();

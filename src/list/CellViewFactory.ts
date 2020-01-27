@@ -12,12 +12,35 @@ import compositeReferenceCell from './templates/compositeReferenceCell.html';
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
 const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
+const compiledStringValueCell = Handlebars.compile('{{{value}}}');
+const compiledValueCell = Handlebars.compile('{{value}}');
+
+const getWrappedTemplate = (template: string) => {
+    return `<div class="composite-cell__wrp">
+        ${template}
+        {{#if count}}
+            <div class="composite-cell__count">+{{count}}</div>
+            <i class="fa fa-angle-down bubbles__caret"></i>
+        {{/if}}
+    </div>`;
+};
+
+const compiledWrappedCompositeDocumentCell = Handlebars.compile(getWrappedTemplate(compositeDocumentCell));
+const compiledWrappedCompositeReferenceCell = Handlebars.compile(getWrappedTemplate(compositeReferenceCell));
+const compiledWrappedCompositeUserCell = Handlebars.compile(getWrappedTemplate(compositeUserCell));
+const compiledWrappedStringValueCell = Handlebars.compile(getWrappedTemplate('{{{value}}}'));
+const compiledWrappedValueCell = Handlebars.compile(getWrappedTemplate('{{value}}'));
+
 
 let factory;
 
 type Column = { key: string, customClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
 
-type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
+type MultivalueCellOptions = {
+     childTemplate: HandlebarsTemplateDelegate<any>,
+     wrappedTemplate: HandlebarsTemplateDelegate<any>,
+     value: Array,
+     title: string, column: Column };
 
 export default factory = {
     getCellViewForColumn(column: Column, model: Backbone.Model) {
@@ -72,7 +95,8 @@ export default factory = {
 
         return this.__getMultivalueCellView({
             values: values.map(v => ({ value: v })),
-            childTemplate: '{{{value}}}',
+            childTemplate: compiledStringValueCell,
+            wrappedTemplate: compiledWrappedStringValueCell,
             title: this.__getTitle({ values, column, model }),
             column
         });
@@ -102,7 +126,8 @@ export default factory = {
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
-            childTemplate: '{{value}}',
+            childTemplate: compiledValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -126,7 +151,8 @@ export default factory = {
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
-            childTemplate: '{{value}}',
+            childTemplate: compiledValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -177,7 +203,8 @@ export default factory = {
 
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
-            childTemplate: '{{value}}',
+            childTemplate: compiledValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -211,7 +238,13 @@ export default factory = {
             const tdContent = compiledCompositeReferenceCell(values[0]);
             return `<td class="${this.__getCellClass(column)}" title="${title}">${tdContent}</td>`;
         }
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell, column });
+        return this.__getMultivalueCellView({
+            values,
+            title,
+            childTemplate: compiledCompositeReferenceCell,
+            wrappedTemplate: compiledWrappedCompositeReferenceCell,
+            column
+         });
     },
 
     __getDocumentCell({ values, column, model }) {
@@ -227,7 +260,13 @@ export default factory = {
             const tdContent = compiledCompositeDocumentCell(values[0]);
             return `<td class="${this.__getCellClass(column)}" title="${title}">${tdContent}</td>`;
         }
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell, column });
+        return this.__getMultivalueCellView({
+            values,
+            title,
+            childTemplate: compiledCompositeDocumentCell,
+            wrappedTemplate: compiledWrappedCompositeDocumentCell,
+            column
+        });
     },
 
     __getUserCell({ values, column, model }) {
@@ -238,14 +277,20 @@ export default factory = {
         const title = this.__getTitle({ column, model, values: values.map(v => v.name) });
 
         if (values.length === 1) {
-            const tdContent = compiledCompositeDocumentCell(values[0]);
+            const tdContent = compiledCompositeUserCell(values[0]);
             return `<td class="${this.__getCellClass(column)}" title="${title}"><div class="composite-cell__wrp">${tdContent}</div></td>`;
         }
 
-        return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell, column });
+        return this.__getMultivalueCellView({
+            values,
+            title,
+            childTemplate: compiledCompositeUserCell,
+            wrappedTemplate: compiledWrappedCompositeUserCell,
+            column
+        });
     },
 
-    __getMultivalueCellView({ childTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
+    __getMultivalueCellView({ childTemplate, wrappedTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
         const panelViewOptions = {
             collection: new Backbone.Collection(values.slice(1)),
             className: 'grid-composite_panel',
@@ -275,8 +320,8 @@ export default factory = {
             }
         };
         if (childTemplate) {
-            panelViewOptions.childViewOptions.template = Handlebars.compile(childTemplate);
-            buttonViewOptions.template = Handlebars.compile(this.__getWrappedTemplate(childTemplate));
+            panelViewOptions.childViewOptions.template = childTemplate;
+            buttonViewOptions.template = wrappedTemplate;
         }
         const menu = Core.dropdown.factory.createDropdown({
             class: 'grid_composite-cell dropdown_root',
@@ -317,15 +362,5 @@ export default factory = {
 
     __getCellClass(gridColumn: Column) {
         return `cell ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`;
-    },
-
-    __getWrappedTemplate(template) {
-        return `<div class="composite-cell__wrp">
-            ${template}
-            {{#if count}}
-                <div class="composite-cell__count">+{{count}}</div>
-                <i class="fa fa-angle-down bubbles__caret"></i>
-            {{/if}}
-        </div>`;
     }
 };
