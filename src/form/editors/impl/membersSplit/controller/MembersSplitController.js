@@ -20,6 +20,15 @@ const debounceInterval = {
     medium: 300
 };
 
+function convertToArray(value: null | string | string[]): string[] {
+    if (typeof value === 'string') {
+        return Array(value);
+    } else if (Array.isArray(value)) {
+        return value;
+    }
+    return [];
+}
+
 export default Marionette.Object.extend({
     initialize(options) {
         this.options = options;
@@ -31,17 +40,11 @@ export default Marionette.Object.extend({
         Object.values(this.filterFns).forEach(fn => Object.defineProperty(fn, 'parameters', { value: options.memberTypes }));
 
         this.members = {};
-        this.bondedCollections = {};
         this.isMemberService = options.memberService && options.memberService.getMembers;
-
-        this.__createModel();
-    },
-
-    fillInModel() {
         const showUsers = !this.options.hideUsers;
         const showGroups = !this.options.hideGroups;
         this.filterState = new FilterState({ showUsers, showGroups, filterFnParameters: this.filterFnParameters });
-        this.model.initialized = this.__updateItems(this.filterState);
+        this.__createModel();
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
             items: this.members,
@@ -54,98 +57,85 @@ export default Marionette.Object.extend({
         });
     },
 
-    async getDisplayText() {
-        await this.model.initialized;
-        let resultText = '';
-        const members = this.members;
-
+    __getDisplayText() {
         const membersCount = {
             users: 0,
             groups: 0
         };
-
-        let selected = this.options.selected;
-
-        if (selected) {
-            if (!Array.isArray(selected)) {
-                selected = [selected];
-            }
-            selected.forEach(id => {
-                if (members[id]) {
-                    membersCount[members[id].type]++;
-                }
-            });
-        } else {
-            selected = [];
-        }
-
+        const members = this.members;
+        const selected = convertToArray(this.options.selected);
+        selected.forEach(id => membersCount[members[id] ?.type]++);
         if (typeof this.options.getDisplayText === 'function') {
             return this.options.getDisplayText(selected);
         }
-
-        resultText = this.options.hideUsers
-            ? ''
-            : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
-        resultText += resultText.length > 0 ? ' ' : '';
-        resultText += this.options.hideGroups
-            ? ''
-            : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
-        return resultText;
+        const usersResultText = (this.options.hideUsers) ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users).concat(' ');
+        const groupsResultText = (this.options.hideGroups) ? '' : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        return `${usersResultText}${groupsResultText}`;
     },
 
-    async __updateItems(filterState) {
-        this.members = {};
+    async updateItems(filterState, selectedItems = this.options.selected) {
+        this.options.selected = selectedItems;
         if (this.isMemberService) {
-            try {
-                this.__setLoading(true, { both: false });
-                const data = await this.options.memberService.getMembers(this.__getSettings(filterState));
-                if (!data.available) {
-                    data.available = [];
-                }
-                if (!data.selected) {
-                    data.selected = [];
-                }
-                data.available.forEach(item => (this.members[item.id] = item));
-                data.selected.forEach(item => (this.members[item.id] = item));
-                this.__processValues(data.selected);
-                this.model.get('available').totalCount = data.totalCount;
-            } catch (e) {
-                console.log(e);
-            } finally {
-                this.__setLoading(false);
-            }
+            await this.__updateMemberItems(filterState, selectedItems);
         } else {
-            this.__setLoading(true, { both: false });
-            const users = await this.options.users;
-            const groups = await this.options.groups;
-            users.forEach(model => (this.members[model.id] = model));
-            groups.forEach(model => (this.members[model.id] = model));
+            await this.__updateGeneralItems();
+        }
+        this.trigger('update:text', this.__getDisplayText());
+    },
+
+    async __updateMemberItems(filterState = this.filterState, selectedItems = this.options.selected) {
+        this.members = {};
+        this.__setLoading(true, { both: true });
+        try {
+            const data = await this.options.memberService.getMembers(this.__getSettings(filterState, selectedItems));
+            data.available.forEach(item => (this.members[item.id] = item));
+            data.selected.forEach(item => (this.members[item.id] = item));
+            this.processValues(selectedItems);
+            this.model.get('available').totalCount = data.totalCount;
+        } catch (e) {
+            console.log(e);
+        } finally {
             this.__setLoading(false);
         }
     },
 
-    __getSettings(filterState) {
-        const selected = this.model.initialized ? this.model.get('selected').parentCollection.map(item => item.id) : this.options.selected;
+    async __updateGeneralItems() {
+        this.members = {};
+        this.__setLoading(true, { both: false });
+        try {
+            const users = await this.options.users;
+            const groups = await this.options.groups;
+            users.forEach(model => (this.members[model.id] = model));
+            groups.forEach(model => (this.members[model.id] = model));
+            this.processValues();
+        } catch (e) {
+            console.log(e);
+        } finally {
+            this.__setLoading(false);
+        }
+    },
 
-        return {
-            filterText: filterState.searchString || '',
-            filterType: filterState.filterType,
-            selected: selected || []
+    __getSettings(filterState, selectedItems) {
+        const selectedModels = convertToArray(selectedItems);
+        const settings = {
+            filterText: filterState ?.searchString,
+            filterType: filterState ?.filterType,
+            selected: selectedModels
         };
+        return settings;
     },
 
     __getFullMemberSplitTitle() {
-        if (this.options.title) {
-            switch (this.options.title) {
-                case 'Members':
-                    return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE');
-                case 'Performers':
-                    return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.PERFORMERSTITLE');
-                default:
-                    return this.options.title;
-            }
+        switch (this.options.title) {
+            case 'Members':
+                return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE');
+            case 'Performers':
+                return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.PERFORMERSTITLE');
+            case undefined:
+                return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.TITLE');
+            default:
+                return this.options.title;
         }
-        return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.TITLE');
     },
 
     createView() {
@@ -158,14 +148,14 @@ export default Marionette.Object.extend({
         const availableText = this.options.itemsToSelectText;
         const availableGridView = this.isMemberService
             ? new AvailableGridView(
-                  Object.assign({}, gridViewOptions, {
-                      memberService: this.options.memberService,
-                      filterFns: this.filterFns,
-                      filterState: this.filterState,
-                      title: availableText,
-                      textFilterDelay: this.options.textFilterDelay
-                  })
-              )
+                Object.assign({}, gridViewOptions, {
+                    memberService: this.options.memberService,
+                    filterFns: this.filterFns,
+                    filterState: this.filterState,
+                    title: availableText,
+                    textFilterDelay: this.options.textFilterDelay
+                })
+            )
             : new SelectedGridView(Object.assign({}, gridViewOptions, { membersCollection: this.model.get('available'), title: availableText }));
         const selectedGridView = new SelectedGridView(
             Object.assign({}, gridViewOptions, {
@@ -177,7 +167,7 @@ export default Marionette.Object.extend({
             class: 'member-split-wrp',
             columns: [availableGridView, selectedGridView]
         });
-
+        this.bondedCollections = {};
         this.bondedCollections[availableGridView.cid] = availableGridView.collection;
         this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
 
@@ -188,13 +178,12 @@ export default Marionette.Object.extend({
         if (this.isMemberService) {
             this.listenTo(availableGridView, 'members:update', async filterState => {
                 availableGridView.gridView.toggleSearchActivity(false);
-                await this.__updateItems(filterState);
+                await this.__updateMemberItems(filterState);
                 availableGridView.gridView.toggleSearchActivity(true);
             });
         }
 
         this.view.once('attach', () => availableGridView.gridView.searchView.focus());
-        this.view.once('detach', () => (this.bondedCollections = {}));
     },
 
     __executeAction(gridView, act) {
@@ -225,7 +214,7 @@ export default Marionette.Object.extend({
 
         if (filterState.filterType) {
             gridView.collection.filter();
-            this.__updateItems(filterState);
+            this.__updateMemberItems(filterState);
         } else {
             gridView.collection.filter(() => false);
         }
@@ -251,15 +240,15 @@ export default Marionette.Object.extend({
         collection.filter(computedName, { action: virtualCollectionFilterActions.REMOVE });
     },
 
-    initItems() {
-        this.createView();
-        this.setValue();
-    },
-
-    updateMembers() {
+    __updateMembers() {
         const allSelectedModels = Object.assign({}, this.model.get('selected').parentCollection);
         this.options.selected = allSelectedModels.models.map(model => model.id);
         this.trigger('popup:ok');
+    },
+
+    saveMembers() {
+        this.__updateMembers();
+        this.trigger('update:text', this.__getDisplayText());
     },
 
     cancelMembers() {
@@ -296,15 +285,9 @@ export default Marionette.Object.extend({
         this.model.set('selected', selectedModels);
 
         this.model.set('allowRemove', this.options.allowRemove);
-        this.fillInModel();
     },
 
-    async setValue() {
-        await this.model.initialized;
-        this.__processValues();
-    },
-
-    __processValues(selected = this.options.selected) {
+    processValues(selected = this.options.selected) {
         const items = Object.assign({}, this.members);
         this.options.exclude.forEach(id => {
             if (items[id]) {
@@ -312,15 +295,11 @@ export default Marionette.Object.extend({
             }
         });
 
-        const selectedItems =
-            Array.isArray(selected) && this.options.selected
-                ? this.options.selected.map(id => {
-                      const model = items[id];
-                      delete items[id];
-                      return model;
-                  })
-                : [];
-
+        const selectedItems = convertToArray(selected).map(id => {
+            const model = items[id];
+            delete items[id];
+            return model;
+        });
         const availableItems = Object.values(items);
 
         this.model.get('available').reset(availableItems);
@@ -329,12 +308,13 @@ export default Marionette.Object.extend({
 
     __moveItems(gridView, model) {
         const source = this.bondedCollections[gridView.cid];
-        const target = Object.entries(this.bondedCollections).find(x => x[0] !== gridView.cid)[1];
+        const targetKey = Object.keys(this.bondedCollections).find(key => key !== gridView.cid);
+        const target = this.bondedCollections[targetKey];
         const movingModels = model || Object.assign([], source.models);
 
         target.parentCollection.add(movingModels);
         source.parentCollection.remove(movingModels);
-        _.debounce(this.updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
+        _.debounce(this.__updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
         target.rebuild();
         source.rebuild();
         if (!model) {

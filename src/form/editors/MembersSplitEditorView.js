@@ -66,13 +66,12 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     setValue(value) {
+        this.controller.updateItems(this.controller.filterState, value);
         this.__value(value, false);
     },
 
     onRender() {
         if (this.getOption('showMode') !== 'button') {
-            this.controller.initItems();
-
             this.showChildView('splitPanelRegion', this.controller.view);
         }
     },
@@ -80,8 +79,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
         this.options.users = users;
         this.options.groups = groups;
-        this.controller.fillInModel();
-        this.controller.initItems();
+        this.setValue([]);
     },
 
     __initializeController(options) {
@@ -102,14 +100,14 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         helpers.ensureOption(this.options, 'filterFnParameters');
         helpers.ensureOption(this.options, 'memberTypes');
 
-        this.options.selected = this.getValue();
-
         this.controller = new MembersSplitController(this.options);
         if (this.getOption('showMode') !== 'button') {
+            this.controller.createView();
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
             });
         }
+        this.listenTo(this.controller, 'update:text', this.__updateText);
     },
 
     __showPopup() {
@@ -117,7 +115,8 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
             return;
         }
         this.options.selected = this.getValue();
-        this.controller.initItems();
+        this.controller.createView();
+        this.controller.processValues();
 
         const popup = new Core.layout.Popup({
             size: {
@@ -140,7 +139,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
                     text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
                     customClass: 'btn-small',
                     handler: () => {
-                        this.controller.updateMembers();
+                        this.controller.saveMembers();
                         this.__value(this.options.selected, true);
                         Core.services.WindowService.closePopup();
                     }
@@ -152,15 +151,12 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         WindowService.showPopup(popup);
     },
 
-    async updateText() {
-        this.ui.membersText.text(await this.controller.getDisplayText());
+    __updateText(text: String) {
+        this.ui.membersText.text(text);
     },
 
     __value(value, triggerChange) {
         this.options.selected = value;
-        if (this.getOption('showMode') === 'button') {
-            this.updateText();
-        }
         this.value = value;
 
         if (triggerChange) {
