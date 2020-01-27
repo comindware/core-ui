@@ -38,7 +38,7 @@ type Column = { key: string, customClass: string, editable: boolean, type: strin
 
 type MultivalueCellOptions = {
      childTemplate: HandlebarsTemplateDelegate<any>,
-     wrapedTemplate: HandlebarsTemplateDelegate<any>,
+     wrappedTemplate: HandlebarsTemplateDelegate<any>,
      value: Array,
      title: string, column: Column };
 
@@ -96,7 +96,7 @@ export default factory = {
         return this.__getMultivalueCellView({
             values: values.map(v => ({ value: v })),
             childTemplate: compiledStringValueCell,
-            wrapedTemplate: compiledWrappedStringValueCell,
+            wrappedTemplate: compiledWrappedStringValueCell,
             title: this.__getTitle({ values, column, model }),
             column
         });
@@ -127,7 +127,7 @@ export default factory = {
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: compiledValueCell,
-            wrapedTemplate: compiledWrappedValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -152,7 +152,7 @@ export default factory = {
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: compiledValueCell,
-            wrapedTemplate: compiledWrappedValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -204,7 +204,7 @@ export default factory = {
         return this.__getMultivalueCellView({
             values: mappedValues.map(v => ({ value: v })),
             childTemplate: compiledValueCell,
-            wrapedTemplate: compiledWrappedValueCell,
+            wrappedTemplate: compiledWrappedValueCell,
             title,
             column
         });
@@ -242,7 +242,7 @@ export default factory = {
             values,
             title,
             childTemplate: compiledCompositeReferenceCell,
-            wrapedTemplate: compiledWrappedCompositeReferenceCell,
+            wrappedTemplate: compiledWrappedCompositeReferenceCell,
             column
          });
     },
@@ -264,7 +264,7 @@ export default factory = {
             values,
             title,
             childTemplate: compiledCompositeDocumentCell,
-            wrapedTemplate: compiledWrappedCompositeDocumentCell,
+            wrappedTemplate: compiledWrappedCompositeDocumentCell,
             column
         });
     },
@@ -285,12 +285,12 @@ export default factory = {
             values,
             title,
             childTemplate: compiledCompositeUserCell,
-            wrapedTemplate: compiledWrappedCompositeUserCell,
+            wrappedTemplate: compiledWrappedCompositeUserCell,
             column
         });
     },
 
-    __getMultivalueCellView({ childTemplate, wrapedTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
+    __getMultivalueCellView({ childTemplate, wrappedTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
         const panelViewOptions = {
             collection: new Backbone.Collection(values.slice(1)),
             className: 'grid-composite_panel',
@@ -321,7 +321,7 @@ export default factory = {
         };
         if (childTemplate) {
             panelViewOptions.childViewOptions.template = childTemplate;
-            buttonViewOptions.template = wrapedTemplate;
+            buttonViewOptions.template = wrappedTemplate;
         }
         const menu = Core.dropdown.factory.createDropdown({
             class: 'grid_composite-cell dropdown_root',
