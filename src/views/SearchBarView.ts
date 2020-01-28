@@ -145,7 +145,6 @@ export default Marionette.View.extend({
     __toggleClearIcon() {
         const value = this.ui.input.val();
         this.ui.clear.toggle(!!value);
-        return value;
     },
 
     __showSearchBar() {

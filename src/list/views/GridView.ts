@@ -157,7 +157,7 @@ export default Marionette.View.extend({
         this.__initializeToolbar();
 
         if (this.options.showSearch) {
-            this.searchView = new SearchBarView({ searchOnEnter: true, isGlobalSearch: true });
+            this.searchView = new SearchBarView();
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
         if (this.options.showTreeEditor) {
