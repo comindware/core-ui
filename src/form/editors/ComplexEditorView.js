@@ -123,7 +123,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
                     this.__showTypeEditor();
                     return;
                 }
-                if (Array.isArray(this.value.value) && this.value.value.length === 1) {
+                if (Array.isArray(this.value.value) && this.value.value.length === 1 && !(this.valueEditor instanceof formRepository.editors.Datalist)) {
                     this.valueEditor.setValue(this.value.value[0]);
                 } else {
                     this.valueEditor.setValue(this.value.value);

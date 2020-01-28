@@ -586,6 +586,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.triggerReady(); //don't move to finally, recursively.
             this.__fetchOptionsQueue.delete(options);
         } catch (e) {
+            console.log(e);
             this.isLastFetchSuccess = false;
             this.triggerReady();
             this.__fetchOptionsQueue.delete(options);
