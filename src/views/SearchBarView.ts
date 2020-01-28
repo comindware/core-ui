@@ -10,9 +10,7 @@ const defaultOptions = () => ({
 
 const classes = {
     defaultSearchClass: 'tr-search tr-search_mselect',
-    compactSearchClass: 'tr-search_compact',
-    closed: 'closed',
-    static: 'static'
+    compactSearchClass: 'tr-search_compact'
 };
 
 export default Marionette.View.extend({
@@ -70,17 +68,12 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (MobileService.isMobile && this.options.isGlobalSearch === true) {
-            this.$el.addClass(classes.closed);
-        } else {
-            this.$el.addClass(classes.static);
-        }
-
         if (this.options.searchText) {
             this.ui.input.val(this.options.searchText);
         }
-        
-        const value = this.__toggleClearIcon();
+
+        const value = this.ui.input.val();
+        this.__toggleClearIcon();
         this.__updateInput(value);
     },
 
@@ -128,7 +121,7 @@ export default Marionette.View.extend({
     },
 
     __getClassName({ searchBarIsOpen } = {}) {
-        if (MobileService.isMobile && !searchBarIsOpen) {
+        if (MobileService.isMobile && !searchBarIsOpen && this.options.isGlobalSearch) {
             return classes.compactSearchClass;
         }
         return classes.defaultSearchClass;
@@ -164,13 +157,10 @@ export default Marionette.View.extend({
 
     __hideSearchBar() {
         if (MobileService.isMobile && this.options.isGlobalSearch === true) {
-            if (!this.el.classList.contains(classes.closed)) {
-                const currentClassName = this.__getClassName();
-                this.el.className = currentClassName;
-                this.$el.addClass(classes.closed);
-            }
-            this.ui.clear.toggle(false);
+            const currentClassName = this.__getClassName();
+            this.el.className = currentClassName;
             this.ui.input.val('');
+            this.__toggleClearIcon();
         }
     },
 
@@ -185,6 +175,7 @@ export default Marionette.View.extend({
 
     __clear() {
         this.ui.input.val('');
+        this.__toggleClearIcon();
         this.__search();
         this.ui.input.focus();
     },

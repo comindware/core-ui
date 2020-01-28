@@ -248,21 +248,11 @@ body {
 }
 
 .tr-search_compact .tr-search__input,
-.tr-search_compact .tr-search__clear,
-.tr-search_compact.closed .tr-search__input,
-.tr-search_compact.closed .tr-search__clear {
+.tr-search_compact .tr-search__clear {
     display: none;
 }
 
 .tr-search .tr-search-icon {
-    display: none;
-}
-
-.tr-search_compact.closed .tr-search-icon {
-    display: block;
-}
-
-.tr-search .tr-search__clear {
     display: none;
 }
 
