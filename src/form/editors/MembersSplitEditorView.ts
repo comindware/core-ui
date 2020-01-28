@@ -61,7 +61,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     setValue(value) {
-        this.controller.updateItems(this.controller.fliterState, value);
+        this.controller.updateItems(this.controller.filterState, value);
         this.__value(value, false);
     },
 
@@ -93,6 +93,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
 
         this.controller = new MembersSplitController(this.options);
         if (this.getOption('showMode') !== 'button') {
+            this.controller.createView();
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
             });

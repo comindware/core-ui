@@ -5,8 +5,6 @@ import FilterState from '../classes/FilterState';
 import AvailableGridView from '../views/AvailableGridView';
 import SelectedGridView from '../views/SelectedGridView';
 import { virtualCollectionFilterActions } from 'Meta';
-import Backbone from 'backbone';
-import _ from 'underscore';
 
 const toolbarActions = {
     MOVE_ALL: 'Move-all'
@@ -22,14 +20,7 @@ const debounceInterval = {
     medium: 300
 };
 
-function convertToArray(value : null | string | string[]): string[] {
-    if (typeof value === 'string') {
-        return Array(value);
-    } else if (Array.isArray(value)) {
-        return value;
-    }
-    return [];
-}
+const convertToArray = (value : null | string | string[]) => Array.isArray(value) ? value : value ? [value] : [];
 
 export default Marionette.MnObject.extend({
     initialize(options) {
@@ -57,7 +48,6 @@ export default Marionette.MnObject.extend({
             confirmEdit: true,
             emptyListText: this.options.emptyListText
         });
-        this.createView();
     },
 
     __getDisplayText() {
@@ -71,9 +61,9 @@ export default Marionette.MnObject.extend({
         if (typeof this.options.getDisplayText === 'function') {
             return this.options.getDisplayText(selected);
         }
-        const usersResultText = (this.options.hideUsers) ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        const usersResultText = (this.options.hideUsers) ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users).concat(' ');
         const groupsResultText = (this.options.hideGroups) ? '' : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
-        return `${usersResultText} ${groupsResultText}`;
+        return `${usersResultText}${groupsResultText}`;
     },
 
     async updateItems(filterState, selectedItems = this.options.selected) {
@@ -111,7 +101,7 @@ export default Marionette.MnObject.extend({
             users.forEach(model => (this.members[model.id] = model));
             groups.forEach(model => (this.members[model.id] = model));
             this.processValues();
-        } catch {
+        } catch (e) {
             console.log(e);
         } finally {
             this.__setLoading(false);
@@ -120,17 +110,12 @@ export default Marionette.MnObject.extend({
 
     __getSettings(filterState, selectedItems) {
         const selectedModels = convertToArray(selectedItems);
-        const defaultSettings = {
-            filterText: '',
-            filterType: '',
-            selected: []
-        };
         const settings = {
             filterText: filterState?.searchString,
             filterType: filterState?.filterType,
             selected: selectedModels
         };
-        return Object.assign(defaultSettings, settings)
+        return settings;
     },
 
     __getFullMemberSplitTitle() {
@@ -207,7 +192,8 @@ export default Marionette.MnObject.extend({
             case toolbarActions.MOVE_ALL:
                 this.__moveItems(gridView);
                 break;
-            default: null;
+            default:
+                break;
         }
     },
 
@@ -307,7 +293,8 @@ export default Marionette.MnObject.extend({
 
     __moveItems(gridView, model) {
         const source = this.bondedCollections[gridView.cid];
-        const target = Object.entries(this.bondedCollections).find(x => x[0] !== gridView.cid)[1];
+        const targetKey = Object.keys(this.bondedCollections).find(key => key !== gridView.cid);
+        const target = this.bondedCollections[targetKey];
         const movingModels = model || Object.assign([], source.models);
 
         target.parentCollection.add(movingModels);
