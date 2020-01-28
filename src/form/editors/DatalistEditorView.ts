@@ -543,7 +543,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.debouncedFetchUpdateFilter();
     },
 
-    __fetchUpdateFilter(text = this.__getInputValue(), { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
+    __fetchUpdateFilter(
+        text = this.__getInputValue(),
+        { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true, selected = this.value } = {}
+    ) {
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
@@ -557,20 +560,20 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__setInputValue(text);
 
         if (this.options.fetchFiltered) {
-            return this.__fetchDataAndOpen(this.searchText, { openOnRender, open });
+            return this.__fetchDataAndOpen(this.searchText, { openOnRender, open, selected });
         }
 
         this.__filterPanelCollection(this.searchText);
         open && this.open(openOnRender);
     },
 
-    async __fetchDataAndOpen(fetchedDataForSearchText: string, options: { open: boolean, openOnRender: boolean }) {
+    async __fetchDataAndOpen(fetchedDataForSearchText: string, options: { open: boolean, openOnRender: boolean, selected: any }) {
         this.__fetchOptionsQueue.add(options);
         this.triggerNotReady();
         this.panelCollection.pointOff();
         try {
             const collection = this.options.collection;
-            await collection.fetch({ data: { filter: fetchedDataForSearchText } });
+            await collection.fetch({ data: { filter: fetchedDataForSearchText, selected: options.selected } });
 
             if (this.searchText !== fetchedDataForSearchText) {
                 throw new Error('searched was updated');
@@ -722,7 +725,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.listenToOnce(this, 'view:ready', () => {
                 this.setValue(value);
             });
-            this.__fetchUpdateFilter('', { forceCompareText: true });
+            this.__fetchUpdateFilter('', { forceCompareText: true, selected: value });
         }
         return this.__adjustValueFromLoaded(value);
     },
