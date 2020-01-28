@@ -254,10 +254,6 @@ body {
     display: none;
 }
 
-.tr-search_compact.open .tr-search-icon {
-    display: none;
-}
-
 .tr-search .tr-search-icon {
     display: none;
 }
@@ -268,6 +264,11 @@ body {
 
 .tr-search .tr-search__clear {
     display: none;
+}
+
+.toolbar .tr-search__clear {
+    top: 15px;
+    height: 25px;
 }
 
 .tr-search__clear {

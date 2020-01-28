@@ -11,7 +11,6 @@ const defaultOptions = () => ({
 const classes = {
     defaultSearchClass: 'tr-search tr-search_mselect',
     compactSearchClass: 'tr-search_compact',
-    open: 'open',
     closed: 'closed',
     static: 'static'
 };
@@ -157,7 +156,6 @@ export default Marionette.View.extend({
     },
 
     __showSearchBar() {
-        this.$el.addClass(classes.open);
         const currentClassName = this.__getClassName({ searchBarIsOpen: true });
         this.el.className = currentClassName;
         this.__toggleClearIcon();

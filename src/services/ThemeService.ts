@@ -17,6 +17,7 @@ const idSpritesPrefix = 'core-ui-sprites-';
 export default class ThemeService {
     static __appliedThemes: Set<string>;
     static __isDarkTheme: boolean;
+    static __initializeListeners: Array<Function>;
     static options: options;
 
     static initialize(opt: options) {
@@ -27,6 +28,12 @@ export default class ThemeService {
         if (this.options.isCompact) {
             this.__setTheme('main');
         }
+
+        this.__initializeListeners.forEach(listener => listener());
+    }
+
+    static addInitializeListener(listener: Function) {
+        (this.__initializeListeners || (this.__initializeListeners = [])).push(listener);
     }
 
     static isThemeShadeIsDark() {
