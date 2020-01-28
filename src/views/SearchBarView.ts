@@ -1,11 +1,17 @@
 import template from './templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 import keyCode from '../utils/keyCode';
+import MobileService from '../services/MobileService';
 
 const defaultOptions = () => ({
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
     delay: 200
 });
+
+const classes = {
+    defaultSearchClass: 'tr-search tr-search_mselect',
+    compactSearchClass: 'tr-search_compact'
+};
 
 export default Marionette.View.extend({
     initialize(options = {}) {
@@ -26,18 +32,30 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'tr-search tr-search_mselect',
+    className() { return this.__getClassName(); },
 
     ui: {
         input: '.js-search-input',
-        clear: '.js-search-clear'
+        clear: '.js-search-clear',
+        compactSearch: '.js-search-icon'
     },
 
-    events: {
-        'keyup @ui.input': '__trySearching',
-        'pointerdown @ui.clear': '__clear',
-        'focus @ui.input': 'onFocus',
-        'blur @ui.input': 'onBlur'
+    events() {
+        const events = {
+            'keyup @ui.input': '__onKeyup',
+            'pointerdown @ui.clear': '__clear',
+            'focus @ui.input': 'onFocus',
+            'blur @ui.input': 'onBlur'
+        };
+
+        if (MobileService.isMobile) {
+            const mobileEvents = {
+                'click @ui.compactSearch': '__showSearchBar'
+            };
+
+            Object.assign(events, mobileEvents);
+        }
+        return events;
     },
 
     onFocus() {
@@ -46,14 +64,16 @@ export default Marionette.View.extend({
 
     onBlur() {
         this.el.classList.remove('focused');
+        this.__hideSearchBar();
     },
 
     onRender() {
         if (this.options.searchText) {
             this.ui.input.val(this.options.searchText);
         }
+
         const value = this.ui.input.val();
-        this.ui.clear.toggle(!!value);
+        this.__toggleClearIcon();
         this.__updateInput(value);
     },
 
@@ -79,7 +99,7 @@ export default Marionette.View.extend({
         }
     },
 
-    setReadonly(isEnabled) {
+    setReadonly(isEnabled: Boolean) {
         if (this.isRendered()) {
             if (isEnabled) {
                 this.ui.input[0].removeAttribute('readonly');
@@ -89,18 +109,30 @@ export default Marionette.View.extend({
         }
     },
 
-    clearInput(isClearingSilent) {
+    clearInput(isClearingSilent: Boolean) {
         if (isClearingSilent) {
-            this.ui.input.val('');
+            const value = this.ui.input.val('');
             this.blur();
-            this.ui.clear.toggle();
             this.__updateInput();
+            this.__toggleClearIcon();
         } else {
             this.__clear();
         }
     },
 
-    __trySearching(event) {
+    __getClassName({ searchBarIsOpen } = {}) {
+        if (MobileService.isMobile && !searchBarIsOpen && this.options.isGlobalSearch) {
+            return classes.compactSearchClass;
+        }
+        return classes.defaultSearchClass;
+    },
+
+    __onKeyup(event: KeyboardEvent) {
+        this.__trySearching(event);
+        this.__toggleClearIcon();
+    },
+
+    __trySearching(event: KeyboardEvent) {
         if (this.options.searchOnEnter === true) {
             if (event.keyCode === keyCode.ENTER || event.keyCode === keyCode.NUMPAD_ENTER) {
                 this.__search();
@@ -110,11 +142,31 @@ export default Marionette.View.extend({
         }
     },
 
+    __toggleClearIcon() {
+        const value = this.ui.input.val();
+        this.ui.clear.toggle(!!value);
+        return value;
+    },
+
+    __showSearchBar() {
+        const currentClassName = this.__getClassName({ searchBarIsOpen: true });
+        this.el.className = currentClassName;
+        this.__toggleClearIcon();
+        this.focus();
+    },
+
+    __hideSearchBar() {
+        if (MobileService.isMobile && this.options.isGlobalSearch === true) {
+            const currentClassName = this.__getClassName();
+            this.el.className = currentClassName;
+            this.ui.input.val('');
+            this.__toggleClearIcon();
+        }
+    },
+
     __search() {
         const value = this.ui.input.val();
         this.__triggerSearch(value);
-        this.ui.clear.toggle(!!value);
-        this.__updateInput(value);
     },
 
     __triggerSearch(value) {
@@ -123,6 +175,7 @@ export default Marionette.View.extend({
 
     __clear() {
         this.ui.input.val('');
+        this.__toggleClearIcon();
         this.__search();
         this.ui.input.focus();
     },

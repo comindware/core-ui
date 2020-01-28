@@ -70,7 +70,7 @@ const variables = {
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '4px 20px 4px 24px',
+    'input-search-padding': '4px 20px 4px 25px',
     'input-search-bg':
         'no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC)',
 
@@ -259,11 +259,11 @@ module.exports.apply = {
         'background-color': 'transparent'
     },
     'input-search-clear-theme': {
-        width: '20px',
+        width: '22px',
         height: '29px',
         opacity: '.8',
         right: '0',
-        top: '17px',
+        top: '10px',
         'font-size': '16px',
         'text-align': 'center'
     },
