@@ -10,20 +10,15 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import GlobalEventService from '../../../../../services/GlobalEventService';
 import LoadingBehavior from '../../../../../views/behaviors/LoadingBehavior';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
-
-const modes = {
-    expression: 'text/comindware_expression',
-    script: 'text/x-csharp'
-};
+import { contextIconType } from '../../../../../Meta';
+import '../../../../../../node_modules/codemirror/mode/turtle/turtle';
 
 const TOOLTIP_PADDING_PX = 15;
-const TOOLTIP_MARGIN = 10;
 const CHECK_VISIBILITY_DELAY = 200;
 
 const classes = constants.classes;
 const types = constants.types;
 
-const lineSeparatorCR_LF = '\r\n';
 const lineSeparatorLF = '\n';
 
 export default Marionette.View.extend({
@@ -41,6 +36,7 @@ export default Marionette.View.extend({
             '__redo',
             '__format',
             '__cmwHint',
+            '__notation3Hints',
             '__showTooltip',
             '__hideTooltip',
             '__onMouseover',
@@ -55,8 +51,18 @@ export default Marionette.View.extend({
             '__checkComments',
             '__countLineAndColumn',
             '__hideHintOnClick',
-            '__getTooltipCsharpModel'
+            '__getTooltipCsharpModel',
+            '__showTemplateHintsN3',
+            '__getAttributeNotation3',
+            '__getListHintsN3',
+            '__changeTemplate',
+            '__showPrefixN3',
+            '__findUsedVariablesN3',
+            '__setHighlightUnusedVar',
+            '__cleanCSharpInfoList',
+            '__showAttributeN3'
         );
+
         if (options.mode === constants.mode.expression) {
             this.autoCompleteModel = new Backbone.Model();
             this.autoCompleteContext = constants.autoCompleteContext.functions;
@@ -73,10 +79,10 @@ export default Marionette.View.extend({
                 });
             }
         }
-        this.elementLength = 0;
+
         this.intelliAssist = options.ontologyService;
         if (options.mode === constants.mode.script) {
-            codemirror.hintWords['text/x-csharp'] = [];
+            codemirror.hintWords[constants.languages.script] = [];
         }
     },
 
@@ -124,7 +130,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly});
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
@@ -160,7 +166,7 @@ export default Marionette.View.extend({
         this.codemirror = codemirror(this.ui.editor[0], {
             extraKeys,
             lineNumbers: true,
-            mode: modes[this.options.mode],
+            mode: constants.languages[this.options.mode],
             ontologyObjects: [],
             lineSeparator: lineSeparatorLF,
             matchBrackets: true,
@@ -190,7 +196,6 @@ export default Marionette.View.extend({
         this.codemirror.on('blur', this.__onBlur);
         this.codemirror.on('change', this.__onChange);
         this.codemirror.on('keydown', this.__onKeyDown);
-
         this.codemirror.on('endCompletion', () => {
             this.__hideTooltip();
             this.isExternalChange = true;
@@ -200,28 +205,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
-        this.codemirror.on('inputRead', (editor, change) => {
-            if (this.intelliAssist && (this.options.mode === constants.mode.script)) {
-                const inputSymbol = change.text[0];
-                const isNotFilter = !(/\w/).test(inputSymbol);
-                if (inputSymbol === '.') {
-                    this.filterList = null;
-                    this.isCallMethodAnywhere = false;
-                    this.lineCallMethod = this.codemirror.getCursor().line;
-                    this.__showCSharpHint();
-                } else if(isNotFilter) {
-                    this.CSharpInfoList = [];
-                } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
-                    const nameFilter = this.__getObjectNameFilter();
-                    if (nameFilter && nameFilter.length) {
-                        this.__showFilterCSharpHint(nameFilter);
-                    } else {
-                        this.filterList = null;
-                    }
-                }
-            }
-        });
-
+        this.codemirror.on('inputRead', (editor, change) => this.__inputСharacterСhecking(editor, change));
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
             document.querySelector('.dev-codemirror').scrollTop = 0;
             if (this.currentHighlightedLine) {
@@ -239,6 +223,130 @@ export default Marionette.View.extend({
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
+    },
+
+    __inputСharacterСhecking(editor, change) {
+        if (!this.intelliAssist) {
+            return;
+        }
+        const inputSymbol = change.text[0];
+        if (this.options.mode === constants.mode.script) {
+            const isNotFilter = !(/\w/).test(inputSymbol);
+            if (inputSymbol === constants.activeSymbol.point) {
+                this.filterList = null;
+                this.isCallMethodAnywhere = false;
+                this.lineCallMethod = this.codemirror.getCursor().line;
+                this.__showCSharpHint();
+            } else if (isNotFilter) {
+                this.CSharpInfoList = [];
+            } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
+                const nameFilter = this.__getObjectNameFilter();
+                if (nameFilter && nameFilter.length) {
+                    this.__showFilterCSharpHint(nameFilter);
+                } else {
+                    this.filterList = null;
+                }
+            }
+        } else {
+            this.options.mode = this.__checkModeN3();
+            this.__setLanguageModeCodemirror(this.options.mode);
+            if (this.options.mode !== constants.mode.notation3) {
+                return;
+            }
+            switch (inputSymbol) {
+                case constants.activeSymbolNotation3.questionMark:
+                    if (!this.__findUsedVariablesN3(change.to)) {
+                        this.codemirror.showHint({ hint: this.__noSuggestionHint });
+                    }
+                    this.codemirror.showHint({ hint: this.__notation3Hints });
+                    break;
+                case constants.activeSymbolNotation3.at:
+                    this.codemirror.showHint({ hint: this.__showPrefixN3 });
+                    break;
+                case constants.activeSymbolNotation3.colon:
+                    this.codemirror.showHint({ hint: this.__showAttributeN3 });
+                    break;
+                default:
+                    break;
+            }
+        }
+    },
+
+    async __showAttributeN3() {
+        try {
+            this.setLoading(true);
+            const cursor = this.codemirror.getCursor();
+            const token = this.codemirror.getTokenAt(cursor);
+            const attributes = await this.__getAttributeNotation3();
+            if (attributes && !attributes.length) {
+                return this.__noSuggestionHint();
+            }
+            const hintsListAttribute = this.__renderConfigListToolbar(attributes);
+            return this.__getListHintsN3(cursor.line, cursor.ch, hintsListAttribute);
+        } finally {
+            this.setLoading(false);
+        }
+    },
+
+    __findUsedVariablesN3(cursor) {
+        this.listVariablesHintsNotation3 = [];
+        const arrNameVariablesNotation3 = [];
+        const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
+        const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
+        const regExpFindVariables = /\?\w*/igm;
+        const variablesN3 = textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
+        if (variablesN3) {
+            variablesN3.forEach(variable => {
+                if (!arrNameVariablesNotation3.includes(variable.substr(1))) {
+                    arrNameVariablesNotation3.push(variable.substr(1));
+                }
+            });
+        }
+        if (arrNameVariablesNotation3) {
+            arrNameVariablesNotation3.sort();
+            arrNameVariablesNotation3.forEach(nameVariable => {
+                this.listVariablesHintsNotation3.push({
+                    text: nameVariable,
+                    icons: contextIconType.case
+                });
+            });
+            return true;
+        }
+        return false;
+    },
+
+    async __showPrefixN3() {
+        let autoCompleteObject = {};
+        const cursor = this.codemirror.getCursor();
+        if (!this.prefixN3) {
+            try {
+                this.setLoading(true);
+                const dataPrefix = await this.intelliAssist.getStandartPrefixN3();
+                if (!dataPrefix) {
+                    return this.__noSuggestionHint();
+                }
+                this.prefixN3 = this.__getPrefixN3Map(dataPrefix);
+                this.__renderConfigListToolbar(this.prefixN3);
+            } finally {
+                this.setLoading(false);
+            }
+        }
+        autoCompleteObject = this.__getListHintsN3(cursor.line, cursor.ch, this.prefixN3);
+        this.showTooltipPrefixN3 = this.__showTooltip;
+        codemirror.on(autoCompleteObject, 'select', this.showTooltipPrefixN3);
+        return autoCompleteObject;
+    },
+
+    __getPrefixN3Map(dataPrefix) {
+        dataPrefix.map(prefix => {
+            prefix.text = `prefix ${prefix.alias}: <${prefix.uri}>.`;
+            prefix.displayText = prefix.alias;
+            prefix.title = `URI: ${prefix.uri}`;
+            prefix.description = (prefix.description) ? prefix.description : '-',
+            prefix.icons = contextIconType.case;
+            return prefix;
+        });
+        return dataPrefix;
     },
 
     onDestroy() {
@@ -376,7 +484,8 @@ export default Marionette.View.extend({
             return;
         }
         if (this.options.mode === constants.mode.expression || this.options.mode === constants.mode.notation3) {
-            this.__checkModeN3();
+            this.options.mode = this.__checkModeN3();
+            this.__setLanguageModeCodemirror(this.options.mode);
             return;
         }
         this.__change();
@@ -445,8 +554,8 @@ export default Marionette.View.extend({
             const completeHoverQuery = {
                 sourceCode: this.codemirror.getValue(),
                 cursorOffset: this.__countOffset(),
-                sourceType: 'CSharp',
-                queryCompleteHoverType: 'Completion',
+                sourceType: constants.typeScript.script,
+                queryCompleteHoverType: constants.queryCompleteHoverType.unusedVariables,
                 useOntologyLibriary: this.options.config?.useOntologyLibriary
             };
             const ontologyModel = await this.intelliAssist.getCSharpOntology(completeHoverQuery);
@@ -478,10 +587,11 @@ export default Marionette.View.extend({
             item.render = function(el, cm, data) {
                 const icon = document.createElement('i');
                 const text = document.createElement('span');
+                text.setAttribute('title', data.displayText || data.text);
                 const nameIcon = data.icons || data.type;
                 const getIcon = getIconPrefixer(nameIcon);
                 icon.className = getIcon(nameIcon);
-                text.innerText = data.text;
+                text.innerText = data.displayText || data.text;
                 el.appendChild(icon);
                 el.appendChild(text);
             };
@@ -514,43 +624,47 @@ export default Marionette.View.extend({
         return filterName;
     },
 
+    __cleanCSharpInfoList() {
+        this.CSharpInfoList = [];
+    },
+
     __getTooltipCsharpModel() {
         let autoCompleteObject = {};
         const dataList = this.filterList || this.CSharpInfoList;
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
-        this.hintsBehindDot = this.codemirror.getLine(cursor.line)[token.start] === '.';
+        this.hintsBehindDot = this.codemirror.getLine(cursor.line)[token.start] === constants.activeSymbol.point;
+
+        this.showTooltipCSharp = this.__showTooltip;
+        this.cleanCSharpInfoList = this.this.__cleanCSharpInfoList;
+
+        codemirror.on(autoCompleteObject, 'select', this.showTooltipCSharp);
+        codemirror.on('pick', this.cleanCSharpInfoList);
         if (!dataList.length) {
-            autoCompleteObject = {
-                from: cursor,
-                to: cursor,
-                list: [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }]
-            };
-        } else {
-            autoCompleteObject = {
-                from: {
-                    line: cursor.line,
-                    ch: this.hintsBehindDot ? token.start + 1 : token.start
-                },
-                to: {
-                    line: cursor.line,
-                    ch: this.hintsBehindDot ? token.end + 1 : token.end
-                },
-                list: this.__renderConfigListToolbar(dataList)
-            };
+            autoCompleteObject = this.__noSuggestionHint();
+            return autoCompleteObject;
         }
-        if (!this.hintsBehindDot) {
-            if (this.previousHintName) {
-                const indexBehhindHint = dataList.findIndex(item => item.name === this.previousHintName);
-                if (indexBehhindHint >= 0) {
-                    autoCompleteObject.selectedHint = indexBehhindHint;
-                }
-            }
-        } else {
+        autoCompleteObject = {
+            from: {
+                line: cursor.line,
+                ch: this.hintsBehindDot ? token.start + 1 : token.start
+            },
+            to: {
+                line: cursor.line,
+                ch: this.hintsBehindDot ? token.end + 1 : token.end
+            },
+            list: this.__renderConfigListToolbar(dataList)
+        };
+
+        if (this.hintsBehindDot) {
             this.previousHintName = null;
         }
-        codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
-        codemirror.on(autoCompleteObject, 'pick', () => this.CSharpInfoList = []);
+        if (this.previousHintName) {
+            const indexBehhindHint = dataList.findIndex(item => item.name === this.previousHintName);
+            if (indexBehhindHint >= 0) {
+                autoCompleteObject.selectedHint = indexBehhindHint;
+            }
+        }
         this.hintIsShown = true;
         return autoCompleteObject;
     },
@@ -563,6 +677,7 @@ export default Marionette.View.extend({
         const tooltipWidth = this.tooltip.$el.width;
         let right;
         const indentRightEdge = document.body.offsetWidth - hintPanelPosition.right;
+
         if (indentRightEdge < hintPanelWidth) {
             right = indentRightEdge + hintPanelWidth + tooltipMargin;
             return { top: hintPanelPosition.top, right };
@@ -594,6 +709,11 @@ export default Marionette.View.extend({
                     model: new Backbone.Model(this.__findObjectByText(token.text)),
                     isFull: true
                 };
+            case constants.mode.notation3:
+                options = {
+                    model: new Backbone.Model(token)
+                };
+                break;
             default:
                 break;
         }
@@ -615,20 +735,70 @@ export default Marionette.View.extend({
         if (this.options.mode === constants.mode.expression) {
             this.codemirror.showHint({ hint: this.__cmwHint });
         }
+        if (this.options.mode === constants.mode.notation3) {
+            const cursor = this.codemirror.getCursor();
+            const valueCodeLeftCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
+            const arrOpenBraceOver = this.__countBrace(valueCodeLeftCursor, constants.activeSymbolNotation3.openBrace);
+            const arrCloseBraceOver = this.__countBrace(valueCodeLeftCursor, constants.activeSymbolNotation3.closeBrace);
+            const countLeftBrace = arrOpenBraceOver.length - arrCloseBraceOver.length;
+
+            if (countLeftBrace) {
+                this.codemirror.showHint({ hint: this.__showTemplateHintsN3 });
+            } else {
+                this.codemirror.showHint({ hint: this.__noSuggestionHint });
+            }
+        }
         if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
         }
     },
 
+    __countBrace(value, typeBrace) {
+        const countBraceRegExp = new RegExp(`${typeBrace}`, 'gim');
+        return value.match(countBraceRegExp) || [];
+    },
+
     __checkModeN3() {
         const firstSymbol = this.codemirror.getValue().trim()[0];
-        if (firstSymbol === '@' || firstSymbol === '{') {
-            this.options.mode = constants.mode.notation3;
-            this.__hideHint();
-        } else {
-            this.options.mode = constants.mode.expression;
-            this.__showHint();
+        if (firstSymbol === constants.activeSymbolNotation3.at || firstSymbol === constants.activeSymbolNotation3.openBrace) {
+            return constants.mode.notation3;
         }
+        this.__showHint();
+        return constants.mode.expression;
+    },
+
+    __setLanguageModeCodemirror(languageMode) {
+        switch (languageMode) {
+            case constants.languages.expression:
+                this.codemirror.setOption('mode', constants.languages.expression);
+                this.__closeNotationMode();
+                this.__closeCSharpMode();
+                break;
+            case constants.languages.notation3:
+                this.codemirror.setOption('mode', constants.languages.notation3);
+                this.__closeExpressionMode();
+                this.__closeCSharpMode();
+                break;
+            default:
+                this.codemirror.setOption('mode', constants.languages.script);
+                this.__closeExpressionMode();
+                this.__closeNotationMode();
+        }
+    },
+
+    __closeExpressionMode() {
+        codemirror.off('select', this.showTooltipCMW);
+    },
+
+    __closeNotationMode() {
+        codemirror.off('pick', this.changeTemplateNotation);
+        codemirror.off('select', this.showTooltipNotation);
+        codemirror.off('select', this.showTooltipPrefixN3);
+    },
+
+    __closeCSharpMode() {
+        codemirror.off('select', this.showTooltipCSharp);
+        codemirror.off('pick', this.cleanCSharpInfoList);
     },
 
     __noSuggestionHint() {
@@ -656,32 +826,61 @@ export default Marionette.View.extend({
     __find() {
         this.codemirror.execCommand('find');
     },
+
+    async __setHighlightUnusedVar() {
+        const formatQuery = {
+            sourceCode: this.codemirror.getValue(),
+            sourceType: constants.typeScript.notation3,
+            queryFormatType: constants.queryCompleteHoverType.unusedVariables,
+            useOntologyLibriary: false
+        };
+        const unusedVariables = await this.intelliAssist.getN3UnusedVariables(formatQuery);
+        const lastLine = this.codemirror.lastLine();
+        this.codemirror.markText({ line: 0, ch: 0 }, { line: lastLine }, { css: 'background : none' });
+        if (unusedVariables.length) {
+            unusedVariables.forEach(variable => {
+                const cursor = this.codemirror.posFromIndex(variable.startPos);
+                const chStart = cursor.ch;
+                const chStop = cursor.ch + variable.alias.length + 1;
+                this.codemirror.markText({ line: cursor.line, ch: chStart }, { line: cursor.line, ch: chStop }, { css: 'background : yellow' });
+            });
+        }
+    },
+
     async __compile() {
         if (!this.intelliAssist) {
             return;
         }
-        if (this.currentHighlightedLine) {
-            this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
-            this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
-        }
+        if (this.options.mode === constants.mode.notation3) {
+            await this.__setHighlightUnusedVar();
+        } else if (this.options.mode === constants.mode.script) {
+            if (this.currentHighlightedLine) {
+                this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorError);
+                this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorWarning);
+            }
 
-        const ERROR = 'Error';
-        const WARNING = 'Warning';
+            const ERROR = 'Error';
+            const WARNING = 'Warning';
 
-        let newArrErr = [];
-        let newArrWarn = [];
-        let newArrInfo = [];
+            let newArrErr = [];
+            let newArrWarn = [];
+            let newArrInfo = [];
 
-        const userCompileQuery = {
-            sourceCode: this.codemirror.getValue(),
-            sourceType: 'CSharp',
-            useOntologyLibriary: this.options.config?.useOntologyLibriary
-        };
-        const content = this.codemirror.getValue();
-        this.setLoading(true);
-        try {
-            const ontologyModel = await this.intelliAssist.getCompile(userCompileQuery);
-            if (ontologyModel) {
+            const userCompileQuery = {
+                sourceCode: this.codemirror.getValue(),
+                sourceType: constants.typeScript.script,
+                useOntologyLibriary: this.options.config?.useOntologyLibriary
+            };
+            const content = this.codemirror.getValue();
+            this.setLoading(true);
+            try {
+                const ontologyModel = await this.intelliAssist.getCompile(userCompileQuery);
+                if (!ontologyModel) {
+                    newArrErr = [];
+                    newArrWarn = [];
+                    newArrInfo = [];
+                }
+
                 if (ontologyModel.get('compilerRemarks').length > 0) {
                     ontologyModel.get('compilerRemarks').forEach(el => {
                         const offsetStart = el.offsetStart;
@@ -691,13 +890,13 @@ export default Marionette.View.extend({
                             el.column = obj.column;
                             switch (el.severity) {
                                 case ERROR:
-                                    newArrErr = newArrErr.concat([el]);
+                                    newArrErr = newArrErr.push(el);
                                     break;
                                 case WARNING:
-                                    newArrWarn = newArrWarn.concat([el]);
+                                    newArrWarn = newArrWarn.push(el);
                                     break;
                                 default:
-                                    newArrInfo = newArrInfo.concat([el]);
+                                    newArrInfo = newArrInfo.push(el);
                                     break;
                             }
                         }
@@ -705,19 +904,16 @@ export default Marionette.View.extend({
                 } else {
                     Core.ToastNotifications.add(Localizer.get('CORE.FORM.EDITORS.CODE.SUCCESSFULCOMPILE'));
                 }
-            } else {
-                newArrErr = [];
-                newArrWarn = [];
-                newArrInfo = [];
+
+                const outputObj = {
+                    errors: newArrErr,
+                    warnings: newArrWarn,
+                    info: newArrInfo
+                };
+                this.trigger('compile', outputObj);
+            } finally {
+                this.setLoading(false);
             }
-            const outputObj = {
-                errors: newArrErr,
-                warnings: newArrWarn,
-                info: newArrInfo
-            };
-            this.trigger('compile', outputObj);
-        } finally {
-            this.setLoading(false);
         }
     },
 
@@ -781,7 +977,7 @@ export default Marionette.View.extend({
         if (this.options.mode === constants.mode.script) {
             const formatQuery = {
                 SourceCode: this.codemirror.getValue(),
-                SourceType: 'CSharp',
+                SourceType: constants.typeScript.script,
                 UseOntologyLibriary: this.options.config?.useOntologyLibriary
             };
             if (this.intelliAssist) {
@@ -800,7 +996,7 @@ export default Marionette.View.extend({
         const completeHoverQuery = {
             sourceCode: this.codemirror.getValue(),
             cursorOffset: this.__countOffset(),
-            sourceType: constants.mode.expression,
+            sourceType: constants.typeScript.expression,
             queryCompleteHoverType: constants.queryCompleteHoverType.completion,
             useOntologyLibriary: false
         };
@@ -826,10 +1022,112 @@ export default Marionette.View.extend({
             this.__renderConfigListToolbar(autoCompleteObject.list);
         }
         this.autoCompleteContext = CmwCodeAssistantServices.getAutoCompleteContext();
-        codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
+        this.showTooltipCMW = this.__showTooltip;
+        codemirror.on(autoCompleteObject, 'select', this.showTooltipCMW);
         this.hintIsShown = true;
 
         return autoCompleteObject;
+    },
+
+    async __showTemplateHintsN3() {
+        const templateNotation3 = this.intelliAssist.getTemplateNotation3(this.options.solution);
+        let autoCompleteObject = {};
+        const cursor = this.codemirror.getCursor();
+        const numberLine = cursor.line;
+        const valueLine = this.codemirror.getLine(numberLine);
+        const ch = cursor.ch;
+        const token = this.codemirror.getTokenAt(cursor);
+
+        const isOpenedLeftBracket = valueLine.slice(0, ch).includes('(');
+        const isClosedRightBracket = valueLine.slice(ch, valueLine.length).includes(')');
+        const isIntoBracket = isOpenedLeftBracket && isClosedRightBracket;
+        const isEmptyLine = !this.codemirror.getLine(cursor.line).trim().length;
+
+        let hintsNotation3;
+        if (isIntoBracket) {
+            hintsNotation3 = await this.__getAttributeNotation3();
+            if (!hintsNotation3) {
+                return this.__noSuggestionHint();
+            }
+            autoCompleteObject = this.__getListHintsN3(cursor.line, ch, hintsNotation3);
+            this.changeTemplateNotation = this.__changeTemplate;
+            codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor));
+        } else if (isEmptyLine) {
+            hintsNotation3 = templateNotation3;
+            autoCompleteObject = this.__getListHintsN3(cursor.line, cursor.ch, hintsNotation3);
+        } else {
+            hintsNotation3 = await this.__getAttributeNotation3();
+            if (!hintsNotation3.length) {
+                return this.__noSuggestionHint();
+            }
+            autoCompleteObject = this.__getListHintsN3(cursor.line, ch, hintsNotation3);
+        }
+        this.__renderConfigListToolbar(hintsNotation3);
+        this.showTooltipNotation = this.__showTooltip;
+        codemirror.on(autoCompleteObject, 'select', this.showTooltipNotation);
+        return autoCompleteObject;
+    },
+
+    __getListHintsN3(line, ch, list) {
+        return {
+            from: {
+                line,
+                ch
+            },
+            list
+        };
+    },
+
+    __changeTemplate(descriptionHint, cursor) {
+        const numberLine = this.codemirror.getCursor().line;
+        const valueLine = this.codemirror.getLine(numberLine);
+        const startSpaces = (valueLine.match(/\s+/)) ? valueLine.match(/\s+/)[0] : '';
+        let newValueLine;
+        if (descriptionHint.overloads && descriptionHint.overloads.length) {
+            let paramGlobalFunction = '';
+            descriptionHint.overloads.forEach(overload => {
+                paramGlobalFunction += `("${overload.name}" val) `;
+            });
+            newValueLine = `${startSpaces}("${this.options.solution}" "${descriptionHint.name}" (${paramGlobalFunction})) cmwglobal:callGlobalFunction ?callResult.`;
+            this.codemirror.replaceRange(newValueLine, { line: numberLine, ch: 0 }, { line: numberLine });
+        } else {
+            let newNameProperty;
+            const regExpFindPropName = /\?pro\w*/i;
+            const nameOldProperty = valueLine.match(regExpFindPropName)[0];
+            if (nameOldProperty && descriptionHint.name) {
+                const addName = `${descriptionHint.name[0].toUpperCase()}${descriptionHint.name.slice(1)}`;
+                newNameProperty = `${nameOldProperty}${addName}`;
+                newValueLine = valueLine.replace(regExpFindPropName, newNameProperty);
+                this.codemirror.replaceRange(newValueLine, { line: numberLine, ch: 0 }, { line: numberLine });
+                this.codemirror.setCursor({ line: cursor.line, ch: cursor.ch + descriptionHint.text.length });
+            }
+        }
+    },
+
+    async __getAttributeNotation3() {
+        this.setLoading(true);
+        try {
+            const completeHoverQuery = {
+                sourceCode: this.codemirror.getValue(),
+                cursorOffset: this.__countOffset(),
+                sourceType: constants.typeScript.notation3,
+                queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+                useOntologyLibriary: false,
+                solution: this.options.solution
+            };
+            const notation3Attributes = await this.intelliAssist.getNotation3Attribute(completeHoverQuery);
+            if (notation3Attributes) {
+                return notation3Attributes;
+            }
+        } finally {
+            this.setLoading(false);
+        }
+    },
+
+    __notation3Hints() {
+        const cursor = this.codemirror.getCursor();
+        this.__renderConfigListToolbar(this.listVariablesHintsNotation3);
+        return this.__getListHintsN3(cursor.line, cursor.ch, this.listVariablesHintsNotation3);
     },
 
     __hideTooltip() {

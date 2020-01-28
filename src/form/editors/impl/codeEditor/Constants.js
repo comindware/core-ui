@@ -18,7 +18,9 @@ export default {
         literal: 'dev-code-editor-literal',
         operator: 'dev-code-editor-operator',
         attribute: 'dev-code-editor-attribute',
-        template: 'dev-code-editor-template'
+        template: 'dev-code-editor-template',
+        colorWarning: 'dev-code-editor-warning',
+        colorError: 'dev-code-editor-error'
     },
 
     types: {
@@ -36,6 +38,18 @@ export default {
         notation3: 'notation3'
     },
 
+    languages: {
+        expression: 'text/comindware_expression',
+        script: 'text/x-csharp',
+        notation3: 'text/turtle'
+    },
+
+    typeScript: {
+        script: 'CSharp',
+        expression: 'expression',
+        notation3: 'N3Query'
+    },
+
     autoCompleteContext: {
         functions: 'functions',
         users: 'users',
@@ -50,7 +64,18 @@ export default {
         arrayRight: '->',
         rightAngleBracket: '>',
         openParenthesis: '(',
-        dbArrayRight: 'db->'
+        dbArrayRight: 'db->',
+        point: '.'
+    },
+
+    activeSymbolNotation3: {
+        colon: ':',
+        questionMark: '?',
+        at: '@',
+        openBracket: '(',
+        closeBracket: ')',
+        openBrace: '{',
+        closeBrace: '}'
     },
 
     tokenTypes: {
@@ -58,6 +83,7 @@ export default {
     },
 
     queryCompleteHoverType: {
-        completion: 'Completion'
+        completion: 'Completion',
+        unusedVariables: 'UnusedVariables'
     }
 };

@@ -38,12 +38,6 @@ export default Marionette.View.extend({
         'click @ui.minimize': '__onMinimize'
     },
 
-    onRender() {
-        if (this.options.editor.options.mode === 'expression') {
-            this.ui.compile.css('display', 'none');
-        }
-    },
-
     onAttach() {
         this.ui.minimize.hide();
     },
