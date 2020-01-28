@@ -8,9 +8,14 @@ export default {
 
     __fillConfiguration(schemaTree: Array<any>, schemaPlain: Object) {
         schemaTree.forEach(item => {
-            item.type && (item.type.includes('container') || item.type.includes('group'))
-                ? this.__fillConfiguration(item.items, schemaPlain)
-                : item.key && (schemaPlain[item.key] = Object.assign(_.omit(item, ['key']), { type: item.type.replace('-field', '').replace('-editor', '') }));
+            if (item.type && (item.type.includes('container') || item.type.includes('group'))) {
+                this.__fillConfiguration(item.items, schemaPlain);
+            } else if (item.key) {
+                if (!/editor|field/.test(item.type)) {
+                    console.warn('Unexpected "key" property for non editor|field configuration', item);
+                }
+                schemaPlain[item.key] = Object.assign(_.omit(item, ['key']), { type: item.type.replace('-field', '').replace('-editor', '') })
+            }
         });
     }
 };
