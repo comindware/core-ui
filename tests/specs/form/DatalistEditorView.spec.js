@@ -867,7 +867,7 @@ describe('Editors', () => {
                 view.once('attach', () => {
                     view.once('dropdown:open', () => {
                         view.once('dropdown:close', () => {
-                            setTimeout(() => done(), textFilterDelay + collectionFetchDelay);
+                            setTimeout(() => done(), (textFilterDelay + collectionFetchDelay));
                         });
                         view.once('dropdown:open', () => {
                             expect(false).toBeTrue('Dropdown opened repeatedly!');
