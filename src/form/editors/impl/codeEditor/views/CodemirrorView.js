@@ -555,7 +555,7 @@ export default Marionette.View.extend({
                 sourceCode: this.codemirror.getValue(),
                 cursorOffset: this.__countOffset(),
                 sourceType: constants.typeScript.script,
-                queryCompleteHoverType: constants.queryCompleteHoverType.unusedVariables,
+                queryCompleteHoverType: constants.queryCompleteHoverType.completion,
                 useOntologyLibriary: this.options.config?.useOntologyLibriary
             };
             const ontologyModel = await this.intelliAssist.getCSharpOntology(completeHoverQuery);
@@ -636,10 +636,10 @@ export default Marionette.View.extend({
         this.hintsBehindDot = this.codemirror.getLine(cursor.line)[token.start] === constants.activeSymbol.point;
 
         this.showTooltipCSharp = this.__showTooltip;
-        this.cleanCSharpInfoList = this.this.__cleanCSharpInfoList;
+        this.cleanCSharpInfoList = this.__cleanCSharpInfoList;
 
         codemirror.on(autoCompleteObject, 'select', this.showTooltipCSharp);
-        codemirror.on('pick', this.cleanCSharpInfoList);
+        codemirror.on(autoCompleteObject, 'pick', this.cleanCSharpInfoList);
         if (!dataList.length) {
             autoCompleteObject = this.__noSuggestionHint();
             return autoCompleteObject;
@@ -769,20 +769,23 @@ export default Marionette.View.extend({
 
     __setLanguageModeCodemirror(languageMode) {
         switch (languageMode) {
-            case constants.languages.expression:
+            case constants.mode.expression:
                 this.codemirror.setOption('mode', constants.languages.expression);
                 this.__closeNotationMode();
                 this.__closeCSharpMode();
                 break;
-            case constants.languages.notation3:
+            case constants.mode.notation3:
                 this.codemirror.setOption('mode', constants.languages.notation3);
                 this.__closeExpressionMode();
                 this.__closeCSharpMode();
                 break;
-            default:
+            case constants.mode.script:
                 this.codemirror.setOption('mode', constants.languages.script);
                 this.__closeExpressionMode();
                 this.__closeNotationMode();
+                break;
+            default:
+                break;
         }
     },
 
