@@ -1,5 +1,3 @@
-import coreIcons from './form/editors/impl/iconEditor/icons.json';
-
 export const contextIconType = {
     reference: 'link',
     instance: 'link',
@@ -134,6 +132,5 @@ export default {
     presentingComponentsTypes,
     splitViewTypes,
     iconsNames,
-    coreIcons,
     objectPropertyFormats
 };
