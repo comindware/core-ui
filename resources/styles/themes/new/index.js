@@ -33,6 +33,7 @@ const variables = {
     'warning-color': '#e19e35',
     'selected-background-color': 'var(--grey-100)',
     'disabled-text-color': 'var(--grey-400)',
+    'icon-remove': 'var(--grey-400)',
 
     'convex-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
     'concave-gradient': 'linear-gradient(#e2e2e2 35%, #ffffff)',
