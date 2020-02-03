@@ -417,7 +417,7 @@ body {
 }
 
 .icon-remove {
-    color: var(--red);
+    color: var(--icon-remove);
 }
 
 /* svg icons */
