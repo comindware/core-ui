@@ -252,7 +252,6 @@ export default Marionette.PartialCollectionView.extend({
 
         // handle = isGrid && isEditable ? e.target.classList.contains('cell') || e.ctrlKey : true;
         const handle = this.collection.isSliding;
-
         switch (e.keyCode) {
             case keyCode.UP:
                 if (handle) {
@@ -292,8 +291,16 @@ export default Marionette.PartialCollectionView.extend({
                 this.collection.trigger(e.shiftKey ? 'move:left' : 'move:right');
                 return false;
             case keyCode.ENTER:
-                delta = (e.shiftKey) ? -1 : 1;
-                this.moveCursorBy(delta, { shiftPressed: false });
+                if (isEditable) {
+                    //duplicate down arrow
+                    delta = (e.shiftKey) ? -1 : 1;
+                    this.moveCursorBy(delta, { shiftPressed: false });
+                } else if (!Core.services.MobileService.isMobile) {
+                    //duplicate dblclick
+                    const model = this.collection.at(this.__getIndexSelectedModel());
+                    this.gridEventAggregator.trigger('row:pointer:down', model);
+                    this.gridEventAggregator.trigger('dblclick', model);
+                }
                 return false;
             case keyCode.ESCAPE:
                 if (isEditable && handle) {
