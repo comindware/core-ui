@@ -29,7 +29,7 @@ export default class ThemeService {
             this.__setTheme('main');
         }
 
-        this.__initializeListeners.forEach(listener => listener());
+        this.__initializeListeners?.forEach(listener => listener());
     }
 
     static addInitializeListener(listener: Function) {
