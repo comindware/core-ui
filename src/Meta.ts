@@ -21,6 +21,8 @@ export const contextIconType = {
     decimal: 'superscript',
     number: 'superscript',
     action: 'hand-pointer',
+    role: 'user-shield',
+    orgStructure: 'bring-front',
     actionbutton: 'hand-pointer',
     text: 'font',
     string: 'font',
