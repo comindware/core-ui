@@ -182,6 +182,10 @@ export default Marionette.View.extend({
         this.__findTab(tabId).set({ enabled });
     },
 
+    setVisible(tabId: string, visible: boolean): void {
+        this.__findTab(tabId).set({ visible });
+    },
+
     isAllHiddenTab() {
         const visibleCollection = this.__tabsCollection.filter(tabModel => tabModel.isShow());
 
