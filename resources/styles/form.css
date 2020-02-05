@@ -490,6 +490,10 @@ input[type="checkbox"].checkbox {
     min-width: 25px;
 }
 
+.grid-table-wrapper .bubbles__form {
+    min-width: 0;
+}
+
 .bubbles__input {
     width: 100%;
     height: 100%;
