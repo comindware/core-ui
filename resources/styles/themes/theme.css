@@ -625,7 +625,9 @@ tr:hover .cell_selection-index {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
+}
 
+.cell_selection > .checkbox {
     /* for chrome margin: 0 auto align broke border for cell_selection column, for IE top is not applied */
     position: absolute;
     top: 50%;
@@ -666,7 +668,8 @@ _:-ms-lang(x),
     vertical-align: middle;
 }
 
-.cell_selection-index > .checkbox {
+.visible-collection .cell_selection-index > .checkbox,
+.grid-header .cell_selection-index > .checkbox {
     float: right;
     margin-top: 2px;
 }
