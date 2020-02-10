@@ -102,6 +102,17 @@ ul .layout__tab-layout__header-view-item:last-child {
     text-align: center;
 }
 
+.layout__tab-layout__header-view-item_disabled,
+.popout-menu__i_disabled {
+    cursor: default;
+    opacity: .4
+}
+
+.layout__tab-layout .layout__tab-layout__header-view-item_disabled:hover {
+    color: #404040;
+    background: none;
+}
+
 .layout__tab-layout__no-tabs-message {
     font-size: 18px;
     font-weight: 300;
