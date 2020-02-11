@@ -376,6 +376,9 @@ const GridHeaderView = Marionette.View.extend({
     },
     
     __updateIndexCellWidth() {
+        if (!this.options.showCheckbox) {
+            return;
+        }
         const selectionCellEl = this.el.firstElementChild;
 
         if (!this.collection.length) {
