@@ -48,13 +48,12 @@
     outline: none;
 }
 
-
 .grid-content-wrp {
     display: table;
     min-width: 100%;
-    border-collapse: collapse;
     table-layout: fixed;
 }
+
 .grid-content-wrp.grid-content-wrp_width-auto {
     min-width: auto;
 }

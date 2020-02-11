@@ -564,6 +564,10 @@ tr.selected .cell_selection-index{
   background-color: #eaf3f8;
 }
 
+tr:not(:last-child) .cell {
+  border-bottom: none;
+}
+
 .row-checked .cell,
 .row-checked .cell_selection,
 .row-checked .cell_selection-index{
