@@ -176,10 +176,8 @@ const stop = (event: KeyboardEvent) => {
     Datalist filter state store in view.searchText(trim and upperCase) and input value (raw).
 
     ToDo:
-    1.Fix bug: valueTypeId, many: if model already has displayText, collection has no this el, on delete some, another will be #.
-    2.Fix focus logic (make as dateTime).
-    3.defaultOptions:displayAttribute should be text.
-    4.getDisplayText should return string always. (String(returnedValue)).
+    1.defaultOptions:displayAttribute should be text.
+    2.getDisplayText should return string always. (String(returnedValue)).
 */
 /**
  * @name DatalistView
@@ -282,6 +280,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         });
 
         this.__addButtonListeners();
+
+        this.__fetchOptionsQueue = new Set();
     },
 
     __getEmptyPlaceholder(isEmpty = this.isEmptyValue()) {
@@ -322,6 +322,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __addButtonListeners() {
         const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
+        this.listenTo(btn, 'blur', this.__onButtonBlur);
         this.listenTo(btn, 'click', () => this.__onButtonClick());
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
@@ -494,18 +495,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     focus(): void {
         this.__focusButton();
-        this.onFocus();
     },
 
     blur(): void {
+        // TODO clean up all, except this.__blurButton();
         this.__setInputValue('');
         this.__blurButton();
         this.panelCollection.pointOff();
         this.__getSelectedBubble()?.deselect();
         this.__toggleSelectAddNewButton(false);
-        this.onBlur(undefined, {
-            triggerChange: false
-        });
     },
 
     isButtonFocus() {
@@ -526,7 +524,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__fetchUpdateFilter(string, options);
     },
 
-    __getInputValue() {
+    __getInputValue(): string {
         return this.dropdownView ? this.dropdownView.getInputValue() : '';
     },
 
@@ -538,10 +536,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (this.options.fetchFiltered) {
             this.triggerNotReady();
         }
-        this.debouncedFetchUpdateFilter(this.__getInputValue());
+        this.debouncedFetchUpdateFilter();
     },
 
-    __fetchUpdateFilter(text: string, { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
+    __fetchUpdateFilter(text = this.__getInputValue(), { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
@@ -562,7 +560,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         open && this.open(openOnRender);
     },
 
-    async __fetchDataAndOpen(fetchedDataForSearchText, { openOnRender, open }) {
+    async __fetchDataAndOpen(fetchedDataForSearchText: string, options: { open: boolean, openOnRender: boolean }) {
+        this.__fetchOptionsQueue.add(options);
         this.triggerNotReady();
         this.panelCollection.pointOff();
         try {
@@ -577,11 +576,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.__updateSelectedOnPanel();
 
             this.isLastFetchSuccess = true;
+            const { open, openOnRender } = options;
             open && this.open(openOnRender);
+
             this.triggerReady(); //don't move to finally, recursively.
+            this.__fetchOptionsQueue.delete(options);
         } catch (e) {
             this.isLastFetchSuccess = false;
             this.triggerReady();
+            this.__fetchOptionsQueue.delete(options);
         }
     },
 
@@ -599,24 +602,23 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.panelCollection.filter(filter);
     },
 
-    __resetSelectedCollection(models) {
+    __resetSelectedCollection(models: Array<Object>  | Object | undefined | null): void {
         if (!this.selectedCollection) {
             return;
         }
 
+        // logic this method is
         // this.selectedCollection.reset(models == null ? undefined : models);
         // select selected after reset
 
-        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.get(this.options.idProperty));
+        const selectedIds = Object.values(this.selectedCollection.selected).map((selectedModel: Backbone.Model) => selectedModel.get(this.options.idProperty));
 
         const arrayOfAttributes = models == null ? [] : this.__toJSON(models);
 
         this.selectedCollection.set(arrayOfAttributes, {
             add: true,
             remove: true, // remove others (like reset)
-
-            // current models can has no display text for valueType = 'id
-            merge: this.valueTypeId // add condition: some models has "#"
+            merge: true // current models can has no display text
         });
 
         selectedIds.forEach(selectedId => this.selectedCollection.get(selectedId)?.select());
@@ -691,15 +693,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__fetchUpdateFilter('');
             } else {
                 this.dropdownView.open();
-                this.__focusButton();
                 this.__tryPointFirstRow();
             }
         }
     },
 
     close() {
+        this.debouncedFetchUpdateFilter.cancel();
+        this.__fetchOptionsQueue.forEach(options => options.open = false);
         this.dropdownView.close();
-        this.__focusButton();
     },
 
     __adjustValue(value: any, isLoadIfNeeded = false) {
@@ -802,6 +804,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (options.isSilent) {
             return;
         }
+        this.__focusButton();
         if (this.__canAddItem()) {
             const valueObject = model ? model.toJSON() : null;
             const value = this.__convertToValue(valueObject);
@@ -809,9 +812,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             if (this.options.maxQuantitySelected === 1) {
                 this.__value(value, { triggerChange: true });
                 this.panelCollection.selectNone({ isSilent: true });
-                this.close();
-                this.__focusButton();
-                this.__clearSearch();
+                this.__closeAfterPanelSelected();
                 return;
             }
 
@@ -824,12 +825,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         canAddItem === false && this.dropdownView.panelView?.toggleSelectable(false);
 
         if (!canAddItem) {
-            this.close();
-            this.__setInputValue('');
+            this.__closeAfterPanelSelected();
         } else {
-            this.__focusButton();
             this.__clearSearch();
         }
+    },
+
+    __closeAfterPanelSelected() {
+        this.__setInputValue('');
+        this.close();
     },
 
     __onPanelDeselected(model: Backbone.Model, options = {}): void {
@@ -862,13 +866,20 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return attributes[displayAttribute] || attributes.text || `#${attributes[this.options.idProperty]}`;
     },
 
-    __onButtonFocus(view, event) {
-        if (this.isNextFocusInner || this.hasFocus) {
+    __onButtonFocus(view: Marionette.View<any>, event: Event) {
+        this.onFocus();
+        if (this.isNextFocusInner) {
             event.stopImmediatePropagation();
             this.isNextFocusInner = false;
             return;
         }
         this.__onInputSearch();
+    },
+
+    __onButtonBlur(view: Marionette.View<any>, event: Event) {
+        this.onBlur(event, {
+            triggerChange: false
+        });
     },
 
     __focusButton(): void {
@@ -928,7 +939,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__onBubbleDelete(model);
     },
 
-    __onInputKeydown(button, e) {
+    __onInputKeydown(button: Marionette.View<any>, e: KeyboardEvent) {
         // Datalist has 4 control modes: input, bubbles, panel, addNewItem.
         // In all of these some quan (bubble of item) is selected
         // Quantity control modes === bubble or item or addNewItem control modes.
@@ -946,8 +957,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         this.__isQuantityControl = true;
-        if (!this.dropdownView.isOpen && e.keyCode !== keyCode.ESCAPE && e.keyCode !== keyCode.ENTER) {
-            this.open();
+        if (!this.dropdownView.isOpen) {
+            if (e.keyCode !== keyCode.ESCAPE && e.keyCode !== keyCode.ENTER) {
+                this.open();
+            }
             return;
         }
         const selectedBubble = this.__getSelectedBubble();
@@ -1076,6 +1089,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.options.addNewItem) {
             return;
         }
+        this.__focusButton();
         this.close();
         this.options.addNewItem(this);
     },
@@ -1203,7 +1217,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __onDropdownOpen(): void {
         this.listenTo(this.panelCollection, 'selected', this.__onPanelSelected);
         this.listenTo(this.panelCollection, 'deselected', this.__onPanelDeselected);
-        this.focus();
         this.trigger('dropdown:open');
     },
 

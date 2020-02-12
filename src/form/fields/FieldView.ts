@@ -1,8 +1,6 @@
 import formRepository from '../formRepository';
 import _ from 'underscore';
 
-const editorSelector = '.js-editor-region';
-
 type EditorOptions = {
     model: Backbone.Model,
     showLabel: boolean,
