@@ -487,6 +487,10 @@ input[type="checkbox"].checkbox {
     display: inline-block;
     align-self: flex-end;
     padding-left: 4px;
+    min-width: 0;
+}
+
+.editor_focused .bubbles__form {
     min-width: 25px;
 }
 
