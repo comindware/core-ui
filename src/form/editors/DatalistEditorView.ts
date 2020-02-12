@@ -723,7 +723,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __adjustValueForIdMode(value, isLoadIfNeeded) {
         if (this.options.fetchFiltered && isLoadIfNeeded && !this.isLastFetchSuccess && this.options.collection.length === 0) {
             this.listenToOnce(this, 'view:ready', () => {
-                this.setValue(value);
+                this.setValue(value, { isLoadIfNeeded: false });
             });
             this.__fetchUpdateFilter('', { forceCompareText: true, selected: value });
         }
