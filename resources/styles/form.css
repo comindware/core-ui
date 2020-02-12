@@ -486,12 +486,11 @@ input[type="checkbox"].checkbox {
     display: inline-block;
     align-self: flex-end;
     padding-left: 4px;
-    min-width: 25px;
+    min-width: 0;
 }
 
-.editor_disabled .bubbles__form,
-.editor_readonly .bubbles__form {
-    min-width: 0;
+.editor_focused .bubbles__form {
+    min-width: 25px;
 }
 
 .bubbles__input {
