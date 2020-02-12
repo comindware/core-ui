@@ -779,10 +779,23 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return true;
     },
 
-    __onValueSelect(): void {
+    __onSpaceValueSelect(): void {
         if (this.panelCollection.lastPointedModel) {
             this.panelCollection.lastPointedModel.toggleSelected();
         }
+    },
+
+    __onEnterValueSelect(event: KeyboardEvent): void {
+        if (this.dropdownView.isOpen) {
+            const lastPointedModel = this.panelCollection.lastPointedModel;
+
+            if (lastPointedModel && !lastPointedModel.selected) {
+                this.panelCollection.lastPointedModel.toggleSelected();
+            }
+            
+            this.__toggleDropdown();
+            stop(event);
+        }   
     },
 
     __onPanelSelected(model: Backbone.Model, options = {}): void {
@@ -931,8 +944,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.__getIsQuantityControl(e)) {
             return;
         }
+
         this.__isQuantityControl = true;
-        if (!this.dropdownView.isOpen) {
+        if (!this.dropdownView.isOpen && e.keyCode !== keyCode.ESCAPE && e.keyCode !== keyCode.ENTER) {
             this.open();
             return;
         }
@@ -1022,9 +1036,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.moveCursorBy(-1);
                 break;
             case keyCode.ENTER:
+                this.__onEnterValueSelect(e);
+                break;
             case keyCode.SPACE:
                 stop(e);
-                this.__onValueSelect();
+                this.__onSpaceValueSelect();
                 break;
             default:
                 this.__isQuantityControl = false;
