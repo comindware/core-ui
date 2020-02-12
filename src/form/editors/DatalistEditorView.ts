@@ -599,24 +599,23 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.panelCollection.filter(filter);
     },
 
-    __resetSelectedCollection(models) {
+    __resetSelectedCollection(models: Array<Object>  | Object | undefined | null): void {
         if (!this.selectedCollection) {
             return;
         }
 
+        // logic this method is
         // this.selectedCollection.reset(models == null ? undefined : models);
         // select selected after reset
 
-        const selectedIds = Object.values(this.selectedCollection.selected).map(selectedModel => selectedModel.get(this.options.idProperty));
+        const selectedIds = Object.values(this.selectedCollection.selected).map((selectedModel: Backbone.Model) => selectedModel.get(this.options.idProperty));
 
         const arrayOfAttributes = models == null ? [] : this.__toJSON(models);
 
         this.selectedCollection.set(arrayOfAttributes, {
             add: true,
             remove: true, // remove others (like reset)
-
-            // current models can has no display text for valueType = 'id
-            merge: this.valueTypeId // add condition: some models has "#"
+            merge: true // current models can has no display text
         });
 
         selectedIds.forEach(selectedId => this.selectedCollection.get(selectedId)?.select());
