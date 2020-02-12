@@ -893,13 +893,13 @@ export default Marionette.View.extend({
                             el.column = obj.column;
                             switch (el.severity) {
                                 case ERROR:
-                                    newArrErr = newArrErr.push(el);
+                                    newArrErr.push(el);
                                     break;
                                 case WARNING:
-                                    newArrWarn = newArrWarn.push(el);
+                                    newArrWarn.push(el);
                                     break;
                                 default:
-                                    newArrInfo = newArrInfo.push(el);
+                                    newArrInfo.push(el);
                                     break;
                             }
                         }
