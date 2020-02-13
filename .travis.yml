@@ -1,19 +1,19 @@
 language: node_js
 node_js:
-  - '12'
-#os: osx todo restore safari
-install: ./build/npm-install.sh
+- '12'
+install: "./build/npm-install.sh"
 script:
-  - npm run deploy
+- npm run deploy
 after_script:
-  - node ./node_modules/coveralls/bin/coveralls.js < ./reports/lcov.info
+- node ./node_modules/coveralls/bin/coveralls.js < ./reports/lcov.info
 sudo: required
 deploy:
+  matrix:
   - provider: npm
     skip_cleanup: true
     email: comindware-awesome-bot@comindware.com
     api_key:
-      secure: pYxiDVCRQR1HHKDMu9Uun+oiZMEa+Hek7q0nLSMGyh1imGA5S9MT68CMpqTcMniaSJE78KpgfjdMnRtmmYOfuUaLsmoD1D8P78zHo4TjjqBZEEZg+SjumP2wu+c9GSsW65W0QABKgDjSAeaX3g1R9tuMFTayPHAOcBCj5Ooue2CZ/sl/36NqUtPQ08ikpEFzyDIYRzAZlkJKWSR2nxD/1NxAbDrlFv0BuDuKLXf2nVhzIulr6CdPaxj5Kl3bqoGgpmhTeviAmCoa1zVdcdqmFw8S1fWS+cS3RtBgRWONrTiqYfBHepAN8h7OZEb93Y0AiN6QNLk4Y+cPIzETOvZpEJ5n3Yj2BYqSpPh4GFBPPVlv1/Q6iLKkj6Yg2Y0s8ig2MrV3QgsLiU1PJA4lmx2xl6D5/eQUByKpheCuq6mIDuNK972QpU3a8Vd4Drcwxl+3FNw9Zh0ZilIgOB8rDAPxuamYop32YI35XPv6ChknbHfvXd9Rb7izp2KUpCivYEL7Dt4LfekGxvZzqbdU2kLbEEoACh6srF6oCCZ4l8XMM1aYnZC79uivdnt9UBLEBIqDeUqeazSnHyvpDbwHXzwfViZxSXyiIUt+dh2ZMlXaoUPBBgLemFto0/UnCjks2vatQd7lZBtB9dOc3fam70zp83HJPMaP2LFYxxVjb5IPPbM=
+      secure: Z8P4ULuwSCCDFUTQsNm1URXwhz6FwIQcaRxQBup3HJ8CFlW44QFf+Y7rFTlACA5e/30+amGcM3+r9ylsh/7Hxv7Fmdx9LLJGbO8APaMiKhmSDtb3vmBvrkcHbH/zqBeM4fgXJitkNa722DoBIwlqmBSwZBjtqDCznP6KLKt4nryjRTdd62jDUBP3YA/kUVsb3h64eBFXp9VGNwpzIWxj9mlV0LzTJvdCZ5ksijJmPal+JEaU02Qi8gvbcvlDGBiL8n62UyByT/pqyGj38YUgSKDlNKeT38JIEkhYk+Ianm6psry6KOPQTCXIqrQkdBAB/gsaGAtcKeAbxj6gxFVZ8pDGnB/QnqYSDwINnOQ4UvyFaoxKkmVBEaLHJhaCZJiDONiglIa/TbAW+X81L+B2uzkT31HsIW1JQ1GBcqD6CIaQLMvm7z8ksOkKj9tif/rBhPyhXK32ve/8RNr1kSfc+AxzT737uGSwrvpKVV/DkU3GJsaonmpLtWFeXSlwCTebmhe3ImKAMmzpA0mF/4u2cbOLsKk9e9QJXVQhmVsv6cEjfW/JMfMl/Mg8qGAQe8mnrb+dDDEGpRvC3VbIcU/BdMGMXFWn8Kg14mURvW/h7DK94KIOB25ehKFvQcisoetKq1Ba5ezFC5hWrMJeysijlpLDKGTJ7bgPtyH+QbsCRno=
     on:
       tags: true
       repo: comindware/core-ui
@@ -25,5 +25,7 @@ deploy:
       tags: true
       repo: comindware/core-ui
       branch: master
+  api_key:
+    secure: SSVrp83yTAhP09Q/xHVRphmFoDaIIO5sIsRdwDMNWILuMRHBkFAD8UChbQ5SuaBeor8SaFFR+wcLVJyPLyekDmGkpyauaAATQDZHvhtqmotXTXFYsazyLllsvoOmjzad631xjn4GSOoHs3ezlU7uxSeozXx2TA+qJh7noob22D6IwaIuNgT8qsNjmHLP1b7SY1SU3686gwyy6Uc9ZfpzQs2Un+XuHZG2LZjy91CyhYYbLNoYmIeBcYX3QWemdYzaXDUjp6SZqpnD9Td0hyjyMLFriT5EdQFDWORfhf3xiBNyXCz96oUNWuToCI8AtYa6sEawLj2CO7jQQDtcI8nEIW+tBKC0D6vXyU4yi/5//Q5L8FN4ZRwHz9DJeV9lURAd6KzlzyUq9b5gez5pUHBYzcw8q0g4ePrRsPFHbCVi/uUe4auEr2kNJTgCidx90a2x6IRHqUYAqYNx6XQzNM5kBQxoaqNLjOVGeRiMP9DNnJ9ajIe57ug/et3aMvBtA10/KJarunC8amN9t4GwTGHRiUW9fRku5zJ0AJ/sX+N+z0c1x+RtSLL50uSH1qPxu2HNqAToXy+TfArYfw8NzszWv5bkOFpb9AnL/HEoOTy8+ZT+nXhIM12YCAJO9nOHcTW3Kq2jEHOK302nArUacNQVRB1JOhUaDCykZrWMSr8UN+k=
 addons:
-  firefox: "latest"
+  firefox: latest
