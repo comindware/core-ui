@@ -229,8 +229,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
                 this.__toggleCalendarPicker();
                 return;
             case keyCode.ENTER:
-                this.__triggerChange();
-                this.__toggleCalendarPicker();
+                this.__onEnterValueSelect(event);
                 return;
             case keyCode.TAB:
                 // if tab go to time input(default browser behavior),
@@ -353,6 +352,14 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.__value(null, true, false);
         this.focus();
         return false;
+    },
+
+    __onEnterValueSelect(event: KeyboardEvent) {
+        if (this.calendarDropdownView.isOpen) {
+            this.__triggerChange();
+            this.__toggleCalendarPicker();
+            event.stopPropagation();
+        }
     },
 
     __adjustValue(value: string): string {
