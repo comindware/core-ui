@@ -1,5 +1,4 @@
 const path = require('path');
-const _ = require('underscore');
 
 const rootDir = path.resolve(__dirname, '../');
 
