@@ -71,6 +71,7 @@ export default class TreeEditor {
         popoutView.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
         popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
         popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
+        popoutView.setInitConfig = this.setInitConfig.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
         popoutView.getRootCollection = this.__getRootCollection.bind(this);
 
@@ -91,6 +92,10 @@ export default class TreeEditor {
 
     __setConfigDiff(configDiff: ConfigDiff) {
         this.controller.set(configDiff);
+    }
+
+    setInitConfig(initConfig: ConfigDiff) {
+        this.controller.setInitConfig(initConfig);
     }
 
     __resetConfigDiff() {
