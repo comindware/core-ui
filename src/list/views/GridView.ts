@@ -964,6 +964,10 @@ export default Marionette.View.extend({
         this.treeEditorView.setConfigDiff(configDiff);
     },
 
+    setInitConfig(initConfig) {
+        this.treeEditorView.setInitConfig(initConfig);
+    },
+
     resetConfigDiff() {
         this.treeEditorView.resetConfigDiff();
     },

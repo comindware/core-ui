@@ -187,6 +187,23 @@ export default class TreeDiffController {
         }
     }
 
+    setInitConfig(initConfig: ConfigDiff) {
+        const keys = Array.from(initConfig.keys());
+        const collection = this.descendants.values().next().value?.collection;
+        if (collection) {
+            const currentState = collection.initialConfig;
+            keys.forEach(key => {
+                const currentIndexColumn = currentState.indexOf(key);
+                const newIndexColumn = keys.indexOf(key);
+                if (currentState.includes(key) && keys.includes(key) && (currentIndexColumn !== newIndexColumn)) {
+                    const column = collection.get(key);
+                    collection.remove(column);
+                    collection.add(column, { at: newIndexColumn });
+                }
+            })
+        }
+    }
+
     // apply diff to graphModel
     __applyDiff(descendants = this.descendants) {
         descendants.forEach((model, modelId) => {
