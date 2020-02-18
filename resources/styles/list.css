@@ -52,7 +52,7 @@
 .grid-content-wrp {
     display: table;
     min-width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
     table-layout: fixed;
 }
 .grid-content-wrp.grid-content-wrp_width-auto {
@@ -179,7 +179,7 @@
 
 .grid-header-view {
     position: relative;
-    border-collapse: collapse;
+    border-collapse: separate;
     display: table-header-group;
 }
 
