@@ -33,6 +33,10 @@ type optionsType = {
     listItemView?: Marionette.View<Backbone.Model>,
     listItemViewWithText?: Marionette.View<Backbone.Model>,
     showCheckboxes?: boolean,
+
+    bubbleTemplate?: Function,
+    listItemTemplate?: string,
+
     textFilterDelay?: number,
 
     selectedTitle?: string,
@@ -51,8 +55,6 @@ type optionsType = {
     emptyPlaceholder?: string,
 
     class?: string,
-    buttonBubbleTemplate?: Function,
-    panelBubbleTemplate?: Function,
 
     format?: 'user' | 'document', //name of preset for editor
 
@@ -92,6 +94,8 @@ const defaultOptions = (options: optionsType): optionsType => ({
     showCheckboxes: false,
     textFilterDelay: 300,
 
+    bubbleTemplate: compiledCompositeReferenceCell,
+
     fetchFiltered: false,
     collection: [],
     showCollection: true,
@@ -110,9 +114,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
 
     emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET'),
 
-    class: undefined,
-    buttonBubbleTemplate: compiledCompositeReferenceCell,
-    panelBubbleTemplate: compiledCompositeReferenceCell,
+    class: '',
 
     boundEditor: undefined,
     boundEditorOptions: {},
@@ -139,8 +141,7 @@ const presetsDefaults = {
     document: (options: optionsType) => ({
         listTitle: options.title,
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: compiledCompositeDocumentCell,
-        panelBubbleTemplate: compiledCompositeDocumentCell,
+        bubbleTemplate: compiledCompositeDocumentCell,
         valueType: 'normal',
         showCollection: false,
         idProperty: 'uniqueId',
@@ -164,8 +165,9 @@ const presetsDefaults = {
     user: (options: optionsType) => ({
         selectedTitle: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSELECT.SELECTEDUSERS'),
         panelClass: 'datalist-panel__formatted',
-        buttonBubbleTemplate: compiledCompositeUserCell,
-        panelBubbleTemplate: compiledCompositeUserCell
+        bubbleTemplate: compiledCompositeUserCell,
+        listItemTemplate: compiledCompositeUserCell,
+        showCheckboxes: false
     })
 };
 
@@ -239,7 +241,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 value: '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
                 bubbleItemViewOptions: {
-                    customTemplate: this.options.buttonBubbleTemplate,
+                    customTemplate: this.options.bubbleTemplate,
                     ...bubbleItemViewOptions
                 },
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
@@ -260,11 +262,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 showAddNewButton: this.options.showAddNewButton,
                 addNewButtonText: this.options.addNewButtonText,
                 bubbleItemViewOptions: {
-                    customTemplate: this.options.panelBubbleTemplate,
+                    customTemplate: this.options.bubbleTemplate,
                     ...bubbleItemViewOptions
                 },
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.showAdditionalList ? this.options.listItemViewWithText : this.options.listItemView,
+                listItemTemplate: this.options.listItemTemplate,
                 getDisplayText: this.__getDisplayText,
                 canAddItem: this.__canAddItem.bind(this),
                 subTextOptions: {
@@ -426,7 +429,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     className() {
-        const classList = [];
+        const classList = ['editor', 'editor_bubble'];
+        if (this.options.class) {
+            classList.push(this.options.class);
+        }
         const maxQuantity = this.options.maxQuantitySelected;
 
         if (maxQuantity === 1) {
@@ -439,7 +445,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             classList.push('editor_bubble--delete');
         }
 
-        return `editor editor_bubble ${classList.join(' ')}`;
+        return classList.join(' ');
     },
 
     template: Handlebars.compile(template),

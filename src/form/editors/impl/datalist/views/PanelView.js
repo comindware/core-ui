@@ -1,4 +1,3 @@
-// @flow
 import list from 'list';
 import template from '../templates/panel.hbs';
 import BubbleItemView from './BubbleItemView';
@@ -86,6 +85,7 @@ export default Marionette.View.extend({
                 columns: [],
                 showHeader: false,
                 childViewOptions: {
+                    template: this.options.listItemTemplate,
                     getDisplayText: this.options.getDisplayText,
                     subTextOptions: this.options.subTextOptions,
                     showCheckboxes: this.options.showCheckboxes,

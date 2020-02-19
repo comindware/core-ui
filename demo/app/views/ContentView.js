@@ -82,7 +82,7 @@ export default Marionette.View.extend({
                     });
                 })
             );
-            this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView());
+            // this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView());
         }
 
         const toolbarItems = new Backbone.Collection([

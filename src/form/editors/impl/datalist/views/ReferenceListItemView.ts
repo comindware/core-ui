@@ -27,7 +27,7 @@ export default Marionette.View.extend({
         const text = this.options.getDisplayText(this.model.toJSON());
 
         return {
-            textForTitle: htmlHelpers.getTextfromHTML(text),
+            title: htmlHelpers.getTextfromHTML(text),
             text,
             showCheckboxes: this.options.showCheckboxes
         };

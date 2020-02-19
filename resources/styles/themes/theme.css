@@ -809,7 +809,8 @@ _:-ms-lang(x),
 }
 
 .dd-list__i:hover,
-.popout-menu__i:hover {
+.popout-menu__i:hover,
+.dd-list__i:not(.dd-list__i_checkbox).editor_checked {
     background-color: var(--dropdown-item-hover-color);
 }
 

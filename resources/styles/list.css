@@ -788,6 +788,7 @@ tr.dragover td {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    align-self: center;
 }
 
 .composite-cell__count {
