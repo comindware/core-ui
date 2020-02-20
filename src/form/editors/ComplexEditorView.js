@@ -36,7 +36,8 @@ const defaultOptions = {
     displayInline: false,
     ontologyService: null,
     config: null,
-    getTemplate: null
+    getTemplate: null,
+    solution: null
 };
 
 export default (formRepository.editors.Complex = BaseEditorView.extend({
@@ -227,7 +228,8 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             showMode: this.options.codeEditorMode,
             ontologyService: this.options.ontologyService,
             config: this.options.config,
-            getTemplate: this.options.getTemplate
+            getTemplate: this.options.getTemplate,
+            solution: this.options.solution
         };
 
         this.expressionEditor = new CodeEditorView(expressionEditorOptionsOptions);
