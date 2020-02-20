@@ -226,7 +226,7 @@ export default Marionette.View.extend({
     },
 
     __inputСharacterСhecking(editor, change) {
-        if (!this.intelliAssist) {
+        if (!this.intelliAssist || (this.options.mode !== constants.mode.notation3) || change.text[0] === ' ') {
             return;
         }
         const inputSymbol = change.text[0];
@@ -248,11 +248,6 @@ export default Marionette.View.extend({
                 }
             }
         } else {
-            this.options.mode = this.__checkModeN3();
-            this.__setLanguageModeCodemirror(this.options.mode);
-            if (this.options.mode !== constants.mode.notation3) {
-                return;
-            }
             switch (inputSymbol) {
                 case constants.activeSymbolNotation3.questionMark:
                     if (!this.__findUsedVariablesN3(change.to)) {
@@ -1001,7 +996,8 @@ export default Marionette.View.extend({
             cursorOffset: this.__countOffset(),
             sourceType: constants.typeScript.expression,
             queryCompleteHoverType: constants.queryCompleteHoverType.completion,
-            useOntologyLibriary: false
+            useOntologyLibriary: false,
+            solution: this.options.solution
         };
 
         let autoCompleteObject = {};
