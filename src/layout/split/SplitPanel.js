@@ -1,4 +1,3 @@
-//@flow
 import template from './splitPanel.hbs';
 import { helpers } from 'utils';
 
