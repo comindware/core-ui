@@ -12,12 +12,12 @@
             "modules": false
         }
     ]
-],
-"plugins": [
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-transform-parameters",
-    "@babel/plugin-proposal-class-properties"
-],
-"cacheDirectory": true
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-optional-chaining",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-parameters",
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "cacheDirectory": true
 }
