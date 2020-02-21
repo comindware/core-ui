@@ -403,6 +403,9 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
                 daysOfWeekDisabled: this.options.daysOfWeekDisabled,
                 calendar: this.options.calendar
             },
+            attributes: {
+                tabindex: 0
+            },
             renderAfterClose: false,
             autoOpen: false,
             popoutFlow: 'right',
@@ -411,10 +414,17 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         });
 
         this.listenTo(this.calendarDropdownView, 'focus', this.__onDateButtonFocus);
-        this.listenTo(this.calendarDropdownView, 'blur', this.onBlur);
+        this.listenTo(this.calendarDropdownView, 'blur', this.__onEditorBlur);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange);
         this.showChildView('dateDropdownRegion', this.calendarDropdownView);
         this.listenTo(this.calendarDropdownView, 'keydown', this.__dateButtonInputKeydown);
+    },
+
+    __onEditorBlur(view: Marionette.View<any>, event: FocusEvent) {
+        if (view.panelView?.el.contains(event.relatedTarget)) {
+            return;
+        }
+        this.onBlur();
     },
 
     __updateDateAndValidateToButton(recipientISO, fromFormatted, { includeTime = false }) {
@@ -462,6 +472,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     __onPanelDateChange(jsDate) {
         this.__value(this.__updateDateAndValidateToButton(this.value, jsDate, { includeTime: false }), true, true);
         this.stopListening(GlobalEventService);
+        this.calendarDropdownView?.focus();
         this.calendarDropdownView?.close();
     },
 
@@ -592,13 +603,16 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
                     template: Handlebars.compile('{{formattedTime}}')
                 })
             }),
+            attributes: {
+                tabindex: 0
+            },
             renderAfterClose: false,
             autoOpen: false,
             class: 'editor_date-time_time'
         });
 
         this.listenTo(this.timeDropdownView, 'focus', this.__onTimeButtonFocus);
-        this.listenTo(this.timeDropdownView, 'blur', this.onBlur);
+        this.listenTo(this.timeDropdownView, 'blur', this.__onEditorBlur);
         this.listenTo(this.timeDropdownView, 'container:click', this.__onTimeButtonFocus);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
@@ -634,6 +648,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
     __onTimePanelSelect(time) {
         this.__setValueToTimeButton(time);
+        this.timeDropdownView.focus();
         this.timeDropdownView.close();
     },
 
