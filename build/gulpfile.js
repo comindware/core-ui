@@ -1,3 +1,5 @@
+/* global require */
+
 const gulp = require('gulp');
 const karma = require('karma');
 

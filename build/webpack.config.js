@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-/* eslint-disable no-undef */
+/* global require, module */
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssnano = require('cssnano');
