@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-/* eslint-disable no-undef */
+/* global require, module */
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const cssnano = require('cssnano');
@@ -10,6 +10,7 @@ const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const babelConfig = require('../babel.config.json');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -50,29 +51,7 @@ module.exports = options => {
                     test: /\.(ts)|(js)$/,
                     loader: 'babel-loader',
                     exclude: [pathResolver.node_modules()],
-                    options: {
-                        presets: [
-                            '@babel/typescript',
-                            [
-                                '@babel/preset-env',
-                                {
-                                    targets: {
-                                        ie: 11
-                                    },
-                                    useBuiltIns: 'usage',
-                                    corejs: 3,
-                                    modules: false
-                                }
-                            ]
-                        ],
-                        plugins: [
-                            '@babel/plugin-proposal-optional-chaining',
-                            '@babel/plugin-proposal-object-rest-spread',
-                            '@babel/plugin-transform-parameters',
-                            '@babel/plugin-proposal-class-properties'
-                        ],
-                        cacheDirectory: true
-                    }
+                    options: babelConfig
                 },
                 {
                     test: /\.css$/,
