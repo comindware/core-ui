@@ -228,6 +228,7 @@ module.exports = options => {
         webpackConfig.output = {
             path: pathResolver.compiled(),
             filename: jsFileName,
+            chunkFilename: '[name].js',
             library: 'core',
             libraryTarget: 'umd'
         };

@@ -1,14 +1,13 @@
 /* eslint-disable prefer-arrow-callback */
 
 import EdgeService from './EdgeService';
-import 'innersvg-polyfill';
-import cssVars from 'css-vars-ponyfill';
+import ToastNotificationService from './ToastNotificationService';
 
-const classListToggle = function (name: string, flag = !this.contains(name)) {
+const classListToggle = function(name: string, flag = !this.contains(name)) {
     return flag ? (this.add(name), true) : (this.remove(name), false);
 };
 
-type classList = {
+type classListType = {
     add: Function,
     remove: Function,
     contains: Function,
@@ -16,9 +15,16 @@ type classList = {
 };
 
 export default class IEService extends EdgeService {
-    static initialize() {
+    static initialized: Promise<any>;
+
+    static async initialize() {
+        this.initialized = import(/* webpackChunkName: "IEDependencies" */ './IEDependencies')
+            .then(this.__addCssVariables.bind(this))
+            .catch(e => {
+                console.error(e);
+                ToastNotificationService.add('Some of the scripts are not downloaded. Please, reload the page.');
+            });
         this.__fixClassListBehaviour();
-        this.__addCssVariables();
         this.__addDOMClassListToggle();
         this.__addSVGClassList();
         this.__addChildNodeRemove();
@@ -30,22 +36,26 @@ export default class IEService extends EdgeService {
     }
 
     static __fixClassListBehaviour() {
-        DOMTokenList.prototype.toggle = function(name, flag = !this.contains(name)) {
+        DOMTokenList.prototype.toggle = function toggle(name, flag = !this.contains(name)) {
             return flag ? (this.add(name), true) : (this.remove(name), false);
         };
 
         const originAdd = DOMTokenList.prototype.add;
-        DOMTokenList.prototype.add = function() {
+        DOMTokenList.prototype.add = function add() {
             [...arguments].map(name => originAdd.call(this, name));
         };
 
         const oldRemove = DOMTokenList.prototype.remove;
-        DOMTokenList.prototype.remove = function() {
+        DOMTokenList.prototype.remove = function remove() {
             [...arguments].map(name => oldRemove.call(this, name));
         };
     }
 
-    static __addCssVariables() {
+    static __addCssVariables(module: { default: any }) {
+        const {
+            default: { cssVars }
+        } = module;
+
         cssVars({
             onlyLegacy: true
         });
@@ -61,7 +71,7 @@ export default class IEService extends EdgeService {
         }
         Object.defineProperty(SVGElement.prototype, 'classList', {
             get() {
-                const classList: classList = {
+                const classList: classListType = {
                     contains: (className: string) => this.className.baseVal.split(' ').includes(className),
                     add: (className: string) => {
                         this.setAttribute('class', `${this.getAttribute('class')} ${className}`);
@@ -151,7 +161,7 @@ export default class IEService extends EdgeService {
                     prototype.removeEventListener.call(this, type, wrapper, options);
                     listener.call(this, event);
                 };
-            
+
                 return originAddEventListener.call(this, type, wrapper, options);
             };
 

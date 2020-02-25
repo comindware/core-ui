@@ -27,9 +27,9 @@ export default class EdgeService {
                     let node;
                     let first_child;
                     let next_sibling;
-                
+
                     container.innerHTML = html;
-                
+
                     switch (position.toLowerCase()) {
                         case 'beforebegin':
                             while ((node = container.firstChild)) {
