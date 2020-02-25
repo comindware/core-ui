@@ -498,7 +498,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     focus(): void {
-        this.__focusButton();
+        this.__focusButton({
+            isNextFocusInner: false
+        });
     },
 
     blur(): void {
@@ -890,11 +892,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         });
     },
 
-    __focusButton(): void {
+    __focusButton({ isNextFocusInner = true } = {}): void {
         if (this.isButtonFocus()) {
             return;
         }
-        this.isNextFocusInner = true;
+        this.isNextFocusInner = isNextFocusInner;
         this.dropdownView.focus();
     },
 
