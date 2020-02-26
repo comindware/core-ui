@@ -460,7 +460,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         focus() {
             //TODO if focusElement === null ?
-            this.__getFocusElement().focus();
+            this.__getFocusElement().get(0).focus();
             this.hasFocus = true;
         },
 
@@ -469,7 +469,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         blur() {
             //TODO if focusElement === null ?
-            this.__getFocusElement().blur();
+            this.__getFocusElement().get(0).blur();
             this.hasFocus = false;
         },
 
