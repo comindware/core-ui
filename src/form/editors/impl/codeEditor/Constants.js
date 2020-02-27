@@ -23,6 +23,11 @@ export default {
         colorError: 'dev-code-editor-error'
     },
 
+    originChange: {
+        paste: 'paste',
+        inputPlus: '+input'
+    },
+
     types: {
         function: 'function',
         user: 'user',

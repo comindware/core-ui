@@ -194,7 +194,7 @@ export default Marionette.View.extend({
         });
 
         this.codemirror.on('blur', this.__onBlur);
-        this.codemirror.on('change', this.__onChange);
+        this.codemirror.on('change', (editor, change) => this.__onChange({ change }));
         this.codemirror.on('keydown', this.__onKeyDown);
         this.codemirror.on('endCompletion', () => {
             this.__hideTooltip();
@@ -205,7 +205,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
-        this.codemirror.on('inputRead', (editor, change) => this.__inputСharacterСhecking(editor, change));
+        this.codemirror.on('inputRead', (editor, change) => this.__inputСharacterСhecking({ change }));
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
             document.querySelector('.dev-codemirror').scrollTop = 0;
             if (this.currentHighlightedLine) {
@@ -225,13 +225,19 @@ export default Marionette.View.extend({
         });
     },
 
-    __inputСharacterСhecking(editor, change) {
-        if (!this.intelliAssist || (this.options.mode !== constants.mode.notation3) || change.text[0] === ' ') {
+    __inputСharacterСhecking(options = {}) {
+        const { change } = options;
+        const isPasteOrigin = change.origin === constants.originChange.paste;
+        const isScriptMode = this.options.mode === constants.mode.script;
+        const notN3Mode = this.options.mode !== constants.mode.notation3;
+
+        if (!this.intelliAssist || isPasteOrigin) {
             return;
         }
+
         const inputSymbol = change.text[0];
-        if (this.options.mode === constants.mode.script) {
-            const isNotFilter = !(/\w/).test(inputSymbol);
+        const isNotFilter = !(/\w/).test(inputSymbol);
+        if (isScriptMode) {
             if (inputSymbol === constants.activeSymbol.point) {
                 this.filterList = null;
                 this.isCallMethodAnywhere = false;
@@ -248,6 +254,9 @@ export default Marionette.View.extend({
                 }
             }
         } else {
+            if (notN3Mode || isNotFilter) {
+                return;
+            }
             switch (inputSymbol) {
                 case constants.activeSymbolNotation3.questionMark:
                     if (!this.__findUsedVariablesN3(change.to)) {
@@ -473,8 +482,9 @@ export default Marionette.View.extend({
         this.trigger('change', this);
     },
 
-    __onChange() {
-        if (this.isExternalChange) {
+    __onChange(options = {}) {
+        const { change } = options;
+        if (this.isExternalChange && change.origin === constants.originChange.inputPlus) {
             this.isExternalChange = false;
             return;
         }
@@ -633,8 +643,6 @@ export default Marionette.View.extend({
         this.showTooltipCSharp = this.__showTooltip;
         this.cleanCSharpInfoList = this.__cleanCSharpInfoList;
 
-        codemirror.on(autoCompleteObject, 'select', this.showTooltipCSharp);
-        codemirror.on(autoCompleteObject, 'pick', this.cleanCSharpInfoList);
         if (!dataList.length) {
             autoCompleteObject = this.__noSuggestionHint();
             return autoCompleteObject;
@@ -650,7 +658,8 @@ export default Marionette.View.extend({
             },
             list: this.__renderConfigListToolbar(dataList)
         };
-
+        codemirror.on(autoCompleteObject, 'select', this.showTooltipCSharp);
+        codemirror.on(autoCompleteObject, 'pick', this.cleanCSharpInfoList);
         if (this.hintsBehindDot) {
             this.previousHintName = null;
         }
