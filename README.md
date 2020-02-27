@@ -8,7 +8,7 @@ Comindware Core UI is a set of components based on Marionette framework and some
 
 The package includes a variety of components such as editors, layouts, lists, dropdowns, as well as several high-level services to build pop-ups, show messages, arrange RPC-ajax communication and localize the application.
 
-For more details have a look at the [demo](https://comindware.github.io/core-ui/) and JSDoc-based [documentation](https://comindware.github.io/core-ui/doc/).
+For more details have a look at the [demo](https://comindware.github.io/core-ui/).
 
 # License
 
