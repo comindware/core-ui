@@ -7,7 +7,7 @@ export default class MobileService {
     static isMobile: boolean;
     static isPhone: boolean;
     static isTablet: boolean;
-    static initialize() {
+    static initialize(): void {
         const userAgent = navigator.userAgent;
         this.isPhone = /Android|webOS|iPhone|iPod|Blackberry|Windows Phone/i.test(userAgent)
             && window.innerWidth <= 414 
@@ -16,9 +16,14 @@ export default class MobileService {
         this.isMobile = this.isPhone || this.isTablet;
 
         this.isIE = navigator.appName === 'Microsoft Internet Explorer' || /MSIE|Trident/i.test(userAgent);
-        this.isIE && IEService.initialize();
+        // this.isIE && IEService.initialize();
+        IEService.initialize();
 
         this.isEdge = /Edge\//.test(userAgent);
         this.isEdge && EdgeService.initialize();
+    }
+
+    static get initialized(): Promise<any> {
+        return IEService.initialized || Promise.resolve();
     }
 }

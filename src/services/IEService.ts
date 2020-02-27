@@ -17,7 +17,7 @@ type classListType = {
 export default class IEService extends EdgeService {
     static initialized: Promise<any>;
 
-    static async initialize() {
+    static initialize(): void {
         this.initialized = import(/* webpackChunkName: "IEDependencies" */ './IEDependencies')
             .then(this.__addCssVariables.bind(this))
             .catch(e => {
