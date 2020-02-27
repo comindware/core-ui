@@ -483,8 +483,9 @@ svg.svg-grid-icons {
   border-top: none;
   position: relative;
 }
-.cell:not(:last-child) {
-  border-right: none;
+
+td.cell:not(:first-child) {
+  border-left: none;
 }
 
 .cell.editor {
