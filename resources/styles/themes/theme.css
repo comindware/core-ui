@@ -617,7 +617,6 @@ tr:hover .cell_selection-index {
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   border: 1px solid #e2e2e2;
-  border-right: none;
   white-space: nowrap;
   position: sticky;
   left: 0;
