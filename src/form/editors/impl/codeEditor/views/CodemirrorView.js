@@ -306,10 +306,7 @@ export default Marionette.View.extend({
     },
 
     __hideHintOnClick(target) {
-        if (!this.ui.hints.length) {
-            return;
-        }
-        if (this.hintIsShown && !this.ui.hints.get(0).contains(target)) {
+        if (this.hintIsShown && !(target.classList.contains(constants.classes.hintCodemirror) || target.parentElement.classList.contains(constants.classes.hintCodemirror))) {
             this.__hideHint();
         }
     },
