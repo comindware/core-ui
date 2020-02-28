@@ -18,7 +18,8 @@ export default {
         literal: 'dev-code-editor-literal',
         operator: 'dev-code-editor-operator',
         attribute: 'dev-code-editor-attribute',
-        template: 'dev-code-editor-template'
+        template: 'dev-code-editor-template',
+        hintCodemirror: 'CodeMirror-hint'
     },
 
     types: {
