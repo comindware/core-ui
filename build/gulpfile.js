@@ -19,6 +19,7 @@ gulp.task('watch:generateThemes', () => {
 });
 
 gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
+gulp.task('generateChangeLogTask', require('./tasks/generateChangeLogTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
