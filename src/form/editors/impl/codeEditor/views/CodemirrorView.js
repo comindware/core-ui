@@ -255,7 +255,7 @@ export default Marionette.View.extend({
                 }
             }
         } else {
-            if (notN3Mode || isNotFilter) {
+            if (notN3Mode) {
                 return;
             }
             switch (inputSymbol) {
