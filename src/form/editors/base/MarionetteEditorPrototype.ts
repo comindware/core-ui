@@ -213,13 +213,15 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     class: className,
                     id
                 });
-                const labelHtml = showLabel ? `<label class="form-label__txt" title="${title || ''}" for="${this.options.fieldId}">${title || ''}</label>` : '';
-                this.fieldEl.insertAdjacentHTML(
-                    'afterbegin',
-                    `<div class="form-label ${showLabel ? '' : 'form-label--empty'}">
-                        ${labelHtml}
-                    </div>`
-                );
+                if (showLabel) {
+                    const labelHtml = `<label class="form-label__txt" title="${title || ''}" for="${this.options.fieldId}">${title || ''}</label>`;
+                    this.fieldEl.insertAdjacentHTML(
+                        'afterbegin',
+                        `<div class="form-label ${title ? '' : 'form-label--empty'}">
+                            ${labelHtml}
+                        </div>`
+                    );
+                }
                 this.editorEl = this._createElement(this.tagName);
                 this.$editorEl = Backbone.$(this.editorEl);
                 var attrs = { ..._.result(this, 'attributes') };
@@ -515,17 +517,18 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;
-            const getValidator = this.getValidator;
 
-            if (validators) {
-                validators.forEach(validatorOptions => {
-                    const validator = getValidator(validatorOptions);
-                    const error = validator.call(this, value, formValues);
-                    if (error) {
-                        errors.push(error)
-                    }
-                });
+            if (!validators) { 
+                return;
             }
+
+            validators.forEach(validatorOptions => {
+                const validator = formRepository.getValidator(validatorOptions);
+                const error = validator.call(this, value, formValues);
+                if (error) {
+                    errors.push(error);
+                }
+            });
 
             if (this.isRendered() && !this.isDestroyed()) {
                 this.$editorEl.toggleClass(classes.ERROR, !!errors.length);
@@ -547,41 +550,6 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             }
 
             return Marionette.View.prototype.trigger.apply(this, arguments);
-        },
-
-        getValidator(validator: string | Function) {
-            const validators = formRepository.validators;
-
-            //Convert regular expressions to validators
-            if (_.isRegExp(validator)) {
-                return validators.regexp({ regexp: validator });
-            }
-
-            //Use a built-in validator if given a string
-            if (typeof validator === 'string') {
-                if (!validators[validator]) {
-                    throw new Error(`Validator "${validator}" not found`);
-                }
-
-                return validators[validator]();
-            }
-
-            //Functions can be used directly
-            if (typeof validator === 'function') {
-                return validator;
-            }
-
-            //Use a customised built-in validator if given an object
-            //noinspection JSUnresolvedVariable
-            if (_.isObject(validator) && validator.type) {
-                const config = validator;
-
-                //noinspection JSUnresolvedVariable
-                return validators[config.type](config);
-            }
-
-            //Unknown validator type
-            throw new Error('Invalid validator');
         },
 
         checkChange() {

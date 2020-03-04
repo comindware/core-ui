@@ -122,7 +122,7 @@ export default function() {
                                         helpText: 'help!',
                                         required: true,
                                         autocommit: true,
-                                        validators: ['required'],
+                                        validators: ['required', 'systemName'],
                                         editable: true
                                     },
                                     {

@@ -14,7 +14,7 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
-import meta from '../meta';
+import { getDefaultActions, classes, configurationConstants } from '../meta';
 import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
@@ -23,12 +23,7 @@ import ErrorsPanelView from '../../views/ErrorsPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
 import { GraphModel } from '../../components/treeEditor/types';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
-
-const classes = {
-    REQUIRED: 'required',
-    ERROR: 'error',
-    TABLE_WIDTH_AUTO: 'grid-content-wrp_width-auto'
-};
+import { Column } from '../types/types';
 
 /*
     Public interface:
@@ -59,12 +54,6 @@ const defaultOptions = options => ({
     treeEditorConfig: new Map(),
     headerHeight: 36
 });
-
-const configConstants = {
-    // VISIBLE_COLLECTION_RESERVE: 20,
-    VISIBLE_COLLECTION_RESERVE_HALF: 10
-    // VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
-};
 
 /**
  * @name GridView
@@ -147,9 +136,10 @@ export default Marionette.View.extend({
                     this.editableCellsIndexes.push(index);
                 }
             });
+            this.__debounceCheckBlur = _.debounce(this.__checkBlur, 300).bind(this);
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
-            this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
+            this.listenTo(this.collection, 'select:some select:one', this.__onCollectionSelect);
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
         }
@@ -202,13 +192,13 @@ export default Marionette.View.extend({
 
     updatePosition(position, shouldScrollElement = false) {
         const newPosition = this.__checkFillingViewport(position);
-        if (newPosition === this.listView.state.position || !this.collection.isSliding) {
+        if (newPosition === this.listView.state.position || !this.collection.isSliding || Math.abs(newPosition - this.listView.state.position) < configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF - 1 ) {
             return;
         }
 
-        this.collection.updatePosition(Math.max(0, newPosition - configConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.__updateTop();
 
+        this.collection.updatePosition(Math.max(0, newPosition - configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.listView.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;
@@ -224,7 +214,10 @@ export default Marionette.View.extend({
     __updateTop() {
         requestAnimationFrame(() => {
             const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
-            this.ui.tableWrapper[0].style.paddingTop = `${top}px`; //todo use transforme
+            if (top !== this.oldTop) {
+                this.oldTop = top;
+                this.ui.content[0].style.top = `${top}px`;
+            }          
         });
     },
 
@@ -246,9 +239,27 @@ export default Marionette.View.extend({
             return;
         }
         this.__prevScroll = nextScroll;
-        
         const newPosition = Math.max(0, Math.floor(nextScroll / this.listView.childHeight));
         this.updatePosition(newPosition, false);
+    },
+
+    __onCollectionSelect(collection, options) {
+        this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        this.__onCursorMove(0, options);
+    },
+
+    __checkBlur(target: Element) {
+        if (this.isDestroyed()) {
+            return;
+        }
+        const popupContainer = document.querySelector('.js-global-popup-stack');
+        const element = document.contains(target) ? target : document.activeElement;
+        const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element)
+        if (!isElementOutOfElementOrPopup) {
+            this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
+            this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        }
     },
 
     __onCursorMove(delta, options = {}) {
@@ -549,67 +560,59 @@ export default Marionette.View.extend({
     },
 
     validate() {
-        let error;
+        const errors = [];
         if (this.required && this.collection.length === 0) {
-            error = {
+            errors.push({
                 type: 'required',
-                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID')
-            };
-        } else if (this.isEditable) {
-            const hasErrorInFields = this.options.columns.some(column => {
-                if (!column.editable || !column.validators) {
-                    return false;
+                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID'),
+                severity: 'Error'
+            });
+        }
+        if (this.isEditable) {
+            let isErrorInCells = false;
+            this.collection.forEach(model => {
+                delete model.validationError;
+                if (!model.isValid()) {
+                    isErrorInCells = true;
                 }
-                const validators = [];
-                return column.validators.some(validator => {
-                    let result;
-                    if (typeof validator === 'function') {
-                        validators.push(validator);
-                    } else {
-                        const predefined = form.repository.validators[validator];
-                        if (typeof predefined === 'function') {
-                            validators.push(predefined());
-                        }
+                this.options.columns.forEach((column: Column) => {
+                    if (!column.editable || !column.validators) {
+                        return;
                     }
-
-                    this.collection.forEach(model => {
-                        if (model._events['validate:force']) {
-                            const e = {};
-                            model.trigger('validate:force', e);
-                            if (e.validationResult) {
-                                result = e.validationResult;
+                    column.validators.forEach(validatorOptions => {
+                        const validator = form.repository.getValidator(validatorOptions);
+                        const fieldError = validator(model.get(column.key), model.attributes);
+                        if (fieldError) {
+                            fieldError;
+                            isErrorInCells = true;
+                            if (!model.validationError) {
+                                model.validationError = {};
                             }
-                        } else if (!model.isValid()) {
-                            result = model.validationResult;
-                        } else {
-                            validators.some(v => {
-                                const filedError = v(model.get(column.key), model.attributes);
-                                if (filedError) {
-                                    result = model.validationResult = filedError;
-                                }
-                                return result;
-                            });
+                            if (!model.validationError[column.key]) {
+                                model.validationError[column.key] = [];
+                            }
+                            model.validationError[column.key].push(fieldError);
                         }
                     });
-                    return result;
                 });
+                model.trigger('validated');
             });
-            if (hasErrorInFields) {
-                error = {
+            if (isErrorInCells) {
+                errors.push({
                     type: 'gridError',
                     message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR'),
                     severity: 'Error'
-                };
+                });
             }
         }
 
-        if (error) {
-            this.setError([error]);
+        if (errors.length) {
+            this.setError(errors);
         } else {
             this.clearError();
         }
 
-        return error;
+        return errors;
     },
 
     setDraggable(draggable: boolean): void {
@@ -754,7 +757,7 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.el.classList.add(classes.ERROR);
+        this.el.classList.add(classes.error);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -775,7 +778,7 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.el.classList.remove(classes.ERROR);
+        this.el.classList.remove(classes.error);
         this.errorCollection && this.errorCollection.reset();
     },
 
@@ -804,7 +807,7 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
+        this.$el.toggleClass(classes.required, Boolean(required));
     },
 
     __checkUiReady() {
@@ -875,7 +878,7 @@ export default Marionette.View.extend({
 
     __getToolbarActions() {
         let toolbarActions = [];
-        const defaultActions = meta.getDefaultActions();
+        const defaultActions = getDefaultActions();
         if (!this.options.excludeActions) {
             toolbarActions = defaultActions;
         } else if (this.options.excludeActions !== 'all') {
@@ -1045,7 +1048,7 @@ export default Marionette.View.extend({
 
         this.trigger('column:set:isHidden', { id, isHidden });
 
-        this.setClassToColumn(id, isHidden, index, meta.classes.hiddenByTreeEditorClass);
+        this.setClassToColumn(id, isHidden, index, classes.hiddenByTreeEditorClass);
     },
 
     setClassToColumn(id: string, state = false, index: number, classCell: string) {
@@ -1098,6 +1101,6 @@ export default Marionette.View.extend({
     },
 
     __toggleTableWidth() {
-        this.ui.table.get(0).classList.toggle(classes.TABLE_WIDTH_AUTO, this.headerView.isEveryColumnSetPxWidth);
+        this.ui.table.get(0).classList.toggle(classes.tableWidthAuto, this.headerView.isEveryColumnSetPxWidth);
     }
 });

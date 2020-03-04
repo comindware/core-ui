@@ -3,7 +3,7 @@ import _ from 'underscore';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/behaviors/GridCollapsibleItemBehavior';
+import GridItemBehavior from '../list/behaviors/GridItemBehavior';
 import FixGroupingOptions from './GroupingService';
 import { virtualCollectionFilterActions } from 'Meta';
 
@@ -505,7 +505,7 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     sort(options) {
-        this.__rebuildIndex(options);
+        this.__rebuildIndex(options, true);
     },
 
     collapse(model) {
