@@ -316,6 +316,10 @@ export default Marionette.View.extend({
                 `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
                  fa fa-angle-down ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
             );
+            const editor = el.getElementsByClassName('editor')[0];
+            if (editor) {
+                editor.style.left = `${margin + defaultOptions.subGroupMargin}px`;
+            }
         } else {
             el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
         }
