@@ -4,6 +4,8 @@ const autoprefixer = require('autoprefixer');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -31,8 +33,8 @@ module.exports = () => {
         devtool: 'source-map',
         output: {
             path: pathResolver.client(),
-            filename: '[name].js',
-            sourceMapFilename: '[file].map'
+            filename: '[name][hash].js',
+            sourceMapFilename: '[file][hash].map'
         },
         module: {
             rules: [
@@ -40,12 +42,17 @@ module.exports = () => {
                     test: /\.css$/,
                     use: [
                         {
-                            loader: 'style-loader'
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                hmr: process.env.NODE_ENV === 'development',
+                                reloadAll: true
+                            }
                         },
                         {
                             loader: 'css-loader',
                             options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                import: true
                             }
                         },
                         {
@@ -122,6 +129,10 @@ module.exports = () => {
             ]
         },
         plugins: [
+            new MiniCssExtractPlugin({
+                filename: 'styles.[contenthash].css',
+                chunkFilename: '[id].[contenthash].css'
+            }),
             new WebpackPwaManifest({
                 name: 'Comindware Core-ui demo',
                 short_name: 'Core.Demo',
@@ -193,7 +204,10 @@ module.exports = () => {
                     from: `${__dirname}/../demo/index.html`,
                     to: pathResolver.client('')
                 }
-            ])
+            ]),
+            new HtmlWebpackPlugin({
+                template: `${__dirname}/../demo/index.html`
+            })
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

@@ -145,6 +145,12 @@ export default class DropdownView {
 
         this.button.on('destroy', this.__onDestroy, this);
 
+        // dropdown bind on existing DOM element without rendering ButtonView, refactoring needed
+        if (options.element) {
+            this.button.el = options.element;
+            this.button.$el = Backbone.$(options.element);
+        }
+
         return this.button;
     }
 

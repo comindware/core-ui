@@ -3,7 +3,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 // 1. Get some data
 export default function() {
     const dataArray = [];
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 1000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -11,11 +11,23 @@ export default function() {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell:
-                i > 3
+                i > 4
                     ? [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }]
                     : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
-            referenceCell: i > 3 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
-            documentCell: i > 3 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
+            referenceCell: i > 4 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
+            documentCell: i > 4 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
+            enumCell: { valueExplained: ['123'] },
+            textCell1: [`Text Cell ${i}`, `Text Cell ${i + 1}`],
+            numberCell1: [i + 1, i + 2],
+            dateTimeCell1: ['2015-07-24T08:13:13.847Z', '2016-07-24T08:13:13.847Z'],
+            durationCell1: ['P12DT5H42M', 'P22DT5H42M'],
+            booleanCell1: [true, false],
+            userCell1:
+                i > 400
+                    ? [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }]
+                    : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
+            referenceCell1: i > 400 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
+            documentCell1: i > 400 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
             enumCell: { valueExplained: ['123'] }
         });
     }
@@ -61,6 +73,46 @@ export default function() {
             key: 'documentCell',
             type: 'Document',
             title: 'Document Cell'
+        },
+        {
+            key: 'textCell1',
+            type: 'String',
+            title: 'TextCell'
+        },
+        {
+            key: 'numberCell1',
+            type: 'Integer',
+            title: 'Number Cell'
+        },
+        {
+            key: 'dateTimeCell1',
+            type: 'DateTime',
+            title: 'DateTime Cell'
+        },
+        {
+            key: 'durationCell1',
+            type: 'Duration',
+            title: 'Duration Cell'
+        },
+        {
+            key: 'userCell1',
+            type: 'Account',
+            title: 'User'
+        },
+        {
+            key: 'booleanCell1',
+            type: 'Boolean',
+            title: 'Boolean Cell'
+        },
+        {
+            key: 'referenceCell1',
+            type: 'Instance',
+            title: 'Reference Cell'
+        },
+        {
+            key: 'documentCell1',
+            type: 'Document',
+            title: 'Document Cell'
         }
     ];
 
@@ -75,15 +127,16 @@ export default function() {
         showToolbar: true,
         collection: new Backbone.Collection(dataArray),
         draggable: true,
+        // isSliding: false,
         showRowIndex: true,
-        showTreeEditor: true,
-        treeEditorConfig: new Map([
-            ['dateTimeCell', { index: 3 }],
-            ['durationCell', { index: 4, isHidden: true }],
-            ['numberCell', { index: 2 }],
-            ['textCell', { index: 1, isHidden: true }],
-            ['userCell', { index: 0, isHidden: true }]
-        ]),
+        // showTreeEditor: true,
+        // treeEditorConfig: new Map([
+        //     ['dateTimeCell', { index: 3 }],
+        //     ['durationCell', { index: 4, isHidden: true }],
+        //     ['numberCell', { index: 2 }],
+        //     ['textCell', { index: 1, isHidden: true }],
+        //     ['userCell', { index: 0, isHidden: true }]
+        // ]),
         excludeActions: ['delete'],
         additionalActions: [
             {

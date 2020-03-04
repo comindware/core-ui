@@ -45,6 +45,16 @@
     border-color: var(--checkbox-border-color);
 }
 
+.checkbox i,
+.icon-true {
+    color: var(--checkbox-checked-color);
+}
+
+.icon-false {
+    color: var(--red);
+    font-size: 1.2em;
+}
+
 .tr-search__input {
     @apply --input-theme;
 
@@ -177,11 +187,6 @@ svg.svg-grid-icons.svg-icons_flag-yes {
 
 svg.svg-grid-icons.svg-icons_flag-none {
     fill: var(--error-color);
-}
-
-.grid-header-column .collapsible-btn {
-    background-image: var(--collapse-icon-header);
-    top: -1px;
 }
 
 /* Tabs */
@@ -318,9 +323,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
     padding: var(--grid-cell-padding);
 }
 
-.cell > .collapsible-btn + .form-label + .editor {
-    left: 5px;
+.cell > .collapsible-btn + .editor {
+    display: inline-flex;
     width: auto;
+    padding: 0;
+    position: static;
 }
 
 .cell > .context_select {
@@ -397,16 +404,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .cell .documents__wrapper {
     padding: 0;
     border: none;
-}
-
-.cell .js-tree-first-cell + .editor {
-    position: static;
-    display: inline-flex;
-}
-
-.cell .js-tree-first-cell + .editor,
-.cell .js-tree-first-cell + .editor.editor_bubble {
-    padding: 0;
 }
 
 .layout__popup-view-content > .layout__form-view {

@@ -39,9 +39,6 @@ const GridHeaderView = Marionette.View.extend({
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
-        if (options.showRowIndex) {
-            this.listenTo(this.collection, 'reset update', this.__updateIndexCellWidth);
-        }
     },
 
     template: Handlebars.compile(template),
@@ -108,9 +105,12 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
         if (this.options.isTree) {
+            const expandOnShow = this.getOption('expandOnShow')
             this.$el
-                .find('.header-column-wrp')[0]
-                .insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>`);
+                .find('.header-column-wrp')[0]                
+                .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
+                fa fa-angle-down ${expandOnShow ? classes.expanded : ''}"></i/`);
+            this.collapsed = !this.expandOnShow;
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -134,9 +134,6 @@ const GridHeaderView = Marionette.View.extend({
             }
             this.__updateColumnSorting(column, el);
         });
-        if (this.options.showRowIndex) {
-            this.__updateIndexCellWidth();
-        }
     },
 
     updateSorting() {
@@ -346,50 +343,32 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __updateColumnSorting(column, el) {
-        const oldSortingEl = el.querySelector('.js-sorting');
-        if (oldSortingEl) {
-            oldSortingEl.parentElement.removeChild(oldSortingEl);
-        }
-        if (column.sorting) {
-            const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-            const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
-            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
-        }
+        requestAnimationFrame(() => {
+            const oldSortingEl = el.querySelector('.js-sorting');
+            if (oldSortingEl) {
+                oldSortingEl.parentElement.removeChild(oldSortingEl);
+            }
+            if (column.sorting) {
+                const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+                const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+                el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
+            }
+        });
     },
 
-    __updateState(collection, checkedState) {
-        switch (checkedState) {
+    __updateState(collection, state) {
+        switch (state) {
             case 'checked':
-                this.ui.checkbox.addClass(classes.checked);
-                this.ui.checkbox.removeClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
                 break;
             case 'checkedSome':
-                this.ui.checkbox.removeClass(classes.checked);
-                this.ui.checkbox.addClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
                 break;
             case 'unchecked':
             default:
-                this.ui.checkbox.removeClass(classes.checked);
-                this.ui.checkbox.removeClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '';
                 break;
         }
-    },
-    
-    __updateIndexCellWidth() {
-        if (!this.options.showCheckbox) {
-            return;
-        }
-        const selectionCellEl = this.el.firstElementChild;
-
-        if (!this.collection.length) {
-            selectionCellEl.style.width = '';
-            selectionCellEl.style.minWidth = '';
-            return;
-        } 
-        const lengthSymbolCount = this.collection.length.toString().length;
-        const width = `${baseSelectionCellWidth + (lengthSymbolCount) * oneSymbolWidth}px`;
-        selectionCellEl.style.width = width;        
-        selectionCellEl.style.minWidth = width;        
     }
 });
 

@@ -194,15 +194,18 @@ module.exports = options => {
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
-            new TypedocWebpackPlugin({
-                out: './docs',
-                module: 'commonjs',
-                target: 'es6',
-                exclude: '**/node_modules/**/*.*',
-                tsconfig: '../tsconfig.json',
-                experimentalDecorators: true,
-                ignoreCompilerErrors: true
-            }),
+            new TypedocWebpackPlugin(
+                {
+                    out: './docs',
+                    module: 'commonjs',
+                    target: 'es6',
+                    exclude: '**/node_modules/**/*.*',
+                    tsconfig: '../tsconfig.json',
+                    experimentalDecorators: true,
+                    ignoreCompilerErrors: true
+                },
+                // '../src'
+            ),
             new StylelintPlugin({
                 files: ['../resources/styles/*.css', '../resources/styles/**/*.css', '../resources/styles/**/**/*.css']
             })

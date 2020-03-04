@@ -1,3 +1,4 @@
+import LocalizationService from 'services/LocalizationService';
 export const contextIconType = {
     reference: 'link',
     instance: 'link',
@@ -128,11 +129,38 @@ export const splitViewTypes = {
     HORIZONTAL: 'SplitHorizontal',
 };
 
+export const complexValueTypes = {
+    value: 'value',
+    context: 'context',
+    expression: 'expression',
+    script: 'script',
+    template: 'template'
+};
+
+export const getComplexValueTypesLocalization = complexValueType => {
+    switch (complexValueType) {
+        case complexValueTypes.value:
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
+        case complexValueTypes.context:
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
+        case complexValueTypes.expression:
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
+        case complexValueTypes.script:
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
+        case complexValueTypes.template:
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
+        default:
+            return '';
+    }
+};
+
 export default {
     objectPropertyTypes,
     contextIconType,
     presentingComponentsTypes,
     splitViewTypes,
     iconsNames,
-    objectPropertyFormats
+    objectPropertyFormats,
+    complexValueTypes,
+    getComplexValueTypesLocalization
 };

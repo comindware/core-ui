@@ -79,6 +79,10 @@ body {
     border-top: 16px solid #e61212;
     border-right: 16px solid transparent;
     vertical-align: top;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .cell.error .form-label__error-button::after {
@@ -86,7 +90,7 @@ body {
     color: #ffffff;
     position: absolute;
     vertical-align: top;
-    top: 0;
+    top: -16px;
     font-size: 10px;
     font-weight: bold;
     left: 3px;
@@ -489,31 +493,6 @@ svg.svg-grid-icons {
     z-index: 20;
 }
 
-.cell {
-    height: var(--grid-cell-height);
-    line-height: var(--grid-cell-height);
-    font-size: var(--grid-cell-size);
-    padding: var(--grid-cell-padding);
-    border-top: none;
-    position: relative;
-}
-
-.cell,
-.cell_selection,
-.cell_selection-index {
-    border-top: none;
-    border-right: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2;
-    border-left: none;
-}
-
-.cell:first-child,
-.cell_selection:first-child,
-.cell_selection-index:first-child,
-.grid-header:hover .cell_selection:first-child {
-    border-left: 1px solid #e2e2e2;
-}
-
 .grid__headless tr:first-child .cell,
 .grid__headless tr:first-child .cell_selection,
 .grid__headless tr:first-child .cell_selection-index {
@@ -557,12 +536,6 @@ svg.svg-grid-icons {
     overflow: auto;
 }
 
-.cell_selection {
-    color: var(--grid-selection-color);
-    width: var(--grid-selection-width);
-    padding: 0;
-}
-
 .cell_draggable {
     color: var(--grid-selection-color);
     width: 25px;
@@ -572,6 +545,18 @@ svg.svg-grid-icons {
 .cell_selection[draggable],
 .cell_selection-index[draggable] {
     cursor: move;
+}
+
+.cell_selection[draggable]:hover::before,
+.cell_selection-index[draggable]:hover::before {
+    content: '⋮';
+
+    /* rem? */
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    left: 1px;
+    transform: translateY(-50%);
 }
 
 .grid__headless .cell_selection:first-child {
@@ -619,20 +604,31 @@ tr:hover .cell_selection-index {
     transition: background-color 300ms ease-in-out;
 }
 
-.cell .checkbox,
-.cell_selection-index > .checkbox,
+.cell .checkbox {
+    font-size: var(--grid-checkbox-icon-size);
+    width: var(--grid-checkbox-size);
+    height: var(--grid-checkbox-size);
+    margin: 0;
+    display: inline-flex;
+}
+
 .cell_selection > .checkbox {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
+    margin: 0 auto;
 }
 
-.cell_selection > .checkbox {
-    /* for chrome margin: 0 auto align broke border for cell_selection column, for IE top is not applied */
+.cell_selection-index > .checkbox {
+    font-size: var(--grid-checkbox-icon-size);
+    width: var(--grid-checkbox-size);
+    height: var(--grid-checkbox-size);
+    margin: 0;
+    display: inline-flex;
     position: absolute;
+    right: 5px;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(0, -50%);
 }
 
 /* stylelint-disable */
@@ -652,12 +648,33 @@ _:-ms-lang(x),
     padding: var(--grid-cell-input-padding);
 }
 
+.cell {
+    height: var(--grid-cell-height);
+    line-height: var(--grid-cell-height);
+    font-size: var(--grid-cell-size);
+    padding: var(--grid-cell-padding);
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background-clip: padding-box;
+    max-width: 0; /* hack to set width less than cells content */
+    width: auto;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    border-left: none;
+    border-top: none;
+}
+
+.cell:first-child {
+    border-left: 1px solid #e2e2e2;
+}
+
 .cell_selection,
 .cell_selection-index {
     padding: 0 5px;
     color: var(--grid-selection-color);
     background-color: var(--grid-selection-bg);
-    border-top: none;
     white-space: nowrap;
     position: sticky;
     left: 0;
@@ -666,12 +683,8 @@ _:-ms-lang(x),
     min-width: 47px;
     background-clip: padding-box;
     vertical-align: middle;
-}
-
-.visible-collection .cell_selection-index > .checkbox,
-.grid-header .cell_selection-index > .checkbox {
-    float: right;
-    margin-top: 2px;
+    border: 1px solid #e2e2e2;
+    border-top: none;
 }
 
 /* for IE */
@@ -682,10 +695,6 @@ _:-ms-lang(x),
         position: relative;
         background-clip: padding-box;
     }
-}
-
-.cell_selection-index:not(:empty) + .grid-header-view {
-    width: calc(100% - var(--grid-selection-index-width));
 }
 
 .cell__dots {
@@ -708,80 +717,36 @@ _:-ms-lang(x),
     outline-color: #e61212 !important;
 }
 
-.cell.selected:not(.cell_selection) {
-    outline: var(--focus) !important;
-}
-
-.cell_selection.cell-focused {
-    outline: none !important;
-}
-
 .collapsible-btn {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+    font-size: 1.4em;
     cursor: pointer;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    /* background-image: var(--collapse-icon); */
-    vertical-align: middle;
-    z-index: 1;
-}
-
-.context-collapsible-btn {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    /* background-image: var(--collapse-icon); */
-    vertical-align: middle;
+    margin-right: 3px;
     transition-property: transform;
     transition-duration: 300ms;
-    transform: rotate(90deg);
-}
-
-.collapsible-btn svg,
-.context-collapsible-btn svg {
-    width: 70%;
-    height: 70%;
-}
-
-.collapsible-btn.collapsible-btn_expanded {
-    transform: rotate(90deg);
-}
-
-.context-collapsible-btn.collapsible-btn_expanded {
-    transform: rotate(0deg);
+    top: 2px;
 }
 
 .cell .collapsible-btn {
+    color: #636262;
+}
+
+.context-collapsible-btn {
+    position: absolute;
+    right: 5px;
+    font-size: 1.4em;
+    color: #636262;
+    cursor: pointer;
+    margin-right: 3px;
+    transition-property: transform;
+    transition-duration: 300ms;
+}
+
+.collapsible-btn:not(.collapsible-btn_expanded) {
     transform: rotate(-90deg);
-    background: none;
-    fill: #636262;
-    left: 0;
 }
 
-.cell .collapsible-btn svg {
-    transform: translate(3px, 2px);
-}
-
-.cell .collapsible-btn.collapsible-btn_expanded svg {
-    transform: translate(3px, 1px);
-}
-
-.cell .collapsible-btn.collapsible-btn_expanded {
-    transform: rotate(0deg);
-    background: none;
+.context-collapsible-btn:not(.collapsible-btn_expanded) {
+    transform: rotate(90deg);
 }
 
 /* dropdown-list */

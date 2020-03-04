@@ -558,17 +558,6 @@ li.CodeMirror-hint-active {
     color: #636262;
 }
 
-.dev-code-editor-fading-panel {
-    background-color: #26292a;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 100;
-    opacity: 0.5;
-}
-
 .dev-codemirror-maximized {
     position: fixed;
     top: 5%;
@@ -576,6 +565,8 @@ li.CodeMirror-hint-active {
     width: 80%;
     height: 80%;
     z-index: 101;
+    display: flex;
+    flex-direction: column;
 }
 
 .dev-code-editor-button-mode {
