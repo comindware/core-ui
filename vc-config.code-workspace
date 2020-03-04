@@ -10,8 +10,13 @@
 		"eslint.enable": true,
 		"eslint.validate": [
 			"javascript",
-			"typescript"
-		]
+			"javascriptreact",
+			"typescript",
+			"typescriptreact"
+		],
+		"emmet.includeLanguages": {
+			"javascript": "javascriptreact"
+		},
 	},
 	"extensions": {
 		"recommendations": [
