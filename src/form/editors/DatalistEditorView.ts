@@ -29,6 +29,7 @@ type optionsType = {
     showAdditionalList?: boolean,
     subtextProperty?: string,
     iconProperty?: string,
+    metaIcons?: Object,
 
     listItemView?: Marionette.View<Backbone.Model>,
     listItemViewWithText?: Marionette.View<Backbone.Model>,
@@ -82,7 +83,8 @@ const defaultOptions = (options: optionsType): optionsType => ({
     showAdditionalList: false,
     subtextProperty: '',
     iconProperty: '',
-
+    metaIcons: Core.meta.contextIconType,
+    
     listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
@@ -265,7 +267,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 canAddItem: this.__canAddItem.bind(this),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
-                    iconProperty: this.options.iconProperty
+                    iconProperty: this.options.iconProperty,
+                    metaIcons: this.options.metaIcons
                 },
                 listTitle: this.options.listTitle,
                 idProperty: this.options.idProperty,
