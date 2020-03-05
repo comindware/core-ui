@@ -16,6 +16,8 @@
 
 .group-toggle {
     display: inline-block;
+    position: absolute;
+    right: 10px;
     width: 16px;
     height: 16px;
     vertical-align: middle;
