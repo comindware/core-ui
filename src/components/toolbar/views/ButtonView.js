@@ -18,7 +18,7 @@ export default Marionette.View.extend({
     attributes() {
         return {
             tabindex: 0,
-            title: this.model.get('description') || ''
+            title: this.model.get('description') || this.model.get('name') || ''
         };
     },
 
