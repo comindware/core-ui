@@ -205,11 +205,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__mapDatalistOptions(options);
         this.valueTypeId = this.options.valueType === 'id';
 
-        if (this.options.maxQuantitySelected === 1) {
-            this.isButtonLimitMode = false;
-        } else {
-            this.isButtonLimitMode = this.options.isButtonLimitMode;
-        }
+        this.isButtonLimitMode = this.options.isButtonLimitMode;
 
         this.__createBoundEditor();
 
