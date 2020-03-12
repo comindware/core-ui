@@ -54,7 +54,8 @@ export const objectPropertyTypes = {
     DOCUMENT: 'Document',
     INSTANCE: 'Instance',
     COLLECTION: 'Collection',
-    ENUM: 'Enum'
+    ENUM: 'Enum',
+    ROLE: 'Role'
 };
 
 export const presentingComponentsTypes = {
