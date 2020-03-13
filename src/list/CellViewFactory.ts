@@ -14,6 +14,7 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
+import { helpers } from 'utils';
 
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
@@ -34,7 +35,8 @@ const compiledWrappedValueCell = Handlebars.compile(getWrappedTemplate('{{value}
 
 type ValueFormatOption = {
     value: any,
-    column: Column
+    column: Column,
+    model?: Backbone.Model
 };
 
 type GetCellOptions = {
@@ -119,7 +121,7 @@ class CellViewFactory implements ICellViewFactory {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.INSTANCE:
                 template = compiledCompositeReferenceCell;
-                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column }));
+                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column, model }));
                 break;
             case objectPropertyTypes.ACCOUNT:
                 template = compiledCompositeUserCell;
@@ -249,9 +251,9 @@ class CellViewFactory implements ICellViewFactory {
         return `<div class="checkbox js-checbox">${innerHTML}</div>`;
     }
 
-    __getFormattedReferenceValue({ value, column }: ValueFormatOption) {
+    __getFormattedReferenceValue({ value, column, model }: ValueFormatOption) {
         const result = {
-            text: value.name,
+            text: value.name || helpers.getDisplayText(value, column.displayAttribute, model, column.idProperty),
             ...value
         };
         if (!value.url && typeof column.createValueUrl === 'function') {
@@ -368,7 +370,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getReferenceCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column }));
+        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column, model }));
 
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.text) });
 

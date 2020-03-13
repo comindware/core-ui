@@ -221,7 +221,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
         this.debouncedFetchUpdateFilter = _.debounce(this.__fetchUpdateFilter, this.options.textFilterDelay);
 
-        this.__getDisplayText = this.__getDisplayText.bind(this);
+        this.__getDisplayText = (value) => helpers.getDisplayText(value, this.options.displayAttribute, this.model, this.options.idProperty);
 
         const bubbleItemViewOptions = {
             getDisplayText: this.__getDisplayText,
@@ -862,18 +862,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         return isAccess && maxQuantity > this.selectedCollection.length;
-    },
-
-    __getDisplayText(value, displayAttribute = this.options.displayAttribute): string {
-        if (value == null) {
-            return '';
-        }
-
-        const attributes = this.__getAttributes(value);
-        if (typeof displayAttribute === 'function') {
-            return displayAttribute(attributes, this.model);
-        }
-        return attributes[displayAttribute] || attributes.text || `#${attributes[this.options.idProperty]}`;
     },
 
     __onButtonFocus(view: Marionette.View<any>, event: Event) {

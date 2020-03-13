@@ -340,6 +340,17 @@ export default /** @lends module:core.utils.helpers */ {
         this.throwError(message || 'The operation is not supported', 'NotSupportedError');
     },
 
+    getDisplayText(value, displayAttribute = 'name', model, idProperty = 'id'): string {
+        if (value == null) {
+            return '';
+        }
+        const attributes = value instanceof Backbone.Model ? value.toJSON() : value;
+        if (typeof displayAttribute === 'function') {
+            return displayAttribute(attributes, model);
+        }
+        return attributes[displayAttribute] || attributes.text || `#${attributes[idProperty]}`;
+    },
+
     /**
      * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
      * For example: a base class could have abstract methods that throws such error.
