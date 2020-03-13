@@ -754,7 +754,8 @@ export default Marionette.View.extend({
     },
 
     __checkModeN3() {
-        const firstSymbol = this.codemirror.getValue().trim()[0];
+        const valueWithoutComment = this.codemirror.getValue().replace(/^#.*/gm, '');
+        const firstSymbol = valueWithoutComment.trim()[0];
         if (firstSymbol === constants.activeSymbolNotation3.at || firstSymbol === constants.activeSymbolNotation3.openBrace) {
             return constants.mode.notation3;
         }
