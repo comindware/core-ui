@@ -17,7 +17,7 @@ const defaultOptions = () => ({
     allowBlank: false,
     instanceRecordTypeId: undefined,
     isInstanceExpandable: true,
-    instanceTypeProperty: objectPropertyTypes.INSTANCE,
+    instanceTypeProperties: [objectPropertyTypes.INSTANCE],
     instanceValueProperty: 'instanceTypeId'
 });
 
@@ -206,7 +206,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         const mappedContext = {};
         Object.entries(context).forEach(([key, value]) => {
             const mappedProperties = value.reduce((filteredProperites, property) => {
-                const isInstance = property.type === this.options.instanceTypeProperty;
+                const isInstance = this.options.instanceTypeProperties.includes(property.type);
                 if (!this.__isPropertyValid(property)) {
                     return filteredProperites;
                 }
@@ -236,7 +236,8 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     __isPropertyValid(property) {
         const { usePropertyTypes, propertyTypes } = this.options;
         const isFilterEnabled = usePropertyTypes && propertyTypes?.length;
-        return !isFilterEnabled || property.type === this.options.instanceTypeProperty || propertyTypes.includes(property.type);
+        const isInstance = this.options.instanceTypeProperties.includes(property.type);
+        return !isFilterEnabled || isInstance || propertyTypes.includes(property.type);
     },
 
     __onExpand({ model, mappedContext }) {
@@ -244,7 +245,8 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
             return;
         }
         model.children.forEach(child => {
-            if (child.get('type') === this.options.instanceTypeProperty) {
+            const isInstance = this.options.instanceTypeProperties.includes(child.get('type'));
+            if (isInstance) {
                 const newChildren = mappedContext[child.get(this.options.instanceValueProperty)]?.map(m => m.toJSON());
 
                 if (newChildren) {
