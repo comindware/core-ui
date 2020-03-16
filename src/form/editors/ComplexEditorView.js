@@ -249,7 +249,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             'popoutFlow',
             'allowBlank',
             'isInstanceExpandable',
-            'instanceTypeProperty',
+            'instanceTypeProperties',
             'instanceValueProperty'
         );
 
