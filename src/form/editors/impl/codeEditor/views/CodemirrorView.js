@@ -767,6 +767,7 @@ export default Marionette.View.extend({
         switch (languageMode) {
             case constants.mode.expression:
                 this.codemirror.setOption('mode', constants.languages.expression);
+                this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
                 this.__closeNotationMode();
                 this.__closeCSharpMode();
                 break;
