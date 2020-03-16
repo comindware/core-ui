@@ -63,24 +63,6 @@ export default Marionette.View.extend({
             '__cleanCSharpInfoList',
             '__showAttributeN3'
         );
-
-        if (options.mode === constants.mode.expression) {
-            this.autoCompleteModel = new Backbone.Model();
-            this.autoCompleteContext = constants.autoCompleteContext.functions;
-            if (options.ontologyService) {
-                this.templateId = options.templateId;
-                options.ontologyService.getFunctions().then(ontologyModel => {
-                    if (ontologyModel.functions && constants.autoCompleteContext?.functions) {
-                        this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, constants.autoCompleteContext.functions) });
-                        if (this.codemirror) {
-                            this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
-                            this.setValue(this.getValue());
-                        }
-                    }
-                });
-            }
-        }
-
         this.intelliAssist = options.ontologyService;
         if (options.mode === constants.mode.script) {
             codemirror.hintWords[constants.languages.script] = [];
@@ -767,7 +749,7 @@ export default Marionette.View.extend({
         switch (languageMode) {
             case constants.mode.expression:
                 this.codemirror.setOption('mode', constants.languages.expression);
-                this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
+                this.__setFunctionsHintForExpression();
                 this.__closeNotationMode();
                 this.__closeCSharpMode();
                 break;
@@ -794,6 +776,28 @@ export default Marionette.View.extend({
         codemirror.off('pick', this.changeTemplateNotation);
         codemirror.off('select', this.showTooltipNotation);
         codemirror.off('select', this.showTooltipPrefixN3);
+    },
+
+    async __setFunctionsHintForExpression() {
+        if (!this.codemirror) {
+            return;
+        }
+        const ontologyObjectsLength = this.codemirror.getMode()?.ontologyObjects.length;
+        if (!this.options.ontologyService || ontologyObjectsLength) {
+            return;
+        }
+        if (this.autoCompleteModel?.get(constants.autoCompleteContext.functions)) {
+            this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
+            return;
+        }
+        this.autoCompleteModel = new Backbone.Model();
+        this.templateId = this.options.templateId;
+        const ontologyModel = await this.options.ontologyService.getFunctions();
+        const functionsExpression = constants.autoCompleteContext.functions
+        if (ontologyModel.functions) {
+            this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, functionsExpression) });
+            this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
+        }
     },
 
     __closeCSharpMode() {
@@ -1208,7 +1212,7 @@ export default Marionette.View.extend({
     },
 
     __findObjectByText(text) {
-        if (this.autoCompleteContext === null) {
+        if (this.autoCompleteContext == null || !this.autoCompleteModel?.get(this.autoCompleteContext)) {
             return;
         }
         return this.autoCompleteModel.get(this.autoCompleteContext)?.find(item => item.text === text);
