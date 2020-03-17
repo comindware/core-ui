@@ -793,7 +793,7 @@ export default Marionette.View.extend({
         this.autoCompleteModel = new Backbone.Model();
         this.templateId = this.options.templateId;
         const ontologyModel = await this.options.ontologyService.getFunctions();
-        const functionsExpression = constants.autoCompleteContext.functions
+        const functionsExpression = constants.autoCompleteContext.functions;
         if (ontologyModel.functions) {
             this.autoCompleteModel.set({ functions: MappingService.mapOntologyArrayToAutoCompleteArray(ontologyModel.functions, functionsExpression) });
             this.codemirror.getMode().ontologyObjects = this.autoCompleteModel.get(constants.autoCompleteContext.functions);
