@@ -12,11 +12,6 @@ const toolbarActions = {
     MOVE_ALL: 'Move-all'
 };
 
-const filterFnsConst = {
-    filterFnUsers: (model, parameters) => model.get('type') !== parameters.users,
-    filterFnGroups: (model, parameters) => model.get('type') !== parameters.groups
-};
-
 const debounceInterval = {
     short: 100,
     medium: 300
@@ -35,12 +30,9 @@ export default Marionette.MnObject.extend({
     initialize(options) {
         this.options = options;
         this.filterFnParameters = options.filterFnParameters;
-        this.filterFns = {
-            [`filterFn_${this.filterFnParameters.users}`]: filterFnsConst.filterFnUsers.bind({}),
-            [`filterFn_${this.filterFnParameters.groups}`]: filterFnsConst.filterFnGroups.bind({})
-        };
-        Object.values(this.filterFns).forEach(fn => Object.defineProperty(fn, 'parameters', { value: options.memberTypes }));
-
+        this.filterFn = {};
+        Object.values(this.filterFnParameters).forEach(parameter =>
+            this.filterFn[parameter] = model => this.filterFnParameters[model.get('type')] !== parameter);
         this.members = {};
         this.isMemberService = options.memberService && options.memberService.getMembers;
         const showUsers = !this.options.hideUsers;
@@ -158,7 +150,6 @@ export default Marionette.MnObject.extend({
             ? new AvailableGridView(
                   Object.assign({}, gridViewOptions, {
                       memberService: this.options.memberService,
-                      filterFns: this.filterFns,
                       filterState: this.filterState,
                       title: availableText,
                       textFilterDelay: this.options.textFilterDelay
@@ -231,15 +222,11 @@ export default Marionette.MnObject.extend({
         const collection = gridView.collection;
         const actionId = act.get('id');
         const isChecked = act.get('isChecked');
-        const filterFn = this.filterFns[`filterFn_${actionId}`];
 
-        if (!collection.filterFn) {
-            collection.filterFn = [];
-        }
         if (!isChecked) {
-            collection.filter(filterFn, { action: virtualCollectionFilterActions.PUSH });
+            collection.filter(this.filterFn[actionId], { action: virtualCollectionFilterActions.PUSH });
         } else {
-            collection.filter(filterFn, { action: virtualCollectionFilterActions.REMOVE });
+            collection.filter(this.filterFn[actionId], { action: virtualCollectionFilterActions.REMOVE });
         }
     },
 
