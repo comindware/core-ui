@@ -58,7 +58,7 @@ export default Marionette.View.extend({
             '__getListHintsN3',
             '__changeTemplate',
             '__showPrefixN3',
-            '__findUsedVariablesN3',
+            '__setVariablesN3ForHint',
             '__setHighlightUnusedVar',
             '__cleanCSharpInfoList',
             '__showAttributeN3'
@@ -242,9 +242,7 @@ export default Marionette.View.extend({
             }
             switch (inputSymbol) {
                 case constants.activeSymbolNotation3.questionMark:
-                    if (!this.__findUsedVariablesN3(change.to)) {
-                        this.codemirror.showHint({ hint: this.__noSuggestionHint });
-                    }
+                    this.__setVariablesN3ForHint(change.to);
                     this.codemirror.showHint({ hint: this.__notation3Hints });
                     break;
                 case constants.activeSymbolNotation3.at:
@@ -275,9 +273,9 @@ export default Marionette.View.extend({
         }
     },
 
-    __findUsedVariablesN3(cursor) {
+    __setVariablesN3ForHint(cursor) {
         this.listVariablesHintsNotation3 = [];
-        const arrNameVariablesNotation3 = [];
+        const arrNameVariablesNotation3 = [constants.defaultVariablesNotation3.value, constants.defaultVariablesNotation3.item];
         const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
         const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
         const regExpFindVariables = /\?\w*/igm;
@@ -289,17 +287,13 @@ export default Marionette.View.extend({
                 }
             });
         }
-        if (arrNameVariablesNotation3) {
-            arrNameVariablesNotation3.sort();
-            arrNameVariablesNotation3.forEach(nameVariable => {
-                this.listVariablesHintsNotation3.push({
-                    text: nameVariable,
-                    icons: contextIconType.case
-                });
+        arrNameVariablesNotation3.sort();
+        arrNameVariablesNotation3.forEach(nameVariable => {
+            this.listVariablesHintsNotation3.push({
+                text: nameVariable,
+                icons: contextIconType.case
             });
-            return true;
-        }
-        return false;
+        });
     },
 
     async __showPrefixN3() {
