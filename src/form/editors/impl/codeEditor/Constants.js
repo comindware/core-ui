@@ -91,5 +91,10 @@ export default {
     queryCompleteHoverType: {
         completion: 'Completion',
         unusedVariables: 'UnusedVariables'
+    },
+
+    defaultVariablesNotation3: {
+        value: 'value',
+        item: 'item'
     }
 };
