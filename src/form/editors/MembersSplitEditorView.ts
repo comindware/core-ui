@@ -80,7 +80,14 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
         this.options.users = users;
         this.options.groups = groups;
-        this.setValue([]);
+        const newCollection = [...this.options.users, ...this.options.groups];
+        const currentValue = this.getValue();
+        if (!currentValue) {
+            this.setValue([]);
+            return;
+        }
+        const filteredValue = currentValue.filter(selected => newCollection.find(member => member.id === selected));
+        this.setValue(filteredValue);
     },
 
     __initializeController(options) {
