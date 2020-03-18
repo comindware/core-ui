@@ -14,7 +14,7 @@ export default function() {
             max: 'P15DT18H4M',
             min: 3600000 //1 hour
         }),
-        presentation: "{{durationValue}}",
+        presentation: '{{durationValue}}',
         isEditor: true
     });
 }
