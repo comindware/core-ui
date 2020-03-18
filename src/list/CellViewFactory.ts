@@ -134,7 +134,8 @@ export default factory = {
                 allowDays: true,
                 allowHours: true,
                 allowMinutes: true,
-                allowSeconds: true
+                allowSeconds: true,
+                hoursPerDay: 24
             };
             const options = Object.assign(defaultOptions, _.pick(column.formatOptions || {}, Object.keys(defaultOptions)));
             let result = '';
@@ -147,20 +148,24 @@ export default factory = {
             let totalMilliseconds = moment.duration(value).asMilliseconds();
 
             if (options.allowDays) {
-                result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
-                totalMilliseconds %= 1000 * 60 * 60 * 24;
+                const oneDayMs = 1000 * 60 * 60 * options.hoursPerDay;
+                result += `${Math.floor(totalMilliseconds / oneDayMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                totalMilliseconds %= oneDayMs;
             }
             if (options.allowHours) {
-                result += `${Math.floor(totalMilliseconds / (1000 * 60 * 60)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
-                totalMilliseconds %= 1000 * 60 * 60;
+                const oneHourMs = 1000 * 60 * 60;
+                result += `${Math.floor(totalMilliseconds / oneHourMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                totalMilliseconds %= oneHourMs;
             }
             if (options.allowMinutes) {
-                result += `${Math.floor(totalMilliseconds / (1000 * 60)) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
-                totalMilliseconds %= 1000 * 60;
+                const oneMinuteMs = 1000 * 60;
+                result += `${Math.floor(totalMilliseconds / oneMinuteMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                totalMilliseconds %= oneMinuteMs;
             }
             if (options.allowSeconds) {
-                result += `${Math.floor(totalMilliseconds / 1000) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
-                totalMilliseconds %= 1000;
+                const oneSecondMs = 1000;
+                result += `${Math.floor(totalMilliseconds / oneSecondMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
+                totalMilliseconds %= oneSecondMs;
             }
             return result;
         });
