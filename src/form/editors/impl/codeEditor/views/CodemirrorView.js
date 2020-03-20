@@ -219,7 +219,7 @@ export default Marionette.View.extend({
         }
 
         const inputSymbol = change.text[0];
-        const isNotFilter = !(/\w/).test(inputSymbol);
+        const isNotFilter = !/\w/.test(inputSymbol);
         if (isScriptMode) {
             if (inputSymbol === constants.activeSymbol.point) {
                 this.filterList = null;
@@ -240,6 +240,14 @@ export default Marionette.View.extend({
             if (notN3Mode) {
                 return;
             }
+
+            const { valueLine, column } = this.__getOptionCodemirror([constants.optionsCodemirror.valueLine, constants.optionsCodemirror.column]);
+            const isComment = this.__isCommentN3(valueLine, column);
+
+            if (isComment) {
+                return;
+            }
+
             switch (inputSymbol) {
                 case constants.activeSymbolNotation3.questionMark:
                     this.__setVariablesN3ForHint(change.to);
@@ -261,7 +269,6 @@ export default Marionette.View.extend({
         try {
             this.setLoading(true);
             const cursor = this.codemirror.getCursor();
-            const token = this.codemirror.getTokenAt(cursor);
             const attributes = await this.__getAttributeNotation3();
             if (attributes && !attributes.length) {
                 return this.__noSuggestionHint();
@@ -278,12 +285,13 @@ export default Marionette.View.extend({
         const arrNameVariablesNotation3 = [constants.defaultVariablesNotation3.value, constants.defaultVariablesNotation3.item];
         const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
         const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
-        const regExpFindVariables = /\?\w*/igm;
-        const variablesN3 = textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
-        if (variablesN3) {
-            variablesN3.forEach(variable => {
-                if (!arrNameVariablesNotation3.includes(variable.substr(1))) {
-                    arrNameVariablesNotation3.push(variable.substr(1));
+        const regExpFindVariables = /\?\w*/gim;
+        const allItemsWithQuestion = textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
+        if (allItemsWithQuestion) {
+            allItemsWithQuestion.forEach(item => {
+                const nameItem = item.substr(1);
+                if (!arrNameVariablesNotation3.includes(nameItem) && nameItem) {
+                    arrNameVariablesNotation3.push(nameItem);
                 }
             });
         }
@@ -323,7 +331,7 @@ export default Marionette.View.extend({
             prefix.text = `prefix ${prefix.alias}: <${prefix.uri}>.`;
             prefix.displayText = prefix.alias;
             prefix.title = `URI: ${prefix.uri}`;
-            prefix.description = (prefix.description) ? prefix.description : '-',
+            prefix.description = prefix.description ? prefix.description : '-';
             prefix.icons = contextIconType.case;
             return prefix;
         });
@@ -585,7 +593,7 @@ export default Marionette.View.extend({
         const line = this.codemirror.getLine(lineNumber);
         const ch = this.codemirror.getCursor().ch;
         let filterName;
-        const hasDot = (/\./g).test(line);
+        const hasDot = /\./g.test(line);
         if (this.isCallMethodAnywhere || hasDot) {
             if (this.lineCallMethod !== lineNumber) {
                 this.CSharpInfoList = [];
@@ -663,7 +671,7 @@ export default Marionette.View.extend({
 
     __showTooltip(token, hintEl) {
         hintEl.focus();
-        const tooltipTypeCSharp = constants.types.function;
+        const tooltipType = constants.types.function;
         this.previousHintName = token.text;
         let options;
         if (!token.description) {
@@ -688,7 +696,7 @@ export default Marionette.View.extend({
             default:
                 break;
         }
-        const TooltipView = MappingService.getTooltipView(tooltipTypeCSharp);
+        const TooltipView = MappingService.getTooltipView(tooltipType);
         this.tooltip = new TooltipView(options);
 
         this.listenTo(this.tooltip, 'syntax:changed', syntax => (token.currentSyntax = syntax));
@@ -714,6 +722,11 @@ export default Marionette.View.extend({
             const countLeftBrace = arrOpenBraceOver.length - arrCloseBraceOver.length;
 
             if (countLeftBrace) {
+                const { valueLine, column } = this.__getOptionCodemirror([constants.optionsCodemirror.valueLine, constants.optionsCodemirror.column]);
+                const isComment = this.__isCommentN3(valueLine, column);
+                if (isComment) {
+                    return;
+                }
                 this.codemirror.showHint({ hint: this.__showTemplateHintsN3 });
             } else {
                 this.codemirror.showHint({ hint: this.__noSuggestionHint });
@@ -764,6 +777,38 @@ export default Marionette.View.extend({
 
     __closeExpressionMode() {
         codemirror.off('select', this.showTooltipCMW);
+    },
+
+    __isCommentN3(valueLine, column) {
+        const subStringForFind = valueLine.slice(0, column);
+        return subStringForFind.includes(constants.activeSymbolNotation3.comment);
+    },
+
+    __getOptionCodemirror(options) {
+        const cursor = this.codemirror.getCursor();
+        const resultOptions = {};
+        options.forEach(option => {
+            switch (option) {
+                case constants.optionsCodemirror.cursor:
+                    resultOptions[constants.optionsCodemirror.cursor] = cursor;
+                    break;
+                case constants.optionsCodemirror.numberLine:
+                    resultOptions[constants.optionsCodemirror.numberLine] = cursor.line;
+                    break;
+                case constants.optionsCodemirror.column:
+                    resultOptions[constants.optionsCodemirror.column] = cursor.ch;
+                    break;
+                case constants.optionsCodemirror.valueLine:
+                    resultOptions[constants.optionsCodemirror.valueLine] = this.codemirror.getLine(cursor.line);
+                    break;
+                case constants.optionsCodemirror.currentSymbol:
+                    resultOptions[constants.optionsCodemirror.currentSymbol] = this.codemirror.getLine(cursor.line)[cursor.ch];
+                    break;
+                default:
+                    break;
+            }
+        });
+        return resultOptions;
     },
 
     __closeNotationMode() {
@@ -882,7 +927,7 @@ export default Marionette.View.extend({
                 if (ontologyModel.get('compilerRemarks').length > 0) {
                     ontologyModel.get('compilerRemarks').forEach(el => {
                         const offsetStart = el.offsetStart;
-                        if ((el.offsetStart != null) && (content.length >= offsetStart)) {
+                        if (el.offsetStart != null && content.length >= offsetStart) {
                             const obj = this.__countLineAndColumn(offsetStart, content);
                             el.line = obj.line;
                             el.column = obj.column;
@@ -1013,7 +1058,7 @@ export default Marionette.View.extend({
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
-            templateId: this.templateId,
+            templateId: this.templateId
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
@@ -1029,21 +1074,40 @@ export default Marionette.View.extend({
     },
 
     async __showTemplateHintsN3() {
-        const templateNotation3 = this.intelliAssist.getTemplateNotation3(this.options.solution);
         let autoCompleteObject = {};
-        const cursor = this.codemirror.getCursor();
-        const numberLine = cursor.line;
-        const valueLine = this.codemirror.getLine(numberLine);
-        const ch = cursor.ch;
-        const token = this.codemirror.getTokenAt(cursor);
+        let hintsNotation3;
+
+        const templateNotation3 = this.intelliAssist.getTemplateNotation3(this.options.solution);
+        const { valueLine, column, cursor } = this.__getOptionCodemirror([
+            constants.optionsCodemirror.valueLine,
+            constants.optionsCodemirror.column,
+            constants.optionsCodemirror.cursor
+        ]);
+        const ch = column;
 
         const isOpenedLeftBracket = valueLine.slice(0, ch).includes('(');
         const isClosedRightBracket = valueLine.slice(ch, valueLine.length).includes(')');
         const isIntoBracket = isOpenedLeftBracket && isClosedRightBracket;
         const isEmptyLine = !this.codemirror.getLine(cursor.line).trim().length;
+        const isSymbolQuestionMark = constants.activeSymbolNotation3.questionMark === valueLine[ch - 1];
+        const isSymbolAt = constants.activeSymbolNotation3.at === valueLine[ch - 1];
 
-        let hintsNotation3;
-        if (isIntoBracket) {
+        if (isSymbolQuestionMark) {
+            const isOneSymbol = valueLine.trim().length === 1;
+            const beforeSymbolQuestionMark = valueLine[ch - 2];
+            if (isOneSymbol || beforeSymbolQuestionMark === ' ') {
+                this.__setVariablesN3ForHint(cursor);
+                this.codemirror.showHint({ hint: this.__notation3Hints });
+                return;
+            }
+        } else if (isSymbolAt) {
+            const isOneSymbol = valueLine.trim().length === 1;
+            const beforeSymbolAt = valueLine[ch - 2];
+            if (isOneSymbol || beforeSymbolAt === ' ') {
+                this.codemirror.showHint({ hint: this.__showPrefixN3 });
+                return;
+            }
+        } else if (isIntoBracket) {
             hintsNotation3 = await this.__getAttributeNotation3();
             if (!hintsNotation3) {
                 return this.__noSuggestionHint();
@@ -1080,7 +1144,7 @@ export default Marionette.View.extend({
     __changeTemplate(descriptionHint, cursor) {
         const numberLine = this.codemirror.getCursor().line;
         const valueLine = this.codemirror.getLine(numberLine);
-        const startSpaces = (valueLine.match(/\s+/)) ? valueLine.match(/\s+/)[0] : '';
+        const startSpaces = valueLine.match(/\s+/) ? valueLine.match(/\s+/)[0] : '';
         let newValueLine;
         if (descriptionHint.overloads && descriptionHint.overloads.length) {
             let paramGlobalFunction = '';
@@ -1142,7 +1206,12 @@ export default Marionette.View.extend({
             !event.altKey
             && !event.ctrlKey
             && !event.metaKey
-            && (charCode === keyCode['>'] || charCode === keyCode.HOME || (charCode >= keyCode[0] && charCode <= keyCode.Z) || (charCode > keyCode._ && charCode < keyCode['{']) || charCode === keyCode.BACKSPACE || charCode === keyCode.PERIOD)
+            && (charCode === keyCode['>']
+                || charCode === keyCode.HOME
+                || (charCode >= keyCode[0] && charCode <= keyCode.Z)
+                || (charCode > keyCode._ && charCode < keyCode['{'])
+                || charCode === keyCode.BACKSPACE
+                || charCode === keyCode.PERIOD)
         );
         if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {

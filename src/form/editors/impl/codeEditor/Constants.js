@@ -81,7 +81,16 @@ export default {
         openBracket: '(',
         closeBracket: ')',
         openBrace: '{',
-        closeBrace: '}'
+        closeBrace: '}',
+        comment: '#'
+    },
+
+    optionsCodemirror: {
+        numberLine: 'numberLine',
+        valueLine: 'valueLine',
+        column: 'column',
+        currentSymbol: 'currentSymbol',
+        cursor: 'cursor'
     },
 
     tokenTypes: {
