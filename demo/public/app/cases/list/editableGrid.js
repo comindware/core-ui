@@ -10,8 +10,7 @@ export default () => {
             numberCell: i + 1,
             dateTimeCell: '2015-07-24T08:13:13.847Z',
             durationCell: 'P12DT5H42M',
-            booleanCell: i % 2,
-            userCell: [{ id: 'user.1', columns: ['J. J.'] }],
+            booleanCell: i % 2 === 0,
             referenceCell: [
                 { id: 'task.1', name: 'Ref 1', abbreviation: 'AB' },
                 { id: 'task.2', name: 'Ref 2' },
@@ -21,16 +20,40 @@ export default () => {
                 { id: 'task.6', name: 'Ref 6' },
                 { id: 'task.7', name: 'Ref 7' }
             ],
+            userCell: [
+                { id: 'user.1', name: 'User 1' },
+                { id: 'user.2', name: 'User 1' }
+            ],
             enumCell: { valueExplained: ['123'] },
             documentCell: [
                 {
                     id: `document.${i}`,
                     name: `Document ${i}`,
                     url: `GetDocument/${i}`
+                },
+                {
+                    id: `document.${i + 1}`,
+                    name: `Document ${i + 1}`,
+                    url: `GetDocument/${i + 1}`
                 }
             ]
         });
     }
+
+    const generateCollection = (count, prefix) => {
+        const result = [];
+        const capitalizedPrefix = prefix.replace(/^./, ch => ch.toUpperCase());
+        for (let i = 0; i < count; i++) {
+            result.push({
+                id: `${prefix}.${i}`,
+                name: `${capitalizedPrefix} ${i}`
+            });
+        }
+        return result;
+    };
+
+    const referenceCollection = generateCollection(20, 'task');
+    const userCollection = generateCollection(20, 'user');
 
     // 2. Create columns
     const columns = [
@@ -110,7 +133,8 @@ export default () => {
             title: 'Boolean Cell',
             editable: true,
             autocommit: true,
-            getHidden: model => !model.get('numberCell') % 2 && !model.get('numberCell') % 3
+            getHidden: model => model.get('numberCell') % 5 === 0,
+            getReadonly: model => model.get('numberCell') % 7 === 0,
         },
         {
             key: 'documentCell',
@@ -127,13 +151,35 @@ export default () => {
             title: 'Reference Cell',
             required: true,
             customClass: 'dropdown_root',
-            controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController(),
+            controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({
+                collection: referenceCollection
+            }),
             editable: true,
             showCheckboxes: true,
             autocommit: true,
             maxQuantitySelected: 5,
             simplified: true,
-            getReadonly: model => model.get('numberCell') % 2
+            getReadonly: model => model.get('numberCell') % 2,
+            collection: referenceCollection
+        },
+        {
+            key: 'userCell',
+            type: 'Datalist',
+            dataType: 'Account',
+            title: 'User Cell',
+            required: true,
+            customClass: 'dropdown_root',
+            controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({
+                collection: userCollection
+            }),
+            format: 'user',
+            editable: true,
+            autocommit: true,
+            showCheckboxes: true,
+            maxQuantitySelected: 5,
+            collection: userCollection,
+            getReadonly: model => model.get('numberCell') % 2,
+            getHidden: model => model.get('numberCell') % 3
         }
     ];
 

@@ -46,8 +46,7 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     ui: {
         editor: '.js-code-codemirror-container',
         editBtn: '.js-code-button-edit',
-        clearBtn: '.js-code-button-clear',
-        fadingPanel: '.js-code-fading-panel'
+        clearBtn: '.js-code-button-clear'
     },
 
     events: {
@@ -67,7 +66,6 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     onRender() {
-        this.ui.fadingPanel.hide();
         if (this.options.showMode === showModes.button) {
             this.ui.editor.hide();
             this.el.classList.add(classes.buttonMode);
@@ -80,16 +78,12 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
     },
 
     showEditor() {
-        this.editor = new CodemirrorView({
-            mode: this.options.mode,
-            height: this.options.height,
-            lineSeparator: this.options.lineSeparator,
-            ontologyService: this.options.ontologyService,
-            config: this.options.config
-        });
+        if (this.editor) {
+            return;
+        }
+        this.editor = new CodemirrorView(this.options);
 
         this.editor.on('change', this.__change, this);
-        this.editor.on('maximize', () => this.ui.fadingPanel.show());
         this.editor.on('minimize', () => this.__onMinimize());
         this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
@@ -100,9 +94,12 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
 
     focus() {
         if (this.options.showMode === showModes.button) {
-            this.ui.button.focus();
+            this.showEditor();
+            this.ui.editor.show();
+            this.editor.maximize();
+        } else {
+            this.editor.codemirror.focus();
         }
-        this.editor.codemirror.focus();
         this.hasFocus = true;
     },
 
@@ -133,17 +130,16 @@ export default (formRepository.editors.Code = BaseEditorView.extend({
         this.__value(value, false, true);
     },
 
-    __onEdit() {
+    __onEdit(e) {
         if (!this.editor) {
             this.showEditor();
         }
         this.ui.editor.show();
-        this.ui.fadingPanel.show();
         this.editor.maximize();
+        e.stopPropagation();
     },
 
     __onMinimize() {
-        this.ui.fadingPanel.hide();
         if (this.options.showMode === showModes.button) {
             this.ui.editor.hide();
         }

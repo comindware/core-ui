@@ -593,9 +593,10 @@ describe('Editors', () => {
             const newData = Object.assign({}, data);
             newData.totalCount = 20;
             const newMemberService = Object.assign({}, memberService);
-            newMemberService.getMembers = () => new Promise(res => {
-                timer = setTimeout(() => res(newData), 100);
-            });
+            newMemberService.getMembers = () =>
+                new Promise(res => {
+                    timer = setTimeout(() => res(newData), 100);
+                });
 
             const view = new core.form.editors.MembersSplitEditor({
                 model,

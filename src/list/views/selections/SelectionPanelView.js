@@ -36,6 +36,15 @@ export default Marionette.CollectionView.extend({
         }
     },
 
+    _removeChildView(view) {
+        this.children._remove(view);
+        if (view.el.parentElement === this.el) {
+            view.el.remove();
+        }
+        // to execute destroy logic after relayout on scroll
+        setTimeout(() => Marionette.CollectionView.prototype._removeChildView.apply(this, arguments));
+    },
+
     __updateHeight(height) {
         this.$el.css({ height });
     },

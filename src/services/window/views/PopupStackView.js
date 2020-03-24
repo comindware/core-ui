@@ -16,6 +16,8 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'js-global-popup-stack',
+
     ui: {
         fadingPanel: '.js-fading-panel'
     },
@@ -83,8 +85,8 @@ export default Marionette.View.extend({
         return popupId;
     },
 
-    showElInPopup(view, options) {
-        const { fadeBackground, transient } = options;
+    showElInPopup($el, options) {
+        const { fadeBackground, transient, useWrapper } = options;
 
         if (!transient) {
             this.__removeTransientPopups();
@@ -96,7 +98,7 @@ export default Marionette.View.extend({
         regionEl.classList.add('js-core-ui__global-popup-region');
 
         const config = {
-            view,
+            view: $el,
             options,
             regionEl,
             popupId,
@@ -104,17 +106,21 @@ export default Marionette.View.extend({
         };
 
         this.$el.append(regionEl);
-        this.addRegion(popupId, {
+        const region = this.addRegion(popupId, {
             el: regionEl
         });
-        this.prevSublingOfContentEl = view.prev();
+        this.prevSublingOfContentEl = $el.prev();
         if (this.prevSublingOfContentEl.length === 0) {
             delete this.prevSublingOfContentEl;
-            this.parentOfContentEl = view.parent();
+            this.parentOfContentEl = $el.parent();
         }
-        this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
+        if (useWrapper) {
+            this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
 
-        view.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
+            $el.appendTo(region.$el.children('.modal-window-wrapper'));
+        } else {
+            $el.appendTo(region.$el);
+        }
 
         if (fadeBackground) {
             let lastIndex = -1;
@@ -130,7 +136,7 @@ export default Marionette.View.extend({
         }
 
         this.__stack.push(config);
-        view.popupId = popupId;
+        $el.popupId = popupId;
 
         return popupId;
     },

@@ -4,6 +4,7 @@ import template from './templates/tabLayout.hbs';
 import HeaderView from './TabHeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 
 type Tab = { view: any, id: string };
 
@@ -59,7 +60,8 @@ export default Marionette.View.extend({
 
     regions: {
         headerRegion: '.js-header-region',
-        stepperRegion: '.js-stepper-region'
+        stepperRegion: '.js-stepper-region',
+        loadingRegion: '.js-loading-region'
     },
 
     ui: {
@@ -69,6 +71,10 @@ export default Marionette.View.extend({
     behaviors: {
         LayoutBehavior: {
             behaviorClass: LayoutBehavior
+        },
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
         }
     },
 
@@ -79,27 +85,15 @@ export default Marionette.View.extend({
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.showChildView('headerRegion', headerView);
+        if (this.getOption('deferRender')) {
+            const selectedTab = this.__findSelectedTab();
+            this.__renderTab(selectedTab, false);
+        } else {
+            this.__tabsCollection.forEach(model => {
+                this.__renderTab(model, false);
+            });
+        }
 
-        this.__tabsCollection.each(tabModel => {
-            const regionEl = document.createElement('div');
-            regionEl.className = classes.PANEL_REGION;
-            this.ui.panelContainer.append(regionEl);
-            const region = this.addRegion(`${tabModel.id}TabRegion`, {
-                el: regionEl
-            });
-            const view = tabModel.get('view');
-
-            view.on('all', (...args) => {
-                args[0] = `tab:${args[0]}`;
-                this.triggerMethod(...args);
-            });
-            region.show(view);
-            tabModel.set({
-                region,
-                regionEl
-            });
-            this.__updateTabRegion(tabModel);
-        });
         this.__updateState();
         if (this.getOption('showStepper')) {
             const stepperView = new StepperView({ collection: this.__tabsCollection });
@@ -152,10 +146,13 @@ export default Marionette.View.extend({
                 }
             }
             selectedTab.set('selected', false);
-            this.selectTabIndex = this.__getSelectedTabIndex(tab);
         }
         if (tab.get('enabled')) {
             tab.set('selected', true);
+            if (!tab.get('isRendered') && this.isRendered()) {
+                this.__renderTab(tab, false);
+            }
+            this.selectTabIndex = this.__tabsCollection.indexOf(tab);
         }
     },
 
@@ -200,6 +197,47 @@ export default Marionette.View.extend({
         const newTabIndex = this.__getClosestVisibleTab(indexesOfVisibleCollection, tabIndex);
 
         this.selectTab(this.__tabsCollection.at(newTabIndex).id);
+    },
+
+    setLoading(state: Boolean | Promise<any>): void {
+        this.loading.setLoading(state);
+    },
+
+    __renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean): void {
+        const regionEl = document.createElement('div');
+        regionEl.className = classes.PANEL_REGION;
+        this.ui.panelContainer.append(regionEl);
+        const region = this.addRegion(`${tabModel.id}TabRegion`, {
+            el: regionEl
+        });
+        const view = tabModel.get('view');
+
+        view.on('all', (...args) => {
+            args[0] = `tab:${args[0]}`;
+            this.trigger(...args);
+        });
+        if (isLoadingNeeded) {
+            this.setLoading(true);
+            setTimeout(() => {
+                this.__showTab({ region, tabModel, view, regionEl });
+                this.setLoading(false);
+            });
+        } else {
+            this.__showTab({ region, tabModel, view, regionEl });
+        }
+    },
+
+    __showTab(options): void {
+        const { region, tabModel, view, regionEl } = options;
+
+        region.show(view);
+        tabModel.set({
+            region,
+            regionEl,
+            isRendered: true
+        });
+
+        this.__updateTabRegion(tabModel);
     },
 
     __getClosestVisibleTab(indexes, tabIndex) {
@@ -268,12 +306,16 @@ export default Marionette.View.extend({
     },
 
     __updateTabRegion(model: Backbone.Model): void {
+        const regionEl = model.get('regionEl');
+        if (!regionEl) {
+            return;
+        }
         const selected = model.get('selected');
 
         if (selected) {
-            model.get('regionEl').classList.remove(classes.HIDDEN);
+            regionEl.classList.remove(classes.HIDDEN);
         } else {
-            model.get('regionEl').classList.add(classes.HIDDEN);
+            regionEl.classList.add(classes.HIDDEN);
         }
 
         this.trigger('changed:selectedTab', model);

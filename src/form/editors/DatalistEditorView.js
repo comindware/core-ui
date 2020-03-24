@@ -264,6 +264,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     focus(): void {
         this.__focusButton();
         this.onFocus();
+        this.__onInputSearch();
     },
 
     blur(): void {
@@ -700,7 +701,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onDropdownOpen(): void {
-        this.focus();
+        this.__focusButton();
+        this.onFocus();
         this.__tryPointFirstRow();
         this.trigger('dropdown:open');
     },
