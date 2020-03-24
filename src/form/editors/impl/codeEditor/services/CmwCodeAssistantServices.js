@@ -64,7 +64,7 @@ export default {
             if (options.token.string === null) {
                 return;
             }
-            if (currentArray.length) {
+            if (currentArray && currentArray.length) {
                 completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
                 autoCompleteObject = {
                     from: {
