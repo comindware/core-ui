@@ -90,7 +90,13 @@ export default {
         valueLine: 'valueLine',
         column: 'column',
         currentSymbol: 'currentSymbol',
-        cursor: 'cursor'
+        cursor: 'cursor',
+        isOpenedLeftBracket: 'isOpenedLeftBracket',
+        isClosedRightBracket: 'isClosedRightBracket',
+        isIntoBracket: 'isIntoBracket',
+        isEmptyLine: 'isEmptyLine',
+        previousSymbol: 'previousSymbol',
+        twoPreviousSymbol: 'twoPreviousSymbol'
     },
 
     tokenTypes: {
@@ -100,6 +106,13 @@ export default {
     queryCompleteHoverType: {
         completion: 'Completion',
         unusedVariables: 'UnusedVariables'
+    },
+
+    modeHintsForN3: {
+        localVariables: 'localVariables',
+        colon: 'colon',
+        prefix: 'prefix',
+        contextFromServer: 'contextFromServer'
     },
 
     defaultVariablesNotation3: {
