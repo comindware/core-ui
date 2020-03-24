@@ -2,6 +2,7 @@ import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
 import LocalizationService from '../../../../../services/LocalizationService';
+import { contextIconType } from '../../../../../Meta';
 
 export default {
     getAutoCompleteContext() {
@@ -88,6 +89,7 @@ export default {
             let listToolbar;
             const result = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
             if (result.length) {
+                result.forEach(atribute => (atribute.icons = contextIconType.attribute));
                 options.autoCompleteModel.set({ attributes: result });
                 this.autoCompleteContext = constants.autoCompleteContext.attributes;
                 listToolbar = this.__renderConfigListToolbar(result);
