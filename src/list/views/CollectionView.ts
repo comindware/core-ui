@@ -114,6 +114,12 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
 
         this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
+
+        if (this.options.draggable) {
+            this.__onCheckedNone();
+            this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
+            this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+        }
     },
 
     attributes() {
@@ -123,11 +129,44 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     events() {
-        return this.options.disableKeydownHandler
-            ? undefined
-            : {
-                  keydown: '__handleKeydown'
-              };
+        const events: {[key: string]: string} = {
+            dragstart: '__handleDragStart',
+            dragend: '__handleDragEnd',
+            dragover: '__handleDragOver'
+        };
+
+        if (!this.options.disableKeydownHandler) {
+            events.keydown = '__handleKeydown';
+        }
+
+        return events;
+    },
+
+    __handleDragStart(event: { originalEvent: DragEvent }) {
+        const checkedModels = this.collection.getCheckedModels();
+
+        if (!checkedModels.length) {
+            return;
+        }
+
+        this.collection.draggingModels = checkedModels;
+
+        const originalEvent = event.originalEvent;
+        if (!originalEvent.dataTransfer) {
+            return;
+        }
+
+        originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
+    },
+
+    __handleDragEnd() {
+        delete this.collection.draggingModels;
+        this.collection.dragoverModel?.trigger('dragleave');
+    },
+
+    __handleDragOver(event: MouseEvent) {
+        // prevent default to allow drop
+        event.preventDefault();
     },
 
     className() {
@@ -141,7 +180,7 @@ export default Marionette.PartialCollectionView.extend({
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.__specifyChildHeight();
         this.handleResize(false);
-        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
+        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(model));
     },
 
     __specifyChildHeight() {
@@ -193,23 +232,23 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     onAddChild(view, child) {
-        this.__updateChildTop(child);
+        this.__updateChildTop(child.model);
     },
 
-    __updateChildTop(child) {
-        if (!child || !this.collection.length) {
-            return;
-        }
+    __updateChildTop(model) {
         requestAnimationFrame(() => {
-            const childModel = child.model;
+            const childView = this.children.findByModel(model);
+            if (!childView || !this.collection.length) {
+                return;
+            }
             if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
-                const index = childModel.collection.indexOf(childModel) + 1;
-                if (index !== childModel.currentIndex) {
-                    child.updateIndex && child.updateIndex(index);
+                const index = model.collection.indexOf(model) + 1;
+                if (index !== model.currentIndex) {
+                    childView.updateIndex && childView.updateIndex(index);
                 }
             }
-            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
-                child.insertFirstCellHtml();
+            if (this.getOption('isTree') && typeof childView.insertFirstCellHtml === 'function') {
+                childView.insertFirstCellHtml();
             }
         });
     },
@@ -526,5 +565,54 @@ export default Marionette.PartialCollectionView.extend({
         this.parent$el.scrollTop(0);
         this.scrollTo(0);
         this.debouncedHandleResizeShort();
+    },
+
+    __onChecked() {
+        if (this.__checkedNone) {
+            this.__setCheckedNone(false);
+        }
+
+        this.__updateDraggableForChecked();
+    },
+
+    __onCheckedNone() {
+        this.__setCheckedNone(true);
+    },
+
+    __setCheckedNone(state: boolean) {
+        this.__checkedNone = state;
+        this.collection.__allDraggable = state;
+        this.gridEventAggregator.trigger('set:draggable', state);
+        if (state) {
+            this.stopListening(this.collection, 'unchecked', this.__onUncheckedOne);
+        } else {
+            this.listenTo(this.collection, 'unchecked', this.__onUncheckedOne);
+        }
+    },
+
+    __onUncheckedOne(model: Backbone.Model) {
+        model.trigger('set:draggable', false);
+    },
+
+    __updateDraggableForChecked() {
+        const checked = this.collection.getCheckedModels();
+
+        const draggable = this.__areSequencial(checked);
+        
+        checked.forEach((model: Backbone.Model) => model.trigger('set:draggable', draggable));
+    },
+
+    __areSequencial(models: Array<Backbone.Model>) {
+        const gridIndexes = models.map(model => this.collection.indexOf(model));
+
+        return gridIndexes
+            .sort((a, b) => a - b)
+            .every((index, i) => {
+                if (i === 0) {
+                    return true;
+                }
+                const previousIndex = gridIndexes[i - 1];
+                return index - previousIndex === 1;
+            });
     }
 });

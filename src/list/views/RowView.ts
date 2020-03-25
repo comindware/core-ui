@@ -13,8 +13,7 @@ const config = {
 const defaultOptions = {
     levelMargin: 10,
     contextLevelMargin: 30,
-    subGroupMargin: 20,
-    draggable: false
+    subGroupMargin: 20
 };
 
 /**
@@ -49,10 +48,7 @@ export default Marionette.View.extend({
         'pointerdown @ui.collapsibleButton': '__toggleCollapse',
         'click @ui.collapsibleButton': (event: MouseEvent) => event.stopPropagation(),
         dragstart: '__handleDragStart',
-        dragend: '__handleDragEnd',
-        dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
-        dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu'
@@ -71,13 +67,15 @@ export default Marionette.View.extend({
         'toggle:collapse': 'updateCollapsed',
         checked: '__updateState',
         unchecked: '__updateState',
-        'checked:some': '__updateState'
+        'checked:some': '__updateState',
+        'set:draggable': '__setDraggable',
+        'dragleave': '__onModelDragLeave'
     },
 
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
-        this.listenTo(this.gridEventAggregator, 'set:draggable', this.__updateDraggable);
+        this.listenTo(this.gridEventAggregator, 'set:draggable', this.__setDraggable);
         this.collection = this.model.collection;
         this.cellConfigs = {};
         this.options.columns.forEach((column, index) => {
@@ -214,25 +212,18 @@ export default Marionette.View.extend({
         }
     },
 
-    __handleDragStart(event) {
-        this.collection.draggingModel = this.model;
-        event.originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
-    },
-
-    __handleDragEnd() {
-        this.__handleDragLeave();
-        delete this.collection.draggingModel;
-    },
-
-    __allowDrop() {
-        const draggingModel = this.collection.draggingModel;
-        if (!draggingModel) {
+    __isDropAllowed(): boolean {
+        const draggingModels = this.collection.draggingModels;
+        if (!draggingModels) {
             return false;
         }
-        if (this.collection.indexOf(this.model) + 1 === this.collection.indexOf(draggingModel) && this.model.level <= draggingModel.level) {
+        if (draggingModels.some(draggingModel => this.collection.indexOf(this.model) + 1 === this.collection.indexOf(draggingModel) && this.model.level <= draggingModel.level)) {
             return false;
         }
-        return !this.__findInParents(draggingModel, this.model);
+        if (draggingModels.some(draggingModel => this.__findInParents(draggingModel, this.model))) {
+            return false;
+        }
+        return true;
     },
 
     __findInParents(draggingModel, model): boolean {
@@ -245,31 +236,52 @@ export default Marionette.View.extend({
         return false;
     },
 
-    __handleDragOver(event: MouseEvent) {
-        // prevent default to allow drop
-        event.preventDefault();
+    __handleDragStart(event: { originalEvent: DragEvent }) {
+        const checkedModels = this.model.collection.getCheckedModels();
+
+        if (checkedModels.length) {
+            return;
+        }
+
+        this.model.collection.draggingModels = [this.model];
+
+        const originalEvent = event.originalEvent;
+        if (!originalEvent.dataTransfer) {
+            return;
+        }
+
+        originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
     },
 
-    __handleDragEnter(event: MouseEvent) {
-        if (this.__allowDrop()) {
+    __handleDragEnter(event: DragEvent) {
+        this.__setDragEnterModel(this.model);
+    },
+
+    __setDragEnterModel(model: Backbone.Model) {
+        const previousDragEnterModel = this.model.collection.dragoverModel;
+        if (previousDragEnterModel === model) {
+            return;
+        }
+        
+        previousDragEnterModel?.trigger('dragleave');
+        this.model.collection.dragoverModel = model;
+
+        if (this.__isDropAllowed()) {
             this.el.classList.add(classes.dragover);
         }
     },
 
-    __handleDragLeave(event: MouseEvent) {
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-        }
+    __onModelDragLeave() {
+        this.el.classList.remove(classes.dragover);
     },
 
-    __handleDrop(event: MouseEvent) {
+    __handleDrop(event: DragEvent) {
         event.preventDefault();
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-
-            this.gridEventAggregator.trigger('drag:drop', this.model.collection.draggingModel, this.model);
-            delete this.collection.draggingModel;
+        this.el.classList.remove(classes.dragover);
+        if (this.__isDropAllowed()) {
+            this.gridEventAggregator.trigger('drag:drop', this.model.collection.draggingModels, this.model);
         }
+        delete this.collection.draggingModels;
     },
 
     __handleContextMenu(event: MouseEvent) {
@@ -339,12 +351,17 @@ export default Marionette.View.extend({
     },
 
     __insertCellChechbox() {
+        if (typeof this.model.__draggable !== 'boolean') {
+            this.model.__draggable = this.model.collection.__allDraggable;
+        }
+        const isDraggable = this.options.draggable && this.model.__draggable;
+
         this.el.insertAdjacentHTML(
             'afterBegin',
             `
             <td class="${classes.checkboxCell} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}"
-             ${this.options.draggable ? 'draggable="true"' : ''}>
-        ${this.options.draggable ? draggableDots : ''}${
+             ${isDraggable ? 'draggable="true"' : ''}>
+        ${isDraggable ? draggableDots : ''}${
                 this.options.showRowIndex
                     ? `
 <span class="js-index cell__index">
@@ -362,16 +379,26 @@ export default Marionette.View.extend({
         );
     },
 
-    __updateDraggable(draggable: boolean): void {
+    __setDraggable(draggable: boolean): void {
+        if (!this.options.draggable) {
+            console.warn('Can not set draggable cause draggable options is false');
+            return;
+        }
+        this.model.__draggable = draggable;
+
         const checkboxCellEl = this.el.querySelector(`.${classes.checkboxCell}`);
         if (!checkboxCellEl) {
             return;
         }
         const hasDraggableAttribute = checkboxCellEl.hasAttribute('draggable');
-        if (draggable && !hasDraggableAttribute) {
+
+        const needSet = draggable && !hasDraggableAttribute;
+        const needRemove = !draggable && hasDraggableAttribute;
+
+        if (needSet) {
             checkboxCellEl.setAttribute('draggable', true);
             checkboxCellEl.insertAdjacentHTML('afterbegin', draggableDots);
-        } else if (hasDraggableAttribute) {
+        } else if (needRemove) {
             checkboxCellEl.removeAttribute('draggable');
             checkboxCellEl.removeChild(checkboxCellEl.firstElementChild);
         }
