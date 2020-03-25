@@ -195,10 +195,14 @@ export default class TreeDiffController {
             keys.forEach(key => {
                 const currentIndexColumn = currentState.indexOf(key);
                 const newIndexColumn = keys.indexOf(key);
-                if (currentState.includes(key) && keys.includes(key) && (currentIndexColumn !== newIndexColumn)) {
-                    const column = collection.get(key);
+                const column = collection.get(key);
+                if (column && (currentIndexColumn !== newIndexColumn)) {                   
                     collection.remove(column);
                     collection.add(column, { at: newIndexColumn });
+                } 
+                if (column) {
+                    const initWidth = initConfig.get(key).width;
+                    column.set('width', initWidth);                
                 }
             })
         }
