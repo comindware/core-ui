@@ -514,10 +514,12 @@ tr:hover .cell_selection {
     flex: auto;
 }
 
-tr.dragover td.grid-header-column,
-tr.dragover td.cell_selection-index,
-tr.dragover td {
+tr.dragover:not(.grid-header) td {
     border-bottom: 1px solid #ff0000;
+}
+
+tr.grid-header.dragover td {
+    box-shadow: inset 0 -1px #ff0000;
 }
 
 .dragover .cell *,

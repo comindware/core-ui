@@ -550,9 +550,7 @@ svg.svg-grid-icons {
 .cell_selection[draggable]:hover::before,
 .cell_selection-index[draggable]:hover::before {
     content: '⋮';
-
-    /* rem? */
-    font-size: 1.5em;
+    font-size: 1.5rem;
     position: absolute;
     top: 50%;
     left: 1px;
