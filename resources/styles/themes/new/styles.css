@@ -398,14 +398,18 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .task-links__i {
   margin-bottom: 10px;
 }
+
 .btn.field-documents__more {
   width: auto;
   text-align: center;
   background-color: var(--grey-200);
+  color: var(--black);
 }
+
 .btn.field-documents__more:hover {
   background-color: var(--grey-300);
 }
+
 .show-more-counter:not(:empty) {
   border-radius: 10px;
   background-color: var(--grey-400);
