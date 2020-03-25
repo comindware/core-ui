@@ -377,11 +377,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
     margin-right: 2em;
 }
 
-.cell .documents__text,
-.cell .field-documents__more {
-    display: none;
-}
-
 .cell .documents__drop-zone {
     height: auto;
     position: absolute;
@@ -429,16 +424,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .task-links__i {
     margin-bottom: 10px;
-}
-
-.btn.field-documents__more {
-    width: auto;
-    text-align: center;
-    background-color: var(--grey-200);
-}
-
-.btn.field-documents__more:hover {
-    background-color: var(--grey-300);
 }
 
 .show-more-counter:not(:empty) {
