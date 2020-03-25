@@ -106,8 +106,66 @@ export const booleanDropdown = {
     null: null
 };
 
+export const pageSize = {
+    10: '10',
+    25: '25',
+    50: '50',
+    100: '100',
+    500: '500',
+    1000000000: 'ALL'
+};
+
+export const enabledFilterEditor = model => {
+    const operator = model.get('operator');
+    return ![filterPredicates.set, filterPredicates.notSet].includes(operator);
+};
+
+export const pagingControlsTypes = {
+    firstPage: 'fp',
+    previousPage: 'pp',
+    twoPagesBefore: 'tpb',
+    currentPage: 'cp',
+    nextPage: 'np',
+    twoPagesNext: 'tpn',
+    lastPage: 'lp'
+};
+
+export const configurationConstants = {
+    VISIBLE_COLLECTION_RESERVE: 2,
+    VISIBLE_COLLECTION_RESERVE_HALF: 1,
+    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
+    HEIGHT_STOCK_TO_SCROLL: 1 //px, border-collapse property for table (grid-content-wrp) add this 1 px
+};
+
+export const classes = {
+    checked: 'editor_checked',
+    checked_some: 'editor_checked_some',
+    selected: 'selected',
+    dragover: 'dragover',
+    hover: 'hover',
+    hover__transition: 'hover__transition',
+    rowChecked: 'row-checked',
+    expanded: 'collapsible-btn_expanded',
+    collapsible: 'js-collapsible-button',
+    collapsibleIcon: 'js-tree-first-cell',
+    checkboxCell: 'js-cell_selection',
+    cellFocused: 'cell-focused',
+    cellEditable: 'cell_editable',
+    cellError: 'error',
+    cell: 'cell',
+    errorButton: 'js-error-button',
+    sortingUp: 'arrow-up',
+    sortingDown: 'arrow-down',
+    required: 'required',
+    error: 'error',
+    tableWidthAuto: 'grid-content-wrp_width-auto'
+};
+
 export default {
+    pageSize,
     contextTypes,
     columnTypes,
-    getDefaultActions
+    getDefaultActions,
+    classes,
+    configurationConstants
 };

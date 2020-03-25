@@ -83,6 +83,13 @@ export default Marionette.View.extend({
 
         _.bindAll(this, 'open', 'close', '__onBlur');
 
+        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.buttonView = this.button;
+        // dropdown bind on existing DOM element without rendering ButtonView, refactoring needed
+        if (this.options.element) {
+            this.button.el = this.options.element;
+            this.button.$el = Backbone.$(this.options.element);
+        }
         this.__observedEntities = [];
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
@@ -118,13 +125,12 @@ export default Marionette.View.extend({
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
-        this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
             this.triggerMethod(...args);
         });
-        const el = this.button.render().$el;
+        this.button.render();
+        const el = this.button.$el;
         this.$el.append(el);
 
         this.isShown = true;
@@ -300,7 +306,7 @@ export default Marionette.View.extend({
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !document.body.contains(this.el)) {
+        if (!this.isOpen || (!document.body.contains(this.el) && !document.body.contains(this.button.el))) {
             return;
         }
         this.trigger('before:close', this);

@@ -30,7 +30,7 @@ export default Marionette.View.extend({
             showSearch: false,
             openOnRender: editable,
             panelClass: 'simplified-panel_wrapper',
-            customTemplate: '<div class="user-edit-wrp" title="{{name}}"><div class="composite-user-abr__container">{{getAvatar}}</div></div>',
+            // customTemplate: '<div class="user-edit-wrp" title="{{name}}"><div class="composite-user-abr__container">{{getAvatar}}</div></div>',
             externalBlurHandler: this.__handleBlur.bind(this)
         });
         if (this.options.editorConfig.schema) {

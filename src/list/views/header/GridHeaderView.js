@@ -18,8 +18,8 @@ import InfoMessageView from './InfoMessageView';
 const classes = {
     expanded: 'collapsible-btn_expanded',
     dragover: 'dragover',
-    sortingUp: 'sort_up',
-    sortingDown: 'sort_down'
+    sortingUp: 'arrow-up',
+    sortingDown: 'arrow-down'
 };
 
 const GridHeaderView = Marionette.View.extend({
@@ -76,12 +76,11 @@ const GridHeaderView = Marionette.View.extend({
 
     onRender() {
         if (this.options.isTree) {
-            this.$el
-                .children()[0]
-                .insertAdjacentHTML(
-                    'afterbegin',
-                    `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>&nbsp;`
-                );
+            this.$el.children()[0].insertAdjacentHTML(
+                'afterbegin',
+                `<i class="js-tree-first-cell js-collapsible-button collapsible-btn ${classes.collapsible}
+                    fa fa-angle-down ${this.getOption('expandOnShow') ? classes.expanded : ''}"></i/`
+            );
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -308,7 +307,8 @@ const GridHeaderView = Marionette.View.extend({
         }
         if (column.sorting) {
             const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', `<span class="js-sorting ${sortingClass}"></span>`);
+            const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
         }
     }
 });

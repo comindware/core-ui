@@ -47,7 +47,6 @@ export default Marionette.View.extend({
             index = this.model.collection.indexOf(this.model) + 1;
         }
         return {
-            draggable: this.getOption('draggable'),
             index,
             showCheckbox: this.getOption('showCheckbox')
         };

@@ -116,7 +116,12 @@ rgba(5,117,189,.5) // user avatar btn
 .form-label__error-panel {
     min-width: 200px;
     max-width: 400px;
-    padding: 0 10px;
+    position: fixed;
+    font-size: 12px;
+    background: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    z-index: 600;
+    padding: 5px;
 }
 
 .form-label__error-item {

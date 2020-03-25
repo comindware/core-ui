@@ -53,8 +53,16 @@ export default FieldView.extend({
         this.editor?.__updateEmpty();
     },
 
+    focus() {
+        this.menuView.open();
+    },
+
+    blur() {
+        this.menuView.close();
+    },
+
     __showMenuView() {
-        const menuView = Core.dropdown.factory.createDropdown({
+        this.menuView = Core.dropdown.factory.createDropdown({
             buttonView: SimplifiedButtonView,
             panelView: SimplifiedPanelView,
             panelViewOptions: {
@@ -72,8 +80,8 @@ export default FieldView.extend({
             autoopen: true,
             minAvailableHeight: 220
         });
-        this.showChildView('editorRegion', menuView);
-        this.listenTo(menuView, 'panel:dropdown:close', () => menuView.close());
+        this.showChildView('editorRegion', this.menuView);
+        this.listenTo(this.menuView, 'panel:dropdown:close', () => this.menuView.close());
     },
 
     __createEditor(options, fieldId) {

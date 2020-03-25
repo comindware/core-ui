@@ -1,6 +1,8 @@
-//@flow
-import { keyCode, helpers } from 'utils';
+import { keyCode, helpers } from '../../utils';
+import { configurationConstants } from '../meta';
 import GlobalEventService from '../../services/GlobalEventService';
+import _ from 'underscore';
+import Backbone from 'backbone';
 
 /*
     Public interface:
@@ -12,12 +14,6 @@ import GlobalEventService from '../../services/GlobalEventService';
         collection change (via Backbone.Collection events)
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
-
-const config = {
-    VISIBLE_COLLECTION_RESERVE: 20,
-    VISIBLE_COLLECTION_RESERVE_HALF: 10,
-    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
-};
 
 const heightOptions = {
     AUTO: 'auto',
@@ -104,6 +100,10 @@ export default Marionette.CollectionView.extend({
             }
             return this.debouncedHandleResizeShort(true, model, collection, Object.assign({}, opt, { scroll: collection.scroll })); //magic from prod collection
         });
+
+        if (!this.__isChildHeightSpecified) {
+            this.listenTo(this.collection.parentCollection, 'add remove reset ', () => requestAnimationFrame(() => this.__specifyChildHeight()));
+        }
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
@@ -194,6 +194,39 @@ export default Marionette.CollectionView.extend({
             this._destroyEmptyView();
             this._addChild(child, index);
         }
+    },
+
+    onAddChild(view, child) {
+        this.__updateChildTop(child);
+    },
+
+    __updateChildTop(child) {
+        if (!child || !this.collection.length) {
+            return;
+        }
+        requestAnimationFrame(() => {
+            const childModel = child.model;
+            if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
+                if (this.getOption('showRowIndex')) {
+                    const index = childModel.collection.indexOf(childModel) + 1;
+                    if (index !== childModel.currentIndex) {
+                        childModel.trigger('update:model', index);
+                    }
+                }
+            }
+            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                child.insertFirstCellHtml();
+            }
+        });
+    },
+
+    _removeChildView(view) {
+        this.children._remove(view);
+        if (view.el.parentElement === this.el) {
+            view.el.remove();
+        }
+        // to execute destroy logic after relayout on scroll
+        setTimeout(() => Marionette.CollectionView.prototype._removeChildView.apply(this, arguments));
     },
 
     childView(child) {
@@ -417,7 +450,7 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        this.collection.updatePosition(Math.max(0, newPosition - config.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.collection.updatePosition(Math.max(0, newPosition - configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.__updateTop();
 
         this.state.position = newPosition;
@@ -493,33 +526,11 @@ export default Marionette.CollectionView.extend({
             return;
         }
 
-        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE));
+        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + configurationConstants.VISIBLE_COLLECTION_RESERVE));
         if (this.getOption('showRowIndex') && this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:index');
         }
         this.handleResize(shouldUpdateScroll, model, collection, options);
-    },
-
-    onAddChild(view, child) {
-        this.__updateChildTop(child);
-    },
-
-    __updateChildTop(child) {
-        if (!child || !this.collection.length) {
-            return;
-        }
-        requestAnimationFrame(() => {
-            const childModel = child.model;
-            if (this.getOption('showRowIndex')) {
-                const index = childModel.collection.indexOf(childModel) + 1;
-                if (index !== childModel.currentIndex) {
-                    childModel.trigger('update:model', index);
-                }
-            }
-            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
-                child.insertFirstCellHtml();
-            }
-        });
     },
 
     __toggleCollapseAll(collapsed) {

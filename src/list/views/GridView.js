@@ -10,7 +10,7 @@ import ListView from './CollectionView';
 import RowView from './RowView';
 import SelectionPanelView from './selections/SelectionPanelView';
 import SelectionCellView from './selections/SelectionCellView';
-import GridHeaderView from './header/GridHeaderView';
+import GridHeaderView from './header/GridHeaderView.js';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 import MobileService from '../../services/MobileService';
@@ -150,10 +150,12 @@ export default Marionette.View.extend({
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
-            this.listenTo(this.collection, 'select:some select:one', (collection, opts) => this.__onCursorMove(0, opts));
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
+            this.listenTo(this.collection, 'change', this.__validateModel);
         }
+        this.__debounceCheckBlur = _.debounce(this.__checkBlur, 300).bind(this);
+        this.listenTo(this.collection, 'select:some select:one', this.__onCollectionSelect);
 
         this.listView = new ListView({
             collection: this.collection,
@@ -547,67 +549,36 @@ export default Marionette.View.extend({
     },
 
     validate() {
-        let error;
+        const errors = [];
         if (this.required && this.collection.length === 0) {
-            error = {
+            errors.push({
                 type: 'required',
-                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID')
-            };
-        } else if (this.isEditable) {
-            const hasErrorInFields = this.options.columns.some(column => {
-                if (!column.editable || !column.validators) {
-                    return false;
-                }
-                const validators = [];
-                return column.validators.some(validator => {
-                    let result;
-                    if (typeof validator === 'function') {
-                        validators.push(validator);
-                    } else {
-                        const predefined = form.repository.validators[validator];
-                        if (typeof predefined === 'function') {
-                            validators.push(predefined());
-                        }
-                    }
-
-                    this.collection.forEach(model => {
-                        if (model._events['validate:force']) {
-                            const e = {};
-                            model.trigger('validate:force', e);
-                            if (e.validationResult) {
-                                result = e.validationResult;
-                            }
-                        } else if (!model.isValid()) {
-                            result = model.validationResult;
-                        } else {
-                            validators.some(v => {
-                                const filedError = v(model.get(column.key), model.attributes);
-                                if (filedError) {
-                                    result = model.validationResult = filedError;
-                                }
-                                return result;
-                            });
-                        }
-                    });
-                    return result;
-                });
+                message: Localizer.get('CORE.FORM.VALIDATION.REQUIREDGRID'),
+                severity: 'Error'
             });
-            if (hasErrorInFields) {
-                error = {
+        }
+        if (this.isEditable) {
+            let isErrorInCells = false;
+            this.collection.forEach(model => {
+                const modelHasErrors = this.__validateModel(model);
+                if (modelHasErrors) {
+                    isErrorInCells = true;
+                }
+            });
+            if (isErrorInCells) {
+                errors.push({
                     type: 'gridError',
                     message: Localizer.get('CORE.FORM.VALIDATION.GRIDERROR'),
                     severity: 'Error'
-                };
+                });
             }
         }
 
-        if (error) {
-            this.setError([error]);
-        } else {
-            this.clearError();
+        if (errors.length) {
+            this.setError(errors);
+            return errors;
         }
-
-        return error;
+        this.clearError();
     },
 
     setDraggable(draggable) {
@@ -615,6 +586,37 @@ export default Marionette.View.extend({
             this.selectionPanelChildOptions.draggable = draggable;
             this.selectionPanelView.render();
         }
+    },
+
+    __validateModel(model) {
+        let hasErrors = false;
+        delete model.validationError;
+        if (!model.isValid()) {
+            hasErrors = true;
+        }
+        this.options.columns.forEach(column => {
+            if (!column.editable || !column.validators) {
+                return;
+            }
+            column.validators.forEach(validatorOptions => {
+                const validator = form.repository.getValidator(validatorOptions);
+                const fieldError = validator(model.get(column.key), model.attributes);
+                if (fieldError) {
+                    fieldError;
+                    hasErrors = true;
+                    if (!model.validationError) {
+                        model.validationError = {};
+                    }
+                    if (!model.validationError[column.key]) {
+                        model.validationError[column.key] = [];
+                    }
+                    model.validationError[column.key].push(fieldError);
+                }
+            });
+        });
+        model.trigger('validated');
+
+        return hasErrors;
     },
 
     __handleDragLeave(event) {
@@ -772,5 +774,26 @@ export default Marionette.View.extend({
 
     __checkUiReady() {
         return this.isRendered() && !this.isDestroyed();
+    },
+
+    __onCollectionSelect(collection, options) {
+        this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        if (this.isEditable) {
+            this.__onCursorMove(0, options);
+        }
+    },
+
+    __checkBlur(target: Element) {
+        if (this.isDestroyed()) {
+            return;
+        }
+        const popupContainer = document.querySelector('.js-global-popup-stack');
+        const element = document.contains(target) ? target : document.activeElement;
+        const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element);
+        if (!isElementOutOfElementOrPopup) {
+            this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
+            this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        }
     }
 });

@@ -27,10 +27,27 @@
   border-color: var(--checkbox-border-color);
 }
 
+.checkbox i,
+.icon-true {
+    color: var(--checkbox-checked-color);
+    padding-left: 0;
+}
+
+.icon-false {
+    color: var(--red);
+    font-size: initial;
+}
+
+.icon-true, .icon-false {
+  padding-left: 3px;
+}
+
 .tr-search__input {
-  @apply --input-theme;
-  height: var(--input-height);
-  background-size: 14px;
+    @apply --input-theme;
+
+    height: var(--input-height);
+    background-size: 14px 14px;
+    text-overflow: ellipsis;
 }
 
 .checkbox,
@@ -147,11 +164,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
   fill: var(--error-color);
 }
 
-.grid-header-column .collapsible-btn {
-  background-image: var(--collapse-icon-header);
-  top: -1px;
-}
-
 /* Tabs */
 
 .layout__tab-layout_move-button {
@@ -266,11 +278,19 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .cell > .editor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0 20px 0 15px;
+    position: absolute;
+    height: 34px;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--grid-cell-padding);
+}
+
+.cell > .collapsible-btn + .editor {
+    display: inline-flex;
+    width: auto;
+    padding: 0;
+    position: static;
 }
 
 .cell > .context_select {
@@ -321,23 +341,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .cell .documents__wrapper {
-  padding: 0;
-  border: none;
-}
-
-.cell .js-tree-first-cell + .editor {
-  position: static;
-  display: inline-flex;
-}
-.cell .js-tree-first-cell + .editor,
-.cell .js-tree-first-cell + .editor.editor_bubble {
-  padding: 0;
-}
-.cell .dropdown {
-  width: 100%;
-}
-.cell > .editor.editor_bubble {
-  padding: 0 9px 0 15px;
+    padding: 0;
+    border: none;
 }
 
 .layout__popup-view-content>.layout__form-view {

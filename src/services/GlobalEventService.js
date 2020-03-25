@@ -8,6 +8,10 @@ const windowEventList = [
         capture: true
     },
     {
+        name: 'keydown',
+        capture: false
+    },
+    {
         name: 'mousedown',
         capture: true
     },
