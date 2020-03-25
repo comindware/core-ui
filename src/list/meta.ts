@@ -134,7 +134,7 @@ export const configurationConstants = {
     VISIBLE_COLLECTION_RESERVE: 2,
     VISIBLE_COLLECTION_RESERVE_HALF: 1,
     VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
-    HEIGHT_STOCK_TO_SCROLL: 1, //px, border-collapse property for table (grid-content-wrp) add this 1 px
+    HEIGHT_STOCK_TO_SCROLL: 1 //px, border-collapse property for table (grid-content-wrp) add this 1 px
 };
 
 export const classes = {
@@ -154,7 +154,6 @@ export const classes = {
     cellError: 'error',
     cell: 'cell',
     errorButton: 'js-error-button',
-    hiddenByTreeEditorClass: 'hidden-by-tree-editor',
     sortingUp: 'arrow-up',
     sortingDown: 'arrow-down',
     required: 'required',

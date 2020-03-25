@@ -71,34 +71,8 @@ class CellViewFactory implements ICellViewFactory {
 
         let values = Array.isArray(value) ? value : [value];
 
-        switch (column.dataType || column.type) {
-            case objectPropertyTypes.EXTENDED_STRING:
-                return this.__createContextString({ values, column, model });
-            case objectPropertyTypes.INSTANCE:
-                return this.__getReferenceCell({ values, column, model });
-            case objectPropertyTypes.ACCOUNT:
-                return this.__getUserCell({ values, column, model });
-            case objectPropertyTypes.ENUM:
-                values = value ? value.valueExplained : '';
-                return `<div class="${this.__getCellClass(column, model)}" title="${this.__getTitle({ values, column, model })}">${values}</div>`;
-            case objectPropertyTypes.INTEGER:
-            case objectPropertyTypes.DOUBLE:
-            case objectPropertyTypes.DECIMAL:
-                return this.__getNumberCell({ values, column, model });
-            case objectPropertyTypes.DURATION:
-                return this.__getDurationCell({ values, column, model });
-            case objectPropertyTypes.BOOLEAN:
-                return this.__getBooleanCell({ values, column, model });
-            case objectPropertyTypes.DATETIME:
-                return this.__getDateTimeCell({ values, column, model });
-            case objectPropertyTypes.DOCUMENT:
-                return this.__getDocumentCell({ values, column, model });
-            case 'Complex':
-                return this.__getComplexCell({ values, column, model });
-            case objectPropertyTypes.STRING:
-            default:
-                return this.__getStringCell({ values, column, model });
-        }
+        const type = column.dataType || column.type;
+        return this.__getCellByType({ values, column, model, type });
     }
 
     tryGetMultiValueCellPanel(column: Column, model: Backbone.Model, cellElement: Element): DropdownView | null {
@@ -112,16 +86,19 @@ class CellViewFactory implements ICellViewFactory {
         let formattedValues;
         switch (column.dataType || column.type) {
             case objectPropertyTypes.INSTANCE:
+            case 'Datalist':
                 template = compiledCompositeReferenceCell;
                 formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column }));
                 break;
             case objectPropertyTypes.ACCOUNT:
+            case 'MembersSplit':
                 template = compiledCompositeUserCell;
                 formattedValues = value.map(v => this.__getFormattedUserValue({ value: v, column }));
                 break;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
+            case 'Number':
                 template = compiledValueCell;
                 formattedValues = value.map(v => ({ value: this.__getFormattedNumberValue({ value: v, column }) }));
                 break;
@@ -163,6 +140,41 @@ class CellViewFactory implements ICellViewFactory {
             element: cellElement
         });
         return menu;
+    }
+
+    // TODO: string constants is editors
+    __getCellByType({ values, column, model, type }) {
+        switch (type) {
+            case objectPropertyTypes.EXTENDED_STRING:
+                return this.__createContextString({ values, column, model });
+            case objectPropertyTypes.INSTANCE:
+            case 'Datalist':
+                return this.__getReferenceCell({ values, column, model });
+            case objectPropertyTypes.ACCOUNT:
+            case 'MembersSplit':
+                return this.__getUserCell({ values, column, model });
+            case objectPropertyTypes.ENUM:
+                values = value ? value.valueExplained : '';
+                return `<div class="${this.__getCellClass(column, model)}" title="${this.__getTitle({ values, column, model })}">${values}</div>`;
+            case objectPropertyTypes.INTEGER:
+            case objectPropertyTypes.DOUBLE:
+            case objectPropertyTypes.DECIMAL:
+            case 'Number':
+                return this.__getNumberCell({ values, column, model });
+            case objectPropertyTypes.DURATION:
+                return this.__getDurationCell({ values, column, model });
+            case objectPropertyTypes.BOOLEAN:
+                return this.__getBooleanCell({ values, column, model });
+            case objectPropertyTypes.DATETIME:
+                return this.__getDateTimeCell({ values, column, model });
+            case objectPropertyTypes.DOCUMENT:
+                return this.__getDocumentCell({ values, column, model });
+            case 'Complex':
+                return this.__getComplexCell({ values, column, model });
+            case objectPropertyTypes.STRING:
+            default:
+                return this.__getStringCell({ values, column, model });
+        }
     }
 
     __getFormattedNumberValue({ value, column }: ValueFormatOption) {
@@ -244,12 +256,31 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedReferenceValue({ value, column }: ValueFormatOption) {
-        const result = {
-            text: value.name,
-            ...value
-        };
+        let result;
+        if (column.valueType === 'id') {
+            const item = column.collection?.find(m => m.id === value);
+            if (item) {
+                const data = item instanceof Backbone.Model ? item.toJSON() : item;
+                let text = data[column.displayAttribute] || data.text || data.name;
+                result = {
+                    id: value,
+                    text
+                };
+            } else {
+                result = {
+                    id: value,
+                    text: `#${value}`
+                };
+            }
+        } else {
+            result = {
+                text: value.name,
+                ...value
+            };
+        }
+
         if (!value.url && typeof column.createValueUrl === 'function') {
-            result.url = column.createValueUrl({ value, column });
+            result.url = column.createValueUrl({ value: result, column });
         }
 
         return result;
@@ -436,56 +467,55 @@ class CellViewFactory implements ICellViewFactory {
         let valueInnerHTML = '';
         let title = '';
         const value = values[0];
+        if (this.__isEmpty(value.value)) {
+            return this.__getTaggedCellHTML({ column, model, cellInnerHTML: valueInnerHTML, title });
+        }
         const valueTypeHTML = getComplexValueTypesLocalization(value.type);
-        if (value.value === null || value.value === undefined) {
-            valueInnerHTML = '';
-        } else {
-            switch (value.type) {
-                case complexValueTypes.value:
-                    valueHTMLResult = this.__getHTMLbyValueEditor({ value: value.value, column, model });
-                    title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
-                    break;
-                case complexValueTypes.context: {
-                    if (!value.value || value.value === 'False' || !column.context || !column.recordTypeId) {
-                        valueInnerHTML = '';
-                    } else if (typeof value.value === 'string') {
-                        valueInnerHTML = value.value;
-                    } else {
-                        let instanceTypeId = column.recordTypeId;
-                        valueInnerHTML = '';
+        switch (value.type) {
+            case complexValueTypes.value:
+                valueHTMLResult = this.__getHTMLbyValueEditor({ value: value.value, column, model });
+                title = valueHTMLResult.title;
+                valueInnerHTML = valueHTMLResult.cellInnerHTML;
+                break;
+            case complexValueTypes.context: {
+                if (!value.value || value.value === 'False' || !column.context || !column.recordTypeId) {
+                    valueInnerHTML = '';
+                } else if (typeof value.value === 'string') {
+                    valueInnerHTML = value.value;
+                } else {
+                    let instanceTypeId = column.recordTypeId;
+                    valueInnerHTML = '';
 
-                        value.value.forEach((item: string, index: number) => {
-                            const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                    value.value.forEach((item: string, index: number) => {
+                        const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
 
-                            if (searchItem) {
-                                valueInnerHTML += index ? ` - ${searchItem.name}` : searchItem.name;
-                                instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
-                            }
-                        });
-                    }
-                    title = valueInnerHTML;
-                    break;
-                }
-                case complexValueTypes.expression:
-                case complexValueTypes.script:
-                    if (value.value) {
-                        if (column.getReadonly?.(model)) {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
-                        } else {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
+                        if (searchItem) {
+                            valueInnerHTML += index ? ` - ${searchItem.name}` : searchItem.name;
+                            instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
                         }
-                    } else {
-                        valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
-                    }
-                    title = value.value;
-                    break;
-                case complexValueTypes.template:
-                    title = valueInnerHTML = value.value.name;
-                    break;
-                default:
-                    break;
+                    });
+                }
+                title = valueInnerHTML;
+                break;
             }
+            case complexValueTypes.expression:
+            case complexValueTypes.script:
+                if (value.value) {
+                    if (column.getReadonly?.(model)) {
+                        valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
+                    } else {
+                        valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
+                    }
+                } else {
+                    valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
+                }
+                title = value.value;
+                break;
+            case complexValueTypes.template:
+                title = valueInnerHTML = value.value.name;
+                break;
+            default:
+                break;
         }
         const cellInnerHTML = `${valueTypeHTML}: ${valueInnerHTML}`;
         const cellTitle = `${valueTypeHTML}: ${title}`;

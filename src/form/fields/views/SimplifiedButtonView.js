@@ -62,13 +62,7 @@ export default Marionette.View.extend({
             case 'Datalist': {
                 return Array.isArray(values)
                     ? _.compact(values).map(v => ({
-                          value: `
-                            <div class="user-edit-wrp">
-                                <div class="composite-user-abr__container">
-                                ${UserService.getAvatar(v)}
-                                </div>
-                                ${v.name}
-                            </div>`
+                          value: v.name
                       }))
                     : [{ value: values?.name }];
             }

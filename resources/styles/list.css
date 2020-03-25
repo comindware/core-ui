@@ -542,22 +542,6 @@
     margin-bottom: 0;
 }
 
-.cell__dots{
-    visibility: hidden;
-    z-index: 1;
-    cursor: move;
-    height: 35px;
-}
-
-.cell_selection:hover .cell__dots,
-.cell_selection-index:hover .cell__dots{
-    visibility: visible;
-}
-
-.cell__dots svg{
-    fill: #c9caca;
-}
-
 .cell__index {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -602,9 +586,6 @@
 }
 .compact.grid-container .btn.btn-icon .fa{
     vertical-align: top;
-}
-.compact.grid-container  .cell__dots svg {
-    transform: scale(.7) translate(-8px, -5px);
 }
 
 .compact.grid-container .sort_down,
@@ -727,8 +708,8 @@
 }
 
 .composite-user-abr__avatar {
-    width: 27px;
-    height: 27px;
+    flex-basis: 27px;
+    line-height: 27px;
 }
 
 .grid_composite-cell .dropdown__button {

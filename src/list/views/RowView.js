@@ -110,9 +110,6 @@ export default Marionette.View.extend({
         if (model.highlighted) {
             this.__handleHighlight(model.highlightedFragment);
         }
-        if (this.model.checked !== undefined) {
-            this.__updateState();
-        }
         if (this.getOption('isTree')) {
             this.insertFirstCellHtml();
         }
@@ -139,18 +136,6 @@ export default Marionette.View.extend({
         }
     },
 
-    __setCustomClassToColumn(column: Column) {
-        if (column.isHidden) {
-            if (!column.customClass) {
-                column.customClass = classes.hiddenByTreeEditorClass;
-            } else if (!column.customClass.match(new RegExp(classes.hiddenByTreeEditorClass))) {
-                column.customClass += ` ${classes.hiddenByTreeEditorClass}`;
-            }
-        } else if (column.customClass) {
-            column.customClass = column.customClass.replace(new RegExp(classes.hiddenByTreeEditorClass), '');
-        }
-    },
-
     _renderTemplate() {
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.initializeTransliteration({
@@ -168,7 +153,6 @@ export default Marionette.View.extend({
 
         const customCells: Array<{ index: number, CellView: Marionette.View<Backbone.Model> }> = [];
         this.options.columns.forEach((column: Column, index: number) => {
-            this.__setCustomClassToColumn(column);
             if (column.cellView) {
                 customCells.push({ index, CellView: column.cellView });
             } else {
@@ -387,12 +371,12 @@ export default Marionette.View.extend({
     },
 
     __removeCheckedClass() {
-        this.el.classList.remove(classes.cherowCheckedcked);
+        this.el.classList.remove(classes.rowChecked);
     },
 
     __showDropDown(index: number) {
         const column = this.options.columns[index];
-        this.lastShowDropodwnIndex = this.multiValuePopout = CellViewFactory.tryGetMultiValueCellPanel(column, this.model, this.__getCellByColumnIndex(index));
+        this.multiValuePopout = CellViewFactory.tryGetMultiValueCellPanel(column, this.model, this.__getCellByColumnIndex(index));
         if (this.multiValuePopout) {
             this.multiValuePopout.open();
             this.multiValuePopout.on('close', () => delete this.multiValueShownIndex);

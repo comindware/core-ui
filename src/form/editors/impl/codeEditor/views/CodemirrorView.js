@@ -264,6 +264,7 @@ export default Marionette.View.extend({
             immimmediateClosing: true,
             useWrapper: false
         });
+        this.ui.editor.css('height', '100%');
         this.codemirror.refresh();
         this.codemirror.focus();
     },
@@ -272,6 +273,7 @@ export default Marionette.View.extend({
         this.trigger('minimize', this);
         WindowService.closeElPopup(this.popupId, true);
         this.el.classList.remove(classes.maximized);
+        this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();
         this.__change();
     },

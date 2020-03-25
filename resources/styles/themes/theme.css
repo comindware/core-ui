@@ -335,6 +335,7 @@ svg.svg-grid-icons {
   width: auto;
   flex-direction: row;
   flex: auto;
+  height: 100%;
 }
 
 .cell .layout__vertical-layout > div,
@@ -499,16 +500,6 @@ svg.svg-grid-icons {
         position: relative;
         background-clip: padding-box;
     }
-}
-
-.cell__dots{
-  left: -6px;
-  width: 2px;
-  position: relative;
-}
-
-.cell__dots svg{
-  fill: var(--grid-dots-color);
 }
 
 .cell-focused {

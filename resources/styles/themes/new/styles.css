@@ -30,11 +30,16 @@
 .checkbox i,
 .icon-true {
     color: var(--checkbox-checked-color);
+    padding-left: 0;
 }
 
 .icon-false {
     color: var(--red);
-    font-size: 1.2em;
+    font-size: initial;
+}
+
+.icon-true, .icon-false {
+  padding-left: 3px;
 }
 
 .tr-search__input {
