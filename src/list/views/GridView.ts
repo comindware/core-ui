@@ -142,6 +142,7 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'select:some select:one', this.__onCollectionSelect);
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
+            this.listenTo(this.collection, 'change', this.__validateModel);
         }
 
         this.__initializeToolbar();
@@ -571,31 +572,10 @@ export default Marionette.View.extend({
         if (this.isEditable) {
             let isErrorInCells = false;
             this.collection.forEach(model => {
-                delete model.validationError;
-                if (!model.isValid()) {
+                const modelHasErrors = this.__validateModel(model);
+                if (modelHasErrors) {
                     isErrorInCells = true;
                 }
-                this.options.columns.forEach((column: Column) => {
-                    if (!column.editable || !column.validators) {
-                        return;
-                    }
-                    column.validators.forEach(validatorOptions => {
-                        const validator = form.repository.getValidator(validatorOptions);
-                        const fieldError = validator(model.get(column.key), model.attributes);
-                        if (fieldError) {
-                            fieldError;
-                            isErrorInCells = true;
-                            if (!model.validationError) {
-                                model.validationError = {};
-                            }
-                            if (!model.validationError[column.key]) {
-                                model.validationError[column.key] = [];
-                            }
-                            model.validationError[column.key].push(fieldError);
-                        }
-                    });
-                });
-                model.trigger('validated');
             });
             if (isErrorInCells) {
                 errors.push({
@@ -616,6 +596,37 @@ export default Marionette.View.extend({
     setDraggable(draggable: boolean): void {
         this.childViewOptions.draggable = draggable;
         this.trigger('set:draggable', draggable);
+    },
+
+    __validateModel(model) {
+        let hasErrors = false;
+        delete model.validationError;
+        if (!model.isValid()) {
+            hasErrors = true;
+        }
+        this.options.columns.forEach(column => {
+            if (!column.editable || !column.validators) {
+                return;
+            }
+            column.validators.forEach(validatorOptions => {
+                const validator = form.repository.getValidator(validatorOptions);
+                const fieldError = validator(model.get(column.key), model.attributes);
+                if (fieldError) {
+                    fieldError;
+                    hasErrors = true;
+                    if (!model.validationError) {
+                        model.validationError = {};
+                    }
+                    if (!model.validationError[column.key]) {
+                        model.validationError[column.key] = [];
+                    }
+                    model.validationError[column.key].push(fieldError);
+                }
+            });
+        });
+        model.trigger('validated');
+
+        return hasErrors;
     },
 
     replaceColumns(newColumns = []) {
