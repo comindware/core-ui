@@ -9,10 +9,6 @@ import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
-import { cmpPos } from 'codemirror';
-import Backbone from 'backbone';
-import Marionette from 'backbone.marionette';
-import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
 import { helpers } from 'utils';
 
@@ -24,7 +20,7 @@ const compiledValueCell = Handlebars.compile('{{value}}');
 
 const getWrappedTemplate = (template: string) => `<div class="composite-cell__wrp">
         ${template}
-        <span class="composite-cell__count">+{{count}}</div>
+        <span class="composite-cell__count">+{{count}}</span>
     </div>`;
 
 const compiledWrappedCompositeDocumentCell = Handlebars.compile(getWrappedTemplate(compositeDocumentCell));
@@ -150,7 +146,7 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.STRING:
             default:
                 template = compiledStringValueCell;
-                formattedValues = value.map(v => ({ value }));
+                formattedValues = value.map(v => ({ value: v }));
                 break;
         }
         const panelViewOptions = {
