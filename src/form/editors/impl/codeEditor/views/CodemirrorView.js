@@ -451,7 +451,8 @@ export default Marionette.View.extend({
 
     __onChange(options = {}) {
         const { change } = options;
-        if (this.isExternalChange && change.origin === constants.originChange.inputPlus) {
+        const hasNotOrigin = !change.origin;
+        if (this.isExternalChange && (change?.origin === constants.originChange.inputPlus || hasNotOrigin)) {
             this.isExternalChange = false;
             return;
         }
