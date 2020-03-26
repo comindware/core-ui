@@ -112,6 +112,7 @@ export default Marionette.View.extend({
                 _.defaultsPure(
                     {
                         columns: this.options.columns,
+                        columnsCollection: this.columnsCollection,
                         gridEventAggregator: this,
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
@@ -961,12 +962,6 @@ export default Marionette.View.extend({
                 newIndex: columnsCollection.indexOf(model)
             };
             this.__moveColumn(configDiff);
-        });
-        this.listenTo(columnsCollection, 'change:width', (model: GraphModel) => {
-            const newColumnWidth = model.get('width');
-            const index = columnsCollection.indexOf(model);
-            this.headerView.__updateColumnAndNeighbourWidths(columnsCollection.at(index));
-            this.headerView.__setColumnWidth(index, newColumnWidth);
         });
         this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
         this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
