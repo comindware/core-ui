@@ -370,8 +370,8 @@ module.exports.apply = {
         color: 'black'
     },
     'toolbar-btn-low-hover-theme': {
-        'background-color': '#e1e1e1',
-        'border-color': '#e1e1e1',
+        'background-color': '#c1c1c1',
+        'border-color': '#c1c1c1',
         color: 'black'
     },
     'toolbar-btn-low-active-theme': {
