@@ -83,6 +83,10 @@
   top: 50%;
 }
 
+.tr-search__clear .icon-remove {
+  vertical-align: inherit;
+}
+
 .textarea:hover {
   border-color: var(--input-hover-color);
 }

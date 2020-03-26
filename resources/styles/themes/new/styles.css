@@ -50,6 +50,10 @@
   top: 18px;
 }
 
+.tr-search__clear .icon-remove {
+    vertical-align: middle;
+}
+
 .checkbox,
 .radiobutton {
   background: var(--light-gradient);
