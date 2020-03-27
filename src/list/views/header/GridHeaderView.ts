@@ -5,6 +5,7 @@ import InfoMessageView from './InfoMessageView';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
 import { classes } from '../../meta';
+import { GraphModel } from '../../../components/treeEditor/types';
 
 /**
  * @name GridHeaderView
@@ -30,7 +31,7 @@ const GridHeaderView = Marionette.View.extend({
         if (!options.gridEventAggregator) {
             throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
         }
-
+        const columnsCollection = options.columnsCollection;
         this.gridEventAggregator = options.gridEventAggregator;
         this.collection = options.gridEventAggregator.collection;
 
@@ -39,6 +40,10 @@ const GridHeaderView = Marionette.View.extend({
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
+        this.listenTo(columnsCollection, 'change:width', (model: GraphModel, newColumnWidth: any) => {
+            const index = columnsCollection.indexOf(model);
+            this.__setColumnWidth(index, newColumnWidth);
+        });
         if (options.showRowIndex) {
             this.listenTo(this.collection, 'reset update', this.__updateIndexCellWidth);
         }
@@ -257,7 +262,7 @@ const GridHeaderView = Marionette.View.extend({
         const currentWidth = this.options.columns[index].width;
         const newColumnWidthPX = `${newColumnWidth}px`;
 
-        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidthPX === currentWidth) {
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidth === currentWidth) {
             return;
         }
 

@@ -164,7 +164,7 @@ export default class TreeDiffController {
                 const pick = {
                     index: model.collection?.indexOf(model),
                     isHidden: false,
-                    width: model.get('width') || 0
+                    width: model.get('width')
                 };
                 Object.defineProperty(model, 'initialConfig' , {
                     writable: false,
@@ -193,13 +193,18 @@ export default class TreeDiffController {
         if (collection) {
             const currentState = collection.initialConfig;
             keys.forEach(key => {
+                const column = collection.get(key);
                 const currentIndexColumn = currentState.indexOf(key);
                 const newIndexColumn = keys.indexOf(key);
-                if (currentState.includes(key) && keys.includes(key) && (currentIndexColumn !== newIndexColumn)) {
-                    const column = collection.get(key);
+                if (!column) {
+                    return
+                }
+                if (currentIndexColumn !== newIndexColumn) {                   
                     collection.remove(column);
                     collection.add(column, { at: newIndexColumn });
-                }
+                } 
+                const initWidth = initConfig.get(key).width;
+                column.set('width', initWidth); 
             })
         }
     }
