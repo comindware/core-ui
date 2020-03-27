@@ -121,6 +121,7 @@ export default Marionette.View.extend({
                 _.defaultsPure(
                     {
                         columns: this.options.columns,
+                        columnsCollection: this.columnsCollection,
                         gridEventAggregator: this,
                         checkBoxPadding: options.checkBoxPadding || 0,
                         uniqueId: this.uniqueId,
