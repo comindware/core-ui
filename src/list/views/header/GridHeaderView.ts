@@ -4,6 +4,7 @@ import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
+import Backbone from 'backbone';
 import { classes } from '../../meta';
 import { GraphModel } from '../../../components/treeEditor/types';
 
@@ -19,9 +20,9 @@ import { GraphModel } from '../../../components/treeEditor/types';
  * @param {Object} options.gridEventAggregator ?
  * */
 
- // for manual selectionCellWidth calculating
- const baseSelectionCellWidth = 34;
- const oneSymbolWidth = 8;
+// for manual selectionCellWidth calculating
+const baseSelectionCellWidth = 34;
+const oneSymbolWidth = 8;
 
 const GridHeaderView = Marionette.View.extend({
     initialize(options) {
@@ -44,6 +45,9 @@ const GridHeaderView = Marionette.View.extend({
             const index = columnsCollection.indexOf(model);
             this.__setColumnWidth(index, newColumnWidth);
         });
+
+        this.__modelForDrag = new Backbone.Model();
+        this.listenTo(this.__modelForDrag, 'dragleave', this.__onModelDragLeave);
     },
 
     template: Handlebars.compile(template),
@@ -65,7 +69,6 @@ const GridHeaderView = Marionette.View.extend({
         'pointerdown .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
-        dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseenter .grid-header-column': '__handleColumnSelect',
         'click .grid-header-column-title': '__handleColumnSort',
@@ -299,36 +302,43 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragOver(event: MouseEvent) {
-        if (!this.collection.draggingModel) {
-            return;
-        }
         // prevent default to allow drop
         event.preventDefault();
     },
 
-    __handleDragEnter(event: MouseEvent) {
-        if (this.__allowDrop()) {
+    __handleDragEnter(event: DragEvent) {
+        this.__setDragEnterModel(this.__modelForDrag);
+    },
+
+    __setDragEnterModel(model: Backbone.Model) {
+        const previousDragEnterModel = this.collection.dragoverModel;
+        if (previousDragEnterModel === model) {
+            return;
+        }
+        
+        previousDragEnterModel?.trigger('dragleave');
+        this.collection.dragoverModel = model;
+
+        if (this.__isDropAllowed()) {
             this.el.classList.add(classes.dragover);
         }
     },
 
-    __handleDragLeave(event: MouseEvent) {
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-        }
-    },
-
-    __handleDrop(event: MouseEvent) {
+    __handleDrop(event: DragEvent) {
         event.preventDefault();
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-            this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModel);
-            delete this.collection.draggingModel;
+        this.el.classList.remove(classes.dragover);
+        if (this.__isDropAllowed()) {
+            this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModels, this.model);
         }
+        delete this.collection.draggingModels;
     },
 
-    __allowDrop() {
-        if (!this.collection.draggingModel || this.collection.indexOf(this.collection.draggingModel) < 0) {
+    __onModelDragLeave() {
+        this.el.classList.remove(classes.dragover);
+    },
+
+    __isDropAllowed() {
+        if (!this.collection.draggingModels || this.collection.draggingModels.some(draddingModel => this.collection.indexOf(draddingModel) < 1)) {
             return false;
         }
         return true;
