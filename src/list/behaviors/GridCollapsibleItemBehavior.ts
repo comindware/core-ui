@@ -60,11 +60,12 @@ export default function() {
             }
 
             this.checked = true;
-            this.trigger('checked', this);
 
             if (this.collection) {
                 this.collection.check(this);
             }
+
+            this.trigger('checked', this);
         },
 
         uncheck() {
@@ -73,11 +74,12 @@ export default function() {
             }
 
             this.checked = false;
-            this.trigger('unchecked', this);
 
             if (this.collection) {
                 this.collection.uncheck(this);
             }
+
+            this.trigger('unchecked', this);
         },
 
         checkSome() {

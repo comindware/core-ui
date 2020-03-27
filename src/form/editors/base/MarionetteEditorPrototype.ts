@@ -519,7 +519,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     const validator = getValidator(validatorOptions);
                     const error = validator.call(this, value, formValues);
                     if (error) {
-                        errors.push(error)
+                        errors.push(error);
                     }
                 });
             }

@@ -49,6 +49,7 @@ const defaultOptions = options => ({
         text: () => (options.columns?.length ? Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY') : Localizer.get('CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN')),
         colspan: options.columns ? options.columns.length + !!options.showCheckbox : 0
     },
+    draggable: false,
     isSliding: true,
     showHeader: true,
     handleSearch: true,
@@ -436,7 +437,8 @@ export default Marionette.View.extend({
             maxRows: this.options.maxRows,
             height: this.options.height,
             isTree: this.options.isTree,
-            isEditable: this.isEditable,            
+            isEditable: this.isEditable,
+            draggable: this.options.draggable,
             showCheckbox: this.options.showCheckbox,
             showRowIndex,
             parentEl: this.ui.tableTopMostWrapper[0],
@@ -628,16 +630,13 @@ export default Marionette.View.extend({
         this.listView.render();
     },
 
-    __handleDragLeave(event) {
-        const element = document.elementFromPoint(event.pageX, event.pageY);
-        if (!this.el.contains(element)) {
-            if (this.collection.dragoverModel) {
-                this.collection.dragoverModel.trigger('dragleave');
-            } else {
-                this.collection.trigger('dragleave:head');
-            }
-            this.collection.dragoverModel = null;
+    __handleDragLeave(event: { originalEvent: DragEvent }) {
+        const dragToElement = event.originalEvent.relatedTarget;
+
+        if (this.el.contains(dragToElement) || !document.body.contains(dragToElement)) {
+            return;
         }
+        this.collection.dragoverModel?.trigger('dragleave');
     },
 
     // __setCheckBoxColummWidth() {
