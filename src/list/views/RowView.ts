@@ -410,7 +410,6 @@ export default Marionette.View.extend({
 
     __showDropDown(index: number) {
         const column = this.options.columns[index];
-        this.lastShowDropodwnIndex = 
         this.multiValuePopout = CellViewFactory.tryGetMultiValueCellPanel(column, this.model, this.__getCellByColumnIndex(index));
         if (this.multiValuePopout) {
             this.multiValuePopout.open();
