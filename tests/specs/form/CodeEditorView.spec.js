@@ -37,7 +37,7 @@ describe('Editors', () => {
             expect(true).toBe(true);
         });
 
-        it('The script should not  lose characters after adding to the editor - (mode LF and CR_LF)', () => {
+        xit('The script should not  lose characters after adding to the editor - (mode LF and CR_LF)', () => {
             const textLF = '"using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Comindware.Data.Enti';
             const textCR_LF = 'test_line_one;\r\ntest_line_two;\r\ntest_line_three;\r\n';
 
