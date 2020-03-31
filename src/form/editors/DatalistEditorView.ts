@@ -329,9 +329,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
         this.listenTo(btn, 'click', (e: MouseEvent) => {
-            if (e.target.tagName === 'A') {
-                e.preventDefault();
+            if (e.target?.tagName === 'A') {
                 e.stopPropagation();
+                return;
             }
 
             this.__onButtonClick();
