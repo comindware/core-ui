@@ -1083,6 +1083,7 @@ body.non-selectable {
     height: 100%;
     min-width: 200px;
     min-height: 200px;
+    display: flex;
 }
 
 .split-panel_container .content-view {
