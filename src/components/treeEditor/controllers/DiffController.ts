@@ -112,7 +112,11 @@ export default class TreeDiffController {
 
     __passConfigDiff(configDiff: ConfigDiff) {
         if (configDiff.initialConfig) {
-            configDiff.initialConfig.forEach((value, key) => this.configDiff.set(key, configDiff.get(key) || value));
+            configDiff.initialConfig.forEach((value, key) => {
+                if (configDiff.has(key)) {
+                    this.configDiff.set(key, configDiff.get(key));
+                }
+            });
         } else {
             configDiff.forEach((value, key) => this.configDiff.set(key, value));
         }
@@ -204,7 +208,7 @@ export default class TreeDiffController {
                     collection.add(column, { at: newIndexColumn });
                 } 
                 const initWidth = initConfig.get(key).width;
-                column.set('width', initWidth);                
+                column.trigger('change:width', column, initWidth);                
             })
         }
     }

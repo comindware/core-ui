@@ -234,7 +234,8 @@ const GridHeaderView = Marionette.View.extend({
 
         if (delta !== 0) {
             const index = ctx.draggedColumn.index;
-            this.__setColumnWidth(index, this.dragContext.draggedColumn.initialWidth + delta);
+            const width = this.dragContext.draggedColumn.initialWidth + delta;
+            this.__setColumnWidth(index, width);
         }
 
         return false;
@@ -269,7 +270,6 @@ const GridHeaderView = Marionette.View.extend({
         this.el.children[index + this.columnIndexOffset].style.minWidth = newColumnWidthPX;
         this.el.children[index + this.columnIndexOffset].style.width = newColumnWidthPX;
         this.options.columns[index].width = newColumnWidth;
-
         //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
         // this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
