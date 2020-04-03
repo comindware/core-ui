@@ -30,6 +30,9 @@ export default Backbone.AssociatedModel.extend({
     },
 
     __selectDefaultModel(itemsCollection) {
+        if (this.get('iconClass')) {
+            return;
+        }
         let firstNotHeadlineModel = null;
 
         firstNotHeadlineModel = itemsCollection.find(model => model.get('type') !== meta.toolbarItemType.HEADLINE && model.get('default'));
