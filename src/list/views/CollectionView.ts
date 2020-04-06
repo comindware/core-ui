@@ -607,7 +607,7 @@ export default Marionette.PartialCollectionView.extend({
         const checked = this.collection.getCheckedModels();
 
         const draggable = this.__areSequencial(checked);
-        
+
         checked.forEach((model: Backbone.Model) => model.trigger('set:draggable', draggable));
     },
 

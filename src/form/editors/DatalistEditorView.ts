@@ -351,7 +351,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __bindEditorsState() {
-        this.listenTo(this.boundEditor, 'set:loading', this.setLoading);
+        this.listenTo(this.boundEditor, 'set:loading', this.setLoading.bind(this));
         this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue(), { triggerChange: true }));
         this.listenTo(this, 'change', () => this.boundEditor.setValue(this.getValue()));
     },
@@ -486,8 +486,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return estimatedObjects;
     },
 
-    __convertToObject(value) {
-        this.__adjustValue(value);
+    __convertToObject(value): Object {
+        return this.__adjustValue(value);
     },
 
     setPermissions(enabled: boolean, readonly: boolean) {
@@ -713,7 +713,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView.close();
     },
 
-    __adjustValue(value: any, isLoadIfNeeded = false) {
+    __adjustValue(value: any, isLoadIfNeeded = false): Object | Array<Object> | null {
         if (this.isEmptyValue(value)) {
             return this.options.maxQuantitySelected === 1 ? null : [];
         }
@@ -721,7 +721,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return result;
     },
 
-    __adjustValueForIdMode(value, isLoadIfNeeded) {
+    __adjustValueForIdMode(value: any, isLoadIfNeeded: boolean): Object {
         if (this.options.fetchFiltered && isLoadIfNeeded && !this.isLastFetchSuccess && this.options.collection.length === 0) {
             this.listenToOnce(this, 'view:ready', () => {
                 this.setValue(value, { isLoadIfNeeded: false });
@@ -731,22 +731,23 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         return this.__adjustValueFromLoaded(value);
     },
 
-    __adjustValueFromLoaded(value) {
+    __adjustValueFromLoaded(value: any): Object {
         if (Array.isArray(value)) {
             return value.map(v => this.__getValueFromCollection(v));
         }
         return this.__getValueFromCollection(value);
     },
 
-    __getValueFromCollection(primitive) {
+    __getValueFromCollection(primitive: any): Object {
         // not use get, because 1. get(null) => undefined; 2. this.options.collection may be array or collection.
+        let array = this.options.collection;
+
+        if (array instanceof Backbone.Collection) {
+            array = array.toJSON();
+        }
         return (
-            this.options.collection.find(
-                model =>
-                    (model instanceof Backbone.Model
-                        ? model.get(this.options.idProperty)
-                        : // eslint-disable-next-line eqeqeq
-                        model[this.options.idProperty]) == primitive
+            array.find(
+                (object: { [key: string]: any }) => object[this.options.idProperty] == primitive // eslint-disable-line eqeqeq
             ) || this.__tryToCreateAdjustedValue(primitive)
         );
     },
@@ -874,7 +875,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonBlur(view: Marionette.View<any>, event: FocusEvent) {
-        if (this.dropdownView.panelView?.el.contains(event.relatedTarget)) {
+        const relatedTarget = event.relatedTarget;
+        if (this.dropdownView.panelView?.el.contains(relatedTarget) || this.dropdownView.el.contains(relatedTarget)) {
             // button will be focus after timeout
             return;
         }

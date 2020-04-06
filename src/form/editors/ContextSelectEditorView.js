@@ -15,7 +15,6 @@ const defaultOptions = () => ({
     propertyTypes: undefined,
     usePropertyTypes: true,
     allowBlank: false,
-    instanceRecordTypeId: undefined,
     isInstanceExpandable: true,
     instanceTypeProperties: [objectPropertyTypes.INSTANCE],
     instanceValueProperty: 'instanceTypeId'
@@ -37,7 +36,6 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
             instanceTypeId: this.recordTypeId,
             propertyTypes: this.options.propertyTypes,
             usePropertyTypes: this.options.usePropertyTypes,
-            instanceRecordTypeId: this.options.instanceRecordTypeId,
             allowBlank: this.options.allowBlank
         });
 
