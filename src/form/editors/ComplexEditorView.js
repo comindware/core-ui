@@ -207,6 +207,13 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         }
     },
 
+    isEmptyValue() {
+        const value = this.value?.value;
+        const isFilled = Array.isArray(value) ? value.length : value;
+
+        return !isFilled;
+    },
+
     __showTypeEditor() {
         if (!this.valueTypeCollection.get(this.value.type)) {
             console.warn(`Unexpected value.type "${this.value.type}"`);
