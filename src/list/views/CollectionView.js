@@ -207,26 +207,15 @@ export default Marionette.CollectionView.extend({
         requestAnimationFrame(() => {
             const childModel = child.model;
             if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
-                if (this.getOption('showRowIndex')) {
-                    const index = childModel.collection.indexOf(childModel) + 1;
-                    if (index !== childModel.currentIndex) {
-                        childModel.trigger('update:model', index);
-                    }
+                const index = childModel.collection.indexOf(childModel) + 1;
+                if (index !== childModel.currentIndex) {
+                    childModel.trigger('update:model', index);
                 }
             }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
                 child.insertFirstCellHtml();
             }
         });
-    },
-
-    _removeChildView(view) {
-        this.children._remove(view);
-        if (view.el.parentElement === this.el) {
-            view.el.remove();
-        }
-        // to execute destroy logic after relayout on scroll
-        setTimeout(() => Marionette.CollectionView.prototype._removeChildView.apply(this, arguments));
     },
 
     childView(child) {

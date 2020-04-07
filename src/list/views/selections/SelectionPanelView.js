@@ -1,4 +1,5 @@
 import SelectionCellView from './SelectionCellView';
+import _ from 'underscore';
 
 export default Marionette.CollectionView.extend({
     initialize(options) {
@@ -24,25 +25,16 @@ export default Marionette.CollectionView.extend({
 
     // override default method to correct add when index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
-        let index = opts.at !== undefined && opts.index;
+        let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 
         if (this.filter || index === false) {
-            index = this._filteredSortedModels(index).indexOf(child);
+            index = _.indexOf(this._filteredSortedModels(index), child);
         }
 
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
             this._addChild(child, index);
         }
-    },
-
-    _removeChildView(view) {
-        this.children._remove(view);
-        if (view.el.parentElement === this.el) {
-            view.el.remove();
-        }
-        // to execute destroy logic after relayout on scroll
-        setTimeout(() => Marionette.CollectionView.prototype._removeChildView.apply(this, arguments));
     },
 
     __updateHeight(height) {

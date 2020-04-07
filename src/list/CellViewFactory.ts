@@ -65,7 +65,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     getCell(column: Column, model: Backbone.Model, value: any = model.get(column.key)): string {
-        if (this.__isEmpty(value) || column.getHidden?.(model)) {
+        if ((this.__isEmpty(value) && column.type !== objectPropertyTypes.BOOLEAN) || column.getHidden?.(model)) {
             return `<div class="${this.__getCellClass(column, model)}" tabindex="-1"></div>`;
         }
 
@@ -237,11 +237,6 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedBooleanValue({ value, column, model }: ValueFormatOption) {
-        // if (value === true) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-        // } else if (value === false) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
-        // }
         const trueIcon = '<i class="fas fa-check icon-true"></i>';
         if (!column.editable || column.getReadonly?.(model)) {
             if (value === true) {
@@ -453,7 +448,7 @@ class CellViewFactory implements ICellViewFactory {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${model.get('isDisabled') ? 'archiveTemplate' : ''}" title="${this.__getTitle({ values, column, model })}">
+            <div class="js-extend_cell_content extend_cell_content ${column.columnClass} ${model.get('isDisabled') ? 'archiveTemplate' : ''}" title="${this.__getTitle({ values, column, model })}">
                 <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
                 <div class="extend_cell_text">
                     <span class="extend_cell_header">${values.join(', ')}</span>
@@ -478,20 +473,21 @@ class CellViewFactory implements ICellViewFactory {
                 valueInnerHTML = valueHTMLResult.cellInnerHTML;
                 break;
             case complexValueTypes.context: {
-                if (!value.value || value.value === 'False' || !column.context || !column.recordTypeId) {
+                const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
+                if (!value.value || value.value === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
                     valueInnerHTML = '';
                 } else if (typeof value.value === 'string') {
                     valueInnerHTML = value.value;
                 } else {
-                    let instanceTypeId = column.recordTypeId;
+                    let instanceTypeId = columnWithExtension.recordTypeId;
                     valueInnerHTML = '';
 
                     value.value.forEach((item: string, index: number) => {
-                        const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                        const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
 
                         if (searchItem) {
                             valueInnerHTML += index ? ` - ${searchItem.name}` : searchItem.name;
-                            instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
+                            instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
                         }
                     });
                 }

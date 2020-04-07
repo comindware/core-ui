@@ -131,6 +131,7 @@ export default Marionette.View.extend({
         const childView = options.childView || RowView;
 
         const showRowIndex = this.getOption('showRowIndex');
+        const showCheckbox = this.getOption('showCheckbox');
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
@@ -172,12 +173,13 @@ export default Marionette.View.extend({
             isTree: this.options.isTree,
             isEditable: this.isEditable,
             showRowIndex,
+            showCheckbox,
             minimumVisibleRows: options.minimumVisibleRows
         });
 
         const draggable = this.getOption('draggable');
 
-        if (this.options.showCheckbox || draggable) {
+        if (showCheckbox || draggable) {
             let checkboxColumnClass = '';
             if (showRowIndex) {
                 this.on('update:top update:index', this.__setCheckBoxColummWidth);
@@ -187,7 +189,7 @@ export default Marionette.View.extend({
 
             this.selectionPanelChildOptions = {
                 draggable,
-                showCheckbox: options.showCheckbox,
+                showCheckbox,
                 showRowIndex,
                 bindSelection: this.getOption('bindSelection'),
                 checkboxColumnClass
@@ -204,7 +206,7 @@ export default Marionette.View.extend({
             this.selectionHeaderView = new SelectionCellView({
                 collection: this.collection,
                 selectionType: 'all',
-                showCheckbox: options.showCheckbox,
+                showCheckbox,
                 gridEventAggregator: this,
                 checkboxColumnClass,
                 showRowIndex
