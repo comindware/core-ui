@@ -145,8 +145,11 @@ export default Marionette.View.extend({
         menuCollection.reset();
 
         const toolbarElementsItems = [...this.getRegion('toolbarItemsRegion').el.firstElementChild.children];
-        const maxRight = this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width;
-        const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => btn.getBoundingClientRect().right > maxRight);
+        const maxRight = Math.round(this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width);
+        const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => {
+            const currentRight = Math.round(btn.getBoundingClientRect().right);
+            return currentRight > maxRight;
+        });
 
         if (indexOfNotFitItem > -1) {
             const sliceIndex = indexOfNotFitItem;
