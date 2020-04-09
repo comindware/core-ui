@@ -190,6 +190,7 @@
 .subtext-list {
     height: 45px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ececec;
 }
@@ -200,8 +201,23 @@
     background-color: #d6e7f2;
 }
 
+.subtext-list .datalist-link .datalist-icon {
+    padding-left: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.subtext-list .datalist-link .datalist-icon:hover {
+    color: #0575bd;
+}
+
 .datalist-checkbox {
     margin: 0 13px;
+}
+
+.datalist-container-item {
+    display: flex;
+    align-items: center;
 }
 
 .datalist-text-container {

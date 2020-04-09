@@ -5,8 +5,13 @@
         </svg>
     </span>
 {{/if}}
-<i class="{{iconPrefixer iconType}} datalist-icon" aria-hidden="true"></i>
-<div class="datalist-text-container">
-    <span class="datalist-container-text" title="{{text}}">{{text}}</span>
-    <span class="datalist-container-subtext" title="{{subtext}}">{{subtext}}</span>
+<div class="datalist-container-item">
+    <i class="{{iconPrefixer iconType}} datalist-icon" aria-hidden="true"></i>
+    <div class="datalist-text-container">
+        <span class="datalist-container-text" title="{{text}}">{{text}}</span>
+        <span class="datalist-container-subtext" title="{{subtext}}">{{subtext}}</span>
+    </div>
 </div>
+{{#if url}}
+    <a class="datalist-link" href="{{url}}" target="_blank" title="{{url}}"><i class="{{iconPrefixer iconLink}} datalist-icon" aria-hidden="true"></i></a>
+{{/if}}

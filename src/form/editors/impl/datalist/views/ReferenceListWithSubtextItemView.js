@@ -11,11 +11,14 @@ export default ReferenceListItemView.extend({
         const iconPropertyValue = this.model.get(options.iconProperty);
         const type = iconPropertyValue ? iconPropertyValue.toLocaleLowerCase() : '';
         const iconType = options.metaIcons[type] || null;
+        const iconLink = options.metaIcons.goTo;
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
             iconType,
+            iconLink,
             subtext: this.model.get(options.subtextProperty),
-            showCheckboxes: this.options.showCheckboxes
+            showCheckboxes: this.options.showCheckboxes,
+            url: this.options.model.get('url')
         };
     }
 });
