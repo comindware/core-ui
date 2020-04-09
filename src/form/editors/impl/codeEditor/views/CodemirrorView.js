@@ -26,6 +26,7 @@ export default Marionette.View.extend({
     initialize(options = {}) {
         this.tt = new Backbone.Model();
         this.isCallMethodAnywhere = false;
+        this.getCmwOntology = CmwCodeAssistantServices.getCmwOntology.bind(this);
         _.bindAll(
             this,
             '__onBlur',
@@ -214,48 +215,47 @@ export default Marionette.View.extend({
         const { change } = options;
         let symbolsForFilter;
         const isPasteOrigin = change.origin === constants.originChange.paste;
-        const isScriptMode = this.options.mode === constants.mode.script;
-        const notN3Mode = this.options.mode !== constants.mode.notation3;
-
         if (!this.intelliAssist || isPasteOrigin) {
             return;
         }
-
         const inputSymbol = change.text[0];
         const isNotLetter = !/\w/.test(inputSymbol);
 
         if (isNotLetter) {
             this.CSharpInfoList = null;
         }
-
-        if (isScriptMode) {
-            if (inputSymbol === constants.activeSymbol.point) {
-                this.filterCSharpList = null;
-                this.isCallMethodAnywhere = false;
-                this.numberLineCallHints = this.codemirror.getCursor().line;
-                this.__showCSharpHint();
-            } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
-                symbolsForFilter = this.__getObjectNameFilter({ mode: constants.mode.script });
-                if (symbolsForFilter && symbolsForFilter.length) {
-                    this.__showFilterHints({ symbolsForFilter, mode: constants.mode.script });
-                } else {
-                    this.filterCSharpList = null;
-                }
-            }
-            return;
-        }
-
-        if (notN3Mode) {
-            return;
-        }
-
         const { valueLine, column } = this.__getOptionCodemirror([constants.optionsCodemirror.valueLine, constants.optionsCodemirror.column]);
-        const isComment = this.__isCommentN3(valueLine, column);
-
-        if (isComment) {
-            return;
+        switch (this.options.mode) {
+            case constants.mode.script:
+                if (inputSymbol === constants.activeSymbol.point) {
+                    this.filterCSharpList = null;
+                    this.isCallMethodAnywhere = false;
+                    this.numberLineCallHints = this.codemirror.getCursor().line;
+                    this.__showCSharpHint();
+                } else if (this.CSharpInfoList && this.CSharpInfoList.length) {
+                    symbolsForFilter = this.__getObjectNameFilter({ mode: constants.mode.script });
+                    if (symbolsForFilter && symbolsForFilter.length) {
+                        this.__showFilterHints({ symbolsForFilter, mode: constants.mode.script });
+                    } else {
+                        this.filterCSharpList = null;
+                    }
+                }
+                break;
+            case constants.mode.expression:
+                this.codemirror.showHint({ hint: this.__cmwHint });
+                break;
+            case constants.mode.notation3:
+                if (this.__isCommentN3(valueLine, column)) {
+                    break;
+                }
+                this.__showHintN3(inputSymbol, change);
+                break;
+            default:
+                break;
         }
+    },
 
+    __showHintN3(inputSymbol, change) {
         switch (inputSymbol) {
             case constants.activeSymbolNotation3.questionMark:
                 this.__setVariablesN3ForHint(change.to);
@@ -272,11 +272,15 @@ export default Marionette.View.extend({
                 this.codemirror.showHint({ hint: this.__getAttributeN3 });
                 break;
             default:
-                symbolsForFilter = this.__getObjectNameFilter({ mode: constants.mode.notation3 });
-                if (symbolsForFilter && symbolsForFilter.length) {
-                    this.__showFilterHints({ symbolsForFilter, mode: constants.mode.notation3 });
-                }
+                this.__showFilterHintsN3();
                 break;
+        }
+    },
+
+    __showFilterHintsN3() {
+        const symbolsForFilter = this.__getObjectNameFilter({ mode: constants.mode.notation3 });
+        if (symbolsForFilter && symbolsForFilter.length) {
+            this.__showFilterHints({ symbolsForFilter, mode: constants.mode.notation3 });
         }
     },
 
@@ -377,9 +381,45 @@ export default Marionette.View.extend({
     },
 
     __callMethodAnywere() {
+        if (this.codemirror.isReadOnly() || !this.intelliAssist) {
+            return;
+        }
         this.numberLineCallHints = this.codemirror.getCursor().line;
         this.isCallMethodAnywhere = true;
-        this.__showHint();
+        this.__showHint({ isCtrSpace: true });
+    },
+
+    __showHint(options) {
+        const { isCtrSpace } = options;
+        this.hintIsShown = true;
+        switch (this.options.mode) {
+            case constants.mode.notation3:
+                this.__showN3Hint();
+                break;
+            case constants.mode.expression:
+                if (isCtrSpace) {
+                    this.__showCMWHint();
+                } else {
+                    this.codemirror.showHint({ hint: this.__cmwHint });
+                }
+                break;
+            case constants.mode.script:
+                this.__showCSharpHint();
+                break;
+            default:
+                break;
+        }
+    },
+
+    __showN3Hint() {
+        if (this.numberLineCallHints !== this.codemirror.getCursor().line) {
+            this.__resetN3Hints();
+        }
+        const { valueLine, column } = this.__getOptionCodemirror([constants.optionsCodemirror.valueLine, constants.optionsCodemirror.column]);
+        if (this.__isCommentN3(valueLine, column)) {
+            return;
+        }
+        this.codemirror.showHint({ hint: this.__showHintsN3_ctr_space });
     },
 
     setValue(value) {
@@ -486,6 +526,9 @@ export default Marionette.View.extend({
     },
 
     __onChange(options = {}) {
+        if (this.codemirror.isReadOnly() || !this.intelliAssist) {
+            return;
+        }
         const { change } = options;
         const hasNotOrigin = !change.origin;
         if (this.isExternalChange && (change?.origin === constants.originChange.inputPlus || hasNotOrigin)) {
@@ -554,10 +597,13 @@ export default Marionette.View.extend({
         }
     },
 
+    async __showCMWHint() {
+        const { cursor, token } = this.__getOptionCodemirror([constants.optionsCodemirror.cursor, constants.optionsCodemirror.token]);
+        const ontologyModel = await this.getCmwOntology({ cursor, token });
+        this.codemirror.showHint({ hint: () => ontologyModel });
+    },
+
     async __showCSharpHint() {
-        if (!this.intelliAssist) {
-            return;
-        }
         this.setLoading(true);
         try {
             const completeHoverQuery = {
@@ -794,30 +840,6 @@ export default Marionette.View.extend({
         this.tooltip.setPosition(this.__getPositionTooltip(hintEl));
     },
 
-    __showHint() {
-        if (this.codemirror.isReadOnly()) {
-            return;
-        }
-        this.hintIsShown = true;
-        if (this.options.mode === constants.mode.expression) {
-            this.codemirror.showHint({ hint: this.__cmwHint });
-        }
-        if (this.options.mode === constants.mode.notation3) {
-            if (this.numberLineCallHints !== this.codemirror.getCursor().line) {
-                this.__resetN3Hints();
-            }
-            const { valueLine, column } = this.__getOptionCodemirror([constants.optionsCodemirror.valueLine, constants.optionsCodemirror.column]);
-            const isComment = this.__isCommentN3(valueLine, column);
-            if (isComment) {
-                return;
-            }
-            this.codemirror.showHint({ hint: this.__showHintsN3_ctr_space });
-        }
-        if (this.options.mode === constants.mode.script) {
-            this.__showCSharpHint();
-        }
-    },
-
     __countBrace(value, typeBrace) {
         const countBraceRegExp = new RegExp(`${typeBrace}`, 'gim');
         return value.match(countBraceRegExp) || [];
@@ -828,8 +850,7 @@ export default Marionette.View.extend({
         const firstSymbol = valueWithoutComment.trim()[0];
         if (firstSymbol === constants.activeSymbolNotation3.at || firstSymbol === constants.activeSymbolNotation3.openBrace) {
             return constants.mode.notation3;
-        }
-        this.__showHint();
+        } 
         return constants.mode.expression;
     },
 
@@ -1278,11 +1299,12 @@ export default Marionette.View.extend({
     },
 
     __mapFormatHintsN3(line, ch, list, token) {
-        const { isEmptyLine } = this.__getOptionCodemirror([constants.optionsCodemirror.isEmptyLine]);
+        const { isEmptyLine } = this.__getOptionCodemirror([constants.optionsCodemirror.isEmptyLine, constants.optionsCodemirror.isIntoBracket]);
+        const isSpecialLeftSymbol = [constants.activeSymbolNotation3.colon, constants.activeSymbolNotation3.openBracket].includes(token.string);
         return {
             from: {
                 line,
-                ch: isEmptyLine ? ch : token.start
+                ch: isEmptyLine || isSpecialLeftSymbol ? ch : token.start
             },
             to: {
                 line,
