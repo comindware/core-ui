@@ -142,5 +142,31 @@ export default {
             });
             return list;
         }
+    },
+
+    async getCmwOntology(options) {
+        const { cursor, token } = options;
+        this.setLoading(true);
+        try {
+            const completeHoverQuery = {
+                sourceCode: this.codemirror.getValue(),
+                cursorOffset: this.__countOffset(),
+                sourceType: constants.typeScript.expression,
+                queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+                useOntologyLibriary: false,
+                solution: this.options.solution
+            };
+            const ontologyModel = await this.options.ontologyService.getTemplates(completeHoverQuery);
+            this.autoCompleteContext = constants.autoCompleteContext.templates;
+            const list = this.__renderConfigListToolbar(ontologyModel);
+            const autoCompleteObject = {
+                from: options.cursor,
+                to: options.cursor,
+                list
+            };
+            return autoCompleteObject;
+        } finally {
+            this.setLoading(false);
+        }
     }
 };
