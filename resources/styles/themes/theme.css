@@ -421,7 +421,7 @@ svg.svg-grid-icons {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
-    margin: 0;
+    margin: 0 auto;
     display: inline-flex;
 }
 
@@ -473,6 +473,8 @@ svg.svg-grid-icons {
     border-bottom: 1px solid #e2e2e2;
     border-left: none;
     border-top: none;
+    display: flex;
+    align-items: center;
 }
 
 .cell_selection,
@@ -521,6 +523,10 @@ svg.svg-grid-icons {
 
 .cell .collapsible-btn {
     color: #636262;
+}
+
+.cell .form-group {
+    width: 100%;
 }
 
 .context-collapsible-btn {
@@ -618,7 +624,7 @@ svg.svg-grid-icons {
 }
 .editor_bubble--edit.editor_bubble--delete .icon-edit {
   right: 20px;
-}  
+}
 .editor_bubble--delete .bubbles__i:hover a,
 .editor_bubble--delete .bubbles__i:hover span,
 .editor_bubble--edit .bubbles__i:hover a,
@@ -1158,7 +1164,7 @@ svg.svg-grid-icons {
   border-radius: 6px;
   padding: 20px;
   height: 100%;
-  min-width: 120px; 
+  min-width: 120px;
   min-height: 100px;
   display: flex;
 }

@@ -736,6 +736,7 @@
     display: inline-flex;
     align-items: center;
     overflow: visible;
+    width: 100%;
 }
 
 .cell .js-tree-first-cell + .composite-cell__wrp {

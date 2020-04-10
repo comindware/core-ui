@@ -39,7 +39,7 @@
 }
 
 .icon-true, .icon-false {
-  padding-left: 3px;
+    margin: 0 auto;
 }
 
 .tr-search__input {
