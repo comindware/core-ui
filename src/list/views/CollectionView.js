@@ -106,6 +106,7 @@ export default Marionette.CollectionView.extend({
         }
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
+        this.listenTo(this.collection, 'reorder', this.reorder);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
     },
@@ -194,6 +195,10 @@ export default Marionette.CollectionView.extend({
             this._destroyEmptyView();
             this._addChild(child, index);
         }
+    },
+
+    _filteredSortedModels() {
+        return this.collection.visibleModels;
     },
 
     onAddChild(view, child) {

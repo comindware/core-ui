@@ -6,6 +6,7 @@ export default Marionette.CollectionView.extend({
         this.gridEventAggregator = options.gridEventAggregator;
         this.listenTo(this.gridEventAggregator, 'update:height', this.__updateHeight);
         this.listenTo(this.gridEventAggregator, 'update:top', this.__updateTop);
+        this.listenTo(this.collection, 'reorder', this.reorder);
     },
 
     className() {
@@ -35,6 +36,10 @@ export default Marionette.CollectionView.extend({
             this._destroyEmptyView();
             this._addChild(child, index);
         }
+    },
+
+    _filteredSortedModels() {
+        return this.collection.visibleModels;
     },
 
     __updateHeight(height) {

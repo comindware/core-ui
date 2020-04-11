@@ -2,7 +2,6 @@
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { diffHelper } from 'utils';
 import GridItemBehavior from '../list/behaviors/GridItemBehavior';
 import FixGroupingOptions from './GroupingService';
 import { virtualCollectionFilterActions } from 'Meta';
@@ -315,31 +314,23 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __processDiffs(oldModels, options = {}) {
-        const diff = new diffHelper(oldModels, this.visibleModels);
-        diff.compose();
-        const diffObject = diff.getses();
         const added = [];
         const removed = [];
-
-        Object.values(diffObject)
-            .sort((a, b) => a.t - b.t)
-            .forEach(object => {
-                switch (object.t) {
-                    case 0:
-                        this.trigger('update:child', object.elem);
-                        break;
-                    case -1:
-                        removed.push(object.elem);
-                        break;
-                    case 1:
-                        added.push(object.elem);
-                        break;
-                }
-            });
-
-        // it's important remove items before add
+        oldModels.forEach(model => {
+            if (!this.visibleModels.includes(model)) {
+                removed.push(model);
+            }
+        });
+        this.visibleModels.forEach(model => {
+            if (oldModels.includes(model)) {
+                this.trigger('update:child', model)
+            } else {
+                added.push(model);
+            }
+        });
         this.__removeModels(removed, options);
-        added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
+        added.forEach(model => this.__addModel(model, options));
+        this.trigger('reorder');
     },
 
     __normalizePosition(position) {
