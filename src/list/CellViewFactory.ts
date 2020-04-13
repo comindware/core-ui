@@ -564,12 +564,10 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getCellClass(column: Column, model: Backbone.Model) {
-        return `cell ${column.customClass ? column.customClass : ''}
-         ${(column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : ''}
-         ${(column.editable && column.getReadonly?.(model)) ? 'readonly' : ''}
-         ${column.hasErrors?.(model) ? 'error' : ''}       
-         ${column.columnClass} 
-        `;
+        const requiredClass = (column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : '';
+        const readonlyClass = (column.editable && (column.getReadonly?.(model) || column.getHidden?.(model))) ? 'readonly' : '';
+        const errorClass = column.hasErrors?.(model) ? 'error' : '';
+        return `cell ${column.customClass ? column.customClass : ''} ${column.columnClass} ${requiredClass} ${readonlyClass} ${errorClass}`;
     }
 
     __isEmpty(value: any): boolean {
