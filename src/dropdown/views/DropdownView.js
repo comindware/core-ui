@@ -285,7 +285,7 @@ export default Marionette.View.extend({
         //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
 
         this.listenTo(this.panelView, 'change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
-        this.__listenToElementMoveOnce(this.el, this.close);
+        this.__listenToElementMoveOnce(this.button.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
         this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);

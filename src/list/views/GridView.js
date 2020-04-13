@@ -791,7 +791,7 @@ export default Marionette.View.extend({
             return;
         }
         const popupContainer = document.querySelector('.js-global-popup-stack');
-        const element = document.contains(target) ? target : document.activeElement;
+        const element = document.body.contains(target) ? target : document.activeElement;
         const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element);
         if (!isElementOutOfElementOrPopup) {
             this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
