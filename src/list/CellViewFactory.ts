@@ -566,6 +566,7 @@ class CellViewFactory implements ICellViewFactory {
     __getCellClass(column: Column, model: Backbone.Model) {
         return `cell ${column.customClass ? column.customClass : ''}
          ${(column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : ''}
+         ${(column.editable && column.getReadonly?.(model)) ? 'readonly' : ''}
          ${column.hasErrors?.(model) ? 'error' : ''}       
          ${column.columnClass} 
         `;

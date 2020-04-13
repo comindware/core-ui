@@ -456,6 +456,10 @@
     line-height: 35px;
 }
 
+.cell.readonly {
+    background-color: #f9f9f9;
+}
+
 .cell_selection {
     justify-content: center;
 }
