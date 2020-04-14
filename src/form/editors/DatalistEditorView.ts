@@ -874,7 +874,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onButtonBlur(view: Marionette.View<any>, event: FocusEvent) {
-        if (this.dropdownView.panelView?.el.contains(event.relatedTarget)) {
+        const relatedTarget = event.relatedTarget;
+        if (this.dropdownView.panelView?.el.contains(relatedTarget) || this.dropdownView.el.contains(relatedTarget)) {
             // button will be focus after timeout
             return;
         }
