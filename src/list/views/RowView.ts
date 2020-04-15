@@ -193,7 +193,7 @@ export default Marionette.View.extend({
             return;
         }
         this.getOption('columns').forEach((column: Column, index: number) => {
-            if (!Object.prototype.hasOwnProperty.call(changed, column.key) || this.__isColumnEditable(index)) {
+            if (!Object.prototype.hasOwnProperty.call(changed, column.key) || (this.__isColumnEditable(index) && this.lastPointedIndex === index)) {
                 return
             }
             this.__insertReadonlyCell({ column, index, isReplace: true});
