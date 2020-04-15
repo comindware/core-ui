@@ -87,12 +87,22 @@ export default {
             }
         } else if (options.token.string === constants.activeSymbol.dollar) {
             let listToolbar;
-            const result = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
-            if (result.length) {
-                result.forEach(atribute => (atribute.icons = contextIconType.attribute));
-                options.autoCompleteModel.set({ attributes: result });
+            let attributes;
+            if (options.attributes) {
+                attributes = options.attributes;
+            } else {
+                attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
+            }
+            if (attributes.length) {
+                attributes.forEach(atribute => { 
+                    atribute.icons = contextIconType.attribute;
+                    if (atribute.alias) {
+                        atribute.text = atribute.alias;
+                    }
+                });
+                options.autoCompleteModel.set({ attributes });
                 this.autoCompleteContext = constants.autoCompleteContext.attributes;
-                listToolbar = this.__renderConfigListToolbar(result);
+                listToolbar = this.__renderConfigListToolbar(attributes);
             } else {
                 listToolbar = [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }];
             }

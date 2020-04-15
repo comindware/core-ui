@@ -1198,6 +1198,7 @@ export default Marionette.View.extend({
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
+            attributes: this.options.hintAttributes,
             templateId: this.templateId
         };
 

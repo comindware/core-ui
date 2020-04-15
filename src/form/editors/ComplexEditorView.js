@@ -28,6 +28,7 @@ const defaultOptions = {
     ontologyService: null,
     config: null,
     getTemplate: null,
+    hintAttributes: null,
     solution: null
 };
 
@@ -268,6 +269,8 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             ontologyService: this.options.ontologyService,
             config: this.options.config,
             getTemplate: this.options.getTemplate,
+            templateId: this.options.templateId,
+            hintAttributes: this.options.hintAttributes,
             solution: this.options.solution
         };
 
