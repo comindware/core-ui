@@ -522,6 +522,7 @@ svg.svg-grid-icons {
     margin-bottom: 0;
     height: 100%;
     flex: 1 0 100px;
+    align-self: center;
 }
 
 .grid__headless .row:first-child .cell {
@@ -1341,6 +1342,7 @@ _:-ms-lang(x),
     background: transparent;
     text-align: center;
     width: auto;
+    line-height: inherit;
 }
 
 /* color picker */

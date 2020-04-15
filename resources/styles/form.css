@@ -906,9 +906,30 @@ input[type="color"],
     cursor: pointer;
 }
 
-.dev-expression-editor-field-inline {
+.form-group .dev-expression-editor-field-inline {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    border: 1px solid #c1c1c1;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.dev-expression-editor-field-inline .dev-complex-padding {
+    width: 100%;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.dev-expression-editor-field-inline .bubbles,
+.dev-expression-editor-field-inline .dev-complex-editor-item input,
+.dev-expression-editor-field-inline .dev-complex-editor-item .textarea,
+.dev-expression-editor-field-inline .editor.context_select {
+    border: none;
+}
+
+.dev-expression-editor-field-inline .dev-complex-editor-item {
+    width: 100%;
+    margin-bottom: 0;
 }
 
 .dev-expression-editor-field-inline .editor {
