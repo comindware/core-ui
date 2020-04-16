@@ -158,7 +158,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             mode: stateModes.VIEW,
             displayValue: null
         });
-        this.__value(null, false);
+        this.__value(null, true);
         this.focus();
     },
 
