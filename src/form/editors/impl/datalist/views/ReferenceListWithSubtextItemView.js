@@ -9,8 +9,9 @@ export default ReferenceListItemView.extend({
     templateContext() {
         const options = this.options.subTextOptions;
         const iconPropertyValue = this.model.get(options.iconProperty);
+        // wtf to lower case ?
         const type = iconPropertyValue ? iconPropertyValue.toLocaleLowerCase() : '';
-        const iconType = options.metaIcons[type] || null;
+        const iconType = options.metaIcons[type] || options.metaIcons[iconPropertyValue] || null;
         const iconLink = options.metaIcons.goTo;
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
@@ -18,7 +19,7 @@ export default ReferenceListItemView.extend({
             iconLink,
             subtext: this.model.get(options.subtextProperty),
             showCheckboxes: this.options.showCheckboxes,
-            url: this.options.model.get('url')
+            url: _.getResult(this.options.model.get('url'))
         };
     }
 });

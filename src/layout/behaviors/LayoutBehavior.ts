@@ -22,12 +22,14 @@ export default Marionette.Behavior.extend({
     __computeViewState(): { visible: boolean } {
         let visible = this.view.options.visible;
 
-        visible = typeof visible === 'function' ? visible.call(this.view) : visible;
-        if (visible === undefined) {
+        if (visible == null) {
             visible = true;
         }
+
+        visible = typeof visible === 'function' ? visible.call(this.view) : visible;
+
         return {
-            visible
+            visible: Boolean(visible)
         };
     }
 });
