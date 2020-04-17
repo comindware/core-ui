@@ -314,7 +314,7 @@ svg.svg-grid-icons {
 
 .grid-header-column {
   background-color: var(--grid-header-bg);
-  box-shadow: var(--grid-header-border);
+  border-right: 1px solid var(--blue-200);
   color: var(--grid-header-color);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
