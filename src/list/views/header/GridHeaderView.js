@@ -202,12 +202,12 @@ const GridHeaderView = Marionette.View.extend({
         return false;
     },
 
-    __getFullWidth() {
-        return this.el.clientWidth;
+    getScrollWidth() {
+        return this.scrollWidth || (this.scrollWidth = this.el.scrollWidth);
     },
 
     onAttach() {
-        this.trigger('set:emptyView:width', this.el.scrollWidth);
+        this.trigger('set:emptyView:width', this.getScrollWidth());
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
@@ -217,12 +217,13 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
-
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
         this.options.columns[index].width = newColumnWidth;
+        this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
+        this.scrollWidth = this.el.scrollWidth;
+        this.trigger('change:scrollWidth');
     },
 
     __toggleCollapseAll() {

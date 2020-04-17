@@ -642,7 +642,10 @@ export default Marionette.View.extend({
         };
         const removeError = (el: Element) => {
             el.classList.remove(classes.cellError);
-            el.querySelector(`.${classes.errorButton}`)?.remove();
+            const errorEl = el.querySelector(`.${classes.errorButton}`);
+            if (errorEl) {
+                errorEl.parentElement?.removeChild(errorEl);
+            }
         };
         const cellEl = this.__getCellByColumnIndex(index);
         if (this.model.validationError?.[column.key]) {
