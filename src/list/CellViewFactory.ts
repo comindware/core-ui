@@ -74,6 +74,7 @@ class CellViewFactory implements ICellViewFactory {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString({ values, column, model });
+            case objectPropertyTypes.ROLE:     
             case objectPropertyTypes.INSTANCE:
                 return this.__getReferenceCell({ values, column, model });
             case objectPropertyTypes.ACCOUNT:
@@ -115,6 +116,7 @@ class CellViewFactory implements ICellViewFactory {
         let template;
         let formattedValues;
         switch (column.dataType || column.type) {
+            case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 template = compiledCompositeReferenceCell;
                 formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column, model }));
