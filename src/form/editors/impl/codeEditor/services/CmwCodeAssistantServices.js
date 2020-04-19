@@ -95,7 +95,8 @@ export default {
             }
             if (attributes.length) {
                 attributes.forEach(atribute => { 
-                    atribute.icons = contextIconType.attribute;
+                    const type = atribute.type.toLowerCase();
+                    atribute.icons = Core.meta.contextIconType[type];
                     if (atribute.alias) {
                         atribute.text = atribute.alias;
                     }
