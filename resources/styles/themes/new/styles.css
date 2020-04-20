@@ -48,11 +48,18 @@
 .checkbox i,
 .icon-true {
     color: var(--checkbox-checked-color);
+    display: flex;
 }
 
 .icon-false {
     color: var(--red);
     font-size: 1.2em;
+    display: flex;
+}
+
+.icon-true::before,
+.icon-false::before {
+    margin: 0 auto;
 }
 
 .tr-search__input {

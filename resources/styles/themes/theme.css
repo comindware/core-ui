@@ -607,8 +607,8 @@ tr:hover .cell_selection-index {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
-    margin: 0;
-    display: inline-flex;
+    margin: 0 auto;
+    display: flex;
 }
 
 .cell_selection > .checkbox {
