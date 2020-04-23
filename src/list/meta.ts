@@ -32,6 +32,7 @@ export const columnTypes = {
     string: 'String',
     boolean: 'Boolean',
     users: 'AccountProperty',
+    role: 'RoleProperty',
     reference: 'InstanceProperty',
     enumerable: 'EnumProperty',
     document: 'DocumentProperty',

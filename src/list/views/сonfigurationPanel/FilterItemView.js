@@ -78,6 +78,7 @@ export default Marionette.View.extend({
             case columnType.duration:
             case columnType.users:
             case columnType.reference:
+            case columnType.role:    
                 this.filterView = this.__createFilterView();
                 this.filterPredicateDropdown = this.__createFilterPredicateDropdown(this.getOption('filtersConfigurationModel').get('columnType'), this.model);
                 this.el.classList.remove('filters_settings-inline-after');
