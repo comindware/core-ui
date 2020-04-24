@@ -886,6 +886,7 @@ body.non-selectable {
 
 .toolbar-buttons_container__const {
     flex: 0 0 auto;
+    margin-right: 20px;
 }
 
 .toolbar-panel_container {
