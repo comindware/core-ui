@@ -935,6 +935,19 @@ export default Marionette.View.extend({
                         .includes(constants.activeSymbolNotation3.closeBracket);
                     resultOptions[constants.optionsCodemirror.isIntoBracket] = isOpenedLeftBracket && isClosedRightBracket;
                     break;
+                case constants.optionsCodemirror.isIntoSquareBracket:
+                    // eslint-disable-next-line no-case-declarations
+                    const isOpenedSquareBracket = this.codemirror
+                        .getLine(cursor.line)
+                        .slice(0, cursor.ch)
+                        .includes(constants.activeSymbolNotation3.openSquareBracket);
+                    // eslint-disable-next-line no-case-declarations
+                    const isClosedSquareBracket = this.codemirror
+                        .getLine(cursor.line)
+                        .slice(cursor.ch, valueLine.length)
+                        .includes(constants.activeSymbolNotation3.closeSquareBrackett);
+                    resultOptions[constants.optionsCodemirror.isIntoSquareBracket] = isOpenedSquareBracket && isClosedSquareBracket;
+                    break;    
                 case constants.optionsCodemirror.isEmptyLine:
                     resultOptions[constants.optionsCodemirror.isEmptyLine] = !valueLine.trim().length;
                     break;
@@ -1217,11 +1230,12 @@ export default Marionette.View.extend({
     async __showHintsN3_ctr_space() {
         this.__resetN3Hints();
         const templateNotation3 = this.intelliAssist.getTemplateNotation3(this.options.solution);
-        const { valueLine, column, token, cursor, isIntoBracket, isEmptyLine, previousSymbol, twoPeviousSymbol } = this.__getOptionCodemirror([
+        const { valueLine, column, token, cursor, isIntoBracket, isIntoSquareBracket, isEmptyLine, previousSymbol, twoPeviousSymbol } = this.__getOptionCodemirror([
             constants.optionsCodemirror.valueLine,
             constants.optionsCodemirror.column,
             constants.optionsCodemirror.cursor,
             constants.optionsCodemirror.isIntoBracket,
+            constants.optionsCodemirror.isIntoSquareBracket,
             constants.optionsCodemirror.isEmptyLine,
             constants.optionsCodemirror.previousSymbol,
             constants.optionsCodemirror.twoPeviousSymbol,
@@ -1246,38 +1260,39 @@ export default Marionette.View.extend({
                 return this.__getAttributeN3();
             default:
                 break;
-        }
-
-        if (isIntoBracket) {
-            this.hintsN3intoBracket = await this.__getAttributeNotation3();
-            if (!this.hintsN3intoBracket) {
-                return this.__noSuggestionHint();
-            }
-            return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: this.hintsN3intoBracket, isIntoBracket: true });
-        } else if (isEmptyLine) {
+        }  
+        if (isEmptyLine) {
             this.hintsNotation3 = null;
             this.notation3Attributes = null;
             const hints = templateNotation3;
-            return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: hints, isIntoBracket: true });
+            return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: hints, isIntoBracket: false });
         }
-        this.hintsNotation3 = await this.__getAttributeNotation3();
-        return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: this.hintsNotation3, isIntoBracket: true });
+        const attributesN3 = await this.__getAttributeNotation3();
+        if (!attributesN3) {
+            return this.__noSuggestionHint();
+        }
+        if (isIntoBracket || isIntoSquareBracket) {
+            this.hintsN3intoBracket = attributesN3;  
+        }
+        this.hintsNotation3 = attributesN3;
+        return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: attributesN3, isIntoBracket, isIntoSquareBracket });
     },
 
     __showOtherHintsN3() {
         this.numberLineCallHints = this.codemirror.getCursor().line;
-        const { cursor, column, numberLine, token, isIntoBracket } = this.__getOptionCodemirror([
+        const { cursor, column, numberLine, token, isIntoBracket, isIntoSquareBracket } = this.__getOptionCodemirror([
             constants.optionsCodemirror.cursor,
             constants.optionsCodemirror.token,
             constants.optionsCodemirror.column,
             constants.optionsCodemirror.numberLine,
-            constants.optionsCodemirror.isIntoBracket
+            constants.optionsCodemirror.isIntoBracket,
+            constants.optionsCodemirror.isIntoSquareBracket
         ]);
-        if (this.hintsN3intoBracket && isIntoBracket) {
+        if (this.hintsN3intoBracket && (isIntoBracket || isIntoSquareBracket)) {
             const hints = this.filterHintsNotation3 || this.hintsN3intoBracket;
             const autoCompleteObject = this.__mapFormatHintsN3(numberLine, column, hints, token);
             this.changeTemplateNotation = this.__changeTemplate;
-            codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor));
+            codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor, isIntoSquareBracket));
             this.__renderConfigListToolbar(this.hintsN3intoBracket);
             this.showTooltipNotation = this.__showTooltip;
             codemirror.on(autoCompleteObject, 'select', this.showTooltipNotation);
@@ -1286,12 +1301,12 @@ export default Marionette.View.extend({
     },
 
     __showHintsIntoBracket(options) {
-        const { cursor, column, hintsNotation3, token, isIntoBracket } = options;
+        const { cursor, column, hintsNotation3, token, isIntoBracket, isIntoSquareBracket } = options;
         const ch = column;
         const autoCompleteObject = this.__mapFormatHintsN3(cursor.line, ch, hintsNotation3, token);
-        if (isIntoBracket) {
+        if (isIntoBracket || isIntoSquareBracket) {
             this.changeTemplateNotation = this.__changeTemplate;
-            codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor));
+            codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor, isIntoSquareBracket));
         }
         this.__renderConfigListToolbar(hintsNotation3);
         this.showTooltipNotation = this.__showTooltip;
@@ -1315,11 +1330,16 @@ export default Marionette.View.extend({
         };
     },
 
-    __changeTemplate(descriptionHint, cursor) {
+    __changeTemplate(descriptionHint, cursor, isIntoSquareBracket) {
         const numberLine = this.codemirror.getCursor().line;
         const valueLine = this.codemirror.getLine(numberLine);
         const startSpaces = valueLine.match(/\s+/) ? valueLine.match(/\s+/)[0] : '';
         let newValueLine;
+        if (isIntoSquareBracket) {
+            newValueLine = `${startSpaces}?object${descriptionHint.name} a [object:alias ${descriptionHint.text}].`
+            this.codemirror.replaceRange(newValueLine, { line: numberLine, ch: 0 }, { line: numberLine });
+            return; 
+        }
         if (descriptionHint.overloads && descriptionHint.overloads.length) {
             let paramGlobalFunction = '';
             descriptionHint.overloads.forEach(overload => {

@@ -80,6 +80,8 @@ export default {
         at: '@',
         openBracket: '(',
         closeBracket: ')',
+        openSquareBracket: '[',
+        closeSquareBracket: ']',
         openBrace: '{',
         closeBrace: '}',
         comment: '#'
@@ -95,6 +97,7 @@ export default {
         isOpenedLeftBracket: 'isOpenedLeftBracket',
         isClosedRightBracket: 'isClosedRightBracket',
         isIntoBracket: 'isIntoBracket',
+        isIntoSquareBracket: 'isIntoSquareBracket',
         isEmptyLine: 'isEmptyLine',
         previousSymbol: 'previousSymbol',
         twoPreviousSymbol: 'twoPreviousSymbol'
