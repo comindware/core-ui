@@ -82,7 +82,8 @@ export default {
         closeBracket: ')',
         openBrace: '{',
         closeBrace: '}',
-        comment: '#'
+        comment: '#',
+        space: ' '
     },
 
     optionsCodemirror: {

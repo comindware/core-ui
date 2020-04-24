@@ -1302,14 +1302,15 @@ export default Marionette.View.extend({
     __mapFormatHintsN3(line, ch, list, token) {
         const { isEmptyLine } = this.__getOptionCodemirror([constants.optionsCodemirror.isEmptyLine, constants.optionsCodemirror.isIntoBracket]);
         const isSpecialLeftSymbol = [constants.activeSymbolNotation3.colon, constants.activeSymbolNotation3.openBracket].includes(token.string);
+        const isSpaceLeft = token.string.includes(constants.activeSymbolNotation3.space);
         return {
             from: {
                 line,
-                ch: isEmptyLine || isSpecialLeftSymbol ? ch : token.start
+                ch: isEmptyLine || isSpecialLeftSymbol || isSpaceLeft ? ch : token.start
             },
             to: {
                 line,
-                ch: token.end
+                ch: isEmptyLine || isSpecialLeftSymbol || isSpaceLeft ? ch : token.end
             },
             list
         };
