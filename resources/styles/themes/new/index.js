@@ -261,10 +261,9 @@ module.exports.apply = {
     },
     'input-search-clear-theme': {
         width: '22px',
-        height: '29px',
         opacity: '.8',
         right: '0',
-        top: '10px',
+        top: '50%',
         'font-size': '16px',
         'text-align': 'center'
     },
