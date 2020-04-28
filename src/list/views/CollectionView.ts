@@ -251,17 +251,6 @@ export default Marionette.PartialCollectionView.extend({
         });
     },
 
-    _removeChildView(view) {
-        this.children._remove(view);
-        requestAnimationFrame(() => {
-            if (view.el.parentElement === this.el) {
-                view.el.remove();
-            }
-            // to execute destroy logic after relayout on scroll
-            setTimeout(() => Marionette.PartialCollectionView.prototype._removeChildView.apply(this, arguments));      
-        });
-    },
-
     _setupChildView(view, index) {
         if (this.sort) {
             view._index = index;
