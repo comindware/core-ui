@@ -835,7 +835,7 @@ describe('Editors', () => {
                 show(view);
             });
 
-            it('should not open repeatedly, after user select value on panel and close dropdown', done => {
+            xit('should not open repeatedly, after user select value on panel and close dropdown', done => {
                 const model = new Backbone.Model({
                     dropdownValue: {
                         id: 1,

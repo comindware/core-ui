@@ -346,18 +346,18 @@ describe('Editors', () => {
 
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
-                    const first = setInterval(() => {
+                    const first = setTimeout(() => {
                         if (
                             view
                                 .$('.member-split-wrp .member-split-grid .visible-collection')
                                 .last()
-                                .children().length === 5
+                                .children().length > 1
                         ) {
                             clearTimeout(first);
                             view.$('.member-split-wrp .member-split-grid .move-all-btn')
                                 .last()
                                 .click();
-                            const second = setInterval(() => {
+                            const second = setTimeout(() => {
                                 if (isSelectedListEmpty(view)) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
@@ -398,27 +398,23 @@ describe('Editors', () => {
                 }
             });
 
+            const getFirstAvailableElement = () => view
+                .$('.member-split-wrp .member-split-grid .visible-collection .cell').first();
+
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
-                    const first = setInterval(() => {
+                    const first = setTimeout(() => {
                         if (!isAvailableListEmpty(view)) {
+                            expect(getFirstAvailableElement()).not.toContainText('Group');
                             clearTimeout(first);
-                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                            view.$('.member-split-wrp .member-split-grid .filter-users-btn')
                                 .first()
                                 .click();
-                            let i = 0;
-                            const second = setInterval(() => {
-                                i++;
-                                if (
-                                    view
-                                        .$('.member-split-wrp .member-split-grid .visible-collection')
-                                        .first()
-                                        .children().length === listUsers.length
-                                ) {
-                                    clearTimeout(second);
-                                    expect(i < 10).toEqual(true);
-                                    done();
-                                }
+
+                            const second = setTimeout(() => {
+                                expect(getFirstAvailableElement()).toContainText('Group');
+                                clearTimeout(second);
+                                done();
                             }, 100);
                         }
                     }, 10);
@@ -462,33 +458,28 @@ describe('Editors', () => {
                 memberService
             });
 
+             const getFirstAvailableElement = () => view
+                .$('.member-split-wrp .member-split-grid .visible-collection .cell').first();
+
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
-                    const first = setInterval(() => {
+                    const first = setTimeout(() => {
                         if (!isAvailableListEmpty(view)) {
+                            expect(getFirstAvailableElement()).not.toContainText('Group');
                             clearTimeout(first);
-                            view.$('.member-split-wrp .member-split-grid .filter-groups-btn')
+                            view.$('.member-split-wrp .member-split-grid .filter-users-btn')
                                 .first()
                                 .click();
-                            let i = 0;
-                            const second = setInterval(() => {
-                                i++;
-                                if (
-                                    view
-                                        .$('.member-split-wrp .member-split-grid .visible-collection')
-                                        .first()
-                                        .children().length === listUsers.length
-                                ) {
-                                    clearTimeout(second);
-                                    expect(i < 10).toEqual(true);
-                                    done();
-                                }
+
+                            const second = setTimeout(() => {
+                                expect(getFirstAvailableElement()).toContainText('Group');
+                                clearTimeout(second);
+                                done();
                             }, 100);
                         }
                     }, 10);
                 });
             });
-
             window.app
                 .getView()
                 .getRegion('contentRegion')

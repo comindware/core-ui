@@ -1,3 +1,5 @@
+/* global process */
+
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
 import localizationMapRu from 'localizationMapRu';
@@ -16,7 +18,7 @@ const rootView = Marionette.View.extend({
                 {{/each}}</div>
             <div class="js-content-region"></div>
             <div class="js-toast-notification-region"></div>
-		</div>
+        </div>
     `),
 
     className: 'app-region-container',
@@ -49,7 +51,7 @@ export default Marionette.Application.extend({
     },
 
     onStart() {
-        const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
+        const isProduction = process.env.NODE_ENV === 'production';
 
         const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
         const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];

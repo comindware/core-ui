@@ -886,6 +886,7 @@ body.non-selectable {
 
 .toolbar-buttons_container__const {
     flex: 0 0 auto;
+    margin-right: 20px;
 }
 
 .toolbar-panel_container {
@@ -1083,6 +1084,7 @@ body.non-selectable {
     height: 100%;
     min-width: 200px;
     min-height: 200px;
+    display: flex;
 }
 
 .split-panel_container .content-view {

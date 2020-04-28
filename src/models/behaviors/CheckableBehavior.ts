@@ -157,6 +157,10 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         }
     },
 
+    getCheckedModels() {
+        return Object.values(this.checked || {});
+    },
+
     __updateChecked() {
         this.checked = {};
         this.collection.each(model => {

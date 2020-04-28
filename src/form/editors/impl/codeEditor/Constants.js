@@ -20,7 +20,13 @@ export default {
         attribute: 'dev-code-editor-attribute',
         template: 'dev-code-editor-template',
         colorWarning: 'dev-code-editor-warning',
-        colorError: 'dev-code-editor-error'
+        colorError: 'dev-code-editor-error',
+        hintCodemirror: 'CodeMirror-hint'
+    },
+
+    originChange: {
+        paste: 'paste',
+        inputPlus: '+input'
     },
 
     types: {
@@ -75,7 +81,23 @@ export default {
         openBracket: '(',
         closeBracket: ')',
         openBrace: '{',
-        closeBrace: '}'
+        closeBrace: '}',
+        comment: '#'
+    },
+
+    optionsCodemirror: {
+        token: 'token',
+        numberLine: 'numberLine',
+        valueLine: 'valueLine',
+        column: 'column',
+        currentSymbol: 'currentSymbol',
+        cursor: 'cursor',
+        isOpenedLeftBracket: 'isOpenedLeftBracket',
+        isClosedRightBracket: 'isClosedRightBracket',
+        isIntoBracket: 'isIntoBracket',
+        isEmptyLine: 'isEmptyLine',
+        previousSymbol: 'previousSymbol',
+        twoPreviousSymbol: 'twoPreviousSymbol'
     },
 
     tokenTypes: {
@@ -85,5 +107,17 @@ export default {
     queryCompleteHoverType: {
         completion: 'Completion',
         unusedVariables: 'UnusedVariables'
+    },
+
+    modeHintsForN3: {
+        localVariables: 'localVariables',
+        colon: 'colon',
+        prefix: 'prefix',
+        contextFromServer: 'contextFromServer'
+    },
+
+    defaultVariablesNotation3: {
+        value: 'value',
+        item: 'item'
     }
 };

@@ -45,6 +45,16 @@
     border-color: var(--checkbox-border-color);
 }
 
+.checkbox i,
+.icon-true {
+    color: var(--checkbox-checked-color);
+}
+
+.icon-false {
+    color: var(--red);
+    font-size: 1.2em;
+}
+
 .tr-search__input {
     @apply --input-theme;
 
@@ -179,11 +189,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
     fill: var(--error-color);
 }
 
-.grid-header-column .collapsible-btn {
-    background-image: var(--collapse-icon-header);
-    top: -1px;
-}
-
 /* Tabs */
 
 .layout__tab-layout_move-button {
@@ -263,7 +268,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
     padding-right: 10px;
 }
 
-.layout__vertical-layout > div,
+.layout__vertical-layout > div:not(:last-child),
 .layout__vertical-layout-item {
     margin-bottom: 20px;
 }
@@ -318,9 +323,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
     padding: var(--grid-cell-padding);
 }
 
-.cell > .collapsible-btn + .form-label + .editor {
-    left: 5px;
+.cell > .collapsible-btn + .editor {
+    display: inline-flex;
     width: auto;
+    padding: 0;
+    position: static;
 }
 
 .cell > .context_select {
@@ -370,11 +377,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
     margin-right: 2em;
 }
 
-.cell .documents__text,
-.cell .field-documents__more {
-    display: none;
-}
-
 .cell .documents__drop-zone {
     height: auto;
     position: absolute;
@@ -397,16 +399,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .cell .documents__wrapper {
     padding: 0;
     border: none;
-}
-
-.cell .js-tree-first-cell + .editor {
-    position: static;
-    display: inline-flex;
-}
-
-.cell .js-tree-first-cell + .editor,
-.cell .js-tree-first-cell + .editor.editor_bubble {
-    padding: 0;
 }
 
 .layout__popup-view-content > .layout__form-view {
@@ -432,16 +424,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .task-links__i {
     margin-bottom: 10px;
-}
-
-.btn.field-documents__more {
-    width: auto;
-    text-align: center;
-    background-color: var(--grey-200);
-}
-
-.btn.field-documents__more:hover {
-    background-color: var(--grey-300);
 }
 
 .show-more-counter:not(:empty) {

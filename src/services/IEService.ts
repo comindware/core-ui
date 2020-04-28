@@ -25,6 +25,7 @@ export default class IEService extends EdgeService {
         this.__addDocumentContains();
         this.__addParendAppend();
         this.__addOnceListeners();
+        this.__addNumberIsNaN();
 
         super.initialize();
     }
@@ -151,11 +152,17 @@ export default class IEService extends EdgeService {
                     prototype.removeEventListener.call(this, type, wrapper, options);
                     listener.call(this, event);
                 };
-            
+
                 return originAddEventListener.call(this, type, wrapper, options);
             };
 
             prototype.addEventListener = addEventListener;
         });
+    }
+
+    static __addNumberIsNaN() {
+        Number.isNaN = Number.isNaN || function(value) {
+            return typeof value === 'number' && isNaN(value);
+        };
     }
 }

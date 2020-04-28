@@ -1,4 +1,3 @@
-// @flow
 import stepperItem from './templates/stepperItem.hbs';
 
 export default Marionette.View.extend({

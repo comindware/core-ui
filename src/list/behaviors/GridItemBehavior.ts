@@ -1,6 +1,37 @@
-export default function() {
-    // Select this model, and tell our
-    // collection that we're selected
+
+export interface GridItemBehavior {
+    selected?: boolean,
+    checked?: boolean,
+    collapsed?: boolean,
+    highlighted?: boolean,
+    highlightedFragment?: string,
+    /**
+    * Select this model, and tell ourcollection that we're selected
+    */
+    select(options?: any): void,
+    /**
+    * Deselect this model, and tell ourcollection that we're deselected
+    */
+    deselect(options?: any): void,
+    /**
+    * Change selected to the opposite of what is currently is
+    */
+    toggleSelected(isSelected?: boolean, options?: any): void,
+    pointOff(options?: any): void,
+    pointTo(): void,
+    pointTo(): void,
+    check(): void,
+    uncheck(): void,
+    checkSome(): void,
+    toggleChecked(isShiftKeyPressed: boolean): void,
+    highlight(text: string): void,
+    unhighlight(): void,
+    collapse(internal: boolean): void,
+    expand(internal: boolean): void,
+    toggleCollapsed(): void
+}
+
+export default function() : GridItemBehavior {
     return {
         select(options) {
             if (this.selected) {
@@ -44,8 +75,6 @@ export default function() {
             this.trigger('unpointed', this);
         },
 
-        // Change selected to the opposite of what
-        // it currently is
         toggleSelected(isSelect = !this.selected, options) {
             if (isSelect) {
                 this.select(options);
@@ -60,11 +89,12 @@ export default function() {
             }
 
             this.checked = true;
-            this.trigger('checked', this);
 
             if (this.collection) {
                 this.collection.check(this);
             }
+
+            this.trigger('checked', this);
         },
 
         uncheck() {
@@ -73,11 +103,12 @@ export default function() {
             }
 
             this.checked = false;
-            this.trigger('unchecked', this);
 
             if (this.collection) {
                 this.collection.uncheck(this);
             }
+
+            this.trigger('unchecked', this);
         },
 
         checkSome() {
@@ -92,7 +123,7 @@ export default function() {
             }
         },
 
-        toggleChecked(isShiftKeyPressed: boolean) {
+        toggleChecked(isShiftKeyPressed) {
             if (isShiftKeyPressed) {
                 this.collection.checkSmart(this, isShiftKeyPressed);
             } else if (this.checked) {
@@ -102,7 +133,7 @@ export default function() {
             }
         },
 
-        highlight(text: String) {
+        highlight(text) {
             if (this.highlightedFragment === text) {
                 return;
             }
@@ -125,7 +156,7 @@ export default function() {
             this.trigger('unhighlighted');
         },
 
-        collapse(internal: Boolean) {
+        collapse(internal) {
             if (this.collapsed) {
                 return;
             }
@@ -139,7 +170,7 @@ export default function() {
             }
         },
 
-        expand(internal: Boolean) {
+        expand(internal) {
             if (this.collapsed === false) {
                 return;
             }

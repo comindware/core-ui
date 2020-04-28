@@ -1,4 +1,5 @@
 import { keyCode, helpers } from '../../utils';
+import { configurationConstants } from '../meta';
 import GlobalEventService from '../../services/GlobalEventService';
 import _ from 'underscore';
 import Backbone from 'backbone';
@@ -13,13 +14,6 @@ import Backbone from 'backbone';
         collection change (via Backbone.Collection events)
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
-
-const config = {
-    VISIBLE_COLLECTION_RESERVE: 20,
-    VISIBLE_COLLECTION_RESERVE_HALF: 10,
-    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
-    HEIGHT_STOCK_TO_SCROLL: 1 //px, border-collapse property for table (grid-content-wrp) add this 1 px
-};
 
 const heightOptions = {
     AUTO: 'auto',
@@ -106,7 +100,7 @@ export default Marionette.PartialCollectionView.extend({
         });
 
         if (!this.__isChildHeightSpecified) {
-            this.listenTo(this.collection.parentCollection, 'add remove reset ', this.__specifyChildHeight);
+            this.listenTo(this.collection.parentCollection, 'add remove reset ', () => requestAnimationFrame(() => this.__specifyChildHeight()));
         }
 
         this.listenTo(this.collection, 'filter', this.__handleFilter);
@@ -114,6 +108,12 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
 
         this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
+
+        if (this.options.draggable) {
+            this.__onCheckedNone();
+            this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
+            this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+        }
     },
 
     attributes() {
@@ -123,11 +123,44 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     events() {
-        return this.options.disableKeydownHandler
-            ? undefined
-            : {
-                  keydown: '__handleKeydown'
-              };
+        const events: {[key: string]: string} = {
+            dragstart: '__handleDragStart',
+            dragend: '__handleDragEnd',
+            dragover: '__handleDragOver'
+        };
+
+        if (!this.options.disableKeydownHandler) {
+            events.keydown = '__handleKeydown';
+        }
+
+        return events;
+    },
+
+    __handleDragStart(event: { originalEvent: DragEvent }) {
+        const checkedModels = this.collection.getCheckedModels();
+
+        if (!checkedModels.length) {
+            return;
+        }
+
+        this.collection.draggingModels = checkedModels;
+
+        const originalEvent = event.originalEvent;
+        if (!originalEvent.dataTransfer) {
+            return;
+        }
+
+        originalEvent.dataTransfer.setData('Text', this.cid); // fix for FireFox
+    },
+
+    __handleDragEnd() {
+        delete this.collection.draggingModels;
+        this.collection.dragoverModel?.trigger('dragleave');
+    },
+
+    __handleDragOver(event: MouseEvent) {
+        // prevent default to allow drop
+        event.preventDefault();
     },
 
     className() {
@@ -141,7 +174,7 @@ export default Marionette.PartialCollectionView.extend({
         this.__oldParentScrollLeft = this.options.parentEl.scrollLeft;
         this.__specifyChildHeight();
         this.handleResize(false);
-        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
+        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(model));
     },
 
     __specifyChildHeight() {
@@ -188,29 +221,44 @@ export default Marionette.PartialCollectionView.extend({
 
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
-            this._addChild(child, index);
+            requestAnimationFrame(() => {
+                if (collection.visibleModels.find(model => model === child)) {
+                    this._addChild(child, index);
+                }
+            });            
         }
     },
 
     onAddChild(view, child) {
-        this.__updateChildTop(child);
+        this.__updateChildTop(child.model);
     },
 
-    __updateChildTop(child) {
-        if (!child || !this.collection.length) {
-            return;
-        }
+    __updateChildTop(model) {
         requestAnimationFrame(() => {
-            const childModel = child.model;
+            const childView = this.children.findByModel(model);
+            if (!childView || !this.collection.length) {
+                return;
+            }
             if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
-                const index = childModel.collection.indexOf(childModel) + 1;
-                if (index !== childModel.currentIndex) {
-                    child.updateIndex && child.updateIndex(index);
+                const index = model.collection.indexOf(model) + 1;
+                if (index !== model.currentIndex) {
+                    childView.updateIndex && childView.updateIndex(index);
                 }
             }
-            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
-                child.insertFirstCellHtml();
+            if (this.getOption('isTree') && typeof childView.insertFirstCellHtml === 'function') {
+                childView.insertFirstCellHtml();
             }
+        });
+    },
+
+    _removeChildView(view) {
+        this.children._remove(view);
+        requestAnimationFrame(() => {
+            if (view.el.parentElement === this.el) {
+                view.el.remove();
+            }
+            // to execute destroy logic after relayout on scroll
+            setTimeout(() => Marionette.PartialCollectionView.prototype._removeChildView.apply(this, arguments));      
         });
     },
 
@@ -440,12 +488,13 @@ export default Marionette.PartialCollectionView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
         //@ts-ignore
-        const availableHeight = this.options.parentEl?.clientHeight !== this.childHeight ? this.options.parentEl.clientHeight : window.innerHeight;
+        const parentElHeight = this.options.parentEl.clientHeight;
+        const availableHeight = this.el.clientHeight !== this.childHeight && parentElHeight ? parentElHeight : window.innerHeight;
 
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.collection.length) {
-            this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + config.HEIGHT_STOCK_TO_SCROLL;
+            this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + configurationConstants.HEIGHT_STOCK_TO_SCROLL;
         } else {
             this.state.allItemsHeight = 'auto';
         }
@@ -474,7 +523,7 @@ export default Marionette.PartialCollectionView.extend({
             return;
         }
 
-        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE));
+        this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + configurationConstants.VISIBLE_COLLECTION_RESERVE));
         if (this.getOption('showRowIndex') && this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:index');
         }
@@ -525,5 +574,54 @@ export default Marionette.PartialCollectionView.extend({
         this.parent$el.scrollTop(0);
         this.scrollTo(0);
         this.debouncedHandleResizeShort();
+    },
+
+    __onChecked() {
+        if (this.__checkedNone) {
+            this.__setCheckedNone(false);
+        }
+
+        this.__updateDraggableForChecked();
+    },
+
+    __onCheckedNone() {
+        this.__setCheckedNone(true);
+    },
+
+    __setCheckedNone(state: boolean) {
+        this.__checkedNone = state;
+        this.collection.__allDraggable = state;
+        this.gridEventAggregator.trigger('set:draggable', state);
+        if (state) {
+            this.stopListening(this.collection, 'unchecked', this.__onUncheckedOne);
+        } else {
+            this.listenTo(this.collection, 'unchecked', this.__onUncheckedOne);
+        }
+    },
+
+    __onUncheckedOne(model: Backbone.Model) {
+        model.trigger('set:draggable', false);
+    },
+
+    __updateDraggableForChecked() {
+        const checked = this.collection.getCheckedModels();
+
+        const draggable = this.__areSequencial(checked);
+
+        checked.forEach((model: Backbone.Model) => model.trigger('set:draggable', draggable));
+    },
+
+    __areSequencial(models: Array<Backbone.Model>) {
+        const gridIndexes = models.map(model => this.collection.indexOf(model));
+
+        return gridIndexes
+            .sort((a, b) => a - b)
+            .every((index, i) => {
+                if (i === 0) {
+                    return true;
+                }
+                const previousIndex = gridIndexes[i - 1];
+                return index - previousIndex === 1;
+            });
     }
 });

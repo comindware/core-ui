@@ -4,7 +4,9 @@ import InfoButtonView from './InfoButtonView';
 import InfoMessageView from './InfoMessageView';
 import Marionette from 'backbone.marionette';
 import _ from 'underscore';
+import Backbone from 'backbone';
 import { classes } from '../../meta';
+import { GraphModel } from '../../../components/treeEditor/types';
 
 /**
  * @name GridHeaderView
@@ -18,9 +20,9 @@ import { classes } from '../../meta';
  * @param {Object} options.gridEventAggregator ?
  * */
 
- // for manual selectionCellWidth calculating
- const baseSelectionCellWidth = 34;
- const oneSymbolWidth = 8;
+// for manual selectionCellWidth calculating
+const baseSelectionCellWidth = 34;
+const oneSymbolWidth = 8;
 
 const GridHeaderView = Marionette.View.extend({
     initialize(options) {
@@ -30,7 +32,7 @@ const GridHeaderView = Marionette.View.extend({
         if (!options.gridEventAggregator) {
             throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
         }
-
+        const columnsCollection = options.columnsCollection;
         this.gridEventAggregator = options.gridEventAggregator;
         this.collection = options.gridEventAggregator.collection;
 
@@ -39,9 +41,13 @@ const GridHeaderView = Marionette.View.extend({
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
-        if (options.showRowIndex) {
-            this.listenTo(this.collection, 'reset update', this.__updateIndexCellWidth);
-        }
+        this.listenTo(columnsCollection, 'change:width', (model: GraphModel, newColumnWidth: any) => {
+            const index = columnsCollection.indexOf(model);
+            this.__setColumnWidth(index, newColumnWidth);
+        });
+
+        this.__modelForDrag = new Backbone.Model();
+        this.listenTo(this.__modelForDrag, 'dragleave', this.__onModelDragLeave);
     },
 
     template: Handlebars.compile(template),
@@ -63,7 +69,6 @@ const GridHeaderView = Marionette.View.extend({
         'pointerdown .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
-        dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         'mouseenter .grid-header-column': '__handleColumnSelect',
         'click .grid-header-column-title': '__handleColumnSort',
@@ -108,9 +113,12 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
         if (this.options.isTree) {
+            const expandOnShow = this.getOption('expandOnShow')
             this.$el
-                .find('.header-column-wrp')[0]
-                .insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${this.getOption('expandOnShow') === true ? classes.expanded : ''}"></span>`);
+                .find('.header-column-wrp')[0]                
+                .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
+                fa fa-angle-down ${expandOnShow ? classes.expanded : ''}"></i/`);
+            this.collapsed = !this.expandOnShow;
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -134,9 +142,6 @@ const GridHeaderView = Marionette.View.extend({
             }
             this.__updateColumnSorting(column, el);
         });
-        if (this.options.showRowIndex) {
-            this.__updateIndexCellWidth();
-        }
     },
 
     updateSorting() {
@@ -257,7 +262,7 @@ const GridHeaderView = Marionette.View.extend({
         const currentWidth = this.options.columns[index].width;
         const newColumnWidthPX = `${newColumnWidth}px`;
 
-        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidthPX === currentWidth) {
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH || newColumnWidth === currentWidth) {
             return;
         }
 
@@ -297,36 +302,43 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleDragOver(event: MouseEvent) {
-        if (!this.collection.draggingModel) {
-            return;
-        }
         // prevent default to allow drop
         event.preventDefault();
     },
 
-    __handleDragEnter(event: MouseEvent) {
-        if (this.__allowDrop()) {
+    __handleDragEnter(event: DragEvent) {
+        this.__setDragEnterModel(this.__modelForDrag);
+    },
+
+    __setDragEnterModel(model: Backbone.Model) {
+        const previousDragEnterModel = this.collection.dragoverModel;
+        if (previousDragEnterModel === model) {
+            return;
+        }
+        
+        previousDragEnterModel?.trigger('dragleave');
+        this.collection.dragoverModel = model;
+
+        if (this.__isDropAllowed()) {
             this.el.classList.add(classes.dragover);
         }
     },
 
-    __handleDragLeave(event: MouseEvent) {
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-        }
-    },
-
-    __handleDrop(event: MouseEvent) {
+    __handleDrop(event: DragEvent) {
         event.preventDefault();
-        if (this.__allowDrop()) {
-            this.el.classList.remove(classes.dragover);
-            this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModel);
-            delete this.collection.draggingModel;
+        this.el.classList.remove(classes.dragover);
+        if (this.__isDropAllowed()) {
+            this.gridEventAggregator.trigger('drag:drop', this.collection.draggingModels, this.model);
         }
+        delete this.collection.draggingModels;
     },
 
-    __allowDrop() {
-        if (!this.collection.draggingModel || this.collection.indexOf(this.collection.draggingModel) < 0) {
+    __onModelDragLeave() {
+        this.el.classList.remove(classes.dragover);
+    },
+
+    __isDropAllowed() {
+        if (!this.collection.draggingModels || this.collection.draggingModels.some(draddingModel => this.collection.indexOf(draddingModel) < 1)) {
             return false;
         }
         return true;
@@ -346,50 +358,32 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __updateColumnSorting(column, el) {
-        const oldSortingEl = el.querySelector('.js-sorting');
-        if (oldSortingEl) {
-            oldSortingEl.parentElement.removeChild(oldSortingEl);
-        }
-        if (column.sorting) {
-            const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-            const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
-            el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
-        }
+        requestAnimationFrame(() => {
+            const oldSortingEl = el.querySelector('.js-sorting');
+            if (oldSortingEl) {
+                oldSortingEl.parentElement.removeChild(oldSortingEl);
+            }
+            if (column.sorting) {
+                const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+                const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+                el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
+            }
+        });
     },
 
-    __updateState(collection, checkedState) {
-        switch (checkedState) {
+    __updateState(collection, state) {
+        switch (state) {
             case 'checked':
-                this.ui.checkbox.addClass(classes.checked);
-                this.ui.checkbox.removeClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
                 break;
             case 'checkedSome':
-                this.ui.checkbox.removeClass(classes.checked);
-                this.ui.checkbox.addClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
                 break;
             case 'unchecked':
             default:
-                this.ui.checkbox.removeClass(classes.checked);
-                this.ui.checkbox.removeClass(classes.checked_some);
+                this.ui.checkbox.get(0).innerHTML = '';
                 break;
         }
-    },
-    
-    __updateIndexCellWidth() {
-        if (!this.options.showCheckbox) {
-            return;
-        }
-        const selectionCellEl = this.el.firstElementChild;
-
-        if (!this.collection.length) {
-            selectionCellEl.style.width = '';
-            selectionCellEl.style.minWidth = '';
-            return;
-        } 
-        const lengthSymbolCount = this.collection.length.toString().length;
-        const width = `${baseSelectionCellWidth + (lengthSymbolCount) * oneSymbolWidth}px`;
-        selectionCellEl.style.width = width;        
-        selectionCellEl.style.minWidth = width;        
     }
 });
 

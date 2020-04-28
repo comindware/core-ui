@@ -134,6 +134,7 @@ export default {
             case columnType.id:
             case columnType.users:
             case columnType.reference:
+            case columnType.role:    
             case columnType.enumerable: {
                 const datasourceId = filtersConfigurationModel.get('datasourceId');
                 model.set('datasourceId', datasourceId, { silent: true });
@@ -279,6 +280,7 @@ export default {
             case columnType.users:
             case columnType.reference:
             case columnType.enumerable:
+            case columnType.role:    
                 filterPredicateCollection = new Backbone.Collection(
                     [
                         {

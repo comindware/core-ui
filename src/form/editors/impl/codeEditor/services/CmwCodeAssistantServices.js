@@ -2,6 +2,7 @@ import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
 import LocalizationService from '../../../../../services/LocalizationService';
+import { contextIconType } from '../../../../../Meta';
 
 export default {
     getAutoCompleteContext() {
@@ -64,7 +65,7 @@ export default {
             if (options.token.string === null) {
                 return;
             }
-            if (currentArray.length) {
+            if (currentArray && currentArray.length) {
                 completion = currentArray.filter(item => item.text.toLowerCase().indexOf(options.token.string.toLowerCase()) > -1);
                 autoCompleteObject = {
                     from: {
@@ -86,11 +87,23 @@ export default {
             }
         } else if (options.token.string === constants.activeSymbol.dollar) {
             let listToolbar;
-            const result = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
-            if (result.length) {
-                options.autoCompleteModel.set({ attributes: result });
+            let attributes;
+            if (options.attributes) {
+                attributes = options.attributes;
+            } else {
+                attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
+            }
+            if (attributes.length) {
+                attributes.forEach(atribute => { 
+                    const type = atribute.type.toLowerCase();
+                    atribute.icons = Core.meta.contextIconType[type];
+                    if (atribute.alias) {
+                        atribute.text = atribute.alias;
+                    }
+                });
+                options.autoCompleteModel.set({ attributes });
                 this.autoCompleteContext = constants.autoCompleteContext.attributes;
-                listToolbar = this.__renderConfigListToolbar(result);
+                listToolbar = this.__renderConfigListToolbar(attributes);
             } else {
                 listToolbar = [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }];
             }
@@ -139,6 +152,32 @@ export default {
                 };
             });
             return list;
+        }
+    },
+
+    async getCmwOntology(options) {
+        const { cursor, token } = options;
+        this.setLoading(true);
+        try {
+            const completeHoverQuery = {
+                sourceCode: this.codemirror.getValue(),
+                cursorOffset: this.__countOffset(),
+                sourceType: constants.typeScript.expression,
+                queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+                useOntologyLibriary: false,
+                solution: this.options.solution
+            };
+            const ontologyModel = await this.options.ontologyService.getTemplates(completeHoverQuery);
+            this.autoCompleteContext = constants.autoCompleteContext.templates;
+            const list = this.__renderConfigListToolbar(ontologyModel);
+            const autoCompleteObject = {
+                from: options.cursor,
+                to: options.cursor,
+                list
+            };
+            return autoCompleteObject;
+        } finally {
+            this.setLoading(false);
         }
     }
 };

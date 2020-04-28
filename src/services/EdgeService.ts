@@ -22,7 +22,7 @@ export default class EdgeService {
         Object.defineProperty(SVGElement.prototype, 'insertAdjacentHTML', {
             get() {
                 return (position: InsertPosition, html: string) => {
-                    const container = this.ownerDocument.createElementNS('http://www.w3.org/2000/svg');
+                    const container = this.ownerDocument.createElementNS('http://www.w3.org/2000/svg', 'svg');
                     const parent = this.parentNode;
                     let node;
                     let first_child;

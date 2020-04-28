@@ -1,4 +1,3 @@
-// @flow
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
@@ -159,7 +158,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             mode: stateModes.VIEW,
             displayValue: null
         });
-        this.__value(null, false);
+        this.__value(null, true);
         this.focus();
     },
 
@@ -185,34 +184,50 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             return;
         }
 
-        const values = this.getSegmentValue();
-        let newValueObject = {
-            days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0
-        };
-        this.focusableParts.forEach((seg, i) => {
-            newValueObject[seg.id] = Number(values[i]);
-        });
+        let valueObject = this.__getObjectValueFromInput();
 
-        newValueObject = this.__checkMaxMinObject(newValueObject, this.options.max, this.options.min);
+        valueObject = this.__checkMaxMinObject(valueObject, this.options.max, this.options.min);
 
         this.__updateState({
             mode: stateModes.VIEW,
-            displayValue: newValueObject
+            displayValue: valueObject
         });
 
         if (this.triggeredByClean) {
             this.triggeredByClean = false;
-            if (Object.values(newValueObject).every(value => value === 0)) {
+            if (Object.values(valueObject).every(value => value === 0)) {
                 this.ui.input.val(null);
                 this.__value(null, true);
                 return;
             }
         }
 
-        this.__value(moment.duration(this.state.displayValue).toISOString(), true);
+        this.__value(moment.duration(valueObject).toISOString(), true);
+    },
+
+    __getObjectValueFromInput() {
+        const values = this.getSegmentValue();
+        const valueObject = {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+        };
+        this.focusableParts.forEach((seg, i) => {
+            valueObject[seg.id] = Number(values[i]);
+        });
+
+        const days = valueObject.days;
+
+        const devider = 24 / this.options.hoursPerDay;
+
+        const realDays = Math.floor(days / devider);
+        const daysRemainder = days % devider;
+
+        valueObject.days = realDays;
+        valueObject.hours += daysRemainder * this.options.hoursPerDay;
+
+        return valueObject;
     },
 
     getCaretPos() {
@@ -588,6 +603,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         if (object === null) {
             return null;
         }
+
         let totalMilliseconds = moment.duration(object).asMilliseconds();
         const result = {
             days: 0,
@@ -627,9 +643,9 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             this.state.displayValue = newState.displayValue;
         }
 
-        this.state.displayValue = this.__normalizeDuration(this.state.displayValue);
+        const normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
         const inEditMode = this.state.mode === stateModes.EDIT;
-        const val = this.__createInputString(this.state.displayValue, inEditMode);
+        const val = this.__createInputString(normalizedDisplayValue, inEditMode);
         this.ui.input.val(val);
         if (this.options.showTitle && !inEditMode) {
             this.$editorEl.prop('title', val);
