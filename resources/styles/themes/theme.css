@@ -677,6 +677,18 @@ tr:not(:first-child) .cell_selection {
     border-top: none;
 }
 
+.cell__html-string {
+    height: 100%;
+    max-height: var(--grid-cell-height);
+    overflow: hidden;
+    display: block;
+    text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
+}
+
+.cell__html-string > * {
+    height: 100%;
+}
+
 /* for IE*/
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .cell_selection, .cell_selection-index, .grid-header-column {
