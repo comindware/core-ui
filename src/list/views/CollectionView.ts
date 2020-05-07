@@ -74,6 +74,7 @@ export default Marionette.PartialCollectionView.extend({
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
         this.height = options.height;
+        this.expandOnShow = options.expandOnShow;
         this.minimumVisibleRows = this.getOption('minimumVisibleRows') || 0;
 
         if (options.height === undefined) {
@@ -206,6 +207,7 @@ export default Marionette.PartialCollectionView.extend({
         const models = this.collection.visibleModels;
 
         models.forEach((child, index) => {
+            child.set('collapsed', !this.expandOnShow);
             this._addChild(child, index);
         });
         this.children._updateLength();
