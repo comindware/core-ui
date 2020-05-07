@@ -269,7 +269,7 @@ class CellViewFactory implements ICellViewFactory {
             }
         } else {
             result = {
-                text: value.name,
+                text: value[column.displayAttribute] || value.name,
                 ...value
             };
         }

@@ -483,7 +483,7 @@ export default Marionette.CollectionView.extend({
         const oldAllItemsHeight = this.state.allItemsHeight;
 
         const availableHeight =
-            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
+            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight * this.collection.length
                 ? this.el.parentElement.clientHeight
                 : window.innerHeight;
 
