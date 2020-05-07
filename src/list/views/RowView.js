@@ -334,30 +334,33 @@ export default Marionette.View.extend({
             });
         }
         if (column) {
+            // todo: find more clear way to handle this case
+            const target = e.target;
+            const isErrorButtonClicked = target && target.classList.contains('js-error-button');
+            const isFocusChangeNeeded = columnIndex !== this.lastPointedIndex && target && !isErrorButtonClicked;
+            let isFocusEditor;
             if (
                 this.__isColumnEditable(columnIndex) ||
                 // temporary desicion for complex cells
                 (column.type === 'Complex' && [complexValueTypes.expression, complexValueTypes.script].includes(this.model.get(column.key)?.type))
             ) {
-                // todo: find more clear way to handle this case
-                const target = e.target;
-                const isErrorButtonClicked = target && target.classList.contains('js-error-button');
-                const isFocusChangeNeeded = columnIndex !== this.lastPointedIndex && target && !isErrorButtonClicked;
                 // change boolean value immediatly
                 if (column.type === objectPropertyTypes.BOOLEAN && isFocusChangeNeeded) {
                     const newValue = column.storeArray ? [!this.model.get(column.key)?.[0]] : !this.model.get(column.key);
                     this.model.set(column.key, newValue);
                 }
-                setTimeout(
-                    () => this.__selectPointed(columnIndex, true, isFocusChangeNeeded, isErrorButtonClicked),
-                    11 //need more than debounce delay in selectableBehavior calculateLength
-                );
+                isFocusEditor = true;
             } else {
                 const values = this.model.get(column.key);
                 if (values?.length > 1 && this.multiValueShownIndex !== columnIndex) {
                     this.__showDropDown(columnIndex);
                 }
+                isFocusEditor = false;
             }
+            setTimeout(
+                () => this.__selectPointed(columnIndex, isFocusEditor, isFocusChangeNeeded, isErrorButtonClicked),
+                11 //need more than debounce delay in selectableBehavior calculateLength
+            );
         }
         this.trigger('click', this.model);
     },
@@ -516,25 +519,13 @@ export default Marionette.View.extend({
         }
         const column = this.getOption('columns')[columnIndex];
 
-        if (isFocusEditor && isFocusChangeNeeded && this.lastPointedIndex !== columnIndex) {
+        if (isFocusEditor && isFocusChangeNeeded && this.lastPointedIndex !== columnIndex && this.__isColumnEditable(columnIndex)) {
             const cell = this.__getEditableCell(column);
             this.__insertEditableCell({ column, index: columnIndex, CellView: cell });
             pointedEl = this.__getCellByColumnIndex(columnIndex); // override pointedEl because of replaceChild
             this.gridEventAggregator.pointedCell = columnIndex;
             this.lastPointedIndex = columnIndex;
             this.cellViewsByKey[column.key]?.focus?.();
-            // const editors = pointedEl.querySelectorAll('input,[class~=editor]');
-            // const input = pointedEl.querySelector('input');
-
-            // if (input) {
-            //     if (input.classList.contains('input_duration')) {
-            //         setTimeout(() => input.focus(), 0);
-            //     } else {
-            //         input.focus();
-            //     }
-            // } else if (editors) {
-            //     editors[0].focus();
-            // }
         } else if (this.lastPointedIndex > -1 && isFocusChangeNeeded) {
             this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
             pointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);

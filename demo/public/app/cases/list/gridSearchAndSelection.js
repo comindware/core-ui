@@ -11,7 +11,7 @@ export default function() {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
+            referenceCell: { id: 'ref.1', displayAttribute: `Reference ${i}`},
             enumCell: { valueExplained: ['123'] },
             documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }],
             textCell1: [`Text Cell ${i}`, `Text Cell ${i + 1}`],
@@ -58,7 +58,8 @@ export default function() {
         {
             key: 'referenceCell',
             type: 'Instance',
-            title: 'Reference Cell'
+            title: 'Reference Cell',
+            displayAttribute: 'displayAttribute'
         },
         {
             key: 'documentCell',
