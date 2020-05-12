@@ -1,5 +1,6 @@
 import LocalizationService from 'services/LocalizationService';
-export const contextIconType = {
+
+const meta = {
     reference: 'link',
     instance: 'link',
     instanceproperty: 'link',
@@ -38,8 +39,17 @@ export const contextIconType = {
     process: 'cogs',
     case: 'cube',
     list: 'align-justify',
-    group: 'clone'
+    group: 'clone',
+    rolesCatalog: 'user-shield',
+    organizationalUnit: 'sitemap'
 };
+
+Object.entries(meta).forEach(([key, value]) => {
+    const keyUp = key[0].toUpperCase() + key.slice(1); 
+    meta[keyUp] = value;
+})
+
+export const contextIconType = meta;
 
 export const objectPropertyTypes = {
     STRING: 'String',
