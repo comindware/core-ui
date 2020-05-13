@@ -178,12 +178,25 @@ export default Marionette.View.extend({
         if (!changed) {
             return;
         }
-        this.getOption('columns').forEach((column: Column, index: number) => {
-            if (!Object.prototype.hasOwnProperty.call(changed, column.key) || this.__isColumnEditable(index)) {
+        this.getOption('columns').forEach((column, index) => {
+            if (!this.__isNeedToReplaceCell({ changed, column, index })) {
                 return;
             }
             this.__insertReadonlyCell({ column, index, isReplace: true });
         });
+    },
+
+    __isNeedToReplaceCell({ changed, column, index }) {
+        if (column.getHidden?.(this.model)) {
+            return false;
+        }
+
+        const isCellValueChanged = Object.prototype.hasOwnProperty.call(changed, column.key);
+        if (!isCellValueChanged) {
+            return false;
+        }
+
+        return this.lastPointedIndex !== index;
     },
 
     __hasCellErrors(column: Column) {
@@ -537,7 +550,9 @@ export default Marionette.View.extend({
         if (isErrorButtonClicked) {
             this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
         }
-        pointedEl.classList.add(classes.cellFocused);
+        if (this.gridEventAggregator.isEditable) {
+            pointedEl.classList.add(classes.cellFocused);
+        }
         this.lastPointedEl = pointedEl;
     },
 
