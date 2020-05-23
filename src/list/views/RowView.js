@@ -147,9 +147,6 @@ export default Marionette.View.extend({
         this.onDestroy();
 
         const itemsHTML: Array<string> = (this.itemsHTML = []);
-        // if (this.getOption('showCheckbox')) {
-        //     this.__insertCellChechbox();
-        // }
 
         const customCells: Array<{ index: number, CellView: Marionette.View<Backbone.Model> }> = [];
         this.options.columns.forEach((column: Column, index: number) => {

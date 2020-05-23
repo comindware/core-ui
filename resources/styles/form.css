@@ -97,12 +97,12 @@ rgba(5,117,189,.5) // user avatar btn
     display: none;
 }
 .form-label__info-button-anchor,
-.form-label__error-button-anchor { 
-    position:absolute; 
-    width:0; 
-    top:-2px; 
-    bottom:-4px; 
-    left:5px; 
+.form-label__error-button-anchor {
+    position:absolute;
+    width:0;
+    top:-2px;
+    bottom:-4px;
+    left:5px;
 }
 
 .form-label__tooltip-panel {
@@ -1070,6 +1070,10 @@ input[type="color"], .colorpicker{
     margin-top: 165px;
 }
 
+.simplified-panel_panel[noSelected].dropdown__wrp_up .bubbles {
+    margin-top: -166px; /* dirty hack and magic pixel for dropdowns pixel */
+}
+
 .simplified-panel_container[noSelected] {
     height: 70px;
 }
@@ -1156,7 +1160,7 @@ input[type="color"], .colorpicker{
 }
 
 .user-edit-wrp {
-    display: flex;    
+    display: flex;
     align-items: center
 }
 
