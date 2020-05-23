@@ -130,7 +130,6 @@ export default {
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
-        WindowService.closePopup();
         this.loadingContext = {
             config,
             leavingPromise: null,
@@ -153,6 +152,7 @@ export default {
             return;
         }
 
+        WindowService.closePopup();
         this.loadingContext.loaded = true;
         // reset loading region
         window.app
