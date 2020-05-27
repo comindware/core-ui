@@ -17,6 +17,8 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'js-global-popup-stack',
+
     ui: {
         fadingPanel: '.js-fading-panel'
     },
@@ -92,7 +94,7 @@ export default Marionette.View.extend({
     },
 
     showElInPopup($el, options) {
-        const { fadeBackground, transient } = options;
+        const { fadeBackground, transient, useWrapper } = options;
 
         if (!transient) {
             this.__removeTransientPopups();
@@ -113,7 +115,7 @@ export default Marionette.View.extend({
         };
 
         this.$el.append(regionEl);
-        this.addRegion(popupId, {
+        const region = this.addRegion(popupId, {
             el: regionEl
         });
         this.prevSublingOfContentEl = $el.prev();
@@ -121,9 +123,13 @@ export default Marionette.View.extend({
             delete this.prevSublingOfContentEl;
             this.parentOfContentEl = $el.parent();
         }
-        this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
+        if (useWrapper) {
+            this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
 
-        $el.appendTo(this.getRegion(popupId).$el.children('.modal-window-wrapper'));
+            $el.appendTo(region.$el.children('.modal-window-wrapper'));
+        } else {
+            $el.appendTo(region.$el);
+        }
 
         if (fadeBackground) {
             let lastIndex = -1;

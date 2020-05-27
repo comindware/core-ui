@@ -68,16 +68,13 @@ body {
   z-index: 1;
 }
 
+<<<<<<< HEAD
 .cell.error .form-label__error-button{
   height: 0;
   width: 0;
   border-top: 16px solid #e61212;
   border-right: 16px solid transparent;
   vertical-align: top;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .cell.error .form-label__error-button:after {
@@ -85,10 +82,33 @@ body {
   color: #fff;
   position: absolute;
   vertical-align: top;
-    top: -16px;
+  top: 0;
   font-size: 10px;
   font-weight: bold;
   left: 3px;
+=======
+.cell.error .form-label__error-button {
+    height: 0;
+    width: 0;
+    border-top: 16px solid #e61212;
+    border-right: 16px solid transparent;
+    vertical-align: top;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.cell.error .form-label__error-button::after {
+    content: '!';
+    color: #ffffff;
+    position: absolute;
+    vertical-align: top;
+    top: -16px;
+    font-size: 10px;
+    font-weight: bold;
+    left: 3px;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
 .cell.error .form-label__error-button:before{
@@ -471,6 +491,7 @@ svg.svg-grid-icons {
   z-index: 20;
 }
 
+<<<<<<< HEAD
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
   box-shadow: var(--grid-header-border-first);
 }
@@ -478,6 +499,25 @@ svg.svg-grid-icons {
   box-shadow: var(--grid-header-border-last);
 }
 
+.cell {
+  height: var(--grid-cell-height);
+  line-height: var(--grid-cell-height);
+  font-size: var(--grid-cell-size);
+  padding: var(--grid-cell-padding);
+  border: 1px solid #e2e2e2;
+  border-top: none;
+  position: relative;
+}
+
+td.cell:not(:first-child) {
+  border-left: none;
+=======
+.grid__headless tr:first-child .cell,
+.grid__headless tr:first-child .cell_selection,
+.grid__headless tr:first-child .cell_selection-index {
+    border-top: 1px solid #e2e2e2;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
+}
 
 .cell.editor {
   line-height: initial;
@@ -516,6 +556,15 @@ svg.svg-grid-icons {
   overflow: auto;
 }
 
+<<<<<<< HEAD
+.cell_selection {
+  color: var(--grid-selection-color);
+  width: var(--grid-selection-width);
+  padding: 0;
+}
+
+=======
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 .cell_draggable {
   color: var(--grid-selection-color);
   width: 25px;
@@ -525,6 +574,8 @@ svg.svg-grid-icons {
 .cell_selection[draggable], .cell_selection-index[draggable] {
   cursor: move;
 }
+<<<<<<< HEAD
+=======
 
 .cell_selection[draggable]:hover::before,
 .cell_selection-index[draggable]:hover::before {
@@ -537,6 +588,8 @@ svg.svg-grid-icons {
     left: 1px;
     transform: translateY(-50%);
 }
+
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 .grid__headless .cell_selection:first-child {
   box-shadow: var(--grid-cell-border-first-headless);
 }
@@ -581,12 +634,25 @@ tr:hover .cell_selection-index {
   transition: background-color 300ms ease-in-out;
 }
 
+<<<<<<< HEAD
+.cell .checkbox,
+.cell_selection-index > .checkbox,
+.cell_selection > .checkbox {
+  font-size: var(--grid-checkbox-icon-size);
+  width: var(--grid-checkbox-size);
+  height: var(--grid-checkbox-size);
+  margin: 0 auto;
+}
+
+.cell .input {
+  padding: var(--grid-cell-input-padding);
+=======
 .cell .checkbox {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
-    margin: 0 auto;
-    display: flex;
+    margin: 0;
+    display: inline-flex;
 }
 
 .cell_selection > .checkbox {
@@ -606,19 +672,50 @@ tr:hover .cell_selection-index {
     right: 5px;
     top: 50%;
     transform: translate(0, -50%);
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
-/* stylelint-disable */
-
-_:-ms-lang(x),
-.cell .checkbox,
-.cell_selection-index > .checkbox,
-.cell_selection > .checkbox {
-    position: static;
-    margin: 0 auto;
-    transform: translate(0, 0);
+.grid-selection-cell-all {
+  min-width: var(--grid-selection-width);
 }
 
+.grid-selection-cell-all {
+  height: var(--grid-header-height);
+}
+
+.grid-selection-cell-all .cell_selection{
+  height: var(--grid-header-height);
+  line-height: var(--grid-header-height);
+  box-shadow: var(--grid-header-border-first);
+  background-color: var(--grid-header-selection-bg);
+}
+
+.cell_selection, .cell_selection-index {
+  padding: 0 5px;
+  color: var(--grid-selection-color);
+  background-color: var(--grid-selection-bg);
+  border: 1px solid #e2e2e2;
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  width: 47px;
+  min-width: 47px;
+  background-clip: padding-box;
+  vertical-align: middle;
+}
+
+<<<<<<< HEAD
+tr:not(:first-child) .cell,
+tr:not(:first-child) .cell_selection,
+tr:not(:first-child) .cell_selection-index {
+    border-top: none;
+}
+
+.cell_selection-index > .checkbox {
+  float: right;
+  margin-top: 2px;
+=======
 .cell {
     height: var(--grid-cell-height);
     line-height: var(--grid-cell-height);
@@ -641,43 +738,22 @@ _:-ms-lang(x),
     border-left: 1px solid #e2e2e2;
 }
 
-.grid-selection-cell-all {
-  min-width: var(--grid-selection-width);
-}
-
-.grid-selection-cell-all {
-  height: var(--grid-header-height);
-}
-
-.grid-selection-cell-all .cell_selection{
-  height: var(--grid-header-height);
-  line-height: var(--grid-header-height);
-  box-shadow: var(--grid-header-border-first);
-  background-color: var(--grid-header-selection-bg);
-}
-
-.cell_selection, .cell_selection-index {
-  padding: 0 5px;
-  color: var(--grid-selection-color);
-  background-color: var(--grid-selection-bg);
-  white-space: nowrap;
-  position: sticky;
-  left: 0;
-  width: 47px;
-  min-width: 47px;
-  background-clip: padding-box;
-  vertical-align: middle;
-  border: 1px solid #e2e2e2;
-  border-top: none;
-}
-
-tr:not(:first-child) .cell,
-tr:not(:first-child) .cell_selection {
+.cell_selection,
+.cell_selection-index {
+    padding: 0 5px;
+    color: var(--grid-selection-color);
+    background-color: var(--grid-selection-bg);
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    width: 47px;
+    min-width: 47px;
+    background-clip: padding-box;
+    vertical-align: middle;
+    border: 1px solid #e2e2e2;
     border-top: none;
-}
-
-.grid-header .cell_selection-index > .checkbox {
-    border-top: none;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
 /* for IE*/
@@ -692,11 +768,23 @@ tr:not(:first-child) .cell_selection {
   width: calc(100% - var(--grid-selection-width));
 }
 
+<<<<<<< HEAD
+.cell_selection-index:not(:empty) + .grid-header-view {
+  width: calc(100% - var(--grid-selection-index-width));
+}
+
 .cell__dots{
   position: absolute;
   top: 0;
   left: 3px;
   width: 2px;
+=======
+.cell__dots {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    width: 2px;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
 .cell__dots svg{
@@ -712,6 +800,83 @@ tr:not(:first-child) .cell_selection {
   outline-color: #e61212 !important;
 }
 
+<<<<<<< HEAD
+.cell.selected:not(.cell_selection){
+  outline: var(--focus) !important;
+}
+
+.cell_selection.cell-focused{
+  outline: none !important;
+}
+
+.collapsible-btn {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  /*background-image: var(--collapse-icon);*/
+  vertical-align: middle;
+  z-index: 1;
+}
+
+.context-collapsible-btn {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-image: var(--collapse-icon); */
+  vertical-align: middle;
+  transition-property: transform;
+  transition-duration: 300ms;
+  transform: rotate(90deg);
+}
+
+.collapsible-btn svg, .context-collapsible-btn svg{
+    width: 70%;
+    height: 70%;
+}
+
+.collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(90deg);
+}
+
+.context-collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(0deg);
+}
+
+.cell .collapsible-btn{
+  transform: rotate(-90deg);
+  background: none;
+  fill: #636262;
+  left: 0;
+}
+
+.cell .collapsible-btn svg{
+  transform: translate(3px, 2px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded svg {
+  transform: translate(3px, 1px);
+}
+
+.cell .collapsible-btn.collapsible-btn_expanded{
+  transform: rotate(0deg);
+  background: none;
+}
+
+.grid-header-column-content .collapsible-btn {
+  top: -1px;
+=======
 .collapsible-btn {
     font-size: 1.4em;
     cursor: pointer;
@@ -730,22 +895,19 @@ tr:not(:first-child) .cell_selection {
     right: 5px;
     font-size: 1.4em;
     color: #636262;
-  cursor: pointer;
+    cursor: pointer;
     margin-right: 3px;
-  transition-property: transform;
-  transition-duration: 300ms;
+    transition-property: transform;
+    transition-duration: 300ms;
 }
 
 .collapsible-btn:not(.collapsible-btn_expanded) {
-  transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
 .context-collapsible-btn:not(.collapsible-btn_expanded) {
     transform: rotate(90deg);
-}
-
-.grid-header-column-content .collapsible-btn {
-  top: -1px;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
 /* dropdown-list */
@@ -822,7 +984,7 @@ tr:not(:first-child) .cell_selection {
 }
 .editor_bubble--edit.editor_bubble--delete .icon-edit {
   right: 20px;
-}
+}  
 .editor_bubble--delete .bubbles__i:hover a,
 .editor_bubble--delete .bubbles__i:hover span,
 .editor_bubble--edit .bubbles__i:hover a,
@@ -864,7 +1026,7 @@ tr:not(:first-child) .cell_selection {
 .bubble__pencil-edit:hover a,
 .bubble__pencil-edit:hover span {
 
-
+  
 }
 .editor_readonly .bubble__pencil-edit:hover a,
 .editor_disabled .bubble__pencil-edit:hover span {
@@ -1431,7 +1593,7 @@ tr:not(:first-child) .cell_selection {
   border-radius: 6px;
   padding: 20px;
   height: 100%;
-  min-width: 120px;
+  min-width: 120px; 
   min-height: 100px;
   display: flex;
 }

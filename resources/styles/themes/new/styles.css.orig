@@ -49,12 +49,6 @@
     font-size: 1.2em;
 }
 
-.icon-true, .icon-false {
-  margin: 0 auto;
-  display: flex;
-  width: 10px;
-}
-
 .tr-search__input {
   @apply --input-theme;
   height: var(--input-height);
@@ -176,6 +170,14 @@ svg.svg-grid-icons.svg-icons_flag-none {
   fill: var(--error-color);
 }
 
+<<<<<<< HEAD
+.grid-header-column .collapsible-btn {
+  background-image: var(--collapse-icon-header);
+  top: -1px;
+}
+
+=======
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 /* Tabs */
 
 .layout__tab-layout_move-button {
@@ -302,11 +304,17 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: var(--grid-cell-padding);
 }
 
+<<<<<<< HEAD
+.cell > .collapsible-btn + .form-label + .editor {
+  left: 5px;
+  width: auto;
+=======
 .cell > .collapsible-btn + .editor {
     display: inline-flex;
     width: auto;
     padding: 0;
     position: static;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 }
 
 .cell > .context_select {
@@ -382,7 +390,20 @@ svg.svg-grid-icons.svg-icons_flag-none {
   border: none;
 }
 
+<<<<<<< HEAD
+.cell .js-tree-first-cell + .editor {
+  position: static;
+  display: inline-flex;
+}
+.cell .js-tree-first-cell + .editor,
+.cell .js-tree-first-cell + .editor.editor_bubble {
+  padding: 0;
+}
+
 .layout__popup-view-content>.layout__form-view {
+=======
+.layout__popup-view-content > .layout__form-view {
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
     display: flex;
 }
 

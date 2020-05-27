@@ -2,7 +2,16 @@ import DemoService from './app/DemoService';
 import ContentView from './app/views/ContentView';
 
 export default {
-    showCase(sectionId = 'components', groupId = 'FormLayout', caseId) {
+    showCase() {
+        if (!this.isRunned)  {
+            setTimeout(() => this.__showCase.apply(this, arguments), 1000);
+            this.isRunned = true;
+        } else {
+            this.__showCase.apply(this, arguments);
+        }
+    },
+
+    __showCase(sectionId = 'components', groupId = 'FormLayout', caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
         const defaultSectionId = sectionId || 'components';
         sections.find(s => s.id === defaultSectionId).set('selected', true);

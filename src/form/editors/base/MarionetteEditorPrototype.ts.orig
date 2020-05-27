@@ -514,16 +514,29 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;
+<<<<<<< HEAD
+            const getValidator = this.getValidator;
+
+            if (validators) {
+                validators.forEach(validatorOptions => {
+                    const validator = getValidator(validatorOptions);
+                    const error = validator.call(this, value, formValues);
+                    if (error) {
+                        errors.push(error);
+                    }
+                });
+=======
 
             if (!validators) { 
                 return;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
             }
 
             validators.forEach(validatorOptions => {
                 const validator = formRepository.getValidator(validatorOptions);
                 const error = validator.call(this, value, formValues);
                 if (error) {
-                        errors.push(error);
+                    errors.push(error);
                 }
             });
 

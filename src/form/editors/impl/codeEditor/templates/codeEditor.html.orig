@@ -1,0 +1,8 @@
+<div class="js-code-codemirror-container"></div>
+<div class="js-code-button-edit dev-code-button-edit"></div>
+<<<<<<< HEAD
+<i class="js-code-button-clear editor__icons icon-remove fa fa-times" title="{{localize 'CORE.FORM.EDITORS.CODE.CLEAR'}}"></i>
+<div class="js-code-fading-panel dev-code-editor-fading-panel"></div>
+=======
+<i class="js-code-button-clear editor__icons icon-remove fal fa-times" title="{{localize 'CORE.FORM.EDITORS.CODE.CLEAR'}}"></i>
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
