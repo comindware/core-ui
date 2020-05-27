@@ -132,6 +132,13 @@ export const pagingControlsTypes = {
     lastPage: 'lp'
 };
 
+export const configurationConstants = {
+    VISIBLE_COLLECTION_RESERVE: 2,
+    VISIBLE_COLLECTION_RESERVE_HALF: 1,
+    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
+    HEIGHT_STOCK_TO_SCROLL: 1, //px, border-collapse property for table (grid-content-wrp) add this 1 px
+};
+
 export const classes = {
     checked: 'editor_checked',
     checked_some: 'editor_checked_some',
@@ -146,10 +153,16 @@ export const classes = {
     checkboxCell: 'js-cell_selection',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
+    cellError: 'error',
     cell: 'cell',
-    hiddenByTreeEditorClass: 'hidden-by-tree-editor',    
+    errorButton: 'js-error-button',
+    hiddenByTreeEditorClass: 'hidden-by-tree-editor',
     sortingUp: 'arrow-up',
-    sortingDown: 'arrow-down'
+    sortingDown: 'arrow-down',
+    required: 'required',
+    readonly: 'readonly',
+    error: 'error',
+    tableWidthAuto: 'grid-content-wrp_width-auto'
 };
 
 export default {
@@ -157,5 +170,6 @@ export default {
     contextTypes,
     columnTypes,
     getDefaultActions,
-    classes
+    classes,
+    configurationConstants
 };

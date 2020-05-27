@@ -457,15 +457,26 @@ tr.empty-view {
 
 /* New grid */
 
+/* .cell {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+<<<<<<< HEAD
+    background-clip: padding-box;    
+    max-width: 0px; /*hack to set width less than cells content */
+    width: auto;
+}
+=======
+    background-clip: padding-box;
+    max-width: 0; /* hack to set width less than cells content
+    width: auto;
+} */
+
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 .cell_editable {
     display: flex;
     align-items: center;
 }
-
-.cell.readonly {
-    background-color: #f9f9f9;
-}
-
 .cell_selection, .cell_selection-index {
     align-items: center;
     /*height: 35px;
@@ -494,9 +505,11 @@ tr:hover .cell_selection {
     outline: none;
 }
 
+
 .cell.selected{
     outline-offset: -1px;
 }
+
 
 .cell .editor{
     height: 100%;
@@ -505,7 +518,20 @@ tr:hover .cell_selection {
     background-color: transparent;
     flex: auto;
 }
+<<<<<<< HEAD
+.cell .js-tree-first-cell {
+    flex: none;
+}
+.cell .js-tree-first-cell + .editor {
+    flex: 1 1 auto;
+}
 tr.dragover:not(.grid-header) td {
+=======
+
+tr.dragover td.grid-header-column,
+tr.dragover td.cell_selection-index,
+tr.dragover td {
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
     border-bottom: 1px solid #ff0000;
 }
 tr.grid-header.dragover td {
@@ -587,7 +613,15 @@ tr.grid-header.dragover td {
     text-align: right;
 }
 
+<<<<<<< HEAD
+.cell .collapsible-btn{
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKCAYAAACXDi8zAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjZGREJCMUI0OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjZGREJCMUI1OTU5MDExRTg4NzAwRUE5NjE2MzY2MUQ3Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NkZEQkIxQjI5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NkZEQkIxQjM5NTkwMTFFODg3MDBFQTk2MTYzNjYxRDciLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz447xZHAAAAO0lEQVR42mJmYGCoBmJxIL7GgAZ4gHgBEIcwYAHESzIjSfwC4j1AXADiMDEQAbDaQ7wgA9SDGIIAAQYAdcoKZphNcRcAAAAASUVORK5CYII=');
+}
+
 .cell.editor_bubble .bubbles__i{
+=======
+.cell.editor_bubble .bubbles__i {
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
     height: auto;
 }
 

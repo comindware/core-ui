@@ -21,7 +21,7 @@ export default {
         rootView.showChildView('popupStackRegion', this.__popupStackView);
 
         this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
-        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
+        this.listenTo(GlobalEventService, 'window:keydown', (document, event) => this.__keyAction(event));
     },
 
     /**
@@ -44,13 +44,14 @@ export default {
      * @param {DOMNode} el A DOM node.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showElInPopup(view, options = { immediateClosing: false }) {
+    showElInPopup(view, options = { immediateClosing: false, useWrapper: true }) {
         return this.__popupStackView.showElInPopup(view, {
             fadeBackground: true,
             transient: false,
             hostEl: null,
             showedInEl: true,
-            immediateClosing: options.immediateClosing
+            immediateClosing: options.immediateClosing,
+            useWrapper: options.useWrapper
         });
     },
 

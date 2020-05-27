@@ -14,8 +14,10 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
-import { classes } from './meta';
 
+<<<<<<< HEAD
+let factory;
+=======
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
 const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
@@ -44,17 +46,22 @@ type GetCellOptions = {
     values?: any,
     [others: string]: any
 };
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
 type GetCellInnerHTMLResult = {
     cellInnerHTML: string,
     title: string
 };
 
+<<<<<<< HEAD
+type MultivalueCellOptions = { childTemplate: string, value: Array, title: string, column: Column };
+=======
 export interface ICellViewFactory {
     getCellViewForColumn(column: Column, model: Backbone.Model): string | CellFieldView;
     getCell(column: Column, model: Backbone.Model): string;
     tryGetMultiValueCellPanel(column: Column, model: Backbone.Model, cellElement: Element): DropdownView | null;
 }
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
 class CellViewFactory implements ICellViewFactory {
     getCellViewForColumn(column: Column, model: Backbone.Model): string | CellFieldView {
@@ -68,7 +75,7 @@ class CellViewFactory implements ICellViewFactory {
     getCell(column: Column, model: Backbone.Model): string {
         const value = model.get(column.key);
 
-        if ((this.__isEmpty(value) && column.type !== objectPropertyTypes.BOOLEAN) || column.getHidden?.(model)) {
+        if (this.__isEmpty(value) || column.getHidden?.(model)) {
             return `<td class="${this.__getCellClass(column, model)}" tabindex="-1"></td>`;
         }
 
@@ -111,6 +118,13 @@ class CellViewFactory implements ICellViewFactory {
     tryGetMultiValueCellPanel(column: Column, model: Backbone.Model, cellElement: Element): DropdownView | null {
         let value = model.get(column.key);
 
+<<<<<<< HEAD
+        return this.__getMultivalueCellView({
+            values: values.map(v => ({ value: v })),
+            childTemplate: '{{{value}}}',
+            title: this.__getTitle({ values, column, model }),
+            column
+=======
         if (value === null || value === undefined || !Array.isArray(value) || value.length < 2) {
             return null;
         }
@@ -168,6 +182,7 @@ class CellViewFactory implements ICellViewFactory {
             panelView: Marionette.CollectionView,
             panelViewOptions,
             element: cellElement
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
         });
         return menu;
     }
@@ -192,7 +207,7 @@ class CellViewFactory implements ICellViewFactory {
             const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(value, column.formatOptions.timeDisplayFormat) : '';
             return `${dateDisplayValue} ${timeDisplayValue}`;
         }
-        return dateHelpers.dateToDateTimeString(value, dateHelpers.dateTimeFormats.GENERAL_DATE_SHORT_TIME);
+        return dateHelpers.dateToDateTimeString(value, 'generalDateShortTime');
     }
 
     __getFormattedDurationValue({ value, column }: ValueFormatOption) {
@@ -231,6 +246,22 @@ class CellViewFactory implements ICellViewFactory {
         return result;
     }
 
+<<<<<<< HEAD
+        return this.__getMultivalueCellView({
+            values: mappedValues.map(v => ({ value: v })),
+            childTemplate: '{{value}}',
+            title,
+            column
+        });
+    },
+
+    __getDateTimeCell({ values, column, model }) {
+        const mappedValues = values.map(value => {
+            if (column.formatOptions) {
+                const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(value, column.formatOptions.dateDisplayFormat) : '';
+                const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(value, column.formatOptions.timeDisplayFormat) : '';
+                return `${dateDisplayValue} ${timeDisplayValue}`;
+=======
     __getFormattedBooleanValue({ value, column, model }: ValueFormatOption) {
         // if (value === true) {
         //     result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
@@ -243,6 +274,7 @@ class CellViewFactory implements ICellViewFactory {
                 return trueIcon;
             } else if (value === false) {
                 return '<i class="fas fa-times icon-false"></i>';
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
             }
             return '';
         }
@@ -251,31 +283,12 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedReferenceValue({ value, column }: ValueFormatOption) {
-        let result;
-        if (column.valueType === 'id') {
-            const item = column.collection?.find(m => m.id === value);
-            if (item) {
-                const data = item instanceof Backbone.Model ? item.toJSON() : item;
-                const text = data[column.displayAttribute] || data.text || data.name;
-                result = {
-                    id: value,
-                    text
-                };
-            } else {
-                result = {
-                    id: value,
-                    text: `#${value}`
-                };
-            }
-        } else {
-            result = {
-                text: value[column.displayAttribute] || value.name,
-                ...value
-            };
-        }
-
+        const result = {
+            text: value.name,
+            ...value
+        };
         if (!value.url && typeof column.createValueUrl === 'function') {
-            result.url = column.createValueUrl({ value: result, column });
+            result.url = column.createValueUrl({ value, column });
         }
 
         return result;
@@ -314,6 +327,57 @@ class CellViewFactory implements ICellViewFactory {
         return { cellInnerHTML, title };
     }
 
+<<<<<<< HEAD
+        return this.__getMultivalueCellView({
+            values: mappedValues.map(v => ({ value: v })),
+            childTemplate: '{{value}}',
+            title,
+            column
+        });
+    },
+
+    __getDurationCell({ values, column, model }) {
+        const mappedValues = values.map(value => {
+            const defaultOptions = {
+                allowDays: true,
+                allowHours: true,
+                allowMinutes: true,
+                allowSeconds: true,
+                hoursPerDay: 24
+            };
+            const options = Object.assign(defaultOptions, _.pick(column.formatOptions || {}, Object.keys(defaultOptions)));
+            let result = '';
+            if (value === 0) {
+                return '0';
+            }
+            if (!value) {
+                return '';
+            }
+            let totalMilliseconds = moment.duration(value).asMilliseconds();
+
+            if (options.allowDays) {
+                const oneDayMs = 1000 * 60 * 60 * options.hoursPerDay;
+                result += `${Math.floor(totalMilliseconds / oneDayMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                totalMilliseconds %= oneDayMs;
+            }
+            if (options.allowHours) {
+                const oneHourMs = 1000 * 60 * 60;
+                result += `${Math.floor(totalMilliseconds / oneHourMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                totalMilliseconds %= oneHourMs;
+            }
+            if (options.allowMinutes) {
+                const oneMinuteMs = 1000 * 60;
+                result += `${Math.floor(totalMilliseconds / oneMinuteMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                totalMilliseconds %= oneMinuteMs;
+            }
+            if (options.allowSeconds) {
+                const oneSecondMs = 1000;
+                result += `${Math.floor(totalMilliseconds / oneSecondMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
+                totalMilliseconds %= oneSecondMs;
+            }
+            return result;
+        });
+=======
     __getStringCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getStringCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
@@ -321,6 +385,7 @@ class CellViewFactory implements ICellViewFactory {
 
     __getNumberCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedNumberValue({ value, column }));
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
@@ -333,6 +398,37 @@ class CellViewFactory implements ICellViewFactory {
         return { cellInnerHTML, title };
     }
 
+<<<<<<< HEAD
+        return this.__getMultivalueCellView({
+            values: mappedValues.map(v => ({ value: v })),
+            childTemplate: '{{value}}',
+            title,
+            column
+        });
+    },
+
+    __getBooleanCell(values, column: Column) {
+        const mappedValues = values
+            .map(v => {
+                let result = '';
+                if (v === true) {
+                    result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                } else if (v === false) {
+                    result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                }
+                return result;
+            })
+            .join('');
+        return `<td class="${this.__getCellClass(column)}">${mappedValues}</td>`;
+    },
+
+    __getReferenceCell({ values, column, model }) {
+        values.forEach(value => {
+            if (!value.text) {
+                value.text = value.name;
+            }
+        });
+=======
     __getNumberCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getNumberCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
@@ -340,11 +436,25 @@ class CellViewFactory implements ICellViewFactory {
 
     __getDateTimeCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedDateTimeValue({ value, column }));
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
         let cellInnerHTML;
         if (values.length === 1) {
+<<<<<<< HEAD
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeReferenceCell}</td>`)(values[0]);
+        }
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeReferenceCell, column });
+    },
+
+    __getDocumentCell({ values, column, model }) {
+        values.forEach(value => {
+            const { name, text, isLoading, extension } = value
+            value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
+            value.name = name || text;
+        });
+=======
             cellInnerHTML = mappedValues[0];
         } else {
             cellInnerHTML = compiledWrappedValueCell({ value: mappedValues[0], count: values.length - 1 });
@@ -359,11 +469,23 @@ class CellViewFactory implements ICellViewFactory {
 
     __getDurationCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedDurationValue({ value, column }));
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
         let cellInnerHTML;
         if (values.length === 1) {
+<<<<<<< HEAD
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}">${compositeDocumentCell}</td>`)(values[0]);
+        }
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeDocumentCell, column });
+    },
+
+    __getUserCell({ values, column, model }) {
+        values.forEach(value => {
+            value.avatar = UserService.getAvatar(value)
+        });;
+=======
             cellInnerHTML = mappedValues[0];
         } else {
             cellInnerHTML = compiledWrappedValueCell({ value: mappedValues[0], count: values.length - 1 });
@@ -375,6 +497,7 @@ class CellViewFactory implements ICellViewFactory {
         const { title, cellInnerHTML } = this.__getDurationCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
     __getBooleanCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedBooleanValue({ value, column, model }));
@@ -382,6 +505,10 @@ class CellViewFactory implements ICellViewFactory {
         return { cellInnerHTML, title: '' };
     }
 
+<<<<<<< HEAD
+        if (values.length === 1) {
+            return Handlebars.compile(`<td class="${this.__getCellClass(column)}" title="${title}"><div class="composite-cell__wrp">${compositeUserCell}</div></td>`)(values[0]);
+=======
     __getBooleanCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getBooleanCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
@@ -397,10 +524,26 @@ class CellViewFactory implements ICellViewFactory {
             cellInnerHTML = compiledCompositeReferenceCell(mappedValues[0]);
         } else {
             cellInnerHTML = compiledWrappedCompositeReferenceCell({ ...mappedValues[0], count: values.length - 1 });
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
         }
         return { cellInnerHTML, title };
     }
 
+<<<<<<< HEAD
+        return this.__getMultivalueCellView({ values, title, childTemplate: compositeUserCell, column });
+    },
+
+    __getMultivalueCellView({ childTemplate, values = [], title, column }: MultivalueCellOptions = {}): Node {
+        const panelViewOptions = {
+            collection: new Backbone.Collection(values.slice(1)),
+            className: 'grid-composite_panel',
+            childView: Marionette.View,
+            childViewOptions: {
+                tagName: 'div',
+                className: 'composite-cell_container'
+            }
+        };
+=======
     __getReferenceCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getReferenceCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
@@ -408,6 +551,7 @@ class CellViewFactory implements ICellViewFactory {
 
     __getDocumentCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedDocumentValue({ value, column }));
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.name) });
 
@@ -420,6 +564,19 @@ class CellViewFactory implements ICellViewFactory {
         return { cellInnerHTML, title };
     }
 
+<<<<<<< HEAD
+        const buttonViewOptions = {
+            model: new Backbone.Model(buttonViewData),
+            tagName: 'td',
+            className: `${this.__getCellClass(column)}`,
+            attributes: {
+                title
+            }
+        };
+        if (childTemplate) {
+            panelViewOptions.childViewOptions.template = Handlebars.compile(childTemplate);
+            buttonViewOptions.template = Handlebars.compile(this.__getWrappedTemplate(childTemplate));
+=======
     __getDocumentCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getDocumentCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
@@ -435,6 +592,7 @@ class CellViewFactory implements ICellViewFactory {
             cellInnerHTML = compiledCompositeUserCell(mappedValues[0]);
         } else {
             cellInnerHTML = compiledWrappedCompositeUserCell({ ...mappedValues[0], count: values.length - 1 });
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
         }
         return { cellInnerHTML, title };
     }
@@ -473,22 +631,22 @@ class CellViewFactory implements ICellViewFactory {
                     valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 case complexValueTypes.context: {
-                    const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
-                    if (!value.value || value.value === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
+                    if (!value.value || value.value === 'False' || !column.context || !column.recordTypeId) {
                         valueInnerHTML = '';
                     } else if (typeof value.value === 'string') {
                         valueInnerHTML = value.value;
                     } else {
-                        let instanceTypeId = columnWithExtension.recordTypeId;
-                        const parts: string[] = [];
-                        value.value.forEach((item: string) => {
-                            const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                        let instanceTypeId = column.recordTypeId;
+                        valueInnerHTML = '';
+
+                        value.value.forEach((item: string, index: number) => {
+                            const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+
                             if (searchItem) {
-                                parts.push(searchItem.name);
-                                instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
+                                valueInnerHTML += index ? ` - ${searchItem.name}` : searchItem.name;
+                                instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
                             }
                         });
-                        valueInnerHTML = parts.join(' - ');
                     }
                     title = valueInnerHTML;
                     break;
@@ -563,21 +721,26 @@ class CellViewFactory implements ICellViewFactory {
         return title;
     }
 
+<<<<<<< HEAD
+    __getCellClass(gridColumn: Column) {
+        return `cell ${gridColumn.customClass ? `${gridColumn.customClass} ` : ''}`;
+    },
+
+    __getWrappedTemplate(template) {
+        return `<div class="composite-cell__wrp">
+            ${template}
+            {{#if count}}
+                <div class="composite-cell__count">+{{count}}</div>
+                <i class="fa fa-angle-down bubbles__caret"></i>
+            {{/if}}
+        </div>`;
+=======
     __getCellClass(column: Column, model: Backbone.Model) {
-        const classNames = ['cell'];
-        if (column.customClass) {
-            classNames.push(column.customClass);
-        }
-        if ((column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key))) {
-            classNames.push(classes.required);
-        }
-        if ((column.editable && (column.getReadonly?.(model) || column.getHidden?.(model)))) {
-            classNames.push(classes.readonly);
-        }
-        if (column.hasErrors?.(model)) {
-            classNames.push(classes.error);
-        }
-        return classNames.join(' ');
+        return `cell ${column.customClass ? column.customClass : ''}
+         ${(column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : ''}
+         ${column.hasErrors?.(model) ? 'error' : ''}        
+        `;
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
     }
 
     __isEmpty(value: any): boolean {

@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import coreIcons from './form/editors/impl/iconEditor/icons.json';
+
+=======
 import LocalizationService from 'services/LocalizationService';
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 export const contextIconType = {
     reference: 'link',
     instance: 'link',
@@ -159,8 +163,12 @@ export default {
     presentingComponentsTypes,
     splitViewTypes,
     iconsNames,
+<<<<<<< HEAD
     coreIcons,
+    objectPropertyFormats
+=======
     objectPropertyFormats,
     complexValueTypes,
     getComplexValueTypesLocalization
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
 };

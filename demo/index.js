@@ -1,10 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import 'styles/defaultFontawesome.css';
-import 'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
-//import 'node_modules/@fortawesome/fontawesome-free/css/solid.css';
-import '../dist/core.css';
-import 'styles/demo.css';
+import './styles';
 import core from 'comindware/core';
 
 window.Core = core;
@@ -16,6 +12,7 @@ import AppController from './AppController';
 Application.appRouter = new AppRouter({
     controller: AppController
 });
+
 const app = new Application();
 window.app = app;
 app.once('before:start', () => (AppController.contentView = window.app.getView()));

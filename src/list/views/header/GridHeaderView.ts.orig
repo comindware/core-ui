@@ -41,12 +41,19 @@ const GridHeaderView = Marionette.View.extend({
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
         this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
+<<<<<<< HEAD
         this.listenTo(columnsCollection, 'change:width', (model: GraphModel, newColumnWidth: any) => {
             const index = columnsCollection.indexOf(model);
             this.__setColumnWidth(index, newColumnWidth);
         });
+        if (options.showRowIndex) {
+            this.listenTo(this.collection, 'reset update', this.__updateIndexCellWidth);
+        }
+
         this.__modelForDrag = new Backbone.Model();
         this.listenTo(this.__modelForDrag, 'dragleave', this.__onModelDragLeave);
+=======
+>>>>>>> ade66bb6... Grid: editable cells only on focus and other optimizations
     },
 
     template: Handlebars.compile(template),

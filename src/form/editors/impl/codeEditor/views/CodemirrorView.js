@@ -1,5 +1,6 @@
 import { codemirror } from 'lib';
 import { keyCode } from 'utils';
+import WindowService from 'services/WindowService';
 import ToolbarView from './ToolbarView';
 import OutputView from './OutputView';
 import template from '../templates/codemirror.html';
@@ -315,25 +316,18 @@ export default Marionette.View.extend({
 
     __onMaximize() {
         this.el.classList.add(classes.maximized);
-        this.ui.editor.css('height', '80%');
-
-        if (this.el.querySelector(this.regions.editorOutputContainer.el)) {
-            this.el.querySelector(this.regions.editorOutputContainer.el).style.height = '30%';
-        }
-        document.querySelector(this.regions.output).style.height = '100%';
-        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
-            document.querySelector(this.regions.outputTabs).style.height = '100%';
-        }
-        this.$el.appendTo('body');
+        this.popupId = WindowService.showElInPopup(this.$el, {
+            immimmediateClosing: true,
+            useWrapper: false
+        });
         this.codemirror.refresh();
         this.codemirror.focus();
     },
 
     __onMinimize() {
         this.trigger('minimize', this);
-        this.$el.appendTo(this.parentElement);
+        WindowService.closeElPopup(this.popupId, true);
         this.el.classList.remove(classes.maximized);
-        this.ui.editor.css('height', this.options.height);
         this.codemirror.refresh();
         this.__change();
     },
