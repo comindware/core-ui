@@ -18,6 +18,7 @@ export default function() {
                 height: '700px'
             },
             fullscreenToggleDisabled: true,
+            expandOnShow: true,
             header: 'New Operation',
             buttons: [
                 {
