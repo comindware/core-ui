@@ -47,9 +47,9 @@ export default (window.Ajax = new (Marionette.Object.extend({
             if (canProceed) {
                 return PromiseService.registerPromise($.ajax(config));
             }
-        } else {
-            return PromiseService.registerPromise($.ajax(config));
+            return Promise.reject();
         }
+        return PromiseService.registerPromise($.ajax(config));
     },
 
     sendFormData(url, formData) {
