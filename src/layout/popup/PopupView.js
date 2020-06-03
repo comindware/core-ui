@@ -29,7 +29,7 @@ export default Marionette.View.extend({
 
         this.content = options.content;
         this.onClose = options.onClose;
-        this.__expanded = false;
+        this.__expanded = Boolean(options.expandOnShow);
     },
 
     template: Handlebars.compile(template),
@@ -96,6 +96,9 @@ export default Marionette.View.extend({
         }
 
         this.__initializeWindowDrag();
+        if (this.options.expandOnShow) {
+            this.__setFullScreen();
+        }
     },
 
     onAttach() {
@@ -132,16 +135,25 @@ export default Marionette.View.extend({
     __fullscreenToggle() {
         this.__expanded = !this.__expanded;
         this.__callWithTransition(
-            () => {
-                this.ui.window.draggable('option', 'disabled', this.__expanded);
-                this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
-                this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
-            },
-            () => {
-                this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.expand}`, !this.__expanded);
-                this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.minimize}`, this.__expanded);
-            }
+            () => this.__toggleIconClasses(),
+            () => this.__toggleFullscreenClasses()
         );
+    },
+
+    __setFullScreen() {
+        this.__toggleFullscreenClasses();
+        this.__toggleIconClasses();
+    },
+
+    __toggleFullscreenClasses() {
+        this.ui.window.draggable('option', 'disabled', this.__expanded);
+        this.ui.window.toggleClass(classes.EXPAND, this.__expanded);
+        this.ui.header.toggleClass(classes.CURSOR_AUTO, this.__expanded);
+    },
+
+    __toggleIconClasses() {
+        this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.expand}`, !this.__expanded);
+        this.ui.fullscreenToggle.toggleClass(`fa-${iconsNames.minimize}`, this.__expanded);
     },
 
     __callWithTransition(callback, callbackAfterTransition) {
