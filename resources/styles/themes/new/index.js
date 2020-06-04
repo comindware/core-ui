@@ -53,7 +53,7 @@ const variables = {
     'form-field-margin': '15px',
     'form-label-font-size': 'var(--base-font-size)',
     'form-label-font-weight': '600',
-    'form-label-color': 'var(--black)',
+    'form-label-color': 'var(--theme-colors__text)',
     'form-label-margin': '8px',
     'form-label-padding': '0 0 0 var(--form-input-padding)',
     'form-label-icon-size': '14px',

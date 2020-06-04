@@ -16,7 +16,8 @@
 }
 
 .bubbles__form {
-  height: 26px;
+  height: 24px;
+  padding: 0;
 }
 /*
 .editor_code:after{
