@@ -479,13 +479,6 @@ export default Marionette.PartialCollectionView.extend({
 
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
-        //@ts-ignore
-        const parentElHeight = this.options.parentEl?.clientHeight;
-        const availableHeight = parentElHeight !== this.childHeight * this.collection.length
-            ? parentElHeight
-            : window.innerHeight;
-
-        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.collection.length) {
             this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + configurationConstants.HEIGHT_STOCK_TO_SCROLL;
@@ -501,6 +494,13 @@ export default Marionette.PartialCollectionView.extend({
                 this.trigger('update:height', this.state.allItemsHeight);
             }
         }
+        //@ts-ignore
+        const parentElHeight = this.options.parentEl?.clientHeight;
+        const availableHeight = parentElHeight !== this.childHeight * this.collection.length
+            ? parentElHeight
+            : window.innerHeight;
+
+        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.state.viewportHeight === oldViewportHeight) {
             if (shouldUpdateScroll === false) {
