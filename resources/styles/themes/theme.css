@@ -669,14 +669,11 @@ _:-ms-lang(x),
   vertical-align: middle;
   border: 1px solid #e2e2e2;
   border-top: none;
+  z-index: 20;
 }
 
 tr:not(:first-child) .cell,
 tr:not(:first-child) .cell_selection {
-    border-top: none;
-}
-
-.grid-header .cell_selection-index > .checkbox {
     border-top: none;
 }
 

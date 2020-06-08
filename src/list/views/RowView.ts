@@ -8,9 +8,7 @@ import MobileService from '../../services/MobileService';
 import CellViewFactory from '../CellViewFactory';
 import { Column, GridItemModel } from '../types/types';
 import { objectPropertyTypes, complexValueTypes } from '../../Meta';
-import draggableDots from '../templates/draggableDots.html';
 import ErrorsPanelView from '../../views/ErrorsPanelView';
-import { cmpPos } from 'codemirror';
 
 const config = {
     TRANSITION_DELAY: 400
@@ -201,7 +199,7 @@ export default Marionette.View.extend({
     },
 
     __isNeedToReplaceCell({ changed, column, index }) {
-        if (column.getHidden?.(this.model)) {
+        if (column.cellView || column.getHidden?.(this.model)) {
             return false;
         }
 
@@ -355,7 +353,6 @@ export default Marionette.View.extend({
         if (this.options.showRowIndex) {
             this.model.currentIndex = this.model.collection.indexOf(this.model) + 1;
         }
-        const dots = '&#8942';
         const cellHTML =
             `<td class="${classes.checkboxCell} ${this.options.showRowIndex ? 'cell_selection-index' : 'cell_selection'}"
              ${isDraggable ? 'draggable="true"' : ''}>
@@ -371,10 +368,6 @@ export default Marionette.View.extend({
     },
 
     __setDraggable(draggable: boolean): void {
-        if (!this.options.draggable) {
-            console.warn('Can not set draggable cause draggable options is false');
-            return;
-        }
         this.model.__draggable = draggable;
 
         const checkboxCellEl = this.el.querySelector(`.${classes.checkboxCell}`);
@@ -388,10 +381,8 @@ export default Marionette.View.extend({
 
         if (needSet) {
             checkboxCellEl.setAttribute('draggable', true);
-            checkboxCellEl.insertAdjacentHTML('afterbegin', draggableDots);
         } else if (needRemove) {
             checkboxCellEl.removeAttribute('draggable');
-            checkboxCellEl.removeChild(checkboxCellEl.firstElementChild);
         }
     },
 
@@ -440,7 +431,7 @@ export default Marionette.View.extend({
                     this.__showDropDown(columnIndex);
                 }
                 isFocusEditor = false;
-            }            
+            }
             setTimeout(
                 () => this.__selectPointed(columnIndex, isFocusEditor, isFocusChangeNeeded, isErrorButtonClicked),
                 11 //need more than debounce delay in selectableBehavior calculateLength

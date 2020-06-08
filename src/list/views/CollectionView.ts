@@ -110,9 +110,7 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
 
         if (this.options.draggable) {
-            this.__onCheckedNone();
-            this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
-            this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+            this.__setDraggableListeners();
         }
     },
 
@@ -175,6 +173,14 @@ export default Marionette.PartialCollectionView.extend({
         this.__specifyChildHeight();
         this.handleResize(false);
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(model));
+    },
+
+    setDraggable(draggable: boolean) {
+        if (draggable) {
+            this.__setDraggableListeners();
+        } else {
+            this.__unsetDraggableListeners();
+        }
     },
 
     __specifyChildHeight() {
@@ -617,5 +623,17 @@ export default Marionette.PartialCollectionView.extend({
                 const previousIndex = gridIndexes[i - 1];
                 return index - previousIndex === 1;
             });
-    }
+    },
+
+    __setDraggableListeners() {
+        this.__onCheckedNone();
+        this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
+        this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+    },
+
+    __unsetDraggableListeners() {
+        this.__setCheckedNone(false);
+        this.stopListening(this.collection, 'check:none', this.__onCheckedNone);
+        this.stopListening(this.collection, 'check:some check:all', this.__onChecked);
+    },
 });
