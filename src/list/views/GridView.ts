@@ -204,7 +204,7 @@ export default Marionette.View.extend({
             this.internalScroll = true;
 
             this.ui.tableTopMostWrapper.get(0).scrollTop = (newPosition + this.listView.state.viewportHeight) * this.listView.childHeight;
-        
+
             _.delay(() => (this.internalScroll = false), 100);
         }
 
@@ -217,7 +217,7 @@ export default Marionette.View.extend({
             if (top !== this.oldTop) {
                 this.oldTop = top;
                 this.ui.content[0].style.top = `${top}px`;
-            }          
+            }
         });
     },
 
@@ -619,6 +619,7 @@ export default Marionette.View.extend({
     setDraggable(draggable: boolean): void {
         this.childViewOptions.draggable = draggable;
         this.trigger('set:draggable', draggable);
+        this.listView.setDraggable(draggable);
     },
 
     replaceColumns(newColumns = []) {
