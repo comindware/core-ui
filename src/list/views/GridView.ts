@@ -609,11 +609,10 @@ export default Marionette.View.extend({
 
         if (errors.length) {
             this.setError(errors);
-        } else {
-            this.clearError();
+            return errors;
         }
-
-        return errors;
+        this.clearError();
+        return null;
     },
 
     setDraggable(draggable: boolean): void {
