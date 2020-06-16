@@ -1336,7 +1336,7 @@ export default Marionette.View.extend({
         const startSpaces = valueLine.match(/\s+/) ? valueLine.match(/\s+/)[0] : '';
         let newValueLine;
         if (isIntoSquareBracket) {
-            newValueLine = `${startSpaces}?object${descriptionHint.name} a [object:alias ${descriptionHint.text}].`
+            newValueLine = `${startSpaces}?object${descriptionHint.name} a [object:alias ${descriptionHint.text}].`;
             this.codemirror.replaceRange(newValueLine, { line: numberLine, ch: 0 }, { line: numberLine });
             return; 
         }
