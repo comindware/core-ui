@@ -232,11 +232,6 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedBooleanValue({ value, column, model }: ValueFormatOption) {
-        // if (value === true) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-        // } else if (value === false) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
-        // }
         const trueIcon = '<i class="fas fa-check icon-true"></i>';
         if (!column.editable || column.getReadonly?.(model)) {
             if (value === true) {
@@ -303,6 +298,10 @@ class CellViewFactory implements ICellViewFactory {
         return `<td class="${this.__getCellClass(column, model)}" title="${title}" tabindex="-1">${cellInnerHTML}</td>`;
     }
 
+    __getFormattedHTMLValue(cellInnerHTML: string) {
+        return `<div class="cell__html-string">${cellInnerHTML}</div>`;
+    }
+
     __getStringCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const title = this.__getTitle({ values, column, model });
         let cellInnerHTML;
@@ -310,6 +309,9 @@ class CellViewFactory implements ICellViewFactory {
             cellInnerHTML = values[0] || '';
         } else {
             cellInnerHTML = compiledWrappedStringValueCell({ value: values[0], count: values.length - 1 });
+        }
+        if (column.format === 'HTML') {
+            cellInnerHTML = this.__getFormattedHTMLValue(cellInnerHTML);
         }
         return { cellInnerHTML, title };
     }
@@ -552,14 +554,12 @@ class CellViewFactory implements ICellViewFactory {
 
     __getTitle({ values, column, model }: GetCellOptions): string {
         let title;
-        if (column.format === 'HTML') {
-            title = '';
-        } else if (column.titleAttribute) {
+        if (column.titleAttribute) {
             title = model.get(column.titleAttribute);
         } else {
             title = Array.isArray(values) ? values.join(', ') : values;
         }
-        title = title !== null && title !== undefined ? title.toString().replace(/"/g, '&quot;') : '';
+        title = title !== null && title !== undefined ? title.toString().replace(/"/g, '&quot;').replace(/<[^>]*>/g, '') : '';
         return title;
     }
 
