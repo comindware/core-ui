@@ -264,6 +264,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             showMode: this.options.codeEditorMode,
             ontologyService: this.options.ontologyService,
             config: this.options.config,
+            templateId: this.options.templateId,
             getTemplate: this.options.getTemplate
         };
 
