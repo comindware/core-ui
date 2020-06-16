@@ -6,3 +6,4 @@ reports/
 dist/
 !dist/localization/
 demo/assets/
+demo/node_modules/
