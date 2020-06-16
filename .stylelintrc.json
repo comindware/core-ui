@@ -5,7 +5,9 @@
     "number-leading-zero": null,
     "unit-whitelist": ["px","%", "s", "deg", "em", "ms", "rem", "pt"],
     "no-descending-specificity": null,
-    "color-hex-length": "long"
+    "color-hex-length": "long",
+    "selector-max-id": 0,
+    "selector-class-pattern": "^(?!js-)[-a-zA-Z0-9_]+$"
   },
   "defaultSeverity": "warning"
 }

@@ -827,7 +827,7 @@ tr.grid-header.dragover td {
     min-width: 0;
 }
 
-.cell .js-tree-first-cell + .composite-cell__wrp {
+.cell .js-tree-first-cell + .composite-cell__wrp { /*  stylelint-disable-line selector-class-pattern */
     display: inline-flex;
     max-width: calc(100% - 35px);
 }

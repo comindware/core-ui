@@ -532,7 +532,7 @@ li.CodeMirror-hint-active {
     height: 100%;
 }
 
-.dev-codemirror > .js-code-editor-container {
+.dev-codemirror > .code-editor-container {
     height: calc(100% - 31px);
 }
 
