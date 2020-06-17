@@ -514,7 +514,7 @@ svg.svg-grid-icons {
 .collapsible-btn {
     font-size: 1.4em;
     cursor: pointer;
-    margin-right: 3px;
+    margin-right: 8px;
     transition-property: transform;
     transition-duration: 300ms;
     top: 2px;
