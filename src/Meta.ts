@@ -24,7 +24,8 @@ const meta = {
     number: 'superscript',
     action: 'hand-pointer',
     role: 'user-shield',
-    organizationalStructure: 'sitemap',
+    orgStructureTemplate: 'sitemap',
+    orgStructure: 'sitemap',
     actionbutton: 'hand-pointer',
     text: 'font',
     string: 'font',
@@ -40,7 +41,7 @@ const meta = {
     case: 'cube',
     list: 'align-justify',
     group: 'clone',
-    rolesCatalog: 'user-shield',
+    roleTemplate: 'user-shield',
     organizationalUnit: 'sitemap'
 };
 
