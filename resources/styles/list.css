@@ -760,7 +760,6 @@ tr.grid-header.dragover td {
     border-radius: 50%;
 }
 .composite-user-abr__name {
-    margin-left: 0.5rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -800,7 +799,9 @@ tr.grid-header.dragover td {
     display: inline-flex;
     align-items: center;
     overflow: visible;
+    width: 100%;
 }
+
 .cell .js-tree-first-cell + .composite-cell__wrp {
     display: inline-flex;
     max-width: calc(100% - 35px);

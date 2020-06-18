@@ -52,6 +52,7 @@ export default Marionette.View.extend({
         dblclick: '__handleDblClick',
         dragstart: '__handleDragStart',
         dragenter: '__handleDragEnter',
+        dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu'
@@ -274,7 +275,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __onModelDragLeave() {
+    __handleDragLeave() {
         this.el.classList.remove(classes.dragover);
     },
 

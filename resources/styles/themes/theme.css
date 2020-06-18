@@ -468,7 +468,7 @@ svg.svg-grid-icons {
   top: 0;
   border: none;
   box-shadow: inset -1px 0 0 0 #90c3eb, inset 0 1px 0 0 #0575bd;
-  z-index: 20;
+  z-index: 3;
 }
 
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
@@ -669,7 +669,7 @@ _:-ms-lang(x),
   vertical-align: middle;
   border: 1px solid #e2e2e2;
   border-top: none;
-  z-index: 20;
+  z-index: 2;
 }
 
 tr:not(:first-child) .cell,
@@ -724,7 +724,7 @@ tr:not(:first-child) .cell_selection {
 .collapsible-btn {
     font-size: 1.4em;
     cursor: pointer;
-    margin-right: 3px;
+    margin-right: 8px;
     transition-property: transform;
     transition-duration: 300ms;
     top: 2px;
