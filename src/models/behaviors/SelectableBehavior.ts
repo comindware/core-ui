@@ -61,7 +61,7 @@ _.extend(SelectableBehavior.SingleSelect.prototype, {
 
         lastSelectedModel.deselect(options);
         this.cursorCid = undefined;
-
+        this.lastDeselectedModel = model.cid;
         if (this.selected[this.lastSelectedModel] !== undefined) {
             //todo why we need to do this!?
             this.trigger('deselect:one', this.selected[this.lastSelectedModel], options);

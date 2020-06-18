@@ -35,6 +35,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         delete this.checked[model.cid];
         model.uncheck();
+        this.collection.lastDeselectedModel = model.cid;
         this.__triggerCheck();
     },
 
@@ -62,37 +63,61 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
             collection.lastSelectedModel = model.cid;
         } else if (shiftPressed) {
-            // if shift or ctrl+shift is pressed we select the items in range [lastSelectedItem, thisItem] and deselect the others
+            // if shift or ctrl+shift is pressed we select the items in range [lastSelectedItem, thisItem]
             const lastSelectedModel = collection.lastSelectedModel;
-
             if (!lastSelectedModel) {
                 // we select this item alone if this is the first click
                 if (model.checked) {
                     this.uncheck(model);
                 } else {
                     this.check(model);
+                    collection.lastSelectedModel = model.cid;
                 }
-
-                collection.lastSelectedModel = model.cid;
             } else {
                 // if not, we select the range
-                let lastSelectedIndex = 0;
-                let thisIndex = 0;
-                collection.forEach((m, i) => {
-                    if (m.cid === lastSelectedModel) {
-                        lastSelectedIndex = i;
-                    }
-                    if (m === model) {
-                        thisIndex = i;
-                    }
-                });
-                const startIndex = Math.min(lastSelectedIndex, thisIndex);
-                const endIndex = Math.max(lastSelectedIndex, thisIndex);
-                const models = collection.models;
+                this.toggleSmartCheck({ lastChangeModel: lastSelectedModel, model });
+            }
+        }
+    },
 
-                for (let i = startIndex; i <= endIndex; i++) {
-                    models[i].check();
-                }
+    uncheckSmart(model) {
+        const collection = this.collection;
+        const lastDeselectedModel = collection.lastDeselectedModel;
+        if (!lastDeselectedModel) {
+            if (model.checked) {
+                this.uncheck(model);
+                collection.lastDeselectedModel = model.cid;
+            } else {
+                this.check(model);
+             }
+        } else {
+            this.toggleSmartCheck({ lastChangeModel: lastDeselectedModel, model });
+        }
+    },
+
+    toggleSmartCheck(options: object) {
+        const { lastChangeModel, model } = options;
+        let lastChangeIndex = 0;
+        let thisIndex = 0;
+        this.collection.forEach((m, i) => {
+            if (m.cid === lastChangeModel) {
+                lastChangeIndex = i;
+            }
+            if (m === model) {
+                thisIndex = i;
+            }
+        });
+        const startIndex = Math.min(lastChangeIndex, thisIndex);
+        const endIndex = Math.max(lastChangeIndex, thisIndex);
+        const models = this.collection.models;
+
+        if (model.checked) {
+            for (let i = startIndex; i <= endIndex; i++) {
+                models[i].uncheck();
+            }
+        } else {
+            for (let i = startIndex; i <= endIndex; i++) {
+                models[i].check();
             }
         }
     },
