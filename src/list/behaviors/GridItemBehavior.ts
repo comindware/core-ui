@@ -125,7 +125,7 @@ export default function() : GridItemBehavior {
 
         toggleChecked(isShiftKeyPressed) {
             if (isShiftKeyPressed) {
-                this.collection.checkSmart(this, isShiftKeyPressed);
+                this.collection.manyChangeChecked(this);
             } else if (this.checked) {
                 this.uncheck(isShiftKeyPressed);
             } else {
