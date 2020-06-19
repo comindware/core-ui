@@ -32,7 +32,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         if (this.internalCheck || !this.checked[model.cid]) {
             return;
         }
-
+        this.collection.lastUncheckedModel = model.cid;
         delete this.checked[model.cid];
         model.uncheck();
         this.__triggerCheck();
@@ -48,48 +48,37 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         this.__triggerCheck();
     },
 
-    // Select a specified model and update selection for the whole collection according to the key modifiers
-    checkSmart(model, shiftPressed) {
+    // pressed we checked/unchecked the items in range [lastSelectedItem, thisItem]
+    manyChangeChecked(model) {
         const collection = this.collection;
-        if (!shiftPressed) {
-            // with no hotkeys we select this item and deselect the others
-            // collection.selectNone();
+        const lastChangeModel = (model.checked) ? collection.lastUncheckedModel : collection.lastSelectedModel;
+        if (!lastChangeModel) {
             if (model.checked) {
                 this.uncheck(model);
             } else {
                 this.check(model);
             }
-
-            collection.lastSelectedModel = model.cid;
-        } else if (shiftPressed) {
-            // if shift or ctrl+shift is pressed we select the items in range [lastSelectedItem, thisItem] and deselect the others
-            const lastSelectedModel = collection.lastSelectedModel;
-
-            if (!lastSelectedModel) {
-                // we select this item alone if this is the first click
-                if (model.checked) {
-                    this.uncheck(model);
-                } else {
-                    this.check(model);
+            collection.lastChangeModel = model.cid;
+        } else {
+            let lastChangeIndex = 0;
+            let thisIndex = 0;
+            this.collection.forEach((m, i) => {
+                if (m.cid === lastChangeModel) {
+                    lastChangeIndex = i;
                 }
+                if (m === model) {
+                    thisIndex = i;
+                }
+            });
+            const startIndex = Math.min(lastChangeIndex, thisIndex);
+            const endIndex = Math.max(lastChangeIndex, thisIndex);
+            const models = this.collection.models;
 
-                collection.lastSelectedModel = model.cid;
+            if (model.checked) {
+                for (let i = startIndex; i <= endIndex; i++) {
+                    models[i].uncheck();
+                }
             } else {
-                // if not, we select the range
-                let lastSelectedIndex = 0;
-                let thisIndex = 0;
-                collection.forEach((m, i) => {
-                    if (m.cid === lastSelectedModel) {
-                        lastSelectedIndex = i;
-                    }
-                    if (m === model) {
-                        thisIndex = i;
-                    }
-                });
-                const startIndex = Math.min(lastSelectedIndex, thisIndex);
-                const endIndex = Math.max(lastSelectedIndex, thisIndex);
-                const models = collection.models;
-
                 for (let i = startIndex; i <= endIndex; i++) {
                     models[i].check();
                 }
