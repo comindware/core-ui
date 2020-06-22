@@ -475,7 +475,7 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __onChange(model, options, isPartialUpdate) {
-        if (this.options.skipRebuildOnChange) {
+        if (!this.options.rebuildOnChange) {
             return;
         }
         const changed = Object.keys(model.changedAttributes());
