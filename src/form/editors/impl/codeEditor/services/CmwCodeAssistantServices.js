@@ -73,13 +73,31 @@ export default {
                 list: completion
             };
         } else if (options.token.string === constants.activeSymbol.dollar) {
-            const result = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
-            options.autoCompleteModel.set({ attributes: result });
-            this.autoCompleteContext = constants.autoCompleteContext.attributes;
+            let listToolbar;
+            let attributes;
+            if (options.attributes) {
+                attributes = options.attributes;
+            } else {
+                attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
+            }
+            if (attributes.length) {
+                attributes.forEach(atribute => { 
+                    const type = atribute.type.toLowerCase();
+                    atribute.icons = Core.meta.contextIconType[type];
+                    if (atribute.alias) {
+                        atribute.text = atribute.alias;
+                    }
+                });
+                options.autoCompleteModel.set({ attributes });
+                this.autoCompleteContext = constants.autoCompleteContext.attributes;
+                listToolbar = this.__renderConfigListToolbar(attributes);
+            } else {
+                listToolbar = [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }];
+            }
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: this.__renderConfigListToolbar(result)
+                list: listToolbar
             };
         } else if (options.token.string === constants.activeSymbol.arrayRight) {
             const result = await this.getDataRequest(options, constants.autoCompleteContext.templates);
