@@ -1090,9 +1090,7 @@ tr:not(:first-child) .cell_selection {
 .toolbar-btn:hover{
   @apply --button-strong-hover-theme;
 }
-.toolbar-btn:focus{
-  outline: var(--focus);
-}
+
 .toolbar-btn:active {
   @apply --button-strong-active-theme;
 }
@@ -1181,7 +1179,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar__icons + .toolbar-btn__text{
-  margin-left: 5px;
+  margin-left: 2px;
 }
 
 .toolbar__icons + .toolbar-btn__text:empty{

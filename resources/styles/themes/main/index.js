@@ -177,7 +177,7 @@ module.exports.apply = {
     },
     'button-theme': {
         'font-size': '12px',
-        padding: '4px 10px',
+        padding: '3px 6px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
         overflow: 'hidden',

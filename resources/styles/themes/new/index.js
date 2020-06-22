@@ -182,7 +182,7 @@ module.exports.apply = {
         'vertical-align': 'middle',
         cursor: 'pointer',
         'font-size': '15px',
-        padding: '3px 15px',
+        padding: '3px 11px',
         'border-radius': '4px'
     },
     'button-strong': {
