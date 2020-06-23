@@ -176,7 +176,7 @@ module.exports.apply = {
         'margin-bottom': 'auto'
     },
     'button-theme': {
-        'font-size': '12px',
+        'font-size': '1em',
         padding: '3px 6px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
