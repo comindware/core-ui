@@ -181,7 +181,7 @@ module.exports.apply = {
     'button-theme': {
         'vertical-align': 'middle',
         cursor: 'pointer',
-        'font-size': '15px',
+        'font-size': '14px',
         padding: '3px 11px',
         'border-radius': '4px'
     },

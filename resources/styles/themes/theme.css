@@ -1,6 +1,7 @@
 body, input, textarea, select {
   font: var(--font);
 }
+
 body {
   color: var(--text-color);
 }
@@ -1450,4 +1451,9 @@ tr:not(:first-child) .cell_selection {
 .documents__upload:hover {
   color: var(--link-hover-color);
   text-decoration: underline
+}
+
+
+.cke_editable{
+  font: var(--font);
 }
