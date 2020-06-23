@@ -98,10 +98,8 @@ class CellViewFactory implements ICellViewFactory {
                 return this.__getDocumentCell({ values, column, model });
             case 'Complex':
                 return this.__getComplexCell({ values, column, model });
-            // case 'Code':
-            //     return this.__getDocumentCell({ values, column, model });
-            // case 'Code':
-            //     return this.__getDocumentCell({ values, column, model });
+            case 'ContextSelect':
+                return this.__getContextCell({ values, column, model });
             case objectPropertyTypes.STRING:
             default:
                 return this.__getStringCell({ values, column, model });
@@ -147,9 +145,10 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.BOOLEAN:
                 return null;
             case objectPropertyTypes.STRING:
-            default:
                 template = compiledStringValueCell;
                 formattedValues = value.map(v => ({ value }));
+                break;                
+            default:
                 break;
         }
         const panelViewOptions = {
@@ -446,7 +445,7 @@ class CellViewFactory implements ICellViewFactory {
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 
-    __createContextString({ values, column, model }: GetCellOptions): string{
+    __createContextString({ values, column, model }: GetCellOptions): string {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
@@ -457,6 +456,11 @@ class CellViewFactory implements ICellViewFactory {
                     <span class="extend_info">${model.get('alias') || ''}</span>
                 </div>
             </td>`;
+    }
+
+    __getContextCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getContextCellInnerHtml({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 
     __getComplexCell({ values, column, model }: GetCellOptions): string {
@@ -475,6 +479,9 @@ class CellViewFactory implements ICellViewFactory {
                     valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 case complexValueTypes.context: {
+                    valueHTMLResult = this.__getContextCellInnerHtml({ values: value.value, column, model });
+                    title = valueHTMLResult.title;
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
                     if (!value.value || value.value === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
                         valueInnerHTML = '';
@@ -550,6 +557,31 @@ class CellViewFactory implements ICellViewFactory {
                 valueCellInnerHTMLResult = this.__getStringCellInnerHTML({ values, column, model });
         }
         return valueCellInnerHTMLResult;
+    }
+
+    __getContextCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
+        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
+        let valueInnerHTML = '';
+        if (!values || values === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
+            valueInnerHTML = '';
+        } else if (typeof values === 'string') {
+            valueInnerHTML = values;
+        } else {
+            let instanceTypeId = columnWithExtension.recordTypeId;
+            const parts: string[] = [];
+            values.forEach((item: string) => {
+                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                if (searchItem) {
+                    parts.push(searchItem.name);
+                    instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
+                }
+            });
+            valueInnerHTML = parts.join(' - ');
+        }
+        return {
+            cellInnerHTML: valueInnerHTML,
+            title: valueInnerHTML
+        };
     }
 
     __getTitle({ values, column, model }: GetCellOptions): string {

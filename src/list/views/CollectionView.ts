@@ -502,7 +502,7 @@ export default Marionette.PartialCollectionView.extend({
         }
         //@ts-ignore
         const parentElHeight = this.options.parentEl?.clientHeight;
-        const availableHeight = parentElHeight !== this.childHeight * this.collection.length
+        const availableHeight = parentElHeight && parentElHeight !== this.childHeight * this.collection.length
             ? parentElHeight
             : window.innerHeight;
 
