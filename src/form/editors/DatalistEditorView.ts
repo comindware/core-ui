@@ -21,6 +21,7 @@ type optionsType = {
     collection?: Backbone.Collection | Array<Object>,
 
     fetchFiltered?: boolean,
+    fetchOnSearch?: boolean,
     showCollection?: boolean,
 
     displayAttribute?: string,
@@ -91,6 +92,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
     textFilterDelay: 300,
 
     fetchFiltered: false,
+    fetchOnSearch: true,
     collection: [],
     showCollection: true,
     selectedTitle: options.title,
@@ -521,12 +523,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __clearSearch() {
-        this.__startSearch('', { open: false });
-    },
-
-    __startSearch(string: string, options) {
-        this.__setInputValue(string);
-        this.__fetchUpdateFilter(string, options);
+        this.__setInputValue('');
+        this.__fetchUpdateFilter('', { open: false, isSearch: true });
     },
 
     __getInputValue(): string {
@@ -538,13 +536,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onInputSearch(button, e): void {
-        if (this.options.fetchFiltered) {
-            this.triggerNotReady();
-        }
-        this.debouncedFetchUpdateFilter();
+        this.debouncedFetchUpdateFilter(undefined, { isSearch: true });
     },
 
-    __fetchUpdateFilter(text = this.__getInputValue(), { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true } = {}) {
+    __fetchUpdateFilter(text = this.__getInputValue(), {
+        forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess,
+        openOnRender = false,
+        open = true,
+        isSearch = false } = {}
+    ) {
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
@@ -557,7 +557,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.searchText = searchText;
         this.__setInputValue(text);
 
-        if (this.options.fetchFiltered) {
+        if (this.options.fetchFiltered && (this.options.fetchOnSearch || !isSearch)) {
+            this.triggerNotReady();
             return this.__fetchDataAndOpen(this.searchText, { openOnRender, open });
         }
 

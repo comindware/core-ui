@@ -100,6 +100,8 @@ class CellViewFactory implements ICellViewFactory {
                 return this.__getComplexCell({ values, column, model });
             case 'ContextSelect':
                 return this.__getContextCell({ values, column, model });
+            case 'Code':
+                return this.__getCodeCell({ values, column, model });
             case objectPropertyTypes.STRING:
             default:
                 return this.__getStringCell({ values, column, model });
@@ -463,6 +465,11 @@ class CellViewFactory implements ICellViewFactory {
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 
+    __getCodeCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getCodeCellInnerHtml({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
+    }
+
     __getComplexCell({ values, column, model }: GetCellOptions): string {
         let valueHTMLResult;
         let valueInnerHTML = '';
@@ -482,38 +489,13 @@ class CellViewFactory implements ICellViewFactory {
                     valueHTMLResult = this.__getContextCellInnerHtml({ values: value.value, column, model });
                     title = valueHTMLResult.title;
                     valueInnerHTML = valueHTMLResult.cellInnerHTML;
-                    const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
-                    if (!value.value || value.value === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
-                        valueInnerHTML = '';
-                    } else if (typeof value.value === 'string') {
-                        valueInnerHTML = value.value;
-                    } else {
-                        let instanceTypeId = columnWithExtension.recordTypeId;
-                        const parts: string[] = [];
-                        value.value.forEach((item: string) => {
-                            const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
-                            if (searchItem) {
-                                parts.push(searchItem.name);
-                                instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
-                            }
-                        });
-                        valueInnerHTML = parts.join(' - ');
-                    }
-                    title = valueInnerHTML;
                     break;
                 }
                 case complexValueTypes.expression:
-                case complexValueTypes.script:
-                    if (value.value) {
-                        if (column.getReadonly?.(model)) {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
-                        } else {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
-                        }
-                    } else {
-                        valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
-                    }
-                    title = value.value;
+                case complexValueTypes.script:                    
+                    valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
+                    title = valueHTMLResult.title;
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 case complexValueTypes.template:
                     title = valueInnerHTML = value.value.name;
@@ -577,6 +559,23 @@ class CellViewFactory implements ICellViewFactory {
                 }
             });
             valueInnerHTML = parts.join(' - ');
+        }
+        return {
+            cellInnerHTML: valueInnerHTML,
+            title: valueInnerHTML
+        };
+    }
+
+    __getCodeCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
+        let valueInnerHTML = '';
+        if (values) {
+            if (column.getReadonly?.(model)) {
+                valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
+            } else {
+                valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
+            }
+        } else {
+            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
         }
         return {
             cellInnerHTML: valueInnerHTML,

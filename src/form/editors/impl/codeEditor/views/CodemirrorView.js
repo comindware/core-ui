@@ -811,6 +811,7 @@ export default Marionette.View.extend({
         if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {
                 this.minimize();
+                event.stopPropagation();
             }
             return;
         }
