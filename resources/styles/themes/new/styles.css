@@ -63,10 +63,6 @@
     text-overflow: ellipsis;
 }
 
-.search-bar-container .tr-search__clear {
-    top: 18px;
-}
-
 .checkbox,
 .radiobutton {
     background: var(--convex-gradient);
