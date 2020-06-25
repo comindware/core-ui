@@ -66,6 +66,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
+        if (this.options.showMode === showModes.button) {
+            this.focusElement = '.js-code-button-edit';
+        }
     },
 
     onRender() {
