@@ -55,7 +55,7 @@ const variables = {
     'editor-textarea-line-height': '18px',
     'editor-font-size': 'var(--base-font-size)',
     'editor-text-color': 'var(--text-color)',
-    'editor-empty-text-color': 'var(--grey-500)',
+    'editor-empty-text-color': 'var(--grey-900)',
 
     // input
     'input-padding': '4px 18px 4px 5px',

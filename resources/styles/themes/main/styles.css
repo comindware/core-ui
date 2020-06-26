@@ -88,10 +88,6 @@
   vertical-align: inherit;
 }
 
-.textarea:hover {
-  border-color: var(--input-hover-color);
-}
-
 .checkbox {
   border-radius: var(--checkbox-radius);
 }
