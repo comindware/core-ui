@@ -126,7 +126,7 @@ export default {
                 item.syntax = item.text;
                 item.icons = attribute.icons;
                 item.className = classes.attribute;
-                item.type = types.attribute;
+                item.type = attribute.type || types.attribute;
                 item.hint = (cm, data, completion) => {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
