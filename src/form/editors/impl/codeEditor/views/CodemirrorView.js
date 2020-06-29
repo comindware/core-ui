@@ -771,6 +771,9 @@ export default Marionette.View.extend({
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
 
+        if (this.options.getTemplate) {
+            this.templateId = this.options.getTemplate();
+        }
         const options = {
             token,
             types,
@@ -779,8 +782,9 @@ export default Marionette.View.extend({
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
+
             attributes: this.options.hintAttributes,
-            templateId: this.templateId,
+            templateId: this.options.templateId || this.templateId,
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);

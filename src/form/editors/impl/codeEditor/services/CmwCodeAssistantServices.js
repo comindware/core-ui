@@ -77,8 +77,10 @@ export default {
             let attributes;
             if (options.attributes) {
                 attributes = options.attributes;
-            } else {
+            } else if (options.templateId) {
                 attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
+            } else {
+                return;
             }
             if (attributes.length) {
                 attributes.forEach(atribute => { 

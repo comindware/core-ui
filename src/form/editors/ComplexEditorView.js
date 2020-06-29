@@ -27,8 +27,9 @@ const defaultOptions = {
     displayInline: false,
     ontologyService: null,
     config: null,
+    getTemplate: null,
     hintAttributes: null,
-    getTemplate: null
+    solution: null
 };
 
 export default (formRepository.editors.Complex = BaseEditorView.extend({
@@ -90,8 +91,8 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         this.__isFirstValueSetting = true;
     },
 
-    setValue(oldValue) {
-        let value = oldValue;
+    setValue(newValue) {
+        let value = newValue;
         if (!value || !Object.keys(this.value).length) {
             value = {
                 type: this.valueTypeCollection.at(0).id,
@@ -101,6 +102,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         if (!this.__isFirstValueSetting && _.isEqual(this.value, value)) {
             return;
         }
+        this.value = value;
         this.__isFirstValueSetting = false;
 
         this.typeEditor?.setValue(value.type || complexValueTypes.value);
@@ -265,8 +267,10 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
             showMode: this.options.codeEditorMode,
             ontologyService: this.options.ontologyService,
             config: this.options.config,
+            templateId: this.options.templateId,
             hintAttributes: this.options.hintAttributes,
-            templateId: this.options.templateId
+            solution: this.options.solution,
+            getTemplate: this.options.getTemplate
         };
 
         this.expressionEditor = new CodeEditorView(expressionEditorOptionsOptions);
