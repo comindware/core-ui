@@ -249,9 +249,7 @@ export default Marionette.PartialCollectionView.extend({
             }
             if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
                 const index = model.collection.indexOf(model) + 1;
-                if (index !== model.currentIndex) {
-                    childView.updateIndex && childView.updateIndex(index);
-                }
+                childView.updateIndex && childView.updateIndex(index);
             }
             if (this.getOption('isTree') && typeof childView.insertFirstCellHtml === 'function') {
                 childView.insertFirstCellHtml();

@@ -301,7 +301,10 @@ export default Marionette.View.extend({
     },
 
     updateIndex(index: number) {
-        this.el.querySelector('.js-index').innerHTML = index;
+        if (index !== this.model.currentIndex) {
+            this.el.querySelector('.js-index').innerHTML = index;
+            this.model.currentIndex = index;
+        }        
     },
 
     insertFirstCellHtml(force: boolean) {
