@@ -62,10 +62,6 @@
   text-overflow: ellipsis;
 }
 
-.search-bar-container .tr-search__clear {
-  top: 18px;
-}
-
 .tr-search__clear .icon-remove {
     vertical-align: middle;
 }
