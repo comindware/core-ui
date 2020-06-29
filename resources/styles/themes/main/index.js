@@ -232,7 +232,8 @@ module.exports.apply = {
         cursor: 'auto'
     },
     'checkbox-theme': {
-        'line-height': 'normal'
+        'line-height': 'normal',
+        'font-size': '11px'
     },
     'checkbox-disabled-theme': {},
     'radio-disabled-theme': {},

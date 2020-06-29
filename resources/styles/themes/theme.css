@@ -285,8 +285,8 @@ body {
 
 /* checkbox */
 .checkbox {
-  @apply --checkbox-theme;
   font-size: var(--base-font-size);
+  @apply --checkbox-theme;
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   border-radius: var(--checkbox-radius);
