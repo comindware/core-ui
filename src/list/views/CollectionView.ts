@@ -89,7 +89,7 @@ export default Marionette.PartialCollectionView.extend({
             this.collection.updatePosition(0);
         }
 
-        this.debouncedHandleResizeLong = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
+        this.debouncedHandleResizeLong = _.debounce(() => this.handleResize(false), 100);
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
@@ -507,7 +507,8 @@ export default Marionette.PartialCollectionView.extend({
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.state.viewportHeight === oldViewportHeight) {
-            if (shouldUpdateScroll === false) {
+            const isAllItemHeightLessAvailable = typeof this.state.allItemsHeight === 'number' && this.state.allItemsHeight <= availableHeight;
+            if (shouldUpdateScroll === false && !isAllItemHeightLessAvailable) {
                 return;
             }
             // scroll in case of search, do not scroll in case of collapse
