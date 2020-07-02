@@ -985,6 +985,7 @@ input[type="color"], .colorpicker{
 .simplified-button_grid .cell{
     min-width: 28px;
     width: 28px;
+    height: 34px;
     padding: 0;
     box-shadow: none!important;
     background-color: transparent!important;
@@ -997,7 +998,7 @@ input[type="color"], .colorpicker{
 }
 
 .simplified-button_grid .visible-collection {
-    height: 35px;
+    height: 34px;
 }
 
 .simplified-button_grid .grid-content-view{

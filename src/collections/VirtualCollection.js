@@ -323,7 +323,7 @@ const VirtualCollection = Backbone.Collection.extend({
         });
         this.visibleModels.forEach(model => {
             if (oldModels.includes(model)) {
-                this.trigger('update:child', model)
+                this.trigger('update:child', model);
             } else {
                 added.push(model);
             }
@@ -372,6 +372,8 @@ const VirtualCollection = Backbone.Collection.extend({
         models.forEach(model => {
             if (model.children && model.children.length) {
                 model.filteredChildren = this.__filterModels(model.children.models);
+            } else {
+                delete model.filteredChildren;
             }
 
             if (this.filterFn.every(fn => fn.call(models, model, fn.parameters)) || (model.filteredChildren && model.filteredChildren.length)) {
