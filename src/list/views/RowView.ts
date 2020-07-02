@@ -135,18 +135,6 @@ export default Marionette.View.extend({
         }
     },
 
-    __setCustomClassToColumn(column: Column) {
-        if (column.isHidden) {
-            if (!column.customClass) {
-                column.customClass = classes.hiddenByTreeEditorClass;
-            } else if (!column.customClass.match(new RegExp(classes.hiddenByTreeEditorClass))) {
-                column.customClass += ` ${classes.hiddenByTreeEditorClass}`;
-            }
-        } else if (column.customClass) {
-            column.customClass = column.customClass.replace(new RegExp(classes.hiddenByTreeEditorClass), '');
-        }
-    },
-
     _renderTemplate() {
         if (typeof this.options.transliteratedFields === 'object') {
             transliterator.initializeTransliteration({
@@ -164,7 +152,6 @@ export default Marionette.View.extend({
 
         const customCells: Array<{ index: number, CellView: Marionette.View<Backbone.Model> }> = [];
         this.options.columns.forEach((column: Column, index: number) => {
-            this.__setCustomClassToColumn(column);
             if (column.cellView) {
                 customCells.push({ index, CellView: column.cellView })
             } else {
