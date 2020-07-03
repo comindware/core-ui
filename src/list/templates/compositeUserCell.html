@@ -1,1 +1,6 @@
-<span class="composite-user-abr__name">{{name}}</span>
+{{#if url}}
+    <a href="{{url}}" target="_blank" class="standart-link">{{name}}</a>
+{{else}}
+    <span class="composite-user-abr__name">{{name}}</span>
+{{/if}}
+
