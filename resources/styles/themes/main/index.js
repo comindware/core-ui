@@ -92,7 +92,7 @@ const variables = {
     'grid-toolbar-bg-color': 'var(--grey-100)',
 
     'grid-checkbox-size': '14px',
-    'grid-checkbox-icon-size': '12px',
+    'grid-checkbox-icon-size': '11px',
     'grid-header-font-size': 'var(--base-font-size)',
     'grid-header-color': 'var(--white)',
     'grid-header-bg': 'var(--blue-200)',
