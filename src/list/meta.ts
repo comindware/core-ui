@@ -158,6 +158,7 @@ export const classes = {
     cell: 'cell',
     errorButton: 'js-error-button',
     hiddenByTreeEditorClass: 'hidden-by-tree-editor',
+    hiddenColumns: 'hidden-columns',
     sortingUp: 'arrow-up',
     sortingDown: 'arrow-down',
     required: 'required',
