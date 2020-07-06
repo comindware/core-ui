@@ -184,6 +184,8 @@ export default Marionette.View.extend({
         const { index, newColumnWidth } = config;
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
+            const treeModel = this.treeModel.get('columnsCollection').find(model => model.id === columnModel.id);
+            treeModel.set('width', newColumnWidth);
             const configWidthColumn = new Map();
             configWidthColumn.set(this.options.columns[index].columnModel.id, { width: newColumnWidth });
             this.trigger('treeEditor:save', configWidthColumn);
