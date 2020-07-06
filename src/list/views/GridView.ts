@@ -1101,11 +1101,13 @@ export default Marionette.View.extend({
                 this.el.querySelector('.js-grid-content').appendChild(noColumnsMessage);
                 this.el.querySelector('tbody').classList.add(classes.hiddenByTreeEditorClass);
                 this.el.querySelector('.grid-header').classList.add(classes.hiddenByTreeEditorClass);
+                this.ui.tableWrapper.get(0).classList.add(classes.hiddenColumns);
             }
         } else if (this.el.querySelector('.tree-editor-no-columns-message')) {
             this.el.querySelector('.tree-editor-no-columns-message').remove();
             this.el.querySelector('tbody').classList.remove(classes.hiddenByTreeEditorClass);
             this.el.querySelector('.grid-header').classList.remove(classes.hiddenByTreeEditorClass);
+            this.ui.tableWrapper.get(0).classList.remove(classes.hiddenColumns);
         }
     },
 

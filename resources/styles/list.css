@@ -58,8 +58,13 @@
     will-change: top;
     contain: strict;
 }
+
 .grid-content-wrp.grid-content-wrp_width-auto {
     min-width: auto;
+}
+
+.hidden-columns .grid-content-wrp {
+    min-width: 100% !important;
 }
 
 .grid-header-wrp {
@@ -320,6 +325,7 @@ tr.empty-view {
 .empty-view_text {
     text-align: center;
     white-space: nowrap;
+    line-height: 25px;
 }
 /* /Empty View */
 
@@ -728,6 +734,10 @@ tr.grid-header.dragover td {
 .grid-table-wrapper {
     min-height: 100%;
     width: 100%;
+}
+
+.grid-table-wrapper.hidden-columns {
+    height: auto !important;
 }
 
 .grid-table-wrapper-war {
