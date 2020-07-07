@@ -658,6 +658,8 @@ _:-ms-lang(x),
 }
 
 .cell_selection, .cell_selection-index {
+  height: var(--grid-cell-height);
+  line-height: var(--grid-cell-height);
   padding: 0 5px;
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
