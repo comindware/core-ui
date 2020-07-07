@@ -514,7 +514,10 @@ export default Marionette.PartialCollectionView.extend({
             // scroll in case of search, do not scroll in case of collapse
             if (options.add) {
                 const rowIndex = collection.indexOf(model);
-                this.scrollTo(rowIndex, true);
+                const view = this.children.findByModel(model);
+                if (!view) {
+                    this.scrollTo(rowIndex, true);
+                }
                 model.trigger('blink');
             } else if (options.scroll !== false) {
                 this.scrollTo(0, true);
@@ -570,8 +573,7 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     __handleFilter() {
-        this.parent$el.scrollTop(0);
-        this.scrollTo(0);
+        this.scrollTo(0, true);
         this.debouncedHandleResizeShort();
     },
 
