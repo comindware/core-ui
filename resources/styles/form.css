@@ -792,6 +792,16 @@ input[type="color"],
 
 .task-links__link {
     flex: 1 1 auto;
+    max-width: 100%;
+    text-decoration: none;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.document-buttons__link {
+    max-width: 100%;
     text-decoration: none;
     display: inline-block;
     overflow: hidden;
@@ -818,10 +828,39 @@ input[type="color"],
     border: 1px solid #009bfe;
 }
 
+.document-list {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.document-buttons__list {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    line-height: 1;
+    margin: 4px 0;
+}
+
+.document-embedded {
+    overflow: auto;
+    width: 100%;
+    max-width: 100%;
+    max-height: 600px;
+}
+
 .documents {
+    list-style-type: none;
     margin-top: 20px;
-    margin-left: 2em;
-    max-width: calc(100% - 2em);
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0;
 }
 
 .cell.editor_document .documents {
@@ -847,15 +886,15 @@ input[type="color"],
     display: none;
 }
 
-.dev-btn-document-revise,
-.editor-document__preview-btn:not(:empty) {
+.document-buttons__i {
+    display: inline-flex;
     width: 16px;
     font-size: 16px;
-    position: relative;
-    display: inline-block;
     cursor: pointer;
     text-align: center;
-    line-height: 1;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
 }
 
 .editor-document__preview-btn:not(:empty) {
