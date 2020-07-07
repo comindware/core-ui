@@ -204,7 +204,14 @@ export default Marionette.View.extend({
         this.listView.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;
-            this.ui.tableTopMostWrapper.get(0).scrollTop = newPosition * this.listView.childHeight;
+            const wraper = this.ui.tableTopMostWrapper.get(0);
+            let scrollTop;
+            if (position === this.collection.length - 1) {
+                scrollTop = wraper.scrollHeight - wraper.clientHeight;
+            } else {
+                scrollTop = newPosition * this.listView.childHeight;
+            }
+            wraper.scrollTop = scrollTop;
 
             _.delay(() => (this.internalScroll = false), 100);
         }
