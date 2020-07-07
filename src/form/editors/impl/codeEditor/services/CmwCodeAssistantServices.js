@@ -1,3 +1,4 @@
+import LocalizationService from 'services/LocalizationService';
 import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
