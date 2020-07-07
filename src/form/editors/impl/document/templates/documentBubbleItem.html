@@ -1,8 +1,27 @@
-<span class="fa-li" ><i class="{{iconPrefixer icon}}"></i></span>
-{{#if url}}
-<a class="task-links__link js-link" target="_blank" href="{{url}}" title="{{text}}" download="{{text}}">{{text}}</a>
-{{else}}
-<span>{{text}}</span>
+<div class="document-buttons__list">
+    <i class="document-buttons__i {{iconPrefixer icon}}"></i>
+    {{#if url}}
+        <a class="document-buttons__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">{{text}}</a>
+    {{else}}
+        <span>{{text}}</span>
+    {{/if}}
+    {{#if isInline}}
+        {{#if editLink}}
+            <a href="{{editLink}}" class="js-document-edit-btn" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.EDIT'}}">
+                <i class="{{iconPrefixer 'pencil'}}"></i></span>
+            </a>
+        {{/if}}
+    {{/if}}
+    <span class="js-revise-button-region document-buttons__i dev-btn-document-revise" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWREVISION'}}"></span>
+    <span class="js-download-button document-buttons__i" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}">
+        <i class="{{iconPrefixer 'download'}}"></i>
+    </span>
+    <span class="js-delete-button document-buttons__i icon-remove" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DELETE'}}">
+        <i class="{{iconPrefixer 'times'}}"></i>
+    </span>
+</div>
+{{#if isInline}}
+<div class="document-embedded">
+    <object data="{{url}}" type="{{embeddedType}}"></object>
+</div>
 {{/if}}
-<span class="js-revise-button-region dev-btn-document-revise" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWREVISION'}}"></span>
-<span class="js-download-button editor-document__preview-btn" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}"></span>

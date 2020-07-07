@@ -103,9 +103,9 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view.$('.task-links__i').trigger('mouseenter');
+            view.$('.document-list').trigger('mouseenter');
 
-            document.getElementsByClassName('js-bubble-delete')[0].click();
+            document.getElementsByClassName('js-delete-button')[0].click();
 
             expect(view.getValue()).toEqual([]);
         });
@@ -162,7 +162,7 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view.$('.task-links__i').trigger('mouseenter');
+            view.$('.document-list').trigger('mouseenter');
             view.$('.js-revise-button-region').click();
             setTimeout(() => {
                 expect(document.getElementsByClassName('js-revision-list').length).toEqual(1);
