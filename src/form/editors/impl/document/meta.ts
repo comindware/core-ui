@@ -53,8 +53,27 @@ export const videoFileExtensions = [
     'yuv'
 ];
 
+export const embeddedTypes = {
+    txt: 'text/plain',
+    jpg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    bmp: 'image/bmp',
+    zip: 'application/zip',
+    rar: 'application/vnd.rar',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    pdf: 'application/pdf'
+};
+
 export default {
     fileIconClasses,
-
-    savedDocumentPrefix: 'document'
+    savedDocumentPrefix: 'document',
+    embeddedTypes,
+    graphicFileExtensions,
+    videoFileExtensions
 };

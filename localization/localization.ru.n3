@@ -106,9 +106,13 @@
 
 <http://comindware.com/text/core/form/editors/document#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "выберите файл"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/form/editors/document#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
+
 <http://comindware.com/text/core/form/editors/document#download> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать"; l10n:originalData "Download"].
 
 <http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите файл для загрузки <br> или "; l10n:originalData "dragFile"].
+
+<http://comindware.com/text/core/form/editors/document#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "Edit"].
 
 <http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
 
