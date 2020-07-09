@@ -31,7 +31,8 @@ const defaultOptions = options => ({
     createDocument: null,
     removeDocument: null,
     displayText: '',
-    isCell: false
+    isCell: false,
+    isInline: false
 });
 
 const MAX_NUMBER_VISIBLE_DOCS = 2;
@@ -74,7 +75,8 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         return {
             attachmentsController: this.attachmentsController,
             allowDelete: this.options.allowDelete,
-            showRevision: this.options.showRevision
+            showRevision: this.options.showRevision,
+            isInline: this.options.isInline
         };
     },
 

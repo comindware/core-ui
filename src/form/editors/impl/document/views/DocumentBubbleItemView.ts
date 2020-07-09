@@ -33,17 +33,19 @@ export default Marionette.View.extend({
         const { text, name, isLoading, extension } = this.model.toJSON();
         return {
             text: text || name,
-            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name })
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
+            isInline: this.options.isInline
         };
     },
 
-    className: 'task-links__i',
+    className: 'document-list',
 
     ui: {
-        remove: '.js-bubble-delete',
+        remove: '.js-delete-button',
         revise: '.js-revise-button-region',
         link: '.js-link',
-        downloadButton: '.js-download-button'
+        downloadButton: '.js-download-button',
+        edit: '.js-document-edit-btn'
     },
 
     triggers: {
@@ -118,14 +120,14 @@ export default Marionette.View.extend({
         this.__addRemoveButton();
         this.__addRevisionButton();
         this.__addDownloadButton();
+        this.__addEditButton();
     },
 
     __addRemoveButton() {
-        if (!this.options.allowDelete || this.__removeButtonElement) {
+        if (!this.options.allowDelete) {
             return;
         }
-        this.__removeButtonElement = UIService.createElementsFromHTML(iconWrapRemoveBubble)[0];
-        this.el.insertAdjacentElement('beforeend', this.__removeButtonElement);
+        this.ui.remove.show();
     },
 
     __addRevisionButton() {
@@ -149,11 +151,14 @@ export default Marionette.View.extend({
     },
 
     __addDownloadButton() {
-        if (this.__downloadElement) {
+        this.ui.downloadButton.show();
+    },
+
+    __addEditButton() {
+        if (!this.options.isInline) {
             return;
         }
-        this.__downloadElement = UIService.createElementsFromHTML(iconWrapDownload, { download: iconsNames.download })[0];
-        this.ui.downloadButton.get(0).insertAdjacentElement('beforeend', this.__downloadElement);
+        this.ui.edit.get(0) && this.ui.edit.show();
     },
 
     __isNew() {
@@ -169,14 +174,11 @@ export default Marionette.View.extend({
         this.__removeRemoveButton();
         this.__removeRevisionButton();
         this.__removeDownloadButton();
+        this.__removeEditButton();
     },
 
     __removeRemoveButton() {
-        if (!this.options.allowDelete || !this.__removeButtonElement) {
-            return;
-        }
-        this.el.removeChild(this.__removeButtonElement);
-        delete this.__removeButtonElement;
+        this.ui.remove.hide();
     },
 
     __removeRevisionButton() {
@@ -186,10 +188,10 @@ export default Marionette.View.extend({
     },
 
     __removeDownloadButton() {
-        if (!this.__downloadElement) {
-            return;
-        }
-        this.ui.downloadButton.get(0).removeChild(this.__downloadElement);
-        delete this.__downloadElement;
+        this.ui.downloadButton.hide();
+    },
+
+    __removeEditButton() {
+        this.ui.edit.get(0) && this.ui.edit.hide();
     }
 });
