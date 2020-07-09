@@ -17,6 +17,11 @@ const modes = {
     script: 'text/x-csharp'
 };
 
+const showModes = {
+    normal: 'normal',
+    button: 'button'
+};
+
 const TOOLTIP_PADDING_PX = 15;
 const TOOLTIP_MARGIN = 10;
 const CHECK_VISIBILITY_DELAY = 200;
@@ -134,6 +139,7 @@ export default Marionette.View.extend({
             this.trigger('maximize', this);
         });
         this.toolbar.on('minimize', this.__onMinimize);
+        this.toolbar.on('code:editor:close', async () => this.__onClose());
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
         if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
@@ -292,6 +298,24 @@ export default Marionette.View.extend({
         this.parentElement = this.el.parentElement;
     },
 
+    async __onClose() {
+        if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
+            const isSaveChange = await Core.services.MessageService.showMessageDialog(
+                Localizer.get('PROCESS.FORMDESIGNER.CONFIRMSAVE.TITLE'), 
+                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
+                    id: true,
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
+                }, {
+                    id: false,
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
+                }]);
+            if (!isSaveChange) { 
+                this.codemirror.setValue(this.valueAfterMaximize);
+            }    
+        }
+        this.__onMinimize();
+    },
+
     __checkVisibleAndRefresh() {
         if (this.$el.height()) {
             this.codemirror.refresh();
@@ -315,6 +339,7 @@ export default Marionette.View.extend({
     },
 
     __onMaximize() {
+        this.valueAfterMaximize = this.codemirror.getValue();
         this.el.classList.add(classes.maximized);
         this.popupId = WindowService.showElInPopup(this.$el, {
             immimmediateClosing: true,
