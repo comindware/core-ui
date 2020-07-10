@@ -168,7 +168,8 @@ export default formRepository.editors.Code = BaseEditorView.extend({
             if (this.getReadonly()) {
                 this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.SHOW'));
             } else {
-                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+                const codeText = this.options.value || this.value;
+                this.ui.editBtn.text(codeText);
             }
         } else {
             this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));

@@ -501,7 +501,7 @@ svg.svg-grid-icons {
 .cell .layout__vertical-layout > div,
 .cell .layout__vertical-layout-item {
   margin-bottom: 0;
-  height: 100%;
+  height: auto;
   flex: 1 0 100px;
 }
 
@@ -1290,6 +1290,7 @@ tr:not(:first-child) .cell_selection {
 
 .cell .editor.context_select {
   margin: 0;
+  line-height: inherit;
   padding:0;
   border: none;
   background: transparent;

@@ -9,7 +9,6 @@ import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
-import { cmpPos } from 'codemirror';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 import moment from 'moment';
@@ -478,7 +477,7 @@ class CellViewFactory implements ICellViewFactory {
         const value = values[0];
         const valueTypeHTML = getComplexValueTypesLocalization(value.type);
         if (value.value === null || value.value === undefined) {
-            valueInnerHTML = '';
+            return this.__getTaggedCellHTML({ column, model, cellInnerHTML: '', title: '' });
         } else {
             switch (value.type) {
                 case complexValueTypes.value:
@@ -493,10 +492,10 @@ class CellViewFactory implements ICellViewFactory {
                     break;
                 }
                 case complexValueTypes.expression:
-                case complexValueTypes.script:                    
+                case complexValueTypes.script:     
                     valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
                     title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;               
                     break;
                 case complexValueTypes.template:
                     title = valueInnerHTML = value.value.name;
@@ -506,8 +505,7 @@ class CellViewFactory implements ICellViewFactory {
             }
         }
         const cellInnerHTML = `${valueTypeHTML}: ${valueInnerHTML}`;
-        const cellTitle = `${valueTypeHTML}: ${title}`;
-        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title: cellTitle });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title});
     }
 
     __getHTMLbyValueEditor({ value, column, model }: GetCellOptions): GetCellInnerHTMLResult {
@@ -570,17 +568,13 @@ class CellViewFactory implements ICellViewFactory {
     __getCodeCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
         let valueInnerHTML = '';
         if (values) {
-            if (column.getReadonly?.(model)) {
-                valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
-            } else {
-                valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
-            }
+            valueInnerHTML = values;
         } else {
             valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
         }
         return {
             cellInnerHTML: valueInnerHTML,
-            title: valueInnerHTML
+            title: this.__getTitle({ values, column, model })
         };
     }
 

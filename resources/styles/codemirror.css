@@ -568,7 +568,6 @@ li.CodeMirror-hint-active {
     height: 100%;
     padding: 4px 20px 4px 10px;
     vertical-align: top;
-    white-space: nowrap;
 }
 
 .grid-container .dev-code-button-edit {
@@ -577,6 +576,10 @@ li.CodeMirror-hint-active {
     margin: 4px 10px;
     padding: 4px 16px 2px 5px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .dev-code-button-edit:hover {
@@ -636,13 +639,19 @@ li.CodeMirror-hint-active {
     border-bottom: 0;
 }
 
-.dev-code-editor-toolbar_button_container {
+.dev-code-editor-toolbar_button_container .dev-code-editor-toolbar_button_container-close {
     cursor: pointer;
     color: black;
     height: 30px;
     width: 40px;
-}.dev-code-editor-toolbar
+}
 
+.dev-code-editor-toolbar_button_container-close {
+    margin-left: auto;
+    display: none;
+}
+
+.dev-code-editor-toolbar
 .dev-code-editor-toolbar_button_container:hover {
     background-color: rgba(228, 232, 234, 1);
 }
