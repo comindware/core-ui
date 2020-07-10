@@ -58,6 +58,7 @@ export default Marionette.View.extend({
             '__checkComments',
             '__countLineAndColumn',
             '__hideHintOnClick',
+            '__isStringLiteral',
             '__getTooltipCsharpModel'
         );
         if (options.mode === constants.mode.expression) {
@@ -205,7 +206,7 @@ export default Marionette.View.extend({
             this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
         this.codemirror.on('inputRead', (editor, change) => {
-            if (this.intelliAssist) {
+            if (this.intelliAssist && this.options.mode ===  constants.mode.script) {
                 if (change.text[0] === '.') {
                     this.filterList = null;
                     this.__showCSharpHint();
@@ -431,7 +432,7 @@ export default Marionette.View.extend({
     },
 
     async __showCSharpHint() {
-        if (!this.intelliAssist) {
+        if (!this.intelliAssist || this.__isStringLiteral()) {
             return;
         }
         this.setLoading(true);
@@ -465,6 +466,14 @@ export default Marionette.View.extend({
         } finally {
             this.setLoading(false);
         }
+    },
+
+    __isStringLiteral() {
+        const token = this.codemirror.getTokenAt(this.codemirror.getCursor());
+        if (token && token.type === 'string') { 
+            return true;
+        }
+        return false;
     },
 
     __renderConfigListToolbar(list) {
@@ -522,7 +531,12 @@ export default Marionette.View.extend({
             autoCompleteObject = {
                 from: cursor,
                 to: cursor,
-                list: [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }]
+                list: [
+                    {
+                        text: '',
+                        displayText: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS')
+                    }
+                ]
             };
         } else {
             autoCompleteObject = {
