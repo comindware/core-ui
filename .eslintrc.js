@@ -12,7 +12,6 @@ module.exports = {
         browser: true,
         es6: true
     },
-    plugins: ['prettier'],
     globals: {
         __DEV__: true,
         Backbone: true,
@@ -32,7 +31,7 @@ module.exports = {
         expect: true,
         jasmine: true
     },
-    plugins: ['backbone'],
+    plugins: ['prettier', 'backbone'],
     extends: ['prettier'],
     rules: {
         'backbone/no-native-jquery': 1,

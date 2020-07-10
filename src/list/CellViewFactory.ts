@@ -264,8 +264,9 @@ class CellViewFactory implements ICellViewFactory {
                 };
             }
         } else {
+            const data = value instanceof Backbone.Model ? value.toJSON() : value;
             result = {
-                text: value[column.displayAttribute] || value.name,
+                text: data[column.displayAttribute] || data.name,
                 ...value
             };
         }
