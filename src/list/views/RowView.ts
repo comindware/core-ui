@@ -55,7 +55,8 @@ export default Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         pointerup: '__handlePointerDown',
-        contextmenu: '__handleContextMenu'
+        contextmenu: '__handleContextMenu',
+        touchend: '__handlePointerDown'
     },
 
     modelEvents: {
@@ -428,7 +429,7 @@ export default Marionette.View.extend({
                 11 //need more than debounce delay in selectableBehavior calculateLength
             );
         }
-
+        
         this.gridEventAggregator.trigger('click', this.model);
     },
 

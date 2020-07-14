@@ -4,6 +4,7 @@ import EdgeService from './EdgeService';
 export default class MobileService {
     static isEdge: boolean;
     static isIE: boolean;
+    static isIOS: boolean;
     static isMobile: boolean;
     static isPhone: boolean;
     static isTablet: boolean;
@@ -20,5 +21,7 @@ export default class MobileService {
 
         this.isEdge = /Edge\//.test(userAgent);
         this.isEdge && EdgeService.initialize();
+
+        this.isIOS = /iPhone|iPad|iPod/i.test(userAgent);
     }
 }
