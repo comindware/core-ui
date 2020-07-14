@@ -31,6 +31,7 @@ const defaultOptions = () => ({
 });
 
 const defaultClasses = 'editor editor_date-time dropdown_root';
+const clearButtonClassSelector = '.js-clear-button';
 
 const editorTypes = {
     dateTime: 'dateTime',
@@ -69,7 +70,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     ui: {
-        clearButton: '.js-clear-button',
+        clearButton: clearButtonClassSelector,
         mobileInput: '.js-mobile-input'
     },
 
@@ -191,6 +192,14 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.__presentView();
 
         this.$editorEl.attr('class', this.__getClassName());
+    },
+
+    checkChange() {
+        if (this.model) {
+            if (this.__adjustValue(this.value) !== this.__adjustValue(this.model.get(this.key))) {
+                this.__triggerChange();
+            }
+        }
     },
 
     __onMobileInput(event) {
@@ -410,13 +419,14 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             autoOpen: false,
             popoutFlow: 'right',
             panelMinWidth: 'none',
-            class: 'editor_date-time_date'
+            class: 'editor_date-time_date',
+            externalBlurHandler: (target: Element) => this.__checkBlur(target)
         });
 
+        this.showChildView('dateDropdownRegion', this.calendarDropdownView);
         this.listenTo(this.calendarDropdownView, 'focus', this.__onDateButtonFocus);
         this.listenTo(this.calendarDropdownView, 'blur', this.__onEditorBlur);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelDateChange);
-        this.showChildView('dateDropdownRegion', this.calendarDropdownView);
         this.listenTo(this.calendarDropdownView, 'keydown', this.__dateButtonInputKeydown);
     },
 
@@ -608,7 +618,8 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             },
             renderAfterClose: false,
             autoOpen: false,
-            class: 'editor_date-time_time'
+            class: 'editor_date-time_time',
+            externalBlurHandler: (target: Element) => this.__checkBlur(target)
         });
 
         this.listenTo(this.timeDropdownView, 'focus', this.__onTimeButtonFocus);
@@ -687,5 +698,9 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         return `${defaultClasses} ${this.displayClasses.dateMapClasses[this.options.dateDisplayFormat] || ''} ${this.displayClasses.timeMapClasses[
             this.options.timeDisplayFormat
         ] || ''}`;
+    },
+
+    __checkBlur(target: Element) {
+        return target === this.el.querySelector(clearButtonClassSelector);
     }
 });
