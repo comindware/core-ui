@@ -2,7 +2,6 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { diffHelper } from 'utils';
 import GridItemBehavior from '../list/behaviors/GridItemBehavior';
 import FixGroupingOptions from './GroupingService';
 import { virtualCollectionFilterActions } from 'Meta';
@@ -282,17 +281,24 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __processDiffs(oldModels, options = {}) {
-        const diff = new diffHelper(oldModels, this.visibleModels);
-        const diffObject = diff.compose();
-
-        diffObject.common.forEach(e => this.trigger('update:child', e)); //update child index and collapses
-
-        const sorted = diffObject.add.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b));
-        options.added = sorted;
-
-        // it's important remove items before add
-        this.__removeModels(diffObject.remove, options);
-        sorted.forEach(model => this.__addModel(model, options));
+        const added: Array<Backbone.Model> = [];
+        const removed: Array<Backbone.Model> = [];
+        oldModels.forEach(model => {
+            if (!this.visibleModels.includes(model)) {
+                removed.push(model);
+            }
+        });
+        this.visibleModels.forEach(model => {
+            if (oldModels.includes(model)) {
+                this.trigger('update:child', model)
+            } else {
+                added.push(model);
+            }
+        });
+        options.added = added;
+        this.__removeModels(removed, options);
+        added.forEach(model => this.__addModel(model, options));
+        this.trigger('reorder');
     },
 
     __normalizePosition(position) {
@@ -469,7 +475,7 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __onChange(model, options, isPartialUpdate) {
-        if (this.options.skipRebuildOnChange) {
+        if (!this.options.rebuildOnChange) {
             return;
         }
         const changed = Object.keys(model.changedAttributes());

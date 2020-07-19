@@ -66,6 +66,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
+        if (this.options.showMode === showModes.button) {
+            this.focusElement = '.js-code-button-edit';
+        }
     },
 
     onRender() {
@@ -132,11 +135,6 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         this.__value(value, true, false);
     },
 
-    async isCompilationError() {
-        const isErrors = await this.editor.__isCompilationError();
-        return isErrors;
-    },
-
     __change() {
         const value = this.editor.getValue() || null;
         this.__value(value, false, true);
@@ -170,7 +168,8 @@ export default formRepository.editors.Code = BaseEditorView.extend({
             if (this.getReadonly()) {
                 this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.SHOW'));
             } else {
-                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
+                const codeText = this.options.value || this.value;
+                this.ui.editBtn.text(codeText);
             }
         } else {
             this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));

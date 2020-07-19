@@ -29,8 +29,8 @@ export default Marionette.View.extend({
             this.topOffset = rect.top;
             this.originalParentHeight = parentRect.height + parentRect.top;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_horizontal';
-            if (this.options.splitPosition) {
-                originalPanelHeight = Number(this.options.splitPosition);
+            if (this.options.splitViewPosition) {
+                originalPanelHeight = Number(this.options.splitViewPosition);
             }
             this.__setTopPosition(originalPanelHeight);
 
@@ -40,7 +40,7 @@ export default Marionette.View.extend({
                 drag: (event, ui) => this.__onResizerDragHorizontal(ui),
                 stop: (event, ui) => {
                     const height = ui.offsetTop - this.topOffset;
-                    this.trigger('change:resizer', height);
+                    this.trigger('change:resizer', height, this.options.orientation);
                 }
             });
         } else if (this.options.orientation === splitViewTypes.VERTICAL) {
@@ -48,8 +48,8 @@ export default Marionette.View.extend({
             this.leftOffset = rect.left;
             this.originalParentWidth = parentRect.width;
             this.el.className = 'split-panel-resizer_container split-panel-resizer_vertical';
-            if (this.options.splitPosition) {
-                originalPanelWidth = Number(this.options.splitPosition);
+            if (this.options.splitViewPosition) {
+                originalPanelWidth = Number(this.options.splitViewPosition);
             }
             this.__setLeftPosition(originalPanelWidth);
 
@@ -58,8 +58,8 @@ export default Marionette.View.extend({
                 axis: 'x',
                 drag: (event, ui) => this.__onResizerDragVertical(ui),
                 stop: (event, ui) => {
-                    const width = ui.offsetLeft - this.leftOffset;
-                    this.trigger('change:resizer', width);
+                    const width = ui.offsetLeft - this.el.offsetParent.offsetLeft;
+                    this.trigger('change:resizer', width, this.options.orientation);
                 }
             });
         } else {
@@ -67,8 +67,9 @@ export default Marionette.View.extend({
         }
     },
 
-    toggleOrientation(type) {
+    toggleOrientation(type, position) {
         this.options.orientation = type;
+        this.options.splitViewPosition = position;
         this.__resetListeners();
     },
 

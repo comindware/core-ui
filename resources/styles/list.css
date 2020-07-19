@@ -64,6 +64,10 @@
     min-width: auto;
 }
 
+.hidden-columns .grid-content-wrp {
+    min-width: 100% !important;
+}
+
 .grid-header-wrp {
     display: flex;
     flex: 0 0 auto;
@@ -172,7 +176,7 @@
 
 .grid-header-view {
     position: relative;
-    border-collapse: collapse;
+    border-collapse: separate;
     display: table-header-group;
 }
 
@@ -316,6 +320,7 @@ tr.empty-view {
 .empty-view_text {
     text-align: center;
     white-space: nowrap;
+    line-height: 25px;
 }
 
 /* /Empty View */
@@ -455,18 +460,13 @@ tr.empty-view {
 
 /* New grid */
 
-/* .cell {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    background-clip: padding-box;
-    max-width: 0; /* hack to set width less than cells content
-    width: auto;
-} */
-
 .cell_editable {
     display: flex;
     align-items: center;
+}
+
+.cell.readonly {
+    background-color: #f9f9f9;
 }
 
 .cell_selection,
@@ -745,6 +745,9 @@ tr.grid-header.dragover td {
     min-height: 100%;
     width: 100%;
 }
+.grid-table-wrapper.hidden-columns {
+    height: auto !important;
+}
 
 .grid-table-wrapper-war {
     overflow: auto;
@@ -778,7 +781,6 @@ tr.grid-header.dragover td {
 }
 
 .composite-user-abr__name {
-    margin-left: 0.5rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -816,8 +818,10 @@ tr.grid-header.dragover td {
 }
 
 .composite-cell__wrp {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    overflow: visible;
+    width: 100%;
 }
 
 .composite-cell__wrp > * {

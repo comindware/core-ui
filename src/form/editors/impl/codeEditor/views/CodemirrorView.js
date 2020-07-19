@@ -14,6 +14,11 @@ import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
 import { contextIconType } from '../../../../../Meta';
 import '../../../../../../node_modules/codemirror/mode/turtle/turtle';
 
+const showModes = {
+    normal: 'normal',
+    button: 'button'
+};
+
 const TOOLTIP_PADDING_PX = 15;
 const CHECK_VISIBILITY_DELAY = 200;
 
@@ -53,6 +58,7 @@ export default Marionette.View.extend({
             '__checkComments',
             '__countLineAndColumn',
             '__hideHintOnClick',
+            '__isStringLiteral',
             '__getTooltipCsharpModel',
             '__showHintsN3_ctr_space',
             '__getAttributeNotation3',
@@ -115,7 +121,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this, readonly: this.options.readonly });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
@@ -127,6 +133,7 @@ export default Marionette.View.extend({
             this.trigger('maximize', this);
         });
         this.toolbar.on('minimize', this.__onMinimize);
+        this.toolbar.on('code:editor:close', async () => this.__onClose());
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
         if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
@@ -467,14 +474,26 @@ export default Marionette.View.extend({
         }
     },
 
-    async __isCompilationError() {
-        await this.__compile();
-        const isErrors = Boolean(this.editor.output.model.get('errors').length);
-        return isErrors;
-    },
-
     onAttach() {
         this.parentElement = this.el.parentElement;
+    },
+
+    async __onClose() {
+        if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
+            const isSaveChange = await Core.services.MessageService.showMessageDialog(
+                Localizer.get('PROCESS.FORMDESIGNER.CONFIRMSAVE.TITLE'), 
+                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
+                    id: true,
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
+                }, {
+                    id: false,
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
+                }]);
+            if (!isSaveChange) { 
+                this.codemirror.setValue(this.valueAfterMaximize);
+            }    
+        }
+        this.__onMinimize();
     },
 
     __checkVisibleAndRefresh() {
@@ -500,6 +519,7 @@ export default Marionette.View.extend({
     },
 
     __onMaximize() {
+        this.valueAfterMaximize = this.codemirror.getValue();
         this.el.classList.add(classes.maximized);
         this.popupId = WindowService.showElInPopup(this.$el, {
             immimmediateClosing: true,
@@ -604,6 +624,9 @@ export default Marionette.View.extend({
     },
 
     async __showCSharpHint() {
+        if (!this.intelliAssist || this.__isStringLiteral()) {
+            return;
+        }
         this.setLoading(true);
         try {
             const completeHoverQuery = {
@@ -635,6 +658,14 @@ export default Marionette.View.extend({
         } finally {
             this.setLoading(false);
         }
+    },
+
+    __isStringLiteral() {
+        const token = this.codemirror.getTokenAt(this.codemirror.getCursor());
+        if (token && token.type === 'string') { 
+            return true;
+        }
+        return false;
     },
 
     __renderConfigListToolbar(list) {
@@ -1203,6 +1234,9 @@ export default Marionette.View.extend({
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
 
+        if (this.options.getTemplate) {
+            this.templateId = this.options.getTemplate();
+        }
         const options = {
             token,
             types,
@@ -1211,8 +1245,9 @@ export default Marionette.View.extend({
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
+
             attributes: this.options.hintAttributes,
-            templateId: this.templateId
+            templateId: this.options.templateId || this.templateId,
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
@@ -1417,6 +1452,7 @@ export default Marionette.View.extend({
         if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {
                 this.minimize();
+                event.stopPropagation();
             }
             return;
         }

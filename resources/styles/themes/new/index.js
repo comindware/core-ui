@@ -55,7 +55,7 @@ const variables = {
     'form-field-margin': '15px',
     'form-label-font-size': 'var(--base-font-size)',
     'form-label-font-weight': '600',
-    'form-label-color': 'var(--black)',
+    'form-label-color': 'var(--theme-colors__text)',
     'form-label-margin': '8px',
     'form-label-padding': '0 0 0 var(--form-input-padding)',
     'form-label-icon-size': '14px',
@@ -64,7 +64,7 @@ const variables = {
     // form editor
     'editor-font-size': 'inherit',
     'editor-text-color': 'var(--text-color)',
-    'editor-empty-text-color': 'rgba(0,0,0,.3)',
+    'editor-empty-text-color': 'var(--grey-900)',
 
     // input
     'input-padding': '4px 20px 4px var(--form-input-padding)',
@@ -182,8 +182,8 @@ module.exports.apply = {
     'button-theme': {
         'vertical-align': 'middle',
         cursor: 'pointer',
-        'font-size': '15px',
-        padding: '3px 15px',
+        'font-size': '14px',
+        padding: '3px 11px',
         'border-radius': '4px'
     },
     'button-strong': {

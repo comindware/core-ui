@@ -60,7 +60,8 @@ const GridHeaderView = Marionette.View.extend({
         gridHeaderColumn: '.grid-header-column',
         checkbox: '.js-checkbox',
         dots: '.js-dots',
-        index: '.js-index'
+        index: '.js-index',
+        cellSelection: '.js-cell_selection'
     },
 
     events: {
@@ -118,7 +119,7 @@ const GridHeaderView = Marionette.View.extend({
                 .find('.header-column-wrp')[0]                
                 .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
                 fa fa-angle-down ${expandOnShow ? classes.expanded : ''}"></i/`);
-            this.collapsed = !this.expandOnShow;
+            this.collapsed = !this.options.expandOnShow;
         }
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -315,7 +316,7 @@ const GridHeaderView = Marionette.View.extend({
         if (previousDragEnterModel === model) {
             return;
         }
-        
+
         previousDragEnterModel?.trigger('dragleave');
         this.collection.dragoverModel = model;
 
@@ -375,11 +376,20 @@ const GridHeaderView = Marionette.View.extend({
         switch (state) {
             case 'checked':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
+                if (this.ui.cellSelection.get(0)) {
+                    this.ui.cellSelection.get(0).classList.add(classes.has_checked);
+                }
                 break;
             case 'checkedSome':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
+                if (this.ui.cellSelection.get(0)) {
+                    this.ui.cellSelection.get(0).classList.add(classes.has_checked);
+                }
                 break;
             case 'unchecked':
+                if (this.ui.cellSelection.get(0)) {
+                    this.ui.cellSelection.get(0).classList.remove(classes.has_checked);
+                }
             default:
                 this.ui.checkbox.get(0).innerHTML = '';
                 break;

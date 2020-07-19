@@ -268,6 +268,7 @@ input[type="checkbox"].checkbox {
     overflow: hidden;
     display: block;
     border-radius: 50%;
+    flex: none;
 }
 
 .editor_checked .radiobutton::after {

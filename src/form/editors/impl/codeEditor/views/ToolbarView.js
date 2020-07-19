@@ -5,12 +5,6 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateContext() {
-        return {
-            isReadonly: this.options.readonly
-        };
-    },
-
     ui: {
         compile: '.js-code-editor-compile',
         undo: '.js-code-editor-undo',
@@ -20,7 +14,8 @@ export default Marionette.View.extend({
         find: '.js-code-editor-find',
         maximize: '.js-code-editor-maximize',
         minimize: '.js-code-editor-minimize',
-        download: '.js-code-editor-download'
+        download: '.js-code-editor-download',
+        close: '.js-code-editor-close'
     },
 
     triggers: {
@@ -35,7 +30,8 @@ export default Marionette.View.extend({
 
     events: {
         'click @ui.maximize': '__onMaximize',
-        'click @ui.minimize': '__onMinimize'
+        'click @ui.minimize': '__onMinimize',
+        'click @ui.close': '__onClose'
     },
 
     onAttach() {
@@ -43,11 +39,13 @@ export default Marionette.View.extend({
     },
 
     maximize() {
-        this.ui.maximize.hide();
+        this.ui.close.show();
         this.ui.minimize.show();
+        this.ui.maximize.hide();
     },
 
     minimize() {
+        this.ui.close.hide();
         this.ui.maximize.show();
         this.ui.minimize.hide();
     },
@@ -60,5 +58,12 @@ export default Marionette.View.extend({
     __onMinimize() {
         this.minimize();
         this.trigger('minimize');
+    },
+
+    __onClose() {       
+        this.trigger('code:editor:close');
+        this.ui.minimize.hide();
+        this.ui.maximize.show();
+        this.ui.close.hide();
     }
 });

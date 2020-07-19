@@ -9,8 +9,11 @@ import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
+import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
+import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
-import { helpers } from 'utils';
+import { classes } from './meta';
 
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
@@ -20,7 +23,7 @@ const compiledValueCell = Handlebars.compile('{{value}}');
 
 const getWrappedTemplate = (template: string) => `<div class="composite-cell__wrp">
         ${template}
-        <span class="composite-cell__count">+{{count}}</span>
+        <span class="composite-cell__count">+{{count}}</div>
     </div>`;
 
 const compiledWrappedCompositeDocumentCell = Handlebars.compile(getWrappedTemplate(compositeDocumentCell));
@@ -31,7 +34,6 @@ const compiledWrappedValueCell = Handlebars.compile(getWrappedTemplate('{{value}
 
 type ValueFormatOption = {
     value: any,
-    column: Column,
     model?: Backbone.Model
 };
 
@@ -65,7 +67,7 @@ class CellViewFactory implements ICellViewFactory {
     getCell(column: Column, model: Backbone.Model): string {
         const value = model.get(column.key);
 
-        if (this.__isEmpty(value) || column.getHidden?.(model)) {
+        if ((this.__isEmpty(value) && column.type !== objectPropertyTypes.BOOLEAN) || column.getHidden?.(model)) {
             return `<td class="${this.__getCellClass(column, model)}" tabindex="-1"></td>`;
         }
 
@@ -96,10 +98,10 @@ class CellViewFactory implements ICellViewFactory {
                 return this.__getDocumentCell({ values, column, model });
             case 'Complex':
                 return this.__getComplexCell({ values, column, model });
-            // case 'Code':
-            //     return this.__getDocumentCell({ values, column, model });
-            // case 'Code':
-            //     return this.__getDocumentCell({ values, column, model });
+            case 'ContextSelect':
+                return this.__getContextCell({ values, column, model });
+            case 'Code':
+                return this.__getCodeCell({ values, column, model });
             case objectPropertyTypes.STRING:
             default:
                 return this.__getStringCell({ values, column, model });
@@ -119,7 +121,7 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 template = compiledCompositeReferenceCell;
-                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column, model }));
+                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column }));
                 break;
             case objectPropertyTypes.ACCOUNT:
                 template = compiledCompositeUserCell;
@@ -146,9 +148,10 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.BOOLEAN:
                 return null;
             case objectPropertyTypes.STRING:
-            default:
                 template = compiledStringValueCell;
-                formattedValues = value.map(v => ({ value: v }));
+                formattedValues = value.map(v => ({ value }));
+                break;                
+            default:
                 break;
         }
         const panelViewOptions = {
@@ -191,7 +194,7 @@ class CellViewFactory implements ICellViewFactory {
             const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(value, column.formatOptions.timeDisplayFormat) : '';
             return `${dateDisplayValue} ${timeDisplayValue}`;
         }
-        return dateHelpers.dateToDateTimeString(value, 'generalDateShortTime');
+        return dateHelpers.dateToDateTimeString(value, dateHelpers.dateTimeFormats.GENERAL_DATE_SHORT_TIME);
     }
 
     __getFormattedDurationValue({ value, column }: ValueFormatOption) {
@@ -236,11 +239,6 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedBooleanValue({ value, column, model }: ValueFormatOption) {
-        // if (value === true) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-        // } else if (value === false) {
-        //     result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
-        // }
         const trueIcon = '<i class="fas fa-check icon-true"></i>';
         if (!column.editable || column.getReadonly?.(model)) {
             if (value === true) {
@@ -254,13 +252,33 @@ class CellViewFactory implements ICellViewFactory {
         return `<div class="checkbox js-checbox">${innerHTML}</div>`;
     }
 
-    __getFormattedReferenceValue({ value, column, model }: ValueFormatOption) {
-        const result = {
-            text: value.name || helpers.getDisplayText(value, column.displayAttribute, model, column.idProperty),
-            ...value
-        };
+    __getFormattedReferenceValue({ value, column }: ValueFormatOption) {
+        let result;
+        if (column.valueType === 'id') {
+            const item = column.collection?.find(m => m.id === value);
+            if (item) {
+                const data = item instanceof Backbone.Model ? item.toJSON() : item;
+                const text = data[column.displayAttribute] || data.text || data.name;
+                result = {
+                    id: value,
+                    text
+                };
+            } else {
+                result = {
+                    id: value,
+                    text: `#${value}`
+                };
+            }
+        } else {
+            const data = value instanceof Backbone.Model ? value.toJSON() : value;
+            result = {
+                text: data[column.displayAttribute] || data.name,
+                ...value
+            };
+        }
+
         if (!value.url && typeof column.createValueUrl === 'function') {
-            result.url = column.createValueUrl({ value, column });
+            result.url = column.createValueUrl({ value: result, column });
         }
 
         return result;
@@ -380,7 +398,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getReferenceCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column, model }));
+        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column }));
 
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.text) });
 
@@ -449,6 +467,16 @@ class CellViewFactory implements ICellViewFactory {
             </td>`;
     }
 
+    __getContextCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getContextCellInnerHtml({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
+    }
+
+    __getCodeCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getCodeCellInnerHtml({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
+    }
+
     __getComplexCell({ values, column, model }: GetCellOptions): string {
         let valueHTMLResult;
         let valueInnerHTML = '';
@@ -456,7 +484,7 @@ class CellViewFactory implements ICellViewFactory {
         const value = values[0];
         const valueTypeHTML = getComplexValueTypesLocalization(value.type);
         if (value.value === null || value.value === undefined) {
-            valueInnerHTML = '';
+            return this.__getTaggedCellHTML({ column, model, cellInnerHTML: '', title: '' });
         } else {
             switch (value.type) {
                 case complexValueTypes.value:
@@ -465,38 +493,16 @@ class CellViewFactory implements ICellViewFactory {
                     valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 case complexValueTypes.context: {
-                    if (!value.value || value.value === 'False' || !column.context || !column.recordTypeId) {
-                        valueInnerHTML = '';
-                    } else if (typeof value.value === 'string') {
-                        valueInnerHTML = value.value;
-                    } else {
-                        let instanceTypeId = column.recordTypeId;
-                        valueInnerHTML = '';
-
-                        value.value.forEach((item: string, index: number) => {
-                            const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
-
-                            if (searchItem) {
-                                valueInnerHTML += index ? ` - ${searchItem.name}` : searchItem.name;
-                                instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
-                            }
-                        });
-                    }
-                    title = valueInnerHTML;
+                    valueHTMLResult = this.__getContextCellInnerHtml({ values: value.value, column, model });
+                    title = valueHTMLResult.title;
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 }
                 case complexValueTypes.expression:
-                case complexValueTypes.script:
-                    if (value.value) {
-                        if (column.getReadonly?.(model)) {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.SHOW');
-                        } else {
-                            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EDIT');
-                        }
-                    } else {
-                        valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
-                    }
-                    title = value.value;
+                case complexValueTypes.script:     
+                    valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
+                    title = valueHTMLResult.title;
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;               
                     break;
                 case complexValueTypes.template:
                     title = valueInnerHTML = value.value.name;
@@ -506,8 +512,7 @@ class CellViewFactory implements ICellViewFactory {
             }
         }
         const cellInnerHTML = `${valueTypeHTML}: ${valueInnerHTML}`;
-        const cellTitle = `${valueTypeHTML}: ${title}`;
-        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title: cellTitle });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title});
     }
 
     __getHTMLbyValueEditor({ value, column, model }: GetCellOptions): GetCellInnerHTMLResult {
@@ -542,6 +547,44 @@ class CellViewFactory implements ICellViewFactory {
         return valueCellInnerHTMLResult;
     }
 
+    __getContextCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
+        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
+        let valueInnerHTML = '';
+        if (!values || values === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
+            valueInnerHTML = '';
+        } else if (typeof values === 'string') {
+            valueInnerHTML = values;
+        } else {
+            let instanceTypeId = columnWithExtension.recordTypeId;
+            const parts: string[] = [];
+            values.forEach((item: string) => {
+                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                if (searchItem) {
+                    parts.push(searchItem.name);
+                    instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
+                }
+            });
+            valueInnerHTML = parts.join(' - ');
+        }
+        return {
+            cellInnerHTML: valueInnerHTML,
+            title: valueInnerHTML
+        };
+    }
+
+    __getCodeCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
+        let valueInnerHTML = '';
+        if (values) {
+            valueInnerHTML = values;
+        } else {
+            valueInnerHTML = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTY');
+        }
+        return {
+            cellInnerHTML: valueInnerHTML,
+            title: this.__getTitle({ values, column, model })
+        };
+    }
+
     __getTitle({ values, column, model }: GetCellOptions): string {
         let title;
         if (column.titleAttribute) {
@@ -554,10 +597,20 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getCellClass(column: Column, model: Backbone.Model) {
-        return `cell ${column.customClass ? column.customClass : ''}
-         ${(column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : ''}
-         ${column.hasErrors?.(model) ? 'error' : ''}        
-        `;
+        const classNames = ['cell'];
+        if (column.customClass) {
+            classNames.push(column.customClass);
+        }
+        if ((column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key))) {
+            classNames.push(classes.required);
+        }
+        if ((column.editable && (column.getReadonly?.(model) || column.getHidden?.(model)))) {
+            classNames.push(classes.readonly);
+        }
+        if (column.hasErrors?.(model)) {
+            classNames.push(classes.error);
+        }
+        return classNames.join(' ');
     }
 
     __isEmpty(value: any): boolean {

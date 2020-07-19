@@ -1,7 +1,7 @@
+import LocalizationService from 'services/LocalizationService';
 import MappingService from '../services/MappingService';
 import constants from '../Constants';
 import getIconPrefixer from '../../../../../utils/handlebars/getIconPrefixer';
-import LocalizationService from '../../../../../services/LocalizationService';
 import { contextIconType } from '../../../../../Meta';
 
 export default {
@@ -90,8 +90,10 @@ export default {
             let attributes;
             if (options.attributes) {
                 attributes = options.attributes;
-            } else {
+            } else if (options.templateId) {
                 attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
+            } else {
+                return;
             }
             if (attributes.length) {
                 attributes.forEach(atribute => { 
