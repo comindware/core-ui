@@ -54,7 +54,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu',
         touchend: '__handlePointerDown'
     },

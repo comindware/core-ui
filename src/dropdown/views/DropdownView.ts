@@ -133,6 +133,7 @@ export default class DropdownView {
             this.button.on('toggle', () => this.toggle());
             buttonEl.addEventListener('click', this.__handleClick.bind(this));
             buttonEl.addEventListener('blur', this.__onBlur.bind(this));
+            buttonEl.addEventListener('touchend', e => e.stopPropagation());
         });
 
         buttonEl.classList.toggle(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
