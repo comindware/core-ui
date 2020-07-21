@@ -252,7 +252,13 @@ body {
 }
 
 .tr-search_compact .tr-search__input,
-.tr-search_compact .tr-search__clear {
+.tr-search_compact .tr-search__clear,
+.tr-search_compact.closed .tr-search__input,
+.tr-search_compact.closed .tr-search__clear {
+    display: none;
+}
+
+.tr-search_compact.open .tr-search-icon {
     display: none;
 }
 
@@ -260,9 +266,8 @@ body {
     display: none;
 }
 
-.toolbar .tr-search__clear {
-    top: 15px;
-    height: 25px;
+.tr-search_compact.closed .tr-search-icon {
+    display: block;
 }
 
 .tr-search__clear {
@@ -490,13 +495,13 @@ svg.svg-grid-icons {
     top: 0;
     border: none;
     box-shadow: inset -1px 0 0 0 #90c3eb, inset 0 1px 0 0 #0575bd;
-    z-index: 20;
+    z-index: 3;
 }
 
 .grid__headless tr:first-child .cell,
 .grid__headless tr:first-child .cell_selection,
 .grid__headless tr:first-child .cell_selection-index {
-    border-top: 1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
 }
 
 .cell.editor {
@@ -520,7 +525,7 @@ svg.svg-grid-icons {
 .cell .layout__vertical-layout > div,
 .cell .layout__vertical-layout-item {
     margin-bottom: 0;
-    height: 100%;
+    height: auto;
     flex: 1 0 100px;
     align-self: center;
 }
@@ -607,8 +612,8 @@ tr:hover .cell_selection-index {
     font-size: var(--grid-checkbox-icon-size);
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
-    margin: 0;
-    display: inline-flex;
+    margin: 0 auto;
+    display: flex;
 }
 
 .cell_selection > .checkbox {
@@ -671,18 +676,25 @@ _:-ms-lang(x),
 
 .cell_selection,
 .cell_selection-index {
+    height: var(--grid-cell-height);
+    line-height: var(--grid-cell-height);
     padding: 0 5px;
     color: var(--grid-selection-color);
     background-color: var(--grid-selection-bg);
     white-space: nowrap;
     position: sticky;
     left: 0;
-    z-index: 10;
     width: 47px;
     min-width: 47px;
     background-clip: padding-box;
     vertical-align: middle;
     border: 1px solid #e2e2e2;
+    border-top: none;
+    z-index: 2;
+}
+
+tr:not(:first-child) .cell,
+tr:not(:first-child) .cell_selection {
     border-top: none;
 }
 
@@ -690,7 +702,7 @@ _:-ms-lang(x),
     height: 100%;
     max-height: var(--grid-cell-height);
     overflow: hidden;
-    display: block;
+    display: inline-flex;
     text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
 }
 
@@ -731,7 +743,6 @@ _:-ms-lang(x),
 .collapsible-btn {
     font-size: 1.4em;
     cursor: pointer;
-    margin-right: 3px;
     transition-property: transform;
     transition-duration: 300ms;
     top: 2px;
@@ -1081,7 +1092,6 @@ _:-ms-lang(x),
 .layout__tab-layout_move-button.prev-layout_move-button {
     @apply --tab-move-btn-prev-theme;
 }
-
 /* Toolbar component */
 
 .toolbar-btn {
@@ -1112,9 +1122,7 @@ _:-ms-lang(x),
     @apply --button-strong-hover-theme;
 }
 
-.toolbar-btn:focus {
-    outline: var(--focus);
-}
+
 
 .toolbar-btn:active {
     @apply --button-strong-active-theme;
@@ -1239,7 +1247,7 @@ _:-ms-lang(x),
 }
 
 .toolbar__icons + .toolbar-btn__text {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 .toolbar__icons + .toolbar-btn__text:empty {
@@ -1349,6 +1357,7 @@ _:-ms-lang(x),
 
 .cell .editor.context_select {
     margin: 0;
+    line-height: inherit;
     padding: 0;
     border: none;
     background: transparent;
@@ -1544,4 +1553,9 @@ _:-ms-lang(x),
 .documents__upload:hover {
     color: var(--link-hover-color);
     text-decoration: underline;
+}
+
+
+.cke_editable{
+    font: var(--font);
 }

@@ -1,13 +1,21 @@
 /* dropdown */
 
-.core-ui__global-popup-region > .dropdown__wrp_down {
+.core-ui__global-popup-region > .dropdown__wrp_down
+.core-ui__global-popup-region > .dropdown__wrp_up {
     background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     position: fixed;
     z-index: 600;
     border-radius: 4px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.core-ui__global-popup-region > .dropdown__wrp_down {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.core-ui__global-popup-region > .dropdown__wrp_up {
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
 }
 
 .dropdown__button {

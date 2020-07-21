@@ -21,6 +21,7 @@ type optionsType = {
     collection?: Backbone.Collection | Array<Object>,
 
     fetchFiltered?: boolean,
+    fetchOnSearch?: boolean,
     showCollection?: boolean,
 
     displayAttribute?: string,
@@ -95,6 +96,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
     textFilterDelay: 300,
 
     fetchFiltered: false,
+    fetchOnSearch: true,
     collection: [],
     showCollection: true,
     selectedTitle: options.title,
@@ -521,12 +523,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __clearSearch() {
-        this.__startSearch('', { open: false });
-    },
-
-    __startSearch(string: string, options) {
-        this.__setInputValue(string);
-        this.__fetchUpdateFilter(string, options);
+        this.__setInputValue('');
+        this.__fetchUpdateFilter('', { open: false, isSearch: true });
     },
 
     __getInputValue(): string {
@@ -538,15 +536,15 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __onInputSearch(button, e): void {
-        if (this.options.fetchFiltered) {
-            this.triggerNotReady();
-        }
-        this.debouncedFetchUpdateFilter();
+        this.debouncedFetchUpdateFilter(undefined, { isSearch: true });
     },
 
-    __fetchUpdateFilter(
-        text = this.__getInputValue(),
-        { forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess, openOnRender = false, open = true, selected = this.value } = {}
+    __fetchUpdateFilter(text = this.__getInputValue(), {
+        forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess,
+        openOnRender = false,
+        open = true,
+        isSearch = false,
+        selected = this.value } = {}
     ) {
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
@@ -560,7 +558,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.searchText = searchText;
         this.__setInputValue(text);
 
-        if (this.options.fetchFiltered) {
+        if (this.options.fetchFiltered && (this.options.fetchOnSearch || !isSearch)) {
+            this.triggerNotReady();
             return this.__fetchDataAndOpen(this.searchText, { openOnRender, open, selected });
         }
 
@@ -568,7 +567,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         open && this.open(openOnRender);
     },
 
-    async __fetchDataAndOpen(fetchedDataForSearchText: string, options: { open: boolean, openOnRender: boolean, selected: any }) {
+    async __fetchDataAndOpen(fetchedDataForSearchText: string, options: { open: boolean, openOnRender: boolean }) {
         this.__fetchOptionsQueue.add(options);
         this.triggerNotReady();
         this.panelCollection.pointOff();
@@ -804,10 +803,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             if (lastPointedModel && !lastPointedModel.selected) {
                 this.panelCollection.lastPointedModel.toggleSelected();
             }
-            
+
             this.__toggleDropdown();
             stop(event);
-        }   
+        }
     },
 
     __onPanelSelected(model: Backbone.Model, options = {}): void {
@@ -862,6 +861,18 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
 
         return isAccess && maxQuantity > this.selectedCollection.length;
+    },
+
+    __getDisplayText(value, displayAttribute = this.options.displayAttribute): string {
+        if (value == null) {
+            return '';
+        }
+
+        const attributes = this.__getAttributes(value);
+        if (typeof displayAttribute === 'function') {
+            return displayAttribute(attributes, this.model);
+        }
+        return attributes[displayAttribute] || attributes.text || `#${attributes[this.options.idProperty]}`;
     },
 
     __onButtonFocus(view: Marionette.View<any>, event: Event) {

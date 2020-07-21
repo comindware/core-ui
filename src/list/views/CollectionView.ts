@@ -89,7 +89,7 @@ export default Marionette.PartialCollectionView.extend({
             this.collection.updatePosition(0);
         }
 
-        this.debouncedHandleResizeLong = _.debounce(shouldUpdateScroll => this.handleResize(shouldUpdateScroll), 100);
+        this.debouncedHandleResizeLong = _.debounce(() => this.handleResize(false), 100);
         this.debouncedHandleResizeShort = _.debounce((...rest) => this.handleResize(...rest), 20);
         this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResizeLong);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', (model, collection, opt) => {
@@ -106,13 +106,11 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'filter', this.__handleFilter);
         this.listenTo(this.collection, 'nextModel', () => this.moveCursorBy(1, { isLoop: true }));
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
-
+        this.listenTo(this.collection, 'reorder', this.reorder);
         this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
 
         if (this.options.draggable) {
-            this.__onCheckedNone();
-            this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
-            this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+            this.__setDraggableListeners();
         }
     },
 
@@ -177,6 +175,14 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(model));
     },
 
+    setDraggable(draggable: boolean) {
+        if (draggable) {
+            this.__setDraggableListeners();
+        } else {
+            this.__unsetDraggableListeners();
+        }
+    },
+
     __specifyChildHeight() {
         if (this.__isChildHeightSpecified || this.collection.length === 0) {
             return;
@@ -211,6 +217,10 @@ export default Marionette.PartialCollectionView.extend({
         this.children._updateLength();
     },
 
+    _filteredSortedModels() {
+        return this.collection.visibleModels;
+    },
+
     // override default method to correct add twhen index === 0 in visible collection
     _onCollectionAdd(child, collection, opts) {
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
@@ -221,11 +231,9 @@ export default Marionette.PartialCollectionView.extend({
 
         if (this._shouldAddChild(child, index)) {
             this._destroyEmptyView();
-            requestAnimationFrame(() => {
-                if (collection.visibleModels.find(model => model === child)) {
-                    this._addChild(child, index);
-                }
-            });            
+            if (collection.visibleModels.find(model => model === child)) {
+                this._addChild(child, index);
+            }
         }
     },
 
@@ -241,9 +249,7 @@ export default Marionette.PartialCollectionView.extend({
             }
             if (this.getOption('showRowIndex') && this.getOption('showCheckbox')) {
                 const index = model.collection.indexOf(model) + 1;
-                if (index !== model.currentIndex) {
-                    childView.updateIndex && childView.updateIndex(index);
-                }
+                childView.updateIndex && childView.updateIndex(index);
             }
             if (this.getOption('isTree') && typeof childView.insertFirstCellHtml === 'function') {
                 childView.insertFirstCellHtml();
@@ -476,11 +482,6 @@ export default Marionette.PartialCollectionView.extend({
 
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
-        //@ts-ignore
-        const parentElHeight = this.options.parentEl.clientHeight;
-        const availableHeight = this.el.clientHeight !== this.childHeight && parentElHeight ? parentElHeight : window.innerHeight;
-
-        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.collection.length) {
             this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + configurationConstants.HEIGHT_STOCK_TO_SCROLL;
@@ -496,15 +497,26 @@ export default Marionette.PartialCollectionView.extend({
                 this.trigger('update:height', this.state.allItemsHeight);
             }
         }
+        //@ts-ignore
+        const parentElHeight = this.options.parentEl?.clientHeight;
+        const availableHeight = parentElHeight && parentElHeight !== this.childHeight * this.collection.length
+            ? parentElHeight
+            : window.innerHeight;
+
+        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
         if (this.state.viewportHeight === oldViewportHeight) {
-            if (shouldUpdateScroll === false) {
+            const isAllItemHeightLessAvailable = typeof this.state.allItemsHeight === 'number' && this.state.allItemsHeight <= availableHeight;
+            if (shouldUpdateScroll === false && !isAllItemHeightLessAvailable) {
                 return;
             }
             // scroll in case of search, do not scroll in case of collapse
             if (options.add) {
                 const rowIndex = collection.indexOf(model);
-                this.scrollTo(rowIndex, true);
+                const view = this.children.findByModel(model);
+                if (!view) {
+                    this.scrollTo(rowIndex, true);
+                }
                 model.trigger('blink');
             } else if (options.scroll !== false) {
                 this.scrollTo(0, true);
@@ -560,8 +572,7 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     __handleFilter() {
-        this.parent$el.scrollTop(0);
-        this.scrollTo(0);
+        this.scrollTo(0, true);
         this.debouncedHandleResizeShort();
     },
 
@@ -612,5 +623,17 @@ export default Marionette.PartialCollectionView.extend({
                 const previousIndex = gridIndexes[i - 1];
                 return index - previousIndex === 1;
             });
-    }
+    },
+
+    __setDraggableListeners() {
+        this.__onCheckedNone();
+        this.listenTo(this.collection, 'check:none', this.__onCheckedNone);
+        this.listenTo(this.collection, 'check:some check:all', this.__onChecked);
+    },
+
+    __unsetDraggableListeners() {
+        this.__setCheckedNone(false);
+        this.stopListening(this.collection, 'check:none', this.__onCheckedNone);
+        this.stopListening(this.collection, 'check:some check:all', this.__onChecked);
+    },
 });

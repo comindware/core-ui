@@ -109,8 +109,6 @@ export default {
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
-        WindowService.closePopup();
-
         const subModuleContext = this.__tryGetSubmoduleContext(config);
 
         const context = subModuleContext || this;
@@ -145,6 +143,7 @@ export default {
                 routingArgs[index] = componentQuery[0];
             }
         }
+        WindowService.closePopup();
 
         const movingOut = this.__destroyPreviousModuleIfMovingOut({ context, config });
 

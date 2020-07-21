@@ -35,9 +35,9 @@ export default Marionette.View.extend({
         }
     },
 
-    toggleOrientation(viewType = defaultOptions.viewType) {
+    toggleOrientation(viewType = defaultOptions.viewType, position) {
         this.options.viewType = viewType;
-        this.resisersList.forEach(resizer => resizer.toggleOrientation(this.options.viewType));
+        this.resisersList.forEach(resizer => resizer.toggleOrientation(this.options.viewType, position));
         this.el.className = this.className();
         this.__showPanels();
     },
@@ -76,9 +76,11 @@ export default Marionette.View.extend({
                 orientation: this.options.viewType,
                 firstPanel: this.regionModulesMap[i].region,
                 secondPanel: this.regionModulesMap[i + 1] ?.region,
-                splitPosition: this.options.splitPosition
+                splitViewPosition: this.options.splitViewPosition
             });
-            this.listenTo(resizer, 'change:resizer', splitPosition => this.trigger('change:resizer', splitPosition));
+            this.listenTo(resizer, 'change:resizer', (splitPosition, viewType) => {
+                this.trigger('change:resizer', splitPosition, viewType);
+            });
             this.resisersList.push(resizer);
             this.regionModulesMap[i].region.el.insertAdjacentElement('afterEnd', resizer.render().el);
         }

@@ -40,7 +40,7 @@ const variables = {
     'form-input-padding': '5px',
 
     'form-field-margin': '10px',
-    'form-label-font-size': '12px',
+    'form-label-font-size': '11px',
     'form-label-font-weight': '600',
     'form-label-color': 'var(--grey-800)',
     'form-label-margin': '2px',
@@ -55,10 +55,10 @@ const variables = {
     'editor-textarea-line-height': '18px',
     'editor-font-size': 'var(--base-font-size)',
     'editor-text-color': 'var(--text-color)',
-    'editor-empty-text-color': 'var(--grey-500)',
+    'editor-empty-text-color': 'var(--grey-900)',
 
     // input
-    'input-padding': '5px 18px 5px 5px',
+    'input-padding': '4px 18px 4px 5px',
     'input-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
     'input-search-padding': '2px 20px 2px 24px',
@@ -92,7 +92,7 @@ const variables = {
     'grid-toolbar-bg-color': 'var(--grey-100)',
 
     'grid-checkbox-size': '14px',
-    'grid-checkbox-icon-size': '12px',
+    'grid-checkbox-icon-size': '11px',
     'grid-header-font-size': 'var(--base-font-size)',
     'grid-header-color': 'var(--white)',
     'grid-header-bg': 'var(--blue-200)',
@@ -131,7 +131,7 @@ const variables = {
     'columns-select-border': 'var(--border)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
 
-    'dropdown-padding': '0 20px 1px var(--form-input-padding)',
+    'dropdown-padding': '0 20px 0 var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '11px',
     'dropdown-group-color': '#000',
@@ -175,8 +175,8 @@ module.exports.apply = {
         'margin-bottom': 'auto'
     },
     'button-theme': {
-        'font-size': '12px',
-        padding: '4px 10px',
+        'font-size': '1em',
+        padding: '3px 6px',
         'white-space': 'nowrap',
         'text-overflow': 'clip',
         overflow: 'hidden',
@@ -231,7 +231,8 @@ module.exports.apply = {
         cursor: 'auto'
     },
     'checkbox-theme': {
-        'line-height': 'normal'
+        'line-height': 'normal',
+        'font-size': '11px'
     },
     'checkbox-disabled-theme': {},
     'radio-disabled-theme': {},

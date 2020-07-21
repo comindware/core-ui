@@ -143,6 +143,7 @@ export const configurationConstants = {
 export const classes = {
     checked: 'editor_checked',
     checked_some: 'editor_checked_some',
+    has_checked: 'hasChecked',
     selected: 'selected',
     dragover: 'dragover',
     hover: 'hover',
@@ -158,9 +159,11 @@ export const classes = {
     cell: 'cell',
     errorButton: 'js-error-button',
     hiddenByTreeEditorClass: 'hidden-by-tree-editor',
+    hiddenColumns: 'hidden-columns',
     sortingUp: 'arrow-up',
     sortingDown: 'arrow-down',
     required: 'required',
+    readonly: 'readonly',
     error: 'error',
     tableWidthAuto: 'grid-content-wrp_width-auto'
 };

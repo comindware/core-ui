@@ -19,7 +19,8 @@
 }
 
 .bubbles__form {
-    height: 26px;
+  height: 24px;
+  padding: 0;
 }
 
 /*
@@ -81,12 +82,16 @@
     position: relative;
 }
 
-.tr-search_compact .tr-search-icon {
+.tr-search_compact.closed .tr-search-icon {
     font-size: 15px;
 }
 
-.textarea:hover {
-    border-color: var(--input-hover-color);
+.search-bar-container .tr-search__clear {
+    top: 50%;
+}
+
+.tr-search__clear .icon-remove {
+    vertical-align: inherit;
 }
 
 .checkbox {
@@ -454,6 +459,16 @@
     line-height: 19px;
 }
 
+@media (max-width: 720px) {
+  .top-nav_icon {
+    min-width: 0;
+  }
+
+  .top-nav__i_person {
+    width: 25px;
+  }
+}
+
 /* -------------------- Left Menu Header -------------------- */
 .left-menu__logo {
     min-height: 60px;
@@ -461,6 +476,48 @@
 
 .left-menu-logo.left-menu-logo_comindware {
     height: 40px;
+}
+
+.left-menu_small .left-menu-logo.left-menu-logo_comindware {
+    height: 30px;
+}
+
+.left-menu-view-switcher .toolbar__icons_arrow {
+    margin: 0 0 0 4px;
+}
+
+.left-menu-view-switcher__container .toolbar-btn {
+    font-size: 13px;
+    padding: 3px 15px;
+}
+
+@media (max-width: 720px) {
+    .left-menu.compact {
+      height: 30px;
+    }
+}
+
+/* -------------------- Left Menu List -------------------- */
+.left-menu-i-group {
+    padding-left: 12px;
+}
+
+.left-menu-i-group .left-menu__list-l,
+.left-menu-i-group .left-menu__item {
+    padding-left: 17px;
+}
+
+.left-menu-i-group .left-menu-i.action {
+    margin: 0 3px 0 0;
+    max-width: calc(100% - 18px);
+}
+
+.left-menu__list-g .checkbox {
+    margin-right: 3px;
+}
+
+.left-menu-collapse__wrapper {
+    margin-right: 0;
 }
 
 .left-menu_small .left-menu-logo.left-menu-logo_comindware {
@@ -538,4 +595,9 @@
     line-height: 15px;
     left: 19px;
     top: 3px;
+}
+
+/*comple editor*/
+.dev-complex-editor-item {
+    min-width: 0;
 }

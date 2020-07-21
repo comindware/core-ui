@@ -147,7 +147,7 @@
         "codemirror": "^5.52.0",
         "core-js": "^3.6.4",
         "css-vars-ponyfill": "^2.2.1",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.1",
         "marionette.approuter": "^1.0.2",
         "marionette.oldcollectionview": "^1.0.0",
         "moment": "^2.24.0",

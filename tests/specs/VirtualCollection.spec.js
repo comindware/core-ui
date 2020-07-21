@@ -249,7 +249,8 @@ describe('VirtualCollection', () => {
                         {
                             iterator: 'title'
                         }
-                    ]
+                    ],
+                    rebuildOnChange: true
                 }
             );
 
@@ -270,7 +271,8 @@ describe('VirtualCollection', () => {
                     assignee: repository.users[n % 2]
                 })),
                 {
-                    grouping: [assigneeGrouping]
+                    grouping: [assigneeGrouping],                    
+                    rebuildOnChange: true
                 }
             );
             const resetCallback = jasmine.createSpy('resetCallback');
@@ -307,7 +309,8 @@ describe('VirtualCollection', () => {
                     grouping: [assigneeGrouping],
                     comparator(model) {
                         return model.get('title');
-                    }
+                    },
+                    rebuildOnChange: true
                 }
             );
             const resetCallback = jasmine.createSpy('resetCallback');
