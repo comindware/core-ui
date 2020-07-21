@@ -1058,6 +1058,7 @@ body.non-selectable {
     height: 100%;
     width: 100%;
     display: flex;
+    position: relative;
 }
 
 .split-panel_container.split-panel__vertical {
