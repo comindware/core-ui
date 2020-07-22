@@ -818,10 +818,8 @@ tr.grid-header.dragover td {
 }
 
 .composite-cell__wrp {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    overflow: visible;
-    width: 100%;
 }
 
 .composite-cell__wrp > * {

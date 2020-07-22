@@ -1,4 +1,12 @@
-{{#if customHtml}} {{customHtml}} {{else}}
-<span class="radiobutton"></span>
-<span class="radiobutton-text" title="{{displayText}}">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>
+{{#if customHtml}}
+    {{customHtml}}
+{{else}}
+    <span class="radiobutton"></span>
+    <span class="radiobutton-text" title="{{displayText}}">
+        {{#if displayHtml}}
+            {{{displayHtml}}}
+        {{else}}
+            {{displayText}}
+        {{/if}}
+    </span>
 {{/if}}
