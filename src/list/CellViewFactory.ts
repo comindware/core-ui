@@ -23,7 +23,7 @@ const compiledValueCell = Handlebars.compile('{{value}}');
 
 const getWrappedTemplate = (template: string) => `<div class="composite-cell__wrp">
         ${template}
-        <span class="composite-cell__count">+{{count}}</div>
+        <span class="composite-cell__count">+{{count}}</span>
     </div>`;
 
 const compiledWrappedCompositeDocumentCell = Handlebars.compile(getWrappedTemplate(compositeDocumentCell));
@@ -76,7 +76,7 @@ class CellViewFactory implements ICellViewFactory {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString({ values, column, model });
-            case objectPropertyTypes.ROLE:     
+            case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 return this.__getReferenceCell({ values, column, model });
             case objectPropertyTypes.ACCOUNT:
@@ -148,10 +148,9 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.BOOLEAN:
                 return null;
             case objectPropertyTypes.STRING:
-                template = compiledStringValueCell;
-                formattedValues = value.map(v => ({ value }));
-                break;                
             default:
+                template = compiledStringValueCell;
+                formattedValues = value.map(v => ({ value: v }));
                 break;
         }
         const panelViewOptions = {
@@ -499,10 +498,10 @@ class CellViewFactory implements ICellViewFactory {
                     break;
                 }
                 case complexValueTypes.expression:
-                case complexValueTypes.script:     
+                case complexValueTypes.script:
                     valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
                     title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;               
+                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
                     break;
                 case complexValueTypes.template:
                     title = valueInnerHTML = value.value.name;

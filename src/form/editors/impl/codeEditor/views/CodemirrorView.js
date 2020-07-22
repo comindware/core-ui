@@ -481,7 +481,7 @@ export default Marionette.View.extend({
     async __onClose() {
         if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
             const isSaveChange = await Core.services.MessageService.showMessageDialog(
-                Localizer.get('PROCESS.FORMDESIGNER.CONFIRMSAVE.TITLE'), 
+                Localizer.get('PROCESS.FORMDESIGNER.CONFIRMSAVE.TITLE'),
                 Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
                     id: true,
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
@@ -489,9 +489,9 @@ export default Marionette.View.extend({
                     id: false,
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
                 }]);
-            if (!isSaveChange) { 
+            if (!isSaveChange) {
                 this.codemirror.setValue(this.valueAfterMaximize);
-            }    
+            }
         }
         this.__onMinimize();
     },
@@ -662,10 +662,7 @@ export default Marionette.View.extend({
 
     __isStringLiteral() {
         const token = this.codemirror.getTokenAt(this.codemirror.getCursor());
-        if (token && token.type === 'string') { 
-            return true;
-        }
-        return false;
+        return token?.type === 'string';
     },
 
     __renderConfigListToolbar(list) {
@@ -881,7 +878,7 @@ export default Marionette.View.extend({
         const firstSymbol = valueWithoutComment.trim()[0];
         if (firstSymbol === constants.activeSymbolNotation3.at || firstSymbol === constants.activeSymbolNotation3.openBrace) {
             return constants.mode.notation3;
-        } 
+        }
         return constants.mode.expression;
     },
 
@@ -978,7 +975,7 @@ export default Marionette.View.extend({
                         .slice(cursor.ch, valueLine.length)
                         .includes(constants.activeSymbolNotation3.closeSquareBrackett);
                     resultOptions[constants.optionsCodemirror.isIntoSquareBracket] = isOpenedSquareBracket && isClosedSquareBracket;
-                    break;    
+                    break;
                 case constants.optionsCodemirror.isEmptyLine:
                     resultOptions[constants.optionsCodemirror.isEmptyLine] = !valueLine.trim().length;
                     break;
@@ -1295,7 +1292,7 @@ export default Marionette.View.extend({
                 return this.__getAttributeN3();
             default:
                 break;
-        }  
+        }
         if (isEmptyLine) {
             this.hintsNotation3 = null;
             this.notation3Attributes = null;
@@ -1307,7 +1304,7 @@ export default Marionette.View.extend({
             return this.__noSuggestionHint();
         }
         if (isIntoBracket || isIntoSquareBracket) {
-            this.hintsN3intoBracket = attributesN3;  
+            this.hintsN3intoBracket = attributesN3;
         }
         this.hintsNotation3 = attributesN3;
         return this.__showHintsIntoBracket({ cursor, column, token, hintsNotation3: attributesN3, isIntoBracket, isIntoSquareBracket });
@@ -1373,7 +1370,7 @@ export default Marionette.View.extend({
         if (isIntoSquareBracket) {
             newValueLine = `${startSpaces}?object${descriptionHint.name} a [object:alias ${descriptionHint.text}].`;
             this.codemirror.replaceRange(newValueLine, { line: numberLine, ch: 0 }, { line: numberLine });
-            return; 
+            return;
         }
         if (descriptionHint.overloads && descriptionHint.overloads.length) {
             let paramGlobalFunction = '';
