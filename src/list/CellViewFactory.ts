@@ -121,11 +121,11 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 template = compiledCompositeReferenceCell;
-                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column }));
+                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column, model }));
                 break;
             case objectPropertyTypes.ACCOUNT:
                 template = compiledCompositeUserCell;
-                formattedValues = value.map(v => this.__getFormattedUserValue({ value: v, column }));
+                formattedValues = value.map(v => this.__getFormattedUserValue({ value: v, column, model }));
                 break;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
@@ -251,7 +251,8 @@ class CellViewFactory implements ICellViewFactory {
         return `<div class="checkbox js-checbox">${innerHTML}</div>`;
     }
 
-    __getFormattedReferenceValue({ value, column }: ValueFormatOption) {
+    __getFormattedReferenceValue({ value, column, model }: ValueFormatOption) {
+        let v = value;
         let result;
         if (column.valueType === 'id') {
             const item = column.collection?.find(m => m.id === value);
@@ -269,15 +270,23 @@ class CellViewFactory implements ICellViewFactory {
                 };
             }
         } else {
-            const data = value instanceof Backbone.Model ? value.toJSON() : value;
+            v = value instanceof Backbone.Model ? value.toJSON() : value;
+            if (typeof value === 'object') {
+                v = value.name ? value : { name: value.id, id: value.id };
+            } else if (typeof value === 'string') {
+                v = {
+                    id: value,
+                    name: value
+                };
+            }
             result = {
-                text: data[column.displayAttribute] || data.name,
-                ...value
+                text: v[column.displayAttribute] || v.name,
+                ...v
             };
         }
 
         if (!value.url && typeof column.createValueUrl === 'function') {
-            result.url = column.createValueUrl({ value: result, column });
+            result.url = column.createValueUrl({ value: result, column, model });
         }
 
         return result;
@@ -294,9 +303,10 @@ class CellViewFactory implements ICellViewFactory {
         };
     }
 
-    __getFormattedUserValue({ value }: ValueFormatOption) {
+    __getFormattedUserValue({ value, column, model }: ValueFormatOption) {
         return {
             avatar: UserService.getAvatar(value),
+            url: !value.url && typeof column.createValueUrl === 'function' ? column.createValueUrl({ value, column, model }) : null,
             ...value
         };
     }
@@ -397,7 +407,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getReferenceCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column }));
+        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column, model }));
 
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.text) });
 
@@ -435,7 +445,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getUserCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedUserValue({ value, column }));
+        const mappedValues = values.map(value => this.__getFormattedUserValue({ value, column, model }));
 
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.name) });
 
