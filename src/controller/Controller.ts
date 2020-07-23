@@ -101,7 +101,7 @@ export default class Controller {
     }
 
     destroy(...rest) {
-        this.moduleRegion.reset();
+        this.moduleRegion.empty();
         this.onDestroy?.(...rest);
     }
 
