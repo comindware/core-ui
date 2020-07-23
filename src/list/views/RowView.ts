@@ -164,7 +164,12 @@ export default Marionette.View.extend({
         customCells.forEach(({ index, CellView }) => {
             const cellView = this.__renderCell({ column: this.options.columns[index], index, CellView });
             if (index === 0) {
-                this.el.insertAdjacentElement('afterbegin', cellView.el);
+                if (this.getOption('showCheckbox')) {
+                    const firstChildEl = this.el.firstChild;
+                    firstChildEl.insertAdjacentElement('afterend', cellView.el);
+                } else {
+                    this.el.insertAdjacentElement('afterbegin', cellView.el);
+                }   
             } else {
                 const childElBefore = this.__getCellByColumnIndex(index - 1);
                 childElBefore.insertAdjacentElement('afterend', cellView.el);
