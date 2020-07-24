@@ -216,6 +216,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .error .form-label {
   color: var(--error-color);
 }
+
+.warning .form-label {
+  color: var(--warning-color);
+}
 .required .form-label__txt,
 .form-label_required .form-label__txt{
   padding-right: 10px;
@@ -237,8 +241,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
   transform: translateY(-50%);
 }
 
-.cell.error.required::before {
-  display: none;
+.cell.error.required::before,
+.cell.warning.required::before {
+  display:none;
 }
 
 .layout__horizontal-layout > div:not(:last-child),

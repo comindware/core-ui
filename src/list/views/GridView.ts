@@ -2,6 +2,7 @@
 import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import template from '../templates/grid.hbs';
 import CollectionView from './CollectionView';
 import RowView from './RowView';
@@ -757,7 +758,12 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.el.classList.add(classes.error);
+        const isWarning = errors.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING);
+        if (isWarning) {
+            this.el.classList.add(validationSeverityClasses.WARNING);
+        } else {
+            this.el.classList.add(validationSeverityClasses.ERROR);
+        }
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -778,7 +784,8 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.el.classList.remove(classes.error);
+        this.el.classList.remove(validationSeverityClasses.ERROR);
+        this.el.classList.remove(validationSeverityClasses.WARNING);
         this.errorCollection && this.errorCollection.reset();
     },
 

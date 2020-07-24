@@ -326,7 +326,8 @@
   margin: 0 0 0 1px;
 }
 
-.cell.error.required::before {
+.cell.error.required::before,
+.cell.warning.required::before {
   display:none;
 }
 

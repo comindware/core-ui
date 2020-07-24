@@ -424,7 +424,8 @@ tr.empty-view {
     display: none !important;
 }
 
-.editable-grid-field.error .form-label__error{
+.editable-grid-field.error .form-label__error,
+.editable-grid-field.warning .form-label__error{
     position: absolute;
     left: 0;
     top: 0;

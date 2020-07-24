@@ -4,6 +4,7 @@ import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapText from './iconsWraps/iconWrapText.html';
+import { keyCode } from 'utils';
 
 const changeMode = {
     blur: 'blur',
@@ -100,8 +101,8 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         this.maskedInputController && this.maskedInputController.destroy();
     },
 
-    __keyup() {
-        if (this.options.changeMode === changeMode.keydown) {
+    __keyup(event) {
+        if (this.options.changeMode === changeMode.keydown || event.keyCode === keyCode.ENTER) {
             this.__value(this.ui.input.val(), false, true);
         }
 

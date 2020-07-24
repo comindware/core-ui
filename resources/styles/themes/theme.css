@@ -36,7 +36,8 @@ body {
 }
 
 .form-label__info:not(:empty),
-.error .form-label__error {
+.error .form-label__error,
+.warning .form-label__error {
   display: inline-block;
   margin: 0 var(--form-label-icon-margin-x);
 }
@@ -48,6 +49,10 @@ body {
 
 .form-label__error-button {
   color: var(--error-color);
+}
+
+.form-label__warning-button {
+  color: var(--warning-color);
 }
 
 .form-label__error-text {
@@ -62,17 +67,18 @@ body {
   color: var(--warning-color);
 }
 
-.cell.error .form-label__error{
+.cell.error .form-label__error,
+.cell.error .form-label__warning{
   margin: 0;
   position: relative;
   left: -15px;
   z-index: 1;
 }
 
-.cell.error .form-label__error-button{
+.cell.error .form-label__error-button,
+.cell.warning .form-label__warning-button {
   height: 0;
   width: 0;
-  border-top: 16px solid #e61212;
   border-right: 16px solid transparent;
   vertical-align: top;
   cursor: pointer;
@@ -81,18 +87,27 @@ body {
   left: 0;
 }
 
-.cell.error .form-label__error-button:after {
+.cell.error .form-label__error-button {
+  border-top: 16px solid var(--error-color);
+}
+
+.cell.warning .form-label__warning-button {
+  border-top: 16px solid var(--warning-color);
+}
+
+.cell.error .form-label__error-button::after,
+.cell.warning .form-label__warning-button::after {
   content: '!';
   color: #fff;
   position: absolute;
   vertical-align: top;
-    top: -16px;
+  top: -16px;
   font-size: 10px;
   font-weight: bold;
   left: 3px;
 }
 
-.cell.error .form-label__error-button:before{
+.cell.error .form-label__error-button::before {
   display: none;
 }
 
@@ -179,11 +194,18 @@ body {
   @apply --cell-input-disabled-theme;
 }
 
-.editor_error.editor .input,
-.editor_error.editor .textarea,
-.editor_error.editor .bubbles,
-.editor_error.editor_date-time {
+.editor_error .input,
+.editor_error .textarea,
+.editor_error .bubbles,
+.editor_error .editor_date-time {
   border-color: var(--error-color);
+}
+
+.warning .editor .input,
+.warning .editor .textarea,
+.warning .editor .bubbles,
+.warning .editor_date-time {
+  border-color: var(--warning-color);
 }
 
 .cell.error {
@@ -720,7 +742,11 @@ tr:not(:first-child) .cell_selection {
 }
 
 .cell-focused.error {
-  outline-color: #e61212 !important;
+    outline-color: var(--error-color) !important;
+}
+
+.cell-focused.warning {
+    outline-color: var(--warning-color) !important;
 }
 
 .collapsible-btn {
