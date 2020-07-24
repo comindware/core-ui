@@ -2,6 +2,7 @@ import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import _ from 'underscore';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import { classes } from '../meta';
 import dropdown from 'dropdown';
 import MobileService from '../../services/MobileService';
@@ -636,25 +637,30 @@ export default Marionette.View.extend({
     },
 
     __updateValidationErrorForColumn({ column, index }: { column: Column, index: number }) {
-        const errorButton = `<i class="${classes.errorButton} form-label__error-button fa fa-exclamation-circle popout__action-btn"></i>`;
-        const addError = (el: Element) => {
-            el.classList.add(classes.cellError);
-            if (!el.querySelector(`.${classes.errorButton}`)) {
-                el.insertAdjacentHTML('beforeend', errorButton);
+        const cellEl = this.__getCellByColumnIndex(index);
+        const columnError = this.model.validationError?.[column.key];
+        if (columnError) {
+            const oldErrorButton = cellEl.querySelector(`.${classes.errorButton}`);
+            if (oldErrorButton) {
+                cellEl.removeChild(oldErrorButton);
             }
-        };
-        const removeError = (el: Element) => {
-            el.classList.remove(classes.cellError);
-            const errorEl = el.querySelector(`.${classes.errorButton}`);
+            let severityPart;
+            if (Array.isArray(columnError) && columnError.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING)) {
+                cellEl.classList.add(validationSeverityClasses.WARNING);
+                severityPart = validationSeverityClasses.WARNING;
+            } else {
+                cellEl.classList.add(validationSeverityClasses.ERROR);
+                severityPart = validationSeverityClasses.ERROR;
+            }
+            const errorButton = `<i class="${classes.errorButton} form-label__${severityPart}-button popout__action-btn"></i>`;
+            cellEl.insertAdjacentHTML('beforeend', errorButton);
+        } else {
+            cellEl.classList.remove(validationSeverityClasses.ERROR);
+            cellEl.classList.remove(validationSeverityClasses.WARNING);
+            const errorEl = cellEl.querySelector(`.${classes.errorButton}`);
             if (errorEl) {
                 errorEl.parentElement?.removeChild(errorEl);
             }
-        };
-        const cellEl = this.__getCellByColumnIndex(index);
-        if (this.model.validationError?.[column.key]) {
-            addError(cellEl);
-        } else {
-            removeError(cellEl);
         }
     },
 
@@ -663,11 +669,13 @@ export default Marionette.View.extend({
             return;
         }
         const errors = this.model.validationError[column.key];
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         this.errorPopout = dropdown.factory.createDropdown({
             buttonView: Marionette.View,
+            buttonModel: new Backbone.Model({ errorCollection: this.errorCollection }),
             panelView: ErrorsPanelView,
             panelViewOptions: {
-                collection: new Backbone.Collection(errors)
+                collection: this.errorCollection
             },
             popoutFlow: 'right',
             element,

@@ -264,7 +264,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     focus(): void {
         this.__focusButton();
         this.onFocus();
-        this.__onInputSearch();
+        this.dropdownView?.buttonView?.setLoading(true);
+        this.fetchUpdateFilter();
     },
 
     blur(): void {

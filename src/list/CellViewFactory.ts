@@ -448,7 +448,11 @@ class CellViewFactory implements ICellViewFactory {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
-            <div class="js-extend_cell_content extend_cell_content ${column.columnClass} ${model.get('isDisabled') ? 'archiveTemplate' : ''}" title="${this.__getTitle({ values, column, model })}">
+            <div class="js-extend_cell_content extend_cell_content ${column.columnClass} ${model.get('isDisabled') ? 'archiveTemplate' : ''}" title="${this.__getTitle({
+            values,
+            column,
+            model
+        })}">
                 <i class="${getIcon(type)} context-icon" aria-hidden="true"></i>
                 <div class="extend_cell_text">
                     <span class="extend_cell_header">${values.join(', ')}</span>
@@ -565,9 +569,9 @@ class CellViewFactory implements ICellViewFactory {
 
     __getCellClass(column: Column, model: Backbone.Model) {
         const requiredClass = (column.required || column.getRequired?.(model)) && this.__isEmpty(model.get(column.key)) ? 'required' : '';
-        const readonlyClass = (column.editable && (column.getReadonly?.(model) || column.getHidden?.(model))) ? 'readonly' : '';
-        const errorClass = column.hasErrors?.(model) ? 'error' : '';
-        return `cell ${column.customClass ? column.customClass : ''} ${column.columnClass} ${requiredClass} ${readonlyClass} ${errorClass}`;
+        const readonlyClass = column.editable && (column.getReadonly?.(model) || column.getHidden?.(model)) ? 'readonly' : '';
+        const validationClass = column.getValidationClassName?.(model) || '';
+        return `cell ${column.customClass ? column.customClass : ''} ${column.columnClass} ${requiredClass} ${readonlyClass} ${validationClass}`;
     }
 
     __isEmpty(value: any): boolean {
