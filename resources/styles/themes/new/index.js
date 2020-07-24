@@ -14,7 +14,7 @@ const variables = {
     // colors
     white: '#ffffff',
     black: '#313131',
-    red: '#e1462c!important',
+    red: '#e1462c',
     'red-dark': '#d63a1f',
 
     'grey-50': '#f9f9f9',
@@ -317,7 +317,7 @@ module.exports.apply = {
         color: variables.red,
         'border-top-color': variables.red,
         'border-right-color': variables.red,
-        'border-left-color': variables.red,
+        'border-left-color': variables.red
     },
     'tab-item-disabled-theme': {
         color: variables['grey-400'],

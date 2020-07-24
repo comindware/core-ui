@@ -125,7 +125,7 @@ export const splitViewTypes = {
     UNDEFINED: 'Undefined',
     GENERAL: 'General',
     VERTICAL: 'SplitVertical',
-    HORIZONTAL: 'SplitHorizontal',
+    HORIZONTAL: 'SplitHorizontal'
 };
 
 export const complexValueTypes = {
@@ -139,18 +139,28 @@ export const complexValueTypes = {
 export const getComplexValueTypesLocalization = complexValueType => {
     switch (complexValueType) {
         case complexValueTypes.value:
-            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE');
         case complexValueTypes.context:
-            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE');
         case complexValueTypes.expression:
-            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION');
         case complexValueTypes.script:
-            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT');
         case complexValueTypes.template:
-            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
+            return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE');
         default:
             return '';
     }
+};
+
+export const validationSeverityTypes = {
+    ERROR: 'error',
+    WARNING: 'warning'
+};
+
+export const validationSeverityClasses = {
+    ERROR: 'error',
+    WARNING: 'warning'
 };
 
 export default {
@@ -162,5 +172,7 @@ export default {
     coreIcons,
     objectPropertyFormats,
     complexValueTypes,
+    validationSeverityTypes,
+    validationSeverityClasses,
     getComplexValueTypesLocalization
 };

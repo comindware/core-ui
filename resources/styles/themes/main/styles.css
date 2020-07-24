@@ -343,7 +343,8 @@ svg.svg-grid-icons {
   top: 0;
 }
 
-.cell.error.required::before {
+.cell.error.required::before,
+.cell.warning.required::before {
   display:none;
 }
 

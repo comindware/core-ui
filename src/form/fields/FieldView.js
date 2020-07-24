@@ -1,6 +1,6 @@
-// @flow
-import template from './templates/field.hbs';
 import dropdown from 'dropdown';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
+import template from './templates/field.hbs';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
 import TooltipPanelView from '../../views/TooltipPanelView';
@@ -10,8 +10,7 @@ import formRepository from '../formRepository';
 const classes = {
     REQUIRED: 'required',
     READONLY: 'readonly',
-    DISABLED: 'disabled',
-    ERROR: 'error'
+    DISABLED: 'disabled'
 };
 
 export default Marionette.View.extend({
@@ -92,11 +91,21 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.$el.addClass(classes.ERROR);
+        const isWarning = errors.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING);
+        if (isWarning) {
+            this.$el.addClass(validationSeverityClasses.WARNING);
+            this.$el.removeClass(validationSeverityClasses.ERROR);
+        } else {
+            this.$el.addClass(validationSeverityClasses.ERROR);
+            this.$el.removeClass(validationSeverityClasses.WARNING);
+        }
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,
+                buttonViewOptions: {
+                    model: new Backbone.Model({ errorCollection: this.errorCollection })
+                },
                 panelView: ErrorsPanelView,
                 panelViewOptions: {
                     collection: this.errorCollection
@@ -113,7 +122,8 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.$el.removeClass(classes.ERROR);
+        this.$el.removeClass(validationSeverityClasses.ERROR);
+        this.$el.removeClass(validationSeverityClasses.WARNING);
         this.errorCollection && this.errorCollection.reset();
     },
 
