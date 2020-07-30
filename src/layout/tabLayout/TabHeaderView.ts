@@ -75,7 +75,7 @@ export default Marionette.View.extend({
 
     __onMenuEcexute(id, model) {
         if (model.get('enabled')) {
-            this.trigger('select', this.model);
+            this.trigger('select', model);
         }
     },
 
