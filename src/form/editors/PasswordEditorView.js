@@ -15,6 +15,7 @@ export default (formRepository.editors.Password = TextEditorView.extend({
     initialize(options) {
         TextEditorView.prototype.initialize.call(this, options);
         this.options.showTitle = false;
+        this.options.autocomplete = options.isAutocompleteEnabled ? 'on' : 'new-password';
     },
 
     template: Handlebars.compile(template)
