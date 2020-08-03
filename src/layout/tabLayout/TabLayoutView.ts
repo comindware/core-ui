@@ -76,7 +76,7 @@ export default Marionette.View.extend({
             headerClass: this.getOption('headerClass')
         });
 
-        this.listenTo(tabHeaderView, 'select', this.__handleSelect);
+        this.listenTo(tabHeaderView, 'select', model => this.__handleSelect(model));
         this.showChildView('headerRegion', tabHeaderView);
 
         if (this.showTreeEditor) {
