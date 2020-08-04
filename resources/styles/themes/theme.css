@@ -1077,6 +1077,7 @@ tr:not(:first-child) .cell_selection {
   @apply --toolbar-btn-theme;
   white-space: nowrap;
   padding: 3px 15px;
+  flex: 0 1 auto;
 }
 .toolbar-btn > .toolbar__icons > i {
   width: 100%;
