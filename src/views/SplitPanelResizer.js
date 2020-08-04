@@ -4,7 +4,7 @@ const constants = {
     DEFAULT_MODE_WIDTH: 250,
     COMPACT_MODE_WIDTH: 50,
     MODE_CHANGE_DURATION_MS: 200,
-    MIN_WIDTH: 200,
+    MIN_WIDTH: 250,
     MIN_HEIGHT: 200
 };
 
