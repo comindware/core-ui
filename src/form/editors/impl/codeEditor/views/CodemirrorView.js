@@ -474,6 +474,12 @@ export default Marionette.View.extend({
         }
     },
 
+    async __isCompilationError() {
+        await this.__compile();
+        const isErrors = Boolean(this.tt.get('errors')?.length);
+        return isErrors;
+    },
+
     onAttach() {
         this.parentElement = this.el.parentElement;
     },
