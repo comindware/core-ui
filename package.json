@@ -105,7 +105,7 @@
         "jasmine-core": "^3.5.0",
         "jasmine-expect": "^4.0.3",
         "jasmine-jquery": "^2.1.1",
-        "karma": "^4.4.1",
+        "karma": "^5.1.1",
         "karma-chrome-launcher": "^3.1.0",
         "karma-coverage": "^1.1.2",
         "karma-coverage-istanbul-reporter": "^2.1.1",
