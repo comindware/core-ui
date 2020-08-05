@@ -33,11 +33,13 @@ const lineSeparatorLF = '\n';
 
 export default Marionette.View.extend({
     initialize(options = {}) {
+        this.getCmwOntology = CmwCodeAssistantServices.getCmwOntology.bind(this);
         this.tt = new Backbone.Model();
         _.bindAll(
             this,
             '__onBlur',
             '__onChange',
+            '__showHintOnCtrSpace',
             '__showHint',
             '__find',
             '__undo',
@@ -158,7 +160,7 @@ export default Marionette.View.extend({
         this.hintIsShown = false;
 
         const extraKeys = {
-            'Ctrl-Space': this.__showHint,
+            'Ctrl-Space': this.__showHintOnCtrSpace,
             'Alt-F': this.__format
         };
 
@@ -238,6 +240,13 @@ export default Marionette.View.extend({
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
+    },
+
+    __showHintOnCtrSpace() {
+        if (this.codemirror.isReadOnly() || !this.intelliAssist) {
+            return;
+        }
+        this.__showHint({ isCtrSpace: true });
     },
 
     onDestroy() {
@@ -618,17 +627,28 @@ export default Marionette.View.extend({
         this.tooltip.setPosition(this.__getPositionTooltip(hintEl));
     },
 
-    __showHint() {
+    __showHint(options) {
         if (this.codemirror.isReadOnly()) {
             return;
         }
         this.hintIsShown = true;
         if (this.options.mode === constants.mode.expression) {
-            this.codemirror.showHint({ hint: this.__cmwHint });
+            if (options?.isCtrSpace) {
+                this.__showCMWHint();
+            } else {
+                this.codemirror.showHint({ hint: this.__cmwHint });
+            }
         }
         if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
         }
+    },
+
+    async __showCMWHint() {
+        const cursor = this.codemirror.getCursor();
+        const token = this.codemirror.getTokenAt(cursor);
+        const ontologyModel = await this.getCmwOntology({ cursor, token });
+        this.codemirror.showHint({ hint: () => ontologyModel });
     },
 
     __noSuggestionHint() {
