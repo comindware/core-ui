@@ -49,7 +49,7 @@ export default {
         let completion = [];
         let currentArray = [];
         let autoCompleteObject = {};
-        if (options.token.type === constants.tokenTypes.identifier || options.types[options.token.type]) {
+        if (options.token.type === constants.tokenTypes.identifier || (options.types && options.types[options.token.type])) {
             if (options.completeHoverQuery.sourceCode[options.token.start - 1] === constants.activeSymbol.dollar) {
                 currentArray = options.autoCompleteModel.get(constants.autoCompleteContext.attributes);
             } else if (options.completeHoverQuery.sourceCode[options.token.start - 1] === constants.activeSymbol.rightAngleBracket) {
@@ -77,23 +77,16 @@ export default {
             let listToolbar;
             let attributes;
             if (options.attributes) {
-                attributes = options.attributes;
+                attributes = MappingService.mapOntologyArrayToAutoCompleteArray(options.attributes, constants.autoCompleteContext.attributes);
             } else if (options.templateId) {
                 attributes = await this.getDataRequest(options, constants.autoCompleteContext.attributes);
             } else {
                 return;
             }
             if (attributes.length) {
-                attributes.forEach(atribute => { 
-                    const type = atribute.type.toLowerCase();
-                    atribute.icons = Core.meta.contextIconType[type];
-                    if (atribute.alias) {
-                        atribute.text = atribute.alias;
-                    }
-                });
                 options.autoCompleteModel.set({ attributes });
                 this.autoCompleteContext = constants.autoCompleteContext.attributes;
-                listToolbar = this.__renderConfigListToolbar(attributes);
+                listToolbar = this.renderConfigListToolbar(attributes);
             } else {
                 listToolbar = [{ text: LocalizationService.get('CORE.FORM.EDITORS.CODE.NOSUGGESTIONS') }];
             }
@@ -109,65 +102,46 @@ export default {
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: this.__renderConfigListToolbar(result)
-            };
-        } else if (options.token.string === constants.activeSymbol.openParenthesis || options.codemirror.getValue().trim() === '') {
+                list: this.renderConfigListToolbar(result)
+            }; 
+        } else if (options.isKeyCtrlSpace) {
+            const result = await this.getDataRequest(options, constants.autoCompleteContext.templates);
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: this.__renderConfigListToolbar(options.autoCompleteModel.get(constants.autoCompleteContext.functions))
+                list: this.renderConfigListToolbar(result)
+            };     
+        } else if (options.token.string === constants.activeSymbol.openParenthesis || options.code === '') {
+            autoCompleteObject = {
+                from: options.cursor,
+                to: options.cursor,
+                list: this.renderConfigListToolbar(options.autoCompleteModel.get(constants.autoCompleteContext.functions))
             };
         } else {
             autoCompleteObject = {
                 from: options.cursor,
                 to: options.cursor,
-                list: this.__renderConfigListToolbar(completion)
+                list: this.renderConfigListToolbar(completion)
             };
         }
         return autoCompleteObject;
     },
 
-    __renderConfigListToolbar(list) {
+    renderConfigListToolbar(list) {
         if (list.length) {
             list?.forEach(item => {
                 item.render = function(el, cm, data) {
                     const icon = document.createElement('i');
-                    const text = document.createElement('span');
-                    text.innerText = data.text;
-                    const type = data.type;
-                    const getIcon = getIconPrefixer(type);
-                    icon.className = getIcon(type);
+                    const textEl = document.createElement('span');
+                    textEl.innerText = data.text || data.name;
+                    const nameIcon = data.icons || data.type;
+                    const getIcon = getIconPrefixer(nameIcon);
+                    icon.className = getIcon(nameIcon); 
                     el.appendChild(icon);
-                    el.appendChild(text);
+                    el.appendChild(textEl);
                 };
             });
             return list;
-        }
-    },
-
-    async getCmwOntology(options) {
-        const { cursor, token } = options;
-        this.setLoading(true);
-        try {
-            const completeHoverQuery = {
-                sourceCode: this.codemirror.getValue(),
-                cursorOffset: this.__countOffset(),
-                sourceType: constants.mode.expression,
-                queryCompleteHoverType: constants.queryCompleteHoverType.completion,
-                useOntologyLibriary: false,
-                solution: this.options.solution
-            };
-            const ontologyModel = await this.options.ontologyService.getTemplates(completeHoverQuery);
-            this.autoCompleteContext = constants.autoCompleteContext.templates;
-            const list = this.__renderConfigListToolbar(ontologyModel);
-            const autoCompleteObject = {
-                from: options.cursor,
-                to: options.cursor,
-                list
-            };
-            return autoCompleteObject;
-        } finally {
-            this.setLoading(false);
         }
     }
 };

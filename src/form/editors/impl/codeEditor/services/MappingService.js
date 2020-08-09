@@ -77,7 +77,8 @@ export default {
             const literalsArray = [];
             literals.forEach(literal => {
                 const item = {};
-                item.text = literal.name;
+                const text = literal.name;
+                item.text = literal.IsWrapQuots ? `"${text}"` : text;
                 item.syntax = literal.syntax;
                 item.icons = literal.icons;
                 item.arguments = literal.arguments;
@@ -101,7 +102,8 @@ export default {
             const operatorsArray = [];
             operators.forEach(operator => {
                 const item = {};
-                item.text = operator.name;
+                const text = operator.name;
+                item.text = operator.IsWrapQuots ? `"${text}"` : text;
                 item.syntax = operator.syntax;
                 item.arguments = operator.arguments;
                 item.icons = operator.icons;
@@ -122,9 +124,10 @@ export default {
             const attributesArray = [];
             attributes.forEach(attribute => {
                 const item = {};
-                item.text = attribute.alias;
+                const text = attribute.alias;
+                item.text = attribute.IsWrapQuots ? `"${text}"` : text;
                 item.syntax = item.text;
-                item.icons = attribute.icons;
+                item.icons = Core.meta.contextIconType[attribute.type.toLowerCase()];
                 item.className = classes.attribute;
                 item.type = attribute.type || types.attribute;
                 item.hint = (cm, data, completion) => {
@@ -141,9 +144,11 @@ export default {
             const templatesArray = [];
             templates.forEach(template => {
                 const item = {};
-                item.text = template.name; //alias, necessary rename this field to the backend
+                const text = template.text || template.name;
+                item.text = template.IsWrapQuots ? `"${text}"` : text;
+                item.displayText = text;
                 item.syntax = item.text;
-                item.icons = template.icons;
+                item.icons = Core.meta.contextIconType[template.type.toLowerCase()] || template.icons;
                 item.className = classes.template;
                 item.type = types.template;
                 item.hint = (cm, data, completion) => {
