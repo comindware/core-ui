@@ -33,7 +33,6 @@ const lineSeparatorLF = '\n';
 
 export default Marionette.View.extend({
     initialize(options = {}) {
-        this.getCmwOntology = CmwCodeAssistantServices.getCmwOntology.bind(this);
         this.tt = new Backbone.Model();
         _.bindAll(
             this,
@@ -485,22 +484,6 @@ export default Marionette.View.extend({
         return false;
     },
 
-    __renderConfigListToolbar(list) {
-        list.forEach(item => {
-            item.render = function(el, cm, data) {
-                const icon = document.createElement('i');
-                const text = document.createElement('span');
-                const nameIcon = data.icons || data.type;
-                const getIcon = getIconPrefixer(nameIcon);
-                icon.className = getIcon(nameIcon);
-                text.innerText = data.text;
-                el.appendChild(icon);
-                el.appendChild(text);
-            };
-        });
-        return list;
-    },
-
     __showFilterCSharpHint(nameEntity) {
         if (nameEntity && nameEntity.match(/\s/g) === null) {
             const regExpString = `^${nameEntity}`;
@@ -557,7 +540,7 @@ export default Marionette.View.extend({
                     line: cursor.line,
                     ch: this.hintsBehindDot ? token.end + 1 : token.end
                 },
-                list: this.__renderConfigListToolbar(dataList)
+                list: CmwCodeAssistantServices.renderConfigListToolbar(dataList)
             };
         }
         if (!this.hintsBehindDot) {
@@ -634,10 +617,12 @@ export default Marionette.View.extend({
         this.hintIsShown = true;
         if (this.options.mode === constants.mode.expression) {
             if (options?.isCtrSpace) {
-                this.__showCMWHint();
+                this.isKeyCtrlSpace = true;
             } else {
-                this.codemirror.showHint({ hint: this.__cmwHint });
+                this.isKeyCtrlSpace = false;
             }
+            this.codemirror.showHint({ hint: this.__cmwHint });
+            return;
         }
         if (this.options.mode === constants.mode.script) {
             this.__showCSharpHint();
@@ -645,10 +630,23 @@ export default Marionette.View.extend({
     },
 
     async __showCMWHint() {
-        const cursor = this.codemirror.getCursor();
-        const token = this.codemirror.getTokenAt(cursor);
-        const ontologyModel = await this.getCmwOntology({ cursor, token });
-        this.codemirror.showHint({ hint: () => ontologyModel });
+        const completeHoverQuery = {
+            sourceCode: this.codemirror.getValue(),
+            cursorOffset: this.__countOffset(),
+            sourceType: constants.mode.expression,
+            queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+            useOntologyLibriary: false
+        };
+        const options = {
+            completeHoverQuery,
+            intelliAssist: this.intelliAssist,
+            autoCompleteModel: this.autoCompleteModel
+        };
+        const autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
+        this.codemirror.showHint({ hint: () => {
+            codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
+            return autoCompleteObject;
+        } });
     },
 
     __noSuggestionHint() {
@@ -840,15 +838,15 @@ export default Marionette.View.extend({
             autoCompleteModel: this.autoCompleteModel,
             completeHoverQuery,
             intelliAssist: this.intelliAssist,
-            codemirror: this.codemirror,
-
+            isKeyCtrlSpace: this.isKeyCtrlSpace,
+            code: this.codemirror.getValue().trim(),
             attributes: this.options.hintAttributes,
             templateId: this.options.templateId || this.templateId,
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
         if (autoCompleteObject.list) {
-            this.__renderConfigListToolbar(autoCompleteObject.list);
+            CmwCodeAssistantServices.renderConfigListToolbar(autoCompleteObject.list);
         }
         this.autoCompleteContext = CmwCodeAssistantServices.getAutoCompleteContext();
         codemirror.on(autoCompleteObject, 'select', this.__showTooltip);
