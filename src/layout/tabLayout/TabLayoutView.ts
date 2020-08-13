@@ -155,17 +155,16 @@ export default Marionette.View.extend({
             return;
         }
 
-        const selectedTab = this.__getSelectedTab();
+        const previousSelectedTab = this.__getSelectedTab();
 
-        if (selectedTab) {
+        if (previousSelectedTab) {
             if (this.getOption('validateBeforeMove')) {
-                const errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
-                this.setTabError(selectedTab.id, errors);
+                const errors = !previousSelectedTab.get('view').form || previousSelectedTab.get('view').form.validate();
+                this.setTabError(previousSelectedTab.id, errors);
                 if (errors) {
                     return false;
                 }
             }
-            selectedTab.set('selected', false);
         }
 
         if (tab.get('enabled')) {
@@ -175,6 +174,11 @@ export default Marionette.View.extend({
             }
 
             this.selectTabIndex = this.__getTabIndex(tab);
+        }
+
+        // For IE (scroll position jumped up when tabs reselected)
+        if (previousSelectedTab) {
+            previousSelectedTab.set('selected', false);
         }
     },
 

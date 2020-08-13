@@ -207,7 +207,8 @@ module.exports = options => {
                 // '../src'
             ),
             new StylelintPlugin({
-                files: ['../resources/styles/*.css', '../resources/styles/**/*.css', '../resources/styles/**/**/*.css']
+                files: ['../resources/styles/*.css', '../resources/styles/**/*.css', '../resources/styles/**/**/*.css'],
+                fix: true
             })
         ],
         resolve: {

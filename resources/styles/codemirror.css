@@ -463,7 +463,6 @@ li.CodeMirror-hint-active {
     overflow: hidden;
     padding: 2px 5px;
     position: fixed;
-    white-space: pre;
     white-space: pre-wrap;
     z-index: 100;
     max-width: 600px;
@@ -615,7 +614,6 @@ li.CodeMirror-hint-active {
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
 }
 

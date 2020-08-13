@@ -52,6 +52,7 @@ export default Marionette.View.extend({
         dblclick: '__handleDblClick',
         dragstart: '__handleDragStart',
         dragenter: '__handleDragEnter',
+        dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu',
@@ -165,7 +166,12 @@ export default Marionette.View.extend({
         customCells.forEach(({ index, CellView }) => {
             const cellView = this.__renderCell({ column: this.options.columns[index], index, CellView });
             if (index === 0) {
-                this.el.insertAdjacentElement('afterbegin', cellView.el);
+                if (this.getOption('showCheckbox')) {
+                    const firstChildEl = this.el.firstChild;
+                    firstChildEl.insertAdjacentElement('afterend', cellView.el);
+                } else {
+                    this.el.insertAdjacentElement('afterbegin', cellView.el);
+                }
             } else {
                 const childElBefore = this.__getCellByColumnIndex(index - 1);
                 childElBefore.insertAdjacentElement('afterend', cellView.el);
@@ -255,6 +261,7 @@ export default Marionette.View.extend({
         if (previousDragEnterModel === model) {
             return;
         }
+
         previousDragEnterModel?.trigger('dragleave');
         this.model.collection.dragoverModel = model;
 
@@ -292,7 +299,7 @@ export default Marionette.View.extend({
         if (index !== this.model.currentIndex) {
             this.el.querySelector('.js-index').innerHTML = index;
             this.model.currentIndex = index;
-        }        
+        }
     },
 
     insertFirstCellHtml(force: boolean) {
@@ -356,7 +363,7 @@ export default Marionette.View.extend({
                 }
                     <div class="checkbox js-checkbox"></div>
             </td>`
-        this.itemsHTML.push(cellHTML);     
+        this.itemsHTML.push(cellHTML);
     },
 
     __setDraggable(draggable: boolean): void {
@@ -433,7 +440,7 @@ export default Marionette.View.extend({
                 11 //need more than debounce delay in selectableBehavior calculateLength
             );
         }
-        
+
         this.gridEventAggregator.trigger('click', this.model);
     },
 
@@ -576,7 +583,7 @@ export default Marionette.View.extend({
             const column = this.options.columns[this.lastPointedIndex];
             this.cellViewsByKey[column.key]?.blur?.();
             this.__insertReadonlyCell({ column, index: this.lastPointedIndex })
-            delete this.lastPointedIndex; 
+            delete this.lastPointedIndex;
         }
     },
 

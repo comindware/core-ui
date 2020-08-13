@@ -702,7 +702,6 @@ tr:not(:first-child) .cell_selection {
     height: 100%;
     max-height: var(--grid-cell-height);
     overflow: hidden;
-    display: inline-flex;
     text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
 }
 
@@ -846,7 +845,6 @@ tr:not(:first-child) .cell_selection {
 .bubbles .editor__icons {
     cursor: pointer;
     transform: none;
-    top: 3px;
     top: var(--bubbles-icon-offset-x);
     right: 2px;
     font-size: 16px;
@@ -1092,6 +1090,7 @@ tr:not(:first-child) .cell_selection {
 .layout__tab-layout_move-button.prev-layout_move-button {
     @apply --tab-move-btn-prev-theme;
 }
+
 /* Toolbar component */
 
 .toolbar-btn {
@@ -1101,6 +1100,7 @@ tr:not(:first-child) .cell_selection {
 
     white-space: nowrap;
     padding: 3px 15px;
+    flex: 0 1 auto;
 }
 
 .toolbar-btn > .toolbar__icons > i {
@@ -1121,8 +1121,6 @@ tr:not(:first-child) .cell_selection {
 .toolbar-btn:hover {
     @apply --button-strong-hover-theme;
 }
-
-
 
 .toolbar-btn:active {
     @apply --button-strong-active-theme;
@@ -1363,7 +1361,6 @@ tr:not(:first-child) .cell_selection {
     background: transparent;
     text-align: center;
     width: auto;
-    line-height: inherit;
 }
 
 /* color picker */
@@ -1555,7 +1552,6 @@ tr:not(:first-child) .cell_selection {
     text-decoration: underline;
 }
 
-
-.cke_editable{
+.cke_editable {
     font: var(--font);
 }
