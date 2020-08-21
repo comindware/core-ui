@@ -1,149 +1,161 @@
 /*eslint-env node*/
+const utils = require('../utils');
+
+const icons = {
+    arrowIcon:
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
+    angleRight:
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E"
+};
+
 const variables = {
     // colors
     white: '#ffffff',
-    red: '#ba0c08',
-    'blue-extra-light': '#eaf5fc',
-    'blue-100': '#278ed9',
-    'blue-200': '#0575bd',
+    black: '#313131',
+    red: '#e1462c!important',
+    'red-dark': '#d63a1f',
 
-    'grey-100': '#f3f3f3',
-    'grey-200': '#edeff0',
-    'grey-300': '#d2dbe2',
-    'grey-400': '#dfe4e8',
-    'grey-500': '#d3d5d6',
-    'grey-600': '#b9bcbd',
-    'grey-700': '#aab5be',
-    'grey-800': '#70787F',
-    'grey-900': '#838c92',
+    'grey-50': '#f9f9f9',
+    'grey-100': '#f5f5f5',
+    'grey-200': '#efefef',
+    'grey-300': '#e2e2e2',
+    'grey-400': '#c1c1c1',
 
-    'text-color': '#384650',
-    'link-color': 'var(--blue-200)',
-    'link-hover-color': 'var(--blue-100)',
-    'main-color': 'var(--blue-200)',
+    'blue-100': '#d6e7f2',
+    'blue-200': '#90c3eb',
+    'blue-300': '#0575bd',
+    'blue-400': '#04619d',
+    'text-color': '#404040',
+    'link-color': 'var(--blue-300)',
+    'link-hover-color': 'var(--blue-200)',
+    'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
-    'warning-color': '#ffda44',
-    'selected-background-color': 'var(--blue-extra-light)',
+    'warning-color': '#e19e35',
+    'selected-background-color': 'var(--grey-100)',
     'disabled-text-color': 'var(--grey-400)',
+    'icon-remove': 'var(--grey-400)',
+
+    'convex-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
+    'concave-gradient': 'linear-gradient(#e2e2e2 35%, #ffffff)',
 
     'border-color': 'var(--grey-400)',
-    border: '1px solid #dfe4e8',
-    'border-radius': '2px',
+    'border-radius': '4px',
+    'border-radius-big': '5px',
+    border: '1px solid #c1c1c1',
 
-    focus: '1px solid var(--blue-200)',
+    focus: '1px solid var(--blue-300)',
 
     // font
-    'base-font-size': '13px',
-    'line-height': '1.3',
+    'base-font-size': '14px',
+    'line-height': '1.4',
     font: "normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif",
 
-    'form-input-padding': '5px',
+    'form-input-padding': '10px',
 
-    'form-field-margin': '10px',
-    'form-label-font-size': '11px',
+    'form-field-margin': '15px',
+    'form-label-font-size': 'var(--base-font-size)',
     'form-label-font-weight': '600',
-    'form-label-color': 'var(--grey-800)',
-    'form-label-margin': '2px',
+    'form-label-color': 'var(--theme-colors__text)',
+    'form-label-margin': '8px',
     'form-label-padding': '0 0 0 var(--form-input-padding)',
-    'form-label-icon-size': '12px',
-    'form-label-icon-margin-x': '3px',
+    'form-label-icon-size': '14px',
+    'form-label-icon-margin-x': '5px',
 
     // form editor
-    'editor-height': '20px',
-    'editor-textarea-height': 'auto',
-    'editor-line-height': '20px',
-    'editor-textarea-line-height': '18px',
-    'editor-font-size': 'var(--base-font-size)',
+    'editor-font-size': 'inherit',
     'editor-text-color': 'var(--text-color)',
     'editor-empty-text-color': 'var(--grey-900)',
 
     // input
-    'input-padding': '4px 18px 4px 5px',
-    'input-height': 'inherit',
-    'input-hover-color': 'var(--grey-600)',
-    'input-search-padding': '2px 20px 2px 24px',
+    'input-padding': '4px 20px 4px var(--form-input-padding)',
+    'input-height': 'auto',
+    'input-active-border-color': 'var(--blue-300)',
+    'input-error-color': 'var(--red)',
+    'input-search-padding': '4px 20px 4px 25px',
     'input-search-bg':
         'no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC)',
 
     // textarea
-    'textarea-padding': '3px 5px',
+    'textarea-padding': '4px 20px 4px 10px',
     'textarea-line-height': 'inherit',
-    'textarea-min-height': '24px',
+    'textarea-min-height': '29px',
 
     // custom control
-    'custom-control-spacer-y': '0',
+    'custom-control-spacer-y': '10px',
 
     // checkbox
-    'checkbox-size': '16px',
-    'checkbox-radius': '2px',
-    'checkbox-border-color': 'var(--grey-900)',
-    'checkbox-intermediate-color': 'var(--blue-100)',
-    'checkbox-intermediate-size': '8px',
+    'checkbox-size': '18px',
+    'checkbox-checked-color': 'var(--blue-300)',
+    'checkbox-border-color': 'var(--border-color)',
+    'checkbox-radius': 'var(--border-radius)',
+    'checkbox-intermediate-color': 'var(--blue-300)',
+    'checkbox-intermediate-size': '10px',
 
     // radio
-    'radio-size': '12px',
-    'radio-margin': '0 5px 0 0',
-    'radio-checked-color': 'var(--blue-200)',
-    'radio-inner-size': '6px',
-    'radio-checked-disabled-color': 'var(--grey-800)',
+    'radio-size': 'var(--checkbox-size)',
+    'radio-margin': '0 10px 0 0',
+    'radio-checked-color': 'var(--checkbox-checked-color)',
+    'radio-inner-size': '10px',
+    'radio-checked-disabled-color': 'var(--grey-400)',
+    'radio-margin_reduced': '5px 0',
 
     // grid
-    'grid-toolbar-padding': '2px 0',
-    'grid-toolbar-bg-color': 'var(--grey-100)',
+    'grid-toolbar-padding': '10px 6px 10px 0',
+    'grid-toolbar-bg-color': 'transparent',
 
-    'grid-checkbox-size': '14px',
-    'grid-checkbox-icon-size': '11px',
+    'grid-checkbox-size': '16px',
+    'grid-checkbox-icon-size': '12px',
     'grid-header-font-size': 'var(--base-font-size)',
     'grid-header-color': 'var(--white)',
-    'grid-header-bg': 'var(--blue-200)',
-    'grid-header-border-color': 'var(--grey-400)',
-    'grid-header-height': '26px',
-    'grid-header-padding': '0 10px 0 5px',
-    'grid-header-border': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
-    'grid-header-border-last': 'var(--grid-header-border)',
-    'grid-header-selection-bg': 'var(--grey-100)',
+    'grid-header-bg': 'var(--blue-300)',
+    'grid-header-border-color': 'var(--grid-header-bg)',
+    'grid-header-height': '35px',
+    'grid-header-padding': '0 15px',
+    'grid-header-border': 'inset -1px 0 0 0 var(--blue-200), inset 0 1px 0 0 var(--grid-header-border-color)',
+    'grid-header-border-last': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
+    'grid-header-selection-bg': 'var(--grid-header-bg)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-border': '1px solid var(--grid-header-border-color)',
-    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
-    'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color)',
-    'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
-    'grid-cell-height': '25px',
-    'grid-cell-padding': '0 5px',
+    'grid-cell-border': 'inset -1px -1px 0 0 var(--grey-300)',
+    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 0 0 0 var(--grey-300)',
+    'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 0px 1px 0 0 var(--grey-300)',
+    'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 1px 0 0 var(--grey-300)',
+    'grid-cell-height': '34px',
+    'grid-cell-padding': '0 15px',
     'grid-cell-size': '13px',
-    'grid-cell-input-padding': '0 2px 0 0',
-    'grid-dots-width': '30px',
-    'grid-dots-padding': '0 25px 0 2px',
-    'grid-dots-color': 'var(--grey-600)',
-    'grid-row-selected-color': 'var(--blue-extra-light)',
-    'grid-row-hover-color': 'var(--grey-100)',
+    'grid-cell-input-padding': '0',
+    'grid-row-selected-color': 'var(--blue-100)',
+    'grid-row-hover-color': 'var(--grid-row-selected-color)',
 
-    'grid-selection-color': 'var(--grey-900)',
-    'grid-selection-width': '26px',
+    'grid-selection-color': 'var(--grey-400)',
+    'grid-selection-width': '50px',
     'grid-selection-bg': 'var(--grid-cell-bg)',
-    'grid-selection-index-width': '53px',
+    'grid-selection-index-width': '58px',
     'grid-selection-index-padding-x': '10px',
     'grid-selection-index-padding-checkbox': '21px',
 
-    'grid-sort-icon-size': '11px',
-    'grid-sort-icon-offset-y': '2px',
+    'grid-dots-width': 'var(--grid-selection-index-width)',
+    'grid-dots-padding': '0 20px 0 4px',
+    'grid-dots-color': 'var(--blue-200)',
 
-    'columns-select-border': 'var(--border)',
-    'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
+    'grid-sort-icon-size': 'var(--base-font-size)',
+    'grid-sort-icon-offset-y': '1px',
 
-    'dropdown-padding': '0 20px 0 var(--form-input-padding)',
+    'columns-select-border': '0',
+
+    'dropdown-padding': '2px 20px 2px var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
-    'dropdown-group-fontsize': '11px',
-    'dropdown-group-color': '#000',
-    'dropdown-item-padding': '5px 10px',
-    'dropdown-item-checkbox-padding': '5px',
-    'dropdown-item-hover-color': 'var(--grey-100)',
-    'bubbles-item-delete-padding': '17px',
-    'bubbles-item-edit-delete-padding': '38px',
-    'bubbles-icon-offset-x': '1px',
+    'dropdown-group-fontsize': '12px',
+    'dropdown-group-color': 'var(--black)',
+    'dropdown-item-padding': '8px 20px',
+    'dropdown-item-checkbox-padding': '10px',
+    'dropdown-item-hover-color': 'var(--blue-100)',
+    'bubbles-item-delete-padding': '0',
+    'bubbles-item-edit-delete-padding': '20px',
+    'bubbles-icon-offset-x': '5px',
 
-    'collapse-icon':
-        'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlFRUI4RTM2NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlFRUI4RTM3NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUVFQjhFMzQ0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUVFQjhFMzU0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz42Z48yAAAAeklEQVR42mL8//8/AzmAiYFMwILMYWRkxKsY2XW4bPwHxH0gs/CaAsNIIAyIfwDxSiBmx6oWh0YQcADi90C8H4gFSNEIAjpA/AiIL6NrJBSqIGeykeJHEHAG4k+kOjUKiH+SEzig6OhHjy5ktSzkpiiykxwjuYkcIMAA6W6BsPef8/UAAAAASUVORK5CYII=)',
+    'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
+    'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
 
     // tabs
     'tab-item-padding': '4px 15px',
@@ -151,9 +163,9 @@ const variables = {
     'tab-panel-container-padding': '20px 15px',
     'tab-header-justify': 'flex-start',
 
-    'btn-separator-width': '20px',
+    'btn-separator-width': '15px',
 
-    'popup-window-bg': '#fff',
+    'popup-window-bg': 'var(--grey-100)',
     'popup-content-padding': '0 15px',
     'popup-header-btn-font-size_equate': '22px',
     'system-message-font-size': '15px'
@@ -161,83 +173,124 @@ const variables = {
 
 module.exports.variables = variables;
 
-// postcss apply добавляет правила по очереди в начало (prepend), что бы не переопределить свойства которые присутствуют изначально, в связи с этим приходится писать свойства в обратном порядке если нам нужно сначала сбросить свойство, а потом добавить его частично(https://github.com/pascalduez/postcss-apply/issues/43)
-
 module.exports.apply = {
     'absolute-center-y-theme': {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)'
     },
-    'relative-center-y-theme': {
-        position: 'relative',
-        'margin-top': 'auto',
-        'margin-bottom': 'auto'
-    },
     'button-theme': {
-        'font-size': '1em',
-        padding: '3px 6px',
-        'white-space': 'nowrap',
-        'text-overflow': 'clip',
-        overflow: 'hidden',
-        'border-radius': '4px',
-        height: '28px'
+        'vertical-align': 'middle',
+        cursor: 'pointer',
+        'font-size': '14px',
+        padding: '3px 11px',
+        'border-radius': '4px'
     },
     'button-strong': {
-
+        'background-color': variables['blue-300'],
+        color: variables['blue-100'],
+        border: `1px solid ${variables['blue-300']}`
     },
     'button-pale': {
-
+        'background-color': variables.white,
+        color: variables['blue-300'],
+        border: `1px solid ${variables['grey-400']}`
     },
     'button-strong-hover-theme': {
-
+        'background-color': variables['blue-400'],
+        'border-color': variables['blue-400']
     },
     'button-strong-active-theme': {
-
+        'border-color': variables['blue-400'],
+        'background-color': variables['blue-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
     },
     'button-pale-hover-theme': {
-
+        'background-color': variables['grey-400'],
+        'border-color': variables['grey-400']
     },
     'button-pale-active-theme': {
-
+        'border-color': variables['grey-400'],
+        'background-color': variables['grey-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
+    'button-outline-theme': {
+        'background-color': variables.white,
+        'border-color': variables['grey-400'],
+        color: variables['blue-300']
+    },
+    'button-outline-hover-theme': {
+        color: variables['blue-400']
+    },
+    'button-outline-active-theme': {
+        color: variables['blue-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
+    'button-icon-theme': {
+        width: '30px',
+        'min-width': '30px',
+        height: '30px',
+        padding: '3px 0',
+        'text-align': 'center'
     },
     'dropdown-theme': {
-        'min-height': '20px'
+        background: variables['convex-gradient']
     },
-    'dropdown-caret-theme': {},
+    'dropdown-caret-theme': {
+        'font-size': '16px',
+        right: '6px',
+        color: variables['blue-300']
+    },
     'bubbles-item-theme': {
-
+        color: variables['text-color']
+    },
+    'bubbles-item-theme-hover': {
+        padding: '2px 20px 2px 0'
     },
     'input-theme': {
-
+        border: variables.border,
+        'background-color': variables.white,
+        'border-radius': '4px'
     },
     'input-disabled-theme': {
-
+        'background-color': 'transparent',
+        'border-color': 'transparent'
+    },
+    'cell-input-disabled-theme': {
+        'background-color': 'transparent'
     },
     'input-search-clear-theme': {
-        width: '20px',
-        height: '20px',
+        width: '22px',
+        opacity: '.8',
         right: '0',
         top: '50%',
-        'line-height': '21px',
-        'font-size': '14px'
+        'font-size': '16px',
+        'text-align': 'center'
     },
     'textarea-theme': {
-
+        border: variables.border,
+        'border-radius': '4px',
+        'line-height': '1.5'
     },
     'custom-cotrol-disabled-theme': {
-        filter: 'alpha(opacity=60)',
-        opacity: '.6',
-        cursor: 'auto'
+        cursor: 'default'
     },
     'checkbox-theme': {
-        'line-height': 'normal',
-        'font-size': '11px'
+        display: 'flex',
+        'flex-shrink': '0',
+        'align-items': 'center',
+        'justify-content': 'center'
     },
-    'checkbox-disabled-theme': {},
-    'radio-disabled-theme': {},
+    'checkbox-disabled-theme': {
+        color: variables['grey-400'],
+        'border-color': variables['grey-400'],
+        background: variables['grey-300']
+    },
+    'radio-disabled-theme': {
+        background: variables['grey-300']
+    },
     'svg-icon-wrp-theme': {
-        right: '1px',
+        right: '5px',
         top: '50%',
         width: '1em',
         height: '1em',
@@ -251,74 +304,181 @@ module.exports.apply = {
         'pointer-events': 'none'
     },
     'tab-item-theme': {
-        'min-height': '25px'
+        border: variables.border,
+        color: variables['text-color'],
+        position: 'relative',
+        'z-index': '1',
+        'background-color': variables['grey-100'],
+        'margin-right': '5px',
+        'margin-bottom': '0px',
+        'border-radius': '4px 4px 0 0',
+        flex: '0 0 auto',
+        'min-height': '30px'
     },
     'tab-item-active-theme': {
-
+        'background-color': variables.white,
+        'border-bottom-color': variables.white
     },
     'tab-item-error-theme': {
-
+        color: variables.red,
+        'border-top-color': variables.red,
+        'border-right-color': variables.red,
+        'border-left-color': variables.red
     },
     'tab-item-disabled-theme': {
-
+        color: variables['grey-400'],
+        cursor: 'default'
     },
     'tab-item-hidden-theme': {
-
+        display: 'none'
     },
-
+    'tab-panel-container-theme': {
+        border: variables.border,
+        'background-color': variables.white,
+        'border-radius': '0 0 4px 4px'
+    },
+    'tab-move-btn-theme': {
+        right: '0',
+        padding: '4px',
+        display: 'flex',
+        transform: 'rotate(-90deg)'
+    },
     'tab-move-btn-prev-theme': {
-
+        left: '0',
+        right: 'auto',
+        transform: 'rotate(90deg)'
     },
-    'columns-select-list-theme': {},
+    'columns-select-list-theme': {
+        'background-color': variables.white,
+        padding: '10px 9px 10px 15px',
+        border: variables.border,
+        'border-radius': '0 4px 4px 4px'
+    },
     'columns-header-theme': {
-        'font-size': '13px',
-        'font-weight': '600',
-
+        'font-size': variables['base-font-size'],
+        'font-weight': variables['form-label-font-weight'],
+        color: variables.black,
+        'margin-bottom': variables['form-label-margin']
+    },
+    'toolbar-btn-theme': {
+        'margin-right': '5px'
+    },
+    'toolbar-btn-low-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
+    },
+    'toolbar-btn-low-hover-theme': {
+        'background-color': '#c1c1c1',
+        'border-color': '#c1c1c1',
+        color: 'black'
+    },
+    'toolbar-btn-low-active-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1',
+        color: 'black'
     },
 
-    'toolbar-btn-theme': {},
-    'toolbar-btn-low-theme': {},
-    'toolbar-btn-low-hover-theme': {},
-    'toolbar-btn-low-active-theme': {},
-    'toolbar-btn-normal-theme': {},
-    'toolbar-btn-normal-hover-theme': {},
-    'toolbar-btn-normal-active-theme': {},
-    'toolbar-btn-major-theme': {},
-    'toolbar-btn-major-hover-theme': {},
-    'toolbar-btn-major-active-theme': {},
-    'toolbar-btn-critical-theme': {},
-    'toolbar-btn-critical-hover-theme': {},
-    'toolbar-btn-critical-active-theme': {},
-    'toolbar-btn-fatal-theme': {},
-    'toolbar-btn-fatal-hover-theme': {},
-    'toolbar-btn-fatal-active-theme': {},
-
-    'group-theme': {
-        padding: '5px 0',
-        'margin-top': '5px'
+    'toolbar-btn-normal-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
     },
+    'toolbar-btn-normal-hover-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
+    'toolbar-btn-normal-active-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4',
+        color: 'black'
+    },
+
+    'toolbar-btn-major-theme': {
+        color: variables.white,
+        'background-color': variables['warning-color'],
+        'border-color': variables['warning-color']
+    },
+    'toolbar-btn-major-hover-theme': {
+        'background-color': '#de9621',
+        'border-color': '#de9621'
+    },
+    'toolbar-btn-major-active-theme': {
+        'background-color': '#de9621',
+        'border-color': '#de9621'
+    },
+
+    'toolbar-btn-critical-theme': {
+        color: variables.white,
+        'background-color': '#e1742c',
+        'border-color': '#e1742c'
+    },
+    'toolbar-btn-critical-hover-theme': {
+        'background-color': '#d6681f',
+        'border-color': '#d6681f'
+    },
+    'toolbar-btn-critical-active-theme': {
+        'background-color': '#d6681f',
+        'border-color': '#d6681f'
+    },
+
+    'toolbar-btn-fatal-theme': {
+        color: variables.white,
+        'background-color': variables.red,
+        'border-color': variables.red
+    },
+    'toolbar-btn-fatal-hover-theme': {
+        'background-color': variables['red-dark'],
+        'border-color': variables['red-dark']
+    },
+    'toolbar-btn-fatal-active-theme': {
+        'background-color': variables['red-dark'],
+        'border-color': variables['red-dark']
+    },
+
+    'group-theme': {},
     'group-head-theme': {
-        'max-width': 'calc(100% - 5px)',
-        'font-size': '16px',
-        'margin-bottom': '5px',
+        'font-size': '18px',
+        'font-weight': '700',
+        'margin-bottom': '15px',
+        'align-items': 'center'
     },
     'group-title-theme': {
-        'padding-left': '15px'
+        'padding-left': '20px'
     },
     'group-content-theme': {
-        padding: '10px'
+        padding: '20px',
+        'border-radius': '4px',
+        'background-color': variables['grey-50']
     },
 
     'popup-header-theme': {
-        'font-size': '16px',
+        padding: '15px',
+        'font-size': '18px',
         'font-weight': '600',
+        display: 'flex',
+        'align-items': 'center',
+        flex: 'none'
     },
     'popup-footer-theme': {
-        padding: '10px',
+        padding: '15px'
     },
-    'popup-close-theme': {},
+    'popup-close-theme': {
+        'font-size': '17px' //if icons style = solid, then 19px
+    },
+    'popup-form-content-theme': {
+        padding: '15px',
+        'background-color': variables.white,
+        'border-radius': variables['border-radius-big'],
+        'overflow-y': 'auto',
+        flex: '1'
+    },
     'drop-zone-theme': {
+        'background-color': variables['grey-100'],
         padding: '6px'
     },
-    'drop-zone-active-theme': {}
+    'drop-zone-active-theme': {
+        'background-color': variables['blue-100']
+    }
 };

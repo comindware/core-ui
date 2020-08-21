@@ -25,6 +25,7 @@ export default {
         Handlebars.registerHelper('documentIcon', getDocumentIcon(iconPrefixer)); // must be registred after iconPrefixer
 
         LocalizationService.initialize(options.localizationService);
+        ThemeService.initialize(options.themeService);
 
         const appView = window.app.getView();
         if (appView) {
@@ -87,8 +88,6 @@ export default {
         marionetteApp.start();
 
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
-
-        ThemeService.initialize(options.themeService);
 
         return marionetteApp;
     },

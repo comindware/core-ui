@@ -49,7 +49,7 @@ const Application = Marionette.Application.extend({
                 ajaxMap: []
             },
             themeService: {
-                theme: 'new',
+                theme: 'main',
                 themesPath: '../dist/themes/'
             },
             contentView: Marionette.View.extend({ template: _.noop, }),
