@@ -55,7 +55,8 @@
     font-size: 1.2em;
 }
 
-.icon-true, .icon-false {
+.icon-true,
+.icon-false {
     margin: 0 auto;
     display: flex;
     width: 10px;
@@ -443,7 +444,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
     background-color: var(--grey-300);
 }
 
-
 .show-more-counter:not(:empty) {
     border-radius: 10px;
     background-color: var(--grey-400);
@@ -492,4 +492,3 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .left-menu-view-switcher__container .toolbar-btn {
     padding: 8px 15px;
 }
-

@@ -95,8 +95,16 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.__resetCollections();
+        this.windowWidth = window.innerWidth;
         const debouncedRebuild = _.debounce(() => {
-            const interval = setInterval(() => this.rebuildView(interval), debounceInterval.medium);
+            const interval = setInterval(() => {
+                const currentWindowWidth = window.innerWidth;
+                if (this.windowWidth === currentWindowWidth) {
+                    return;
+                }
+                this.windowWidth = currentWindowWidth;
+                this.rebuildView(interval), debounceInterval.medium;
+            });
         }, debounceInterval.medium);
         //TODO: move menu dropdown on resize
         this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', debouncedRebuild);

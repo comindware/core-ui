@@ -34,7 +34,8 @@ const compiledWrappedValueCell = Handlebars.compile(getWrappedTemplate('{{value}
 
 type ValueFormatOption = {
     value: any,
-    model?: Backbone.Model
+    model?: Backbone.Model,
+    column: Column
 };
 
 type GetCellOptions = {
