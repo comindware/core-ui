@@ -842,7 +842,7 @@ input[type="color"],
 .document-buttons__list {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: start;
+    justify-content: flex-start;
     line-height: 1;
     margin: 4px 0;
 }

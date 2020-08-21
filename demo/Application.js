@@ -66,7 +66,16 @@ export default Marionette.Application.extend({
                 warningAsError: isProduction
             },
             themeService: {
-                theme: 'new'
+                isCompact: false,
+                themesPath: 'themes/',
+                compact: {
+                    name: 'main_compact',
+                    filename: 'theme.css'
+                },
+                normal: {
+                    name: 'main',
+                    filename: 'theme.css'
+                }
             },
             userService: {
                 dataProvider

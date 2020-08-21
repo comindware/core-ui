@@ -1,5 +1,4 @@
 /* General */
-
 body {
     display: flex;
 }
@@ -11,6 +10,7 @@ body {
     width: 100%;
     overflow: hidden;
 }
+
 .app-region-container {
     display: flex;
     width: 100%;

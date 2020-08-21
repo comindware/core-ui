@@ -1,33 +1,43 @@
 import { $ } from 'lib';
+type theme = {
+    name: string,
+    filename: string
+};
 
 type options = {
     isCompact: boolean,
     themesPath: string,
-    insertBefore?: string
-}
+    insertBefore?: string,
+    compact: theme,
+    normal: theme
+};
+
 const defaultOptions: options = {
     isCompact: false,
     themesPath: './themes/',
-    insertBefore: ''
+    insertBefore: '',
+    compact: {
+        name: 'main_compact',
+        filename: 'main_compact.css'
+    },
+    normal: {
+        name: 'main',
+        filename: 'main.css'
+    }
 };
 
-const idStylePrefix = 'core-ui-theme-styles-';
-const idSpritesPrefix = 'core-ui-sprites-';
-
 export default class ThemeService {
-    static __appliedThemes: Set<string>;
     static __isDarkTheme: boolean;
     static __initializeListeners: Array<Function>;
     static options: options;
+    static __isCompact: boolean;
 
     static initialize(opt: options) {
         this.options = _.defaults(opt, defaultOptions);
-        this.__appliedThemes = new Set();
 
-        this.__setTheme('new');
-        if (this.options.isCompact) {
-            this.__setTheme('main');
-        }
+        this.__isCompact = this.options.isCompact;
+
+        this.__isCompact ? this.__setTheme(this.options.compact) : this.__setTheme(this.options.normal);
 
         this.__initializeListeners?.forEach(listener => listener());
     }
@@ -45,55 +55,37 @@ export default class ThemeService {
     }
 
     static setCompact() {
-        this.__setTheme('main');
+        this.__isCompact = true;
+        this.__setTheme(this.options.compact);
     }
 
     static unsetCompact() {
-        this.__unsetTheme('main');
+        this.__isCompact = false;
+        this.__setTheme(this.options.normal);
     }
 
-    static __setTheme(name: string): void {
-        if (!name || this.__appliedThemes.has(name)) {
+    static isCompact() {
+        return this.__isCompact;
+    }
+
+    static __setTheme(thema: theme): void {
+        if (!thema) {
             return;
         }
-
-        // remove previous sprite
-        const lastThemeName = this.__getLastThemeName();
-        if (lastThemeName) {
-            this.__removeElement(idSpritesPrefix + lastThemeName);
-        }
-
-        this.__appliedThemes.add(name);
-
-        this.__setStyle(name);
-        this.__setSprite(name);
+        this.__setStyle(thema);
+        this.__setSprite(thema);
     }
 
-    static __unsetTheme(name: string) {
-        if (!name || !this.__appliedThemes.has(name)) {
-            return;
-        }
-        this.__appliedThemes.delete(name);
-
-        this.__removeElement(idStylePrefix + name);
-        this.__removeElement(idSpritesPrefix + name);
-
-        // restore previous sprite
-        const lastThemeName = this.__getLastThemeName();
-        if (lastThemeName) {
-            this.__setSprite(lastThemeName);
-        }
-    }
-
-    static isCompact(): boolean {
-        return this.__appliedThemes.has('main');
-    }
-
-    static __setStyle(name: string): void {
+    static __setStyle({ name, filename }: theme): void {
         const path = this.__getPath(name);
-        const url = `${path}/theme.css`;
-        const themeHtml = `<link rel='stylesheet' type='text/css' id="${idStylePrefix + name}" href="${url}">`;
+        const url = `${path}/${filename}`;
+        const themeLink = document.getElementById('theme');
+        if (themeLink) {
+            themeLink.setAttribute('href', url);
+            return;
+        }
 
+        const themeHtml = `<link rel="stylesheet" type="text/css" id="theme" href="${url}">`;
         const insertBefore = this.options.insertBefore;
         if (insertBefore) {
             const element = document.querySelector(insertBefore);
@@ -107,29 +99,20 @@ export default class ThemeService {
         return this.options.themesPath + name;
     }
 
-    static __setSprite(name: string) {
+    static __setSprite({ name }: theme) {
         const path = this.__getPath(name);
         const url = `${path}/sprites.svg`;
         $.get(url, data => {
-            if (name !== this.__getLastThemeName()) {
+            const spritesEl = document.getElementById('sprites');
+            if (spritesEl) {
+                spritesEl.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
                 return;
             }
             const div = document.createElement('div');
-            div.id = idSpritesPrefix + name;
+            div.id = 'sprites';
             div.classList.add('visually-hidden');
             div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
             document.body.insertAdjacentElement('afterbegin', div);
         });
-    }
-
-    static __removeElement(id: string) {
-        const el = document.getElementById(id);
-        if (el != null && el.parentNode) {
-            el.parentNode.removeChild(el);
-        }
-    }
-
-    static __getLastThemeName() {
-        return [...this.__appliedThemes][this.__appliedThemes.size - 1];
     }
 }

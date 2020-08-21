@@ -9,7 +9,7 @@ const postCSSCustomProperties = require('postcss-custom-properties');
 const apply = require('postcss-apply');
 const pathResolver = require('../pathResolver');
 
-const themes = ['main', 'new'];
+const themes = ['main_compact', 'main'];
 
 const themeTask = name => {
     const themePath = `styles/themes/${name}`;
