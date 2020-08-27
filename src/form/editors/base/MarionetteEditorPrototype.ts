@@ -26,7 +26,10 @@ const onRender = function() {
     if (this.focusElement) {
         this.$editorEl.on('focus', this.focusElement, this.onFocus);
         this.$editorEl.on('blur', this.focusElement, this.onBlur);
-        this.$editorEl.on('keyup', this.focusElement, this.onKeyup);
+        if (this.model.get('fieldType') !== 'Text') {
+            //besides text-area
+            this.$editorEl.on('keyup', this.focusElement, this.onKeyup);
+        }
     } else if (this.focusElement !== null) {
         this.$editorEl.on('focus', this.onFocus);
         this.$editorEl.on('blur', this.onBlur);
