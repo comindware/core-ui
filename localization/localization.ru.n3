@@ -62,6 +62,8 @@
 
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
 
+<http://comindware.com/text/core/form/editors/code#unsavedEditor> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "В редакторе есть несохраненные изменения. Закрыть редактор без сохранения изменений?"; l10n:originalData "The editor contains unsaved changes. Close editor without saving changes?"].
+
 <http://comindware.com/text/core/form/editors/code#warnings> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждения"; l10n:originalData "Warnings"].
 
 <http://comindware.com/text/core/form/editors/code/output#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "hhhhhhhhhh"; l10n:needsReview true; l10n:originalData "message"].

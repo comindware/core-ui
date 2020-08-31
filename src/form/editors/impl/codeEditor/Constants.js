@@ -21,7 +21,12 @@ export default {
         template: 'dev-code-editor-template',
         hintCodemirror: 'CodeMirror-hint'
     },
-
+    
+    showModes: {
+        normal: 'normal',
+        button: 'button'
+    },
+    
     types: {
         function: 'function',
         user: 'user',

@@ -646,9 +646,13 @@ li.CodeMirror-hint-active {
     width: 40px;
 }
 
-.dev-code-editor-toolbar_button_container-close {
-    margin-left: auto;
+.dev-code-editor-toolbar_button_container-close,
+.dev-code-editor-toolbar_button_container-save {
     display: none;
+}
+
+.dev-code-editor-toolbar_button_container-save {
+    margin-left: auto;
 }
 
 .dev-code-editor-toolbar

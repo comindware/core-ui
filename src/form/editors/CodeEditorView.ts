@@ -10,7 +10,8 @@ const showModes = {
 };
 
 const classes = {
-    buttonMode: 'dev-code-editor-button-mode'
+    buttonMode: 'dev-code-editor-button-mode',
+    maximized: 'dev-codemirror-maximized'
 };
 
 const defaultOptions = {
