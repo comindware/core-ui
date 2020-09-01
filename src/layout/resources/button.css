@@ -16,7 +16,7 @@
 .split-button-wrp {
     display: flex;
     border-radius: 4px;
-    padding: 0;
+    padding: 0 15px;
     vertical-align: middle;
     border: 1px solid #0575bd;
     color: #d6e7f2;
@@ -25,13 +25,15 @@
 }
 
 .split-button-wrp .btn-separator {
-    width: 0px;
-    height: 70%;
+    width: 0;
+    height: 50%;
+    margin: 0 5px;
     border-right: solid 1px;
     align-self: center;
 }
 
 .split-button-wrp .split-button-menu-anchor, .split-button-wrp .split-button-action-button {
-    padding: 3px 5px;
-    margin: 0 5px !important; 
+    padding: 0;
+    margin: 0;
+    min-width: 20px;
 }

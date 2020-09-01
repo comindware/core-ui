@@ -179,11 +179,9 @@ module.exports.apply = {
         transform: 'translateY(-50%)'
     },
     'button-theme': {
-        'vertical-align': 'middle',
-        cursor: 'pointer',
-        'font-size': '14px',
-        padding: '3px 11px',
-        'border-radius': '4px'
+        'font-size': '13px',
+        padding: '0 15x',
+        'font-weight': '600'
     },
     'button-strong': {
         'background-color': variables['blue-300'],
@@ -201,8 +199,7 @@ module.exports.apply = {
     },
     'button-strong-active-theme': {
         'border-color': variables['blue-400'],
-        'background-color': variables['blue-400'],
-        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+        'background-color': variables['blue-400']
     },
     'button-pale-hover-theme': {
         'background-color': variables['grey-400'],
