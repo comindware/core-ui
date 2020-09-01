@@ -3,13 +3,8 @@ import template from '../templates/documentBubbleItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
-import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
-import iconWrapDownload from '../../../iconsWraps/iconWrapDownload.html';
 import ExtensionIconService from '../services/ExtensionIconService';
-import UIService from '../../../../../services/UIService';
-
 import meta from '../meta';
-import { iconsNames } from '../../../../../Meta';
 
 export default Marionette.View.extend({
     initialize(options) {
