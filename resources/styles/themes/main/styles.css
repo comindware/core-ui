@@ -275,26 +275,9 @@
   fill: red
 }
 
-.toolbar-btn {
-}
-
-.toolbar-btn:hover {
-}
-
-.toolbar-btn:active {
-
-}
-.toolbar-btn:hover .toolbar-btn__text {
-}
-
-
-.toolbar-btn__text{
-  display: inline-flex;
-}
 
 .cell .toolbar-btn {
   height: 22px;
-  line-height: 22px;
 }
 
 .grid-toolbar-region {
@@ -411,21 +394,15 @@
 
 .toolbar, .toolbar-dataset {
   height: 30px;
-  padding: 0 10px;
+  padding: 0 5px;
 }
 .toolbar-items-wrp, .toolbar-btn, .tree-editor-btn {
-  height: 24px;
+  height: 26px;
 }
 .split-button-wrp {
-  border: none;
-  height: 24px;
 }
 
-/*
-.toolbar .toolbar-btn, .toolbar-dataset .toolbar-btn {
-  line-height: 1.3
-}
-*/
+
 .toolbar-btn__text {
   vertical-align: baseline;
 }

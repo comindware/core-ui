@@ -1066,6 +1066,12 @@ tr:not(:first-child) .cell_selection {
   transition: all .4s ease-in-out;
 }
 
+.toolbar-container .toolbar-btn,
+.toolbar-container .split-button-wrp{
+  border-color: rgba(120,120,120, 0);
+}
+
+
 .toolbar-btn > .toolbar__icons > i {
   width: 100%;
   height: auto;
@@ -1173,11 +1179,8 @@ tr:not(:first-child) .cell_selection {
   background-color: transparent;
   box-shadow: none;
 }
-/*
-.toolbar-container .toolbar-btn{
-  border-color: rgba(120,120,120, 0);
-}
-*/
+
+
 
 .toolbar__icons {
   display: inline-block;

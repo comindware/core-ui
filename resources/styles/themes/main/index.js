@@ -176,31 +176,9 @@ module.exports.apply = {
     },
     'button-theme': {
         'font-size': '1em',
-        padding: '3px 6px',
-        'white-space': 'nowrap',
-        'text-overflow': 'clip',
-        overflow: 'hidden',
-        'border-radius': '4px',
-        height: '28px'
+        padding: '0 10px',
     },
-    'button-strong': {
 
-    },
-    'button-pale': {
-
-    },
-    'button-strong-hover-theme': {
-
-    },
-    'button-strong-active-theme': {
-
-    },
-    'button-pale-hover-theme': {
-
-    },
-    'button-pale-active-theme': {
-
-    },
     'dropdown-theme': {
         'min-height': '20px'
     },
