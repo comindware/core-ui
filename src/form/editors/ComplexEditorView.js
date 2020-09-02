@@ -9,7 +9,7 @@ import { complexValueTypes, getComplexValueTypesLocalization } from '../../Meta'
 
 const classes = {
     inline: 'dev-expression-editor-field-inline',
-    base: 'complex-editor-field layout__vertical-layout'
+    base: 'complex-editor-field'
 };
 
 const defaultOptions = {
