@@ -286,13 +286,7 @@
 }
 .toolbar-btn:hover .toolbar-btn__text {
 }
-.toolbar-btn_low,
-.toolbar-btn_normal,
-.toolbar-btn_major,
-.toolbar-btn_critical,
-.toolbar-btn_fatal {
-  z-index: 2;
-}
+
 
 .toolbar-btn__text{
   display: inline-flex;

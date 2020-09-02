@@ -16,24 +16,33 @@
 .split-button-wrp {
     display: flex;
     border-radius: 4px;
-    padding: 0 15px;
+    padding: 0;
     vertical-align: middle;
-    border: 1px solid #0575bd;
-    color: #d6e7f2;
-    background-color: #0575bd;
-    margin-right: 5px;  
+    border: 1px solid rgba(120,120,120, .7);
+    background-color: rgba(120, 120, 120, 0);
+    margin-right: 5px;
+    transition: all .4s ease-in-out;
 }
 
 .split-button-wrp .btn-separator {
     width: 0;
     height: 50%;
-    margin: 0 5px;
+    margin: 0 1px;
     border-right: solid 1px;
     align-self: center;
 }
 
-.split-button-wrp .split-button-menu-anchor, .split-button-wrp .split-button-action-button {
-    padding: 0;
+.split-button-wrp .split-button-menu-anchor,
+.split-button-wrp .split-button-action-button {
+    padding: 0 4px;
     margin: 0;
     min-width: 20px;
+}
+.split-button-wrp .split-button-menu-anchor:first-child,
+.split-button-wrp .split-button-action-button:first-child {
+    padding-left: 15px;
+}
+.split-button-wrp .split-button-menu-anchor:last-child,
+.split-button-wrp .split-button-action-button:last-child {
+    padding-right: 15px;
 }

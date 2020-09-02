@@ -77,7 +77,6 @@ const variables = {
     'checkbox-size': '16px',
     'checkbox-radius': '2px',
     'checkbox-border-color': 'var(--grey-900)',
-    'checkbox-intermediate-color': 'var(--blue-100)',
     'checkbox-intermediate-size': '8px',
 
     // radio
@@ -278,21 +277,6 @@ module.exports.apply = {
     },
 
     'toolbar-btn-theme': {},
-    'toolbar-btn-low-theme': {},
-    'toolbar-btn-low-hover-theme': {},
-    'toolbar-btn-low-active-theme': {},
-    'toolbar-btn-normal-theme': {},
-    'toolbar-btn-normal-hover-theme': {},
-    'toolbar-btn-normal-active-theme': {},
-    'toolbar-btn-major-theme': {},
-    'toolbar-btn-major-hover-theme': {},
-    'toolbar-btn-major-active-theme': {},
-    'toolbar-btn-critical-theme': {},
-    'toolbar-btn-critical-hover-theme': {},
-    'toolbar-btn-critical-active-theme': {},
-    'toolbar-btn-fatal-theme': {},
-    'toolbar-btn-fatal-hover-theme': {},
-    'toolbar-btn-fatal-active-theme': {},
 
     'group-theme': {
         padding: '5px 0',

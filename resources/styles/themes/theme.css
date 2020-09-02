@@ -194,7 +194,7 @@ body {
 .editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
   width: var(--checkbox-intermediate-size);
   height: var(--checkbox-intermediate-size);
-  background-color: var(--checkbox-intermediate-color);
+  background-color: #fff;
 }
 
 .editor_icons .caret {
@@ -953,30 +953,6 @@ tr:not(:first-child) .cell_selection {
 .toolbar-btn.btn{
   @apply --button-theme;
 }
-.btn-strong,
-.toolbar-btn.btn-strong{
-  @apply --button-strong;
-}
-.btn-pale,
-.toolbar-btn.btn-pale{
-  @apply --button-pale;
-}
-.btn-strong:hover,
-.toolbar-btn.btn-strong:hover{
-  @apply --button-strong-hover-theme;
-}
-.btn-strong:active,
-.toolbar-btn.btn-strong:active{
-  @apply --button-strong-active-theme;
-}
-.btn-pale:hover,
-.toolbar-btn.btn-pale:hover{
-  @apply --button-pale-hover-theme;
-}
-.btn-pale:active,
-.toolbar-btn.btn-pale:active{
-  @apply --button-pale-active-theme;
-}
 .layout__button .btn:focus{
   outline: var(--focus);
 }
@@ -1085,7 +1061,11 @@ tr:not(:first-child) .cell_selection {
   padding: 0 15px;
   min-width: 50px;
   height: 40px;
+  background-color: rgba(120, 120, 120, 0);
+  border: 1px solid rgba(120,120,120, .7);
+  transition: all .4s ease-in-out;
 }
+
 .toolbar-btn > .toolbar__icons > i {
   width: 100%;
   height: auto;
@@ -1099,11 +1079,14 @@ tr:not(:first-child) .cell_selection {
   margin-left: 5px;
 }
 .toolbar-btn:hover{
-  @apply --button-strong-hover-theme;
+  background-color: rgba(120,120,120, .2);
+  border-color: rgba(120,120,120, .2);
+  color: #000;
 }
 
-.toolbar-btn:active {
-  @apply --button-strong-active-theme;
+.toolbar-btn:active, .split-btn:active {
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,.1), inset -1px -1px 3px rgba(0,0,0,.1);
+  border-color: rgba(120,120,120, .4);
 }
 
 .toolbar-btn__text {
@@ -1112,83 +1095,100 @@ tr:not(:first-child) .cell_selection {
   flex: 1 1 auto;
 }
 
-.split-btn_low, .toolbar-btn.split-btn_low{
-  @apply --toolbar-btn-low-theme;
+
+.toolbar-btn_low, .split-btn_low{
+  color: #245dd1;
+  background-color: rgba(36, 93, 209, 0);
+  border-color: rgba(36, 93, 209, .7);
 }
-.toolbar-btn_low, .toolbar-btn.toolbar-btn_low{
-  @apply --toolbar-btn-low-theme;
+.toolbar-btn_low:hover, .split-btn_low:hover{
+  color: #153e93;
+  background-color: rgba(36, 93, 209, .2);
+  border-color: rgba(36, 93, 209, .2);
 }
-.toolbar-btn_low:hover, .toolbar-btn.toolbar-btn_low:hover{
-  @apply --toolbar-btn-low-hover-theme;
-}
-.toolbar-btn_low:active, .toolbar-btn.toolbar-btn_low:active{
-  @apply --toolbar-btn-low-active-theme;
+.toolbar-btn_low:active, .split-btn_low:active{
+  border-color: rgba(36, 93, 209, .4);
 }
 
-.split-btn_normal, .toolbar-btn.split-btn_normal{
-  @apply --toolbar-btn-normal-theme;
+.toolbar-btn_normal, .split-btn_normal{
+  color: #119e1f;
+  background-color: rgba(17, 158, 31, 0);
+  border-color: rgba(17, 158, 31, .7);
 }
-.toolbar-btn_normal, .toolbar-btn.toolbar-btn_normal{
-  @apply --toolbar-btn-normal-theme;
+.toolbar-btn_normal:hover, .split-btn_normal:hover{
+  color: #087b14;
+  background-color: rgba(17, 158, 31, .2);
+  border-color: rgba(17, 158, 31, .2)
 }
-.toolbar-btn_normal:hover, .toolbar-btn.toolbar-btn_normal:hover{
-  @apply --toolbar-btn-normal-hover-theme;
-}
-.toolbar-btn_normal:active, .toolbar-btn.toolbar-btn_normal:active{
-  @apply --toolbar-btn-normal-active-theme;
-}
-
-.split-btn_major, .toolbar-btn.split-btn_major{
-  @apply --toolbar-btn-major-theme;
-}
-.toolbar-btn_major, .toolbar-btn.toolbar-btn_major{
-  @apply --toolbar-btn-major-theme;
-}
-.toolbar-btn_major:hover, .toolbar-btn.toolbar-btn_major:hover{
-  @apply --toolbar-btn-major-hover-theme;
-}
-.toolbar-btn_major:active, .toolbar-btn.toolbar-btn_major:active{
-  @apply --toolbar-btn-major-active-theme;
+.toolbar-btn_normal:active, .split-btn_normal:active{
+  border-color: rgba(17, 158, 31, .4)
 }
 
-.split-btn_critical, .toolbar-btn.split-btn_critical{
-  @apply --toolbar-btn-critical-theme;
+.toolbar-btn_major, .split-btn_major{
+  color: #1fb3be;
+  background-color: rgba(31, 179, 190, 0);
+  border-color: rgba(31, 179, 190, .7);
 }
-.toolbar-btn_critical, .toolbar-btn.toolbar-btn_critical{
-  @apply --toolbar-btn-critical-theme;
+.toolbar-btn_major:hover, .split-btn_major:hover{
+  color: #0e838b;
+  background-color: rgba(31, 179, 190, .2);
+  border-color: rgba(31, 179, 190, .2);
 }
-.toolbar-btn_critical:hover, .toolbar-btn.toolbar-btn_critical:hover{
-  @apply --toolbar-btn-critical-hover-theme;
-}
-.toolbar-btn_critical:active, .toolbar-btn.toolbar-btn_critical:active{
-  @apply --toolbar-btn-critical-active-theme;
+.toolbar-btn_major:active, .split-btn_major:active{
+  border-color: rgba(31, 179, 190, .4);
 }
 
-.split-btn_fatal, .toolbar-btn.split-btn_fatal{
-  @apply --toolbar-btn-fatal-theme;
+.toolbar-btn_critical, .split-btn_critical{
+  color: #e1742c;
+  background-color: rgba(225, 116, 44, 0);
+  border-color: rgba(225, 116, 44, .7);
 }
-.toolbar-btn_fatal, .toolbar-btn.toolbar-btn_fatal{
-  @apply --toolbar-btn-fatal-theme;
+.toolbar-btn_critical:hover, .split-btn_critical:hover{
+  color: #a84b0d;
+  background-color: rgba(225, 116, 44, .2);
+  border-color: rgba(225, 116, 44, .2);
 }
-.toolbar-btn_fatal:hover, .toolbar-btn.toolbar-btn_fatal:hover{
-  @apply --toolbar-btn-fatal-hover-theme;
+.toolbar-btn_critical:active, .split-btn_critical:active{
+  border-color: rgba(225, 116, 44, .4);
 }
-.toolbar-btn_fatal:active, .toolbar-btn.toolbar-btn_fatal:active{
-  @apply --toolbar-btn-fatal-active-theme;
+
+.toolbar-btn_fatal, .split-btn_fatal{
+  color: #c00000;
+  background-color: rgba(192, 0, 0, 0);
+  border-color: rgba(192, 0, 0, .7);
 }
+.toolbar-btn_fatal:hover, .split-btn_fatal:hover{
+  color: #a00000;
+  background-color: rgba(192, 0, 0, .2);
+  border-color: rgba(192, 0, 0, .2);
+}
+.toolbar-btn_fatal:active, .split-btn_fatal:active{
+  border-color: rgba(192, 0, 0, .4);
+}
+
+.toolbar-btn.toolbar-btn_splitButton,
+.toolbar-btn.toolbar-btn_splitButton:hover,
+.toolbar-btn.toolbar-btn_splitButton:active{
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+/*
+.toolbar-container .toolbar-btn{
+  border-color: rgba(120,120,120, 0);
+}
+*/
 
 .toolbar__icons {
   display: inline-block;
-  width: 20px;
+  min-width: 20px;
+  max-height: 20px;
   flex: none;
-}
-
-.toolbar__icons .fa {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .toolbar__icons + .toolbar-btn__text{
-  margin-left: 2px;
+  margin-left: 5px;
 }
 
 .toolbar__icons + .toolbar-btn__text:empty{
