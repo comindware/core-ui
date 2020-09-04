@@ -1092,7 +1092,8 @@ tr:not(:first-child) .cell_selection {
 .toolbar-items-wrp > div:first-child .toolbar-btn{
   margin-left: 5px;
 }
-.toolbar-btn:hover{
+.toolbar-btn:hover,
+.split-btn:hover{
   background-color: rgba(120,120,120, .2);
   border-color: rgba(120,120,120, .2);
   color: #000;
@@ -1180,9 +1181,10 @@ tr:not(:first-child) .cell_selection {
   border-color: rgba(192, 0, 0, .4);
 }
 
-.toolbar-btn.toolbar-btn_splitButton,
-.toolbar-btn.toolbar-btn_splitButton:hover,
-.toolbar-btn.toolbar-btn_splitButton:active{
+
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton,
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton:hover,
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton:active{
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
