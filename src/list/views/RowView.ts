@@ -416,27 +416,29 @@ export default Marionette.View.extend({
             // todo: find more clear way to handle this case
             const target = <Element>e.target;
             const isErrorButtonClicked = target && target.classList.contains('js-error-button');
-            const isFocusChangeNeeded = columnIndex !== this.lastPointedIndex && target && !isErrorButtonClicked;
-            let isFocusEditor: boolean;
             if (this.__isColumnEditable(columnIndex)
              // temporary desicion for complex cells
              || (column.type === 'Complex' && [complexValueTypes.expression, complexValueTypes.script].includes(this.model.get(column.key)?.type))) {
 
                 // change boolean value immediatly
-                if (column.type === objectPropertyTypes.BOOLEAN && isFocusChangeNeeded) {
+                if (column.type === objectPropertyTypes.BOOLEAN) {
                     const newValue = column.storeArray ? [!this.model.get(column.key)?.[0]] : !this.model.get(column.key);
                     this.model.set(column.key, newValue);
                 }
-                isFocusEditor = true;
+
             } else {
                 const values = this.model.get(column.key);
                 if (values?.length > 1 && this.multiValueShownIndex !== columnIndex)  {
                     this.__showDropDown(columnIndex);
                 }
-                isFocusEditor = false;
             }
             setTimeout(
-                () => this.__selectPointed(columnIndex, isFocusEditor, isFocusChangeNeeded, isErrorButtonClicked),
+                () => { 
+                    const pointedEl = this.__selectPointed(columnIndex)
+                    if (isErrorButtonClicked) {
+                        this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
+                    }
+                },
                 11 //need more than debounce delay in selectableBehavior calculateLength
             );
         }
@@ -576,50 +578,44 @@ export default Marionette.View.extend({
     },
 
     __deselectPointed() {
-        if (this.lastPointedEl) {
-            this.lastPointedEl.classList.remove(classes.cellFocused);
-        }
         if (this.lastPointedIndex > -1) {
-            const column = this.options.columns[this.lastPointedIndex];
-            this.cellViewsByKey[column.key]?.blur?.();
-            this.__insertReadonlyCell({ column, index: this.lastPointedIndex })
+            const isColumnEditable = this.__isColumnEditable(this.lastPointedIndex);
+            if (isColumnEditable) {
+                const column = this.getOption('columns')[this.lastPointedIndex];
+                this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
+            }
+            const lastPointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
+            lastPointedEl.classList.remove(classes.cellFocused);
             delete this.lastPointedIndex;
         }
     },
 
-    __selectPointed(columnIndex: number, isFocusEditor: boolean, isFocusChangeNeeded = true, isErrorButtonClicked = false) {
-        let pointedEl = this.__getCellByColumnIndex(columnIndex);
-        if (pointedEl == null) {
-            return;
-        }
-        if (this.lastPointedEl && this.lastPointedEl !== pointedEl) {
+    __selectPointed(columnIndex: number, focusEditor: boolean = true) {
+        if (this.lastPointedIndex > -1 && this.lastPointedIndex !== columnIndex) {
             this.__deselectPointed();
         }
-        const column = this.getOption('columns')[columnIndex];
 
-        if (isFocusEditor && isFocusChangeNeeded && this.lastPointedIndex !== columnIndex && this.__isColumnEditable(columnIndex)) {
-            const cell = this.__getEditableCell(column);
-            this.__insertEditableCell({ column, index: columnIndex, CellView: cell  });
-            pointedEl = this.__getCellByColumnIndex(columnIndex); // override pointedEl because of replaceChild
-            this.gridEventAggregator.pointedCell = columnIndex;
-            this.lastPointedIndex = columnIndex;
-            this.cellViewsByKey[column.key]?.focus?.();
-        } else if (this.lastPointedIndex > -1 && isFocusChangeNeeded) {
-            const column = this.options.columns[this.lastPointedIndex];
-            this.__insertReadonlyCell({ column, index: this.lastPointedIndex })
-            pointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
-            delete this.lastPointedIndex;
+        const isColumnEditable = this.__isColumnEditable(columnIndex);
+
+        if (isColumnEditable) {
+            const column = this.getOption('columns')[columnIndex];
+            if (focusEditor) {
+                const cell = this.__getEditableCell(column);
+                this.__insertEditableCell({ column, index: columnIndex, CellView: cell  });
+                this.cellViewsByKey[column.key]?.focus?.();
+            } else {
+                this.__insertReadonlyCell({ column, index: columnIndex })
+            }
+        }
+        
+        this.gridEventAggregator.pointedCell = columnIndex;
+        const pointedEl = this.__getCellByColumnIndex(columnIndex);
+        if (!focusEditor || !isColumnEditable) {
             pointedEl.focus();
-        } else if (this.lastPointedIndex === undefined) {
-            pointedEl.focus();
         }
-        if (isErrorButtonClicked) {
-            this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
-        }
-        if (isFocusEditor) {
-            pointedEl.classList.add(classes.cellFocused);
-        }
-        this.lastPointedEl = pointedEl;
+        pointedEl.classList.add(classes.cellFocused);
+        this.lastPointedIndex = columnIndex;
+        return pointedEl;
     },
 
     __someFocused(nodeList: NodeList) {
@@ -628,11 +624,11 @@ export default Marionette.View.extend({
     },
 
     __handleEnter(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, true, e);
+        this.__selectPointed(this.gridEventAggregator.pointedCell);
     },
 
     __handleExit(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
+        this.__selectPointed(this.gridEventAggregator.pointedCell, false);
     },
 
     __getFocusedColumnIndex(e: MouseEvent): number {
