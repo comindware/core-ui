@@ -997,3 +997,23 @@ input[type="color"],
 .cell .bubbles .bubbles__list .bubbles__i {
     flex: 0 1 auto;
 }
+
+.cell .dev-complex-padding {
+    margin-bottom: 0;
+}
+
+.dev-complex-padding {
+    margin-bottom: 20px;
+}
+
+.cell .complex-editor-field {
+    display: flex;
+}
+
+.cell .complex-editor-field .dev-complex-padding {
+    flex: 1;
+}
+
+.cell .complex-editor-field .dev-complex-editor-item {
+    flex: 2;
+}
