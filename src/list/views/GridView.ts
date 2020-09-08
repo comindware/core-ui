@@ -394,11 +394,11 @@ export default Marionette.View.extend({
             this.ui.tools.hide();
         }
 
-        if (this.getOption('title')) {
-            this.ui.title.parent().show();
-            this.ui.title.text(this.getOption('title') || '');
+        const title = this.getOption('title');
+        if (title) {
+            this.ui.title.text(this.getOption('title'));
         } else {
-            this.ui.title.parent().hide();
+            this.ui.title.parent().addClass('form-label_empty');
         }
         if (this.options.helpText) {
             const viewModel = new Backbone.Model({

@@ -27,11 +27,11 @@ body {
   padding: var(--form-label-padding);
 }
 
-.form-label:not(.form-label--empty) .form-label__txt {
+.form-label:not(.form-label_empty) .form-label__txt {
   margin-bottom: var(--form-label-margin);
 }
 
-.datalist-panel .form-label:not(.form-label--empty) {
+.datalist-panel .form-label:not(.form-label_empty) {
   margin-top: var(--form-label-margin);
 }
 
