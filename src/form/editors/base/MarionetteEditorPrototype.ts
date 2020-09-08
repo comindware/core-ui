@@ -215,7 +215,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     const labelHtml = `<label class="form-label__txt" title="${title || ''}" for="${this.options.fieldId}">${title || ''}</label>`;
                     this.fieldEl.insertAdjacentHTML(
                         'afterbegin',
-                        `<div class="form-label ${title ? '' : 'form-label--empty'}">
+                        `<div class="form-label ${title ? '' : 'form-label_empty'}">
                             ${labelHtml}
                         </div>`
                     );
