@@ -1106,10 +1106,6 @@ tr:not(:first-child) .cell_selection {
 .toolbar-items-wrp > div:last-child .toolbar-btn{
   margin-right: 0
 }
-.toolbar-buttons_container__const .toolbar-items-wrp > div:first-child.toolbar-btn,
-.toolbar-items-wrp > div:first-child .toolbar-btn{
-  margin-left: 5px;
-}
 
 .toolbar-btn__text {
   overflow: hidden;
