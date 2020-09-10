@@ -9,5 +9,13 @@ export default Marionette.View.extend({
         return {
             iconClass: this.options.iconClass
         };
+    },
+
+    show() {
+        this.$el.show();
+    },
+
+    hide() {
+        this.$el.hide();
     }
 });
