@@ -64,7 +64,7 @@ export default class TreeEditor {
         }
 
         if (options.hidden) {
-            popoutView.el.setAttribute('hidden', true);
+            popoutView.hide();
         }
 
         popoutView.getConfigDiff = this.__getConfigDiff.bind(this);
@@ -74,7 +74,6 @@ export default class TreeEditor {
         popoutView.setInitConfig = this.setInitConfig.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
         popoutView.getRootCollection = this.__getRootCollection.bind(this);
-
         return (this.view = popoutView);
     }
 
