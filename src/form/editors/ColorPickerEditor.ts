@@ -72,6 +72,8 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
         this.ui.colorpicker.spectrum({
             color: (this.value || '').toString(),
             showInput: true,
+            cancelText: Localizer.get('CORE.FORM.EDITORS.COLORPICKER.CANCEL'),
+            chooseText: Localizer.get('CORE.FORM.EDITORS.COLORPICKER.CHOOSE'),
             allowEmpty: true,
             showInitial: true,
             preferredFormat: 'hex'

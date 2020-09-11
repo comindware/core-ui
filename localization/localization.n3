@@ -65,6 +65,8 @@
 
 <http://comindware.com/text/core/form/editors#color> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:03:49.4989665Z"; l10n:modificationDate "2019-03-13T08:03:49.4989665Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "color"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/form/editors#colorPicker> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Alexander Malinov"; l10n:modifiedBy "Alexander Malinov"; l10n:creationDate "2020-09-11T11:24:10.1145521Z"; l10n:modificationDate "2020-09-11T11:37:04.2099461Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
+
 <http://comindware.com/text/core/form/editors#date> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:01:38.5608815Z"; l10n:modificationDate "2015-07-31T11:53:33.3337378Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "date"].
 
 <http://comindware.com/text/core/form/editors#document> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2017-09-08T08:12:04.2411430Z"; l10n:modificationDate "2017-09-08T08:12:04.2411430Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "document"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
@@ -180,6 +182,10 @@
 <http://comindware.com/text/core/form/editors/code/output/warnings#warninglevel> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2018-07-17T08:30:27.5421099Z"; l10n:modificationDate "2018-07-17T08:30:29.3778792Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Warning level"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/color#emptyPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2019-03-13T08:04:10.0810940Z"; l10n:modificationDate "2019-03-13T08:09:06.8051126Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter color here"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
+<http://comindware.com/text/core/form/editors/colorPicker#cancel> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Alexander Malinov"; l10n:modifiedBy "Alexander Malinov"; l10n:creationDate "2020-09-11T11:24:55.2139732Z"; l10n:modificationDate "2020-09-11T11:38:21.9720521Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Cancel"].
+
+<http://comindware.com/text/core/form/editors/colorPicker#choose> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Alexander Malinov"; l10n:modifiedBy "Alexander Malinov"; l10n:creationDate "2020-09-11T11:24:32.5270819Z"; l10n:modificationDate "2020-09-11T11:38:19.0686042Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Choose"].
 
 <http://comindware.com/text/core/form/editors/date#disabledPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:02:46.1244821Z"; l10n:modificationDate "2015-07-31T11:53:17.0221068Z"; l10n:param <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder>; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "{0}"].
 

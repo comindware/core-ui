@@ -94,6 +94,10 @@
 
 <http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите цвет"; l10n:originalData "Enter color here"].
 
+<http://comindware.com/text/core/form/editors/colorPicker#cancel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/form/editors/colorPicker#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрать"; l10n:originalData "Choose"].
+
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
 <http://comindware.com/text/core/form/editors/date#invalidDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата неверна"; l10n:originalData "Invalid date"].
