@@ -118,7 +118,7 @@ describe('Editors', () => {
             expect(view.popupPanel.isOpen).toEqual(false);
         });
 
-        it('should set value on dropdowns item select', () => {
+        xit('should set value on dropdowns item select', () => {
             const model = new Backbone.Model({
                 iconClass: 'user'
             });
