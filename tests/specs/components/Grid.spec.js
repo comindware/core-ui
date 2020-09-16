@@ -176,5 +176,68 @@ describe('Components', () => {
                 }
             }
         });
+        it('first row hasChecked/notHasChecked', () => {
+            const headerList = $('.grid-header > td:first-child');
+            expect(headerList[0].className).not.toBe('hasChecked');
+            headerList[0].firstElementChild.click();
+            expect(headerList[0].className).toContain('hasChecked');
+        });
+        it('list row not has Checked', () => {
+            const list = $('tbody > tr');
+            for (let i = 0; i < list.length; i++) {
+                expect(list[i].className).not.toContain('row-checked');
+            }
+        });
+        it('list row has Checked', () => {
+            const headerList = $('.grid-header > td:first-child');
+            const list = $('tbody > tr');
+            headerList[0].firstElementChild.click();
+            for (let i = 0; i < list.length; i++) {
+                expect(list[i].className).toContain('row-checked');
+            }
+        });
+        it('row should checked on click', () => {
+            const list = $('tbody > tr');
+            const checkBox = $('tbody > tr > td:first-child');
+            for (let i = 0; i < list.length; i++) {
+                expect(list[i].className).not.toContain('row-checked');
+                $(checkBox[i].firstElementChild).trigger('pointerdown');
+                expect(list[i].className).toContain('row-checked');
+            }
+        });
+        it('row should not checked on click', () => {
+            const list = $('tbody > tr');
+            const checkBox = $('tbody > tr > td:first-child');
+            for (let i = 0; i < list.length; i++) {
+                $(checkBox[i].firstElementChild).trigger('pointerdown');
+            }
+            for (let i = 0; i < list.length; i++) {
+                expect(list[i].className).toContain('row-checked');
+                $(checkBox[i].firstElementChild).trigger('pointerdown');
+                expect(list[i].className).not.toContain('row-checked');
+            }
+        });
+        it('sorting on click', () => {
+            //$x('//tbody/tr/td[contains(@title,"Text")]');
+            const textName = $('tbody > tr> td:nth-child(2)');
+            const headerCheckBox = $('.grid-header > td:nth-child(2) > div > div:first-child');
+            const beforeText = [];
+            const afterText = [];
+            for (let i = 0; i < textName.length; i++) {
+                beforeText.push(textName[i].innerText);
+            }
+            beforeText.reverse();
+            headerCheckBox.click();
+            headerCheckBox.click();
+            const textAfterName = $('tbody > tr> td:nth-child(2)');
+            for (let i = 0; i < textAfterName.length; i++) {
+                afterText.push(textAfterName[i].innerText);
+            }
+            expect(beforeText.length).toBe(textAfterName.length);
+            for (let i = 0; i < textAfterName.length; i++) {
+                afterText.push(textAfterName[i].innerText);
+                expect(beforeText[i]).toBe(afterText[i]);
+            }
+        });
     });
 });
