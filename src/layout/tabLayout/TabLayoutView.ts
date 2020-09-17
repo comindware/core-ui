@@ -200,6 +200,10 @@ export default Marionette.View.extend({
         return false;
     },
 
+    getTabsCollection() {
+        return this.__tabsCollection;
+    },
+
     __onChangeShowing(tab: Backbone.Model) {
         const isShow = tab.isShow();
 

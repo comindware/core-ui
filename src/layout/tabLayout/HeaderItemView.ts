@@ -14,19 +14,28 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    ui: {
+        name: '.js-name'
+    },
+
     events: {
         click: '__onClick'
     },
 
     modelEvents: {
         'change:selected change:error change:enabled change:visible change:isHidden': '__applyClasses',
-        'change:selected': '__onSelectedChange'
+        'change:selected': '__onSelectedChange',
+        'change:name': '__onChangeName'
     },
 
     onRender() {
         this.__applyClasses();
 
         this.el.setAttribute('id', this.model.id);
+    },
+
+    __onChangeName(model: Backbone.Model, name: string) {
+        this.ui.name.html(name);
     },
 
     __applyClasses() {
@@ -59,7 +68,6 @@ export default Marionette.View.extend({
         this.$el.offsetParent().animate({ scrollLeft: offsetLeft }, 300);
     },
 
-    
     __isIntoView() {
         const parentScrollLeft = this.el.parentElement.scrollLeft;
         const parentOffsetWidth = this.el.parentElement.offsetWidth;
