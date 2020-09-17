@@ -46,7 +46,8 @@ const defaultOptions = {
  * @param {Backbone.View} options.childViewOptions опции для childView
  * @param {Function} options.childViewSelector ?
  * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
- * @param {Object} [options.emptyViewOptions] опции для emptyView
+ * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+ * @param {Function} [options.filter] Фильтрующая функция Marionette. Пример: (child, index, collection) => child.get('value') % 2 === 0
  * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
  * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
@@ -67,6 +68,7 @@ export default Marionette.PartialCollectionView.extend({
         options.childView && (this.childView = options.childView);
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
+        options.filter && (this.filter = options.filter);
 
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
 
@@ -218,7 +220,7 @@ export default Marionette.PartialCollectionView.extend({
     },
 
     _filteredSortedModels() {
-        return this.collection.visibleModels;
+        return this._filterModels(this.collection.visibleModels); //returns models if no filter applied (!this.filter)
     },
 
     // override default method to correct add twhen index === 0 in visible collection

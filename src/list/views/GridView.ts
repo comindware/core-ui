@@ -455,6 +455,7 @@ export default Marionette.View.extend({
             emptyViewOptions: this.options.emptyViewOptions,
             childHeight: this.options.childHeight,
             childViewOptions,
+            filter: this.options.filter,
             loadingChildView: this.options.loadingChildView || LoadingChildView,
             maxRows: this.options.maxRows,
             height: this.options.height,
