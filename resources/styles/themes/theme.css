@@ -703,6 +703,8 @@ tr:not(:first-child) .cell_selection {
     max-height: var(--grid-cell-height);
     overflow: hidden;
     text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
+    display: inline-flex;
+    flex-direction: column;
 }
 
 .cell__html-string > * {
