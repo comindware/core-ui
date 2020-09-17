@@ -428,7 +428,7 @@ export default Marionette.View.extend({
             }
             setTimeout(
                 () => { 
-                    const pointedEl = this.__selectPointed(columnIndex)
+                    const pointedEl = this.__selectPointed(columnIndex, true)
                     if (isErrorButtonClicked) {
                         this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
                     }
@@ -581,15 +581,18 @@ export default Marionette.View.extend({
             const lastPointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
             lastPointedEl.classList.remove(classes.cellFocused);
             delete this.lastPointedIndex;
+            delete this.lastFocusEditor;
         }
     },
 
-    __selectPointed(columnIndex: number, focusEditor: boolean = true) {
+    __selectPointed(columnIndex: number, focusEditor: boolean = this.lastFocusEditor) {        
+        if (this.lastPointedIndex === columnIndex && this.lastFocusEditor === focusEditor) {
+            return;
+        }
+
         if (this.lastPointedIndex > -1 && this.lastPointedIndex !== columnIndex) {
             this.__deselectPointed();
         }
-        const column = this.getOption('columns')[columnIndex];
-
         const isColumnEditable = this.__isColumnEditable(columnIndex);
 
         if (isColumnEditable) {
@@ -611,6 +614,7 @@ export default Marionette.View.extend({
             pointedEl.classList.add(classes.cellFocused);
         }
         this.lastPointedIndex = columnIndex;
+        this.lastFocusEditor = focusEditor;
         return pointedEl;
     },
 
@@ -620,7 +624,7 @@ export default Marionette.View.extend({
     },
 
     __handleEnter(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell);
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
     },
 
     __handleExit(e: KeyboardEvent) {
