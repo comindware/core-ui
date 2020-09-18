@@ -35,6 +35,7 @@ import { Column } from '../types/types';
         collection change (via Backbone.Collection events)
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
+const scrollHandlingSpeed: number = 100;
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
@@ -84,7 +85,7 @@ const defaultOptions = options => ({
 
 export default Marionette.View.extend({
     initialize(options) {
-        this.__onScroll = this.__onScroll.bind(this);
+        this.__debouncedOnScroll = _.debounce(this.__onScroll.bind(this), scrollHandlingSpeed);
 
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
@@ -201,8 +202,6 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.__updateTop();
-
         this.collection.updatePosition(Math.max(0, newPosition - configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.listView.state.position = newPosition;
         if (shouldScrollElement) {
@@ -215,21 +214,22 @@ export default Marionette.View.extend({
                 scrollTop = newPosition * this.listView.childHeight;
             }
             wraper.scrollTop = scrollTop;
+            this.__updateTop(scrollTop);
 
             _.delay(() => (this.internalScroll = false), 100);
+        } else {
+            const top = newPosition * this.listView.childHeight;
+            this.__updateTop(top);
         }
 
         return newPosition;
     },
 
-    __updateTop() {
-        requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
-            if (top !== this.oldTop) {
-                this.oldTop = top;
-                this.ui.content[0].style.top = `${top}px`;
-            }          
-        });
+    __updateTop(top) {
+        if (top !== this.oldTop) {
+            this.oldTop = top;
+            this.ui.content.animate({ top }, scrollHandlingSpeed);
+        }
     },
 
     __checkFillingViewport(position) {
@@ -423,9 +423,9 @@ export default Marionette.View.extend({
         this.setRequired(this.options.required);
         this.__updateState();
         if (Core.services.MobileService.isIE) {
-            this.ui.tableTopMostWrapper[0].addEventListener('scroll', this.__onScroll);
+            this.ui.tableTopMostWrapper.scroll(this.__debouncedOnScroll);
         } else {
-            this.ui.tableTopMostWrapper[0].addEventListener('scroll', this.__onScroll, { passive: true });
+            this.ui.tableTopMostWrapper.get(0).addEventListener('scroll', this.__debouncedOnScroll, { passive: true });
         }
     },
 
@@ -505,9 +505,9 @@ export default Marionette.View.extend({
 
         if (this.isRendered()) {
             if (Core.services.MobileService.isIE) {
-                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', this.__onScroll);
+                this.ui.tableTopMostWrapper.get(0).removeEventListener('scroll', this.__debouncedOnScroll);
             } else {
-                this.ui.tableTopMostWrapper[0].removeEventListener('scroll', this.__onScroll, { passive: true });
+                this.ui.tableTopMostWrapper.get(0).removeEventListener('scroll', this.__debouncedOnScroll, { passive: true });
             }
         }
     },
