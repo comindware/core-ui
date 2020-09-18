@@ -904,10 +904,6 @@ a:hover {
     padding: 0;
 }
 
-.toolbar-panel_container .toolbar-btn {
-    width: calc(100% - 6px);
-    margin: 3px;
-}
 
 .toolbar-btn.toolbar-btn_headline{
     cursor: auto;

@@ -15,7 +15,8 @@
 }
 
 .toolbar .toolbar-btn,
-.toolbar .split-button-wrp{
+.toolbar .split-button-wrp,
+.toolbar-panel_container .toolbar-btn{
     border-color: rgba(120,120,120, 0);
 }
 
@@ -112,3 +113,22 @@
     color: inherit;
 }
 
+
+.toolbar-panel_container {
+    padding: 0;
+}
+.toolbar-panel_container .toolbar-btn {
+    width: 100%;
+    margin: 1px 0 0;
+    border-radius: 0;
+    height: auto;
+    padding: 10px;
+    text-align: left;
+}
+.toolbar-panel_container .toolbar-btn:first-child {
+    margin: 0;
+    border-radius: 4px 4px 0 0;
+}
+.toolbar-panel_container .toolbar-btn:last-child {
+    border-radius: 0 0 4px 4px;
+}
