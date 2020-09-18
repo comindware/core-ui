@@ -1074,7 +1074,6 @@ tr:not(:first-child) .cell_selection {
 
 .toolbar-btn{
   @apply --button-theme;
-  @apply --button-strong;
   @apply --toolbar-btn-theme;
   white-space: nowrap;
   display: inline-flex;
@@ -1153,12 +1152,16 @@ tr:not(:first-child) .cell_selection {
   transition: all .4s ease-in-out;
 }
 
-.split-button-wrp .btn-separator {
+.btn-separator {
+  display: inline-block;
   width: 0;
   height: 50%;
-  margin: 0 1px;
-  border-right: solid 1px;
+  margin: 0 5px 0 0;
+  border-right: 1px solid inherit;
   align-self: center;
+}
+.split-button-wrp .btn-separator {
+  margin: 0 1px;
 }
 
 .split-button-wrp .split-button-menu-anchor,
@@ -1177,10 +1180,6 @@ tr:not(:first-child) .cell_selection {
 }
 
 
-.btn-separator {
-  display: inline-block;
-  width: var(--btn-separator-width);
-}
 
 .toolbar-panel_container__select-state .toolbar-btn{
   background-color: var(--white);
