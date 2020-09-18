@@ -1088,7 +1088,7 @@ tr:not(:first-child) .cell_selection {
   padding: 0 15px;
   min-width: 50px;
   height: 40px;
-  transition: all .4s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 
 .toolbar-btn > .toolbar__icons > i,
@@ -1180,7 +1180,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 
-
+/*
 .toolbar-panel_container__select-state .toolbar-btn{
   background-color: var(--white);
   color: var(--black);
@@ -1194,6 +1194,8 @@ tr:not(:first-child) .cell_selection {
 .toolbar-panel_container__select-state .toolbar-btn_headline:active{
   box-shadow: none;
 }
+*/
+
 
 .layout__button {
   flex: none;

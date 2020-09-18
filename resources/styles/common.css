@@ -915,7 +915,6 @@ a:hover {
 .toolbar-panel_container__select-state .toolbar-btn{
     width: 100%;
     margin: 0;
-    border: none;
 }
 
 .toolbar-panel_container__select-state .toolbar-btn.toolbar-btn_headline{
