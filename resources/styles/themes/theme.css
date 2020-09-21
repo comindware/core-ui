@@ -633,15 +633,6 @@ tr:hover .cell_selection-index {
 
 /* stylelint-disable */
 
-_:-ms-lang(x),
-.cell .checkbox,
-.cell_selection-index > .checkbox,
-.cell_selection > .checkbox {
-    position: static;
-    margin: 0 auto;
-    transform: translate(0, 0);
-}
-
 .cell {
     height: var(--grid-cell-height);
     line-height: var(--grid-cell-height);
