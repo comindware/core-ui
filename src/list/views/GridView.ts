@@ -199,8 +199,6 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.__updateTop();
-
         this.collection.updatePosition(Math.max(0, newPosition - configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF));
         this.listView.state.position = newPosition;
         if (shouldScrollElement) {
@@ -216,18 +214,17 @@ export default Marionette.View.extend({
 
             _.delay(() => (this.internalScroll = false), 100);
         }
+        this.__updateTop();
 
         return newPosition;
     },
 
     __updateTop() {
-        requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
-            if (top !== this.oldTop) {
-                this.oldTop = top;
-                this.ui.content[0].style.top = `${top}px`;
-            }
-        });
+        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
+        if (top !== this.oldTop) {
+            this.oldTop = top;
+            this.ui.content[0].style.top = `${top}px`;
+        }
     },
 
     __checkFillingViewport(position) {

@@ -641,6 +641,10 @@ export default Marionette.View.extend({
         this.el.classList.add(classes.hover);
         setTimeout(() => this.el.classList.remove(classes.hover), config.TRANSITION_DELAY);
         setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
+        // TODO: scrollIntoViewIfNeeded, IE, top?
+        if (this.el.getBoundingClientRect().bottom > window.innerHeight) {
+            this.el.scrollIntoView(false);
+        }
     },
 
     __updateState(model: GridItemModel, checkedState: 'checked' | 'unchecked' | 'checkedSome' | null) {
