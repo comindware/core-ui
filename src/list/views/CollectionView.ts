@@ -241,6 +241,18 @@ export default Marionette.PartialCollectionView.extend({
         this.__updateChildTop(child.model);
     },
 
+    onBeforeReorder() {
+        if (this.el.contains(document.activeElement)) {
+            this.lastActiveElement = document.activeElement;
+        }
+    },
+
+    onReorder() {
+        if (this.lastActiveElement) {
+            this.lastActiveElement.focus?.();
+        }
+    },
+
     __updateChildTop(model) {
         requestAnimationFrame(() => {
             const childView = this.children.findByModel(model);
