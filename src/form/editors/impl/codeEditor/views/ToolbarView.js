@@ -1,6 +1,16 @@
 import template from '../templates/toolbar.html';
 
 export default Marionette.View.extend({
+    initialize(options = {}) {
+        this.isReadonly = options.isReadonly;
+    },
+
+    templateContext() {
+        return {
+            isReadonly: this.isReadonly
+        };
+    },
+
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
