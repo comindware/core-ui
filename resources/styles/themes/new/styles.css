@@ -6,9 +6,18 @@
   border-color: var(--input-active-border-color);
 }
 .editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.open.editor_focused{
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 -1px 2px rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .dropdown__wrp_down.open.editor_focused{
   border-bottom-color: transparent;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 -1px 2px rgba(0,0,0,0.2);
   border-radius: 4px 4px 0 0;
+}
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .dropdown__wrp_up.open.editor_focused{
+  border-top-color: transparent;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  border-radius: 0 0 4px 4px;
 }
 .focused input,
 .focused textarea{
