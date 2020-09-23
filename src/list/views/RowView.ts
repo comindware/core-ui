@@ -434,7 +434,7 @@ export default Marionette.View.extend({
             }
             setTimeout(
                 () => { 
-                    const pointedEl = this.__selectPointed(columnIndex)
+                    const pointedEl = this.__selectPointed(columnIndex, true)
                     if (isErrorButtonClicked) {
                         this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
                     }
@@ -582,15 +582,21 @@ export default Marionette.View.extend({
             const isColumnEditable = this.__isColumnEditable(this.lastPointedIndex);
             if (isColumnEditable) {
                 const column = this.getOption('columns')[this.lastPointedIndex];
+                this.cellViewsByKey[column.key]?.blur?.();
                 this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
             }
             const lastPointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
             lastPointedEl.classList.remove(classes.cellFocused);
             delete this.lastPointedIndex;
+            delete this.lastFocusEditor;
         }
     },
 
-    __selectPointed(columnIndex: number, focusEditor: boolean = true) {
+    __selectPointed(columnIndex: number, focusEditor: boolean = this.lastFocusEditor) {
+        if (this.lastPointedIndex === columnIndex && this.lastFocusEditor === focusEditor) {
+            return;
+        }
+
         if (this.lastPointedIndex > -1 && this.lastPointedIndex !== columnIndex) {
             this.__deselectPointed();
         }
@@ -613,8 +619,11 @@ export default Marionette.View.extend({
         if (!focusEditor || !isColumnEditable) {
             pointedEl.focus();
         }
-        pointedEl.classList.add(classes.cellFocused);
+        if (this.gridEventAggregator.isEditable) {
+            pointedEl.classList.add(classes.cellFocused);
+        }
         this.lastPointedIndex = columnIndex;
+        this.lastFocusEditor = focusEditor;
         return pointedEl;
     },
 
