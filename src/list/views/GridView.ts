@@ -201,9 +201,8 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.__updateTop();
-
         this.collection.updatePosition(Math.max(0, newPosition - configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF));
+        this.__updateTop();
         this.listView.state.position = newPosition;
         if (shouldScrollElement) {
             this.internalScroll = true;
@@ -223,13 +222,11 @@ export default Marionette.View.extend({
     },
 
     __updateTop() {
-        requestAnimationFrame(() => {
-            const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
-            if (top !== this.oldTop) {
-                this.oldTop = top;
-                this.ui.content[0].style.top = `${top}px`;
-            }          
-        });
+        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
+        if (top !== this.oldTop) {
+            this.oldTop = top;
+            this.ui.content[0].style.top = `${top}px`;
+        }
     },
 
     __checkFillingViewport(position) {
@@ -266,8 +263,9 @@ export default Marionette.View.extend({
         }
         const popupContainer = document.querySelector('.js-global-popup-stack');
         const element = document.contains(target) ? target : document.activeElement;
-        const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element)
-        if (!isElementOutOfElementOrPopup) {
+        const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element);
+        const hasActiveElement = this.el.contains(document.activeElement);
+        if (!isElementOutOfElementOrPopup && !hasActiveElement) {
             this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
             this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
         }
