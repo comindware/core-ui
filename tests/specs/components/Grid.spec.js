@@ -34,7 +34,7 @@ describe('Components', () => {
                         valueExplained: ['123']
                     },
                     textCell1: ['Text Cell '.concat(i), 'Text Cell '.concat(i + 1)],
-                    numberCell1: [i + 1, i + 2],
+                    numberCell1: [i + 1, i + 2, i + 3, i + 4],
                     dateTimeCell1: ['2015-07-24T08:13:13.847Z', '2016-07-24T08:13:13.847Z'],
                     durationCell1: ['P12DT5H42M', 'P22DT5H42M'],
                     booleanCell1: [true, false],
@@ -322,13 +322,37 @@ describe('Components', () => {
             const row = $('tbody > tr');
             const search = $('input');
             search.click();
-            search.val('text cell 15');
+            search.val('Text Cell 15');
             const e = $.Event('keyup');
             e.keyCode = 13;
             search.trigger(e);
             jasmine.clock().tick(1000);
             const rowAfter = $('tbody > tr');
+            const text = $('tbody > tr> td:nth-child(3)');
             expect(rowAfter.length).not.toBe(row.length);
+            expect(text[0].innerText).toBe('15');
+
+            const button = $('.tr-search__clear>i:first-child');
+            $(button).trigger('pointerdown');
+            jasmine.clock().tick(1000);
+            const rowNew = $('tbody > tr');
+            expect(rowNew.length).toBe(row.length);
+        });
+        it('cells with multi values', () => {
+            const row = $('tbody > tr> td:nth-child(11) > div');
+            row[0].click();
+            const modal = $('.grid-composite_panel>div');
+            const modalLenght = modal.length;
+            const rowText = +row[0].firstElementChild.innerText;
+            expect(modalLenght).toBe(rowText);
+
+            const list = $('tbody > tr> td:nth-child(2)');
+            const mouse = document.createEvent('MouseEvents');
+            mouse.initMouseEvent('mousedown', true, true, window);
+            list[0].dispatchEvent(mouse);
+            jasmine.clock().tick(1000);
+            const modalAfter = $('.grid-composite_panel>div');
+            expect(modalAfter.length).toBe(0);
         });
     });
 });
