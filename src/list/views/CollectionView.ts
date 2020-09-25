@@ -244,11 +244,13 @@ export default Marionette.PartialCollectionView.extend({
     onBeforeReorder() {
         if (this.el.contains(document.activeElement)) {
             this.lastActiveElement = document.activeElement;
+        } else {
+            delete this.lastActiveElement;
         }
     },
 
     onReorder() {
-        if (this.lastActiveElement) {
+        if (this.lastActiveElement && document.contains(this.lastActiveElement)) {
             this.lastActiveElement.focus?.();
         }
     },

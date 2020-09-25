@@ -8,6 +8,8 @@
 
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 
+<http://comindware.com/text/core/common#close> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Закрыть"; l10n:originalData "Close"].
+
 <http://comindware.com/text/core/common#loading> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка..."; l10n:originalData "Loading..."].
 
 <http://comindware.com/text/core/common#notset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
