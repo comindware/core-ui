@@ -327,6 +327,12 @@ tr.empty-view {
     white-space: nowrap;
     line-height: 25px;
 }
+.dev-collection .empty-view_text {
+    line-height: 60px;
+    font-size: .9em;
+    font-weight: 600;
+    padding-top: 10px;
+}
 /* /Empty View */
 
 /* Editable Grid */
