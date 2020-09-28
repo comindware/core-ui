@@ -32,6 +32,7 @@ describe('Components', () => {
             type: 'Text',
             title: 'TextCell',
             required: true,
+            validators: ['required'],
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
             sorting: 'asc',
@@ -296,6 +297,118 @@ describe('Components', () => {
             for (let i = 0; i < textBefore.length; i++) {
                 expect(textAfter[i]).toContain(`test ${i}`);
                 expect(textAfter[i]).not.toBe(textBefore[i]);
+            }
+        });
+        it('Number cell editing', () => {
+            const cell = $('tbody > tr> td:nth-child(3)');
+            const textBefore = [];
+            const textAfter = [];
+            for (let i = 0; i < 10; i++) {
+                if (cell[i].className.indexOf('readonly') !== -1) {
+                    textBefore.push(`${cell[i].innerText} readonly`);
+                } else {
+                    textBefore.push(cell[i].innerText);
+                }
+            }
+            for (let i = 0; i < 10; i++) {
+                if (cell[i].className.indexOf('readonly') !== -1) {
+                    cell[i].click();
+                    jasmine.clock().tick(100);
+                    expect(cell[i].firstElementChild).toBe(null);
+                } else {
+                    cell[i].click();
+                    jasmine.clock().tick(100);
+                    const input = $('tbody > tr> td:nth-child(3)> div>input');
+
+                    input.val(+cell[i].innerText * 10);
+                    input.trigger('change');
+                }
+                $('tbody > tr> td:nth-child(2)')[0].click();
+            }
+            const cellAfter = $('tbody > tr> td:nth-child(3)');
+            for (let i = 0; i < 10; i++) {
+                if (cellAfter[i].className.indexOf('readonly') !== -1) {
+                    textAfter.push(`${cellAfter[i].innerText} readonly`);
+                } else {
+                    textAfter.push(cellAfter[i].innerText);
+                }
+            }
+            for (let i = 0; i < cell.length; i++) {
+                expect(cell.length).toBe(cellAfter.length);
+                if (cell[i].className.indexOf('readonly') !== -1) {
+                    expect(textBefore[i]).toBe(textAfter[i]);
+                } else {
+                    expect(+textBefore[i]).toBe(textAfter[i] / 10);
+                }
+            }
+        });
+        it('required validation cell ', () => {
+            const cell = $('tbody > tr> td:nth-child(2)');
+
+            for (let i = 0; i < 10; i++) {
+                cell[i].click();
+                jasmine.clock().tick(100);
+                const input = $('tbody > tr> td:nth-child(2)> div>input');
+
+                input.val(``);
+                input.trigger('change');
+                $('tbody > tr> td:nth-child(3)')[0].click();
+            }
+            const cellAfter = $('tbody > tr> td:nth-child(2)');
+            const cellNumber = $('tbody > tr> td:nth-child(3)');
+
+            const mouse = document.createEvent('MouseEvents');
+            mouse.initMouseEvent('mousedown', true, true, window);
+
+            for (let i = 0; i < cellAfter.length; i++) {
+                expect(cellAfter[i].className).toContain(`error`);
+                cellAfter[i].firstElementChild.click();
+                jasmine.clock().tick(100);
+                let modal = $('.form-label__error-panel');
+                expect(modal[0].firstElementChild.innerText).toContain(`This field is required`);
+
+                cellNumber[i].dispatchEvent(mouse);
+                jasmine.clock().tick(150);
+
+                expect($('.js-global-popup-stack').length).toBe(1);
+            }
+        });
+        fit('keyboard event', () => {
+            const cell = $('tbody > tr> td:nth-child(2)');
+            const cellNumber = $('tbody > tr> td:nth-child(3)');
+            for (let i = 0; i < 10; i++) {
+                const textBefore = cell[i].innerText;
+                cell[i].click();
+                jasmine.clock().tick(100);
+                let input = $('tbody > tr> td:nth-child(2)> div>input');
+
+                input.val(`test ${i}`);
+                input.trigger('change');
+                jasmine.clock().tick(100);
+
+                let e = $.Event('keydown');
+                e.keyCode = 9;
+
+                input.trigger(e);
+
+                const textAfter = $('tbody > tr> td:nth-child(2)')[i].innerText;
+                expect(textBefore).not.toBe(textAfter);
+                if (cellNumber[i].className.indexOf('readonly') !== -1) {
+                    
+                    expect(cellNumber[i].firstElementChild).toBe(null);
+                } else {
+                    jasmine.clock().tick(100);
+                    e.key = 113;
+
+                    $(cellNumber[i]).trigger(e); 
+                    jasmine.clock().tick(300);
+                    input = $('tbody > tr> td:nth-child(3)> div>input');
+
+                    input.val(+cellNumber[i].innerText * 10);
+                    input.trigger('change');
+                    jasmine.clock().tick(300);
+                }
+                jasmine.clock().tick(100);
             }
         });
         /*
