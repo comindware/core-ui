@@ -10,6 +10,7 @@ const defaultOptions = {
 };
 
 const toggleMenuDelay = 150;
+const showMenuDelay = 250;
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -70,7 +71,11 @@ export default Marionette.View.extend({
 
         const isOverflow = this.tabHeadersView.el.scrollWidth > this.tabHeadersView.el.offsetWidth + this.menuView.el.offsetWidth;
 
-        this.menuView.$el.toggle(isOverflow);
+        if (this.tabHeadersView.el.offsetWidth) {
+            this.menuView.$el.toggle(isOverflow);
+        } else {
+            setTimeout(() => this.__toggleMenu(), showMenuDelay);
+        }
     },
 
     __onMenuEcexute(id, model) {
