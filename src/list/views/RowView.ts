@@ -121,8 +121,8 @@ export default Marionette.View.extend({
             Object.values(this.cellViewsByKey).forEach(x => x.destroy());
             this.cellViewsByKey = {};
         }
-        this.errorPopout?.close();
-        this.multiValuePopout?.close();
+        this.errorPopout?.destroy();
+        this.multiValuePopout?.destroy();
     },
 
     updateCollapsed(model: ListItemModel) {
