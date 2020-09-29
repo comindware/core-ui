@@ -2,7 +2,7 @@ import ListCanvasView from 'demoPage/views/ListCanvasView';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Paragraph from './Paragraph';
+import Paragraph from './Paragraph.jsx';
 
 export default function() {
     const data = _.times(100, i => ({
