@@ -500,6 +500,17 @@ export default {
                     description: 'Message Service'
                 }
             ]
+        },
+        {
+            id: 'react',
+            displayName: 'React',
+            groups: [
+                {
+                    id: 'exampleReact',
+                    displayName: 'Test react display name',
+                    description: 'Test react description'
+                }
+            ]
         }
     ]
 };
