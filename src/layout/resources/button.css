@@ -135,6 +135,9 @@
 .toolbar-panel_container .toolbar-btn:first-child:last-child {
     border-radius: 4px;
 }
-.toolbar-panel_container .toolbar__icons+.toolbar-btn__text {
+.toolbar-panel_container .toolbar-btn .toolbar__icons{
     margin: 0 5px 0 -5px;
+}
+.toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {
+    margin: 0;
 }
