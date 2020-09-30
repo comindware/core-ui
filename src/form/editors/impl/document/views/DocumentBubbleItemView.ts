@@ -30,11 +30,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        const { text, name, isLoading, extension } = this.model.toJSON();
+        const { text, name, isLoading, extension, embeddedType } = this.model.toJSON();
         return {
             text: text || name,
             icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
-            isInline: this.options.isInline
+            isInline: this.options.isInline && !embeddedType ? false : this.options.isInline
         };
     },
 
