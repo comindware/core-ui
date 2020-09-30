@@ -140,10 +140,11 @@ const VirtualCollection = Backbone.Collection.extend({
             this.internalUpdate = true;
             this.isSliding = true;
             this.state.windowSize = newWindowSize;
-            const oldModels = this.visibleModels.concat();
+            const oldModels = this.models.concat();
+            const oldVisibleModels = this.visibleModels.concat();
             this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
             this.visibleLength = this.visibleModels.length;
-            this.__processDiffs(oldModels);
+            this.__processDiffs(oldVisibleModels, oldModels);
             this.internalUpdate = false;
         }
     },
@@ -163,7 +164,8 @@ const VirtualCollection = Backbone.Collection.extend({
     },
 
     __rebuildModels(options) {
-        const oldModels = this.visibleModels.concat();
+        const oldVisibleModels = this.visibleModels.concat();
+        const oldModels = this.models.concat();
         this._reset();
         this.visibleModels = [];
         this.visibleLength = 0;
@@ -179,7 +181,7 @@ const VirtualCollection = Backbone.Collection.extend({
             this.visibleModels = this.models;
         }
         this.visibleLength = this.visibleModels.length;
-        this.__processDiffs(oldModels, options);
+        this.__processDiffs(oldVisibleModels, oldModels, options);
     },
 
     __addModel(model, options) {
@@ -270,27 +272,32 @@ const VirtualCollection = Backbone.Collection.extend({
         this.internalUpdate = true;
 
         this.state.position = newPosition;
-        const oldModels = this.visibleModels.concat();
+        const oldVisibleModels = this.visibleModels.concat();
+        const oldModels = this.models.concat();
         this.visibleModels = this.models.slice(this.state.position, this.state.position + this.state.windowSize);
         this.visibleLength = this.visibleModels.length;
-        this.__processDiffs(oldModels);
+        this.__processDiffs(oldVisibleModels, oldModels);
 
         this.internalUpdate = false;
 
         return newPosition;
     },
 
-    __processDiffs(oldModels, options = {}) {
+    __processDiffs(oldVisibleModels, oldModels, options = {}) {
         const added: Array<Backbone.Model> = [];
         const removed: Array<Backbone.Model> = [];
-        oldModels.forEach(model => {
+        let isIndexChanged = false;
+        oldVisibleModels.forEach(model => {
             if (!this.visibleModels.includes(model)) {
                 removed.push(model);
             }
         });
         this.visibleModels.forEach(model => {
-            if (oldModels.includes(model)) {
-                this.trigger('update:child', model)
+            if (oldVisibleModels.includes(model)) {
+                this.trigger('update:child', model);
+                if (oldModels.indexOf(model) !== this.models.indexOf(model)) {
+                    isIndexChanged = true;
+                }
             } else {
                 added.push(model);
             }
@@ -298,7 +305,9 @@ const VirtualCollection = Backbone.Collection.extend({
         options.added = added;
         this.__removeModels(removed, options);
         added.forEach(model => this.__addModel(model, options));
-        this.trigger('reorder');
+        if (isIndexChanged) {
+            this.trigger('reorder');
+        }
     },
 
     __normalizePosition(position) {
@@ -340,6 +349,8 @@ const VirtualCollection = Backbone.Collection.extend({
         models.forEach(model => {
             if (model.children && model.children.length) {
                 model.filteredChildren = this.__filterModels(model.children.models);
+            } else {
+                delete model.filteredChildren;
             }
 
             if (this.filterFn.every(fn => fn.call(models, model, fn.parameters)) || (model.filteredChildren && model.filteredChildren.length)) {

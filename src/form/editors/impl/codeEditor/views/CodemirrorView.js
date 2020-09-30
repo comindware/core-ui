@@ -37,6 +37,7 @@ export default Marionette.View.extend({
             '__onBlur',
             '__callMethodAnywere',
             '__onChange',
+            '__onClose',
             '__showHint',
             '__find',
             '__undo',
@@ -120,20 +121,27 @@ export default Marionette.View.extend({
 
     className: 'dev-codemirror',
 
+    attributes() {
+        return {
+            tabindex: 0
+        };
+    },
+
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, showMode: this.options.showMode, editor: this });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
         this.toolbar.on('show:hint', this.__showHint);
         this.toolbar.on('find', this.__find);
+        this.toolbar.on('save', this.__onSave);
         this.toolbar.on('compile', this.__compile);
         this.toolbar.on('maximize', () => {
             this.__onMaximize();
             this.trigger('maximize', this);
         });
         this.toolbar.on('minimize', this.__onMinimize);
-        this.toolbar.on('code:editor:close', async () => this.__onClose());
+        this.toolbar.on('code:editor:close', this.__onClose);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
         if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
@@ -486,8 +494,8 @@ export default Marionette.View.extend({
 
     async __onClose() {
         if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
-            const isSaveChange = await Core.services.MessageService.showMessageDialog(
-                Localizer.get('PROCESS.FORMDESIGNER.CONFIRMSAVE.TITLE'),
+            const isClose = await Core.services.MessageService.showMessageDialog(
+                Localizer.get('CORE.FORM.EDITORS.CODE.UNSAVEDEDITOR'),
                 Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
                     id: true,
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
@@ -495,10 +503,15 @@ export default Marionette.View.extend({
                     id: false,
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
                 }]);
-            if (!isSaveChange) {
-                this.codemirror.setValue(this.valueAfterMaximize);
+            if (!isClose) {
+                return;
             }
         }
+        this.codemirror.setValue(this.valueAfterMaximize);
+        this.__onMinimize();
+    },
+
+    __onSave() {
         this.__onMinimize();
     },
 

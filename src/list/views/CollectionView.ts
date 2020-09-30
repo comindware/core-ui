@@ -241,6 +241,20 @@ export default Marionette.PartialCollectionView.extend({
         this.__updateChildTop(child.model);
     },
 
+    onBeforeReorder() {
+        if (this.el.contains(document.activeElement)) {
+            this.lastActiveElement = document.activeElement;
+        } else {
+            delete this.lastActiveElement;
+        }
+    },
+
+    onReorder() {
+        if (this.lastActiveElement && document.contains(this.lastActiveElement)) {
+            this.lastActiveElement.focus?.();
+        }
+    },
+
     __updateChildTop(model) {
         requestAnimationFrame(() => {
             const childView = this.children.findByModel(model);
@@ -505,8 +519,8 @@ export default Marionette.PartialCollectionView.extend({
 
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
 
+        const isAllItemHeightLessAvailable = typeof this.state.allItemsHeight === 'number' && this.state.allItemsHeight <= availableHeight;
         if (this.state.viewportHeight === oldViewportHeight) {
-            const isAllItemHeightLessAvailable = typeof this.state.allItemsHeight === 'number' && this.state.allItemsHeight <= availableHeight;
             if (shouldUpdateScroll === false && !isAllItemHeightLessAvailable) {
                 return;
             }
@@ -522,6 +536,9 @@ export default Marionette.PartialCollectionView.extend({
                 this.scrollTo(0, true);
             }
             return;
+        }
+        if (isAllItemHeightLessAvailable) {
+            this.scrollTo(0, true);
         }
 
         this.collection.updateWindowSize(Math.max(this.minimumVisibleRows, this.state.viewportHeight + configurationConstants.VISIBLE_COLLECTION_RESERVE));

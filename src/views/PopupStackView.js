@@ -196,6 +196,7 @@ export default Marionette.View.extend({
         if (lastElement) {
             lastElement.regionEl.classList.add(classes.POPUP_FADE);
             this.topPopupId = lastElement.popupId;
+            lastElement.el.focus();
         } else {
             this.topPopupId = undefined;
             this.__toggleFadedBackground(this.__forceFadeBackground);

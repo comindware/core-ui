@@ -1,4 +1,5 @@
 import template from '../templates/toolbar.html';
+import meta from '../Constants';
 
 export default Marionette.View.extend({
     className: 'dev-code-editor-toolbar',
@@ -15,7 +16,8 @@ export default Marionette.View.extend({
         maximize: '.js-code-editor-maximize',
         minimize: '.js-code-editor-minimize',
         download: '.js-code-editor-download',
-        close: '.js-code-editor-close'
+        close: '.js-code-editor-close',
+        save: '.js-code-editor-save'
     },
 
     triggers: {
@@ -25,7 +27,8 @@ export default Marionette.View.extend({
         'click @ui.format': 'format',
         'click @ui.hint': 'show:hint',
         'click @ui.find': 'find',
-        'click @ui.download': 'download'
+        'click @ui.download': 'download',
+        'click @ui.save': 'save'
     },
 
     events: {
@@ -39,13 +42,20 @@ export default Marionette.View.extend({
     },
 
     maximize() {
-        this.ui.close.show();
-        this.ui.minimize.show();
-        this.ui.maximize.hide();
+        if (this.options.showMode === meta.showModes.button) {
+            this.ui.maximize.hide();
+            this.ui.minimize.hide();
+            this.ui.save.show();
+            this.ui.close.show();
+        } else {
+            this.ui.save.hide();
+            this.ui.close.hide();
+            this.ui.maximize.hide();
+            this.ui.minimize.show();
+        }
     },
 
     minimize() {
-        this.ui.close.hide();
         this.ui.maximize.show();
         this.ui.minimize.hide();
     },
@@ -62,8 +72,5 @@ export default Marionette.View.extend({
 
     __onClose() {       
         this.trigger('code:editor:close');
-        this.ui.minimize.hide();
-        this.ui.maximize.show();
-        this.ui.close.hide();
     }
 });

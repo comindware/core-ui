@@ -3,7 +3,7 @@ import template from '../templates/TEButton.hbs';
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    className: 'tree-editor-btn',
+    className: 'tree-editor-btn toolbar-btn',
 
     templateContext() {
         return {

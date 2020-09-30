@@ -163,6 +163,10 @@ export default formRepository.editors.TextArea = BaseEditorView.extend({
         this.trigger('caretChange', text, caret);
     },
 
+    onKeyup() {
+        //for not to call the "change"
+    },
+
     __triggerInput() {
         const text = this.ui.input.val();
         if (this.oldText === text) {

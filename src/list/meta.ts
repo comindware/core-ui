@@ -155,7 +155,6 @@ export const classes = {
     checkboxCell: 'js-cell_selection',
     cellFocused: 'cell-focused',
     cellEditable: 'cell_editable',
-    cellError: 'error',
     cell: 'cell',
     errorButton: 'js-error-button',
     hiddenByTreeEditorClass: 'hidden-by-tree-editor',

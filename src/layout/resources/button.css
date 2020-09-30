@@ -1,37 +1,143 @@
-.layout__button {
-    flex: none;
-}
-.layout__horizontal-layout > .layout__button {
-    align-self: baseline;
-}
-.btn {
-    display: inline-block;
-    cursor: pointer;
-  }
-.btn__text {
-    display: inline-block;
-    line-height: inherit;
+:root {
+    --light: 80;
+    --threshold: 30;
 }
 
+.toolbar-container{
+    background-color: #f5f5f5;
+}
+
+
+.toolbar-btn,
 .split-button-wrp {
-    display: flex;
-    border-radius: 4px;
+    background-color: rgba(120, 120, 120, 0);
+    border: 1px solid rgba(120,120,120, .7);
+}
+
+.toolbar .toolbar-btn,
+.toolbar .split-button-wrp,
+.toolbar-panel_container .toolbar-btn{
+    border-color: rgba(120,120,120, 0);
+}
+
+.toolbar-btn:hover,
+.split-btn:hover{
+    background-color: rgba(120,120,120, .2);
+    border-color: rgba(120,120,120, .2);
+    color: #000;
+}
+
+.toolbar-btn:active,
+.split-btn:active {
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,.1), inset -1px -1px 3px rgba(0,0,0,.1);
+    border-color: rgba(120,120,120, .4);
+}
+
+
+.toolbar-btn_low, .split-btn_low{
+    color: #245dd1;
+    background-color: rgba(36, 93, 209, 0);
+    border-color: rgba(36, 93, 209, .7);
+}
+.toolbar-btn_low:hover, .split-btn_low:hover{
+    color: #153e93;
+    background-color: rgba(36, 93, 209, .2);
+    border-color: rgba(36, 93, 209, .2);
+}
+.toolbar-btn_low:active, .split-btn_low:active{
+    border-color: rgba(36, 93, 209, .4);
+}
+
+.toolbar-btn_normal, .split-btn_normal{
+    color: #119e1f;
+    background-color: rgba(17, 158, 31, 0);
+    border-color: rgba(17, 158, 31, .7);
+}
+.toolbar-btn_normal:hover, .split-btn_normal:hover{
+    color: #087b14;
+    background-color: rgba(17, 158, 31, .2);
+    border-color: rgba(17, 158, 31, .2)
+}
+.toolbar-btn_normal:active, .split-btn_normal:active{
+    border-color: rgba(17, 158, 31, .4)
+}
+
+.toolbar-btn_major, .split-btn_major{
+    color: #1fb3be;
+    background-color: rgba(31, 179, 190, 0);
+    border-color: rgba(31, 179, 190, .7);
+}
+.toolbar-btn_major:hover, .split-btn_major:hover{
+    color: #0e838b;
+    background-color: rgba(31, 179, 190, .2);
+    border-color: rgba(31, 179, 190, .2);
+}
+.toolbar-btn_major:active, .split-btn_major:active{
+    border-color: rgba(31, 179, 190, .4);
+}
+
+.toolbar-btn_critical, .split-btn_critical{
+    color: #e1742c;
+    background-color: rgba(225, 116, 44, 0);
+    border-color: rgba(225, 116, 44, .7);
+}
+.toolbar-btn_critical:hover, .split-btn_critical:hover{
+    color: #a84b0d;
+    background-color: rgba(225, 116, 44, .2);
+    border-color: rgba(225, 116, 44, .2);
+}
+.toolbar-btn_critical:active, .split-btn_critical:active{
+    border-color: rgba(225, 116, 44, .4);
+}
+
+.toolbar-btn_fatal, .split-btn_fatal{
+    color: #c00000;
+    background-color: rgba(192, 0, 0, 0);
+    border-color: rgba(192, 0, 0, .7);
+}
+.toolbar-btn_fatal:hover, .split-btn_fatal:hover{
+    color: #a00000;
+    background-color: rgba(192, 0, 0, .2);
+    border-color: rgba(192, 0, 0, .2);
+}
+.toolbar-btn_fatal:active, .split-btn_fatal:active{
+    border-color: rgba(192, 0, 0, .4);
+}
+
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton,
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton:hover,
+.split-button-wrp .toolbar-btn.toolbar-btn_splitButton:active{
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    color: inherit;
+}
+
+
+.toolbar-panel_container {
     padding: 0;
-    vertical-align: middle;
-    border: 1px solid #0575bd;
-    color: #d6e7f2;
-    background-color: #0575bd;
-    margin-right: 5px;  
 }
-
-.split-button-wrp .btn-separator {
-    width: 0px;
-    height: 70%;
-    border-right: solid 1px;
-    align-self: center;
+.toolbar-panel_container .toolbar-btn {
+    width: 100%;
+    margin: 1px 0 0;
+    border-radius: 0;
+    height: auto;
+    padding: 7px 15px;
+    text-align: left;
 }
-
-.split-button-wrp .split-button-menu-anchor, .split-button-wrp .split-button-action-button {
-    padding: 3px 5px;
-    margin: 0 5px !important; 
+.toolbar-panel_container .toolbar-btn:first-child {
+    margin: 0;
+    border-radius: 4px 4px 0 0;
+}
+.toolbar-panel_container .toolbar-btn:last-child {
+    border-radius: 0 0 4px 4px;
+}
+.toolbar-panel_container .toolbar-btn:first-child:last-child {
+    border-radius: 4px;
+}
+.toolbar-panel_container .toolbar-btn .toolbar__icons{
+    margin: 0 5px 0 -5px;
+}
+.toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {
+    margin: 0;
 }

@@ -2,6 +2,7 @@ import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import _ from 'underscore';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import { classes } from '../meta';
 import dropdown from 'dropdown';
 import MobileService from '../../services/MobileService';
@@ -123,8 +124,8 @@ export default Marionette.View.extend({
             Object.values(this.cellViewsByKey).forEach(x => x.destroy());
             this.cellViewsByKey = {};
         }
-        this.errorPopout?.close();
-        this.multiValuePopout?.close();
+        this.errorPopout?.destroy();
+        this.multiValuePopout?.destroy();
     },
 
     updateCollapsed(model: ListItemModel) {
@@ -417,27 +418,28 @@ export default Marionette.View.extend({
             const target = <Element>e.target;
             const isErrorButtonClicked = target && target.classList.contains('js-error-button');
             const isFocusChangeNeeded = columnIndex !== this.lastPointedIndex && target && !isErrorButtonClicked;
-            let isFocusEditor: boolean;
             if (this.__isColumnEditable(columnIndex)
              // temporary desicion for complex cells
              || (column.type === 'Complex' && [complexValueTypes.expression, complexValueTypes.script].includes(this.model.get(column.key)?.type))) {
 
                 // change boolean value immediatly
-                if (column.type === objectPropertyTypes.BOOLEAN && isFocusChangeNeeded) {
+                if (column.type === objectPropertyTypes.BOOLEAN) {
                     const newValue = column.storeArray ? [!this.model.get(column.key)?.[0]] : !this.model.get(column.key);
                     this.model.set(column.key, newValue);
                 }
-                isFocusEditor = true;
             } else {
                 const values = this.model.get(column.key);
                 if (values?.length > 1 && this.multiValueShownIndex !== columnIndex)  {
                     this.__showDropDown(columnIndex);
                 }
-                isFocusEditor = false;
             }
             setTimeout(
-                () => this.__selectPointed(columnIndex, isFocusEditor, isFocusChangeNeeded, isErrorButtonClicked),
-                11 //need more than debounce delay in selectableBehavior calculateLength
+                () => { 
+                    const pointedEl = this.__selectPointed(columnIndex, true)
+                    if (isErrorButtonClicked) {
+                        this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
+                    }
+                },
             );
         }
 
@@ -576,50 +578,51 @@ export default Marionette.View.extend({
     },
 
     __deselectPointed() {
-        if (this.lastPointedEl) {
-            this.lastPointedEl.classList.remove(classes.cellFocused);
-        }
         if (this.lastPointedIndex > -1) {
-            const column = this.options.columns[this.lastPointedIndex];
-            this.cellViewsByKey[column.key]?.blur?.();
-            this.__insertReadonlyCell({ column, index: this.lastPointedIndex })
+            const isColumnEditable = this.__isColumnEditable(this.lastPointedIndex);
+            if (isColumnEditable) {
+                const column = this.getOption('columns')[this.lastPointedIndex];
+                this.cellViewsByKey[column.key]?.blur?.();
+                this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
+            }
+            const lastPointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
+            lastPointedEl.classList.remove(classes.cellFocused);
             delete this.lastPointedIndex;
+            delete this.lastFocusEditor;
         }
     },
 
-    __selectPointed(columnIndex: number, isFocusEditor: boolean, isFocusChangeNeeded = true, isErrorButtonClicked = false) {
-        let pointedEl = this.__getCellByColumnIndex(columnIndex);
-        if (pointedEl == null) {
+    __selectPointed(columnIndex: number, focusEditor: boolean = this.lastFocusEditor) {        
+        if (this.lastPointedIndex === columnIndex && this.lastFocusEditor === focusEditor) {
             return;
         }
-        if (this.lastPointedEl && this.lastPointedEl !== pointedEl) {
+
+        if (this.lastPointedIndex > -1 && this.lastPointedIndex !== columnIndex) {
             this.__deselectPointed();
         }
-        const column = this.getOption('columns')[columnIndex];
+        const isColumnEditable = this.__isColumnEditable(columnIndex);
 
-        if (isFocusEditor && isFocusChangeNeeded && this.lastPointedIndex !== columnIndex && this.__isColumnEditable(columnIndex)) {
-            const cell = this.__getEditableCell(column);
-            this.__insertEditableCell({ column, index: columnIndex, CellView: cell  });
-            pointedEl = this.__getCellByColumnIndex(columnIndex); // override pointedEl because of replaceChild
-            this.gridEventAggregator.pointedCell = columnIndex;
-            this.lastPointedIndex = columnIndex;
-            this.cellViewsByKey[column.key]?.focus?.();
-        } else if (this.lastPointedIndex > -1 && isFocusChangeNeeded) {
-            const column = this.options.columns[this.lastPointedIndex];
-            this.__insertReadonlyCell({ column, index: this.lastPointedIndex })
-            pointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
-            delete this.lastPointedIndex;
-            pointedEl.focus();
-        } else if (this.lastPointedIndex === undefined) {
+        if (isColumnEditable) {
+            const column = this.getOption('columns')[columnIndex];
+            if (focusEditor) {
+                const cell = this.__getEditableCell(column);
+                this.__insertEditableCell({ column, index: columnIndex, CellView: cell  });
+                this.cellViewsByKey[column.key]?.focus?.();
+            } else {
+                this.__insertReadonlyCell({ column, index: columnIndex })
+            }
+        }
+        this.gridEventAggregator.pointedCell = columnIndex;
+        const pointedEl = this.__getCellByColumnIndex(columnIndex);
+        if (!focusEditor || !isColumnEditable) {
             pointedEl.focus();
         }
-        if (isErrorButtonClicked) {
-            this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
-        }
-        if (isFocusEditor) {
+        if (this.gridEventAggregator.isEditable) {
             pointedEl.classList.add(classes.cellFocused);
         }
-        this.lastPointedEl = pointedEl;
+        this.lastPointedIndex = columnIndex;
+        this.lastFocusEditor = focusEditor;
+        return pointedEl;
     },
 
     __someFocused(nodeList: NodeList) {
@@ -628,11 +631,11 @@ export default Marionette.View.extend({
     },
 
     __handleEnter(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, true, e);
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
     },
 
     __handleExit(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell, false, e);
+        this.__selectPointed(this.gridEventAggregator.pointedCell, false);
     },
 
     __getFocusedColumnIndex(e: MouseEvent): number {
@@ -645,6 +648,10 @@ export default Marionette.View.extend({
         this.el.classList.add(classes.hover);
         setTimeout(() => this.el.classList.remove(classes.hover), config.TRANSITION_DELAY);
         setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
+        // TODO: scrollIntoViewIfNeeded, IE, top?
+        if (this.el.getBoundingClientRect().bottom > window.innerHeight) {
+            this.el.scrollIntoView(false);
+        }
     },
 
     __updateState(model: GridItemModel, checkedState: 'checked' | 'unchecked' | 'checkedSome' | null) {
@@ -719,22 +726,30 @@ export default Marionette.View.extend({
     },
 
     __updateValidationErrorForColumn({ column, index }: { column: Column, index: number }) {
-        const errorButton = `<i class="${classes.errorButton} form-label__error-button fa fa-exclamation-circle popout__action-btn"></i>`;
-        const addError = (el: Element) => {
-            el.classList.add(classes.cellError);
-            if (!el.querySelector(`.${classes.errorButton}`)) {
-                el.insertAdjacentHTML('beforeend', errorButton);
-            }
-        };
-        const removeError = (el: Element) => {
-            el.classList.remove(classes.cellError);
-            el.querySelector(`.${classes.errorButton}`)?.remove();
-        };
         const cellEl = this.__getCellByColumnIndex(index);
-        if (this.model.validationError?.[column.key]) {
-            addError(cellEl);
+        const columnError = this.model.validationError?.[column.key];
+        if (columnError) {
+            const oldErrorButton = cellEl.querySelector(`.${classes.errorButton}`);
+            if (oldErrorButton) {
+                cellEl.removeChild(oldErrorButton);
+            }
+            let severityPart;
+            if (Array.isArray(columnError) && columnError.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING)) {
+                cellEl.classList.add(validationSeverityClasses.WARNING);
+                severityPart = validationSeverityClasses.WARNING;
+            } else {
+                cellEl.classList.add(validationSeverityClasses.ERROR);
+                severityPart = validationSeverityClasses.ERROR;
+            }
+            const errorButton = `<i class="${classes.errorButton} form-label__${severityPart}-button popout__action-btn"></i>`;
+            cellEl.insertAdjacentHTML('beforeend', errorButton);
         } else {
-            removeError(cellEl);
+            cellEl.classList.remove(validationSeverityClasses.ERROR);
+            cellEl.classList.remove(validationSeverityClasses.WARNING);
+            const errorEl = cellEl.querySelector(`.${classes.errorButton}`);
+            if (errorEl) {
+                errorEl.parentElement?.removeChild(errorEl);
+            }
         }
     },
 
@@ -743,11 +758,13 @@ export default Marionette.View.extend({
             return;
         }
         const errors = this.model.validationError[column.key];
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         this.errorPopout = dropdown.factory.createPopout({
             buttonView: Marionette.View,
+            buttonModel: new Backbone.Model({ errorCollection: this.errorCollection }),
             panelView: ErrorsPanelView,
             panelViewOptions: {
-                collection: new Backbone.Collection(errors)
+                collection: this.errorCollection
             },
             popoutFlow: 'right',
             element,
