@@ -324,13 +324,21 @@
     opacity: 1;
 }
 
-.form-label:not(.form-label--empty) + .editor_document,
-.form-label:not(.form-label--empty) + .editor_checkbox {
+.form-label:not(.form-label_empty) + .editor_document,
+.form-label:not(.form-label_empty) + .editor_checkbox {
     padding-left: var(--form-input-padding);
 }
 
 .disabled .form-label {
     color: var(--grey-800);
+}
+
+.error .form-label {
+    color: var(--error-color);
+}
+
+.warning .form-label {
+    color: var(--warning-color);
 }
 
 .form-label_required {
@@ -347,7 +355,8 @@
     margin: 0 0 0 1px;
 }
 
-.cell.error.required::before {
+.cell.error.required::before,
+.cell.warning.required::before {
     display: none;
 }
 

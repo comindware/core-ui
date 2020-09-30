@@ -1,3 +1,4 @@
+import { keyCode } from 'utils';
 import template from './templates/numberEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
@@ -137,7 +138,7 @@ export default formRepository.editors.Number = BaseEditorView.extend({
             return;
         }
 
-        this.__value(value, true, this.isChangeModeKeydown, false);
+        this.__value(value, true, this.isChangeModeKeydown || event.keyCode === keyCode.ENTER, false);
     },
 
     __isTypeInFractionPart(value) {

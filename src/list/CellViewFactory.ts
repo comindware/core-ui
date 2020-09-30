@@ -615,8 +615,9 @@ class CellViewFactory implements ICellViewFactory {
         if ((column.editable && (column.getReadonly?.(model) || column.getHidden?.(model)))) {
             classNames.push(classes.readonly);
         }
-        if (column.hasErrors?.(model)) {
-            classNames.push(classes.error);
+	    const validationClass = column.getValidationClassName?.(model);
+        if (validationClass) {
+            classNames.push(validationClass);
         }
         return classNames.join(' ');
     }
