@@ -14,7 +14,13 @@ module.exports = config => {
         plugins: [/*'karma-safari-launcher',*/ 'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
 
         // list of files / patterns to load in the browser
-        files: ['tests/tests.bundle.js', './dist/core.css', 'dist/themes/main/theme.css', 'dist/themes/main/sprites.svg'],
+        files: [
+            'tests/tests.bundle.js',
+            './dist/core.css',
+            'dist/themes/main/theme.css',
+            'dist/themes/main/sprites.svg',
+            'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css'
+        ],
 
         // list of files to exclude
         exclude: [],
