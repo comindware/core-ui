@@ -69,7 +69,8 @@ export default Marionette.View.extend({
             return;
         }
 
-        const isOverflow = this.tabHeadersView.el.scrollWidth > this.tabHeadersView.el.offsetWidth + this.menuView.el.offsetWidth;
+        const magicCeilingScrollWidthIEDif = 1;
+        const isOverflow = this.tabHeadersView.el.scrollWidth - magicCeilingScrollWidthIEDif > this.tabHeadersView.el.offsetWidth + this.menuView.el.offsetWidth;
 
         if (this.tabHeadersView.el.offsetWidth) {
             this.menuView.$el.toggle(isOverflow);

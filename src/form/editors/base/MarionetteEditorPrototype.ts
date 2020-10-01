@@ -8,6 +8,7 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 import { keyCode } from 'utils';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 
 const classes = {
     editorDisabled: 'editor_disabled',
@@ -217,7 +218,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     const labelHtml = `<label class="form-label__txt" title="${title || ''}" for="${this.options.fieldId}">${title || ''}</label>`;
                     this.fieldEl.insertAdjacentHTML(
                         'afterbegin',
-                        `<div class="form-label ${title ? '' : 'form-label--empty'}">
+                        `<div class="form-label ${title ? '' : 'form-label_empty'}">
                             ${labelHtml}
                         </div>`
                     );
@@ -622,12 +623,23 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 return;
             }
 
+            const isWarning = errors.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING);
+            if (isWarning) {
+                this.el.classList.remove(...this.classes.ERROR.split(' '));
+                this.el.classList.add(validationSeverityClasses.WARNING);
+            } else {
+                this.el.classList.add(...this.classes.ERROR.split(' '));
+                this.el.classList.remove(validationSeverityClasses.WARNING);
+            }
             this.el.classList.add(...this.classes.ERROR.split(' '));
             this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
 
             if (!this.isErrorShown) {
                 const errorPopout = dropdown.factory.createPopout({
                     buttonView: ErrorButtonView,
+                    buttonViewOptions: {
+                        model: new Backbone.Model({ errorCollection: this.errorCollection })
+                    },
                     panelView: ErrorsPanelView,
                     panelViewOptions: {
                         collection: this.errorCollection
@@ -652,6 +664,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 return;
             }
             this.el.classList.remove(...this.classes.ERROR.split(' '));
+            this.el.classList.remove(validationSeverityClasses.WARNING);
             this.errorCollection && this.errorCollection.reset();
         },
 

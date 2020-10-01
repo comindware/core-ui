@@ -9,6 +9,6 @@
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 
 
-<http://comindware.com/ontology/l10n#version> l10n:editedWith "2.1.138.0".
+<http://comindware.com/ontology/l10n#version> l10n:editedWith "2.1.139.0".
 <http://comindware.com/ontology/l10n#categories> l10n:category "Solutions IT Processes"; l10n:category "Solutions F&A"; l10n:category "Solutions C&P"; l10n:category "Solutions HR"; l10n:category "Solutions SD"; l10n:category "Solutions Marketing"; l10n:category "Solutions Sales"; l10n:category "Solutions EDU"; l10n:category "Common"; l10n:category "Tracker MainUI"; l10n:category "Project MainUI"; l10n:category "Installer"; l10n:category "Tracker Outlook"; l10n:category "Project Outlook"; l10n:category "Tracker Sharepoint"; l10n:category "Tracker Iphone"; l10n:category "Project Iphone"; l10n:category "Tracker Ipad"; l10n:category "Project Ipad"; l10n:category "Tracker Android"; l10n:category "Project Android"; l10n:category "Process WebApp".
 

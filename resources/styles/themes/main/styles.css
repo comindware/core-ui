@@ -205,14 +205,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
     @apply --tab-move-btn-theme;
 }
 
-.grid-toolbar-region {
-    padding-right: 10px;
-}
-
-.grid-toolbar__search {
-    order: 2;
-}
-
 /* ------------------ Form Label ------------------ */
 .form-label__info-button,
 .form-label__error-button {
@@ -235,8 +227,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
     color: var(--red-dark);
 }
 
-.form-label:not(.form-label--empty) + .editor_document,
-.form-label:not(.form-label--empty) + .editor_checkbox {
+.form-label:not(.form-label_empty) + .editor_document,
+.form-label:not(.form-label_empty) + .editor_checkbox {
     padding-left: var(--form-input-padding);
 }
 
@@ -266,7 +258,8 @@ svg.svg-grid-icons.svg-icons_flag-none {
     transform: translateY(-50%);
 }
 
-.cell.error.required::before {
+.cell.error.required::before,
+.cell.warning.required::before {
     display: none;
 }
 

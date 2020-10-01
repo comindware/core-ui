@@ -77,7 +77,6 @@ const variables = {
     'checkbox-size': '16px',
     'checkbox-radius': '2px',
     'checkbox-border-color': 'var(--grey-900)',
-    'checkbox-intermediate-color': 'var(--blue-100)',
     'checkbox-intermediate-size': '8px',
 
     // radio
@@ -175,32 +174,17 @@ module.exports.apply = {
         'margin-bottom': 'auto'
     },
     'button-theme': {
-        'font-size': '1em',
-        padding: '3px 6px',
-        'white-space': 'nowrap',
-        'text-overflow': 'clip',
-        overflow: 'hidden',
-        'border-radius': '4px',
-        height: '28px'
+        'font-size': '13px',
+        padding: '0 15x',
+        'font-weight': '600'
     },
-    'button-strong': {
 
-    },
-    'button-pale': {
 
-    },
-    'button-strong-hover-theme': {
 
-    },
-    'button-strong-active-theme': {
 
-    },
-    'button-pale-hover-theme': {
 
-    },
-    'button-pale-active-theme': {
 
-    },
+
     'dropdown-theme': {
         'min-height': '20px'
     },
@@ -276,26 +260,8 @@ module.exports.apply = {
 
     },
 
-    'toolbar-btn-theme': {},
-    'toolbar-btn-low-theme': {},
-    'toolbar-btn-low-hover-theme': {},
-    'toolbar-btn-low-active-theme': {},
-    'toolbar-btn-normal-theme': {},
-    'toolbar-btn-normal-hover-theme': {},
-    'toolbar-btn-normal-active-theme': {},
-    'toolbar-btn-major-theme': {},
-    'toolbar-btn-major-hover-theme': {},
-    'toolbar-btn-major-active-theme': {},
-    'toolbar-btn-critical-theme': {},
-    'toolbar-btn-critical-hover-theme': {},
-    'toolbar-btn-critical-active-theme': {},
-    'toolbar-btn-fatal-theme': {},
-    'toolbar-btn-fatal-hover-theme': {},
-    'toolbar-btn-fatal-active-theme': {},
-
-    'group-theme': {
-        padding: '5px 0',
-        'margin-top': '5px'
+    'toolbar-btn-theme': {
+        'margin-right': '5px'
     },
     'group-head-theme': {
         'max-width': 'calc(100% - 5px)',

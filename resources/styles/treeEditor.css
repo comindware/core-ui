@@ -127,6 +127,7 @@
     overflow: scroll;
 }
 
+/*
 .tree-editor-btn > .toolbar-btn {
     height: 100%;
     line-height: inherit;
@@ -135,6 +136,7 @@
 .layout__tab-layout .tree-editor-btn > .toolbar-btn {
     line-height: inherit;
 }
+*/
 
 .tree-item .collapse-btn,
 .tree-item .eye-btn {

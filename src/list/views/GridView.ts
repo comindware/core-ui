@@ -2,6 +2,7 @@
 import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import template from '../templates/grid.hbs';
 import CollectionView from './CollectionView';
 import RowView from './RowView';
@@ -217,6 +218,7 @@ export default Marionette.View.extend({
 
             _.delay(() => (this.internalScroll = false), 100);
         }
+        this.__updateTop();
 
         return newPosition;
     },
@@ -394,11 +396,11 @@ export default Marionette.View.extend({
             this.ui.tools.hide();
         }
 
-        if (this.getOption('title')) {
-            this.ui.title.parent().show();
-            this.ui.title.text(this.getOption('title') || '');
+        const title = this.getOption('title');
+        if (title) {
+            this.ui.title.text(this.getOption('title'));
         } else {
-            this.ui.title.parent().hide();
+            this.ui.title.parent().addClass('form-label_empty');
         }
         if (this.options.helpText) {
             const viewModel = new Backbone.Model({
@@ -770,7 +772,12 @@ export default Marionette.View.extend({
             return;
         }
 
-        this.el.classList.add(classes.error);
+        const isWarning = errors.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING);
+        if (isWarning) {
+            this.el.classList.add(validationSeverityClasses.WARNING);
+        } else {
+            this.el.classList.add(validationSeverityClasses.ERROR);
+        }
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
@@ -791,7 +798,8 @@ export default Marionette.View.extend({
         if (!this.__checkUiReady()) {
             return;
         }
-        this.el.classList.remove(classes.error);
+        this.el.classList.remove(validationSeverityClasses.ERROR);
+        this.el.classList.remove(validationSeverityClasses.WARNING);
         this.errorCollection && this.errorCollection.reset();
     },
 

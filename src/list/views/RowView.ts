@@ -2,6 +2,7 @@ import { transliterator } from 'utils';
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import _ from 'underscore';
+import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import { classes } from '../meta';
 import dropdown from 'dropdown';
 import MobileService from '../../services/MobileService';
@@ -123,8 +124,8 @@ export default Marionette.View.extend({
             Object.values(this.cellViewsByKey).forEach(x => x.destroy());
             this.cellViewsByKey = {};
         }
-        this.errorPopout?.close();
-        this.multiValuePopout?.close();
+        this.errorPopout?.destroy();
+        this.multiValuePopout?.destroy();
     },
 
     updateCollapsed(model: ListItemModel) {
@@ -632,7 +633,7 @@ export default Marionette.View.extend({
     },
 
     __handleEnter(e: KeyboardEvent) {
-        this.__selectPointed(this.gridEventAggregator.pointedCell);
+        this.__selectPointed(this.gridEventAggregator.pointedCell, true);
     },
 
     __handleExit(e: KeyboardEvent) {
@@ -649,6 +650,10 @@ export default Marionette.View.extend({
         this.el.classList.add(classes.hover);
         setTimeout(() => this.el.classList.remove(classes.hover), config.TRANSITION_DELAY);
         setTimeout(() => this.el.classList.remove(classes.hover__transition), config.TRANSITION_DELAY * 2);
+        // TODO: scrollIntoViewIfNeeded, IE, top?
+        if (this.el.getBoundingClientRect().bottom > window.innerHeight) {
+            this.el.scrollIntoView(false);
+        }
     },
 
     __updateState(model: GridItemModel, checkedState: 'checked' | 'unchecked' | 'checkedSome' | null) {
@@ -723,22 +728,30 @@ export default Marionette.View.extend({
     },
 
     __updateValidationErrorForColumn({ column, index }: { column: Column, index: number }) {
-        const errorButton = `<i class="${classes.errorButton} form-label__error-button fa fa-exclamation-circle popout__action-btn"></i>`;
-        const addError = (el: Element) => {
-            el.classList.add(classes.cellError);
-            if (!el.querySelector(`.${classes.errorButton}`)) {
-                el.insertAdjacentHTML('beforeend', errorButton);
-            }
-        };
-        const removeError = (el: Element) => {
-            el.classList.remove(classes.cellError);
-            el.querySelector(`.${classes.errorButton}`)?.remove();
-        };
         const cellEl = this.__getCellByColumnIndex(index);
-        if (this.model.validationError?.[column.key]) {
-            addError(cellEl);
+        const columnError = this.model.validationError?.[column.key];
+        if (columnError) {
+            const oldErrorButton = cellEl.querySelector(`.${classes.errorButton}`);
+            if (oldErrorButton) {
+                cellEl.removeChild(oldErrorButton);
+            }
+            let severityPart;
+            if (Array.isArray(columnError) && columnError.every(error => error.severity?.toLowerCase() === validationSeverityTypes.WARNING)) {
+                cellEl.classList.add(validationSeverityClasses.WARNING);
+                severityPart = validationSeverityClasses.WARNING;
+            } else {
+                cellEl.classList.add(validationSeverityClasses.ERROR);
+                severityPart = validationSeverityClasses.ERROR;
+            }
+            const errorButton = `<i class="${classes.errorButton} form-label__${severityPart}-button popout__action-btn"></i>`;
+            cellEl.insertAdjacentHTML('beforeend', errorButton);
         } else {
-            removeError(cellEl);
+            cellEl.classList.remove(validationSeverityClasses.ERROR);
+            cellEl.classList.remove(validationSeverityClasses.WARNING);
+            const errorEl = cellEl.querySelector(`.${classes.errorButton}`);
+            if (errorEl) {
+                errorEl.parentElement?.removeChild(errorEl);
+            }
         }
     },
 
@@ -748,11 +761,13 @@ export default Marionette.View.extend({
         }
         const element = this.__getCellByColumnIndex(index);
         const errors = this.model.validationError[column.key];
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         this.errorPopout = dropdown.factory.createPopout({
             buttonView: Marionette.View,
+            buttonModel: new Backbone.Model({ errorCollection: this.errorCollection }),
             panelView: ErrorsPanelView,
             panelViewOptions: {
-                collection: new Backbone.Collection(errors)
+                collection: this.errorCollection
             },
             popoutFlow: 'right',
             element,

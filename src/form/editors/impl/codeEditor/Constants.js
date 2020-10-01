@@ -28,7 +28,12 @@ export default {
         paste: 'paste',
         inputPlus: '+input'
     },
-
+    
+    showModes: {
+        normal: 'normal',
+        button: 'button'
+    },
+    
     types: {
         function: 'function',
         user: 'user',
