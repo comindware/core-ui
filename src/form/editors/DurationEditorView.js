@@ -184,6 +184,10 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             return;
         }
 
+        this.__updateValueByInput();
+    },
+
+    __updateValueByInput() {
         let valueObject = this.__getObjectValueFromInput();
 
         valueObject = this.__checkMaxMinObject(valueObject, this.options.max, this.options.min);
@@ -201,7 +205,6 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
                 return;
             }
         }
-
         this.__value(moment.duration(valueObject).toISOString(), true);
     },
 
@@ -494,6 +497,9 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             if (this.atSegmentStart(position)) {
                 this.__setCaretToPreviousPart(index);
             }
+        }
+        if (event.keyCode === keyCode.ENTER) {
+            this.__updateValueByInput();
         }
     },
 
