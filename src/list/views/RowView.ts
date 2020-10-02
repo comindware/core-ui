@@ -428,9 +428,9 @@ export default Marionette.View.extend({
             }
             setTimeout(
                 () => { 
-                    const pointedEl = this.__selectPointed(columnIndex, true)
+                    this.__selectPointed(columnIndex, true)
                     if (isErrorButtonClicked) {
-                        this.__showErrorsForColumn({ element: pointedEl, column, index: columnIndex });
+                        this.__showErrorsForColumn({ column, index: columnIndex });
                     }
                 },
             );
@@ -615,7 +615,6 @@ export default Marionette.View.extend({
         }
         this.lastPointedIndex = columnIndex;
         this.lastFocusEditor = focusEditor;
-        return pointedEl;
     },
 
     __someFocused(nodeList: NodeList) {
@@ -746,10 +745,12 @@ export default Marionette.View.extend({
         }
     },
 
-    __showErrorsForColumn({ element, column, index } : { element: Element, column: Column, index: number }) {
+    __showErrorsForColumn({ column, index } : { column: Column, index: number }) {
         if (this.errorShownIndex === index) {
             return;
         }
+        
+        const element = this.__getCellByColumnIndex(index);
         const errors = this.model.validationError[column.key];
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         this.errorPopout = dropdown.factory.createPopout({

@@ -101,10 +101,11 @@ body {
   color: #fff;
   position: absolute;
   vertical-align: top;
-  top: -16px;
+  top: -28px;
   font-size: 10px;
   font-weight: bold;
   left: 3px;
+  font-style: normal;
 }
 
 .cell.error .form-label__error-button::before {
