@@ -1217,6 +1217,8 @@ tr:not(:first-child) .cell_selection {
 
 .layout__group-collapsed__button svg {
   transform: rotate(+90deg);
+  transition-property: transform;
+  transition-duration: 300ms;
 }
 
 .group-title.layout__group-collapsed__button{

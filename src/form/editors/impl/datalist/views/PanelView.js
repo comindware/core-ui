@@ -15,6 +15,12 @@ const classes = {
 };
 
 export default Marionette.View.extend({
+    initialize() {
+        if (this.options.selectedCollection) {
+            this.listenTo(this.options.selectedCollection, 'add remove reset', this.__updateSplitter);
+        }
+    },
+
     className() {
         return `dropdown__wrp datalist-panel ${this.options.class || ''}`;
     },
@@ -53,7 +59,8 @@ export default Marionette.View.extend({
     ui: {
         addNewButton: '.js-add-new',
         warning: '.js-warning',
-        selected: '.js-selected'
+        selected: '.js-selected',
+        splitter: '.js-splitter'
     },
 
     onAttach() {
@@ -73,6 +80,7 @@ export default Marionette.View.extend({
                 emptyView: null
             });
 
+            this.__updateSplitter();
             this.showChildView('selectedRegion', this.selected);
         }
 
@@ -114,7 +122,7 @@ export default Marionette.View.extend({
 
     toggleSelectable(canAddItem = this.options.canAddItem()) {
         if (this.isAttached() && this.options.showCollection) {
-            this.getChildView('listRegion').$el.toggleClass(classes.DISABLE_SELECT, !canAddItem);
+            this.getChildView('listRegion').el?.classList.toggle(classes.DISABLE_SELECT, !canAddItem);
         }
     },
 
@@ -136,5 +144,9 @@ export default Marionette.View.extend({
         } else {
             this.ui.warning[0].setAttribute('hidden', '');
         }
+    },
+
+    __updateSplitter() {
+        this.ui.splitter.toggle(!!this.options.selectedCollection.length);
     }
 });

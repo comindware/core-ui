@@ -30,7 +30,7 @@ const defaultOptions = () => ({
     }
 });
 
-const defaultClasses = 'editor editor_date-time dropdown_root';
+const defaultClasses = 'editor editor_date-time js-dropdown__root';
 const clearButtonClassSelector = '.js-clear-button';
 
 const editorTypes = {

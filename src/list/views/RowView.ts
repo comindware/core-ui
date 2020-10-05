@@ -416,7 +416,7 @@ export default Marionette.View.extend({
              || (column.type === 'Complex' && [complexValueTypes.expression, complexValueTypes.script].includes(this.model.get(column.key)?.type))) {
 
                 // change boolean value immediatly
-                if (column.type === objectPropertyTypes.BOOLEAN) {
+                if (column.type === objectPropertyTypes.BOOLEAN && this.lastPointedIndex !== columnIndex) {
                     const newValue = column.storeArray ? [!this.model.get(column.key)?.[0]] : !this.model.get(column.key);
                     this.model.set(column.key, newValue);
                 }
@@ -688,10 +688,8 @@ export default Marionette.View.extend({
     },
 
     __renderCell({ column, index, CellView }: { column: Column, index: number, CellView: Marionette.View<any> }) {
-        const isTree = this.getOption('isTree');
-
         const cellView = new CellView({
-            class: `${classes.cell} ${column.customClass || ''}`,
+            class: `${classes.cell} ${column.customClass || ''} ${column.columnClass || ''} ${this.__getDropdownClass(column)}`,
             tagName: 'td',
             schema: column,
             model: this.model,
@@ -704,6 +702,18 @@ export default Marionette.View.extend({
         this.cellViewsByKey[column.key] = cellView;
 
         return cellView;
+    },
+
+    __getDropdownClass(column: Column): string {
+        switch (column.dataType || column.type) {
+            case objectPropertyTypes.INSTANCE:
+            case objectPropertyTypes.DOCUMENT:
+            case objectPropertyTypes.ACCOUNT:
+            case objectPropertyTypes.ENUM:
+                return classes.dropdownRoot;
+            default:
+                return '';
+        }
     },
 
     __onValidated() {
