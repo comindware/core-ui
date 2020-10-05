@@ -137,7 +137,6 @@ export default Marionette.View.extend({
                     this.editableCellsIndexes.push(index);
                 }
             });
-            this.__debounceCheckBlur = _.debounce(this.__checkBlur, 300).bind(this);
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
             this.listenTo(this.collection, 'select:some select:one', this.__onCollectionSelect);
@@ -250,8 +249,8 @@ export default Marionette.View.extend({
     },
 
     __onCollectionSelect(collection, options) {
-        this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
-        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+        this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__checkBlur);
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__checkBlur);
         this.__onCursorMove(0, options);
     },
 
@@ -260,11 +259,10 @@ export default Marionette.View.extend({
             return;
         }
         const popupContainer = document.querySelector('.js-global-popup-stack');
-        const element = document.contains(target) ? target : document.activeElement;
-        const isElementOutOfElementOrPopup = this.el.contains(element) || popupContainer?.contains(element)
+        const isElementOutOfElementOrPopup = this.el.contains(target) || popupContainer?.contains(target);
         if (!isElementOutOfElementOrPopup) {
             this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
-            this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__debounceCheckBlur);
+            this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__checkBlur);
         }
     },
 

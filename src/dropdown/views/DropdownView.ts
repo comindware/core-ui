@@ -171,7 +171,7 @@ export default class DropdownView {
         this.panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;
-        const dropDownRoot = this.button.$el.closest('.dropdown_root')[0];
+        const dropDownRoot = this.button.$el.closest('.js-dropdown__root')[0];
         const isDropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
         const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
         const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();

@@ -163,7 +163,7 @@ class CellViewFactory implements ICellViewFactory {
             }
         };
         const menu = Core.dropdown.factory.createDropdown({
-            class: 'grid_composite-cell dropdown_root',
+            class: 'grid_composite-cell',
             buttonView: Marionette.View,
             panelView: Marionette.CollectionView,
             panelViewOptions,
@@ -392,7 +392,6 @@ class CellViewFactory implements ICellViewFactory {
 
     __getReferenceCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column }));
-
         const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.text) });
 
         let cellInnerHTML;

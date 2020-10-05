@@ -151,7 +151,6 @@ export default () => {
             dataType: 'Instance',
             title: 'Reference Cell',
             required: true,
-            customClass: 'dropdown_root',
             controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({
                 collection: referenceCollection
             }),
@@ -169,7 +168,6 @@ export default () => {
             dataType: 'Account',
             title: 'User Cell',
             required: true,
-            customClass: 'dropdown_root',
             controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({
                 collection: userCollection
             }),
