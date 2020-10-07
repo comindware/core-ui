@@ -358,7 +358,7 @@ export default class DropdownView {
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.button.isOpen || !document.body.contains(this.button.el)) {
+        if (!this.button.isOpen || (!document.body.contains(this.button.el) && !document.body.contains(this.panelEl))) {
             return;
         }
         this.button.trigger('before:close', this);
