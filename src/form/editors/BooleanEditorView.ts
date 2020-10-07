@@ -71,6 +71,13 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
             this.__updateState();
         },
 
+        onBeforeAttach() {
+            //TODO: this logic is necessary as long as editor is a field
+            if (!this.options.title && this.options.fieldOptions?.helpText && this.options.fieldOptions?.showHelpText) {
+                this.ui.displayText[0].insertAdjacentHTML('afterend', `<div class="js-help-text-region form-label__info"></div>`);
+            }
+        },
+
         setValue(value) {
             if (this.value === value) {
                 return;

@@ -603,7 +603,9 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     customAnchor: true
                 });
 
-                this.el.firstElementChild.insertAdjacentHTML('beforeend', `<div class="js-help-text-region form-label__info"></div>`);
+                if (!this.el.querySelector('.js-help-text-region')) {
+                    this.el.firstElementChild.insertAdjacentHTML('beforeend', `<div class="js-help-text-region form-label__info"></div>`);
+                }
 
                 this.helpTextRegion = new Marionette.Region({
                     el: this.el.querySelector('.js-help-text-region')
