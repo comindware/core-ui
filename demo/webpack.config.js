@@ -1,3 +1,6 @@
+/* global require, module, __dirname, process */
+/* eslint-disable global-require */
+
 const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
@@ -193,8 +196,8 @@ module.exports = () => {
             }),
             new CopyWebpackPlugin([
                 {
-                    from: `${__dirname}/../dist/themes`,
-                    to: pathResolver.client('themes')
+                    from: `${__dirname}/../dist`,
+                    to: pathResolver.client('')
                 },
                 {
                     from: `${__dirname}/../demo/ajaxStub`,

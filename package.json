@@ -17,8 +17,8 @@
         "client",
         "browser"
     ],
-    "main": "dist/core.bundle.min.js",
-    "types": "dist/core.bundle.min.d.ts",
+    "main": "dist/core.js",
+    "types": "dist/core.d.ts",
     "scripts": {
         "start": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js start",
         "develop": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js develop",
