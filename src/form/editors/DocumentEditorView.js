@@ -132,6 +132,9 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this.createdUrls.forEach(url => window.URL.revokeObjectURL(url));
     },
 
+    // override
+    checkChange() {},
+
     __onDragenter(e) {
         e.preventDefault();
         e.stopPropagation();
