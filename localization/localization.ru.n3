@@ -404,9 +404,13 @@
 
 <http://comindware.com/text/core/services/localization#pluralForm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2) "].
 
+<http://comindware.com/text/core/services/message#errors> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибки"; l10n:originalData "Errors"].
+
 <http://comindware.com/text/core/services/message/buttons#no> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет"; l10n:originalData "No"].
 
 <http://comindware.com/text/core/services/message/buttons#yes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Да"; l10n:originalData "Yes"].
+
+<http://comindware.com/text/core/services/message/errors#showDetails> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать детали"; l10n:originalData "Show details"].
 
 <http://comindware.com/text/core/services/message/title#confirmation> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждение"; l10n:originalData "Warning"].
 
