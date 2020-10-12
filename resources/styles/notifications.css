@@ -28,6 +28,20 @@
     overflow: auto;
 }
 
+.notification-body__show-more-btn {
+    cursor: pointer;
+    padding: 0.3rem 0.3rem;
+    border-radius: 2px;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 5px;
+    text-align: center;
+}
+
+.notification-body__show-more-btn:hover {
+    opacity: 0.7;
+}
+
 .fr-alert .fr-alert-title {
     padding-right: 0.5rem;
 }

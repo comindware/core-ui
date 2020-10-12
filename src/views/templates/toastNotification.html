@@ -3,11 +3,14 @@
 </div>
 <div class="notification-body_container">
     {{#if title}}
-    <div class="fr-alert-title">{{title}}</div>
+        <div class="fr-alert-title">{{title}}</div>
     {{/if}}
     <div class="text-container">
         {{text}}
     </div>
+    {{#if showMore}}
+        <div class="js-show-more-btn notification-body__show-more-btn">{{showMoreText}}</div>
+    {{/if}}
 </div>
 <div class="icon-close">
     <i class="{{iconPrefixer iconCloseClass}}"></i>

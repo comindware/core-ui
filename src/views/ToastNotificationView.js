@@ -21,8 +21,13 @@ export default Marionette.View.extend({
         }
     },
 
+    ui: {
+        showMoreBtn: '.js-show-more-btn'
+    },
+
     events: {
-        click: 'hideView'
+        click: 'hideView',
+        'click@ui.showMoreBtn': 'showMore'
     },
 
     template: Handlebars.compile(template),
@@ -31,13 +36,18 @@ export default Marionette.View.extend({
         this.$el.fadeOut(150, () => this.model.collection && this.model.collection.remove(this.model));
     },
 
+    showMore() {
+        this.model.showMore && this.model.showMore();
+    },
+
     templateContext() {
         const notificationType = this.model.get('type');
         const iconClass = notificationType === notificationTypes.INFO ? 'info-circle' : notificationType === notificationTypes.ERROR ? 'exclamation-circle' : 'check-circle';
 
         return {
             iconClass,
-            iconCloseClass: 'times'
+            iconCloseClass: 'times',
+            showMore: Boolean(this.model.showMore)
         };
     }
 });

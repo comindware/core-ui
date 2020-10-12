@@ -30,15 +30,17 @@ export default class ToastNotificationService {
             text = message.text;
             title = message.title;
         }
-        this.notificationCollection.add(
-            new Backbone.Model({
-                type,
-                title,
-                text,
-                time: options.time === 0 ? options.time : options.time || defaultTimeOfShow
-            }),
-            { at: this.notificationCollection.length }
-        );
+        const notificationModel = new Backbone.Model({
+            type,
+            title,
+            text,
+            time: options.time === 0 ? options.time : options.time || defaultTimeOfShow,
+            showMoreText: options.showMoreText || Localizer.get('CORE.SERVICES.MESSAGE.ERRORS.SHOWDETAILS')
+        });
+        if (options.showMore) {
+            notificationModel.showMore = options.showMore;
+        }
+        this.notificationCollection.add(notificationModel, { at: this.notificationCollection.length });
 
         this.trigger('publish:notification', {
             message: title || text,
