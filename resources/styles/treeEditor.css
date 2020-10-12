@@ -36,7 +36,7 @@
 
 .branch-header-name {
     font-weight: 600;
-    font-size: 1.05rem;   
+    font-size: 1.05rem;
 }
 
 .root > .branch-header-name {
@@ -136,7 +136,7 @@
 }
 
 .layout__tab-layout .tree-editor-btn >.toolbar-btn {
-    line-height: inherit;    
+    line-height: inherit;
 }
 */
 .tree-item .collapse-btn, .tree-item .eye-btn {
@@ -171,6 +171,7 @@
 
 .tree-editor-toolbar {
     justify-content: center;
+    height: auto;
 }
 
 .tree-editor-toolbar .toolbar-items-wrp {

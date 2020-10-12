@@ -13,6 +13,8 @@ Backbone.history.checkUrl = () => {
 
     if (shouldCheckUrl) {
         originalCheckUrl.apply(this);
+    } else {
+        shouldCheckUrl = true;
     }
 };
 
@@ -87,8 +89,7 @@ export default {
 
         shouldCheckUrl = options.trigger || activeUrl === url;
 
-        Backbone.history.navigate(url, options);        
-        shouldCheckUrl = true;
+        Backbone.history.navigate(url, options);
     },
 
     getPreviousUrl() {
