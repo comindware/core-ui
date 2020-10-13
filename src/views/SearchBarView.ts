@@ -39,8 +39,7 @@ export default Marionette.View.extend({
 
     ui: {
         input: '.js-search-input',
-        clear: '.js-search-clear',
-        compactSearch: '.js-search-icon'
+        clear: '.js-search-clear'
     },
 
     events() {
@@ -51,27 +50,25 @@ export default Marionette.View.extend({
             'blur @ui.input': 'onBlur'
         };
 
-        if (MobileService.isMobile) {
-            const mobileEvents = {
-                'click @ui.compactSearch': '__showSearchBar'
-            };
-
-            Object.assign(events, mobileEvents);
-        }
         return events;
     },
 
     onFocus() {
         this.el.classList.add('focused');
+        this.searchButtonIsShown = false;
     },
 
     onBlur() {
         this.el.classList.remove('focused');
         this.__hideSearchBar();
+        if (this.searchButtonIsShown) {
+            return;
+        }
+        this.__triggerShowSearchButton();
     },
 
     onRender() {
-        if (MobileService.isMobile && this.options.isGlobalSearch === true) {
+        if (this.options.isGlobalSearch === true) {
             this.$el.addClass(classes.closed);
         } else {
             this.$el.addClass(classes.static);
@@ -83,6 +80,10 @@ export default Marionette.View.extend({
         
         const value = this.__toggleClearIcon();
         this.__updateInput(value);
+    },
+
+    toggleSearchBar(searchButtonIsHidden: Boolean) {
+        searchButtonIsHidden ? this.__showSearchBar() : this.__hideSearchBar();
     },
 
     toggleInputActivity(inputEnabled) {
@@ -129,7 +130,7 @@ export default Marionette.View.extend({
     },
 
     __getClassName({ searchBarIsOpen } = {}) {
-        if (MobileService.isMobile && !searchBarIsOpen) {
+        if (!searchBarIsOpen && this.options.isGlobalSearch === true) {
             return classes.compactSearchClass;
         }
         return classes.defaultSearchClass;
@@ -165,7 +166,7 @@ export default Marionette.View.extend({
     },
 
     __hideSearchBar() {
-        if (MobileService.isMobile && this.options.isGlobalSearch === true) {
+        if (this.options.isGlobalSearch === true) {
             if (!this.el.classList.contains(classes.closed)) {
                 const currentClassName = this.__getClassName();
                 this.el.className = currentClassName;
@@ -183,6 +184,11 @@ export default Marionette.View.extend({
 
     __triggerSearch(value) {
         this.trigger('search', value, { model: this.model });
+    },
+
+    __triggerShowSearchButton() {
+        this.searchButtonIsShown = true;
+        this.trigger('show:search:button');
     },
 
     __clear() {
