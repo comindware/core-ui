@@ -413,6 +413,29 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding-bottom: 20px;
 }
 
+
+.left-menu__logo {
+  max-height: 60px;
+  height: 60px;
+  padding: 15px 10px 10px;
+}
+
+.left-menu-logo{
+  height: 100%;
+}
+
+.left-menu__config{
+  height: 48px;
+}
+
+.left-menu-config-btn {
+  font-size: 19px;
+}
+
+.top-nav{
+  height: 60px;
+}
+
 .task-links__i {
   margin-bottom: 10px;
 }

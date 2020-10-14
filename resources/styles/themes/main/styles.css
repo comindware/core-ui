@@ -413,9 +413,16 @@
 }
 
 
+.left-menu__config{
+  height: 28px;
+}
+
+.left-menu-config-btn {
+  font-size: 16px;
+}
+
 .top-nav{
-  height: 30px;
-  line-height: 29px;
+  height: 40px;
 }
 .top-nav_icon {
   min-width: 30px;
@@ -428,12 +435,24 @@
   width: 40px;
 }
 
-.top-nav .composite-user-abr__container, .top-nav .composite-user-abr__container img,
-.bubbles__i .composite-user-abr__container, .bubbles__i .composite-user-abr__container img {
+.top-nav .composite-user-abr__container,
+.top-nav .composite-user-abr__container img {
+  height: 27px;
+  width: 27px;
+  flex-basis: 27px;
+  line-height: 27px;
+}
+
+.bubbles__i .composite-user-abr__container,
+.bubbles__i .composite-user-abr__container img {
   height: 19px;
   width: 19px;
   flex-basis: 19px;
   line-height: 19px;
+}
+
+.top-nav__btns .tr-search__input {
+  padding: 4px 20px 4px 25px;
 }
 
 @media (max-width: 720px) {
@@ -448,12 +467,15 @@
 
 /* -------------------- Left Menu Header -------------------- */
 .left-menu__logo {
-  min-height: 60px;
+  max-height: 40px;
+  height: 40px;
+  padding: 2px;
 }
 
-.left-menu-logo.left-menu-logo_comindware {
-  height: 40px;
+.left-menu-logo{
+  height: 100%;
 }
+
 
 .left-menu_small .left-menu-logo.left-menu-logo_comindware {
   height: 30px;
