@@ -76,10 +76,6 @@
   position: relative;
 }
 
-.tr-search_compact.closed .tr-search-icon {
-    font-size: 15px;
-}
-
 .search-bar-container .tr-search__clear {
   top: 50%;
 }
