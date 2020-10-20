@@ -170,16 +170,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
     },
 
     __setEditBtnText() {
-        if (this.value) {
-            if (this.getReadonly()) {
-                this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.SHOW'));
-            } else {
-                const codeText = this.options.value || this.value;
-                this.ui.editBtn.text(codeText);
-            }
-        } else {
-            this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));
-        }
+        const codeText = this.options.value || this.value || LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY');
+        this.ui.editBtn.text(codeText);
+        this.ui.editBtn.attr('title', codeText);
     },
 
     __setReadonly(readonly) {

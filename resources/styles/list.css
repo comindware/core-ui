@@ -560,6 +560,7 @@ tr.grid-header.dragover td {
     line-height: inherit;
     background-color: transparent;
     font-size: 13px;
+    padding: 0;
 }
 
 .cell .textarea {

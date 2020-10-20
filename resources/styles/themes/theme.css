@@ -105,10 +105,11 @@ body {
     color: #ffffff;
     position: absolute;
     vertical-align: top;
-    top: -16px;
+    top: -28px;
     font-size: 10px;
     font-weight: bold;
     left: 3px;
+    font-style: normal;
 }
 
 .cell.error .form-label__error-button::before {
@@ -268,28 +269,11 @@ body {
     background: var(--input-search-bg);
 }
 
-.tr-search_compact .tr-search-icon {
-    display: block;
-    font-size: 18px;
-}
-
 .tr-search_compact .tr-search__input,
 .tr-search_compact .tr-search__clear,
 .tr-search_compact.closed .tr-search__input,
 .tr-search_compact.closed .tr-search__clear {
     display: none;
-}
-
-.tr-search_compact.open .tr-search-icon {
-    display: none;
-}
-
-.tr-search .tr-search-icon {
-    display: none;
-}
-
-.tr-search_compact.closed .tr-search-icon {
-    display: block;
 }
 
 .tr-search__clear {
@@ -1230,6 +1214,8 @@ tr:not(:first-child) .cell_selection {
 
 .layout__group-collapsed__button svg {
     transform: rotate(+90deg);
+    transition-property: transform;
+    transition-duration: 300ms;
 }
 
 .group-title.layout__group-collapsed__button {

@@ -171,6 +171,7 @@
 
 .tree-editor-toolbar {
     justify-content: center;
+    height: auto;
 }
 
 .tree-editor-toolbar .toolbar-items-wrp {

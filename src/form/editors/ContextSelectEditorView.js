@@ -61,7 +61,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'editor context_select dropdown_root',
+    className: 'editor context_select js-dropdown__root',
 
     events: {
         'click @ui.clearButton': '__clear'
