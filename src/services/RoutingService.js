@@ -13,8 +13,9 @@ Backbone.history.checkUrl = () => {
 
     if (shouldCheckUrl) {
         originalCheckUrl.apply(this);
+    } else {
+        shouldCheckUrl = true;
     }
-    shouldCheckUrl = true;
 };
 
 export default {

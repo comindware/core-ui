@@ -164,7 +164,8 @@ export const classes = {
     required: 'required',
     readonly: 'readonly',
     error: 'error',
-    tableWidthAuto: 'grid-content-wrp_width-auto'
+    tableWidthAuto: 'grid-content-wrp_width-auto',
+    dropdownRoot: 'js-dropdown__root'
 };
 
 export default {

@@ -605,6 +605,7 @@ li.CodeMirror-hint-active {
     padding: 0 20px 0 10px;
     vertical-align: top;
     white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .grid-container .dev-code-button-edit {
@@ -613,9 +614,6 @@ li.CodeMirror-hint-active {
     margin: 4px 10px;
     padding: 4px 16px 2px 5px;
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .dev-code-button-edit:hover {

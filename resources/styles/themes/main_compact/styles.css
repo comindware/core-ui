@@ -442,7 +442,7 @@
 }
 
 .top-nav {
-    height: 30px;
+    height: 40px;
     line-height: 29px;
 }
 
@@ -498,6 +498,10 @@
 .left-menu-view-switcher__container .toolbar-btn {
     font-size: 13px;
     padding: 3px 15px;
+}
+
+.left-menu:not(.compact) .left-menu-header {
+    padding: 0 2px 2px 2px;
 }
 
 @media (max-width: 720px) {

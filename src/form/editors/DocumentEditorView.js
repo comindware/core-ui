@@ -27,11 +27,9 @@ const defaultOptions = options => ({
     multiple: true,
     fileFormat: '',
     showRevision: true,
-    showAll: Boolean(options.isCell),
     createDocument: null,
     removeDocument: null,
     displayText: '',
-    isCell: false,
     isInline: false
 });
 
@@ -107,7 +105,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             'click @ui.showMore': 'toggleShowMore',
             keydown: '__handleKeydown',
             'change @ui.fileUpload': 'onSelectFiles',
-            [`click @ui.${this.options.schema?.isCell ? 'form' : 'fileUploadButton'}`]: '__onItemClick',
+            'click @ui.fileUploadButton': '__onItemClick',
             'dragenter @ui.form': '__onDragenter',
             'dragover @ui.form': '__onDragover',
             'dragleave @ui.form': '__onDragleave',
@@ -133,6 +131,9 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         window.removeEventListener('resize', this._windowResize, true);
         this.createdUrls.forEach(url => window.URL.revokeObjectURL(url));
     },
+
+    // override
+    checkChange() {},
 
     __onDragenter(e) {
         e.preventDefault();
@@ -470,7 +471,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     renderShowMore() {
-        if (this.collapsed && !this.options.showAll) {
+        if (this.collapsed) {
             this.collapseShowMore();
         } else {
             this.expandShowMore();
@@ -478,7 +479,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     update() {
-        if (this.collapsed && !this.options.showAll) {
+        if (this.collapsed) {
             this.$container.children().show();
             this.collapseShowMore();
         }
