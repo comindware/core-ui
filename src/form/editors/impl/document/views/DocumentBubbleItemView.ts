@@ -34,7 +34,7 @@ export default Marionette.View.extend({
         return {
             text: text || name,
             icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
-            isInline: this.options.isInline && !embeddedType ? false : this.options.isInline
+            isInline: this.options.isInline && embeddedType
         };
     },
 
