@@ -109,12 +109,12 @@ rgba(5,117,189,.5) // user avatar btn
     display: none;
 }
 .form-label__info-button-anchor,
-.form-label__error-button-anchor { 
-    position:absolute; 
-    width:0; 
-    top:-2px; 
-    bottom:-4px; 
-    left:5px; 
+.form-label__error-button-anchor {
+    position:absolute;
+    width:0;
+    top:-2px;
+    bottom:-4px;
+    left:5px;
 }
 
 .form-label__tooltip-panel {
@@ -490,10 +490,6 @@ input[type="checkbox"].checkbox {
     /* align-self: flex-end; why? */
     padding-left: 4px;
     min-width: 0;
-}
-
-.editor_focused .bubbles__form {
-    min-width: 25px;
 }
 
 .bubbles__input {

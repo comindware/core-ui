@@ -1056,7 +1056,6 @@ tr:not(:first-child) .cell_selection {
   align-items: center;
   text-align: center;
   flex-wrap: nowrap;
-  flex: 0 1 auto;
   cursor: pointer;
   overflow: hidden;
   border-radius: 4px;

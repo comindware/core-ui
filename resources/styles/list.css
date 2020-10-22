@@ -520,6 +520,11 @@ tr:hover .cell_selection {
     background-color: transparent;
     flex: auto;
 }
+
+.cell input {
+    padding: 0;
+}
+
 tr.dragover:not(.grid-header) td {
     border-bottom: 1px solid #ff0000;
 }
