@@ -390,12 +390,16 @@
 }
 
 .toolbar, .toolbar-dataset {
-  height: 30px;
+  height: 36px;
   padding: 0 5px;
 }
 .toolbar-items-wrp, .toolbar-btn, .tree-editor-btn {
-  height: 26px;
+  height: 32px;
 }
+.toolbar-btn{
+  padding: 0 8px;
+}
+
 .split-button-wrp {
 }
 
@@ -410,11 +414,12 @@
 
 
 .left-menu__config{
-  height: 28px;
+  height: 36px;
 }
 
 .left-menu-config-btn {
   font-size: 16px;
+  height: calc(100% - 4px);
 }
 
 .top-nav{
