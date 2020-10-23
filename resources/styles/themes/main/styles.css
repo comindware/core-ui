@@ -400,7 +400,13 @@
   padding: 0 8px;
 }
 
-.split-button-wrp {
+.split-button-wrp .split-button-action-button:first-child,
+.split-button-wrp .split-button-menu-anchor:first-child {
+  padding-left: 8px;
+}
+.split-button-wrp .split-button-action-button:last-child,
+.split-button-wrp .split-button-menu-anchor:last-child{
+  padding-right: 8px;
 }
 
 
@@ -418,8 +424,8 @@
 }
 
 .left-menu-config-btn {
-  font-size: 16px;
-  height: calc(100% - 4px);
+  font-size: 17px;
+  width: 32px;
 }
 
 .top-nav{

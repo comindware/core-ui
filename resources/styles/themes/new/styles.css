@@ -510,3 +510,16 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .toolbar-btn__text {
   vertical-align: inherit;
 }
+
+.toolbar-btn{
+  padding: 0 15px;
+}
+
+.split-button-wrp .split-button-action-button:first-child,
+.split-button-wrp .split-button-menu-anchor:first-child {
+  padding-left: 15px;
+}
+.split-button-wrp .split-button-action-button:last-child,
+.split-button-wrp .split-button-menu-anchor:last-child{
+  padding-right: 15px;
+}

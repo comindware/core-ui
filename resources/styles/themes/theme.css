@@ -1059,7 +1059,6 @@ tr:not(:first-child) .cell_selection {
   cursor: pointer;
   overflow: hidden;
   border-radius: 4px;
-  padding: 0 15px;
   min-width: 50px;
   height: 40px;
   transition: all .3s ease-in-out;
@@ -1143,14 +1142,6 @@ tr:not(:first-child) .cell_selection {
   padding: 0 4px;
   margin: 0;
   min-width: 20px;
-}
-.split-button-wrp .split-button-menu-anchor:first-child,
-.split-button-wrp .split-button-action-button:first-child {
-  padding-left: 15px;
-}
-.split-button-wrp .split-button-menu-anchor:last-child,
-.split-button-wrp .split-button-action-button:last-child {
-  padding-right: 15px;
 }
 
 
