@@ -417,7 +417,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .left-menu__logo {
   max-height: 60px;
   height: 60px;
-  padding: 15px 10px 10px;
+  padding: 10px;
 }
 
 .left-menu-logo{
@@ -431,6 +431,16 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .left-menu-config-btn {
   font-size: 19px;
 }
+
+.left-menu-splitter{
+  margin-left: 20px;
+  width: calc(100% - 20px);
+}
+
+.left-menu-i__icon{
+  margin-right: 10px;
+}
+
 
 .top-nav{
   height: 60px;

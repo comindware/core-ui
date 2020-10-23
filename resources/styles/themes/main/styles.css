@@ -418,7 +418,7 @@
 }
 
 .top-nav{
-  height: 40px;
+  height: 50px;
 }
 .top-nav_icon {
   min-width: 30px;
@@ -463,9 +463,9 @@
 
 /* -------------------- Left Menu Header -------------------- */
 .left-menu__logo {
-  max-height: 40px;
-  height: 40px;
-  padding: 2px;
+  max-height: 50px;
+  height: 50px;
+  padding: 5px;
 }
 
 .left-menu-logo{
@@ -474,7 +474,7 @@
 
 
 .left-menu_small .left-menu-logo.left-menu-logo_comindware {
-  height: 30px;
+  height: 100%;
 }
 
 .left-menu-view-switcher .toolbar__icons_arrow {
@@ -493,13 +493,18 @@
 }
 
 /* -------------------- Left Menu List -------------------- */
+.left-menu-splitter{
+  margin-left: 5px;
+  width: calc(100% - 5px);
+}
+
 .left-menu-i-group {
-  padding-left: 12px;
+  padding-left: 10px;
 }
 
 .left-menu-i-group .left-menu__list-l,
 .left-menu-i-group .left-menu__item {
-  padding-left: 17px;
+  padding-left: 5px;
 }
 
 .left-menu-i-group .left-menu-i.action {
@@ -522,7 +527,11 @@
 .left-menu-i__icon,
 .left-menu-collapse,
 .left-menu-switcher__icon {
-  font-size: 17px;
+  font-size: 18px;
+}
+
+.left-menu-i__icon{
+  margin-right: 5px;
 }
 
 .left-menu-i.workspace > .left-menu-i__text {
