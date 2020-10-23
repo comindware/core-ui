@@ -402,11 +402,11 @@
 
 .split-button-wrp .split-button-action-button:first-child,
 .split-button-wrp .split-button-menu-anchor:first-child {
-  padding-left: 8px;
+  padding-left: 6px;
 }
 .split-button-wrp .split-button-action-button:last-child,
 .split-button-wrp .split-button-menu-anchor:last-child{
-  padding-right: 8px;
+  padding-right: 6px;
 }
 
 
