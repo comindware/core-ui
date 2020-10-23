@@ -397,7 +397,7 @@
   height: 32px;
 }
 .toolbar-btn{
-  padding: 0 8px;
+  padding: 0 6px;
 }
 
 .split-button-wrp .split-button-action-button:first-child,
@@ -429,7 +429,7 @@
 }
 
 .top-nav{
-  height: 50px;
+  height: 52px;
 }
 .top-nav_icon {
   min-width: 30px;
@@ -474,8 +474,8 @@
 
 /* -------------------- Left Menu Header -------------------- */
 .left-menu__logo {
-  max-height: 50px;
-  height: 50px;
+  max-height: 52px;
+  height: 52px;
   padding: 5px;
 }
 
