@@ -508,6 +508,10 @@
   margin-left: 5px;
   width: calc(100% - 5px);
 }
+.left-menu-splitter_compact {
+  margin-left: 0;
+  width: 100%;
+}
 
 .left-menu-i-group {
   padding-left: 10px;

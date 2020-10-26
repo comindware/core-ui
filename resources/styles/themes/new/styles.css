@@ -436,6 +436,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
   margin-left: 20px;
   width: calc(100% - 20px);
 }
+.left-menu-splitter_compact {
+  margin-left: 0;
+  width: 100%;
+}
 
 .left-menu-i__icon{
   font-size: 20px;
