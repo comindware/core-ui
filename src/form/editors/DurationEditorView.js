@@ -135,7 +135,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
 
     ui: {
         input: '.js-input',
-        clear: '.js-clear-button'
+        clearButton: '.js-clear-button'
     },
 
     regions: {
@@ -143,7 +143,8 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
     },
 
     events: {
-        'click @ui.clear': '__clear',
+        'click @ui.clearButton': '__onClearClickHandler',
+        'dblclick @ui.clearButton': '__onClearDblclick',
         'focus @ui.input': '__focus',
         'click @ui.input': '__onClick',
         'blur @ui.input': '__onBlur',
@@ -152,7 +153,12 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         mouseenter: '__onMouseenter'
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.triggeredByClean = true;
         this.__updateState({
             mode: stateModes.VIEW,
@@ -192,7 +198,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
 
         valueObject = this.__checkMaxMinObject(valueObject, this.options.max, this.options.min);
 
-        if (updateState) {            
+        if (updateState) {
             this.__updateState({
                 mode: stateModes.VIEW,
                 displayValue: valueObject
@@ -202,8 +208,8 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         if (this.triggeredByClean) {
             this.triggeredByClean = false;
             if (Object.values(valueObject).every(value => value === 0)) {
-                this.ui.input.val(null);
-                this.__value(null, true);
+                // this.ui.input.val(null);
+                // this.__value(null, true);
                 return;
             }
         }

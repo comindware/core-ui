@@ -76,7 +76,8 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
     events() {
         const events = {
-            'click @ui.clearButton': '__onClear',
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick',
             mouseenter: '__onMouseenter'
         };
         if (MobileService.isMobile) {
@@ -357,10 +358,14 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.timeDropdownView?.setReadonly(readonly);
     },
 
-    __onClear(): boolean {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.__value(null, true, false);
         this.focus();
-        return false;
     },
 
     __onEnterValueSelect(event: KeyboardEvent) {

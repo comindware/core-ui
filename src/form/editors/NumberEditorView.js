@@ -28,8 +28,8 @@ const defaultOptions = {
     intlOptions: {
         style: 'decimal',
         useGrouping: true,
-        /* The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group, 
-        minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined, 
+        /* The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group,
+        minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined,
         then the first group is ignored. https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat */
         minimumFractionDigits: 0,
         maximumFractionDigits: defaultAllowFroat ? 3 : 0,
@@ -99,7 +99,8 @@ export default formRepository.editors.Number = BaseEditorView.extend({
 
     events() {
         const events = {
-            'click @ui.clearButton': '__clear',
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick',
             'keyup @ui.input': '__keyup',
             'change @ui.input': '__onChange'
         };
@@ -196,7 +197,12 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         }
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.__value(null, false, this.isChangeModeKeydown, false);
         this.focus();
         return false;

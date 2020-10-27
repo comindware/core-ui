@@ -9,6 +9,7 @@ import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 import { keyCode } from 'utils';
 import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
+import { DOUBLECLICK_DELAY } from '../../../Meta';
 
 const classes = {
     editorDisabled: 'editor_disabled',
@@ -195,6 +196,8 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                     this.once('render', () => this.__updateDynamicFieldAccess(options));
                 }
             }
+
+            this.__debounceOnClearClick = _.debounce((...args) => this.__onClearClick(...args), DOUBLECLICK_DELAY);
         },
 
         _ensureElement() {
@@ -482,7 +485,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         commit(options: Object = {}) {
             let error = this.validate({ internal: true });
-            if (error && !this.options.forceCommit) {
+            if (error && this.options.forceCommit !== false) {
                 return error;
             }
 
@@ -496,7 +499,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 isEditorSetValue: true
             });
 
-            if (error && !this.options.forceCommit) {
+            if (error && this.options.forceCommit !== false) {
                 return error;
             }
             this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
@@ -516,7 +519,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;
 
-            if (!validators) { 
+            if (!validators) {
                 return;
             }
 
@@ -680,6 +683,29 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             if (typeof options.getHidden === 'function') {
                 this.setHidden(Boolean(options.getHidden(options.model)));
             }
+        },
+
+        __onClearClickHandler() {
+            if (this.getOption('isDelayedClear')) {
+                this.__debounceOnClearClick(arguments);
+            } else {
+                this.__onClearClick(arguments);
+            }
+            return false;
+        },
+
+        __onClearClick() {
+            if (this.__isDoubleClicked) {
+                this.__isDoubleClicked = false;
+                return;
+            }
+            this.__isDoubleClicked = false;
+            this.focus();
+            this.__value(null, true, false);
+        },
+
+        __onClearDblclick() {
+            this.__isDoubleClicked = true;
         }
     };
 }

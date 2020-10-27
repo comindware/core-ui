@@ -5,6 +5,8 @@ import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapText from './iconsWraps/iconWrapText.html';
 import { keyCode } from 'utils';
+import _ from 'underscore';
+import { DOUBLECLICK_DELAY } from '../../Meta';
 
 const changeMode = {
     blur: 'blur',
@@ -53,6 +55,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         }
 
         this.__applyOptions(options, defOps);
+        this.__debounceOnClearClick = _.debounce((...args) => this.__onClearClick(...args), DOUBLECLICK_DELAY);
     },
 
     focusElement: '.js-input',
@@ -77,7 +80,8 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         const events = {
             'keyup @ui.input': '__keyup',
             'change @ui.input': '__change',
-            'click @ui.clearButton': '__clear'
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick'
         };
         if (!this.options.hideClearButton) {
             events.mouseenter = '__onMouseenter';
@@ -113,10 +117,14 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         this.__value(this.ui.input.val(), false, true);
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.ui.input.focus();
         this.__value(null, true, false);
-        return false;
     },
 
     setValue(value) {

@@ -85,7 +85,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
     subtextProperty: '',
     iconProperty: '',
     metaIcons: Core.meta.contextIconType,
-    
+
     listItemView: ReferenceListItemView,
     listItemViewWithText: ReferenceListWithSubtextItemView,
     showCheckboxes: false,
@@ -229,6 +229,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             edit: this.options.showEditButton ? this.options.edit : false,
             canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
             createValueUrl: this.options.createValueUrl,
+            isDelayedClear: this.options.isDelayedClear,
             enabled: this.getEnabled(),
             readonly: this.getReadonly()
         };
@@ -800,10 +801,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             if (lastPointedModel && !lastPointedModel.selected) {
                 this.panelCollection.lastPointedModel.toggleSelected();
             }
-            
+
             this.__toggleDropdown();
             stop(event);
-        }   
+        }
     },
 
     __onPanelSelected(model: Backbone.Model, options = {}): void {
