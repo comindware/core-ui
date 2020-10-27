@@ -32,14 +32,15 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
 
     ui: {
         input: '.js-input',
-        colorpicker: '.js-colorpicker'
+        colorpicker: '.js-colorpicker',
+        clearButton: '.js-clear-button'
     },
 
     events: {
         change: '__change',
         'change @ui.colorpicker': '__changedColorPicker',
         'change @ui.input': '__changedHex',
-        'click .js-clear-button': '__clear'
+        'click @ui.clearButton': '__onClearClickHandler'
     },
 
     className: 'editor editor_color',
@@ -56,7 +57,12 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
         this.__value(this.ui.colorpicker.val(), false, true);
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.__value(null, false, true);
         this.ui.input.val(null);
         this.ui.colorpicker.spectrum('set', null);

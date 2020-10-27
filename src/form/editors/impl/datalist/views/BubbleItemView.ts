@@ -3,8 +3,14 @@ import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html'
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 import meta from '../meta';
 import { htmlHelpers } from '../../../../../utils';
+import _ from 'underscore';
+import { DOUBLECLICK_DELAY } from '../../../../../Meta';
 
 export default Marionette.View.extend({
+    initialize() {
+        this.__debounceOnClearClick = _.debounce((...args) => this.__onClearClick(...args), DOUBLECLICK_DELAY);
+    },
+
     template: Handlebars.compile('{{{customTemplate}}}'),
 
     templateContext() {
@@ -37,7 +43,8 @@ export default Marionette.View.extend({
 
     events() {
         const events = {
-            'click @ui.clearButton': '__delete',
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick',
             drag: '__handleDrag',
             mouseenter: '__onMouseenter',
             mouseleave: '__onMouseleave'
@@ -55,9 +62,27 @@ export default Marionette.View.extend({
         change: 'render'
     },
 
-    __delete() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__isDoubleClicked = false;
         this.options.bubbleDelete(this.model);
         return false;
+    },
+
+    __onClearClickHandler() {
+        if (this.getOption('isDelayedClear')) {
+            this.__debounceOnClearClick(arguments);
+        } else {
+            this.__onClearClick(arguments);
+        }
+        return false;
+    },
+
+    __onClearDblclick() {
+        this.__isDoubleClicked = true;
     },
 
     __edit() {
