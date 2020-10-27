@@ -334,6 +334,7 @@ tr.empty-view {
 
 /* Editable Grid */
 .grid-container {
+    overflow-y: auto;
     position: relative;
     display: flex;
     flex-direction: column;
