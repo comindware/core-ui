@@ -863,6 +863,13 @@ body.non-selectable {
     display: inline-block;
 }
 
+.toolbar-panel_container.dropdown__wrp .btn-separator {
+    width: 100%;
+    height: 1px;
+    margin: 1px 0;
+    background: var(--theme-colors__secondary);
+}
+
 .toolbar-btn__icon + .toolbar-btn__text {
     margin-left: 5px;
 }
