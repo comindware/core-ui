@@ -1072,9 +1072,7 @@ tr:not(:first-child) .cell_selection {
     cursor: pointer;
     overflow: hidden;
     border-radius: 4px;
-    padding: 0 15px;
     min-width: 50px;
-    height: 40px;
     transition: all .3s ease-in-out;
 }
 

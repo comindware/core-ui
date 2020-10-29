@@ -179,8 +179,10 @@ module.exports.apply = {
         transform: 'translateY(-50%)'
     },
     'button-theme': {
-        'font-size': '1em',
-        padding: '0 10px'
+        'font-size': '13px',
+        padding: '0 15x',
+        'font-weight': '600',
+        height: '40px'
     },
     'dropdown-theme': {
         background: variables['convex-gradient']

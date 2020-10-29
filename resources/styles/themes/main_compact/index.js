@@ -175,15 +175,10 @@ module.exports.apply = {
     },
     'button-theme': {
         'font-size': '13px',
-        padding: '0 15x',
-        'font-weight': '600'
+        padding: '0 6x',
+        'font-weight': '600',
+        height: '32px'
     },
-
-
-
-
-
-
 
     'dropdown-theme': {
         'min-height': '20px'
