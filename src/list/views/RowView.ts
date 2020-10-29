@@ -417,7 +417,8 @@ export default Marionette.View.extend({
             // todo: find more clear way to handle this case
             const target = <Element>e.target;
             const isErrorButtonClicked = target && target.classList.contains('js-error-button');
-            if (this.__isColumnEditable(columnIndex)
+            const isShowEditor =  this.__isColumnEditable(columnIndex) || column.isShowEditor;
+            if (isShowEditor
              // temporary desicion for complex cells
              || (column.type === 'Complex' && [complexValueTypes.expression, complexValueTypes.script].includes(this.model.get(column.key)?.type))) {
 
