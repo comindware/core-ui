@@ -83,7 +83,7 @@ export default class TreeDiffController {
         this.__initDescendants(graphModel, nestingOptions);
         this.__initConfiguration(configDiff);
 
-        reqres.reply('treeEditor:setWidgetConfig', (widgetId: string, config: NodeConfig) => this.__setNodeConfig(widgetId, config));
+        reqres.reply('treeEditor:setWidgetConfig', (widgetId: string, config: NodeConfig) => this.setNodeConfig(widgetId, config));
     }
 
     reset() {
@@ -100,7 +100,7 @@ export default class TreeDiffController {
         this.configDiff.initialConfig.forEach( item => item.initialConfig.isHidden = false);
     }
 
-    __setNodeConfig(widgetId: string, keyValue: NodeConfig) {
+    setNodeConfig(widgetId: string, keyValue: NodeConfig) {
         this.configDiff.set(widgetId, keyValue);
     }
 
