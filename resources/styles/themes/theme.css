@@ -1393,20 +1393,15 @@ tr:not(:first-child) .cell_selection {
 .sp-container button.sp-choose,
 .sp-cancel {
     @apply --button-theme;
-    @apply --button-strong;
 
     background-image: none;
 }
 
 .sp-container button.sp-choose:hover {
-    @apply --button-strong-hover-theme;
-
     background-image: none;
 }
 
 .sp-container button.sp-choose:active {
-    @apply --button-strong-active-theme;
-
     background-image: none;
 }
 

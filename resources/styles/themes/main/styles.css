@@ -85,26 +85,6 @@
 }
 
 /* Buttons */
-
-.btn.btn-outline,
-.sp-cancel {
-    @apply --button-outline-theme;
-}
-
-.btn.btn-outline:hover,
-.sp-cancel:hover {
-    @apply --button-outline-hover-theme;
-}
-
-.btn.btn-outline:active,
-.sp-cancel:active {
-    @apply --button-outline-active-theme;
-}
-
-.btn.btn-icon {
-    @apply --button-icon-theme;
-}
-
 .btn.btn-icon svg {
     fill: currentColor;
     width: 1em;
@@ -200,8 +180,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .layout__tab-layout_move-button {
     @apply --button-theme;
-    @apply --button-strong;
-    @apply --button-outline-theme;
     @apply --tab-move-btn-theme;
 }
 

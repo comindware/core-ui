@@ -12,7 +12,7 @@ const variables = {
     // colors
     white: '#ffffff',
     black: '#313131',
-    red: '#e1462c!important',
+    red: '#e1462c',
     'red-dark': '#d63a1f',
 
     'grey-50': '#f9f9f9',
