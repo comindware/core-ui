@@ -1,7 +1,7 @@
 import TEButtonView from './views/TEButtonView';
 import NodeViewFactory from './services/NodeViewFactory';
 import DiffController from './controllers/DiffController';
-import { TTreeEditorOptions, GraphModel } from './types';
+import { TTreeEditorOptions, GraphModel, NodeConfig } from './types';
 import ConfigDiff from './classes/ConfigDiff';
 
 const defaultOptions = {
@@ -72,6 +72,7 @@ export default class TreeEditor {
         popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
         popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
         popoutView.setInitConfig = this.setInitConfig.bind(this);
+        popoutView.setConfigItem = this.__setConfigItem.bind(this);
         popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
         popoutView.getRootCollection = this.__getRootCollection.bind(this);
         return (this.view = popoutView);
@@ -87,6 +88,11 @@ export default class TreeEditor {
 
     __getConfigDiff() {
         return this.controller.configDiff.__mapChildsToObjects();
+    }
+
+    __setConfigItem(widgetId: string, config: NodeConfig) {
+        this.controller.setNodeConfig(widgetId, config);
+        this.__onSave();
     }
 
     __setConfigDiff(configDiff: ConfigDiff) {
