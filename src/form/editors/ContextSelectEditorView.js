@@ -276,7 +276,6 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__isDoubleClicked = false;
         this.__value(null, true, null);
     }
 });

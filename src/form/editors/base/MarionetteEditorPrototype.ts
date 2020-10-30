@@ -699,7 +699,6 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 this.__isDoubleClicked = false;
                 return;
             }
-            this.__isDoubleClicked = false;
             this.focus();
             this.__value(null, true, false);
         },

@@ -122,7 +122,6 @@ export default formRepository.editors.Text = BaseEditorView.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__isDoubleClicked = false;
         this.ui.input.focus();
         this.__value(null, true, false);
     },

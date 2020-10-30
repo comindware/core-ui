@@ -158,7 +158,6 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__isDoubleClicked = false;
         this.triggeredByClean = true;
         this.__updateState({
             mode: stateModes.VIEW,

@@ -44,20 +44,7 @@ const service: LocalizationService = {
         this.thousandsSeparatorSymbol = formattedNumber.slice(1, 2);
         this.decimalSymbol = formattedNumber.slice(-3, -2);
 
-        //TODO remove this then server start to return full date
-        const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
-        const unpacked = {
-            name: 'Custom/CMW',
-            abbrs: ['CMWC', 'CMWC'],
-            offsets: [offset, offset],
-            untils: [-1988164200000, null]
-        };
-        moment.tz.add(moment.tz.pack(unpacked));
-
-        moment.tz.setDefault('Custom/CMW');
-        //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
-        //End of hack
-
+        moment.tz.setDefault(this.timeZone);
         moment.locale(this.langCode);
     },
 

@@ -67,7 +67,6 @@ export default Marionette.View.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__isDoubleClicked = false;
         this.options.bubbleDelete(this.model);
         return false;
     },

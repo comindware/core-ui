@@ -441,8 +441,6 @@ export default Marionette.View.extend({
             this.__isDoubleClicked = false;
             return;
         }
-
-        this.__isDoubleClicked = false;
         this.__selectPointed(columnIndex, true);
         if (isErrorButtonClicked) {
             this.__showErrorsForColumn({ column, index: columnIndex });

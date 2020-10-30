@@ -62,7 +62,6 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__isDoubleClicked = false;
         this.__value(null, false, true);
         this.ui.input.val(null);
         this.ui.colorpicker.spectrum('set', null);
