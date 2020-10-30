@@ -109,9 +109,6 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
     },
 
     __showPopup() {
-        if (!this.getEditable()) {
-            return;
-        }
         this.options.selected = this.getValue();
         this.controller.createView();
         this.controller.processValues();
@@ -127,6 +124,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
                     id: false,
                     text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
                     customClass: 'btn-small btn-outline',
+                    visible: () => !this.readonly,
                     handler: () => {
                         this.controller.cancelMembers();
                         Core.services.WindowService.closePopup();
@@ -136,6 +134,7 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
                     id: 'save',
                     text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
                     customClass: 'btn-small',
+                    visible: () => !this.readonly,
                     handler: () => {
                         this.controller.saveMembers();
                         this.__value(this.options.selected, true);

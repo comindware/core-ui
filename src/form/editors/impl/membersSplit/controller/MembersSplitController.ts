@@ -20,6 +20,7 @@ const convertToArray = (value : null | string | string[]) => Array.isArray(value
 export default Marionette.MnObject.extend({
     initialize(options) {
         this.options = options;
+        this.readonly = this.options.readonly;
         this.filterFnParameters = options.filterFnParameters;
         this.filterFn = {};
         Object.values(this.filterFnParameters).forEach(parameter =>
@@ -147,15 +148,20 @@ export default Marionette.MnObject.extend({
             })
         );
 
+        let columns = [availableGridView, selectedGridView];
+        if (this.readonly) {
+            columns = [selectedGridView];
+        }
+
         this.view = new Core.layout.HorizontalLayout({
             class: 'member-split-wrp',
-            columns: [availableGridView, selectedGridView]
+            columns
         });
         this.bondedCollections = {};
         this.bondedCollections[availableGridView.cid] = availableGridView.collection;
         this.bondedCollections[selectedGridView.cid] = selectedGridView.collection;
 
-        [availableGridView, selectedGridView].forEach(view => {
+        columns.forEach(view => {
             this.listenTo(view.gridView, 'execute', act => this.__executeAction(view, act));
             this.listenTo(view.gridView, 'click', model => this.__moveItems(view, model));
         });
@@ -279,6 +285,9 @@ export default Marionette.MnObject.extend({
     },
 
     __moveItems(gridView, model) {
+        if (this.readonly) {
+            return;
+        }
         const source = this.bondedCollections[gridView.cid];
         const targetKey = Object.keys(this.bondedCollections).find(key => key !== gridView.cid);
         const target = this.bondedCollections[targetKey];
