@@ -65,6 +65,11 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         this.__value(value, false);
     },
 
+    __setReadonly(readonly: Boolean) {
+        this.readonly = readonly;
+        this.controller.readonly = readonly;
+    },
+
     isEmptyValue() {
         return !this.value?.length;
     },
