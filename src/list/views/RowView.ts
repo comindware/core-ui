@@ -56,7 +56,9 @@ export default Marionette.View.extend({
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         contextmenu: '__handleContextMenu',
-        touchend: '__handlePointerDown'
+        touchend: '__handleTouchEnd',
+        touchmove: '__handleTouchMove',
+        touchcancel: '__handleTouchCancel'
     },
 
     modelEvents: {
@@ -513,10 +515,22 @@ export default Marionette.View.extend({
         }
     },
 
-    __handlePointerDown() {
+    __handleTouchEnd() {
         if (MobileService.isMobile) {
+            if (this.isTouchMoveEvent) {
+                this.isTouchMoveEvent = false;
+                return;
+            }
             this.gridEventAggregator.trigger('row:pointer:down', this.model);
         }
+    },
+
+    __handleTouchCancel() {
+        this.isTouchMoveEvent = false;
+    },
+
+    __handleTouchMove() {
+        this.isTouchMoveEvent = true;
     },
 
     __handleSelection() {
