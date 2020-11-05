@@ -72,19 +72,18 @@ class CellViewFactory implements ICellViewFactory {
             return `<td class="${this.__getCellClass(column, model)}" tabindex="-1"></td>`;
         }
 
-        let values = Array.isArray(value) ? value : [value];
+        const values = Array.isArray(value) ? value : [value];
 
         switch (column.dataType || column.type) {
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString({ values, column, model });
+            case objectPropertyTypes.ENUM:
+            case objectPropertyTypes.ORGANIZATION_UNIT:
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 return this.__getReferenceCell({ values, column, model });
             case objectPropertyTypes.ACCOUNT:
                 return this.__getUserCell({ values, column, model });
-            case objectPropertyTypes.ENUM:
-                values = value ? value.valueExplained : '';
-                return `<td class="${this.__getCellClass(column, model)}" title="${this.__getTitle({ values, column, model })}">${values}</td>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
