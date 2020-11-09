@@ -190,9 +190,11 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
     __updateValueByInput(updateState) {
         let valueObject = this.__getObjectValueFromInput();
 
-        valueObject = this.__checkMaxMinObject(valueObject, this.options.max, this.options.min);
+        const maxDuration = this.options.model.get('maxDuration');
+        const minDuration = this.options.model.get('minDuration');
+        valueObject = this.__checkMaxMinObject(valueObject, maxDuration, minDuration);
 
-        if (updateState) {            
+        if (updateState) {
             this.__updateState({
                 mode: stateModes.VIEW,
                 displayValue: valueObject
