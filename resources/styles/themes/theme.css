@@ -1078,7 +1078,7 @@ tr:not(:first-child) .cell_selection {
 
 .toolbar-btn > .toolbar__icons > i,
 .toolbar-btn > i {
-    width: 100%;
+    width: auto;
     height: auto;
     font-weight: 300;
     min-width: 20px;
