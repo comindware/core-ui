@@ -95,7 +95,8 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * */
     getTextfromHTML(htmlText = '') {
         return String(htmlText)
-            .replace(/<[^>]*>/g, '', '')
-            .replace(/"/g, '&quot;');
+            .replace(/<[^>]*>/g, '')
+            .replace(/&quot;/g, '"')
+            .replace(/&nbsp;/g, ' ');
     }
 };
