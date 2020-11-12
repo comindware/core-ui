@@ -180,7 +180,7 @@ module.exports.apply = {
     },
     'button-theme': {
         'font-size': '13px',
-        padding: '0 15x',
+        padding: '0 15px',
         'font-weight': '600',
         height: '40px'
     },
