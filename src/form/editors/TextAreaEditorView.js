@@ -105,14 +105,19 @@ export default formRepository.editors.TextArea = BaseEditorView.extend({
         }
         this.value = value;
 
+        if (triggerChange) {
+            this.__triggerChange();
+        }
+
+        if (!this.isRendered()) {
+            return;
+        }
+
         if (this.options.showTitle) {
             this.$editorEl.prop('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);
-        }
-        if (triggerChange) {
-            this.__triggerChange();
         }
     },
 
