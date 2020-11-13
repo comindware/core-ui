@@ -149,14 +149,19 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         this.value = realValue;
         this.__updateEmpty();
 
+        if (triggerChange) {
+            this.__triggerChange();
+        }
+
+        if (!this.isRendered()) {
+            return;
+        }
+
         if (this.getOption('showTitle')) {
             this.ui.input.prop?.('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);
-        }
-        if (triggerChange) {
-            this.__triggerChange();
         }
     },
 

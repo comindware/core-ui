@@ -656,6 +656,10 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             this.state.displayValue = newState.displayValue;
         }
 
+        if (!this.isRendered()) {
+            return;
+        }
+
         const normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
         const inEditMode = this.state.mode === stateModes.EDIT;
         const val = this.__createInputString(normalizedDisplayValue, inEditMode);

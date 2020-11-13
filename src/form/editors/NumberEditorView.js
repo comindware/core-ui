@@ -233,6 +233,14 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         this.value = value;
         this.__updateEmpty();
 
+        if (triggerChange) {
+            this.__triggerChange();
+        }
+
+        if (!this.isRendered()) {
+            return;
+        }
+
         if (this.options.showTitle) {
             this.$editorEl.prop('title', value);
         }
@@ -241,10 +249,6 @@ export default formRepository.editors.Number = BaseEditorView.extend({
             this.ui.input.val(value);
         } else {
             this.maskedInputController && this.maskedInputController.textMaskInputElement.update(this.intl.format(value));
-        }
-
-        if (triggerChange) {
-            this.__triggerChange();
         }
     },
 
