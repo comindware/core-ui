@@ -70,7 +70,7 @@ module.exports = () => {
                     loader: 'source-map-loader'
                 },
                 {
-                    test: /\.js$/,
+                    test: /\.jsx?$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
                     exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
@@ -87,7 +87,10 @@ module.exports = () => {
                                     corejs: '3.1',
                                     modules: false
                                 }
-                            ]
+                            ],
+                            [
+                                '@babel/preset-react',
+                            ],
                         ],
                         plugins: [require('@babel/plugin-syntax-dynamic-import')]
                     }
