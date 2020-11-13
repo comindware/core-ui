@@ -20,29 +20,6 @@ const findDuplicates = (array: string[]): string[] => {
     return duplicates(count(array));
 };
 
-const findAllDescendants = (model: GraphModel, predicate?: (model: GraphModel) => boolean) => {
-    if (!model.isContainer) {
-        return [];
-    }
-
-    const result: GraphModel[] = [];
-    const children = typeof model.getChildren === 'function' ? model.getChildren() : model.get(model.childrenAttribute);
-
-    children.forEach(c => {
-        if (!predicate || predicate(c)) {
-            result.push(c);
-        }
-
-        const r = findAllDescendants(c, predicate);
-
-        if (r && r.length > 0) {
-            result.push(...r);
-        }
-    });
-
-    return result;
-};
-
 const filterDescendants = (model: GraphModel, filterFn: (graphModel: GraphModel) => boolean) => {
     if (!model.isContainer) {
         return [];
@@ -71,7 +48,6 @@ const filterDescendants = (model: GraphModel, filterFn: (graphModel: GraphModel)
 export default class TreeDiffController {
     configDiff: ConfigDiff;
     configuredCollectionsSet: Set<Backbone.Collection>;
-    filteredDescendants: Map<string, GraphModel>;
     reqres: Backbone.Radio.Channel
 
     constructor(options: TreeDiffControllerOptions) {
@@ -106,7 +82,7 @@ export default class TreeDiffController {
 
     __initConfiguration(configDiff: ConfigDiff) {
         this.__passConfigDiff(configDiff);
-        this.__applyDiff(this.filteredDescendants);
+        this.__applyDiff();
 
     }
 
@@ -137,11 +113,7 @@ export default class TreeDiffController {
         };
 
         const filteredDestsArray = filterDescendants(graphModel, filterFn);
-        this.filteredDescendants = new Map(filteredDestsArray.map((model: GraphModel) => [model.id, model]));
-
-        const findAllDescendantsFunc = graphModel.findAllDescendants;
-        const descendantsArr = typeof findAllDescendantsFunc === 'function' ? findAllDescendantsFunc.call(graphModel) : findAllDescendants(graphModel);
-        const descendants = this.descendants = new Map(descendantsArr.map((model: GraphModel) => [model.id, model]));
+        const descendants = this.descendants = new Map(filteredDestsArray.map((model: GraphModel) => [model.id, model]));
         const collectionsSet = new Set();
 
         descendants.forEach((model: GraphModel) => {
@@ -177,11 +149,11 @@ export default class TreeDiffController {
             return initialConfig;
         };
 
-        const initialConfig = descendantsArr.reduce(reducer, new Map());
+        const initialConfig = filteredDestsArray.reduce(reducer, new Map());
 
         this.configDiff = new ConfigDiff(initialConfig);
 
-        const nonUniqueList = findDuplicates(descendantsArr.map((model: GraphModel)  => model.id));
+        const nonUniqueList = findDuplicates(filteredDestsArray.map((model: GraphModel)  => model.id));
         if (nonUniqueList.length) {
             Core.InterfaceError.logError(`Error: graph models has non-unique ids: ${nonUniqueList}. Unpredictable behavior is possible.`);
         }
@@ -210,8 +182,8 @@ export default class TreeDiffController {
     }
 
     // apply diff to graphModel
-    __applyDiff(descendants = this.descendants) {
-        descendants.forEach((model, modelId) => {
+    __applyDiff() {
+        this.descendants.forEach((model, modelId) => {
             const configMap = this.configDiff.get(modelId) || this.configDiff.initialConfig.get(modelId);
             const configObject = configMap.toObject();
 
