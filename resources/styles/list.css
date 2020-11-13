@@ -216,6 +216,13 @@
     max-width: 0px; /*hack to set width less than cells content */
 }
 
+@media (min-width: 721px) and (max-width: 1024px) {
+    @supports (-webkit-touch-callout: none) { /* CSS specific to iOS devices */
+        .dev-collection.compact .grid-header-column {
+            max-width: none;
+    }
+}}
+
 .header-column-wrp{
     display: flex;
     align-items: center;
