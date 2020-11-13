@@ -935,7 +935,8 @@ export default Marionette.View.extend({
             model: this.options.treeEditorModel,
             configDiff: this.options.treeEditorConfig,
             getNodeName: this.options.getNodeName || (model => model.get('title')),
-            nestingOptions: this.options.nestingOptions
+            nestingOptions: this.options.nestingOptions,
+            childsFilter: this.options.childsFilter
         });
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
@@ -1075,11 +1076,6 @@ export default Marionette.View.extend({
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
             element.classList.toggle(classCell, state);
         });
-    },
-
-    updateTreeEditorConfig(arrIdVisibleColumns) {
-        const newColumnsTreeEditor = this.columnCollectionDefault.filter(model => arrIdVisibleColumns.includes(model.get('id')));
-        this.columnsCollection.reset(newColumnsTreeEditor);
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {
