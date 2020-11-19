@@ -169,6 +169,7 @@ export default class DropdownView {
             return;
         }
         this.panelEl.style.height = ''; //resetting custom height
+        this.panelView.ui?.addNewButton?.hide();
 
         const viewportHeight = window.innerHeight;
         const dropDownRoot = this.button.$el.closest('.js-dropdown__root')[0];
@@ -267,6 +268,7 @@ export default class DropdownView {
             this.panelEl.classList.remove(classes.DROPDOWN_DOWN);
         }
 
+        this.panelView.ui?.addNewButton?.show();
         offsetHeight = this.panelEl.offsetHeight;
 
         // panel positioning
