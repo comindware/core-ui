@@ -50,12 +50,13 @@ export default formRepository.editors.Code = BaseEditorView.extend({
     ui: {
         editor: '.js-code-codemirror-container',
         editBtn: '.js-code-button-edit',
-        clearBtn: '.js-code-button-clear'
+        clearButton: '.js-code-button-clear'
     },
 
     events: {
         'click @ui.editBtn': '__onEdit',
-        'click @ui.clearBtn': '__onClear',
+        'click @ui.clearButton': '__onClearClickHandler',
+        'dblclick @ui.clearButton': '__onClearDblclick',
         keydown: '__handleKeydown'
     },
 
@@ -80,7 +81,7 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         } else {
             this.showEditor();
             this.ui.editBtn.hide();
-            this.ui.clearBtn.hide();
+            this.ui.clearButton.hide();
             this.editorEl.classList.remove(classes.buttonMode);
         }
     },
@@ -161,7 +162,11 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         }
     },
 
-    __onClear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
         this.__value(null, true, true);
     },
 

@@ -28,8 +28,8 @@ const defaultOptions = {
     intlOptions: {
         style: 'decimal',
         useGrouping: true,
-        /* The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group, 
-        minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined, 
+        /* The following properties fall into two groups: minimumIntegerDigits, minimumFractionDigits, and maximumFractionDigits in one group,
+        minimumSignificantDigits and maximumSignificantDigits in the other. If at least one property from the second group is defined,
         then the first group is ignored. https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat */
         minimumFractionDigits: 0,
         maximumFractionDigits: defaultAllowFroat ? 3 : 0,
@@ -99,7 +99,8 @@ export default formRepository.editors.Number = BaseEditorView.extend({
 
     events() {
         const events = {
-            'click @ui.clearButton': '__clear',
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick',
             'keyup @ui.input': '__keyup',
             'change @ui.input': '__onChange'
         };
@@ -196,7 +197,11 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         }
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
         this.__value(null, false, this.isChangeModeKeydown, false);
         this.focus();
         return false;
@@ -228,6 +233,14 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         this.value = value;
         this.__updateEmpty();
 
+        if (triggerChange) {
+            this.__triggerChange();
+        }
+
+        if (!this.isRendered()) {
+            return;
+        }
+
         if (this.options.showTitle) {
             this.$editorEl.prop('title', value);
         }
@@ -236,10 +249,6 @@ export default formRepository.editors.Number = BaseEditorView.extend({
             this.ui.input.val(value);
         } else {
             this.maskedInputController && this.maskedInputController.textMaskInputElement.update(this.intl.format(value));
-        }
-
-        if (triggerChange) {
-            this.__triggerChange();
         }
     },
 

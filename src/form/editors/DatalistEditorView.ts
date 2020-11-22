@@ -229,6 +229,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             edit: this.options.showEditButton ? this.options.edit : false,
             canDeleteItem: this.options.maxQuantitySelected > 1 ? this.options.canDeleteItem : this.options.allowEmptyValue,
             createValueUrl: this.options.createValueUrl,
+            isDelayedClear: this.options.isDelayedClear,
             enabled: this.getEnabled(),
             readonly: this.getReadonly()
         };

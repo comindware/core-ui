@@ -53,10 +53,10 @@ const variables = {
     'form-input-padding': '10px',
 
     'form-field-margin': '15px',
-    'form-label-font-size': 'var(--base-font-size)',
+    'form-label-font-size': '12px',
     'form-label-font-weight': '600',
-    'form-label-color': 'var(--theme-colors__text)',
-    'form-label-margin': '8px',
+    'form-label-color': 'var(--theme-colors__text_fadest)',
+    'form-label-margin': '5px',
     'form-label-padding': '0 0 0 var(--form-input-padding)',
     'form-label-icon-size': '14px',
     'form-label-icon-margin-x': '5px',
@@ -111,6 +111,7 @@ const variables = {
     'grid-header-height': '35px',
     'grid-header-padding': '0 15px',
     'grid-header-border': 'inset -1px 0 0 0 var(--blue-200), inset 0 1px 0 0 var(--grid-header-border-color)',
+    'grid-header-border-first': 'inset -1px 0 0 0 var(--blue-200), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
     'grid-header-selection-bg': 'var(--grid-header-bg)',
 
@@ -332,6 +333,7 @@ module.exports.apply = {
         'border-radius': '4px',
         'background-color': variables['grey-50']
     },
+
     'popup-header-theme': {
         padding: '15px',
         'font-size': '18px',

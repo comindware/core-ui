@@ -64,7 +64,8 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     className: 'editor context_select js-dropdown__root',
 
     events: {
-        'click @ui.clearButton': '__clear'
+        'click @ui.clearButton': '__onClearClickHandler',
+        'dblclick @ui.clearButton': '__onClearDblclick'
     },
 
     onRender() {
@@ -272,8 +273,11 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         this.viewModel.get('button').set('value', this.__getButtonText(this.value));
     },
 
-    __clear() {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
         this.__value(null, true, null);
-        return false;
     }
 });

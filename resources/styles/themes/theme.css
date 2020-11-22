@@ -1068,7 +1068,6 @@ tr:not(:first-child) .cell_selection {
     align-items: center;
     text-align: center;
     flex-wrap: nowrap;
-    flex: 0 1 auto;
     cursor: pointer;
     overflow: hidden;
     border-radius: 4px;
@@ -1157,15 +1156,7 @@ tr:not(:first-child) .cell_selection {
     min-width: 20px;
 }
 
-.split-button-wrp .split-button-menu-anchor:first-child,
-.split-button-wrp .split-button-action-button:first-child {
-    padding-left: 15px;
-}
 
-.split-button-wrp .split-button-menu-anchor:last-child,
-.split-button-wrp .split-button-action-button:last-child {
-    padding-right: 15px;
-}
 
 /*
 .toolbar-panel_container__select-state .toolbar-btn {
