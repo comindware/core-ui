@@ -513,14 +513,6 @@
 }
 
 /* -------------------- Left Menu Header -------------------- */
-.left-menu__logo {
-    min-height: 60px;
-}
-
-.left-menu-logo {
-    height: 100%;
-}
-
 .left-menu_small .left-menu-logo.left-menu-logo_comindware {
     height: 100%;
 }
@@ -582,10 +574,6 @@
 .left-menu-i {
     padding: 3px 0 4px;
     height: 25px;
-}
-
-.left-menu-i__icon {
-    margin-right: 3px;
 }
 
 .left-menu-i__icon,
