@@ -491,10 +491,6 @@ input[type="checkbox"].checkbox {
     min-width: 0;
 }
 
-.editor_focused .bubbles__form {
-    min-width: 25px;
-}
-
 .bubbles__input {
     width: 100%;
     height: 100%;

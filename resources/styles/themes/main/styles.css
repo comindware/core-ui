@@ -412,6 +412,42 @@ svg.svg-grid-icons.svg-icons_flag-none {
     padding-bottom: 20px;
 }
 
+.left-menu__logo {
+  max-height: 60px;
+  height: 60px;
+  padding: 10px;
+}
+
+.left-menu-logo{
+  height: 100%;
+}
+
+.left-menu__config{
+  height: 48px;
+}
+
+.left-menu-config-btn {
+  font-size: 19px;
+}
+
+.left-menu-splitter{
+  margin-left: 20px;
+  width: calc(100% - 20px);
+}
+.left-menu-splitter_compact {
+  margin-left: 0;
+  width: 100%;
+}
+
+.left-menu-i__icon{
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+
+.top-nav{
+  height: 60px;
+}
 .task-links__i {
     margin-bottom: 10px;
 }
@@ -474,4 +510,21 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .left-menu-view-switcher__container .toolbar-btn {
     padding: 8px 15px;
+}
+
+.toolbar-btn__text {
+  vertical-align: inherit;
+}
+
+.toolbar-btn{
+  padding: 0 15px;
+}
+
+.split-button-wrp .split-button-action-button:first-child,
+.split-button-wrp .split-button-menu-anchor:first-child {
+  padding-left: 15px;
+}
+.split-button-wrp .split-button-action-button:last-child,
+.split-button-wrp .split-button-menu-anchor:last-child{
+  padding-right: 15px;
 }

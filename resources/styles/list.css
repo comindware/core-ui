@@ -210,6 +210,14 @@
     height: 35px;
 }
 
+@media (min-width: 721px) and (max-width: 1024px) {
+    @supports (-webkit-touch-callout: none) { /* CSS specific to iOS devices */
+        .dev-collection.compact .grid-header-column {
+            max-width: none;
+        }
+    }
+}
+
 .header-column-wrp {
     display: flex;
     align-items: center;
@@ -523,6 +531,10 @@ tr:hover .cell_selection {
     border: none;
     background-color: transparent;
     flex: auto;
+}
+
+.cell input {
+    padding: 0;
 }
 
 tr.dragover:not(.grid-header) td {
