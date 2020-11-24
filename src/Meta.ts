@@ -177,6 +177,8 @@ export const validationSeverityClasses = {
     WARNING: 'warning'
 };
 
+export const DOUBLECLICK_DELAY = 500;
+
 export default {
     objectPropertyTypes,
     contextIconType,
@@ -187,5 +189,6 @@ export default {
     complexValueTypes,
     validationSeverityTypes,
     validationSeverityClasses,
-    getComplexValueTypesLocalization
+    getComplexValueTypesLocalization,
+    DOUBLECLICK_DELAY
 };

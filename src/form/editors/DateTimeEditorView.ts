@@ -67,6 +67,13 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             : this.options.showTime
             ? editorTypes.time
             : console.warn('DateTimeEditor: showDate and showTime is false');
+        if (this.options.showDate !== false) {
+            this.dateButtonModel = new Backbone.Model({
+                [this.key]: this.value == null ? '' : moment(this.value).format(this.options.dateDisplayFormat)
+            });
+
+            this.listenTo(this.dateButtonModel, `change:${this.key}`, this.__onDateModelChange);
+        }
     },
 
     ui: {
@@ -76,7 +83,8 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
 
     events() {
         const events = {
-            'click @ui.clearButton': '__onClear',
+            'click @ui.clearButton': '__onClearClickHandler',
+            'dblclick @ui.clearButton': '__onClearDblclick',
             mouseenter: '__onMouseenter'
         };
         if (MobileService.isMobile) {
@@ -357,10 +365,13 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.timeDropdownView?.setReadonly(readonly);
     },
 
-    __onClear(): boolean {
+    __onClearClick() {
+        if (this.__isDoubleClicked) {
+            this.__isDoubleClicked = false;
+            return;
+        }
         this.__value(null, true, false);
         this.focus();
-        return false;
     },
 
     __onEnterValueSelect(event: KeyboardEvent) {
@@ -383,11 +394,6 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
     },
 
     __createDateDropdownEditor() {
-        this.dateButtonModel = new Backbone.Model({
-            [this.key]: this.value == null ? '' : moment(this.value).format(this.options.dateDisplayFormat)
-        });
-        this.listenTo(this.dateButtonModel, `change:${this.key}`, this.__onDateModelChange);
-
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: DateInputView,
             buttonViewOptions: {

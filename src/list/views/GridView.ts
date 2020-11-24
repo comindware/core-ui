@@ -89,7 +89,7 @@ export default Marionette.View.extend({
 
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id || column.key, ...column })));
+        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
         this.columnCollectionDefault = this.columnsCollection.clone();
         this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
@@ -187,8 +187,7 @@ export default Marionette.View.extend({
         const { index, newColumnWidth } = config;
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
-            const treeModel = this.treeModel.get('columnsCollection').find(model => model.id === columnModel.id);
-            treeModel.set('width', newColumnWidth);
+            columnModel.set('width', newColumnWidth);
             this.treeEditorView.setConfigItem(this.options.columns[index].columnModel.id, { width: newColumnWidth });
         }
     },
@@ -944,24 +943,15 @@ export default Marionette.View.extend({
         this.__onDiffApplied();
         const columnsCollection = this.columnsCollection;
 
-        this.treeModel = new Backbone.Model({
-            title: this.options.title,
-            columnsCollection
-        });
-
         this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
-
-        this.treeModel.id = _.uniqueId('treeModelRoot');
-        this.treeModel.isContainer = !!this.options.columns.length;
-        this.treeModel.childrenAttribute = 'columnsCollection';
 
         this.treeEditorView = new Core.components.TreeEditor({
             hidden: this.options.treeEditorIsHidden,
-            model: this.treeModel,
+            model: this.options.treeEditorModel,
             configDiff: this.options.treeEditorConfig,
-            getNodeName(model: GraphModel) {
-                return model.get('title');
-            }
+            getNodeName: this.options.getNodeName || (model => model.get('title')),
+            nestingOptions: this.options.nestingOptions,
+            childsFilter: this.options.childsFilter
         });
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
@@ -973,8 +963,8 @@ export default Marionette.View.extend({
         });
         this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
         this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
-        this.listenTo(columnsCollection, 'change:isHidden', model => {
-            this.__setColumnVisibility(model.id, !model.get('isHidden'));
+        this.listenTo(columnsCollection, 'change:isHidden change:required', model => {
+            this.__setColumnVisibility(model.id, !model.get('isHidden') || model.get('required'));
         });
         this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
     },
@@ -1057,12 +1047,10 @@ export default Marionette.View.extend({
         const index = columns.findIndex(item => item.id === id);
         const columnToBeHidden = columns[index];
         if (isHidden) {
-            columnToBeHidden.isHidden = isHidden;   
+            columnToBeHidden.isHidden = isHidden;
         } else {
             delete columnToBeHidden.isHidden;
         }
-
-        this.trigger('column:set:isHidden', { id, isHidden });
 
         this.setClassToColumn(id, isHidden, index, classes.hiddenByTreeEditorClass);
     },
@@ -1072,21 +1060,21 @@ export default Marionette.View.extend({
         let elementIndex = index + 1;
         const column = columns[index];
 
-       
+
         if (column.customClass && column.customClass.length) {
             const arrayCustomClasses = column.customClass.split(' ');
             const hasCustomClassCell = arrayCustomClasses.find(customClass => customClass === classCell);
             if (!hasCustomClassCell && state) {
-                column.customClass = `${column.customClass} ${classCell}`;     
+                column.customClass = `${column.customClass} ${classCell}`;
             } else if (!state) {
                 const indexDeleteClass = arrayCustomClasses.indexOf(classCell);
                 if (indexDeleteClass !== -1) {
                     arrayCustomClasses.splice(indexDeleteClass, 1).join(' ');
                     column.customClass = arrayCustomClasses;
-                }          
+                }
             }
         } else if (state) {
-            column.customClass = classCell;     
+            column.customClass = classCell;
         }
         if (!this.isAttached()) {
             return;
@@ -1102,11 +1090,6 @@ export default Marionette.View.extend({
         Array.from(this.el.querySelectorAll(cellSelector)).forEach(element => {
             element.classList.toggle(classCell, state);
         });
-    },
-
-    updateTreeEditorConfig(arrIdVisibleColumns) {
-        const newColumnsTreeEditor = this.columnCollectionDefault.filter(model => arrIdVisibleColumns.includes(model.get('id')));
-        this.columnsCollection.reset(newColumnsTreeEditor);
     },
 
     __toggleNoColumnsMessage(columns: Array<object>) {

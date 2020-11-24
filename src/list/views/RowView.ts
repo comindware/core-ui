@@ -8,7 +8,7 @@ import dropdown from 'dropdown';
 import MobileService from '../../services/MobileService';
 import CellViewFactory from '../CellViewFactory';
 import { Column, GridItemModel } from '../types/types';
-import { objectPropertyTypes, complexValueTypes } from '../../Meta';
+import { objectPropertyTypes, complexValueTypes, DOUBLECLICK_DELAY } from '../../Meta';
 import ErrorsPanelView from '../../views/ErrorsPanelView';
 
 const config = {
@@ -57,7 +57,9 @@ export default Marionette.View.extend({
         drop: '__handleDrop',
         pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu',
-        touchend: '__handlePointerDown'
+        touchend: '__handleTouchEnd',
+        touchmove: '__handleTouchMove',
+        touchcancel: '__handleTouchCancel'
     },
 
     modelEvents: {
@@ -92,6 +94,7 @@ export default Marionette.View.extend({
                 this.listenTo(this.model, 'change', () => this.__setCellHidden({ column, index, isHidden: Boolean(column.getHidden?.(this.model)) }));
             }
         });
+        this.__debounceSelectPointedOnClick = _.debounce((...args) => this.__selectPointedOnClick(...args), DOUBLECLICK_DELAY);
     },
 
     getValue(id: string) {
@@ -434,18 +437,24 @@ export default Marionette.View.extend({
                     this.__showDropDown(columnIndex);
                 }
             }
-            setTimeout(
-                () => { 
-                    this.__selectPointed(columnIndex, true)
-                    if (isErrorButtonClicked) {
-                        this.__showErrorsForColumn({ column, index: columnIndex });
-                    }
-                },
-                11 //need more than debounce delay in selectableBehavior calculateLength
-            );
+            this.__debounceSelectPointedOnClick({ isErrorButtonClicked, column, columnIndex });
         }
 
         this.gridEventAggregator.trigger('click', this.model);
+    },
+
+    __selectPointedOnClick({ isErrorButtonClicked, column, columnIndex }: { isErrorButtonClicked: boolean, column: Column, columnIndex: number }) {
+        if (this.__isDoubleClicked) {
+            if (this.lastPointedIndex > -1 && this.lastPointedIndex === columnIndex) {
+                this.__deselectPointed();
+            }
+            this.__isDoubleClicked = false;
+            return;
+        }
+        this.__selectPointed(columnIndex, true);
+        if (isErrorButtonClicked) {
+            this.__showErrorsForColumn({ column, index: columnIndex });
+        }
     },
 
     __showDropDown(index: number) {
@@ -508,15 +517,28 @@ export default Marionette.View.extend({
 
     __handleDblClick() {
         if (!MobileService.isMobile) {
+            this.__isDoubleClicked = true;
             this.gridEventAggregator.trigger('row:pointer:down', this.model);
             this.gridEventAggregator.trigger('dblclick', this.model);
         }
     },
 
-    __handlePointerDown() {
+    __handleTouchEnd() {
         if (MobileService.isMobile) {
+            if (this.isTouchMoveEvent) {
+                this.isTouchMoveEvent = false;
+                return;
+            }
             this.gridEventAggregator.trigger('row:pointer:down', this.model);
         }
+    },
+
+    __handleTouchCancel() {
+        this.isTouchMoveEvent = false;
+    },
+
+    __handleTouchMove() {
+        this.isTouchMoveEvent = true;
     },
 
     __handleSelection() {
@@ -770,7 +792,7 @@ export default Marionette.View.extend({
         if (this.errorShownIndex === index) {
             return;
         }
-        
+
         const element = this.__getCellByColumnIndex(index);
         const errors = this.model.validationError[column.key];
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));

@@ -102,6 +102,10 @@
     order: 3;
 }
 
+.datalist-panel.dropdown__wrp:not(.dropdown__wrp_down):not(.dropdown__wrp_up) .dd-list__btn {
+    display: none;
+}
+
 .dd-list__list {
     position: relative;
     flex-grow: 1;

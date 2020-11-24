@@ -70,7 +70,15 @@ export default Marionette.View.extend({
         this.trigger('minimize');
     },
 
-    __onClose() {       
+    __onClose() {
         this.trigger('code:editor:close');
+    },
+
+    toggleToolbar(readonly) {
+        this.ui.compile.toggle(!readonly);
+        this.ui.undo.toggle(!readonly);
+        this.ui.redo.toggle(!readonly);
+        this.ui.format.toggle(!readonly);
+        this.ui.hint.toggle(!readonly);
     }
 });
