@@ -102,7 +102,8 @@ export default formRepository.editors.Number = BaseEditorView.extend({
             'click @ui.clearButton': '__onClearClickHandler',
             'dblclick @ui.clearButton': '__onClearDblclick',
             'keyup @ui.input': '__keyup',
-            'change @ui.input': '__onChange'
+            'change @ui.input': '__onChange',
+            'blur @ui.input': '__onBlur'
         };
         if (!this.options.hideClearButton) {
             events.mouseenter = '__onMouseenter';
@@ -129,15 +130,19 @@ export default formRepository.editors.Number = BaseEditorView.extend({
     },
 
     __keyup(event) {
-        const value = event.target.value;
+        let value = event.target.value;
+        const max = event.target.max;
+        const min = event.target.min;
         if (this.__isTypeInFractionPart(value) && this.__isTypeInTheEnd(value) && value.slice(-1) === '0') {
             return;
         }
 
         const parsed = this.__parse(value);
-        if (parsed === 0 && value[0] === '-') {
+        if ((parsed === 0 || parsed === null) && value[0] === '-') {
             return;
         }
+
+        value = Number(min) < 0 ? this.__checkMaxMinValue(value, max, min) : this.__checkMaxMinValue(value, max);
 
         this.__value(value, true, this.isChangeModeKeydown || event.keyCode === keyCode.ENTER, false);
     },
@@ -159,6 +164,12 @@ export default formRepository.editors.Number = BaseEditorView.extend({
         const min = input[0].getAttribute('min');
         const value = this.__checkMaxMinValue(input.val(), max, min);
         this.__value(value, false, true, false);
+    },
+
+    __onBlur() {
+        if (Core.services.MobileService.isIE) {
+            this.__onChange();
+        }
     },
 
     __checkMaxMinValue(value, max, min) {
