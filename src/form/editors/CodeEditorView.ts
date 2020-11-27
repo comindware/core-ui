@@ -186,7 +186,5 @@ export default formRepository.editors.Code = BaseEditorView.extend({
         if (this.options.showMode === showModes.button) {
             this.__setEditBtnText();
         }
-
-        this.editor.toolbar.toggleToolbar(readonly);
     }
 });
