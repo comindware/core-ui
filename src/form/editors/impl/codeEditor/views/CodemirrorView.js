@@ -479,6 +479,7 @@ export default Marionette.View.extend({
     setReadonly(readonly) {
         if (this.codemirror) {
             this.codemirror.setOption('readOnly', readonly);
+            this.toolbar.toggleToolbar(readonly);
         }
     },
 
