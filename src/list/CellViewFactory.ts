@@ -66,45 +66,46 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     getCell(column: Column, model: Backbone.Model): string {
-        const value = model.get(column.key);
+        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
+        const value = model.get(columnWithExtension.key);
 
-        if ((this.__isEmpty(value) && column.type !== objectPropertyTypes.BOOLEAN) || column.getHidden?.(model)) {
-            return `<td class="${this.__getCellClass(column, model)}" tabindex="-1"></td>`;
+        if ((this.__isEmpty(value) && columnWithExtension.type !== objectPropertyTypes.BOOLEAN) || columnWithExtension.getHidden?.(model)) {
+            return `<td class="${this.__getCellClass(columnWithExtension, model)}" tabindex="-1"></td>`;
         }
 
         const values = Array.isArray(value) ? value : [value];
 
-        switch (column.dataType || column.type) {
+        switch (columnWithExtension.dataType || columnWithExtension.type) {
             case objectPropertyTypes.EXTENDED_STRING:
-                return this.__createContextString({ values, column, model });
+                return this.__createContextString({ values, column: columnWithExtension, model });
             case objectPropertyTypes.ENUM:
             case objectPropertyTypes.ORGANIZATION_UNIT:
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
-                return this.__getReferenceCell({ values, column, model });
+                return this.__getReferenceCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.ACCOUNT:
-                return this.__getUserCell({ values, column, model });
+                return this.__getUserCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                return this.__getNumberCell({ values, column, model });
+                return this.__getNumberCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.DURATION:
-                return this.__getDurationCell({ values, column, model });
+                return this.__getDurationCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.BOOLEAN:
-                return this.__getBooleanCell({ values, column, model });
+                return this.__getBooleanCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.DATETIME:
-                return this.__getDateTimeCell({ values, column, model });
+                return this.__getDateTimeCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.DOCUMENT:
-                return this.__getDocumentCell({ values, column, model });
+                return this.__getDocumentCell({ values, column: columnWithExtension, model });
             case 'Complex':
-                return this.__getComplexCell({ values, column, model });
+                return this.__getComplexCell({ values, column: columnWithExtension, model });
             case 'ContextSelect':
-                return this.__getContextCell({ values, column, model });
+                return this.__getContextCell({ values, column: columnWithExtension, model });
             case 'Code':
-                return this.__getCodeCell({ values, column, model });
+                return this.__getCodeCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.STRING:
             default:
-                return this.__getStringCell({ values, column, model });
+                return this.__getStringCell({ values, column: columnWithExtension, model });
         }
     }
 
@@ -522,10 +523,9 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getHTMLbyValueEditor({ value, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
         let valueCellInnerHTMLResult;
         const values = Array.isArray(value) ? value : [value];
-        switch (columnWithExtension.valueEditor) {
+        switch (column.valueEditor) {
             case 'Number':
                 valueCellInnerHTMLResult = this.__getNumberCellInnerHTML({ values, column, model });
                 break;
@@ -554,20 +554,19 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getContextCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
-        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
         let valueInnerHTML = '';
-        if (!values || values === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
+        if (!values || values === 'False' || !column.context || !column.recordTypeId) {
             valueInnerHTML = '';
         } else if (typeof values === 'string') {
             valueInnerHTML = values;
         } else {
-            let instanceTypeId = columnWithExtension.recordTypeId;
+            let instanceTypeId = column.recordTypeId;
             const parts: string[] = [];
             values.forEach((item: string) => {
-                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
                 if (searchItem) {
                     parts.push(searchItem.name);
-                    instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
+                    instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
                 }
             });
             valueInnerHTML = parts.join(' - ');
