@@ -1080,13 +1080,13 @@ export default Marionette.View.extend({
         };
         const unusedVariables = await this.intelliAssist.getN3UnusedVariables(formatQuery);
         const lastLine = this.codemirror.lastLine();
-        this.codemirror.markText({ line: 0, ch: 0 }, { line: lastLine }, { css: 'background : none' });
+        this.codemirror.markText({ line: 0, ch: 0 }, { line: lastLine }, { css: 'opacity : 1' });
         if (unusedVariables.length) {
             unusedVariables.forEach(variable => {
                 const cursor = this.codemirror.posFromIndex(variable.startPos);
                 const chStart = cursor.ch;
-                const chStop = cursor.ch + variable.alias.length + 1;
-                this.codemirror.markText({ line: cursor.line, ch: chStart }, { line: cursor.line, ch: chStop }, { css: 'background : yellow' });
+                const chStop = variable.stopPos - variable.startPos;
+                this.codemirror.markText({ line: cursor.line, ch: chStart }, { line: cursor.line, ch: chStop }, { css: 'opacity : 0.6' });
             });
         }
     },
