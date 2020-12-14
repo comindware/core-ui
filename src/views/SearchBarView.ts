@@ -60,6 +60,9 @@ export default Marionette.View.extend({
 
     onBlur() {
         this.el.classList.remove('focused');
+        if (this.ui.input.val()) {
+            return;
+        }
         this.__hideSearchBar();
         if (this.searchButtonIsShown) {
             return;
@@ -77,7 +80,7 @@ export default Marionette.View.extend({
         if (this.options.searchText) {
             this.ui.input.val(this.options.searchText);
         }
-        
+
         const value = this.__toggleClearIcon();
         this.__updateInput(value);
     },
@@ -130,7 +133,7 @@ export default Marionette.View.extend({
     },
 
     __getClassName({ searchBarIsOpen } = {}) {
-        if (!searchBarIsOpen && this.options.isGlobalSearch === true) {
+        if (!searchBarIsOpen && this.options.isAutoHideable === true) {
             return classes.compactSearchClass;
         }
         return classes.defaultSearchClass;
@@ -166,7 +169,7 @@ export default Marionette.View.extend({
     },
 
     __hideSearchBar() {
-        if (this.options.isGlobalSearch === true) {
+        if (this.options.isAutoHideable === true) {
             if (!this.el.classList.contains(classes.closed)) {
                 const currentClassName = this.__getClassName();
                 this.el.className = currentClassName;
