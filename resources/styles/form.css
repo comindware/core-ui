@@ -937,6 +937,13 @@ input[type="color"],
     cursor: pointer;
 }
 
+.editor_readonly.context_select,
+.editor_disabled.context_select,
+.editor_readonly .context_select,
+.editor_disabled .context_select {
+    cursor: default;
+}
+
 .group-title__collapsible {
     cursor: pointer;
 }

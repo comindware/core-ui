@@ -127,6 +127,9 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
 
     onFocus() {
         BaseEditorView.prototype.onFocus.apply(this, arguments);
+        if (this.getReadonly()) {
+            return;
+        }
         this.popoutView.open();
     },
 
@@ -147,15 +150,22 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         if (typeof value === 'string') {
             return value;
         }
+
+        if (!Array.isArray(value)) {
+            return '';
+        }
+
         let instanceTypeId = this.recordTypeId;
         let text = '';
 
         value.forEach((item, index) => {
-            const searchItem = this.context[instanceTypeId]?.find(contextItem => contextItem.id === item);
+            const searchItem = this.context[instanceTypeId]?.find(contextItem => contextItem.id === item || contextItem.alias === item);
 
             if (searchItem) {
                 text += index ? ` - ${searchItem.name}` : searchItem.name;
                 instanceTypeId = searchItem[this.options.instanceValueProperty];
+            } else {
+                text += this.__getButtonText(item);
             }
         });
 
