@@ -24,12 +24,12 @@
     display: flex;
     align-items: flex-end;
     flex-wrap: nowrap;
-    padding-left: 0;
     width: 100%;
     min-width: 0;
     margin: 0;
     overflow: hidden;
     position: relative; /* for __scrollIntoViewIfNeeded */
+    padding: 0;
 }
 
 ul .layout__tab-layout__header-view-item:last-child {
