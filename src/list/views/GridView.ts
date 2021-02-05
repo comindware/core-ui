@@ -89,7 +89,7 @@ export default Marionette.View.extend({
 
         _.defaults(this.options, defaultOptions(options));
         const comparator = factory.getDefaultComparator(this.options.columns);
-        this.columnsCollection = new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
+        this.columnsCollection = this.options.columnsCollection || new Backbone.Collection(this.options.columns.map(column => ({ id: column.id, ...column })));
         this.columnCollectionDefault = this.columnsCollection.clone();
         this.collection = factory.createWrappedCollection({ ...this.options, comparator });
         if (this.collection === undefined) {
