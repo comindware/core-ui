@@ -542,7 +542,7 @@
 }
 
 .left-menu-i {
-  padding: 4px 10px 1px 40px
+
 }
 
 .left-menu-i__icon,
@@ -552,7 +552,7 @@
 }
 
 .left-menu-i__icon{
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .left-menu-i.workspace > .left-menu-i__text {
