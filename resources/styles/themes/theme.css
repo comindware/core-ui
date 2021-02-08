@@ -1062,7 +1062,7 @@ tr:not(:first-child) .cell_selection {
   overflow: hidden;
   border-radius: 4px;
   min-width: 50px;
-  height: 40px;
+  height: 25px;
   transition: all .3s ease-in-out;
 }
 
@@ -1071,8 +1071,8 @@ tr:not(:first-child) .cell_selection {
   width: 100%;
   height: auto;
   font-weight: 300;
-  min-width: 20px;
-  max-height: 20px;
+  min-width: 18px;
+  max-height: 18px;
   flex: none;
   font-size: 16px;
 }

@@ -180,7 +180,7 @@ module.exports.apply = {
     'button-theme': {
         'font-size': '13px',
         padding: '0 15px',
-        'font-weight': '600'
+        'font-weight': '400',
     },
 
     'button-outline-theme': {
@@ -330,7 +330,7 @@ module.exports.apply = {
         'margin-bottom': variables['form-label-margin']
     },
     'toolbar-btn-theme': {
-        'margin-right': '5px'
+        'margin-right': '10px'
     },
 
     'group-theme': {},

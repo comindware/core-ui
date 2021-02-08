@@ -793,7 +793,7 @@ a:hover {
 
 /* Toolbar component */
 .toolbar {
-    height: 50px;
+    height: 40px;
     padding: 5px;
     white-space: nowrap;
     display: flex;
@@ -801,7 +801,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     align-content: center;
-    background: #f5f5f5;
+    background: #e5f4ff;
     box-sizing: border-box;
     z-index: 55; /*bigger then grid*/;
     flex: none;
@@ -840,7 +840,7 @@ a:hover {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    max-height: 40px;
+    max-height: 25px;
 }
 /* end secret CSS-js magic trick */
 
@@ -850,11 +850,11 @@ a:hover {
 
 .toolbar-btn__icon {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     overflow: hidden;
     vertical-align: middle;
-    color: #636262;
+    color: #fff;
 }
 
 .btn-separator {
