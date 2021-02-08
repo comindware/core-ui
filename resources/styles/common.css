@@ -794,7 +794,7 @@ a:hover {
 /* Toolbar component */
 .toolbar {
     height: 40px;
-    padding: 5px;
+    padding: 7px 20px;
     white-space: nowrap;
     display: flex;
     flex-direction: row;
