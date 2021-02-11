@@ -1,11 +1,7 @@
-<div class="layout-group__head">
+<div class="layout-group__head {{#if collapsible}}js-toggle{{/if}}">
+    <span class="group-title">{{{name}}}</span>
     {{#if collapsible}}
-    <span class="js-toggle group-toggle">
-        <svg viewBox="0 0 12 12">
-            <polygon class="d-svg-icons d-svg-icons_arrow" points="8,2 4.5,5.5 1,2 0,2 0,3 4,7 5,7 9,3 9,2 " />
-        </svg>
-    </span>
+        <span class="js-toggle group-toggle"><i class="fas fa-angle-up"></i></span>
     {{/if}}
-    <span class="group-title {{#if collapsible}}group-title__collapsible {{/if}}js-toggle">{{{name}}}</span>
 </div>
 <div class="layout-group__content js-container-region"></div>

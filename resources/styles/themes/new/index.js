@@ -44,7 +44,7 @@ const variables = {
     focus: '1px solid var(--blue-300)',
 
     // font
-    'base-font-size': '14px',
+    'base-font-size': '13px',
     'line-height': '1.4',
     font: "normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif",
 
@@ -335,18 +335,15 @@ module.exports.apply = {
 
     'group-theme': {},
     'group-head-theme': {
+        height: '50px',
         'font-size': '18px',
-        'font-weight': '700',
-        'margin-bottom': '15px',
-        'align-items': 'center'
+        padding: '0 20px'
     },
     'group-title-theme': {
-        'padding-left': '20px'
+
     },
     'group-content-theme': {
         padding: '20px',
-        'border-radius': '4px',
-        'background-color': variables['grey-50']
     },
 
     'popup-header-theme': {

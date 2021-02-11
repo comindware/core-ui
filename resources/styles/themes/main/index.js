@@ -261,12 +261,12 @@ module.exports.apply = {
         'margin-top': '5px'
     },
     'group-head-theme': {
-        'max-width': 'calc(100% - 5px)',
+        height: '30px',
         'font-size': '16px',
-        'margin-bottom': '5px',
+        padding: '0 10px'
     },
     'group-title-theme': {
-        'padding-left': '15px'
+
     },
     'group-content-theme': {
         padding: '10px'

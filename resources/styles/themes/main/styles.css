@@ -343,10 +343,6 @@
 }
 
 
-.group-toggle svg{
-  transform: translateY(2px);
-}
-
 .layout__group-collapsed__button svg {
   transform: rotate(+90deg) translate(1px);
 }
