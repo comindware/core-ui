@@ -37,11 +37,12 @@ export default Marionette.View.extend({
 
     ui: {
         toggleCollapseButtons: '.js-toggle',
+        header: '.js-header',
         containerRegion: '.js-container-region'
     },
 
     events: {
-        'click @ui.toggleCollapseButtons': 'onToggleButtonClick'
+        'click @ui.header': 'onClickHeader'
     },
 
     onRender() {
@@ -70,8 +71,8 @@ export default Marionette.View.extend({
         }
     },
 
-    onToggleButtonClick(e) {
-        if ([ ...this.ui.toggleCollapseButtons].some(el => el === e.currentTarget)) {
+    onClickHeader(e) {
+        if (this.ui.header.get(0) === e.currentTarget) {
             this.toggleCollapse();
         }
     },

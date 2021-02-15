@@ -20,11 +20,11 @@
     box-shadow: 0 3px 6px rgb(0, 0, 0, .16);
 }
 
-.layout-group__head.js-toggle{
+.layout-group__head_collabsible {
     cursor: pointer;
 }
 
-.layout-group__head.js-toggle:hover{
+.layout-group__head_collabsible:hover {
     background: #fff;
     color: #009bfe;
 }
