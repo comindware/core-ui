@@ -223,6 +223,7 @@ export default Marionette.View.extend({
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
+        this.codemirror.setSize(null, this.options.height);
     },
 
     __inputСharacterСhecking(options = {}) {
