@@ -176,7 +176,7 @@ module.exports.apply = {
     'button-theme': {
         'font-size': '13px',
         padding: '0 6x',
-        'font-weight': '600',
+        'font-weight': '400',
         height: '32px'
     },
 
@@ -256,7 +256,7 @@ module.exports.apply = {
     },
 
     'toolbar-btn-theme': {
-        'margin-right': '5px'
+        'margin-right': '10px'
     },
     'group-head-theme': {
         'max-width': 'calc(100% - 5px)',
