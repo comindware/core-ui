@@ -56,8 +56,9 @@ ul .layout__tab-layout__header-view-item:last-child {
 }
 
 .layout__tab-layout__header-view-item.tab-layout__headers-menu {
-    margin: 0 0 0 5px;
+    font-size: 16px;
     font-weight: bold;
+    padding: 0 20px;
 }
 
 /* panel */

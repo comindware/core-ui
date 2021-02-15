@@ -156,7 +156,7 @@ const variables = {
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
 
     // tabs
-    'tab-item-padding': '4px 15px',
+    'tab-item-padding': '4px 20px',
     'tab-item-font-size': 'var(--base-font-size)',
     'tab-panel-container-padding': '20px 15px',
     'tab-header-justify': 'flex-start',
@@ -273,26 +273,23 @@ module.exports.apply = {
         'pointer-events': 'none'
     },
     'tab-item-theme': {
-        border: variables.border,
+        'border-bottom': '2px solid transparent',
         color: variables['text-color'],
         position: 'relative',
         'z-index': '1',
-        'background-color': variables['grey-100'],
-        'margin-right': '5px',
-        'margin-bottom': '0px',
-        'border-radius': '4px 4px 0 0',
+        'background-color': 'transparent',
+        'margin-bottom': '0',
         flex: '0 0 auto',
         'min-height': '30px'
     },
     'tab-item-active-theme': {
-        'background-color': variables.white,
-        'border-bottom-color': variables.white
+        'background-color': 'transparent',
+        color: variables['blue-300'],
+        'border-bottom-color': variables['blue-300']
     },
     'tab-item-error-theme': {
         color: variables.red,
-        'border-top-color': variables.red,
-        'border-right-color': variables.red,
-        'border-left-color': variables.red
+        'border-bottom-color': variables.red
     },
     'tab-item-disabled-theme': {
         color: variables['grey-400'],

@@ -4,7 +4,7 @@ export default Marionette.View.extend({
         this.listenTo(this.collection, 'change:error', this.setErrorIfNeeded);
     },
 
-    template: () => '⋮',
+    template: () => '…',
 
     className: 'layout__tab-layout__header-view-item tab-layout__headers-menu',
 
