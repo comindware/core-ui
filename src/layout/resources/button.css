@@ -9,39 +9,39 @@
 
 .toolbar-btn,
 .split-button-wrp {
-    background-color: rgba(5, 117, 189, 1);
-    border: 1px solid rgba(5, 117, 189, 1);
+    background-color: hsla(203, 95%, 38%, 1);
+    border: 1px solid hsla(203, 95%, 38%, 1);
     color: #fff;
 }
 
 .toolbar-btn_selected,
 .toolbar .toolbar-btn_selected{
     box-shadow: none;
-    background-color: rgba(32, 84, 117, 1);
-    border: 1px solid rgba(32, 84, 117, 1);
+    background-color: hsla(203, 95%, 48%, .9);
+    border: 1px solid hsla(203, 95%, 48%, 1);
     color: #fff;
 }
 
 .toolbar-btn:hover,
 .split-btn:hover {
     box-shadow: none;
-    background-color: rgba(15, 158, 249, .9);
-    border: 1px solid rgba(15, 158, 249, 1);
+    background-color: hsla(203, 95%, 28%, .9);
+    border: 1px solid hsla(203, 95%, 28%, 1);
     color: #fff;
 }
 
 .toolbar-btn:active,
 .split-btn:active {
-    background-color: rgba(32, 84, 117, 1);
-    border: 1px solid rgba(32, 84, 117, 1);
+    background-color: hsla(203, 95%, 48%, .9);
+    border: 1px solid hsla(203, 95%, 48%, 1);
 }
 
 /* Themes color button */
 
 .toolbar-btn_low,
 .split-btn_low {
-    background-color: rgba(72, 163, 221, .9);
-    border: 1px solid rgba(72, 163, 221, 1);
+    background-color: hsla(203, 50%, 56%, 1);
+    border: 1px solid hsl(203, 50%, 56%);
 }
 
 .toolbar-btn_low.toolbar-btn_selected{
@@ -56,36 +56,40 @@
     color: #153e93;
     background-color: rgba(36, 93, 209, .2);
     border-color: rgba(36, 93, 209, .2); */
+    background-color: hsla(203, 50%, 46%, .9);
+    border: hsl(203, 50%, 46%);
 }
 
 .toolbar-btn_low:active,
 .split-btn_low:active {
     /* border-color: rgba(36, 93, 209, .4); */
+    background-color: hsla(203, 50%, 66%, .9);
+    border: hsl(203, 50%, 66%);
 }
 
 .toolbar-btn_normal,
 .split-btn_normal {
-    background-color: rgba(17, 158, 31, .9);
-    border-color: rgba(17, 158, 31, 1);
+    background-color: hsl(126, 92%, 34%);
+    border-color: hsl(126, 92%, 34%);
 }
 
 .toolbar-btn_normal:hover,
 .split-btn_normal:hover {
-    background-color: rgba(12, 198, 30, .9);
-    border-color: rgba(12, 198, 30, 1);
+    background-color: hsla(126, 92%, 24%, .9);
+    border: 1px solid hsl(126, 92%, 24%);
 }
 
 .toolbar-btn_normal:active,
 .split-btn_normal:active {
-    background-color: rgba(5, 139, 20, .9);
-    border-color: rgba(5, 139, 20, 1);
+    background-color: hsla(126, 92%, 44%, .9);
+    border: 1px solid hsl(126, 92%, 44%);
 }
 
 
 .toolbar-btn_major,
 .split-btn_major {
-    background-color: rgba(0, 157, 162, .9);
-    border-color: rgba(0, 157, 162, 1);
+    background-color: hsla(182, 100%, 32%, 1);
+    border: 1px solid hsl(182, 100%, 32%);
 }
 
 .toolbar-btn_major.toolbar-btn_selected{
@@ -96,20 +100,20 @@
 
 .toolbar-btn_major:hover,
 .split-btn_major:hover {
-    background-color: rgba(64, 208, 212, .9);
-    border-color: rgba(64, 208, 212, 1);
+    background-color: hsla(182, 100%, 22%, .9);
+    border-color: hsl(182, 100%, 22%);
 }
 
 .toolbar-btn_major:active,
 .split-btn_major:active {
-    background-color: rgba(1, 133, 137, .9);
-    border-color: rgba(1, 133, 137, 1);
+    background-color: hsla(182, 100%, 42%, .9);
+    border-color: hsl(182, 100%, 42%);
 }
 
 .toolbar-btn_critical,
 .split-btn_critical {
-    background-color: rgba(224, 115, 67, .9);
-    border-color: rgba(224, 115, 67, 1);
+    background-color: hsla(24, 81%, 46%, 1);
+    border-color: hsl(24, 81%, 46%);
 }
 
 .toolbar-btn_critical.toolbar-btn_selected{
@@ -120,20 +124,20 @@
 
 .toolbar-btn_critical:hover,
 .split-btn_critical:hover {
-    background-color: rgba(255, 168, 136, .9);
-    border-color: rgba(244, 115, 67, .9);
+    background-color: hsla(24, 81%, 36%, .9);
+    border-color: hsl(24, 81%, 36%);
 }
 
 .toolbar-btn_critical:active,
 .split-btn_critical:active {
-    background-color: rgba(209, 109, 72, .9);
-    border-color: rgba(209, 109, 72, 1);
+    background-color: hsla(24, 81%, 56%, .9);
+    border-color: hsl(24, 81%, 56%);
 }
 
 .toolbar-btn_fatal,
 .split-btn_fatal {
-    background-color: rgba(192, 0, 0, .9);
-    border-color: rgba(192, 0, 0, 1);
+    background-color: hsla(0, 100%, 38%, 1);
+    border-color: hsl(0, 100%, 38%);
 }
 
 .toolbar-btn_fatal.toolbar-btn_selected{
@@ -144,14 +148,14 @@
 
 .toolbar-btn_fatal:hover,
 .split-btn_fatal:hover {
-    background-color: rgba(255, 18, 18, .9);
-    border-color: rgba(192, 0, 0, .9);
+    background-color: hsla(0, 100%, 28%, .9);
+    border-color: hsl(0, 100%, 28%);
 }
 
 .toolbar-btn_fatal:active,
 .split-btn_fatal:active {
-    background-color: rgba(173, 21, 21, .9);
-    border-color: rgba(173, 21, 21, 1);
+    background-color: hsla(0, 100%, 48%, .9);
+    border-color: hsl(0, 100%, 48%);
 }
 
 .split-button-wrp .toolbar-btn.toolbar-btn_splitButton,
@@ -173,7 +177,6 @@
     width: 100%;
     margin: 1px 0 0;
     border-radius: 0;
-    height: auto;
     padding: 7px 15px;
     text-align: left;
 }

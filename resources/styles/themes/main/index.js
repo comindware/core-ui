@@ -322,11 +322,12 @@ module.exports.apply = {
     'group-head-theme': {
         'font-size': '18px',
         'font-weight': '700',
-        'margin-bottom': '15px',
-        'align-items': 'center'
+        'align-items': 'center',
+        height: '30px',
+        padding: '0 10px'
     },
     'group-title-theme': {
-        'padding-left': '20px'
+        // 'padding-left': '20px'
     },
     'group-content-theme': {
         padding: '20px',
