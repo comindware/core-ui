@@ -273,7 +273,7 @@ module.exports.apply = {
         'pointer-events': 'none'
     },
     'tab-item-theme': {
-        'border-bottom': '2px solid transparent',
+        'border-bottom': '3px solid transparent',
         color: variables['text-color'],
         position: 'relative',
         'z-index': '1',

@@ -4,8 +4,7 @@
     padding: 10px;
     margin: 0;
 }
-.layout__vertical-layout>.layout-groupб
-.layout__vertical-layout>.layout-group {
+.layout__vertical-layout>.layout-group{
     margin: 0;
 }
 
@@ -81,3 +80,8 @@
 .layout__tab-layout__panel-container .layout-group .layout-group__content{
     box-shadow: none;
 }
+.layout-group .toolbar,
+.layout-group .toolbar-container{
+    background-color: transparent;
+}
+
