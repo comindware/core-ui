@@ -708,16 +708,46 @@ export default Marionette.View.extend({
         const selected = this.__getSelectedItems(collection);
         switch (model.get('id')) {
             case 'delete':
-                this.__confirmUserAction(
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
-                ).then(result => {
-                    if (result) {
-                        this.__triggerAction(model, selected, ...rest);
-                    }
-                });
+                switch (this.options.gridViewOptions.collectionState.get('rowRemovalType')) {
+                    case 'Unlink':
+                        this.__confirmUserAction(
+                            Localizer.get('CORE.GRID.ACTIONS.UNLINK.CONFIRM.TEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.UNLINK.CONFIRM.TITLE'),
+                            Localizer.get('CORE.GRID.ACTIONS.UNLINK.CONFIRM.YESBUTTONTEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.UNLINK.CONFIRM.NOBUTTONTEXT')
+                        ).then(result => {
+                            if (result) {
+                                this.__triggerAction(model, selected, ...rest);
+                            }
+                        });
+                        break;
+                    case 'Archive':
+                        this.__confirmUserAction(
+                            Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                            Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                        ).then(result => {
+                            if (result) {
+                                this.__triggerAction(model, selected, ...rest);
+                            }
+                        });
+                        break;
+                    case 'Delete':
+                        this.__confirmUserAction(
+                            Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                            Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                            Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                        ).then(result => {
+                            if (result) {
+                                this.__triggerAction(model, selected, ...rest);
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case 'archive':
                 this.__confirmUserAction(

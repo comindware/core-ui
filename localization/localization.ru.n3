@@ -360,7 +360,7 @@
 
 <http://comindware.com/text/core/grid/actions/archive/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
 
-<http://comindware.com/text/core/grid/actions/archive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите архивировать выбранные объекты?"; l10n:originalData "Do you want to archive selected items?"].
+<http://comindware.com/text/core/grid/actions/archive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите архивировать выбранные записи?"; l10n:originalData "Do you want to archive selected items?"].
 
 <http://comindware.com/text/core/grid/actions/archive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивирование"; l10n:originalData "Archiving"].
 
@@ -370,7 +370,7 @@
 
 <http://comindware.com/text/core/grid/actions/delete/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
 
-<http://comindware.com/text/core/grid/actions/delete/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите удалить выбранные объекты?"; l10n:originalData "Do you want to delete selected items?"].
+<http://comindware.com/text/core/grid/actions/delete/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите удалить выбранные записи?"; l10n:originalData "Do you want to delete selected items?"].
 
 <http://comindware.com/text/core/grid/actions/delete/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удаление"; l10n:originalData "Deleting"].
 
@@ -385,6 +385,16 @@
 <http://comindware.com/text/core/grid/actions/unArchive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивирование"; l10n:originalData "Unarchiving"].
 
 <http://comindware.com/text/core/grid/actions/unArchive/confirm#yesButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивровать"; l10n:originalData "Unarchive"].
+
+<http://comindware.com/text/core/grid/actions/unlink#confirm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Подтверждение"; l10n:originalData "Confirm"].
+
+<http://comindware.com/text/core/grid/actions/unlink/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cansel"].
+
+<http://comindware.com/text/core/grid/actions/unlink/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите исключить из коллекции выбранные записи?"; l10n:originalData "Do you want to exclude selected items from the collection?"].
+
+<http://comindware.com/text/core/grid/actions/unlink/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Исключение из коллекции"; l10n:originalData "title"].
+
+<http://comindware.com/text/core/grid/actions/unlink/confirm#yesButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Исключить"; l10n:originalData "Exclude"].
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#no> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет"; l10n:originalData "No"].
 
