@@ -768,6 +768,7 @@ tr.grid-header.dragover td {
     max-height: 100%;
     will-change: scroll-position;
     contain: content;
+    border-radius: 4px;
 }
 
 .grid-label_tree-editor {

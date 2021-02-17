@@ -727,12 +727,13 @@ tr:not(:first-child) .cell_selection {
 }
 
 .collapsible-btn {
-    font-size: 1.4em;
+    font-size: 1.6em;
+    font-weight: 300;
     cursor: pointer;
     margin-right: 8px;
+    vertical-align: middle;
     transition-property: transform;
     transition-duration: 300ms;
-    top: 2px;
 }
 
 .cell .collapsible-btn {

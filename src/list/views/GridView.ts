@@ -50,11 +50,11 @@ const defaultOptions = options => ({
     showHeader: true,
     handleSearch: true,
     updateToolbarEvents: '',
-    childHeight: 35,
+    childHeight: 29,
     showTreeEditor: false,
     treeEditorIsHidden: false,
     treeEditorConfig: new Map(),
-    headerHeight: 36
+    headerHeight: 30
 });
 
 /**
