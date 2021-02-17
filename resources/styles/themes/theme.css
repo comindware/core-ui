@@ -1070,9 +1070,12 @@ tr:not(:first-child) .cell_selection {
   height: auto;
   font-weight: 300;
   min-width: 18px;
-  max-height: 18px;
   flex: none;
-  font-size: 16px;
+  font-size: 15px;
+}
+.toolbar-btn > .toolbar__icons_arrow > i{
+  font-size: 12px;
+  min-width: auto;
 }
 .toolbar-items-wrp > div:last-child.toolbar-btn,
 .toolbar-items-wrp > div:last-child .toolbar-btn{
@@ -1091,15 +1094,18 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar__icons {
-  display: inline-block;
+  display: inline-flex;
   min-width: 20px;
-  max-height: 20px;
+  max-height: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   flex: none;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .toolbar__icons + .toolbar-btn__text{
-  margin-left: 5px;
+  margin-left: 3px;
 }
 
 .toolbar__icons + .toolbar-btn__text:empty{
@@ -1111,30 +1117,33 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar__icons_arrow {
-  display: inline-block;
-  padding: 2px 0 0;
+  min-width: auto;
+  margin-left: 5px;
 }
 
 
 .split-button-wrp {
+  @apply --toolbar-btn-theme;
   display: flex;
   border-radius: 4px;
   padding: 0;
   align-items: center;
-  margin-right: 5px;
   transition: all .4s ease-in-out;
 }
 
 .btn-separator {
   display: inline-block;
   width: 0;
-  height: 50%;
-  margin: 0 5px 0 0;
-  border-right: 1px solid inherit;
+  height: 75%;
+  margin: 0 9px 0 10px;
+  border-right: 1px solid;
   align-self: center;
 }
 .split-button-wrp .btn-separator {
-  margin: 0 1px;
+  margin: 0 0 0 1px;
+}
+.toolbar-btn + .btn-separator {
+  margin-left: 0;
 }
 
 .split-button-wrp .split-button-menu-anchor,
