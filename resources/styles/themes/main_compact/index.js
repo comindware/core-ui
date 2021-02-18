@@ -176,7 +176,7 @@ module.exports.apply = {
     'button-theme': {
         'font-size': '13px',
         padding: '0 6x',
-        'font-weight': '600',
+        'font-weight': '400',
         height: '32px'
     },
 
@@ -256,15 +256,16 @@ module.exports.apply = {
     },
 
     'toolbar-btn-theme': {
-        'margin-right': '5px'
+        'margin-right': '10px'
     },
     'group-head-theme': {
+        height: '50px',
         'max-width': 'calc(100% - 5px)',
         'font-size': '16px',
-        'margin-bottom': '5px',
+        padding: '0 20px'
     },
     'group-title-theme': {
-        'padding-left': '15px'
+        // 'padding-left': '15px'
     },
     'group-content-theme': {
         padding: '10px'

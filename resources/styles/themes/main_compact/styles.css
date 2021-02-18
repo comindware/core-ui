@@ -367,10 +367,6 @@
     margin-bottom: 10px;
 }
 
-.group-toggle svg {
-    transform: translateY(2px);
-}
-
 .layout__group-collapsed__button svg {
     transform: rotate(+90deg) translate(1px);
 }
@@ -420,12 +416,6 @@
 .toolbar-dataset {
     height: 36px;
     padding: 0 5px;
-}
-
-.toolbar-items-wrp,
-.toolbar-btn,
-.tree-editor-btn {
-    height: 32px;
 }
 
 .toolbar-btn {
