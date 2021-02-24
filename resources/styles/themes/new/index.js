@@ -83,8 +83,10 @@ const variables = {
 
     // checkbox
     'checkbox-size': '18px',
-    'checkbox-checked-color': 'var(--blue-300)',
     'checkbox-border-color': 'var(--border-color)',
+    'checkbox-checked-color': 'var(--white)',
+    'checkbox-checked-border': 'var(--blue-300)',
+    'checkbox-checked-background': 'var(--blue-300)',
     'checkbox-radius': 'var(--border-radius)',
     'checkbox-intermediate-size': '10px',
 
@@ -248,7 +250,8 @@ module.exports.apply = {
         display: 'flex',
         'flex-shrink': '0',
         'align-items': 'center',
-        'justify-content': 'center'
+        'justify-content': 'center',
+        'background-color': variables.white
     },
     'checkbox-disabled-theme': {
         color: variables['grey-400'],

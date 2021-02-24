@@ -74,10 +74,13 @@ const variables = {
     'custom-control-spacer-y': '0',
 
     // checkbox
-    'checkbox-size': '16px',
-    'checkbox-radius': '2px',
-    'checkbox-border-color': 'var(--grey-900)',
-    'checkbox-intermediate-size': '8px',
+    'checkbox-size': '18px',
+    'checkbox-border-color': 'var(--border-color)',
+    'checkbox-checked-color': 'var(--white)',
+    'checkbox-checked-border': 'var(--blue-300)',
+    'checkbox-checked-background': 'var(--blue-300)',
+    'checkbox-radius': 'var(--border-radius)',
+    'checkbox-intermediate-size': '10px',
 
     // radio
     'radio-size': '12px',

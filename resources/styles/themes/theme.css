@@ -366,7 +366,7 @@ body {
 .editor_checked .radiobutton:after {
   width: var(--radio-inner-size);
   height: var(--radio-inner-size);
-  background-color: var(--radio-checked-color);
+  background-color: var(--checkbox-checked-background);
 }
 
 .editor_disabled .editor_checked .radiobutton:after,
@@ -779,8 +779,8 @@ tr:not(:first-child) .cell_selection {
 .dd-list__i,
 .toolbar-panel_container__select-state .toolbar-btn,
 .popout-menu__txt {
-  padding: var(--dropdown-item-padding);
-  font-size: var(--dropdown-font-size);
+  /*padding: var(--dropdown-item-padding);
+  font-size: var(--dropdown-font-size);*/
 }
 
 .dd-list__i_checkbox{

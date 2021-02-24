@@ -130,21 +130,18 @@
     padding: 0;
 }
 .toolbar-panel_container .toolbar-btn {
-    width: 100%;
-    margin: 1px 0 0;
-    border-radius: 0;
-    padding: 7px 15px;
+    width: calc(100% - 10px);
+    margin: 2px 5px;
     text-align: left;
 }
 .toolbar-panel_container .toolbar-btn:first-child {
-    margin: 0;
-    border-radius: 4px 4px 0 0;
+    margin-top: 5px;
 }
 .toolbar-panel_container .toolbar-btn:last-child {
-    border-radius: 0 0 4px 4px;
+    margin-bottom: 5px;
 }
 .toolbar-panel_container .toolbar-btn:first-child:last-child {
-    border-radius: 4px;
+
 }
 .toolbar-panel_container .toolbar-btn .toolbar__icons{
     margin: 0 5px 0 -5px;
