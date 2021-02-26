@@ -9,7 +9,7 @@ const defaultOptions = ({ view }) => ({
 
 const classes = {
     CLASS_NAME: 'layout-group',
-    COLLAPSED_CLASS: 'group-collapsed'
+    COLLAPSED_CLASS: 'layout__group-collapsed__button'
 };
 
 export default Marionette.View.extend({

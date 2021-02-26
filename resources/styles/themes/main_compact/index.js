@@ -259,13 +259,12 @@ module.exports.apply = {
         'margin-right': '10px'
     },
     'group-head-theme': {
-        height: '50px',
         'max-width': 'calc(100% - 5px)',
         'font-size': '16px',
-        padding: '0 20px'
+        'margin-bottom': '5px'
     },
     'group-title-theme': {
-        // 'padding-left': '15px'
+        'padding-left': '15px'
     },
     'group-content-theme': {
         padding: '10px'
