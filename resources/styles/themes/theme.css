@@ -782,6 +782,9 @@ tr:not(:first-child) .cell_selection {
   /*padding: var(--dropdown-item-padding);
   font-size: var(--dropdown-font-size);*/
 }
+.dd-list__i {
+  padding: var(--dropdown-item-padding)
+}
 
 .dd-list__i_checkbox{
   padding-left: var(--dropdown-item-checkbox-padding);

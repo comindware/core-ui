@@ -147,7 +147,7 @@ const variables = {
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '12px',
     'dropdown-group-color': 'var(--black)',
-    'dropdown-item-padding': '8px 20px',
+    'dropdown-item-padding': '5px 10px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
     'bubbles-item-delete-padding': '0',
