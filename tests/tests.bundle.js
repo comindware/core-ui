@@ -57,7 +57,7 @@ const Application = Marionette.Application.extend({
                 langCode: 'en',
                 localizationMap,
                 warningAsError: true,
-                timeZone: 'Europe/Moscow'
+                timeZone: 'Europe/London'
             },
             userService: {
                 dataProvider
