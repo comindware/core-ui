@@ -37,7 +37,8 @@ export const contextIconType = {
     process: 'cogs',
     case: 'cube',
     list: 'align-justify',
-    group: 'clone'
+    group: 'clone',
+    chart: 'file-chart-pie'
 };
 
 export const objectPropertyTypes = {
