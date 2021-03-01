@@ -38,7 +38,7 @@ describe('Editors', () => {
             const value = view.getValue();
 
             const expected = model.get('data');
-            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
+            expect(view.$('checkbox i').length).toBe(0);
             expect(value).toEqual(expected);
         });
 
@@ -55,7 +55,7 @@ describe('Editors', () => {
 
             const value = view.getValue();
 
-            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
+            expect(view.$('checkbox i').length).toBe(0);
             expect(value).toEqual(expected);
         });
 
@@ -120,7 +120,7 @@ describe('Editors', () => {
             const value = view.getValue();
 
             const expected = model.get('data');
-            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
+            expect(view.$('checkbox i').length).toBe(0);
             expect(value).toEqual(expected);
             expect(onChangeCallback).not.toHaveBeenCalled();
         });

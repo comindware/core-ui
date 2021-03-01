@@ -6,16 +6,12 @@ export default ToolbarCheckboxItemView.extend({
     },
 
     onRender() {
-        this.__updateState();
-    },
-
-    __updateState() {
-        this.ui.check.toggleClass(this.classes.CHECKED, !!this.model.selected);
+        this.__toggleIcon(!!this.model.selected);
     },
 
     __handleClick() {
         this.model.select();
-        this.__updateState();
+        this.__toggleIcon(!!this.model.selected);
         this.trigger('action:click', this.model);
     }
 });

@@ -41,11 +41,23 @@
   color: var(--grey-400);
 }
 
-.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
-.editor_checked.checkbox {
+.checkbox:not(:empty) {
   color: var(--checkbox-checked-color);
   border-color: var(--checkbox-checked-border);
   background-color: var(--checkbox-checked-background);
+}
+
+.grid-header .checkbox:not(:empty) {
+  color: var(--checkbox-checked-background);
+  border-color: var(--checkbox-checked-color);
+  background-color: var(--checkbox-checked-color);
+}
+.grid-header .checkbox i{
+  color: var(--checkbox-checked-background);
+}
+
+.checkbox i{
+  font-size: 10px;
 }
 
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .radiobutton {

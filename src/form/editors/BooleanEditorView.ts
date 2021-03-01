@@ -9,9 +9,9 @@ const defaultOptions = {
     thirdState: false
 };
 
-const classes = {
-    CHECKED: 'editor_checked',
-    CHECKED_SOME: 'editor_checked_some'
+const icons = {
+    CHECKED: '<i class="fas fa-check"></i>',
+    CHECKED_SOME: '<i class="fas fa-sqaure"></i>'
 };
 
 /**
@@ -91,15 +91,13 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
         },
 
         __updateState() {
+            const toggleButtonEl = this.ui.toggleButton.get(0);
             if (this.value) {
-                this.editorEl.classList.add(classes.CHECKED);
-                this.editorEl.classList.remove(classes.CHECKED_SOME);
+                toggleButtonEl.innerHTML = icons.CHECKED;
             } else if (this.value === false || !this.options.thirdState) {
-                this.editorEl.classList.remove(classes.CHECKED_SOME);
-                this.editorEl.classList.remove(classes.CHECKED);
+                toggleButtonEl.innerHTML = '';
             } else {
-                this.editorEl.classList.remove(classes.CHECKED);
-                this.editorEl.classList.add(classes.CHECKED_SOME);
+                toggleButtonEl.innerHTML = icons.CHECKED_SOME;
             }
         },
 
@@ -119,8 +117,5 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
                 event.preventDefault();
             }
         }
-    },
-    {
-        classes
     }
 );

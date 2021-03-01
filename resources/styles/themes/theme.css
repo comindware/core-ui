@@ -1116,6 +1116,12 @@ tr:not(:first-child) .cell_selection {
   margin-left: 0;
 }
 
+.toolbar__icons .checkbox,
+.toolbar__icons .checkbox:not(:empty) {
+  background: unset;
+  border: unset;
+}
+
 .toolbar-btn__text > .editor_checkbox {
   padding-right: 5px;
 }
