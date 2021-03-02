@@ -5,6 +5,7 @@ export default function() {
         view: new Core.layout.Group({
             name: 'Group',
             collapsible: true,
+            showMenu: true,
             view: new Core.layout.Group({
                 name: 'Nested Group',
                 collapsible: false,

@@ -392,6 +392,10 @@
 
 <http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
 
+<http://comindware.com/text/core/layout/groupLayout/menu#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "На весь экран"; l10n:originalData "In full screen"].
+
+<http://comindware.com/text/core/layout/groupLayout/menu#restore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Восстановить размер"; l10n:originalData "Restore size"].
+
 <http://comindware.com/text/core/layout/tabLayout#noTabMessage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все вкладки скрыты"; l10n:originalData "All tabs are hidden"].
 
 <http://comindware.com/text/core/layoutDesigner#addHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите элементы из левой панели"; l10n:originalData "Drag elements from left panel"].

@@ -10,6 +10,7 @@
 
 
 .layout-group__head {
+    position: relative;
     display: flex;
     align-items: center;
     flex: none;
@@ -17,15 +18,6 @@
     background-color: #f9f9f9;
     border-radius: 4px 4px 0 0;
     box-shadow: 0 3px 6px rgb(0, 0, 0, .16);
-}
-
-.layout-group__head_collabsible {
-    cursor: pointer;
-}
-
-.layout-group__head_collabsible:hover {
-    background: #fff;
-    color: #009bfe;
 }
 
 .layout-group__head.group-collapsed{
@@ -57,6 +49,23 @@
     transform: scaleY(-1);
 }
 
+.group-toggle:hover,
+.layout-group__menu:hover {
+    color: #009bfe;
+}
+
+.layout-group__menu {
+    position: absolute;
+    left: 10px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.layout-group__head:hover .layout-group__menu:not(empty),
+.layout-group__head_menu-shown .layout-group__menu:not(empty) {
+    opacity: 1;
+}
+
 .layout-group__content{
     background: #fff;
     border-top: 1px solid #e3e3e3;
@@ -86,5 +95,16 @@
 .layout-group .toolbar,
 .layout-group .toolbar-container{
     background-color: transparent;
+}
+
+.modal-window-wrapper > .layout-group {
+    height: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-window-wrapper > .layout-group > .layout-group__content {
+    flex: 1 1 100%;
 }
 
