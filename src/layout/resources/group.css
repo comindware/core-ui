@@ -67,17 +67,20 @@
 
 /* fix group on group and group in tabs*/
 .layout-group .layout-group,
-.layout__tab-layout__panel-container  .layout-group{
+.layout__tab-layout__panel-container .layout-group,
+.layout__popup-view-window .layout-group{
     padding: 0;
     border: 1px solid #e3e3e3;
     border-radius: 4px;
 }
 .layout-group .layout-group .layout-group__head,
-.layout__tab-layout__panel-container .layout-group .layout-group__head{
+.layout__tab-layout__panel-container .layout-group .layout-group__head,
+.layout__popup-view-window .layout-group .layout-group__head{
     box-shadow: none;
 }
 .layout-group .layout-group .layout-group__content,
-.layout__tab-layout__panel-container .layout-group .layout-group__content{
+.layout__tab-layout__panel-container .layout-group .layout-group__content,
+.layout__popup-view-window .layout-group .layout-group__content{
     box-shadow: none;
 }
 .layout-group .toolbar,
