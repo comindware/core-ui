@@ -95,14 +95,14 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.__resetCollections();
-        this.windowWidth = window.innerWidth;
+        this.toolbarWidth = this.el.parentElement.offsetWidth;
         const debouncedRebuild = _.debounce(() => {
             const interval = setInterval(() => {
-                const currentWindowWidth = window.innerWidth;
-                if (this.windowWidth === currentWindowWidth) {
+                const currentToolbarWidth = this.el.parentElement.offsetWidth;
+                if (this.toolbarWidth === currentToolbarWidth) {
                     return;
                 }
-                this.windowWidth = currentWindowWidth;
+                this.toolbarWidth = currentToolbarWidth;
                 this.rebuildView(interval), debounceInterval.medium;
             });
         }, debounceInterval.medium);
