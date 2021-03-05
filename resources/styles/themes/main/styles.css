@@ -337,9 +337,9 @@
   padding: 0 15px;
 }
 
-.layout__vertical-layout > div,
-.layout__vertical-layout-item{
-  margin-bottom: 10px;
+.layout__vertical-layout > div:not(:first-child),
+.layout__vertical-layout-item:not(:first-child){
+  margin-top: 10px;
 }
 
 

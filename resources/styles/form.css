@@ -855,6 +855,10 @@ input[type="color"], .colorpicker{
     max-height: 600px;
 }
 
+.document-embedded-content {
+    width: 100%;
+}
+
 .documents {
     list-style-type: none;
     margin-top: 20px;

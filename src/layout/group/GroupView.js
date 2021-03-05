@@ -10,12 +10,12 @@ const defaultOptions = ({ view }) => ({
 const classes = {
     CLASS_NAME: 'layout-group',
     COLLAPSED_CLASS: 'group-collapsed',
-    MENU_SHOWN: 'layout-group__head_menu-shown'
+    MENU_SHOWN: 'layout-group__head_menu-shown',
+    MAXIMIZED: 'layout-group__head_maximized'
 };
 
 const menuItemsIds = {
-    maximize: 'maximize',
-    restore: 'restore'
+    maximize: 'maximize'
 };
 
 export default Marionette.View.extend({
@@ -46,12 +46,14 @@ export default Marionette.View.extend({
         toggleCollapseButtons: '.js-toggle',
         header: '.js-header',
         containerRegion: '.js-container-region',
-        menuRegion: '.js-menu-region'
+        menuRegion: '.js-menu-region',
+        restore: '.js-restore'
     },
 
     events: {
         'click @ui.toggleCollapseButtons': 'onClickToggleButton',
-        'click @ui.menuRegion': 'onMenuClick'
+        'click @ui.menuRegion': 'onMenuClick',
+        'click @ui.restore': '__onRestore'
     },
 
     modelEvents: {
@@ -111,8 +113,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __onMaximizedChange() {
-        this.menuItemsCollection.reset(this.__getMenuItems());
+    __onMaximizedChange(model, isMaximized) {
+        this.ui.header.get(0).classList.toggle(classes.MAXIMIZED, isMaximized);
     },
 
     __createMenu() {
@@ -129,31 +131,19 @@ export default Marionette.View.extend({
     },
 
     __getMenuItems() {
-        const items = [];
-        if (this.model.get('isMaximized')) {
-            items.push({
-                id: menuItemsIds.restore,
-                icon: 'window-restore',
-                name: Localizer.get('CORE.LAYOUT.GROUPLAYOUT.MENU.RESTORE')
-            });
-        } else {
-            items.push({
+        return [
+            {
                 id: menuItemsIds.maximize,
                 icon: 'window-maximize',
                 name: Localizer.get('CORE.LAYOUT.GROUPLAYOUT.MENU.MAXIMIZE')
-            });
-        }
-
-        return items;
+            }
+        ];
     },
 
     __execute(id) {
         switch (id) {
             case menuItemsIds.maximize:
                 this.__onMaximize();
-                break;
-            case menuItemsIds.restore:
-                this.__onRestore();
                 break;
             default:
                 break;

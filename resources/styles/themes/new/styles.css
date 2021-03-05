@@ -278,9 +278,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding-right: 10px;
 }
 
-.layout__vertical-layout > div,
-.layout__vertical-layout-item{
-  margin-bottom: 20px;
+.layout__vertical-layout > div:not(:first-child),
+.layout__vertical-layout-item:not(:first-child) {
+  margin-top: 20px;
 }
 
 .layout-group .layout-group__content > .layout-group .group-title {
