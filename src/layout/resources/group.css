@@ -1,25 +1,33 @@
 .layout-group {
-    position: relative;
     background: transparent;
     padding: 10px;
     margin: 0;
-    display: flex;
-    flex-direction: column;
 }
 
 .layout__vertical-layout>.layout-group{
     margin: 0;
 }
 
-.layout-group__head {
+.layout-group-wrp {
     position: relative;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgb(0, 0, 0, .16);
+}
+
+.layout-group__head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     align-items: center;
     flex: none;
     border: 1px solid #f9f9f9;
+    border-bottom-color: #e3e3e3;
     background-color: #f9f9f9;
     border-radius: 4px 4px 0 0;
-    box-shadow: 0 3px 6px rgb(0, 0, 0, .16);
 }
 
 .layout-group__head.group-collapsed{
@@ -54,36 +62,44 @@
 
 .group-toggle:hover,
 .group-restore:hover,
-.layout-group__menu:hover {
+.group-menu:hover {
     color: #009bfe;
 }
 
-.layout-group__menu {
-    position: absolute;
-    left: 10px;
+.group-menu {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex: none;
+    width: 20px;
+    height: 25px;
+    font-weight: 300;
     opacity: 0;
     cursor: pointer;
 }
+.group-menu i{
+    font-weight: 300;
+}
 
-.layout-group__head_maximized > .layout-group__menu,
 .layout-group__head_maximized > .group-toggle {
     display: none;
+}
+.layout-group__head_maximized > .group-menu {
+    visibility: hidden;
 }
 
 :not(.layout-group__head_maximized) > .group-restore {
     display:none;
 }
 
-.layout-group__head:hover .layout-group__menu:not(empty),
+.layout-group__head:hover .group-menu:not(empty),
 .layout-group__head_menu-shown .layout-group__menu:not(empty) {
     opacity: 1;
 }
 
 .layout-group__content{
     background: #fff;
-    border-top: 1px solid #e3e3e3;
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 4px 6px rgb(0, 0, 0, .16);
     flex: 1 1 auto;
 }
 
@@ -91,21 +107,23 @@
 /* fix group on group and group in tabs*/
 .layout-group .layout-group,
 .layout__tab-layout__panel-container .layout-group,
-.layout__popup-view-window .layout-group{
+.layout__popup-view-window .layout-group {
     padding: 0;
-    border: 1px solid #e3e3e3;
     border-radius: 4px;
+}
+.layout-group .layout-group .layout-group-wrp,
+.layout__tab-layout__panel-container .layout-group .layout-group-wrp,
+.layout__popup-view-window .layout-group .layout-group-wrp{
+    box-shadow: none;
+    border: 1px solid #e3e3e3;
 }
 .layout-group .layout-group .layout-group__head,
 .layout__tab-layout__panel-container .layout-group .layout-group__head,
 .layout__popup-view-window .layout-group .layout-group__head{
-    box-shadow: none;
+    position: static;
+    z-index: auto;
 }
-.layout-group .layout-group .layout-group__content,
-.layout__tab-layout__panel-container .layout-group .layout-group__content,
-.layout__popup-view-window .layout-group .layout-group__content{
-    box-shadow: none;
-}
+
 .layout-group .toolbar,
 .layout-group .toolbar-container{
     background-color: transparent;

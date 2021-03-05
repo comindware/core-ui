@@ -337,7 +337,7 @@ module.exports.apply = {
     'group-head-theme': {
         height: '50px',
         'font-size': '18px',
-        padding: '0 20px'
+        padding: '0 20px 0 0'
     },
     'group-title-theme': {
 
