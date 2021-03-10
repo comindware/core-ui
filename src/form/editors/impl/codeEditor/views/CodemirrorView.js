@@ -547,6 +547,7 @@ export default Marionette.View.extend({
             useWrapper: false
         });
         this.codemirror.refresh();
+        this.codemirror.setSize(null, '100%');
         this.codemirror.focus();
     },
 
@@ -555,6 +556,7 @@ export default Marionette.View.extend({
         WindowService.closeElPopup(this.popupId, true);
         this.el.classList.remove(classes.maximized);
         this.codemirror.refresh();
+        this.codemirror.setSize(null, this.options.height);
         this.__change();
     },
 
