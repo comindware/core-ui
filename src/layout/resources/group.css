@@ -57,6 +57,11 @@
     cursor: pointer;
     flex: none;
 }
+
+.group-restore {
+    position: absolute;
+}
+
 .group-toggle.group-collapsed {
     transform: scaleY(-1);
 }
