@@ -130,8 +130,6 @@
     padding: 0;
 }
 .toolbar-panel_container .toolbar-btn {
-    width: calc(100% - 10px);
-    margin: 2px 5px;
     text-align: left;
 }
 .toolbar-panel_container .toolbar-btn:first-child {

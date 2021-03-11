@@ -912,9 +912,12 @@ a:hover {
     box-shadow: none;
 }
 
-.toolbar-panel_container__select-state .toolbar-btn{
+.toolbar-panel_container__select-state .toolbar-btn,
+.toolbar-panel_container__select-state .toolbar-btn:hover {
     width: 100%;
     margin: 0;
+    border: none;
+    border-radius: 0;
 }
 
 .toolbar-panel_container__select-state .toolbar-btn.toolbar-btn_headline{
