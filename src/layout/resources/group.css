@@ -46,6 +46,7 @@
 
 .group-collapsed .layout-group__head{
     border-radius: 4px;
+    border-bottom-color: #f9f9f9;
 }
 
 
