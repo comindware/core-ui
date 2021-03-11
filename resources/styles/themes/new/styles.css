@@ -52,7 +52,8 @@
   border-color: var(--checkbox-checked-color);
   background-color: var(--checkbox-checked-color);
 }
-.grid-header .checkbox i{
+.grid-header .checkbox i,
+.icon-true {
   color: var(--checkbox-checked-background);
 }
 
@@ -66,8 +67,7 @@
   background-color: var(--checkbox-checked-color);
 }
 
-.checkbox i,
-.icon-true {
+.checkbox i {
     color: var(--checkbox-checked-color);
 }
 
