@@ -105,7 +105,7 @@ export default Marionette.View.extend({
     },
 
     __onCollapsedChange(model = this.model, collapsed = this.model.get('collapsed')) {
-        this.ui.toggleCollapseButtons.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
+        this.$el.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
         if (collapsed) {
             this.ui.containerRegion.slideUp(200);
         } else {
