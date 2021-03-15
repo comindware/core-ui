@@ -95,7 +95,9 @@ export default formRepository.editors.TextArea = BaseEditorView.extend({
                 const maxHeight = parseInt(this.ui.input.css('line-height'), 10) * this.options.maxHeight;
                 this.ui.input.css('maxHeight', maxHeight);
             }
-            autosize(this.ui.input);
+            if (this.ui.input[0].scrollHeight > 0) {
+                autosize(this.ui.input);
+            }
         }
     },
 
@@ -118,6 +120,7 @@ export default formRepository.editors.TextArea = BaseEditorView.extend({
         }
         if (updateUi) {
             this.ui.input.val(value);
+            autosize(this.ui.input);
         }
     },
 
