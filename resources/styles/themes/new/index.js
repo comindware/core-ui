@@ -39,7 +39,7 @@ const variables = {
     'border-color': 'var(--grey-400)',
     'border-radius': '4px',
     'border-radius-big': '5px',
-    border: '1px solid #c1c1c1',
+    border: '1px solid #d6d6d6',
 
     focus: '1px solid var(--blue-300)',
 
@@ -63,7 +63,7 @@ const variables = {
     'editor-empty-text-color': 'var(--grey-900)',
 
     // input
-    'input-padding': '4px 20px 4px var(--form-input-padding)',
+    'input-padding': '5px 20px 5px var(--form-input-padding)',
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
@@ -207,8 +207,8 @@ module.exports.apply = {
     },
     'dropdown-caret-theme': {
         'font-size': '16px',
-        right: '6px',
-        color: variables['blue-300']
+        right: '10px',
+        color: '#d6d6d6'
     },
     'bubbles-item-theme': {
         color: variables['text-color']
@@ -222,8 +222,8 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'input-disabled-theme': {
-        'background-color': 'transparent',
-        'border-color': 'transparent'
+        'background-color': '#fafafa',
+        color: '#9c9c9c'
     },
     'cell-input-disabled-theme': {
         'background-color': 'transparent'

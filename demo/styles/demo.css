@@ -325,6 +325,10 @@ body {
     position: relative;
 }
 
+.editor + .h3-demo{
+    margin-top: 1em;
+}
+
 .demo-list-canvas {
     position: absolute;
     left: 0;

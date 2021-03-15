@@ -56,7 +56,7 @@ const variables = {
     'editor-empty-text-color': 'var(--grey-900)',
 
     // input
-    'input-padding': '4px 18px 4px 5px',
+    'input-padding': '5px 18px 5px 5px',
     'input-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
     'input-search-padding': '2px 20px 2px 24px',

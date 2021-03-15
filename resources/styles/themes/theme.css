@@ -200,7 +200,19 @@ body {
 .editor_error .bubbles,
 .editor_error .editor_date-time {
   border-color: var(--error-color);
+  background-color: #fbe2de;
+  color: var(--error-color);
 }
+
+.editor_error.editor_focused .input,
+.editor_error.editor_focused .textarea,
+.editor_error.editor_focused .bubbles,
+.editor_error.editor_focused .editor_date-time {
+  background-color: transparent;
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
 
 .warning .editor .input,
 .warning .editor .textarea,

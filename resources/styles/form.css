@@ -220,7 +220,7 @@ input[type="checkbox"].checkbox {
 }
 .editor_checkbox {
     max-width: 100%;
-    display: inline-flex;
+    display: flex;
     flex-shrink: 0;
 }
 .editor_checkbox.cell {
