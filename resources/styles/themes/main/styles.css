@@ -462,7 +462,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .editor_date-time.ShortDate .editor_date-time_date,
 .editor_date-time.DateIso .editor_date-time_date {
-    flex-basis: 95px;
+    flex-basis: 115px;
 }
 
 .editor_date-time.CondensedDate .editor_date-time_date {
