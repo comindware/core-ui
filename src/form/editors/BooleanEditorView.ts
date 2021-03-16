@@ -91,6 +91,9 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
         },
 
         __updateState() {
+            if (!this.isRendered()) {
+                return;
+            }
             const toggleButtonEl = this.ui.toggleButton.get(0);
             if (this.value) {
                 toggleButtonEl.innerHTML = icons.CHECKED;
