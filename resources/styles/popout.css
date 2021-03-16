@@ -7,6 +7,14 @@
     position: relative;
 }
 
+.popout__action {
+    cursor: pointer;
+}
+
+.popout__action.open .anchor{
+    transform: rotate(180deg);
+}
+
 /* popout-menu */
 .popout-menu {
     position: fixed;

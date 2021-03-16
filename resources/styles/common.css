@@ -801,7 +801,6 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     align-content: center;
-    background: #e5f4ff;
     box-sizing: border-box;
     z-index: 55; /*bigger then grid*/;
     flex: none;

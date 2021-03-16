@@ -12,7 +12,7 @@ const classes = {
     VISIBLE_COLLECTION: 'visible-collection',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
+    DEFAULT_ANCHOR: 'angle-down'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
@@ -140,7 +140,7 @@ export default class DropdownView {
         buttonEl.classList.toggle(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
         if (!this.options.customAnchor && this.options.showDropdownAnchor) {
             this.button.on('render', () => {
-                buttonEl.insertAdjacentHTML('beforeend', `<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+                buttonEl.insertAdjacentHTML('beforeend', `<i class="js-default-anchor ${Handlebars.helpers.iconPrefixer(classes.DEFAULT_ANCHOR)} anchor"></i>`);
             });
         }
 
