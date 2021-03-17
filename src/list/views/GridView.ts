@@ -261,8 +261,7 @@ export default Marionette.View.extend({
         }
         const popupContainer = document.querySelector('.js-global-popup-stack');
         const isElementOutOfElementOrPopup = this.el.contains(target) || popupContainer?.contains(target);
-        const hasActiveElement = this.el.contains(document.activeElement);
-        if (!isElementOutOfElementOrPopup && !hasActiveElement) {
+        if (!isElementOutOfElementOrPopup) {
             this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
             this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__checkBlur);
         }
