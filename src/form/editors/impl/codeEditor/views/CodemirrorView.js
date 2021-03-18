@@ -996,7 +996,7 @@ export default Marionette.View.extend({
                     const isClosedSquareBracket = this.codemirror
                         .getLine(cursor.line)
                         .slice(cursor.ch, valueLine.length)
-                        .includes(constants.activeSymbolNotation3.closeSquareBrackett);
+                        .includes(constants.activeSymbolNotation3.closeSquareBracket);
                     resultOptions[constants.optionsCodemirror.isIntoSquareBracket] = isOpenedSquareBracket && isClosedSquareBracket;
                     break;
                 case constants.optionsCodemirror.isEmptyLine:
@@ -1360,6 +1360,9 @@ export default Marionette.View.extend({
         const ch = column;
         const autoCompleteObject = this.__mapFormatHintsN3(cursor.line, ch, hintsNotation3, token);
         if (isIntoBracket || isIntoSquareBracket) {
+            if (token.string.includes(' ')) {
+                autoCompleteObject.from.ch += 1;
+            }
             this.changeTemplateNotation = this.__changeTemplate;
             codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor, isIntoSquareBracket));
         }
@@ -1372,10 +1375,11 @@ export default Marionette.View.extend({
     __mapFormatHintsN3(line, ch, list, token) {
         const { isEmptyLine } = this.__getOptionCodemirror([constants.optionsCodemirror.isEmptyLine, constants.optionsCodemirror.isIntoBracket]);
         const isSpecialLeftSymbol = [constants.activeSymbolNotation3.colon, constants.activeSymbolNotation3.openBracket].includes(token.string);
+        const isEndsWithQuotationMark = token.string.slice(-1) === '"';
         return {
             from: {
                 line,
-                ch: isEmptyLine || isSpecialLeftSymbol ? ch : token.start
+                ch: isEmptyLine || isSpecialLeftSymbol || isEndsWithQuotationMark ? ch : token.start
             },
             to: {
                 line,
