@@ -125,21 +125,27 @@
 .toolbar-panel_container {
     padding: 0;
 }
+
 .toolbar-panel_container .toolbar-btn {
     text-align: left;
 }
+
+.toolbar-panel_container.presented-modal-window .toolbar-btn:only-child {
+    margin: 0;
+}
+
 .toolbar-panel_container .toolbar-btn:first-child {
     margin-top: 5px;
 }
+
 .toolbar-panel_container .toolbar-btn:last-child {
     margin-bottom: 5px;
 }
-.toolbar-panel_container .toolbar-btn:first-child:last-child {
 
-}
 .toolbar-panel_container .toolbar-btn .toolbar__icons{
     margin: 0 5px 0 -5px;
 }
+
 .toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {
     margin: 0;
 }

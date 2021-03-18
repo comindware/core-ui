@@ -1,1 +1,4 @@
-<input class="js-input input input_duration" {{#if fieldId}} id="{{fieldId}} {{/if}}">
+<div class="input_duration__wrapper">
+    <i class="{{iconPrefixer 'clock'}} date-time_icon" aria-hidden="true"></i>
+    <input class="js-input input input_duration" size="{{size}}" {{#if fieldId}} id="{{fieldId}} {{/if}}">
+</div>

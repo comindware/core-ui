@@ -3,8 +3,6 @@ import DateTimeService from './services/DateTimeService';
 import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
-import iconWrapDate from './iconsWraps/iconWrapDate.html';
-import iconWrapTime from './iconsWraps/iconWrapTime.html';
 import DatePanelView from './impl/dateTime/views/DatePanelView';
 import DateInputView from './impl/dateTime/views/DateInputView';
 import dropdown from 'dropdown';
@@ -678,7 +676,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         this.$editorEl.off('mouseenter');
 
         if (!MobileService.isMobile && !this.options.hideClearButton) {
-            this.renderIcons(this.options.showDate !== false ? iconWrapDate : iconWrapTime, iconWrapRemove);
+            this.renderIcons(iconWrapRemove);
         }
     },
 
