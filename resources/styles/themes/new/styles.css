@@ -326,6 +326,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: var(--grid-cell-padding);
 }
 
+.cell .editor_date-time,
+.cell .editor_duration {
+  height: 100%;
+}
+
 .cell > .collapsible-btn + .editor {
     display: inline-flex;
     width: auto;
@@ -488,29 +493,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
   align-items: center;
   font-size: 12px;
   padding: 2px 6px;
-}
-
-/* Date Time */
-
-.editor_date-time.LongDate .editor_date-time_date {
-  flex-basis: 250px;
-}
-.editor_date-time.ShortDate .editor_date-time_date,
-.editor_date-time.DateIso .editor_date-time_date {
-  flex-basis: 95px;
-}
-.editor_date-time.CondensedDate .editor_date-time_date {
-  flex-basis: 130px;
-}
-.editor_date-time.YearMonth .editor_date-time_date {
-  flex-basis: 140px;
-}
-
-.editor_date-time.ShortTime .editor_date-time_time .input {
-  max-width: 60px;
-}
-.editor_date-time.LongTime .editor_date-time_time .input {
-  max-width: 90px;
 }
 
 /* /Date Time/ */

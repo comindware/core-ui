@@ -164,7 +164,9 @@ export const classes = {
     readonly: 'readonly',
     error: 'error',
     tableWidthAuto: 'grid-content-wrp_width-auto',
-    dropdownRoot: 'js-dropdown__root'
+    dropdownRoot: 'js-dropdown__root',
+    timeIcon: 'cell-time-icon__wrap',
+    dateIcon: 'cell-date-icon__wrap'
 };
 
 export default {

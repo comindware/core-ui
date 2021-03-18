@@ -57,6 +57,18 @@ export const objectPropertyTypes = {
     ENUM: 'Enum'
 };
 
+export const fieldTypes = {
+    Text: 'text',
+    Number: 'number',
+    Duration: 'duration',
+    DateTime: 'dateTime',
+    Date: 'date',
+    Boolean: 'boolean',
+    Document: 'document',
+    Datalist: 'dataList',
+    RadioGroup: 'radioGroup'
+};
+
 export const presentingComponentsTypes = {
     form: 'form',
     popup: 'popup',
@@ -168,6 +180,7 @@ export const DOUBLECLICK_DELAY = 500;
 
 export default {
     objectPropertyTypes,
+    fieldTypes,
     contextIconType,
     presentingComponentsTypes,
     splitViewTypes,
