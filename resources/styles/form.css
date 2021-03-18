@@ -185,8 +185,11 @@ rgba(5,117,189,.5) // user avatar btn
 .editor_document .emptyDocumentPlaceholder{
     display: none;
 }
-.editor_document.editor_empty .emptyDocumentPlaceholder{
-    display: block;
+
+.editor_document.editor_empty .emptyDocumentPlaceholder {
+    display: flex;
+    flex-direction: column;
+    color: var(--theme-colors__text_fadest);
 }
 
 .editor_document.editor_readonly .documents__drop-zone,
@@ -867,6 +870,32 @@ input[type="color"], .colorpicker{
     max-width: 100%;
     overflow: hidden;
     padding: 0;
+}
+
+.documents-collapse-icon {
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: -22px;
+    transition-property: transform;
+    transition-duration: 300ms;
+}
+
+.documents-collapse_rotate {
+    transform: rotate(0);
+}
+
+.documents-collapse_collapsed {
+    transform: rotate(-180deg);
+}
+
+.documents-collapsed .documents__wrapper {
+    padding: 5px 20px;
+    min-height: auto;
+}
+
+.documents-collapsed .documents__upload {
+    margin: 0;
 }
 
 .cell.editor_document .documents {

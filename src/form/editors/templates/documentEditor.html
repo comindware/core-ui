@@ -1,14 +1,19 @@
 <form class="js-file-form documents__drop-zone">
+    <i class="documents-collapse-icon {{iconPrefixer 'angle-down'}} js-collapse-icon documents-collapse_rotate"></i>
     <div class="documents__wrapper">
         <span class="documents__text">{{{placeHolderText}}}
-            <span class="documents__upload js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
+            <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
         </span>
     </div>
 </form>
 
 <input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}" style="display: none">
 
-<div class="documents emptyDocumentPlaceholder">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>
+<div class="documents emptyDocumentPlaceholder">
+    <span class="documents-recommendation">{{localize 'CORE.FORM.EDITORS.DOCUMENT.RECOMMENDEDSIZE'}}</span>
+    <span class="documents-recommendation">{{localize 'CORE.FORM.EDITORS.DOCUMENT.MAXFILESIZE'}}</span>
+    <span class="documents-recommendation">{{localize 'CORE.FORM.EDITORS.DOCUMENT.FILEFORMAT'}}</span>
+</div>
 
 <ul class="documents js-collection-container"></ul>
 

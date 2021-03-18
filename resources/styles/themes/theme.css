@@ -1413,7 +1413,9 @@ tr:not(:first-child) .cell_selection {
   border-radius: 6px;
   text-align: center;
   flex: 0 0 auto;
+  position: relative;
 }
+
 .documents__drop-zone.documents__drop-zone--active {
   @apply --drop-zone-active-theme;
 }
@@ -1431,17 +1433,15 @@ tr:not(:first-child) .cell_selection {
   min-width: 120px;
   min-height: 100px;
   display: flex;
+  justify-content: center;
+  min-width: 300px;
 }
 
 .documents__upload {
   cursor: pointer;
-  color: var(--link-color);
+  color: var(--theme-colors__main);
+  margin: 5px 0 0 0;
 }
-.documents__upload:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline
-}
-
 
 .cke_editable{
   font: var(--font);

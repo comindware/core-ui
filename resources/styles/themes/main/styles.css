@@ -302,6 +302,7 @@
 .form-label:not(.form-label_empty) + .editor_document,
 .form-label:not(.form-label_empty) + .editor_checkbox {
   padding-left: var(--form-input-padding);
+  width: auto;
 }
 
 .disabled .form-label {

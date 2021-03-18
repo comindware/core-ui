@@ -108,19 +108,25 @@
 
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].
 
-<http://comindware.com/text/core/form/editors/document#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "выберите файл"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/form/editors/document#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите файл"; l10n:originalData "select file "].
 
 <http://comindware.com/text/core/form/editors/document#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
 
 <http://comindware.com/text/core/form/editors/document#download> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать"; l10n:originalData "Download"].
 
-<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите файл для загрузки <br> или "; l10n:originalData "dragFile"].
+<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда файл <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
 
 <http://comindware.com/text/core/form/editors/document#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "Edit"].
 
+<http://comindware.com/text/core/form/editors/document#fileFormat> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Формат файла: JPEG, PNG"; l10n:originalData "File format: JPEG, PNG"].
+
 <http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
 
+<http://comindware.com/text/core/form/editors/document#maxFileSize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Максимальный размер файла: 3 Мбайт"; l10n:originalData "Maximum file size: 3 MB"].
+
 <http://comindware.com/text/core/form/editors/document#preview> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Просмотр"; l10n:originalData "Preview"].
+
+<http://comindware.com/text/core/form/editors/document#recommendedSize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Рекомендованный размер изображения: 450x250px"; l10n:originalData "Recommended size of image: 450x250px"].
 
 <http://comindware.com/text/core/form/editors/document#remove> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Remove"].
 

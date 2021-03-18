@@ -12,7 +12,10 @@ import DocumentsCollection from './impl/document/collections/DocumentsCollection
 
 const classes = {
     dropZone: 'documents__drop-zone',
-    activeDropZone: 'documents__drop-zone--active'
+    activeDropZone: 'documents__drop-zone--active',
+    collapsed: 'documents-collapse_collapsed',
+    collapsed_rotate: 'documents-collapse_rotate',
+    documents_collapsed: 'documents-collapsed'
 };
 
 const MultiselectAddButtonView = Marionette.View.extend({
@@ -81,6 +84,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     collapsed: true,
 
     ui: {
+        collapseIcon: '.js-collapse-icon',
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
         form: '.js-file-form',
@@ -92,9 +96,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     focusElement: '.js-file-button',
 
     templateContext() {
+        const isCollapsed = this.model.get('collapsed');
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            placeHolderText: isCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -102,6 +107,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     events() {
         return {
+            'click @ui.collapseIcon': '__onCollapseClick',
             'click @ui.showMore': 'toggleShowMore',
             keydown: '__handleKeydown',
             'change @ui.fileUpload': 'onSelectFiles',
@@ -111,6 +117,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             'dragleave @ui.form': '__onDragleave',
             'drop @ui.form': '__onDrop'
         };
+    },
+
+    modelEvents: {
+        'change:collapsed': '__onCollapsedChange'
     },
 
     setValue(value) {
@@ -524,5 +534,26 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             default:
                 break;
         }
+    },
+
+    __onCollapseClick() {
+        const collapsed = this.model.get('collapsed');
+        this.model.set('collapsed', !collapsed);
+        return false;
+    },
+
+    __onCollapsedChange() {
+        this.__updateCollapseButton();
+    },
+
+    __updateCollapseButton() {
+        this.__updateFileForm();
+        this.ui.collapseIcon.toggleClass(classes.collapsed, this.model.get('collapsed'));
+        this.ui.collapseIcon.toggleClass(classes.collapsed_rotate, !this.model.get('collapsed'));
+    },
+
+    __updateFileForm() {
+        this.render();
+        this.ui.form.toggleClass(classes.documents_collapsed, this.model.get('collapsed'));
     }
 });
