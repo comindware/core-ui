@@ -376,6 +376,7 @@ input[type="checkbox"].checkbox {
 .form-group_date,
 .form-group_duration {
     align-self: flex-start;
+    max-width: 100%;
 }
 
 .editor_date-time .editor_date-time_date,
