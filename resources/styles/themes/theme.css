@@ -997,18 +997,21 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__header-view-item {
   @apply --tab-item-theme;
-  padding: var(--tab-item-padding);
+  padding: 5px 15px 0px;
+  margin: 0 2px;
   font-size: var(--tab-item-font-size);
+}
+.layout__tab-layout__header-view-item:hover {
+  border-bottom-color: var(--theme-colors__secondary);
 }
 
 .layout__tab-layout__header-view-item_selected {
-  @apply --tab-item-active-theme;
+  border-bottom: 3px solid #128aea;
+  background: transparent;
+  color: #0575bd;
 }
-
-.layout__tab-layout__header-view-item:hover,
 .layout__tab-layout__header-view-item_selected:hover {
-  color: #04578b;
-  border-color: #04578b;
+  border-bottom-color: #128aea;
 }
 
 .layout__tab-layout__header-view-item_error{
