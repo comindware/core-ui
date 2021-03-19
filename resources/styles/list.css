@@ -332,14 +332,11 @@ tr.empty-view {
 .empty-view_text {
     text-align: center;
     white-space: nowrap;
-    line-height: 25px;
+    height: 100px;
+    font-size: 1.1em;
+    border: 1px solid var(--theme-colors__secondary_strong);
 }
-.dev-collection .empty-view_text {
-    line-height: 60px;
-    font-size: .9em;
-    font-weight: 600;
-    padding-top: 10px;
-}
+
 /* /Empty View */
 
 /* Editable Grid */

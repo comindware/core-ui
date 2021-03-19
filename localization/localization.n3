@@ -537,7 +537,7 @@
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-06-01T08:25:47.0202864Z"; l10n:modificationDate "2015-08-25T12:44:06.9464334Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Yes"].
 
-<http://comindware.com/text/core/grid/emptyView#empty> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-05-27T16:15:01.9150681Z"; l10n:modificationDate "2015-08-25T12:41:30.8998303Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "The list is empty"].
+<http://comindware.com/text/core/grid/emptyView#empty> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-05-27T16:15:01.9150681Z"; l10n:modificationDate "2015-08-25T12:41:30.8998303Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "No data to show"].
 
 <http://comindware.com/text/core/grid/loadingRow#loading> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy ""; l10n:modifiedBy "Alexandra Sindyaeva"; l10n:creationDate "2015-07-27T14:16:47.0433843Z"; l10n:modificationDate "2015-10-20T12:43:38.3199086Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "LOADING"].
 
