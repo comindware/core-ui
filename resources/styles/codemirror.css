@@ -537,8 +537,9 @@ li.CodeMirror-hint-active {
 
 .dev-code-editor-toolbar {
     display: flex;
+    flex-wrap: wrap;
     background: white;
-    height: 31px;
+    min-height: 31px;
     border: solid 1px #ced3d7;
     border-bottom: none;
     border-bottom: 0;

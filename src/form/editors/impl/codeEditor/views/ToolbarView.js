@@ -6,12 +6,17 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    templateContext() {
+        return {
+            isCSharpScript: this.options.mode === meta.mode.script
+        };
+    },
+
     ui: {
         compile: '.js-code-editor-compile',
         undo: '.js-code-editor-undo',
         redo: '.js-code-editor-redo',
         format: '.js-code-editor-format',
-        hint: '.js-code-editor-hint',
         find: '.js-code-editor-find',
         maximize: '.js-code-editor-maximize',
         minimize: '.js-code-editor-minimize',
@@ -25,7 +30,6 @@ export default Marionette.View.extend({
         'click @ui.undo': 'undo',
         'click @ui.redo': 'redo',
         'click @ui.format': 'format',
-        'click @ui.hint': 'show:hint',
         'click @ui.find': 'find',
         'click @ui.download': 'download',
         'click @ui.save': 'save'
@@ -79,6 +83,5 @@ export default Marionette.View.extend({
         this.ui.undo.toggle(!readonly);
         this.ui.redo.toggle(!readonly);
         this.ui.format.toggle(!readonly);
-        this.ui.hint.toggle(!readonly);
     }
 });

@@ -128,11 +128,10 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, showMode: this.options.showMode, editor: this });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, showMode: this.options.showMode, editor: this, mode: this.options.mode });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
-        this.toolbar.on('show:hint', this.__showHint);
         this.toolbar.on('find', this.__find);
         this.toolbar.on('save', this.__onSave);
         this.toolbar.on('compile', this.__compile);
