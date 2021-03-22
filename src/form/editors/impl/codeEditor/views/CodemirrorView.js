@@ -263,19 +263,18 @@ export default Marionette.View.extend({
                 if (this.__isCommentN3(valueLine, column)) {
                     break;
                 }
-                this.__showHintN3(inputSymbol, change);
+                this.__showHintN3(inputSymbol);
                 break;
             default:
                 break;
         }
     },
 
-    __showHintN3(inputSymbol, change) {
+    __showHintN3(inputSymbol) {
         switch (inputSymbol) {
             case constants.activeSymbolNotation3.questionMark:
-                this.__setVariablesN3ForHint(change.to);
                 this.modeHintsForN3 = constants.modeHintsForN3.questionMark;
-                this.codemirror.showHint({ hint: this.__getLocalVariablesN3 });
+                this.__setVariablesN3ForHint();
                 break;
             case constants.activeSymbolNotation3.at:
                 this.modeHintsForN3 = constants.modeHintsForN3.prefix;
@@ -318,29 +317,40 @@ export default Marionette.View.extend({
         }
     },
 
-    __setVariablesN3ForHint(cursor) {
+    async __setVariablesN3ForHint() {
         this.listVariablesHintsNotation3 = [];
-        const arrNameVariablesNotation3 = [constants.defaultVariablesNotation3.value, constants.defaultVariablesNotation3.item];
-        const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
-        const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
-        const regExpFindVariables = /\?\w*/gim;
-        const allItemsWithQuestion = textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
-        if (allItemsWithQuestion) {
-            allItemsWithQuestion.forEach(item => {
-                const nameItem = item.substr(1);
-                if (!arrNameVariablesNotation3.includes(nameItem) && nameItem) {
-                    arrNameVariablesNotation3.push(nameItem);
-                }
-            });
-        }
-        arrNameVariablesNotation3.sort();
-        arrNameVariablesNotation3.forEach(nameVariable => {
-            this.listVariablesHintsNotation3.push({
-                text: `?${nameVariable}`,
-                displayText: nameVariable,
+        const completeHoverQuery = {
+            sourceCode: this.codemirror.getValue(),
+            queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+            sourceType: constants.typeScript.notation3,
+            cursorOffset: this.__countOffset(),
+            useOntologyLibriary: false
+        };
+        const arrVariablesNotation3 = await this.intelliAssist.getNotation3Attribute(completeHoverQuery);
+        const varNames = arrVariablesNotation3.map(el => {
+            const name = el.name;
+            return {
+                text: `?${name}`,
+                displayText: name,
                 icons: contextIconType.case
-            });
+            };
         });
+        varNames.sort((a, b) => {
+            const aName = a.displayText.toUpperCase();
+            const bName = b.displayText.toUpperCase();
+            if (aName > bName) {
+                return 1;
+            }
+            if (bName > aName) {
+                return -1;
+            }
+            return 0;
+        });
+        this.listVariablesHintsNotation3 = varNames;
+        if (this.__countOffset() !== completeHoverQuery.cursorOffset) {
+            return;
+        }
+        this.codemirror.showHint({ hint: this.__getLocalVariablesN3 });
     },
 
     async __getPrefixN3() {
@@ -1300,8 +1310,7 @@ export default Marionette.View.extend({
         switch (previousSymbol) {
             case constants.activeSymbolNotation3.questionMark:
                 if (hasOnlyOneSymbol || twoPeviousSymbol === ' ') {
-                    this.__setVariablesN3ForHint(cursor);
-                    return this.__getLocalVariablesN3();
+                    await this.__setVariablesN3ForHint();
                 }
                 break;
             case constants.activeSymbolNotation3.at:
