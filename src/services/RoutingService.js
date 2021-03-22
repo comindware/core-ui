@@ -105,8 +105,8 @@ export default {
         this.defaultUrl = newDefaultUrl;
     },
 
-    setModuleLoading(show, { message, useForce = false } = {}) {
-        show ? this.__showViewPlaceholder(message) : this.__hideViewPlaceholder(useForce);
+    setModuleLoading(show, { message, useForce = false } = {}, parent) {
+        show ? this.__showViewPlaceholder(message, parent) : this.__hideViewPlaceholder(useForce, parent);
     },
 
     async __onModuleLoaded(callbackName, routingArgs, config, Module) {
@@ -220,16 +220,30 @@ export default {
         }
     },
 
-    __showViewPlaceholder(message) {
+    __showViewPlaceholder(message, parent) {
         this.loadersCount++;
-        window.contentLoadingRegion.el.classList.add('visible-loader');
+
+        if (parent) {
+            parent.insertAdjacentHTML('beforeend', `
+                <div class="js-content-loading-region l-loader visible-loader">
+                    <div class="loader"></div>
+                </div>
+            `);
+        } else {
+            window.contentLoadingRegion.el.classList.add('visible-loader');
+        }
+
         window.contentLoadingRegion.currentView.setLoadingMessage(message);
     },
 
-    __hideViewPlaceholder(useForce) {
+    __hideViewPlaceholder(useForce, parent) {
         this.loadersCount--;
         if (this.loadersCount <= 0 || useForce) {
-            window.contentLoadingRegion.el.classList.remove('visible-loader');
+            if (parent) {
+                parent.querySelector('.visible-loader').remove();
+            } else {
+                window.contentLoadingRegion.el.classList.remove('visible-loader');
+            }
         }
         if (this.loadersCount < 0 || useForce) {
             this.loadersCount = 0;
