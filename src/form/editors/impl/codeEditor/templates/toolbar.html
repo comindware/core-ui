@@ -2,17 +2,16 @@
     <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-compile"><i class="{{iconPrefixer 'play'}}"></i></div>
 </div>
 <div class="js-code-editor-undo dev-code-editor-toolbar_button_container" title="{{localize 'CORE.FORM.EDITORS.CODE.UNDO'}}">
-    <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo"><i class="{{iconPrefixer 'arrow-left'}}"></i></div>
+    <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo"><i class="{{iconPrefixer 'undo'}}"></i></div>
 </div>
 <div class="js-code-editor-redo dev-code-editor-toolbar_button_container" title="{{localize 'CORE.FORM.EDITORS.CODE.REDO'}}">
-    <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo"><i class="{{iconPrefixer 'arrow-right'}}"></i></div>
+    <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo"><i class="{{iconPrefixer 'redo'}}"></i></div>
 </div>
+{{#if isCSharpScript}}
 <div class="js-code-editor-format dev-code-editor-toolbar_button_container" title="{{localize 'CORE.FORM.EDITORS.CODE.FORMAT'}}">
     <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-format"><i class="{{iconPrefixer 'edit'}}"></i></div>
 </div>
-<div class="js-code-editor-hint dev-code-editor-toolbar_button_container" title="{{localize 'CORE.FORM.EDITORS.CODE.HINT'}}">
-    <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-hint"><i class="{{iconPrefixer 'file-code'}}"></i></div>
-</div>
+{{/if}}
 <div class="js-code-editor-find dev-code-editor-toolbar_button_container" title="{{localize 'CORE.FORM.EDITORS.CODE.FIND'}}">
     <div class="dev-code-editor-toolbar_button dev-code-editor-toolbar_button-find"><i class="{{iconPrefixer 'search'}}"></i></div>
 </div>
