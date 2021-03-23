@@ -276,7 +276,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __updateColumnAndNeighbourWidths(column: HTMLElement) {
-        for (let i = 0; i < this.options.columns.length; i++) {
+        for (let i = 0; i < this.options.columns.length - 1; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
 

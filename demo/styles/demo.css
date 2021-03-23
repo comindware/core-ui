@@ -257,6 +257,10 @@ body {
     display: flex;
 }
 
+.demo-content__attributes:empty {
+    display: none !important;
+}
+
 .demo-content_container {
     flex: 1;
     display: flex;

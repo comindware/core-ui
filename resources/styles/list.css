@@ -213,7 +213,7 @@
 }
 
 .grid-header-column {
-    min-width: 50px;
+    min-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -225,6 +225,10 @@
     z-index: 2;
     background-clip: padding-box;
     max-width: 0px; /*hack to set width less than cells content */
+}
+
+.grid-content-wrp_width-auto .grid-header-column:last-child {
+    width: 100%;
 }
 
 @media (min-width: 721px) and (max-width: 1024px) {
