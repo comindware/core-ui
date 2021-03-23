@@ -363,11 +363,13 @@ const GridHeaderView = Marionette.View.extend({
             if (oldSortingEl) {
                 oldSortingEl.parentElement.removeChild(oldSortingEl);
             }
-            if (column.sorting) {
-                const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-                const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
-                el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
-            }
+
+            const sorting = column.sorting || 'asc';
+            const sortingClass = sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+            const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+
+            el.querySelector('.grid-header-column-title').insertAdjacentHTML('beforeend', sortingHTML);
+            el.querySelector('.js-sorting').addEventListener('pointerdown', () => this.trigger('handle:pointerdown:sort'));
         });
     },
 

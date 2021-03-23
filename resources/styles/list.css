@@ -197,6 +197,17 @@
     text-overflow: ellipsis;
 }
 
+.header-column-wrp .grid-header-column-sorting {
+    display: none;
+    padding: 0 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.grid-header-column-sorting.show {
+    display: inline-block;
+}
+
 .grid-header-view:empty {
     display: none;
 }
