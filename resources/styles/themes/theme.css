@@ -834,7 +834,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .time-dropdown__i:hover {
-  background-color: var(--dropdown-item-hover-color);
+  background-color: var(--theme-colors__main);
 }
 /*-----//------*/
 
