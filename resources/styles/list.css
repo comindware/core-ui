@@ -56,7 +56,7 @@
     table-layout: fixed;
     position: relative;
     will-change: top;
-    contain: content;
+    /*contain: content;*/
 }
 
 .grid-content-wrp.grid-content-wrp_width-auto {
@@ -228,7 +228,7 @@
 }
 
 .grid-content-wrp_width-auto .grid-header-column:last-child {
-    width: 100%;
+    width: 100% !important;
 }
 
 @media (min-width: 721px) and (max-width: 1024px) {
