@@ -95,15 +95,18 @@ export default Marionette.View.extend({
 
     onAttach() {
         this.__resetCollections();
-        this.toolbarWidth = this.el.parentElement.offsetWidth;
+        const toolbar = this.el.parentElement;
+        this.toolbarWidth = toolbar.offsetWidth;
         const debouncedRebuild = _.debounce(() => {
             const interval = setInterval(() => {
-                const currentToolbarWidth = this.el.parentElement.offsetWidth;
-                if (this.toolbarWidth === currentToolbarWidth) {
-                    return;
+                if (!this.isDestroyed()) {
+                    const currentToolbarWidth = toolbar.offsetWidth;
+                    if (this.toolbarWidth === currentToolbarWidth) {
+                        return;
+                    }
+                    this.toolbarWidth = currentToolbarWidth;
+                    this.rebuildView(interval), debounceInterval.medium;
                 }
-                this.toolbarWidth = currentToolbarWidth;
-                this.rebuildView(interval), debounceInterval.medium;
             });
         }, debounceInterval.medium);
         //TODO: move menu dropdown on resize
