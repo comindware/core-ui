@@ -81,11 +81,13 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     collapsed: true,
 
+    isDropZoneCollapsed: false,
+
     ui: {
         collapseIcon: '.js-collapse-icon',
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
-        form: '.js-file-form',
+        fileZone: '.js-file-zone',
         showMore: '.js-show-more',
         invisibleCount: '.js-invisible-count',
         showMoreText: '.js-show-more-text'
@@ -94,10 +96,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     focusElement: '.js-file-button',
 
     templateContext() {
-        const isCollapsed = this.model.get('collapsed');
+        const isDropZoneCollapsed = this.isDropZoneCollapsed;
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            placeHolderText: isCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            placeHolderText: isDropZoneCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -110,15 +112,11 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             keydown: '__handleKeydown',
             'change @ui.fileUpload': 'onSelectFiles',
             'click @ui.fileUploadButton': '__onItemClick',
-            'dragenter @ui.form': '__onDragenter',
-            'dragover @ui.form': '__onDragover',
-            'dragleave @ui.form': '__onDragleave',
-            'drop @ui.form': '__onDrop'
+            'dragenter @ui.fileZone': '__onDragenter',
+            'dragover @ui.fileZone': '__onDragover',
+            'dragleave @ui.fileZone': '__onDragleave',
+            'drop @ui.fileZone': '__onDrop'
         };
-    },
-
-    modelEvents: {
-        'change:collapsed': '__onCollapsedChange'
     },
 
     setValue(value) {
@@ -147,7 +145,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         e.preventDefault();
         e.stopPropagation();
 
-        this.ui.form.addClass(classes.activeDropZone);
+        this.ui.fileZone.addClass(classes.activeDropZone);
     },
 
     __onDragover(e) {
@@ -171,7 +169,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         e.stopPropagation();
 
         if (e.target.classList.contains(classes.dropZone)) {
-            this.ui.form.removeClass(classes.activeDropZone);
+            this.ui.fileZone.removeClass(classes.activeDropZone);
         }
     },
 
@@ -180,7 +178,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         e.stopPropagation();
 
         const files = e.originalEvent.dataTransfer.files;
-        this.ui.form.removeClass(classes.activeDropZone);
+        this.ui.fileZone.removeClass(classes.activeDropZone);
         if (!files.length) {
             return;
         }
@@ -374,7 +372,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
                 this.internalChange = true;
                 this.ui.fileUpload[0].value = null;
                 this.internalChange = false;
-                this.ui.form.trigger('reset');
+                this.ui.fileZone.trigger('reset');
                 this.__triggerChange();
                 this.trigger('set:loading', false);
             },
@@ -535,17 +533,13 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     __onCollapseClick() {
-        const collapsed = this.model.get('collapsed');
-        this.model.set('collapsed', !collapsed);
-        return false;
-    },
-
-    __onCollapsedChange() {
+        const collapsed = this.isDropZoneCollapsed;
+        this.isDropZoneCollapsed = !collapsed;
         this.__updateCollapseButton();
     },
 
     __updateCollapseButton() {
         this.render();
-        this.$el.toggleClass(classes.collapsed, this.model.get('collapsed'));
+        this.$el.toggleClass(classes.collapsed, this.isDropZoneCollapsed);
     }
 });
