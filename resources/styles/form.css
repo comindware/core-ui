@@ -960,6 +960,7 @@ input[type="color"], .colorpicker{
     top: -22px;
     transition-property: transform;
     transition-duration: 300ms;
+    cursor: pointer;
 }
 
 .documents-collapse_collapsed .documents-collapse-icon {
