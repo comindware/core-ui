@@ -105,3 +105,32 @@
 .icon-close {
     padding: 0 5px;
 }
+@media (max-width: 720px) {
+    .notification-container {
+        width: 100%;
+        padding: 15px;
+        align-items: stretch;
+    }
+    .fr-alert{
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0.75rem;
+    }
+    .fr-alert .icon-container {
+        justify-content: flex-start;
+        padding: 5px 15px; 
+    }
+    .fr-alert .text-container {
+        max-height: none;
+        padding: 0;
+    }
+    .notification-body_container {
+        padding: 0.75rem;
+        width: 100%;
+    }
+    .icon-close {
+        margin-left: auto;
+        padding: 5px 15px;
+    }
+}
