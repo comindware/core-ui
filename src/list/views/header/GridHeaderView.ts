@@ -366,10 +366,10 @@ const GridHeaderView = Marionette.View.extend({
 
             const sorting = column.sorting || 'asc';
             const sortingClass = sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-            const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+            const selectedSortingClass = column.sorting && classes.selectedSorting;
+            const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${selectedSortingClass} ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
 
             el.querySelector('.grid-header-column-title').insertAdjacentHTML('beforeend', sortingHTML);
-            el.querySelector('.js-sorting').addEventListener('pointerdown', () => this.trigger('handle:pointerdown:sort'));
         });
     },
 

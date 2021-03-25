@@ -160,6 +160,7 @@ export const classes = {
     hiddenColumns: 'hidden-columns',
     sortingUp: 'arrow-up',
     sortingDown: 'arrow-down',
+    selectedSorting: 'configuration-selected',
     required: 'required',
     readonly: 'readonly',
     error: 'error',

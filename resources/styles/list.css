@@ -198,14 +198,15 @@
 }
 
 .header-column-wrp .grid-header-column-sorting {
-    display: none;
+    display: inline-block;
     padding: 0 5px;
     font-size: 12px;
     cursor: pointer;
+    color: #8bb2cc;
 }
 
-.grid-header-column-sorting.show {
-    display: inline-block;
+.grid-header-column-sorting.configuration-selected {
+    color: #fff;
 }
 
 .grid-header-view:empty {
