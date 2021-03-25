@@ -1454,6 +1454,10 @@ tr:not(:first-child) .cell_selection {
   margin: 5px 0 0 0;
 }
 
+.btn.field-documents__more {
+  cursor: pointer;
+}
+
 .cke_editable{
   font: var(--font);
 }

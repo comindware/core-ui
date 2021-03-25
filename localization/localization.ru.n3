@@ -126,7 +126,7 @@
 
 <http://comindware.com/text/core/form/editors/document#replaceDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить документ"; l10n:originalData "Replace document"].
 
-<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отобразить больше..."; l10n:originalData "Show more..."].
+<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать больше..."; l10n:originalData "Show more..."].
 
 <http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "История"; l10n:originalData "History"].
 
