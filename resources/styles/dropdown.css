@@ -14,7 +14,7 @@
 
 .dropdown__wrp {
     margin: 0;
-    background-color: #fff;
+    background-color: var(--theme-colors__secondary_fadest);
     position: fixed;
     z-index: 600;
     overflow-y: auto;
