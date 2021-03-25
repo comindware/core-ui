@@ -95,6 +95,7 @@ export default Marionette.View.extend({
             }
         });
         this.__debounceSelectPointedOnClick = _.debounce((...args) => this.__selectPointedOnClick(...args), DOUBLECLICK_DELAY);
+        this.__debounceDeselectPointed = _.debounce((...args) => this.__deselectPointed(...args), DOUBLECLICK_DELAY);
     },
 
     getValue(id: string) {
@@ -547,7 +548,7 @@ export default Marionette.View.extend({
 
     __handleDeselection() {
         this.el.classList.remove(classes.selected);
-        this.__deselectPointed();
+        this.__debounceDeselectPointed();
     },
 
     __toggleCollapse(event: MouseEvent) {

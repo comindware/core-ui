@@ -67,7 +67,6 @@ export default Marionette.View.extend({
             '__changeTemplate',
             '__getPrefixN3',
             '__setVariablesN3ForHint',
-            '__setHighlightUnusedVar',
             '__cleanCSharpInfoList',
             '__showOtherHintsN3',
             '__getAttributeN3'
@@ -128,11 +127,10 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.toolbar = new ToolbarView({ maximized: this.options.maximized, showMode: this.options.showMode, editor: this });
+        this.toolbar = new ToolbarView({ maximized: this.options.maximized, showMode: this.options.showMode, editor: this, mode: this.options.mode });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
         this.toolbar.on('format', this.__format);
-        this.toolbar.on('show:hint', this.__showHint);
         this.toolbar.on('find', this.__find);
         this.toolbar.on('save', this.__onSave);
         this.toolbar.on('compile', this.__compile);
@@ -144,7 +142,7 @@ export default Marionette.View.extend({
         this.toolbar.on('code:editor:close', this.__onClose);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__hideHintOnClick);
         this.showChildView('toolbarContainer', this.toolbar);
-        if (this.options.mode === constants.mode.script && this.options.showDebug !== false) {
+        if (this.options.showDebug !== false) {
             this.editor = this;
             this.tt.set('errors', new Backbone.Collection([]));
             this.tt.set('warnings', new Backbone.Collection([]));
@@ -264,19 +262,18 @@ export default Marionette.View.extend({
                 if (this.__isCommentN3(valueLine, column)) {
                     break;
                 }
-                this.__showHintN3(inputSymbol, change);
+                this.__showHintN3(inputSymbol);
                 break;
             default:
                 break;
         }
     },
 
-    __showHintN3(inputSymbol, change) {
+    __showHintN3(inputSymbol) {
         switch (inputSymbol) {
             case constants.activeSymbolNotation3.questionMark:
-                this.__setVariablesN3ForHint(change.to);
                 this.modeHintsForN3 = constants.modeHintsForN3.questionMark;
-                this.codemirror.showHint({ hint: this.__getLocalVariablesN3 });
+                this.__setVariablesN3ForHint();
                 break;
             case constants.activeSymbolNotation3.at:
                 this.modeHintsForN3 = constants.modeHintsForN3.prefix;
@@ -319,29 +316,40 @@ export default Marionette.View.extend({
         }
     },
 
-    __setVariablesN3ForHint(cursor) {
+    async __setVariablesN3ForHint() {
         this.listVariablesHintsNotation3 = [];
-        const arrNameVariablesNotation3 = [constants.defaultVariablesNotation3.value, constants.defaultVariablesNotation3.item];
-        const textFromStartToCursor = this.codemirror.doc.getRange({ line: 0, ch: 0 }, { line: cursor.line, ch: cursor.ch });
-        const regExpRemoveQuotesComment = /(#.*)|(".*")/g;
-        const regExpFindVariables = /\?\w*/gim;
-        const allItemsWithQuestion = textFromStartToCursor.replace(regExpRemoveQuotesComment, '').match(regExpFindVariables);
-        if (allItemsWithQuestion) {
-            allItemsWithQuestion.forEach(item => {
-                const nameItem = item.substr(1);
-                if (!arrNameVariablesNotation3.includes(nameItem) && nameItem) {
-                    arrNameVariablesNotation3.push(nameItem);
-                }
-            });
-        }
-        arrNameVariablesNotation3.sort();
-        arrNameVariablesNotation3.forEach(nameVariable => {
-            this.listVariablesHintsNotation3.push({
-                text: `?${nameVariable}`,
-                displayText: nameVariable,
+        const completeHoverQuery = {
+            sourceCode: this.codemirror.getValue(),
+            queryCompleteHoverType: constants.queryCompleteHoverType.completion,
+            sourceType: constants.typeScript.notation3,
+            cursorOffset: this.__countOffset(),
+            useOntologyLibriary: false
+        };
+        const arrVariablesNotation3 = await this.intelliAssist.getNotation3Attribute(completeHoverQuery);
+        const varNames = arrVariablesNotation3.map(el => {
+            const name = el.name;
+            return {
+                text: `?${name}`,
+                displayText: name,
                 icons: contextIconType.case
-            });
+            };
         });
+        varNames.sort((a, b) => {
+            const aName = a.displayText.toUpperCase();
+            const bName = b.displayText.toUpperCase();
+            if (aName > bName) {
+                return 1;
+            }
+            if (bName > aName) {
+                return -1;
+            }
+            return 0;
+        });
+        this.listVariablesHintsNotation3 = varNames;
+        if (this.__countOffset() !== completeHoverQuery.cursorOffset) {
+            return;
+        }
+        this.codemirror.showHint({ hint: this.__getLocalVariablesN3 });
     },
 
     async __getPrefixN3() {
@@ -484,7 +492,8 @@ export default Marionette.View.extend({
         }
     },
 
-    async __isCompilationError() {
+    async __isCompilationError(isHideCompileMessage) {
+        this.isHideCompileMessage = isHideCompileMessage;
         await this.__compile();
         const isErrors = Boolean(this.tt.get('errors')?.length);
         return isErrors;
@@ -996,7 +1005,7 @@ export default Marionette.View.extend({
                     const isClosedSquareBracket = this.codemirror
                         .getLine(cursor.line)
                         .slice(cursor.ch, valueLine.length)
-                        .includes(constants.activeSymbolNotation3.closeSquareBrackett);
+                        .includes(constants.activeSymbolNotation3.closeSquareBracket);
                     resultOptions[constants.optionsCodemirror.isIntoSquareBracket] = isOpenedSquareBracket && isClosedSquareBracket;
                     break;
                 case constants.optionsCodemirror.isEmptyLine:
@@ -1074,23 +1083,16 @@ export default Marionette.View.extend({
         this.codemirror.execCommand('find');
     },
 
-    async __setHighlightUnusedVar() {
-        const formatQuery = {
-            sourceCode: this.codemirror.getValue(),
-            sourceType: constants.typeScript.notation3,
-            queryFormatType: constants.queryCompleteHoverType.unusedVariables,
-            useOntologyLibriary: false
-        };
-        const unusedVariables = await this.intelliAssist.getN3UnusedVariables(formatQuery);
-        const lastLine = this.codemirror.lastLine();
-        this.codemirror.markText({ line: 0, ch: 0 }, { line: lastLine }, { css: 'opacity : 1' });
-        if (unusedVariables.length) {
-            unusedVariables.forEach(variable => {
-                const cursor = this.codemirror.posFromIndex(variable.startPos);
-                const chStart = cursor.ch;
-                const chStop = variable.stopPos - variable.startPos;
-                this.codemirror.markText({ line: cursor.line, ch: chStart }, { line: cursor.line, ch: chStop }, { css: 'opacity : 0.6' });
-            });
+    __getScriptType() {
+        switch (this.options.mode) {
+            case constants.mode.script:
+                return constants.typeScript.script;
+            case constants.mode.notation3:
+                return constants.typeScript.notation3;
+            case constants.mode.expression:
+                return constants.typeScript.expression;
+            default:
+                break;
         }
     },
 
@@ -1098,69 +1100,63 @@ export default Marionette.View.extend({
         if (!this.intelliAssist) {
             return;
         }
-        if (this.options.mode === constants.mode.notation3) {
-            await this.__setHighlightUnusedVar();
-        } else if (this.options.mode === constants.mode.script) {
-            if (this.currentHighlightedLine) {
-                this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorError);
-                this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorWarning);
-            }
+        if (this.currentHighlightedLine) {
+            this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorError);
+            this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorWarning);
+        }
 
-            const ERROR = 'Error';
-            const WARNING = 'Warning';
+        const ERROR = 'Error';
+        const WARNING = 'Warning';
 
-            let newArrErr = [];
-            let newArrWarn = [];
-            let newArrInfo = [];
+        const newArrErr = [];
+        const newArrWarn = [];
+        const newArrInfo = [];
 
-            const userCompileQuery = {
-                sourceCode: this.codemirror.getValue(),
-                sourceType: constants.typeScript.script,
-                useOntologyLibriary: this.options.config?.useOntologyLibriary
-            };
-            const content = this.codemirror.getValue();
-            this.setLoading(true);
-            try {
-                const ontologyModel = await this.intelliAssist.getCompile(userCompileQuery);
-                if (!ontologyModel) {
-                    newArrErr = [];
-                    newArrWarn = [];
-                    newArrInfo = [];
-                }
+        const userCompileQuery = {
+            sourceCode: this.codemirror.getValue(),
+            sourceType: this.__getScriptType(),
+            useOntologyLibriary: this.options.config?.useOntologyLibriary
+        };
+        if (this.options.mode === constants.mode.expression) {
+            userCompileQuery.container = this.options.templateId;
+        }
+        const content = this.codemirror.getValue();
+        this.setLoading(true);
+        try {
+            const ontologyModel = await this.intelliAssist.getCompile(userCompileQuery);
 
-                if (ontologyModel.get('compilerRemarks').length > 0) {
-                    ontologyModel.get('compilerRemarks').forEach(el => {
-                        const offsetStart = el.offsetStart;
-                        if (el.offsetStart != null && content.length >= offsetStart) {
-                            const obj = this.__countLineAndColumn(offsetStart, content);
-                            el.line = obj.line;
-                            el.column = obj.column;
-                            switch (el.severity) {
-                                case ERROR:
-                                    newArrErr.push(el);
-                                    break;
-                                case WARNING:
-                                    newArrWarn.push(el);
-                                    break;
-                                default:
-                                    newArrInfo.push(el);
-                                    break;
-                            }
+            if (ontologyModel.get('compilerRemarks').length > 0) {
+                ontologyModel.get('compilerRemarks').forEach(el => {
+                    const offsetStart = el.offsetStart;
+                    if (el.offsetStart != null && content.length >= offsetStart) {
+                        const obj = this.__countLineAndColumn(offsetStart, content);
+                        el.line = obj.line;
+                        el.column = obj.column;
+                        switch (el.severity) {
+                            case ERROR:
+                                newArrErr.push(el);
+                                break;
+                            case WARNING:
+                                newArrWarn.push(el);
+                                break;
+                            default:
+                                newArrInfo.push(el);
+                                break;
                         }
-                    });
-                } else {
-                    Core.ToastNotifications.add(Localizer.get('CORE.FORM.EDITORS.CODE.SUCCESSFULCOMPILE'));
-                }
-
-                const outputObj = {
-                    errors: newArrErr,
-                    warnings: newArrWarn,
-                    info: newArrInfo
-                };
-                this.trigger('compile', outputObj);
-            } finally {
-                this.setLoading(false);
+                    }
+                });
+            } else if (!this.isHideCompileMessage) {
+                Core.ToastNotifications.add(Localizer.get('CORE.FORM.EDITORS.CODE.SUCCESSFULCOMPILE'));
             }
+
+            const outputObj = {
+                errors: newArrErr,
+                warnings: newArrWarn,
+                info: newArrInfo
+            };
+            this.trigger('compile', outputObj);
+        } finally {
+            this.setLoading(false);
         }
     },
 
@@ -1301,8 +1297,7 @@ export default Marionette.View.extend({
         switch (previousSymbol) {
             case constants.activeSymbolNotation3.questionMark:
                 if (hasOnlyOneSymbol || twoPeviousSymbol === ' ') {
-                    this.__setVariablesN3ForHint(cursor);
-                    return this.__getLocalVariablesN3();
+                    await this.__setVariablesN3ForHint();
                 }
                 break;
             case constants.activeSymbolNotation3.at:
@@ -1360,6 +1355,9 @@ export default Marionette.View.extend({
         const ch = column;
         const autoCompleteObject = this.__mapFormatHintsN3(cursor.line, ch, hintsNotation3, token);
         if (isIntoBracket || isIntoSquareBracket) {
+            if (token.string.includes(' ')) {
+                autoCompleteObject.from.ch += 1;
+            }
             this.changeTemplateNotation = this.__changeTemplate;
             codemirror.on(autoCompleteObject, 'pick', descriptionHint => this.changeTemplateNotation(descriptionHint, cursor, isIntoSquareBracket));
         }
@@ -1372,10 +1370,11 @@ export default Marionette.View.extend({
     __mapFormatHintsN3(line, ch, list, token) {
         const { isEmptyLine } = this.__getOptionCodemirror([constants.optionsCodemirror.isEmptyLine, constants.optionsCodemirror.isIntoBracket]);
         const isSpecialLeftSymbol = [constants.activeSymbolNotation3.colon, constants.activeSymbolNotation3.openBracket].includes(token.string);
+        const isEndsWithQuotationMark = token.string.slice(-1) === '"';
         return {
             from: {
                 line,
-                ch: isEmptyLine || isSpecialLeftSymbol ? ch : token.start
+                ch: isEmptyLine || isSpecialLeftSymbol || isEndsWithQuotationMark ? ch : token.start
             },
             to: {
                 line,
