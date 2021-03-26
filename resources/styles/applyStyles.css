@@ -90,8 +90,8 @@ postcss apply добавляет правила по очереди в нача�
 .toolbar-btn-theme {}
 
 .group-theme {
-    padding: 5px 0;
-    margin-top: 5px;
+    
+
 }
 
 .group-head-theme {
@@ -184,7 +184,6 @@ postcss apply добавляет правила по очереди в нача�
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
 .editor_readonly .bubbles:hover{
-    border-bottom-color:transparent;
     background: transparent;
 }
 .cell > .editor {
@@ -467,7 +466,7 @@ postcss apply добавляет правила по очереди в нача�
 
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
-    margin-bottom: 10px;
+
 }
 
 

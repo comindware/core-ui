@@ -11,12 +11,16 @@
     height: auto;
 }
 
+.layout-group + .layout-group {
+    margin-top: 20px;
+}
+
 .layout__horizontal-layout > .layout-group.group-collapsed {
     align-self: flex-start;
 }
 
 .layout__vertical-layout>.layout-group{
-    margin: 0;
+
 }
 
 .layout-group-wrp {

@@ -126,14 +126,14 @@
     --line-height: 1.3;
     --font: normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif;
 
-    --form-input-padding: 5px;
+    --form-input-padding: 10px;
 
     --form-field-margin: 10px;
     --form-label-font-size: 12px;
     --form-label-font-weight: 600;
     --form-label-color: var(--grey-800);
     --form-label-margin: 2px;
-    --form-label-padding: 0 0 0 var(--form-input-padding);
+    --form-label-padding: 0 var(--form-input-padding);
     --form-label-icon-size: 12px;
     --form-label-icon-margin-x: 3px;
 
@@ -147,17 +147,17 @@
     --editor-empty-text-color: var(--grey-900);
 
     /* input */
-    --input-padding: 4px 18px 4px 5px;
-    --input-height: inherit;
+    --input-padding: 4px 18px 4px var(--form-input-padding);
+    --input-height: 30px;
     --input-hover-color: var(--blue-100);
     --input-active-border-color: var(--blue-200);
     --input-search-padding: 2px 20px 2px 24px;
     --input-search-bg: no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
 
     /* textarea */
-    --textarea-padding: 3px 5px;
+    --textarea-padding: 4px var(--form-input-padding);
     --textarea-line-height: inherit;
-    --textarea-min-height: 24px;
+    --textarea-min-height: 30px;
 
     /* custom control */
     --custom-control-spacer-y: 10px;

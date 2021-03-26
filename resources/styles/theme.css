@@ -560,6 +560,7 @@ svg.svg-grid-icons {
   margin-bottom: 0;
   height: auto;
   flex: 1 0 100px;
+  padding: 0;
 }
 
 .grid__headless .row:first-child .cell{
@@ -845,6 +846,7 @@ tr:not(:first-child) .cell_selection {
   background-color: var(--theme-colors__main);
   border: 1px solid var(--input-border-color);
   padding: var(--dropdown-padding);
+  height: var(--input-height);
 }
 
 .editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {
@@ -1218,12 +1220,6 @@ tr:not(:first-child) .cell_selection {
 
 
 /* Group */
-
-.layout-group {
-  padding: 10px;
-  margin-top: 5px;
-}
-
 .layout-group__head {
   font-size: 16px;
   padding: 0 20px 0 0;
@@ -1234,7 +1230,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout-group__content {
-  padding: 20px;
+  padding: 15px;
 }
 
 .layout__group-collapsed__button svg {
