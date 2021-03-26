@@ -205,7 +205,7 @@
 }
 
 .grid-header-column-sorting.configuration-selected {
-    color: #fff;
+    color: var(--theme-colors__main);
 }
 
 .grid-header-view:empty {
