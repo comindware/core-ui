@@ -1,115 +1,144 @@
 :root {
     --light: 80;
     --threshold: 30;
+    /* colors */
+    /*--toolbar-btn: hsla(203, 95%, 38%, 1);*/
+    /*--toolbar-btn-selected: hsla(203, 95%, 48%, 1);*/
+    /*--toolbar-btn-hover: hsla(203, 95%, 28%, 1);*/
+    /*--toolbar-btn-active: hsla(203, 95%, 48%, 1);*/
+
+    --toolbar-btn_low: hsla(203, 50%, 56%, 1);;
+    --toolbar-btn_low-hover: hsla(203, 50%, 46%, 1);
+    --toolbar-btn_low-active: hsla(203, 50%, 66%, 1);
+
+    --toolbar-btn_normal: hsl(126, 92%, 34%);;
+    --toolbar-btn_normal-hover: hsla(126, 92%, 24%, 1);
+    --toolbar-btn_normal-active:  hsla(126, 92%, 44%, 1);
+
+    --toolbar-btn_major: hsla(182, 100%, 32%, 1);
+    --toolbar-btn_major-hover: hsla(182, 100%, 22%, 1);
+    --toolbar-btn_major-active: hsla(182, 100%, 42%, 1);
+
+    --toolbar-btn_critical: hsl(24, 81%, 46%);
+    --toolbar-btn_critical-hover: hsl(24, 81%, 36%);
+    --toolbar-btn_critical-active: hsl(24, 81%, 56%);
+
+    --toolbar-btn_fatal: hsl(0, 100%, 38%);
+    --toolbar-btn_fatal-hover: hsl(0, 100%, 28%);
+    --toolbar-btn_fatal-active: hsl(0, 100%, 48%);
+
+    --toolbar-btn: var(--theme-colors__primary);
+    --toolbar-btn-selected: var(--theme-colors__primary_fade);
+    --toolbar-btn-hover: var(--theme-colors__primary_strong);
+    --toolbar-btn-active: var(--theme-colors__primary_fade);
 }
 
 .toolbar-btn,
 .split-button-wrp {
-    background-color: hsla(203, 95%, 38%, 1);
-    border: 1px solid hsla(203, 95%, 38%, 1);
-    color: #fff;
+    background-color: var(--toolbar-btn);
+    border: 1px solid var(--toolbar-btn);
+    color: var(--theme-colors__main);
 }
 
 .toolbar-btn_selected,
 .toolbar .toolbar-btn_selected{
     box-shadow: none;
-    background-color: hsla(203, 95%, 48%, .9);
-    border: 1px solid hsla(203, 95%, 48%, 1);
-    color: #fff;
+    background-color: var(--toolbar-btn-selected);
+    border: 1px solid var(--toolbar-btn-selected);
+    color: var(--theme-colors__main);
 }
 
 .toolbar-btn:hover,
 .split-btn:hover{
     box-shadow: none;
-    background-color: hsla(203, 95%, 28%, .9);
-    border: 1px solid hsla(203, 95%, 28%, 1);
-    color: #fff;
+    background-color: rgba(var(--theme-colors__primary_rgb), 0.8);
+    border: 1px solid rgba(var(--theme-colors__primary_rgb), 0.8);
+    color: var(--theme-colors__main);
 }
-
 .toolbar-btn:active,
 .split-btn:active {
-    background-color: hsla(203, 95%, 48%, .9);
-    border: 1px solid hsla(203, 95%, 48%, 1);
+    background-color: var(--toolbar-btn-active);
+    border: 1px solid var(--toolbar-btn-active);
 }
 
 
 /* Themes color button */
 .toolbar-btn_low, .split-btn_low{
-    background-color: hsla(203, 50%, 56%, 1);
-    border: 1px solid hsl(203, 50%, 56%);
+    background-color: var(--toolbar-btn_low);
+    border: 1px solid var(--toolbar-btn_low);
 }
 .toolbar-btn_low.toolbar-btn_selected{
 
 }
 .toolbar-btn_low:hover, .split-btn_low:hover{
-    background-color: hsla(203, 50%, 46%, .9);
-    border: 1px solid hsl(203, 50%, 46%);
+    background-color: var(--toolbar-btn_low-hover);
+    border: 1px solid var(--toolbar-btn_low-hover);
 }
 .toolbar-btn_low:active, .split-btn_low:active{
-    background-color: hsla(203, 50%, 66%, .9);
-    border: 1px solid hsl(203, 50%, 66%);
+    background-color: var(--toolbar-btn_low-active);
+    border: 1px solid var(--toolbar-btn_low-active);
 }
 
 
 .toolbar-btn_normal, .split-btn_normal{
-    background-color: hsl(126, 92%, 34%);
-    border: 1px solid hsl(126, 92%, 34%);
+    background-color: var(--toolbar-btn_normal);
+    border: 1px solid var(--toolbar-btn_normal);
 }
 .toolbar-btn_normal:hover, .split-btn_normal:hover{
-    background-color: hsla(126, 92%, 24%, .9);
-    border: 1px solid hsl(126, 92%, 24%);
+    background-color: var(--toolbar-btn_normal-hover);
+    border: 1px solid var(--toolbar-btn_normal-hover);
 }
 .toolbar-btn_normal:active, .split-btn_normal:active{
-    background-color: hsla(126, 92%, 44%, .9);
-    border: 1px solid hsl(126, 92%, 44%);
+    background-color: var(--toolbar-btn_normal-active);
+    border: 1px solid var(--toolbar-btn_normal-active);
 }
 
 
 .toolbar-btn_major, .split-btn_major{
-    background-color: hsla(182, 100%, 32%, 1);
-    border: 1px solid hsl(182, 100%, 32%);
+    background-color: var(--toolbar-btn_major);
+    border: 1px solid var(--toolbar-btn_major);
 }
 .toolbar-btn_major.toolbar-btn_selected{
 }
 .toolbar-btn_major:hover, .split-btn_major:hover{
-    background-color: hsla(182, 100%, 22%, .9);
-    border-color: hsl(182, 100%, 22%);
+    background-color: var(--toolbar-btn_major-hover);
+    border-color: var(--toolbar-btn_major-hover);
 }
 .toolbar-btn_major:active, .split-btn_major:active{
-    background-color: hsla(182, 100%, 42%, .9);
-    border-color: hsl(182, 100%, 42%);
+    background-color: var(--toolbar-btn_major-active);
+    border-color: var(--toolbar-btn_major-active);
 }
 
 
 .toolbar-btn_critical, .split-btn_critical{
-    background-color: hsla(24, 81%, 46%, 1);
-    border-color: hsl(24, 81%, 46%);
+    background-color: var(--toolbar-btn_critical);
+    border-color: var(--toolbar-btn_critical);
 }
 .toolbar-btn_critical.toolbar-btn_selected{
 }
 .toolbar-btn_critical:hover, .split-btn_critical:hover{
-    background-color: hsla(24, 81%, 36%, .9);
-    border-color: hsl(24, 81%, 36%);
+    background-color: var(--toolbar-btn_critical-hover);
+    border-color: var(--toolbar-btn_critical-hover);
 }
 .toolbar-btn_critical:active, .split-btn_critical:active{
-    background-color: hsla(24, 81%, 56%, .9);
-    border-color: hsl(24, 81%, 56%);
+    background-color: var(--toolbar-btn_critical-active);
+    border-color: var(--toolbar-btn_critical-active);
 }
 
 
 .toolbar-btn_fatal, .split-btn_fatal{
-    background-color: hsla(0, 100%, 38%, 1);
-    border-color: hsl(0, 100%, 38%);
+    background-color: var(--toolbar-btn_fatal);
+    border-color: var(--toolbar-btn_fatal);
 }
 .toolbar-btn_fatal.toolbar-btn_selected{
 }
 .toolbar-btn_fatal:hover, .split-btn_fatal:hover{
-    background-color: hsla(0, 100%, 28%, .9);
-    border-color: hsl(0, 100%, 28%);
+    background-color: var(--toolbar-btn_fatal-hover);
+    border-color: var(--toolbar-btn_fatal-hover);
 }
 .toolbar-btn_fatal:active, .split-btn_fatal:active{
-    background-color: hsla(0, 100%, 48%, .9);
-    border-color: hsl(0, 100%, 48%);
+    background-color: var(--toolbar-btn_fatal-active);
+    border-color: var(--toolbar-btn_fatal-active);
 }
 
 .split-button-wrp .toolbar-btn.toolbar-btn_splitButton,

@@ -12,7 +12,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-bottom: 1px solid #dee3e8;
+    border-bottom: 1px solid var(--border-color2);
     display: flex;
 }
 
@@ -23,13 +23,12 @@
     text-overflow: ellipsis;
     font-size: 18px;
     font-weight: 500;
-    color: #0575bd;
+    color: var(--blue-200);
     cursor: pointer;
     vertical-align: middle;
 }
 
 .filter-icon-lists__list{
-
     -ms-flex-positive: 1;
     -webkit-box-flex: 1;
     flex-grow: 1;
@@ -49,7 +48,7 @@
 }
 
 .filter-icon-list__i:hover{
-    background-color: #edf3fb;
+    background-color: var(--hover-color);
 }
 
 .filter-icon-list-eye {
@@ -68,7 +67,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-top: 1px solid #dee3e8;
+    border-top: 1px solid var(--border-color2);
     flex: 1;
     padding-left: 8px;
 }
@@ -99,7 +98,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-top: 1px solid #dee3e8;
+    border-top: 1px solid var(--border-color2);
     text-align: center;
     vertical-align: middle;
 }
@@ -107,21 +106,21 @@
 .filter-icon-lists-save-txt{
     font-size: 13px;
     font-weight: 500;
-    color: #0575bd;
+    color: var(--blue-200);
     cursor: pointer;
     vertical-align: middle;
 }
 .filter-icon-lists-save-txt:hover{
-    color: #009bfe;
+    color: var(--theme-colors__primary_fade);
 }
 
 .filter-icon-lists__dragging {
     width: 180px;
     height: 40px;
     position: fixed;
-    border: 1px solid #dee3e8;
+    border: 1px solid var(--border-color2);
     opacity: 0.8;
-    background: #fff;
+    background: var(--theme-colors__main);
     z-index: 1000;
     cursor: move;
     pointer-events: none;
@@ -145,11 +144,11 @@
 }
 
 .filter-enabled {
-    color: #0575bd;
+    color: var(--blue-200);
 }
 
 .filter-disabled {
-    color: #dee3e8;
+    color: var(--border-color2);
 }
 
 /* /filter-icon-list */

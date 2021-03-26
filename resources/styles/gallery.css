@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border : 1px solid gray;
+    border : 1px solid var(--gray);
     top : 0;
     left : 0;
     z-index : 100500;
@@ -11,14 +11,14 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--black-50);
 }
 
 .gallery-window img, .gallery-window video {
     max-height: 100%;
     max-width: 100%;
     overflow: hidden;
-    background: black;
+    background: var(--theme-colors__text);
 }
 
 
@@ -43,7 +43,7 @@
     justify-content: center;
     align-items: center;
     margin: auto 5px;
-    border: solid 1px white;
+    border: solid 1px var(--theme-colors__main);
     cursor: pointer;
 }
 
@@ -74,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--black-20);
     opacity: 0.5;
 }
 .gallery-previous:hover,
@@ -84,7 +84,7 @@
 
 .gallery-image.active {
     border: 3px solid;
-    border-color: aqua;
+    border-color: var(--aqua);
 }
 
 .gallery-top-menu{
@@ -119,7 +119,7 @@
 }
 
 .gallery-btn {
-    color: white;
+    color: var(--theme-colors__main);
     cursor: pointer;
     -webkit-transition: 0.2s ease-in-out;
     -moz-transition: 0.2s ease-in-out;
@@ -148,7 +148,7 @@
 }
 
 .gallery-filename {
-    color: white;
+    color: var(--theme-colors__main);
     cursor: default;
 }
 
@@ -181,7 +181,7 @@
 
 .info-widget-text-container {
     font-size: 10px;
-    color: white;
+    color: var(--theme-colors__main);
     width: 100%;
     margin-left: 5px;
 }
@@ -212,7 +212,7 @@
     margin: 0 auto;
 }
 
-.gallery-window.fullscreen-mode .gallery-controls-menu-wrp, 
+.gallery-window.fullscreen-mode .gallery-controls-menu-wrp,
 .gallery-window.fullscreen-mode .gallery-previews-collection {
     display: none;
 }
@@ -221,9 +221,9 @@
     justify-content: space-between;
 }
 
-.gallery-window.fullscreen-mode .gallery-top-menu, 
+.gallery-window.fullscreen-mode .gallery-top-menu,
 .gallery-window.fullscreen-mode .gallery-nav-btn{
-    background-color: rgba(0,0,0,.7);
+    background-color: var(--black-70);
     padding: 10px;
     border-radius: 10px;
 }

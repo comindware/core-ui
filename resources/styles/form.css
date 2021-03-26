@@ -5,7 +5,7 @@
 			// disabled radiobutton circle
 
 
-#cb4e30; 	// eroror label text
+#cb4e30; 	// eroror label text    -->     **** rename **** #e1462c
 			// eroror border editor
 			// error border textarea
 			// error border date-time
@@ -242,7 +242,7 @@ input[type="checkbox"].checkbox {
 }
 
 .checkbox-text {
-    color: inherit;
+    color: var(--theme-colors__text);
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -261,6 +261,7 @@ input[type="checkbox"].checkbox {
     display: flex;
     cursor: pointer;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .radiobutton {
@@ -412,7 +413,7 @@ input[type="checkbox"].checkbox {
 }
 
 .input_duration__wrapper {
-    border: 1px solid #c1c1c1;
+    border: 1px solid var(--theme-colors__secondary);
     border-radius: 4px;
     display: flex;
     height: 100%;
@@ -484,7 +485,7 @@ input[type="checkbox"].checkbox {
 }
 
 .dropdown_subtext{
-    color: #d3d5d6;
+    color: var(--grey-500);
 }
 /* /Dropdown/ */
 
@@ -498,7 +499,7 @@ input[type="checkbox"].checkbox {
 }
 
 .bubble_editor__elements_quantity_warning span {
-    color: #999;
+    color: var(--theme-colors__text_fadest);
     font-size: 11px;
 }
 
@@ -550,7 +551,7 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__link:hover {
-    color: #0575bd;
+    color: var(--blue-200);
 }
 
 
@@ -610,8 +611,6 @@ input[type="checkbox"].checkbox {
     cursor: pointer;
 }
 
-
-
 /* reference-field */
 
 .editor__common-empty-view {
@@ -619,12 +618,12 @@ input[type="checkbox"].checkbox {
     width: 100%;
     align-items: center;
     justify-content: center;
-    color: #70787F;
+    color: var(--grey-800);
     min-height: 30px;
     font-size: 12px;
     font-weight: 400;
     height: 25px;
-    background: #fff;
+    background: var(--theme-colors__main);
     line-height: 25px;
     padding: 0 10px;
 }
@@ -650,20 +649,20 @@ input[type="checkbox"].checkbox {
     line-height: 80px;
     text-decoration: none;
     text-align: center;
-    border: solid 2px #fff;
+    border: solid 2px var(--theme-colors__main);
     border-radius: 50%;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-    background: #fff no-repeat 50% 50%;
+    background: var(--theme-colors__main) no-repeat 50% 50%;
     background-size: cover;
-    -webkit-box-shadow: 0 0 0 1px #d2dbe2;
-    box-shadow: 0 0 0 1px #d2dbe2;
+    -webkit-box-shadow: 0 0 0 1px var(--grey-300);
+    box-shadow: 0 0 0 1px var(--grey-300);
 }
 
 .user-avatar-editor__txt{
     font-size: 44px;
-    color: #d2dbe2;
+    color: var(--grey-300);
     white-space: nowrap;
     overflow: hidden;
     text-transform: uppercase;
@@ -687,10 +686,11 @@ input[type="checkbox"].checkbox {
     left: -3px;
     right: -3px;
     margin-top: -15px;
-    color: #fff;
+    color: var(--theme-colors__main);
     font-weight: 600;
     font-size: 14px;
-    background: rgba(5,117,189,.8);
+    background: var(--user-avatar-editor-btn-bg);
+    opacity: .8;
     display: inline-block;
     white-space: nowrap;
     height: 30px;
@@ -710,14 +710,14 @@ input[type="checkbox"].checkbox {
     line-height: initial;
     font-weight: 600;
     font-size: 14px;
-    color:#0575BD
+    color: var(--blue-200);
 }
 .user-avatar-editor__empty:hover{
-    color:#cb4e30
+    color: var(--error-color);
 }
 
 .user-avatar-default-icon {
-    color: #70787F;
+    color: var(--grey-800);
     font-size: 46px;
     position: absolute;
     top: -3px;
@@ -762,7 +762,7 @@ input[type="color"], .colorpicker{
 .editor__icons.icon-remove {
     overflow: hidden;
     cursor: pointer;
-    padding: 0px 5px;
+    padding: 0 5px;
 }
 
 .editor-icons__preview-icon{
@@ -912,7 +912,7 @@ input[type="color"], .colorpicker{
 }
 
 .document-field.drag-over {
-    border: 1px solid #009bfe;
+    border: 1px solid var(--theme-colors__primary_fade);
 }
 
 .document-list {
@@ -1046,11 +1046,11 @@ input[type="color"], .colorpicker{
 }
 
 .field-error-view_text {
-    color: #70787f;
+    color: var(--grey-800);
 }
 
 .field-error-view_text .selected {
-    border: 1px solid #8f84ff;
+    border: 1px solid var(--field-error-view_text-selected);
     border-radius: 2px;
 }
 
