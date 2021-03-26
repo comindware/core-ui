@@ -1104,6 +1104,9 @@ export default Marionette.View.extend({
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorError);
             this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', constants.classes.colorWarning);
         }
+        if (!this.codemirror.getValue()) {
+            return;
+        }
 
         const ERROR = 'Error';
         const WARNING = 'Warning';
