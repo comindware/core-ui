@@ -10,8 +10,8 @@
 .icons-panel-category__name{
     margin: 0 10px 5px;
     font-size: 15px;
-    color: #182026;
-    border-bottom: 1px solid #182026;
+    color: var(--icons-panel-color);
+    border-bottom: 1px solid var(--icons-panel-color);
     padding-bottom: 3px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .icons-panel-i:hover{
-    background: #edf3fb;
+    background: var(--hover-color);
 }
 
 .icons-panel-i__img{
@@ -49,7 +49,7 @@
 .icons-panel-i__text{
     display: inline-block;
     white-space: nowrap;
-    color:#70787f;
+    color: var(--grey-800);
     font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -132,7 +132,7 @@
 }
 
 .ld-setting-dd-panel__i:hover{
-    background: #edf3fb;
+    background: var(--hover-color);
 }
 
 .ld-setting-dd-panel__i:empty {

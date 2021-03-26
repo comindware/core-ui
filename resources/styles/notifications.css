@@ -1,9 +1,9 @@
 ﻿.fr-alert {
     max-width: 475px;
     font-size: 13px;
-    color: #fff;
+    color: var(--theme-colors__main);
     border-radius: 5px;
-    background: #eb6c16;
+    background: var(--notification-error);
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -17,8 +17,8 @@
     justify-content: center;
     min-width: 40px;
     align-items: center;
-    background-color: white;
-    color: #eb6c16;
+    background-color: var(--theme-colors__main);
+    color: var(--notification-error);
     font-size: 24px;
 
 }
@@ -53,19 +53,19 @@
     display: flex;
 }
 .fr-alert_error {
-    background:  #eb6c16;
+    background: var(--notification-error);
 }
 
 .fr-alert_error .icon-container{
-    color: #eb6c16;
+    color: var(--notification-error);
 }
 
 .alert_success {
-    background-color: #74C365;
+    background-color: var(--notification-success);
 }
 
 .fr-alert.alert_success .icon-container {
-    color: #74C365;
+    color: var(--notification-success);
 }
 
 .notification-container {

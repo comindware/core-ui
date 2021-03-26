@@ -3,6 +3,7 @@
     display: flex;
     flex-flow: column nowrap;
     flex-shrink: 0;
+    padding: 15px;
 }
 
 .layout__vertical-layout-title {
@@ -13,6 +14,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #384650;
+    color: var(--text-color);
     margin-bottom: 6px;
 }

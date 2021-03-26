@@ -1,3 +1,6 @@
+import './variables.css';
+import './applyStyles.css';
+import './baseStyles.css';
 import './date-picker.css';
 import './fonts.css';
 import './common.css';
@@ -14,4 +17,5 @@ import './notifications.css';
 import './blink-checkbox.css';
 
 import './icon-editor.css';
+import './theme.css';
 import '../../node_modules/spectrum-colorpicker/spectrum.css';

@@ -110,13 +110,13 @@ ul .layout__tab-layout__header-view-item:last-child {
 }
 
 .layout__tab-layout .layout__tab-layout__header-view-item_disabled:hover {
-    color: #404040;
+    color: var(--theme-colors__text_strong);
     background: none;
 }
 
 .layout__tab-layout__no-tabs-message {
     font-size: 18px;
     font-weight: 300;
-    color: #70787F;
+    color: var(--grey-800);
     padding: 5px;
 }
