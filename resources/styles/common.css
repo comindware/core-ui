@@ -559,7 +559,7 @@ body.non-selectable {
     font-size: 11px;
     text-align: center;
     text-transform: none;
-    background: var(--user-avatar__txt);
+    background: var(--theme-colors__primary_fade);
     color: var(--theme-colors__main);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: alpha(opacity=0);

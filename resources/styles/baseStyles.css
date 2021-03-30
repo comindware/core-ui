@@ -46,7 +46,7 @@
 
 .checkbox i,
 .icon-true {
-    color: var(--checkbox-checked-color);
+    color: inherit;
 }
 
 .icon-false {
@@ -62,6 +62,7 @@
 
 .tr-search__input {
     border: 1px solid var(--input-border-color);
+    border-radius: 4px;
     height: var(--input-height);
     background-size: 14px 14px;
     text-overflow: ellipsis;
@@ -77,6 +78,12 @@
     border-color: var(--theme-colors__primary);
     background-color: var(--theme-colors__main);
 }
+
+.checkbox:hover,
+.radiobutton:hover {
+    box-shadow: 0 0 3px var(--theme-colors__primary_fadest);
+}
+
 .checkbox .svg-icons {
     width: 0.9em;
     height: 0.9em;
@@ -296,7 +303,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .cell > .editor {
     position: absolute;
-    height: 34px;
     top: 0;
     left: 0;
     right: 0;

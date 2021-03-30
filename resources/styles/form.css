@@ -689,7 +689,7 @@ input[type="checkbox"].checkbox {
     color: var(--theme-colors__main);
     font-weight: 600;
     font-size: 14px;
-    background: var(--user-avatar-editor-btn-bg);
+    background: var(--theme-colors__primary_fade);
     opacity: .8;
     display: inline-block;
     white-space: nowrap;

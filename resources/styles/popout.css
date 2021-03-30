@@ -51,7 +51,7 @@
     padding: 4px 7px 4px 10px;
     display: inline-block;
     cursor: pointer;
-    color: var(--grey-for-text);
+    color: var(--theme-colors__text_fade);
     flex: 1;
 }
 .popout-menu__txt:hover {

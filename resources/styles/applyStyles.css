@@ -77,6 +77,10 @@
 /*    border: 1px solid var(--input-hover-color);*/
 /*}*/
 
+input::placeholder {
+    color: green;
+}
+
 .tr-search {
     position: relative;
 }
@@ -99,7 +103,6 @@
 
 .editor_focused .checkbox,
 .editor_focused .radiobutton .toolbar-btn_low:hover, .split-btn_low:hover {
-    box-shadow: 0 0 3px var(--editor-focused-color);
     border-color: var(--input-hover-color);
 }
 .checkbox-text {
