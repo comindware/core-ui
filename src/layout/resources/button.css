@@ -6,6 +6,10 @@
     /*--toolbar-btn-selected: hsla(203, 95%, 48%, 1);*/
     /*--toolbar-btn-hover: hsla(203, 95%, 28%, 1);*/
     /*--toolbar-btn-active: hsla(203, 95%, 48%, 1);*/
+    --toolbar-btn: var(--theme-colors__primary);
+    --toolbar-btn-selected: var(--theme-colors__primary_fade);
+    --toolbar-btn-hover: var(--theme-colors__primary_strong);
+    --toolbar-btn-active: var(--theme-colors__primary_fade);
 
     --toolbar-btn_low: hsla(203, 50%, 56%, 1);;
     --toolbar-btn_low-hover: hsla(203, 50%, 46%, 1);
@@ -26,15 +30,11 @@
     --toolbar-btn_fatal: hsl(0, 100%, 38%);
     --toolbar-btn_fatal-hover: hsl(0, 100%, 28%);
     --toolbar-btn_fatal-active: hsl(0, 100%, 48%);
-
-    --toolbar-btn: var(--theme-colors__primary);
-    --toolbar-btn-selected: var(--theme-colors__primary_fade);
-    --toolbar-btn-hover: var(--theme-colors__primary_strong);
-    --toolbar-btn-active: var(--theme-colors__primary_fade);
 }
 
 .toolbar-btn,
 .split-button-wrp {
+    margin-right: 10px;
     background-color: var(--toolbar-btn);
     border: 1px solid var(--toolbar-btn);
     color: var(--theme-colors__main);
@@ -51,8 +51,8 @@
 .toolbar-btn:hover,
 .split-btn:hover{
     box-shadow: none;
-    background-color: rgba(var(--theme-colors__primary_rgb), 0.8);
-    border: 1px solid rgba(var(--theme-colors__primary_rgb), 0.8);
+    background-color: var(--theme-colors__primary_fade);
+    border: 1px solid var(--theme-colors__primary_fade);
     color: var(--theme-colors__main);
 }
 .toolbar-btn:active,
