@@ -147,7 +147,7 @@
 	cursor: pointer;
 }
 .datetimepicker tbody td:hover{
-	border-color: var(--blue-300);
+	border-color: var(--theme-colors__primary);
 	background: transparent;
 }
 
@@ -167,7 +167,7 @@
 .datetimepicker tbody td.today:hover,
 .datetimepicker tbody td.today.disabled,
 .datetimepicker tbody td.today.disabled:hover {
-	border-color: var(--blue-300);
+	border-color: var(--theme-colors__primary);
 	background: var(--theme-colors__main);
 }
 
@@ -175,8 +175,8 @@
 .datetimepicker tbody td.active:hover,
 .datetimepicker tbody td.active.disabled,
 .datetimepicker tbody td.active.disabled:hover {
-	background-color: var(--blue-300);
-	border-color: var(--blue-300);
+	background-color: var(--theme-colors__primary);
+	border-color: var(--theme-colors__primary);
 	color: var(--theme-colors__main);
 }
 
@@ -234,7 +234,7 @@
 .datetimepicker .icon-arrow-right:after{
 	 content: '\003C';
 	 display: inline-block;
-	 color: var(--blue-300);
+	 color: var(--theme-colors__primary);
 	 font-size: 18px;
 	 transform: scaleY(1.5);
 }
@@ -279,7 +279,7 @@
 .datetimepicker-months tbody td span:hover,
 .datetimepicker-years tbody td span.active,
 .datetimepicker-years tbody td span:hover{
-    border-color: var(--blue-300);
+    border-color: var(--theme-colors__primary);
 }
 
 
