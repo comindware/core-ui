@@ -1,4 +1,5 @@
 :root {
+    --theme-background: linear-gradient(0.75turn, #ec9c9d, #adb0e7);
     /* box-shadow variables */
     --black-20: rgba(0,0,0,.2);
     --black-50: rgba(0,0,0,.5);
@@ -12,7 +13,7 @@
     /* Переменные для разобраться */
     --grey-for-borders: #ced3d7;
     --grey-for-text: #636262;
-    --new-blue-200: #90c3eb;
+    /*--new-blue-200: #90c3eb;*/
     --hover-color: #edf3fb;
     --background-btn: #f7f6f6;
     --super-grey: #bfc2c4;                          /* используется один раз! */
@@ -23,6 +24,7 @@
     --context-collapse-button-bg-color: #cbdce7;    /* используется один раз! list.css */
     --extend_cell_content-border-color: #e6e6e6;    /* используется один раз! list.css */
     --blue-in-lists: #1c80c1;
+    /*--blue-300: #0375BD;*/                            /* используется один раз! date-picker.css */
     --cell__dots-svg-fill: #c9caca;                 /* используется один раз! list.css */
     --scrollbar-background-dragger-hover: #B9B9B9;  /* используется один раз! list.css */
     --scrollbar-background-dragger-active: #A0A0A0; /* используется один раз! list.css */
@@ -30,11 +32,11 @@
     --selection-cell-dots-fill: #888E94;            /* используется один раз! list.css */
     --scrollbar-background: #fcfcfc;                /* используется один раз! list.css */
     --dragger-background: #d9d7d7;                  /* используется один раз! list.css */
+    --grid-header-column-sorting-color: #8bb2cc;    /* используется один раз! list.css */
     --hover2: #f0f0f0;
     --input-border-color: #d6d6d6;
     --editor_error-back-color: #fbe2de;             /* используется один раз! theme.css */
     --bubble__focused-border-color: #bdb8b8;        /* используется один раз! theme.css */
-    --grid-header-column-selected: #04619d;         /* используется один раз! theme.css */
     --border-color2: #dee3e8;
     --editor-focused-color: rgba(47,152,248,.5);    /* используется один раз! dropdown.css */
     --layout__popup-view-header__btn-active: rgba(200,200,200,.7);  /* используется один раз! dropdown.css */
@@ -47,7 +49,6 @@
     --caption:#6c757d;                              /* используется один раз! common.css */
     --subtext-list-border-color: #ececec;           /* используется один раз! dropdowmn.css */
     --highlight: #edecd0;                           /* используется один раз! dropdowmn.css */
-    --blue-300: #0375BD;                            /* используется один раз! date-picker.css */
     --grey-date-picker: #ccc;                    /* используется один раз! date-picker.css */
     --thead-hover: #F2F2F2;                         /* используется один раз! date-picker.css */
     --datetimepicker-border-color: rgba(0, 0, 0, 0.2); /* используется один раз! date-picker.css */
@@ -60,12 +61,16 @@
     --icons-panel-color: #182026;                   /* используется один раз! icon-editor.css */
     --aqua: aqua;                                   /* используется один раз! galerry.css */
 
+    --group-back-color: var(--theme-colors__primary);
+
     /*** Primary ***/
-    --theme-colors__primary: #0575bd; /* Basic */
-    --theme-colors__primary_fade: rgba(var(--theme-colors__primary_rgb), 0.8);/*#009bfe;*//* Fade */ /* используется при наведении */
-    --theme-colors__primary_fadest: #d6e7f2;/* The most fade */
-    --theme-colors__primary_strong: #1b6595;/* Strong */
-    --theme-colors__primary_strongest: #023f67;/* Strongest */
+    --theme-colors__primary: hsla(var(--theme-colors__primary_hs), 38%, 1);/*#0575bd;*/ /* Basic */
+    --theme-colors__primary_rgb: 5,117,189; /* Basic RGB */
+    --theme-colors__primary_hs: 3, 95%; /* Basic HS */
+    --theme-colors__primary_fade: hsla(var(--theme-colors__primary_hs), 48%, 1);/*#009bfe;*//* Fade */ /* используется при наведении */
+    --theme-colors__primary_fadest: hsla(var(--theme-colors__primary_hs), 58%, 1);/*#d6e7f2;*//* The most fade */
+    --theme-colors__primary_strong: hsla(var(--theme-colors__primary_hs), 28%, 1);/*#1b6595;*//* Strong */
+    --theme-colors__primary_strongest: hsla(var(--theme-colors__primary_hs), 18%, 1);/*#023f67;*//* Strongest */
 
     /*** Secondary ***/
     --theme-colors__secondary: #c1c1c1; /* Basic */
@@ -76,7 +81,7 @@
 
     /*** Text ***/
     --theme-colors__text: #000; /* Basic */
-    --theme-colors__text_fade: #666; /* Fade */
+    --theme-colors__text_fade: #e59090; /* Fade  #666;*/
     --theme-colors__text_fadest: #999; /* The most fade */
     --theme-colors__text_strong: #404040; /* Strong */
 
@@ -114,11 +119,10 @@
     --selected-background-color: var(--blue-extra-light);
     --disabled-text-color: var(--grey-400);
     --border-color: var(--grey-400);
-    --border: 1px solid var(--grey-400);
+    --border: 1px solid var(--border-color);
     --border-radius: 2px;
     --border-radius-big: 5px; /* Для попапов */
     --focus: 1px solid var(--blue-200);
-    --theme-background: var(--grey-500);
     --toolbar-background: transparent;
 
     /* font */
@@ -126,14 +130,14 @@
     --line-height: 1.3;
     --font: normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif;
 
-    --form-input-padding: 5px;
+    --form-input-padding: 10px;
 
     --form-field-margin: 10px;
     --form-label-font-size: 12px;
     --form-label-font-weight: 600;
-    --form-label-color: var(--grey-800);
+    --form-label-color: var(--theme-colors__text_fade);
     --form-label-margin: 2px;
-    --form-label-padding: 0 0 0 var(--form-input-padding);
+    --form-label-padding: 0 var(--form-input-padding);
     --form-label-icon-size: 12px;
     --form-label-icon-margin-x: 3px;
 
@@ -147,17 +151,17 @@
     --editor-empty-text-color: var(--grey-900);
 
     /* input */
-    --input-padding: 4px 18px 4px 5px;
-    --input-height: inherit;
+    --input-padding: 4px 18px 4px var(--form-input-padding);
+    --input-height: 30px;
     --input-hover-color: var(--blue-100);
     --input-active-border-color: var(--blue-200);
     --input-search-padding: 2px 20px 2px 24px;
     --input-search-bg: no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
 
     /* textarea */
-    --textarea-padding: 3px 5px;
+    --textarea-padding: 4px var(--form-input-padding);
     --textarea-line-height: inherit;
-    --textarea-min-height: 24px;
+    --textarea-min-height: 30px;
 
     /* custom control */
     --custom-control-spacer-y: 10px;
@@ -165,7 +169,7 @@
     /* checkbox */
     --checkbox-size: 18px;
     --checkbox-radius: 2px;
-    --checkbox-border-color: var(--grey-900);
+    --checkbox-border-color: var(--border-color);
     --checkbox-intermediate-size: 8px;
     --checkbox-checked-color: var(--grey-100);
 

@@ -1,130 +1,3 @@
-/*
-postcss apply добавляет правила по очереди в начало (prepend),
-что бы не переопределить свойства которые присутствуют изначально,
-в связи с этим приходится писать свойства в обратном порядке если
-нам нужно сначала сбросить свойство, а потом добавить его
-частично (https://github.com/pascalduez/postcss-apply/issues/43)
- */
-
-.absolute-center-y-theme {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.relative-center-y-theme {
-    position: relative;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.button-theme {
-    font-size: 1em;
-    padding: 0 10px;
-}
-
-.dropdown-theme {
-    min-height: 20px;
-}
-
-.dropdown-caret-theme {}
-.bubbles-item-theme {}
-.input-theme {}
-.input-disabled-theme {}
-.input-search-clear-theme {
-    width: 20px;
-    height: 20px;
-    right: 0;
-    top: 50%;
-    line-height: 21px;
-    font-size: 14px;
-}
-
-.textarea-theme {}
-
-.custom-cotrol-disabled-theme {
-    filter: alpha(opacity=60);
-    opacity: .6;
-    cursor: auto;
-}
-
-.checkbox-theme {
-    line-height: normal;
-    font-size: 11px;
-}
-
-.checkbox-disabled-theme {}
-.radio-disabled-theme {}
-.svg-icon-wrp-theme {
-    right: 1px;
-    top: 50%;
-    width: 1em;
-    height: 1em;
-    line-height: 1em;
-    transform: translateY(-50%);
-}
-
-.svg-icons-theme {
-    width: 1em;
-    height: 1em;
-    fill: currentColor;
-    pointer-events: none;
-}
-
-.tab-item-theme {
-    min-height: 25px;
-}
-
-.tab-item-active-theme {}
-.tab-item-error-theme {}
-.tab-item-disabled-theme {}
-.tab-item-hidden-theme {}
-
-.tab-move-btn-prev-theme {}
-.columns-select-list-theme {}
-.columns-header-theme {
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.toolbar-btn-theme {}
-
-.group-theme {
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-.group-head-theme {
-    max-width: calc(100% - 5px);
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.group-title-theme {
-    padding-left: 15px;
-}
-
-.group-content-theme {
-    padding: 10px;
-}
-
-.popup-header-theme {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.popup-footer-theme {
-    padding: 10px;
-}
-
-.popup-close-theme {}
-
-.drop-zone-theme {
-    padding: 6px;
-}
-
-.drop-zone-active-theme {}
-
 /*  styles.css  */
 
 /*------------------ Form Editor ------------------*/
@@ -184,7 +57,6 @@ postcss apply добавляет правила по очереди в нача�
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
 .editor_readonly .bubbles:hover{
-    border-bottom-color:transparent;
     background: transparent;
 }
 .cell > .editor {
@@ -365,10 +237,6 @@ postcss apply добавляет правила по очереди в нача�
 
 /* Date Time */
 
-.editor_date-time:hover {
-    border-color: var(--input-hover-color);
-}
-
 .editor_date-time {
     padding-right: 16px;
 }
@@ -467,7 +335,7 @@ postcss apply добавляет правила по очереди в нача�
 
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
-    margin-bottom: 10px;
+
 }
 
 

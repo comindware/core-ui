@@ -327,7 +327,7 @@ input[type="checkbox"].checkbox {
     width: 100%;
     margin: 0;
     display: inline-block;
-    color: inherit;
+    color: var(--theme-colors__text);
     font-weight: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
