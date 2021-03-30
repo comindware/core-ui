@@ -316,6 +316,7 @@ body {
 }
 
 .demo-content__code {
+    max-width: 45%;
     overflow: auto;
     box-shadow: 0 1px 3px var(--demo-box-sh1), 0 1px 2px var(--demo-box-sh2);
     flex: 1 1;

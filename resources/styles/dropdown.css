@@ -227,11 +227,11 @@
 }
 
 .subtext-list:hover .datalist-container-subtext {
-    color: var(--blue-in-lists);
+    color: var(--theme-colors__primary);
 }
 
 .subtext-list:hover .datalist-icon {
-    color: var(--blue-in-lists);
+    color: var(--theme-colors__primary);
 }
 
 .datalist_selected-panel > .visible-collection{
