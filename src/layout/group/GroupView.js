@@ -29,7 +29,9 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.options.class || ''}`;
+    },
 
     regions: {
         containerRegion: '.js-container-region',

@@ -131,23 +131,67 @@
 
 
 /* fix group on group and group in tabs*/
-.layout-group .layout-group,
-.layout__tab-layout__panel-container .layout-group,
-.layout__popup-view-window .layout-group {
+.layout-group .layout-group:not(.layout-group_not-nested),
+.layout__tab-layout__panel-container .layout-group:not(.layout-group_not-nested),
+.layout__popup-view-window .layout-group:not(.layout-group_not-nested) {
     padding: 0;
     border-radius: 4px;
 }
-.layout-group .layout-group .layout-group-wrp,
-.layout__tab-layout__panel-container .layout-group .layout-group-wrp,
-.layout__popup-view-window .layout-group .layout-group-wrp{
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group-wrp,
+.layout__tab-layout__panel-container .layout-group:not(.layout-group_not-nested) .layout-group-wrp,
+.layout__popup-view-window .layout-group:not(.layout-group_not-nested) .layout-group-wrp{
     box-shadow: none;
     border: 1px solid var(--border-groups-grey);
 }
-.layout-group .layout-group .layout-group__head,
-.layout__tab-layout__panel-container .layout-group .layout-group__head,
-.layout__popup-view-window .layout-group .layout-group__head{
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group__head,
+.layout__tab-layout__panel-container .layout-group:not(.layout-group_not-nested) .layout-group__head,
+.layout__popup-view-window .layout-group:not(.layout-group_not-nested) .layout-group__head{
     position: static;
     z-index: auto;
+}
+
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group-wrp,
+.layout__tab-layout__panel-container .layout-group:not(.layout-group_not-nested) .layout-group-wrp,
+.layout__popup-view-window .layout-group:not(.layout-group_not-nested) .layout-group-wrp {
+    border: none;
+}
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group__head,
+.layout__tab-layout__panel-container .layout-group:not(.layout-group_not-nested) .layout-group__head,
+.layout__popup-view-window .layout-group:not(.layout-group_not-nested) .layout-group__head{
+    background-color: transparent;
+    border: none;
+    padding: 0 10px;
+    height: auto;
+    margin-bottom: 10px;
+    color: var(--theme-colors__text)
+}
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group__head .group-menu,
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group__head .group-toggle{
+    display: none;
+}
+.layout-group .layout-group:not(.layout-group_not-nested) .layout-group-wrp .layout-group__content {
+    padding: 0;
+}
+
+.layout-group .layout-group:not(.layout-group_not-nested){
+    margin: 0;
+}
+.layout-group .toolbar,
+.layout-group .toolbar-container{
+    background-color: transparent;
+}
+
+.dataset-wrapper.layout-group .toolbar{
+    padding: 0 0 10px 0;
+    height: auto;
+}
+
+.group-toggle{
+    margin-top: 3px;
+}
+.group-toggle i{
+    font-size: 27px;
+    font-weight: 300;
 }
 
 .layout-group .toolbar,
