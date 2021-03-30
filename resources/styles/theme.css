@@ -1076,7 +1076,6 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__configuration-panel-container {
-  @apply --tab-panel-container-theme;
   padding: var(--tab-panel-container-padding);
 }
 
