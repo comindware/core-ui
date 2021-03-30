@@ -1075,6 +1075,10 @@ tr:not(:first-child) .cell_selection {
   padding: var(--tab-panel-container-padding);
 }
 
+.layout__configuration-panel-container {
+  padding: var(--tab-panel-container-padding);
+}
+
 .layout__tab-layout_move-button.prev-layout_move-button{
 }
 

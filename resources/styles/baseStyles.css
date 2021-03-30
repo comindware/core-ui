@@ -251,6 +251,15 @@ svg.svg-grid-icons.svg-icons_flag-none {
     order: 2;
 }
 
+.layout__configuration-panel-container > div {
+    margin-top: 5px;
+}
+
+.dataset-configuration-panel .layout__vertical-layout-item,
+.dataset-configuration-panel .layout__vertical-layout > div {
+    margin-bottom: 0;
+}
+  
 .layout-group .layout-group__content > .layout-group .group-title {
     font-size: 15px;
     padding-left: 0
