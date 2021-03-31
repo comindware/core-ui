@@ -1,65 +1,8 @@
 :root {
-    --theme-background: var(--theme-colors__secondary_fade);
-    /* box-shadow variables */
-    --black-20: rgba(0,0,0,.2);
-    --black-50: rgba(0,0,0,.5);
-    --black-70: rgba(0,0,0,.7);
-    --black-14: rgba(0,0,0,.14);
-    --black-12: rgba(0,0,0,.12);
-    --black-16: rgba(0, 0, 0,.16);
-    --black-23: rgba(0, 0, 0,.23);
-    --black-24: rgba(0, 0, 0,.24);
-
-    /* Переменные для разобраться */
-    --grey-for-borders: #ced3d7;
-    /*--new-blue-200: #90c3eb;*/
-    --hover-color: #edf3fb;
-    --background-btn: #f7f6f6;
-    --super-grey: #bfc2c4;                          /* используется один раз! */
-    --border-groups-grey: #e3e3e3;                  /* используется только в группах */
-    --back-color-grey: #f9f9f9;
-    --text-color2: #434343;
-    --text-color3: #cfcfd0;
-    --context-collapse-button-bg-color: #cbdce7;    /* используется один раз! list.css */
-    --extend_cell_content-border-color: #e6e6e6;    /* используется один раз! list.css */
-    --cell__dots-svg-fill: #c9caca;                 /* используется один раз! list.css */
-    --scrollbar-background-dragger-hover: #B9B9B9;  /* используется один раз! list.css */
-    --scrollbar-background-dragger-active: #A0A0A0; /* используется один раз! list.css */
-    --list-item-color: #43525d;                     /* используется один раз! list.css */
-    --selection-cell-dots-fill: #888E94;            /* используется один раз! list.css */
-    --scrollbar-background: #fcfcfc;                /* используется один раз! list.css */
-    --dragger-background: #d9d7d7;                  /* используется один раз! list.css */
-    --hover2: #f0f0f0;
-    --input-border-color: #d6d6d6;
-    --editor_error-back-color: #fbe2de;             /* используется один раз! theme.css */
-    --bubble__focused-border-color: #bdb8b8;        /* используется один раз! theme.css */
-    --border-color2: #dee3e8;
-    --layout__popup-view-header__btn-active: rgba(200,200,200,.7);  /* используется один раз! dropdown.css */
-    --grey-one-more: #4d4d4d;
-    --fill-svg-icons: #8d8888;                      /* используется один раз! applyStyles.css */
-    --fill-svg-icons_remove: #ca4e30;               /* используется один раз! applyStyles.css */
-    --btn-disabled: #a3abb0;                        /* используется один раз! common.css */
-    --tr-search__placeholder-color: #bcc6cf;        /* используется один раз! common.css */
-    --caption:#6c757d;                              /* используется один раз! common.css */
-    --subtext-list-border-color: #ececec;           /* используется один раз! dropdowmn.css */
-    --highlight: #edecd0;                           /* используется один раз! dropdowmn.css */
-    --grey-date-picker: #ccc;                    /* используется один раз! date-picker.css */
-    --thead-hover: #F2F2F2;                         /* используется один раз! date-picker.css */
-    --datetimepicker-border-color: rgba(0, 0, 0, 0.2); /* используется один раз! date-picker.css */
-    --field-error-view_text-selected: #8f84ff;      /* используется один раз! form.css */
-    --branch-item: #e9e9e9;                         /* используется один раз! threeEditor.css */
-    --hidden-node-color: #d4d4d4;                   /* используется один раз! threeEditor.css */
-    --notification-error: #eb6c16;                  /* используется один раз! notifications.css */
-    --notification-success: #74C365;                /* используется один раз! notifications.css */
-    --icons-panel-color: #182026;                   /* используется один раз! icon-editor.css */
-    --aqua: aqua;                                   /* используется один раз! galerry.css */
-
-    --group-back-color: var(--theme-colors__primary);
-
     /*** Primary ***/
-    --theme-colors__primary: hsla(var(--theme-colors__primary_hs), 38%, 1);/*#0575bd;*/ /* Basic */
-    --theme-colors__primary_rgb: 5,117,189; /* Basic RGB */
     --theme-colors__primary_hs: 203, 95%; /* Basic HS */
+
+    --theme-colors__primary: hsla(var(--theme-colors__primary_hs), 38%, 1);/*#0575bd;*/ /* Basic */
     --theme-colors__primary_fade: hsla(var(--theme-colors__primary_hs), 48%, 1);/*#009bfe;*//* Fade */ /* используется при наведении */
     --theme-colors__primary_fadest: hsla(var(--theme-colors__primary_hs), 58%, 1);/*#d6e7f2;*//* The most fade */
     --theme-colors__primary_strong: hsla(var(--theme-colors__primary_hs), 28%, 1);/*#1b6595;*//* Strong */
@@ -84,38 +27,32 @@
     --theme-colors__main_strong: #e2e2e2;/* Strong */
     --theme-colors__main_strongest: #c1c1c1;/* Strongest */
 
-    /*** Error ***/
-    --theme-colors__error: #e1462c; /* Basic */
+    /*** Notification ***/
+    --notification-warning: #ffda44;
+    --notification-error: #e1462c;
+    --notification-success: #74c365;
 
-    /* colors */
-    --red: red;
-    --red-dark: #ba0c08;
-    --gray: gray;
-    --blue-extra-light: #eaf5fc;
-    --blue-100: var(--theme-colors__primary_fade);
-    --blue-200: var(--theme-colors__primary);
-    --grey-100: #f3f3f3;
-    --grey-200: #edeff0;
-    --grey-300: #d2dbe2;
-    --grey-400: #dfe4e8;
-    --grey-500: #d3d5d6;
-    --grey-600: #b9bcbd;
-    --grey-700: #aab5be;
-    --grey-800: var(--theme-colors__text_fade); /* #70787F; */
-    --grey-900: #838c92;
-    --text-color: var(--theme-colors__text); /* #384650; */
-    --link-color: var(--blue-200);
-    --link-hover-color: var(--blue-100);
-    --main-color: var(--blue-200);
-    --error-color: var(--theme-colors__error);
-    --warning-color: #ffda44;
-    --selected-background-color: var(--blue-extra-light);
-    --disabled-text-color: var(--grey-400);
-    --border-color: var(--grey-400);
+    /* box-shadow variables */
+    --black-20: rgba(0,0,0,.2);
+    --black-50: rgba(0,0,0,.5);
+    --black-70: rgba(0,0,0,.7);
+    --black-14: rgba(0,0,0,.14);
+    --black-12: rgba(0,0,0,.12);
+    --black-16: rgba(0, 0, 0,.16);
+    --black-23: rgba(0, 0, 0,.23);
+    --black-24: rgba(0, 0, 0,.24);
+
+    /* other variables */
+    --red-dark: #ac1e1a; /* use for red control elements */
+    --link-color: var(--theme-colors__primary);
+    --link-hover-color: var(--theme-colors__primary_fade);
+    --main-color: var(--theme-colors__primary);
+    --selected-background-color: var(--theme-colors__main);
+    --disabled-text-color: var(--theme-colors__secondary_fade);
+    --border-color: var(--theme-colors__secondary_fade);
     --border: 1px solid var(--border-color);
     --border-radius: 2px;
-    --border-radius-big: 5px; /* Для попапов */
-    --focus: 1px solid var(--blue-200);
+    --focus: 1px solid var(--theme-colors__primary);
     --toolbar-background: transparent;
 
     /* font */
@@ -140,14 +77,14 @@
     --editor-line-height: 20px;
     --editor-textarea-line-height: 18px;
     --editor-font-size: var(--base-font-size);
-    --editor-text-color: var(--text-color);
-    --editor-empty-text-color: var(--grey-900);
+    --editor-text-color: var(--theme-colors__text);
+    --editor-empty-text-color: var(--theme-colors__text_fadest);
 
     /* input */
     --input-padding: 4px 18px 4px var(--form-input-padding);
     --input-height: 30px;
-    --input-hover-color: var(--blue-100);
-    --input-active-border-color: var(--blue-200);
+    --input-hover-color: var(--theme-colors__primary_fade);
+    --input-active-border-color: var(--theme-colors__primary);
     --input-search-padding: 2px 20px 2px 24px;
     --input-search-bg: no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
 
@@ -162,33 +99,33 @@
     /* checkbox */
     --checkbox-size: 18px;
     --checkbox-radius: 4px;
-    --checkbox-border-color: var(--input-border-color);
+    --checkbox-border-color: var(--theme-colors__secondary);
     --checkbox-intermediate-size: 8px;
-    --checkbox-checked-color: var(--grey-100);
+    --checkbox-checked-color: var(--theme-colors__main_fade);
 
     /* radio */
     --radio-size: 18px;
     --radio-margin: 0 10px 0 0;
-    --radio-checked-color: var(--blue-200);
+    --radio-checked-color: var(--theme-colors__primary);
     --radio-inner-size: 10px;
-    --radio-checked-disabled-color: var(--grey-800);
+    --radio-checked-disabled-color: var(--theme-colors__text_fade);
 
     /* grid */
     --grid-toolbar-padding: 2px 0;
-    --grid-toolbar-bg-color: var(--grey-100);
+    --grid-toolbar-bg-color: var(--theme-colors__main_fade);
 
     --grid-checkbox-size: 18px;
     --grid-checkbox-icon-size: 11px;
     --grid-header-font-size: var(--base-font-size);
     --grid-header-color: var(--theme-colors__main);
     --grid-header-bg: var(--theme-colors__primary);
-    --grid-header-border-color: var(--grey-400);
+    --grid-header-border-color: var(--theme-colors__secondary_fade);
     --grid-header-height: 30px;
     --grid-header-padding: 0 15px;
     --grid-header-border: inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-first: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-last: var(--grid-header-border);
-    --grid-header-selection-bg: var(--grey-100);
+    --grid-header-selection-bg: var(--theme-colors__main_fade);
 
     --grid-cell-bg: var(--theme-colors__main);
     --grid-cell-border: 1px solid var(--grid-header-border-color);
@@ -201,11 +138,11 @@
     --grid-cell-input-padding: 0 2px 0 0;
     --grid-dots-width: 30px;
     --grid-dots-padding: 0 25px 0 2px;
-    --grid-dots-color: var(--grey-600);
-    --grid-row-selected-color: var(--blue-extra-light);
-    --grid-row-hover-color: var(--grey-100);
+    --grid-dots-color: var(--theme-colors__main_strongest);
+    --grid-row-selected-color: var(--theme-colors__main);
+    --grid-row-hover-color: var(--theme-colors__main_fade);
 
-    --grid-selection-color: var(--grey-900);
+    --grid-selection-color: var(--theme-colors__text_fadest);
     --grid-selection-width: 26px;
     --grid-selection-bg: var(--grid-cell-bg);
     --grid-selection-index-width: 53px;
@@ -216,7 +153,7 @@
     --grid-sort-icon-offset-y: 2px;
 
     --columns-select-border: var(--border);
-    --columns-select-cell-border: inset -1px -1px 0 0 var(--grey-400);
+    --columns-select-cell-border: inset -1px -1px 0 0 var(--theme-colors__secondary_fade);
 
     --dropdown-padding: 0 20px 0 var(--form-input-padding);
     --dropdown-font-size: var(--base-font-size);
@@ -224,7 +161,7 @@
     --dropdown-group-color: var(--theme-colors__text);
     --dropdown-item-padding: 7px 15px;
     --dropdown-item-checkbox-padding: 5px;
-    --dropdown-item-hover-color: var(--grey-100);
+    --dropdown-item-hover-color: var(--theme-colors__main_fade);
     --bubbles-item-delete-padding: 17px;
     --bubbles-item-edit-delete-padding: 38px;
     --bubbles-icon-offset-x: 1px;

@@ -12,7 +12,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-bottom: 1px solid var(--border-color2);
+    border-bottom: 1px solid var(--theme-colors__secondary_fade);
     display: flex;
 }
 
@@ -23,7 +23,7 @@
     text-overflow: ellipsis;
     font-size: 18px;
     font-weight: 500;
-    color: var(--blue-200);
+    color: var(--theme-colors__primary);
     cursor: pointer;
     vertical-align: middle;
 }
@@ -48,7 +48,7 @@
 }
 
 .filter-icon-list__i:hover{
-    background-color: var(--hover-color);
+    background-color: var(--theme-colors__main);
 }
 
 .filter-icon-list-eye {
@@ -67,7 +67,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-top: 1px solid var(--border-color2);
+    border-top: 1px solid var(--theme-colors__secondary_fade);
     flex: 1;
     padding-left: 8px;
 }
@@ -98,7 +98,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-top: 1px solid var(--border-color2);
+    border-top: 1px solid var(--theme-colors__secondary_fade);
     text-align: center;
     vertical-align: middle;
 }
@@ -106,7 +106,7 @@
 .filter-icon-lists-save-txt{
     font-size: 13px;
     font-weight: 500;
-    color: var(--blue-200);
+    color: var(--theme-colors__primary);
     cursor: pointer;
     vertical-align: middle;
 }
@@ -118,7 +118,7 @@
     width: 180px;
     height: 40px;
     position: fixed;
-    border: 1px solid var(--border-color2);
+    border: 1px solid var(--theme-colors__secondary_fade);
     opacity: 0.8;
     background: var(--theme-colors__main);
     z-index: 1000;
@@ -144,11 +144,11 @@
 }
 
 .filter-enabled {
-    color: var(--blue-200);
+    color: var(--theme-colors__primary);
 }
 
 .filter-disabled {
-    color: var(--border-color2);
+    color: var(--theme-colors__secondary_fade);
 }
 
 /* /filter-icon-list */

@@ -13,6 +13,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--text-color);
+    color: var(--theme-colors__text);
     margin-bottom: 6px;
 }

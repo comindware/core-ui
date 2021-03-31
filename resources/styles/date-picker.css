@@ -26,8 +26,8 @@
 	display: inline-block;
 	border-left: 7px solid transparent;
 	border-right: 7px solid transparent;
-	border-bottom: 7px solid var(--grey-date-picker);
-	border-bottom-color: var(--datetimepicker-border-color);
+	border-bottom: 7px solid var(--theme-colors__secondary);
+	border-bottom-color: var(--black-20);
 	position: absolute;
 }
 
@@ -45,8 +45,8 @@
 	display: inline-block;
 	border-left: 7px solid transparent;
 	border-right: 7px solid transparent;
-	border-top: 7px solid var(--grey-date-picker);
-	border-top-color: var(--datetimepicker-border-color);
+	border-top: 7px solid var(--theme-colors__secondary);
+	border-top-color: var(--black-20);
 	border-bottom: 0;
 }
 
@@ -159,7 +159,7 @@
 .datetimepicker table tr td.disabled,
 .datetimepicker table tr td.disabled:hover {
 	background: var(--theme-colors__secondary_fade);
-	color: var(--grey-date-picker);
+	color: var(--theme-colors__secondary);
 	cursor: default;
 }
 
@@ -207,7 +207,7 @@
 	cursor: pointer;
 }
 .datetimepicker thead th.switch:hover {
-	background-color: var(--thead-hover);
+	background-color: var(--theme-colors__main_fade);
 }
 
 .datetimepicker th.prev,
@@ -218,7 +218,7 @@
 
 .datetimepicker th.prev:hover,
 .datetimepicker th.next:hover{
-	background-color: var(--thead-hover);
+	background-color: var(--theme-colors__main_fade);
 }
 
 .datetimepicker .icon-arrow-left,
@@ -247,14 +247,14 @@
     padding-top: 5px;
 }
 .datetimepicker tfoot tr:hover{
-    background-color: var(--thead-hover);
+    background-color: var(--theme-colors__main_fade);
 }
 
 .datetimepicker tfoot th{
     height: 25px;
     vertical-align: middle;
     text-align: center;
-    color: var(--blue-200);
+    color: var(--theme-colors__primary);
     font-size: 13px;
     font-weight: 400;
     cursor: pointer;
