@@ -865,6 +865,26 @@ tr.grid-header.dragover td {
     margin-left: 0.25rem;
 }
 
+tr.selected > .cell_selection,
+tr.selected > .cell_selection-index,
+tr.selected > .cell,
+tr.row-checked > .cell_selection,
+tr.row-checked > .cell_selection-index,
+tr.row-checked > .cell,
+.dd-list__i.selected,
+.dd-list__i:hover {
+    background-color: rgba(var(--theme-colors__primary_rgb), 0.1);
+}
+
+tr:hover > .cell_selection,
+tr:hover > .cell_selection-index,
+.hover .cell_selection,
+.hover .cell_selection-index,
+tr:hover > .cell,
+.hover .cell {
+    background-color: var(--theme-colors__secondary_fade);
+}
+
 /* temporary disabled */
 /*--- Fix colletion scroll header ---*/
 /* .dev-collection .grid-table-wrapper-war {

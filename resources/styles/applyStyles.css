@@ -97,10 +97,6 @@ input::placeholder {
     vertical-align: inherit;
 }
 
-.checkbox {
-    border-radius: var(--checkbox-radius);
-}
-
 .editor_focused .checkbox,
 .editor_focused .radiobutton .toolbar-btn_low:hover, .split-btn_low:hover {
     border-color: var(--input-hover-color);

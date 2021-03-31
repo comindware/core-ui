@@ -234,6 +234,18 @@ input[type="checkbox"].checkbox {
     text-align: center;
     cursor: pointer;
     transition: box-shadow .5s;
+    border-radius: var(--checkbox-radius);
+    background-color: var(--theme-colors__main);
+}
+
+td .checkbox i,
+.editor_checkbox .checkbox i {
+    font-weight: 300;
+    font-size: 10px;
+}
+
+td > .icon-true {
+    color: var(--theme-colors__primary);
 }
 
 .editor_readonly .checkbox,

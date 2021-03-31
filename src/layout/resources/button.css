@@ -61,6 +61,11 @@
     border: 1px solid var(--toolbar-btn-active);
 }
 
+.toolbar-btn .checkbox i,
+.split-btn .checkbox i {
+    color: inherit;
+}
+
 
 /* Themes color button */
 .toolbar-btn_low, .split-btn_low{

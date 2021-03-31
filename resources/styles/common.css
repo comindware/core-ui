@@ -896,12 +896,24 @@ body.non-selectable {
     box-shadow: none;
 }
 
+
 .toolbar-panel_container .toolbar-btn,
 .toolbar-panel_container .toolbar-btn:hover {
     width: 100%;
     margin: 0;
     border: none;
     border-radius: 0;
+}
+
+.toolbar-panel_container .toolbar-btn {
+    background-color: var(--theme-colors__main_fade);
+    color: var(--theme-colors__text);
+}
+
+.toolbar-panel_container .toolbar-btn:not(.toolbar-btn_headline):hover{
+    background-color:  #fff;
+    border: none;
+    color: var(--theme-colors__primary);
 }
 
 .toolbar-panel_container__select-state .toolbar-btn.toolbar-btn_headline{

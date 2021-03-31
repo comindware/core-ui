@@ -291,6 +291,7 @@
     height: 305px;
     padding: 0;
     overflow-y: auto;
+    background-color: var(--theme-colors__main);
 }
 .time-dropdown__i {
     text-align: left;

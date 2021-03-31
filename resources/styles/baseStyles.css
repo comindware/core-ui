@@ -44,11 +44,6 @@
     border-color: var(--checkbox-border-color);
 }
 
-.checkbox i,
-.icon-true {
-    color: inherit;
-}
-
 .icon-false {
     color: var(--red);
     font-size: 1.2em;
@@ -72,7 +67,6 @@
     vertical-align: middle;
 }
 
-.checkbox,
 .radiobutton {
     color: var(--theme-colors__primary);
     border-color: var(--theme-colors__primary);
@@ -246,12 +240,12 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .layout__horizontal-layout > div:not(:last-child),
 .layout__horizontal-layout-list-item:not(:last-child) {
-
+    padding-right: 10px;
 }
 
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
-
+    margin-bottom: 20px;
 }
 
 .group-toggle {
@@ -266,7 +260,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .dataset-configuration-panel .layout__vertical-layout > div {
     margin-bottom: 0;
 }
-  
+
 .layout-group .layout-group__content > .layout-group .group-title {
     font-size: 15px;
     padding-left: 0

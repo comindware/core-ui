@@ -624,9 +624,12 @@ tr.row-checked,
 }
 
 .cell .checkbox {
-    font-size: var(--grid-checkbox-icon-size);
-    width: var(--grid-checkbox-size);
-    height: var(--grid-checkbox-size);
+    margin: 0 auto;
+    display: flex;
+}
+
+.cell .checkbox,
+.cell > i {
     margin: 0 auto;
     display: flex;
 }
