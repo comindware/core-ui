@@ -44,7 +44,7 @@
     transition: background .3s ease-in-out, color .3s ease-in-out;
 }
 .popout-menu__i:hover {
-    background: var(--hover-color);
+    background: var(--theme-colors__main);
 }
 .popout-menu__txt {
     padding: 4px 7px 4px 10px;
@@ -58,5 +58,5 @@
     text-decoration: none;
 }
 .popout-menu__subtext {
-    color: var(--grey-500);
+    color: var(--theme-colors__main_strong);
 }

@@ -30,7 +30,7 @@
   content: "";
   position: absolute;
   height: 2px;
-  background-color: var(--blue-100);
+  background-color: var(--theme-colors__primary_fade);
   left: 0;
   bottom: -1px;
   width: 0;
@@ -69,7 +69,7 @@
     padding: var(--input-padding);
     border-radius: 4px;
     background-color: var(--theme-colors__main);
-    border: 1px solid var(--input-border-color);
+    border: 1px solid var(--theme-colors__secondary);
     height: auto;
 }
 
@@ -122,7 +122,7 @@ input::placeholder {
 .textarea {
     border-radius: 4px;
     background-color: var(--theme-colors__main);
-    border: 1px solid var(--input-border-color);
+    border: 1px solid var(--theme-colors__secondary);
 }
 
 /*------------------ SVG Icons ------------------*/
@@ -182,17 +182,17 @@ input::placeholder {
 }
 
 .d-svg-icons {
-    fill: var(--fill-svg-icons);
+    fill: var(--theme-colors__text_fadest);
 }
 
 .d-svg-icons_remove{
-    fill: var(--fill-svg-icons_remove);
+    fill: var(--red-dark);
 }
 .d-svg-icons_plus{
-    fill: var(--grey-one-more);
+    fill: var(--theme-colors__text_strong);
 }
 .d-svg-icons_checked{
-    fill: var(--blue-200);
+    fill: var(--theme-colors__primary);
 }
 
 /*------------------ Grid/List ------------------*/
@@ -269,7 +269,7 @@ input::placeholder {
     transform: rotate(90deg) translate(12px, 19px);
 }
 .layout__tab-layout_move-button .d-svg-icons {
-    fill: var(--red);
+    fill: var(--red-dark);
 }
 
 
@@ -282,11 +282,11 @@ input::placeholder {
 }
 
 .bubbles:hover {
-    border-bottom-color: var(--grey-600);
+    border-bottom-color: var(--theme-colors__main_strongest);
 }
 .editor:not(.editor_readonly).bubbles__i:hover,
 .editor:not(.editor_disabled).bubbles__i:hover {
-    background: var(--hover2);
+    background: var(--theme-colors__main_fade);
 }
 
 /*------------------ Form Label ------------------*/
@@ -306,7 +306,7 @@ input::placeholder {
 }
 
 .disabled .form-label {
-    color: var(--grey-800);
+    color: var(--theme-colors__text_fade);
 }
 
 .form-label_required {
@@ -355,11 +355,8 @@ input::placeholder {
 }
 
 .layout__popup-view-header__btn:hover {
-    border-color: var(--grey-400);
+    border-color: var(--theme-colors__secondary_fade);
 }
-/*.layout__popup-view-header__btn:active {*/
-/*    box-shadow: inset 1px 1px 3px var(--layout__popup-view-header__btn-active);*/
-/*}*/
 
 .btn.btn_arrow {
     width: 26px;
@@ -368,7 +365,7 @@ input::placeholder {
     cursor: pointer;
     text-align: center;
     line-height: 26px;
-    background: var(--background-btn) 50% 50% no-repeat;
+    background: var(--theme-colors__main_fade) 50% 50% no-repeat;
 }
 
 .layout__horizontal-layout-list {

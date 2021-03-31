@@ -3,7 +3,7 @@ body, input, textarea, select {
 }
 
 body {
-  color: var(--text-color);
+  color: var(--theme-colors__text);
 }
 /* a {
   line-height: var(--line-height)
@@ -48,11 +48,11 @@ body {
 }
 
 .form-label__error-button {
-  color: var(--error-color);
+  color: var(--notification-error);
 }
 
 .form-label__warning-button {
-  color: var(--warning-color);
+  color: var(--notification-warning);
 }
 
 .form-label__error-text {
@@ -60,11 +60,11 @@ body {
 }
 
 .form-label__error-icon-error{
-  color: var(--error-color);
+  color: var(--notification-error);
 }
 
 .form-label__error-icon-warning{
-  color: var(--warning-color);
+  color: var(--notification-warning);
 }
 
 .cell.error .form-label__error,
@@ -88,11 +88,11 @@ body {
 }
 
 .cell.error .form-label__error-button {
-  border-top: 16px solid var(--error-color);
+  border-top: 16px solid var(--notification-error);
 }
 
 .cell.warning .form-label__warning-button {
-  border-top: 16px solid var(--warning-color);
+  border-top: 16px solid var(--notification-warning);
 }
 
 .cell.error .form-label__error-button::after,
@@ -197,9 +197,9 @@ body {
 .editor_error .textarea,
 .editor_error .bubbles,
 .editor_error .editor_date-time {
-  border-color: var(--error-color);
-  background-color: var(--editor_error-back-color);
-  color: var(--error-color);
+  border-color: var(--notification-error);
+  background-color: var(--theme-colors__main);
+  color: var(--notification-error);
 }
 
 .editor_error.editor_focused .input,
@@ -207,8 +207,8 @@ body {
 .editor_error.editor_focused .bubbles,
 .editor_error.editor_focused .editor_date-time {
   background-color: transparent;
-  border-color: var(--error-color);
-  color: var(--error-color);
+  border-color: var(--notification-error);
+  color: var(--notification-error);
 }
 
 
@@ -216,11 +216,11 @@ body {
 .warning .editor .textarea,
 .warning .editor .bubbles,
 .warning .editor_date-time {
-  border-color: var(--warning-color);
+  border-color: var(--notification-warning);
 }
 
 .cell.error {
-  outline: 1px solid var(--error-color);
+  outline: 1px solid var(--notification-error);
   outline-offset: -1px;
 }
 
@@ -231,7 +231,7 @@ body {
 }
 
 .editor_icons .caret {
-    color: var(--text-color);
+    color: var(--theme-colors__text);
 }
 
 .bubbles__i{
@@ -240,13 +240,13 @@ body {
 }
 
 .bubbles__i.bubble__focused{
-  border: 1px solid var(--bubble__focused-border-color);
+  border: 1px solid var(--theme-colors__secondary);
   border-radius: 2px;
   background: var(--theme-colors__main_fade);
   padding: 2px;
 }
 .reference-btn.bubble__focused{
-  border: 1px solid var(--bubble__focused-border-color);
+  border: 1px solid var(--theme-colors__secondary);
   border-radius: 2px;
   background: var(--theme-colors__main_fade);
   padding: 2px;
@@ -261,7 +261,7 @@ body {
 
 .tr-search__input {
   padding: var(--input-search-padding);
-  color: var(--text-color);
+  color: var(--theme-colors__text);
   background: var(--input-search-bg);
 }
 
@@ -398,7 +398,7 @@ body {
 .editor_date-time {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
-  border: 1px solid var(--input-border-color);
+  border: 1px solid var(--theme-colors__secondary);
   padding: var(--input-padding);
   overflow: hidden;
 }
@@ -436,7 +436,7 @@ body {
   transform: translateY(-50%);
 }
 .icon-remove {
-  color: var(--red);
+  color: var(--red-dark);
 }
 /* svg icons */
 
@@ -475,7 +475,7 @@ svg.svg-grid-icons {
 
 .grid-header-column {
   background-color: var(--grid-header-bg);
-  box-shadow: inset -1px 0 0 0 var(--theme-colors__main), inset 1px 1px 0 0 var(--blue-200);
+  box-shadow: inset -1px 0 0 0 var(--theme-colors__main), inset 1px 1px 0 0 var(--theme-colors__primary);
   color: var(--grid-header-color);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
@@ -498,7 +498,7 @@ svg.svg-grid-icons {
     position: absolute;
     left: 20px;
     right: 20px;
-    border-top: 1px solid var(--grey-400);
+    border-top: 1px solid var(--theme-colors__secondary_fade);
 }
 
 .grid-header .cell_selection,
@@ -522,9 +522,9 @@ svg.svg-grid-icons {
 }
 
 .checkbox:not(:empty) {
-  color: var(--grey-100);
+  color: var(--theme-colors__main_fade);
   border-color: var(--theme-colors__primary);
-  background-color: var(--blue-200);
+  background-color: var(--theme-colors__primary);
 }
 
 .checkbox:not(:empty):hover {
@@ -534,8 +534,8 @@ svg.svg-grid-icons {
 
 .grid-header .checkbox:not(:empty) {
   color: var(--theme-colors__primary);
-  border-color: var(--grey-100);
-  background-color: var(--grey-100);
+  border-color: var(--theme-colors__main_fade);
+  background-color: var(--theme-colors__main_fade);
 }
 
 .row-checked-some .checkbox:not(:empty) {
@@ -758,11 +758,11 @@ tr:not(:first-child) .cell_selection {
 }
 
 .cell-focused.error {
-    outline-color: var(--error-color) !important;
+    outline-color: var(--notification-error) !important;
 }
 
 .cell-focused.warning {
-    outline-color: var(--warning-color) !important;
+    outline-color: var(--notification-warning) !important;
 }
 
 .collapsible-btn {
@@ -862,7 +862,7 @@ tr:not(:first-child) .cell_selection {
 .bubbles {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
-  border: 1px solid var(--input-border-color);
+  border: 1px solid var(--theme-colors__secondary);
   padding: var(--dropdown-padding);
   height: var(--input-height);
 }
@@ -925,7 +925,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .bubbles__caret {
-  color: var(--input-border-color);
+  color: var(--theme-colors__secondary);
   right: 10px;
   font-size: 16px;
 }
@@ -1051,31 +1051,31 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__tab-layout__header-view-item_error{
-  color: var(--error-color);
+  color: var(--notification-error);
 }
 
 .layout__tab-layout__header-view-item_error:hover,
 .layout__tab-layout__header-view-item_error.layout__tab-layout__header-view-item_selected {
-  color: var(--error-color);
-  border-bottom-color: var(--error-color);
+  color: var(--notification-error);
+  border-bottom-color: var(--notification-error);
 }
 
 .popout-menu__i_error .popout-menu__txt {
-  color: var(--error-color);
+  color: var(--notification-error);
 }
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
-  color: var(--error-color);
+  color: var(--notification-error);
 }
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
   background-color: rgba(225,70,44, 0.2);
 }
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_error:hover {
   background-color: rgba(225,70,44, 0.2);
-  border-bottom-color: var(--error-color);
+  border-bottom-color: var(--notification-error);
 }
 
 .layout__tab-layout__header-view-item_error.layout__tab-layout__header-view-item_selected, .layout__tab-layout__header-view-item_error:hover {
-  border-bottom-color: var(--error-color);
+  border-bottom-color: var(--notification-error);
 }
 
 .layout__tab-layout__header-view-item_disabled,
@@ -1088,14 +1088,14 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__panel-container {
   border-radius: 0 0 4px 4px;
-  background-color: var(--theme-colors__main);
-  border: 1px solid var(--input-border-color);
+  background-color: var(--popup-window-bg);
+  border: 1px solid var(--theme-colors__secondary);
   padding: var(--tab-panel-container-padding);
 }
 
 .layout__configuration-panel-container {
   padding: var(--tab-panel-container-padding);
-  border: 1px solid var(--input-border-color);
+  border: 1px solid var(--theme-colors__secondary);
   border-radius: 0 0 4px 4px;
   background-color: var(--theme-colors__main);
 }
@@ -1224,7 +1224,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar-panel_container__select-state .toolbar-btn:not(.toolbar-btn_headline):hover{
-  background-color: var(--grey-100);
+  background-color: var(--theme-colors__main_fade);
   color: var(--blue-300);
 }
 
@@ -1271,7 +1271,7 @@ tr:not(:first-child) .cell_selection {
 .layout__popup-view-window {
   background: var(--popup-window-bg);
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  border-radius: var(--border-radius-big);
+  border-radius: 5px;
 }
 
 .layout__popup-view-header {

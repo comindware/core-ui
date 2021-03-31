@@ -76,7 +76,7 @@ body {
     flex: 0 0 auto;
     justify-content: flex-start;
     color: var(--theme-colors__main);
-    background: var(--blue-200);
+    background: var(--theme-colors__primary);
     line-height: 36px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow-x: auto;
@@ -338,7 +338,7 @@ body {
     height: 100%;
     overflow: auto;
     padding: 20px;
-    border-left: solid 1px var(--grey-for-borders);
+    border-left: solid 1px var(--theme-colors__secondary);
 }
 
 .h3-demo{
@@ -498,7 +498,7 @@ body {
     position: fixed;
     top: 53px;
     right: 9px;
-    border: 1px solid var(--grey-for-borders);
+    border: 1px solid var(--theme-colors__secondary);
     background: var(--theme-colors__main);
     z-index: 180;
     display: none;
@@ -550,13 +550,13 @@ body {
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
-    color: var(--text-color);
+    color: var(--theme-colors__text);
 }
 
 .nav-profile__links {
     padding: 10px 0;
-    border-top: 1px solid var(--grey-for-borders);
-    border-bottom: 1px solid var(--grey-for-borders);
+    border-top: 1px solid var(--theme-colors__secondary);
+    border-bottom: 1px solid var(--theme-colors__secondary);
 }
 
 .nav-profile__link {
@@ -568,7 +568,7 @@ body {
 
 .nav-profile__logout {
     padding-left: 40px;
-    color: var(--blue-200);
+    color: var(--theme-colors__primary);
     font-size: 16px;
     line-height: 60px;
     display: inline-block;
@@ -589,7 +589,7 @@ body {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background: var(--theme-background);
+    background: var(--theme-colors__secondary_fade);
 }
 
 /*-----//------*/
