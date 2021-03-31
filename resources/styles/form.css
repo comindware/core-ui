@@ -67,6 +67,11 @@ rgba(5,117,189,.5) // user avatar btn
 
 .form-group {
     position: relative;
+    width: 100%;
+}
+
+.form-field {
+    display: flex;
 }
 
 @media (max-width: 720px) {
@@ -390,6 +395,7 @@ td > .icon-true {
 .form-group_duration {
     align-self: flex-start;
     max-width: 100%;
+    width: auto;
 }
 
 .editor_date-time .editor_date-time_date,
@@ -404,6 +410,10 @@ td > .icon-true {
 .cell .input.input_duration,
 .editor_date-time .input.input_duration {
     padding-left: 5px;
+}
+
+.editor_date-time .input {
+    width: auto;
 }
 
 .cell .date-time_icon {
@@ -452,7 +462,7 @@ td > .icon-true {
 
 .editor_date-time .btn-separator {
     color: var(--theme-colors__secondary);
-    height: 18px;
+    height: 16px;
 }
 
 .editor_date-time .editor_duration .date-time_icon {
