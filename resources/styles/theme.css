@@ -1095,6 +1095,9 @@ tr:not(:first-child) .cell_selection {
 
 .layout__configuration-panel-container {
   padding: var(--tab-panel-container-padding);
+  border: 1px solid var(--input-border-color);
+  border-radius: 0 0 4px 4px;
+  background-color: var(--theme-colors__main);
 }
 
 .layout__tab-layout_move-button.prev-layout_move-button{
