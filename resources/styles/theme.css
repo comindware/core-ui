@@ -533,9 +533,21 @@ svg.svg-grid-icons {
 }
 
 .grid-header .checkbox:not(:empty) {
-  color: var(--blue-100);
+  color: var(--theme-colors__primary);
   border-color: var(--grey-100);
   background-color: var(--grey-100);
+}
+
+.row-checked-some .checkbox:not(:empty) {
+  color: var(--theme-colors__primary);
+  background-color: var(--theme-colors__main);
+}
+
+.row-checked-some .checkbox i {
+  background-color: var(--theme-colors__primary);
+  width: 8px;
+  height: 8px;
+  font-size: 8px;
 }
 
 

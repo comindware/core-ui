@@ -683,15 +683,16 @@ export default Marionette.View.extend({
             case 'checked':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
                 this.el.classList.add(classes.rowChecked);
+                this.el.classList.remove(classes.rowCheckedSome);
                 break;
             case 'checkedSome':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
-                this.el.classList.add(classes.rowChecked);
+                this.el.classList.add(classes.rowChecked, classes.rowCheckedSome);
                 break;
             case 'unchecked':
             default:
                 this.ui.checkbox.get(0).innerHTML = '';
-                this.el.classList.remove(classes.rowChecked);
+                this.el.classList.remove(classes.rowChecked, classes.rowCheckedSome);
                 break;
         }
     },

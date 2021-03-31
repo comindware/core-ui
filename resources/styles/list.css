@@ -790,6 +790,10 @@ tr.grid-header.dragover td {
     border-radius: 4px;
 }
 
+.toolbar + .grid-table-wrapper-war {
+    margin-top: 10px;
+}
+
 .grid-label_tree-editor {
     margin-left: auto;
 }

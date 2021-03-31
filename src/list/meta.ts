@@ -148,6 +148,7 @@ export const classes = {
     hover: 'hover',
     hover__transition: 'hover__transition',
     rowChecked: 'row-checked',
+    rowCheckedSome: 'row-checked-some',
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
     collapsibleIcon: 'js-tree-first-cell',

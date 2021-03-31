@@ -424,6 +424,7 @@ body.non-selectable {
     position: relative;
     box-sizing: content-box;
     z-index: 44;
+    background-color: var(--theme-colors__main);
 }
 
 .tr-search_report {
@@ -824,7 +825,7 @@ body.non-selectable {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    max-height: 25px;
+    /*max-height: 25px;*/
 }
 /* end secret CSS-js magic trick */
 
