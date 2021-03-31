@@ -364,9 +364,12 @@ const GridHeaderView = Marionette.View.extend({
                 oldSortingEl.parentElement.removeChild(oldSortingEl);
             }
 
-            const sorting = column.sorting || 'asc';
-            const sortingClass = sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
+            const defaultSortingDirection = 'desc';
+            const sortingDirection = column.sorting || defaultSortingDirection;
+
+            const sortingClass = sortingDirection === 'desc' ? classes.sortingDown : classes.sortingUp;
             const selectedSortingClass = column.sorting && classes.selectedSorting;
+
             const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${selectedSortingClass} ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
 
             el.querySelector('.grid-header-column-title').insertAdjacentHTML('beforeend', sortingHTML);
