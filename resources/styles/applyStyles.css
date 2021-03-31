@@ -357,9 +357,9 @@ input::placeholder {
 .layout__popup-view-header__btn:hover {
     border-color: var(--grey-400);
 }
-.layout__popup-view-header__btn:active {
-    box-shadow: inset 1px 1px 3px var(--layout__popup-view-header__btn-active);
-}
+/*.layout__popup-view-header__btn:active {*/
+/*    box-shadow: inset 1px 1px 3px var(--layout__popup-view-header__btn-active);*/
+/*}*/
 
 .btn.btn_arrow {
     width: 26px;
