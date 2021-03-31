@@ -18,7 +18,6 @@
 /* popout-menu */
 .popout-menu {
     position: fixed;
-    background-color: white;
     box-shadow: 0 5px 5px -3px var(--black-20), 0 8px 10px 1px var(--black-14), 0 3px 14px 2px var(--black-12);
     padding: 0;
 }

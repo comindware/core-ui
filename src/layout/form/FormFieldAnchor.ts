@@ -11,6 +11,8 @@ export default Marionette.View.extend({
         };
     },
 
+    className: 'form-field',
+
     behaviors: {
         LayoutBehavior: {
             behaviorClass: LayoutBehavior
