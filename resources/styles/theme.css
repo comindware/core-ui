@@ -1280,6 +1280,9 @@ tr:not(:first-child) .cell_selection {
   font-weight: 600;
   font-size: 18px;
   padding: 15px;
+  background: var(--theme-colors__primary);
+  color: var(--theme-colors__main);
+  border: 1px solid var(--theme-colors__primary);
 }
 
 .layout__popup-view-button-list {
