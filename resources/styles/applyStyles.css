@@ -393,7 +393,7 @@ input::placeholder {
     height: 30px;
     padding: 0 5px;
 }
-.toolbar-items-wrp, .toolbar-btn, .tree-editor-btn {
+.toolbar-btn, .tree-editor-btn {
     height: 26px;
 }
 .split-button-wrp {

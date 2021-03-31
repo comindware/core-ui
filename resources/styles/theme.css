@@ -585,7 +585,6 @@ svg.svg-grid-icons {
 
 .cell_selection[draggable], .cell_selection-index[draggable] {
   cursor: move;
-  position: relative;
 }
 
 .cell_selection[draggable]:hover::before,
@@ -629,7 +628,8 @@ tr.row-checked,
 }
 
 .cell .checkbox,
-.cell > i {
+.cell > .icon-true,
+.cell > .icon-false {
     margin: 0 auto;
     display: flex;
 }
@@ -772,10 +772,10 @@ tr:not(:first-child) .cell_selection {
     right: 5px;
     font-size: 1.4em;
     color: var(--theme-colors__text_fade);
-  cursor: pointer;
+    cursor: pointer;
     margin-right: 3px;
-  transition-property: transform;
-  transition-duration: 300ms;
+    transition-property: transform;
+    transition-duration: 300ms;
 }
 
 .collapsible-btn:not(.collapsible-btn_expanded) {
