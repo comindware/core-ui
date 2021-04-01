@@ -1248,10 +1248,6 @@ tr:not(:first-child) .cell_selection {
   padding: 0 20px 0 0;
 }
 
-.group-title{
-  padding-left: 15px;
-}
-
 .layout-group__content {
   padding: 15px;
 }

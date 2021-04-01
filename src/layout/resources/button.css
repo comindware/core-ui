@@ -153,6 +153,7 @@
     background-color: transparent;
     box-shadow: none;
     color: inherit;
+    max-height: 25px;
 }
 
 /* Dropdown menu buttons */
