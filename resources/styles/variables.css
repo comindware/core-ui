@@ -16,7 +16,7 @@
     --theme-colors__secondary_strongest: #c2c2c2; /* Strongest */
 
     /*** Text ***/
-    --theme-colors__text: #000; /* Basic */                     /* Базовый цвет текста */
+    --theme-colors__text: #5a5a5a; /* Basic */                     /* Базовый цвет текста */
     --theme-colors__text_fade: #666; /* Fade  #666;*/        /* Базовый цвет заголовков */
     --theme-colors__text_fadest: #999; /* The most fade */      /* Цвет текста скрытый */
     --theme-colors__text_strong: #404040; /* Strong */
@@ -48,6 +48,19 @@
     --black-16: rgba(0, 0, 0,.16);
     --black-23: rgba(0, 0, 0,.23);
     --black-24: rgba(0, 0, 0,.24);
+
+    /* extended palette */
+    --main-title-color: var(--theme-colors__primary);
+    --theme-colors__primary-txt: var(--theme-colors__main);
+
+    --theme-menu__color: var(--theme-colors__text);
+    --theme-menu__color-hover: var(--theme-colors__primary);
+    --theme-menu__background: var(--theme-colors__main);
+    --theme-menu__background-hover: var(--theme-colors__main_fadest);
+
+    --theme-colors__warning-color: var(--theme-colors__main);
+    --theme-colors__error-color: var(--theme-colors__main);
+    --theme-colors__success-color: var(--theme-colors__main);
 
     /* other variables */
     --red-dark: #ac1e1a; /* use for red control elements */

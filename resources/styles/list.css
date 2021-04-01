@@ -196,6 +196,7 @@
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--theme-colors__primary-txt);
 }
 
 .header-column-wrp .grid-header-column-sorting {
@@ -203,11 +204,6 @@
     padding: 0 5px;
     font-size: 12px;
     cursor: pointer;
-    color: var(--theme-colors__main);
-}
-
-.grid-header-column-sorting.configuration-selected {
-    color: var(--theme-colors__main);
 }
 
 .grid-header-view:empty {
@@ -271,7 +267,7 @@
 }
 
 .grid-header-dragger:before{
-    background-color: var(--theme-colors__main);
+    background-color: var(--theme-colors__primary-txt);
 }
 
 .grid-header:hover .grid-header-dragger:before{
