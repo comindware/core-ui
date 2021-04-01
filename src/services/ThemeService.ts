@@ -58,7 +58,7 @@ export default class ThemeService {
 
         this.__appliedThemes.add(name);
 
-        this.__setStyle(name);
+        //this.__setStyle(name);
         this.__setSprite(name);
     }
 
