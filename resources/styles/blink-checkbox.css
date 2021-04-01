@@ -12,7 +12,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-bottom: 1px solid var(--theme-colors__secondary_fade);
+    border-bottom: 1px solid var(--theme-colors__main_fade);
     display: flex;
 }
 
@@ -67,7 +67,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-top: 1px solid var(--theme-colors__secondary_fade);
+    border-top: 1px solid var(--theme-colors__main_fade);
     flex: 1;
     padding-left: 8px;
 }
@@ -98,7 +98,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-top: 1px solid var(--theme-colors__secondary_fade);
+    border-top: 1px solid var(--theme-colors__main_fade);
     text-align: center;
     vertical-align: middle;
 }
@@ -118,7 +118,7 @@
     width: 180px;
     height: 40px;
     position: fixed;
-    border: 1px solid var(--theme-colors__secondary_fade);
+    border: 1px solid var(--theme-colors__main_fade);
     opacity: 0.8;
     background: var(--theme-colors__main);
     z-index: 1000;
@@ -148,7 +148,7 @@
 }
 
 .filter-disabled {
-    color: var(--theme-colors__secondary_fade);
+    color: var(--theme-colors__main_fade);
 }
 
 /* /filter-icon-list */

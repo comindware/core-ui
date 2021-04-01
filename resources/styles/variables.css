@@ -10,10 +10,10 @@
 
     /*** Secondary ***/
     --theme-colors__secondary: #c1c1c1; /* Basic */
-    --theme-colors__secondary_fade: #efefef; /* Fade */
-    --theme-colors__secondary_fadest: #f5f5f5; /* The most fade */
-    --theme-colors__secondary_strong: #e2e2e2; /* Strong */
-    --theme-colors__secondary_strongest: #5e5e5e; /* Strongest */
+    --theme-colors__secondary_fade: #ffffff; /* Fade */
+    --theme-colors__secondary_fadest: #ffffff; /* The most fade */
+    --theme-colors__secondary_strong: #dcdcdc; /* Strong */
+    --theme-colors__secondary_strongest: #c2c2c2; /* Strongest */
 
     /*** Text ***/
     --theme-colors__text: #000; /* Basic */                     /* Базовый цвет текста */
@@ -21,16 +21,23 @@
     --theme-colors__text_fadest: #999; /* The most fade */      /* Цвет текста скрытый */
     --theme-colors__text_strong: #404040; /* Strong */
 
+    /*** Highlight ***/
+    --theme-colors__highlight: #e8f6ff; /* text highlight */
+
+    /*** Background ***/
+    --theme-colors__background: #e3e3e3; /* main background */
+
     /*** Main ***/
-    --theme-colors__main: #fff; /* Basic */
-    --theme-colors__main_fade: #f5f5f5;/* Fade */
+    --theme-colors__main: #ffffff; /* Basic */
+    --theme-colors__main_fade: #efefef;/* Fade */
+    --theme-colors__main_fadest: #f5f5f5; /* The most fade */
     --theme-colors__main_strong: #e2e2e2;/* Strong */
     --theme-colors__main_strongest: #c1c1c1;/* Strongest */
 
     /*** Notification ***/
-    --notification-warning: #ffda44;
-    --notification-error: #e1462c;
-    --notification-success: #74c365;
+    --theme-colors__warning: #ffda44;
+    --theme-colors__error: #e1462c;
+    --theme-colors__success: #74c365;
 
     /* box-shadow variables */
     --black-20: rgba(0,0,0,.2);
@@ -48,8 +55,8 @@
     --link-hover-color: var(--theme-colors__primary_fade);
     --main-color: var(--theme-colors__primary);
     --selected-background-color: var(--theme-colors__main);
-    --disabled-text-color: var(--theme-colors__secondary_fade);
-    --border-color: var(--theme-colors__secondary_fade);
+    --disabled-text-color: var(--theme-colors__main_fade);
+    --border-color: var(--theme-colors__main_fade);
     --border: 1px solid var(--border-color);
     --border-radius: 2px;
     --focus: 1px solid var(--theme-colors__primary);
@@ -99,9 +106,9 @@
     /* checkbox */
     --checkbox-size: 18px;
     --checkbox-radius: 4px;
-    --checkbox-border-color: var(--theme-colors__secondary);
+    --checkbox-border-color: var(--theme-colors__main_strongest);
     --checkbox-intermediate-size: 8px;
-    --checkbox-checked-color: var(--theme-colors__main_fade);
+    --checkbox-checked-color: var(--theme-colors__main_fadest);
 
     /* radio */
     --radio-size: 18px;
@@ -112,20 +119,20 @@
 
     /* grid */
     --grid-toolbar-padding: 2px 0;
-    --grid-toolbar-bg-color: var(--theme-colors__main_fade);
+    --grid-toolbar-bg-color: var(--theme-colors__main_fadest);
 
     --grid-checkbox-size: 18px;
     --grid-checkbox-icon-size: 11px;
     --grid-header-font-size: var(--base-font-size);
     --grid-header-color: var(--theme-colors__main);
     --grid-header-bg: var(--theme-colors__primary);
-    --grid-header-border-color: var(--theme-colors__secondary_fade);
+    --grid-header-border-color: var(--theme-colors__main_fade);
     --grid-header-height: 30px;
     --grid-header-padding: 0 15px;
     --grid-header-border: inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-first: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-last: var(--grid-header-border);
-    --grid-header-selection-bg: var(--theme-colors__main_fade);
+    --grid-header-selection-bg: var(--theme-colors__main_fadest);
 
     --grid-cell-bg: var(--theme-colors__main);
     --grid-cell-border: 1px solid var(--grid-header-border-color);
@@ -140,7 +147,7 @@
     --grid-dots-padding: 0 25px 0 2px;
     --grid-dots-color: var(--theme-colors__main_strongest);
     --grid-row-selected-color: var(--theme-colors__main);
-    --grid-row-hover-color: var(--theme-colors__main_fade);
+    --grid-row-hover-color: var(--theme-colors__main_fadest);
 
     --grid-selection-color: var(--theme-colors__text_fadest);
     --grid-selection-width: 26px;
@@ -153,7 +160,7 @@
     --grid-sort-icon-offset-y: 2px;
 
     --columns-select-border: var(--border);
-    --columns-select-cell-border: inset -1px -1px 0 0 var(--theme-colors__secondary_fade);
+    --columns-select-cell-border: inset -1px -1px 0 0 var(--theme-colors__main_fade);
 
     --dropdown-padding: 0 20px 0 var(--form-input-padding);
     --dropdown-font-size: var(--base-font-size);
@@ -161,7 +168,7 @@
     --dropdown-group-color: var(--theme-colors__text);
     --dropdown-item-padding: 7px 15px;
     --dropdown-item-checkbox-padding: 5px;
-    --dropdown-item-hover-color: var(--theme-colors__main_fade);
+    --dropdown-item-hover-color: var(--theme-colors__main_fadest);
     --bubbles-item-delete-padding: 17px;
     --bubbles-item-edit-delete-padding: 38px;
     --bubbles-icon-offset-x: 1px;

@@ -48,11 +48,11 @@ body {
 }
 
 .form-label__error-button {
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 
 .form-label__warning-button {
-  color: var(--notification-warning);
+  color: var(--theme-colors__warning);
 }
 
 .form-label__error-text {
@@ -60,11 +60,11 @@ body {
 }
 
 .form-label__error-icon-error{
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 
 .form-label__error-icon-warning{
-  color: var(--notification-warning);
+  color: var(--theme-colors__warning);
 }
 
 .cell.error .form-label__error,
@@ -88,11 +88,11 @@ body {
 }
 
 .cell.error .form-label__error-button {
-  border-top: 16px solid var(--notification-error);
+  border-top: 16px solid var(--theme-colors__error);
 }
 
 .cell.warning .form-label__warning-button {
-  border-top: 16px solid var(--notification-warning);
+  border-top: 16px solid var(--theme-colors__warning);
 }
 
 .cell.error .form-label__error-button::after,
@@ -197,9 +197,9 @@ body {
 .editor_error .textarea,
 .editor_error .bubbles,
 .editor_error .editor_date-time {
-  border-color: var(--notification-error);
+  border-color: var(--theme-colors__error);
   background-color: var(--theme-colors__main);
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 
 .editor_error.editor_focused .input,
@@ -207,8 +207,8 @@ body {
 .editor_error.editor_focused .bubbles,
 .editor_error.editor_focused .editor_date-time {
   background-color: transparent;
-  border-color: var(--notification-error);
-  color: var(--notification-error);
+  border-color: var(--theme-colors__error);
+  color: var(--theme-colors__error);
 }
 
 
@@ -216,11 +216,11 @@ body {
 .warning .editor .textarea,
 .warning .editor .bubbles,
 .warning .editor_date-time {
-  border-color: var(--notification-warning);
+  border-color: var(--theme-colors__warning);
 }
 
 .cell.error {
-  outline: 1px solid var(--notification-error);
+  outline: 1px solid var(--theme-colors__error);
   outline-offset: -1px;
 }
 
@@ -240,15 +240,15 @@ body {
 }
 
 .bubbles__i.bubble__focused{
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   border-radius: 2px;
-  background: var(--theme-colors__main_fade);
+  background: var(--theme-colors__main_fadest);
   padding: 2px;
 }
 .reference-btn.bubble__focused{
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   border-radius: 2px;
-  background: var(--theme-colors__main_fade);
+  background: var(--theme-colors__main_fadest);
   padding: 2px;
 }
 /*------------------ End Form Editor ------------------*/
@@ -398,7 +398,7 @@ body {
 .editor_date-time {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   padding: var(--input-padding);
   overflow: hidden;
 }
@@ -498,7 +498,7 @@ svg.svg-grid-icons {
     position: absolute;
     left: 20px;
     right: 20px;
-    border-top: 1px solid var(--theme-colors__secondary_fade);
+    border-top: 1px solid var(--theme-colors__main_fade);
 }
 
 .grid-header .cell_selection,
@@ -522,7 +522,7 @@ svg.svg-grid-icons {
 }
 
 .checkbox:not(:empty) {
-  color: var(--theme-colors__main_fade);
+  color: var(--theme-colors__main_fadest);
   border-color: var(--theme-colors__primary);
   background-color: var(--theme-colors__primary);
 }
@@ -534,8 +534,8 @@ svg.svg-grid-icons {
 
 .grid-header .checkbox:not(:empty) {
   color: var(--theme-colors__primary);
-  border-color: var(--theme-colors__main_fade);
-  background-color: var(--theme-colors__main_fade);
+  border-color: var(--theme-colors__main_fadest);
+  background-color: var(--theme-colors__main_fadest);
 }
 
 .row-checked-some .checkbox:not(:empty) {
@@ -679,16 +679,16 @@ tr.row-checked,
     background-clip: padding-box;
     max-width: 0;
     width: auto;
-    border: 1px solid var(--theme-colors__secondary_strong);
+    border: 1px solid var(--theme-colors__main_strong);
     border-top: none;
-    border-right: 1px solid var(--theme-colors__secondary_strong);
-    border-bottom: 1px solid var(--theme-colors__secondary_strong);
+    border-right: 1px solid var(--theme-colors__main_strong);
+    border-bottom: 1px solid var(--theme-colors__main_strong);
     border-left: none;
     border-top: none;
 }
 
 .cell:first-child {
-    border-left: 1px solid var(--theme-colors__secondary_strong);
+    border-left: 1px solid var(--theme-colors__main_strong);
 }
 
 .grid-selection-cell-all {
@@ -758,11 +758,11 @@ tr:not(:first-child) .cell_selection {
 }
 
 .cell-focused.error {
-    outline-color: var(--notification-error) !important;
+    outline-color: var(--theme-colors__error) !important;
 }
 
 .cell-focused.warning {
-    outline-color: var(--notification-warning) !important;
+    outline-color: var(--theme-colors__warning) !important;
 }
 
 .collapsible-btn {
@@ -862,7 +862,7 @@ tr:not(:first-child) .cell_selection {
 .bubbles {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   padding: var(--dropdown-padding);
   height: var(--input-height);
 }
@@ -925,7 +925,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .bubbles__caret {
-  color: var(--theme-colors__secondary);
+  color: var(--theme-colors__main_strongest);
   right: 10px;
   font-size: 16px;
 }
@@ -1037,7 +1037,7 @@ tr:not(:first-child) .cell_selection {
   border-bottom: 3px solid transparent;
 }
 .layout__tab-layout__header-view-item:hover {
-  border-bottom-color: var(--theme-colors__secondary);
+  border-bottom-color: var(--theme-colors__main_strongest);
 }
 
 .layout__tab-layout__header-view-item_selected {
@@ -1051,31 +1051,31 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__tab-layout__header-view-item_error{
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 
 .layout__tab-layout__header-view-item_error:hover,
 .layout__tab-layout__header-view-item_error.layout__tab-layout__header-view-item_selected {
-  color: var(--notification-error);
-  border-bottom-color: var(--notification-error);
+  color: var(--theme-colors__error);
+  border-bottom-color: var(--theme-colors__error);
 }
 
 .popout-menu__i_error .popout-menu__txt {
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
-  color: var(--notification-error);
+  color: var(--theme-colors__error);
 }
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
   background-color: rgba(225,70,44, 0.2);
 }
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_error:hover {
   background-color: rgba(225,70,44, 0.2);
-  border-bottom-color: var(--notification-error);
+  border-bottom-color: var(--theme-colors__error);
 }
 
 .layout__tab-layout__header-view-item_error.layout__tab-layout__header-view-item_selected, .layout__tab-layout__header-view-item_error:hover {
-  border-bottom-color: var(--notification-error);
+  border-bottom-color: var(--theme-colors__error);
 }
 
 .layout__tab-layout__header-view-item_disabled,
@@ -1089,13 +1089,13 @@ tr:not(:first-child) .cell_selection {
 .layout__tab-layout__panel-container {
   border-radius: 0 0 4px 4px;
   background-color: var(--popup-window-bg);
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   padding: var(--tab-panel-container-padding);
 }
 
 .layout__configuration-panel-container {
   padding: var(--tab-panel-container-padding);
-  border: 1px solid var(--theme-colors__secondary);
+  border: 1px solid var(--theme-colors__main_strongest);
   border-radius: 0 0 4px 4px;
   background-color: var(--theme-colors__main);
 }
@@ -1224,7 +1224,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar-panel_container__select-state .toolbar-btn:not(.toolbar-btn_headline):hover{
-  background-color: var(--theme-colors__main_fade);
+  background-color: var(--theme-colors__main_strongest);
   color: var(--blue-300);
 }
 

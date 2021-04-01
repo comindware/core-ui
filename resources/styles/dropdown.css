@@ -14,7 +14,7 @@
 
 .dropdown__wrp {
     margin: 0;
-    background-color: var(--theme-colors__secondary_fadest);
+    background-color: var(--theme-colors__secondary);
     position: fixed;
     z-index: 600;
     overflow-y: auto;
@@ -32,7 +32,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    border-top: solid 1px var(--theme-colors__secondary_fade);
+    border-top: solid 1px var(--theme-colors__main_fade);
 }
 
 .dropdown__btn {
@@ -280,7 +280,7 @@
 }
 /* list search */
 .highlight {
-    background-color: var(--theme-colors__secondary_fade);
+    background-color: var(--theme-colors__highlight);
 }
 /* /search */
 

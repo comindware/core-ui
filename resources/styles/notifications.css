@@ -3,7 +3,7 @@
     font-size: 13px;
     color: var(--theme-colors__main);
     border-radius: 5px;
-    background: var(--notification-error);
+    background: var(--theme-colors__error);
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -18,7 +18,7 @@
     min-width: 40px;
     align-items: center;
     background-color: var(--theme-colors__main);
-    color: var(--notification-error);
+    color: var(--theme-colors__error);
     font-size: 24px;
 
 }
@@ -53,19 +53,19 @@
     display: flex;
 }
 .fr-alert_error {
-    background: var(--notification-error);
+    background: var(--theme-colors__error);
 }
 
 .fr-alert_error .icon-container{
-    color: var(--notification-error);
+    color: var(--theme-colors__error);
 }
 
 .alert_success {
-    background-color: var(--notification-success);
+    background-color: var(--theme-colors__success);
 }
 
 .fr-alert.alert_success .icon-container {
-    color: var(--notification-success);
+    color: var(--theme-colors__success);
 }
 
 .notification-container {

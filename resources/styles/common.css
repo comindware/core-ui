@@ -457,7 +457,7 @@ body.non-selectable {
     position: absolute;
     top: 13px !important;
     left: 30px !important;
-    color: var(--theme-colors__secondary);
+    color: var(--theme-colors__main_strongest);
     cursor: text;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -610,7 +610,7 @@ body.non-selectable {
 .double-panels__resizer:after{
     content: '';
     width:1px;
-    background: var(--theme-colors__secondary);
+    background: var(--theme-colors__main_strongest);
     top: 0;
     height: 100%;
     left: 4px;
@@ -651,7 +651,7 @@ body.non-selectable {
 }
 .navigationDrawer__li:hover {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    background-color: var(--theme-colors__secondary_fadest);
+    background-color: var(--theme-colors__main_fadest);
 }
 
 .drawer_children-container {
@@ -907,7 +907,7 @@ body.non-selectable {
 }
 
 .toolbar-panel_container .toolbar-btn {
-    background-color: var(--theme-colors__main_fade);
+    background-color: var(--theme-colors__secondary);
     color: var(--theme-colors__text);
 }
 
@@ -1092,8 +1092,8 @@ body.non-selectable {
 .btn.disabled:hover,
 .btn.disabled:hover:active{
     cursor: default;
-    background-color: var(--theme-colors__secondary);
-    border-color: var(--theme-colors__secondary);
+    background-color: var(--theme-colors__main_strongest);
+    border-color: var(--theme-colors__main_strongest);
     box-shadow: none;
     pointer-events: none;
 }
@@ -1175,7 +1175,7 @@ body.non-selectable {
 .member-split-quantity-warning {
     text-align: center;
     font-size: 12px;
-    color: var(--theme-colors__secondary);
+    color: var(--theme-colors__main_strongest);
     margin: 5px auto;
     height: 30px;
 }

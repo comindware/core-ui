@@ -5,7 +5,7 @@
     line-height: 34px;
     font-size: 13px;
     font-weight: normal;
-    color: var(--theme-colors__secondary_strongest);
+    color: var(--theme-colors__main_strongset);
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -16,7 +16,7 @@
 }
 
 .list-item:hover {
-    background: var(--theme-colors__secondary_fadest);
+    background: var(--theme-colors__main_fadest);
 }
 
 .list {
@@ -127,7 +127,7 @@
 
 .grid-cell {
     display: inline-block;
-    border-bottom: 1px solid var(--theme-colors__secondary_fade);
+    border-bottom: 1px solid var(--theme-colors__main_fade);
     padding-right: 15px;
     height: 32px;
     line-height: 32px;
@@ -318,16 +318,16 @@
     position: relative;
     top: 0;
     height: 10%;
-    background-color: var(--theme-colors__secondary);
+    background-color: var(--theme-colors__main_strongest);
     opacity: 0.3;
 }
 
 .scrollbar.hover {
-    background-color: var(--theme-colors__main_fade);
+    background-color: var(--theme-colors__main_fadest);
 }
 
 .scrollbar.hover .dragger {
-    background-color: var(--theme-colors__secondary);
+    background-color: var(--theme-colors__main_strongest);
     opacity: 1;
 }
 
@@ -351,7 +351,7 @@ tr.empty-view {
     white-space: nowrap;
     height: 100px;
     font-size: 1.1em;
-    border: 1px solid var(--theme-colors__secondary_strong);
+    border: 1px solid var(--theme-colors__main_strong);
 }
 
 /* /Empty View */
@@ -465,8 +465,8 @@ tr.empty-view {
 .editable-grid-field .form-label__error:before {
     content: '';
     border: 4px solid transparent;
-    border-top: 4px solid var(--notification-error);
-    border-left: 4px solid var(--notification-error);
+    border-top: 4px solid var(--theme-colors__error);
+    border-left: 4px solid var(--theme-colors__error);
     background: transparent;
     border-radius: 0;
     top: 1px;
@@ -499,7 +499,7 @@ tr.empty-view {
 }
 
 .cell.readonly {
-    background-color: var(--theme-colors__main_fade);
+    background-color: var(--theme-colors__main_fadest);
 }
 
 .cell_selection, .cell_selection-index {
@@ -507,7 +507,7 @@ tr.empty-view {
     vertical-align: middle;
     width: 47px;
     min-width: 47px;
-    border: 1px solid var(--theme-colors__secondary_strong);
+    border: 1px solid var(--theme-colors__main_strong);
     position: relative;
     /*height: 35px;
     line-height: 35px;*/
@@ -522,10 +522,10 @@ tr.empty-view {
     background-clip: padding-box;
 }
 /*tr.row-checked .cell_selection{*/
-/*    background-color: var(--theme-colors__main_fade); !*#c2d7e5;*!*/
+/*    background-color: var(--theme-colors__main_fadest); !*#c2d7e5;*!*/
 /*}*/
 /*tr.selected .cell_selection{*/
-/*    background-color: var(--theme-colors__main_fade); !*#eaf3f8;*!*/
+/*    background-color: var(--theme-colors__main_fadest); !*#eaf3f8;*!*/
 /*}*/
 /*tr:hover .cell_selection {*/
 /*    background-color: var(--theme-colors__main_strong); !*#efefef*!*/
@@ -552,10 +552,10 @@ tr.empty-view {
 }
 
 tr.dragover:not(.grid-header) td {
-    border-bottom: 1px solid var(--notification-error);
+    border-bottom: 1px solid var(--theme-colors__error);
 }
 tr.grid-header.dragover td {
-    box-shadow: inset 0 -1px var(--notification-error);
+    box-shadow: inset 0 -1px var(--theme-colors__error);
 }
 
 .dragover .cell *,
@@ -617,7 +617,7 @@ tr.grid-header.dragover td {
 }
 
 .cell__dots svg{
-    fill: var(--theme-colors__secondary);
+    fill: var(--theme-colors__main_strongest);
 }
 
 .cell__index {
@@ -703,7 +703,7 @@ tr.grid-header.dragover td {
     display: flex;
     overflow: hidden;
     height: 54px;
-    border-bottom: 1px solid var(--theme-colors__secondary);
+    border-bottom: 1px solid var(--theme-colors__main_strongest);
     position: relative;
 }
 
@@ -714,7 +714,7 @@ tr.grid-header.dragover td {
 
 .extend_cell_content:hover > .context-collapse-button {
     cursor: pointer;
-    background-color: var(--theme-colors__secondary_fade);
+    background-color: var(--theme-colors__main_fade);
 }
 
 .visible-collection .archiveTemplate .extend_cell_header,
@@ -887,7 +887,7 @@ tr:hover > .cell_selection-index,
 .hover .cell_selection-index,
 tr:hover > .cell,
 .hover .cell {
-    background-color: var(--theme-colors__secondary_fade);
+    background-color: var(--theme-colors__main_fade);
 }
 
 /* temporary disabled */

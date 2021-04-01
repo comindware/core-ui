@@ -49,7 +49,7 @@
     font-size: 14px;
     color: var(--theme-colors__primary);
     outline: 0;
-    border: 1px solid var(--theme-colors__secondary);
+    border: 1px solid var(--theme-colors__main_strongest);
     background: var(--theme-colors__main);
     cursor: pointer;
 }

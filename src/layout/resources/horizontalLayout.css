@@ -40,6 +40,7 @@
 
 .layout__horizontal-layout > .layout__button {
     min-width: auto;
+    flex: none;
 }
 
 .layout__horizontal-layout-list {

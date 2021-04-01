@@ -84,7 +84,7 @@
 
 .gallery-image.active {
     border: 3px solid;
-    border-color: var(--theme-colors__secondary);
+    border-color: var(--theme-colors__main_strongest);
 }
 
 .gallery-top-menu{

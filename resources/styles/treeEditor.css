@@ -27,7 +27,7 @@
 }
 
 .branch-header {
-    border-bottom: 1px solid var(--theme-colors__secondary_fade);
+    border-bottom: 1px solid var(--theme-colors__main_fade);
     margin: 0;
     display: flex;
     align-items: center;
@@ -55,7 +55,7 @@
 }
 
 .branch-item {
-    border: 1px solid var(--theme-colors__secondary_fade);
+    border: 1px solid var(--theme-colors__main_fade);
     margin-bottom: 8px;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .unnamed-branch-item:not(:last-child) {
-    border-bottom: 1px solid var(--theme-colors__secondary_fade);
+    border-bottom: 1px solid var(--theme-colors__main_fade);
 }
 
 .unnamed-branch-item:hover {
@@ -109,8 +109,8 @@
 }
 
 .hidden-node {
-    background-color: var(--theme-colors__main_fade);
-    color: var(--theme-colors__secondary);
+    background-color: var(--theme-colors__main_fadest);
+    color: var(--theme-colors__main_strongest);
 }
 
 .hidden-by-tree-editor {
