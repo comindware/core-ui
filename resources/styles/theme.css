@@ -1067,10 +1067,10 @@ tr:not(:first-child) .cell_selection {
   color: var(--theme-colors__error);
 }
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
-  background-color: rgba(225,70,44, 0.2);
+  background-color: var(--theme-colors__error-background);
 }
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_error:hover {
-  background-color: rgba(225,70,44, 0.2);
+  background-color: var(--theme-colors__error-background);
   border-bottom-color: var(--theme-colors__error);
 }
 
