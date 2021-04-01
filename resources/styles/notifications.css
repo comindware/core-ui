@@ -3,7 +3,7 @@
     font-size: 13px;
     color: var(--theme-colors__main);
     border-radius: 5px;
-    background: var(--theme-colors__error);
+    background: var(--theme-colors__warning);
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -18,7 +18,7 @@
     min-width: 40px;
     align-items: center;
     background-color: var(--theme-colors__main);
-    color: var(--theme-colors__error);
+    color: var(--theme-colors__warning);
     font-size: 24px;
 
 }
