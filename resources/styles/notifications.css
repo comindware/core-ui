@@ -3,7 +3,7 @@
     font-size: 13px;
     color: var(--theme-colors__main);
     border-radius: 5px;
-    background: var(--theme-colors__error);
+    background: var(--theme-colors__success);
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 560;
     overflow: hidden;
@@ -18,14 +18,14 @@
     min-width: 40px;
     align-items: center;
     background-color: var(--theme-colors__main);
-    color: var(--theme-colors__error);
+    color: var(--theme-colors__success);
     font-size: 24px;
 
 }
 
 .notification-body_container{
     padding: 0.75rem 0 0.75rem 0.75rem;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .fr-alert .fr-alert-title{
@@ -36,8 +36,8 @@
     text-align: left;
     display: flex;
     align-items: flex-start;
-    overflow-y: auto;
-    max-height: calc(2em + 1rem);
+    overflow-y: hidden;
+    max-height: 4em;
     overflow-x: hidden;
     white-space: normal;
     padding-right: 0.75rem;
@@ -87,7 +87,7 @@
 
 .fr-alert-title {
     font-weight: 600;
-    overflow-y: auto;
+    overflow-y: hidden;
     max-height: calc(1em + 1rem);
 }
 
