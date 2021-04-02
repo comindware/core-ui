@@ -199,7 +199,7 @@
 }
 
 .header-column-wrp .grid-header-column-sorting {
-    display: inline-block;
+    display: none;
     padding: 0 5px;
     font-size: 12px;
     cursor: pointer;
@@ -208,6 +208,7 @@
 
 .grid-header-column-sorting.configuration-selected {
     color: var(--theme-colors__main);
+    display: inline-block;
 }
 
 .grid-header-view:empty {
