@@ -469,12 +469,12 @@ input::placeholder {
 
 /* -------------------- Left Menu List -------------------- */
 .left-menu-i-group {
-    padding-left: 12px;
+
 }
 
 .left-menu-i-group .left-menu__list-l,
 .left-menu-i-group .left-menu__item {
-    padding-left: 17px;
+
 }
 
 .left-menu-i-group .left-menu-i.action {
@@ -504,7 +504,6 @@ input::placeholder {
     font-size: 14px;
 }
 
-.left-menu-i__text,
 .left-menu-switcher__text,
 .left-menu-search .tr-search__input {
     font-size: 13px;
