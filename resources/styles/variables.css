@@ -2,11 +2,13 @@
     /*** Primary ***/
     --theme-colors__primary_hs: 203, 95%; /* Basic HS */
 
-    --theme-colors__primary: hsla(var(--theme-colors__primary_hs), 38%, 1);/*#0575bd;*/ /* Basic */
-    --theme-colors__primary_fade: hsla(var(--theme-colors__primary_hs), 48%, 1);/*#009bfe;*//* Fade */ /* используется при наведении */
-    --theme-colors__primary_fadest: hsla(var(--theme-colors__primary_hs), 58%, 1);/*#d6e7f2;*//* The most fade */
-    --theme-colors__primary_strong: hsla(var(--theme-colors__primary_hs), 28%, 1);/*#1b6595;*//* Strong */
-    --theme-colors__primary_strongest: hsla(var(--theme-colors__primary_hs), 18%, 1);/*#023f67;*//* Strongest */
+    --theme-colors__primary: hsla(var(--theme-colors__primary_hs), 38%, 1); /* Basic */
+    --theme-colors__primary_fade: hsla(var(--theme-colors__primary_hs), 48%, 1); /* Fade */
+    --theme-colors__primary_fadest: hsla(var(--theme-colors__primary_hs), 58%, 1); /* The most fade */
+    --theme-colors__primary_strong: hsla(var(--theme-colors__primary_hs), 28%, 1); /* Strong */
+    --theme-colors__primary_strongest: hsla(var(--theme-colors__primary_hs), 18%, 1); /* Strongest */
+
+    --theme-colors__primary-txt: var(--theme-colors__main);
 
     /*** Secondary ***/
     --theme-colors__secondary: #c1c1c1; /* Basic */
@@ -15,8 +17,11 @@
     --theme-colors__secondary_strong: #dcdcdc; /* Strong */
     --theme-colors__secondary_strongest: #c2c2c2; /* Strongest */
 
+    --theme-colors__secondary_text: var(--theme-colors__text);
+    --theme-colors__secondary_text_hover: var(--theme-colors__primary);
+
     /*** Text ***/
-    --theme-colors__text: #000; /* Basic */                     /* Базовый цвет текста */
+    --theme-colors__text: #5a5a5a; /* Basic */                     /* Базовый цвет текста */
     --theme-colors__text_fade: #666; /* Fade  #666;*/        /* Базовый цвет заголовков */
     --theme-colors__text_fadest: #999; /* The most fade */      /* Цвет текста скрытый */
     --theme-colors__text_strong: #404040; /* Strong */
@@ -26,6 +31,7 @@
 
     /*** Background ***/
     --theme-colors__background: #e3e3e3; /* main background */
+    --theme-colors__background-txt: var(--theme-colors__primary);
 
     /*** Main ***/
     --theme-colors__main: #ffffff; /* Basic */
@@ -50,6 +56,10 @@
     --black-16: rgba(0, 0, 0,.16);
     --black-23: rgba(0, 0, 0,.23);
     --black-24: rgba(0, 0, 0,.24);
+
+    --theme-colors__warning-color: var(--theme-colors__main);
+    --theme-colors__error-color: var(--theme-colors__main);
+    --theme-colors__success-color: var(--theme-colors__main);
 
     /* other variables */
     --red-dark: #ac1e1a; /* use for red control elements */
