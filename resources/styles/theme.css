@@ -476,7 +476,7 @@ svg.svg-grid-icons {
 .grid-header-column {
   background-color: var(--grid-header-bg);
   box-shadow: inset -1px 0 0 0 var(--theme-colors__main), inset 1px 1px 0 0 var(--theme-colors__primary);
-  color: var(--grid-header-color);
+  color: var(--theme-colors__primary-txt);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
   vertical-align: top;
@@ -522,7 +522,7 @@ svg.svg-grid-icons {
 }
 
 .checkbox:not(:empty) {
-  color: var(--theme-colors__main_fadest);
+  color: var(--theme-colors__primary-txt);
   border-color: var(--theme-colors__primary);
   background-color: var(--theme-colors__primary);
 }
@@ -530,6 +530,7 @@ svg.svg-grid-icons {
 .checkbox:not(:empty):hover {
   background-color: var(--theme-colors__primary_fade);
   border-color: var(--theme-colors__primary_fade);
+  color: var(--theme-colors__primary-txt);
 }
 
 .grid-header .checkbox:not(:empty) {

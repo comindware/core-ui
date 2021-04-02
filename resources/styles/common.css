@@ -651,12 +651,13 @@ body.non-selectable {
 }
 .navigationDrawer__li:hover {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    background-color: var(--theme-colors__main_fadest);
+    background-color: var(--theme-colors__secondary_fade);
 }
 
 .drawer_children-container {
     height: 100%;
-    background-color: white;
+    color: var(--theme-colors__secondary_text);
+    background-color: var(--theme-colors__secondary);
     position: relative;
     z-index: 2;
     transition: all .2s;
