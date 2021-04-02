@@ -135,6 +135,7 @@
     --grid-header-border-first: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-last: var(--grid-header-border);
     --grid-header-selection-bg: var(--theme-colors__main_fadest);
+    --grid-header-icon-color-fade: hsla(203, 50%, 67%, 1);/*#81b5d5;*//* Basic fade */
 
     --grid-cell-bg: var(--theme-colors__main);
     --grid-cell-border: 1px solid var(--grid-header-border-color);

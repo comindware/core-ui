@@ -203,10 +203,14 @@
     padding: 0 5px;
     font-size: 12px;
     cursor: pointer;
-    color: var(--theme-colors__main);
+    color: var(--grid-header-icon-color-fade);
 }
 
-.grid-header-column-sorting.configuration-selected {
+.grid-header.sorting-selected .grid-header-column-sorting {
+    color: var(--theme-colors__primary);
+}
+
+.grid-header.sorting-selected .grid-header-column-sorting.sorting-selected {
     color: var(--theme-colors__main);
 }
 
