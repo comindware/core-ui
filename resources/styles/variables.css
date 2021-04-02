@@ -37,6 +37,8 @@
     /*** Notification ***/
     --theme-colors__warning: #ffda44;
     --theme-colors__error: #e1462c;
+    --theme-colors__error_rgb: 225, 70, 44;
+    --theme-colors__error-background: rgba(var(--theme-colors__error_rgb), 0.2);
     --theme-colors__success: #74c365;
 
     /* box-shadow variables */
