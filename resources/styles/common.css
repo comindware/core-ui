@@ -826,6 +826,7 @@ body.non-selectable {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    max-height: 26px;
 }
 /* end secret CSS-js magic trick */
 
