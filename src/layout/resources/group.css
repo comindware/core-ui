@@ -105,6 +105,7 @@
 }
 .group-menu i{
     font-weight: 300;
+    padding: 0 10px
 }
 
 .layout-group__head_maximized > .group-toggle {

@@ -1032,7 +1032,6 @@ tr:not(:first-child) .cell_selection {
   flex: 0 0 auto;
   margin: 0 2px;
   background-color: transparent;
-  z-index: 1;
   position: relative;
   color: var(--theme-colors__text_strong);
   border-bottom: 3px solid transparent;
