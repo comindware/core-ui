@@ -25,7 +25,8 @@ enum popoutFlow {
 
 enum panelPosition {
     DOWN = 'down',
-    UP = 'up'
+    UP = 'up',
+    RIGHT = 'right'
 };
 
 type optionsType = {
@@ -47,6 +48,7 @@ const defaultOptions: optionsType = {
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
+    panelOffsetLeft: 0,
     panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
     externalBlurHandler: () => false,
@@ -277,6 +279,11 @@ export default class DropdownView {
                 break;
             case panelPosition.DOWN:
                 top = buttonRect.top + buttonRect.height;
+                break;
+            case panelPosition.RIGHT:
+                top = buttonRect.top + buttonRect.height/2;
+                left = buttonRect.left + buttonRect.width + this.options.panelOffsetLeft;
+                this.panelEl.style.left = `${left}px`;
                 break;
             default:
                 break;
