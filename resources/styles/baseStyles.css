@@ -256,8 +256,11 @@ svg.svg-grid-icons.svg-icons_flag-none {
     margin-top: 5px;
 }
 
-.dataset-configuration-panel .layout__vertical-layout-item,
-.dataset-configuration-panel .layout__vertical-layout > div {
+
+.configuration-panel .layout__vertical-layout-item,
+.configuration-panel .layout__vertical-layout > div,
+.dataset-configuration-panel .layout__vertical-layout-item, /*remove*/
+.dataset-configuration-panel .layout__vertical-layout > div {/*remove*/
     margin-bottom: 0;
 }
 
