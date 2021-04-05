@@ -372,6 +372,7 @@ const GridHeaderView = Marionette.View.extend({
 
             const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${selectedSortingClass} ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
 
+            column.sorting && el.parentElement.classList.add(selectedSortingClass);
             el.querySelector('.grid-header-column-title').insertAdjacentHTML('beforeend', sortingHTML);
         });
     },
