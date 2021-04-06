@@ -40,7 +40,8 @@ type optionsType = {
     panelViewOptions?: object,
     buttonViewOptions?: object,
     showDropdownAnchor?: boolean,
-    customAnchor?: boolean
+    customAnchor?: boolean,
+    fadeBackground?: boolean
 };
 
 const defaultOptions: optionsType = {
@@ -53,7 +54,8 @@ const defaultOptions: optionsType = {
     allowNestedFocus: true,
     externalBlurHandler: () => false,
     showDropdownAnchor: false,
-    customAnchor: false
+    customAnchor: false,
+    fadeBackground: false
 };
 
 /**
@@ -338,7 +340,8 @@ export default class DropdownView {
         this.panelEl.classList.add('dropdown__wrp');
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
-            hostEl: this.button.el
+            hostEl: this.button.el,
+            fadeBackground: this.options.fadeBackground
         });
 
         this.__adjustPosition();
@@ -419,7 +422,8 @@ export default class DropdownView {
     __isNestedInPanel(testedEl) {
         const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
 
-        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.button.el.contains(testedEl)) || (palet && palet.contains(testedEl));
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.button.el.contains(testedEl) || x.el.parentElement === testedEl)
+            || (palet && palet.contains(testedEl));
     }
 
     __handleBlur() {

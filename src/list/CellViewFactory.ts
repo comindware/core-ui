@@ -68,7 +68,7 @@ class CellViewFactory implements ICellViewFactory {
         const value = model.get(column.key);
 
         if ((this.__isEmpty(value) && column.type !== objectPropertyTypes.BOOLEAN) || column.getHidden?.(model)) {
-            return `<td class="${this.__getCellClass(column, model)}" tabindex="-1"></td>`;
+            return `<td class="${this.__getCellClass(column, model)}" tabindex="-1">&nbsp</td>`;
         }
 
         let values = Array.isArray(value) ? value : [value];
