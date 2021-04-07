@@ -27,8 +27,8 @@
 .toolbar-btn:hover,
 .split-btn:hover{
     box-shadow: none;
-    background-color: var(--theme-colors__primary_fade);
-    border: 1px solid var(--theme-colors__primary_fade);
+    background-color: var(--theme-colors__primary_strong);
+    border: 1px solid var(--theme-colors__primary_strong);
     color: var(--theme-colors__primary-txt);
 }
 .toolbar-btn:active,
