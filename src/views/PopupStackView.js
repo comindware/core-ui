@@ -105,9 +105,10 @@ export default Marionette.View.extend({
         regionEl.setAttribute('data-popup-id', popupId);
         regionEl.classList.add('js-core-ui__global-popup-region');
 
+        const el = $el.get(0);
         const config = {
             view: $el,
-            el: $el.get(0),
+            el,
             options,
             regionEl,
             popupId,
@@ -124,11 +125,12 @@ export default Marionette.View.extend({
             this.parentOfContentEl = $el.parent();
         }
         if (useWrapper) {
-            this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
-
-            $el.appendTo(region.$el.children('.modal-window-wrapper'));
+            const wrapper = document.createElement('div');
+            wrapper.className = 'modal-window-wrapper';
+            wrapper.appendChild(el);
+            region.el.appendChild(wrapper);
         } else {
-            $el.appendTo(region.$el);
+            region.el.appendChild(el);
         }
 
         if (fadeBackground) {
