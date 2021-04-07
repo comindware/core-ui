@@ -141,7 +141,7 @@ export default Marionette.View.extend({
             });
             this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
             this.listenTo(this.collection, 'move:right select:hidden', () => this.__onCursorMove(+1));
-            this.listenTo(this.collection, 'select:some select:one', this.__onCollectionSelect);
+            this.listenTo(this.collection, 'select:all select:some select:one', this.__onCollectionSelect);
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
             this.listenTo(this.collection, 'change', this.__validateModel);
