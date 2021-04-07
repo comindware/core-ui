@@ -117,7 +117,7 @@ const GridHeaderView = Marionette.View.extend({
             this.$el
                 .find('.header-column-wrp')[0]
                 .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
-                fa fa-angle-down ${expandOnShow ? classes.expanded : ''}"></i/`);
+                ${Handlebars.helpers.iconPrefixer('angle-down')} ${expandOnShow ? classes.expanded : ''}"></i/`);
             this.collapsed = !this.options.expandOnShow;
         }
 

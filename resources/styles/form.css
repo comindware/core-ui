@@ -649,6 +649,10 @@ td > .icon-true {
     line-height: 25px;
     padding: 0 10px;
 }
+.editor__common-empty-view .empty-view_text {
+    height: auto;
+    border: none;
+}
 /* /reference-field/ */
 
 /*-------------// End Form Editor // -------------*/

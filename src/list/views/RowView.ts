@@ -327,7 +327,7 @@ export default Marionette.View.extend({
             if (hasChildren) {
                 el.insertAdjacentHTML(
                     'beforeend',
-                    `<i class="${classes.collapsible} js-tree-first-cell context-collapsible-btn fa fa-angle-down ${this.model.collapsed === false ? classes.expanded : ''}"></i>`
+                    `<i class="${classes.collapsible} js-tree-first-cell context-collapsible-btn ${Handlebars.helpers.iconPrefixer('angle-down')} ${this.model.collapsed === false ? classes.expanded : ''}"></i>`
                 );
             }
             isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
@@ -335,7 +335,7 @@ export default Marionette.View.extend({
             el.insertAdjacentHTML(
                 'afterbegin',
                 `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
-                 fa fa-angle-down ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
+                 ${Handlebars.helpers.iconPrefixer('angle-down')} ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
             );
         } else {
             el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
