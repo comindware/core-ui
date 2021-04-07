@@ -5,7 +5,7 @@
     line-height: 34px;
     font-size: 13px;
     font-weight: normal;
-    color: var(--theme-colors__main_strongset);
+    color: var(--theme-colors__main_strongest);
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -884,7 +884,7 @@ tr.row-checked > .cell_selection-index,
 tr.row-checked > .cell,
 .dd-list__i.selected,
 .dd-list__i:hover {
-    background-color: rgba(var(--theme-colors__primary_rgb), 0.1);
+    background-color: var(--theme-colors__highlight);
 }
 
 tr:hover > .cell_selection,
@@ -893,7 +893,7 @@ tr:hover > .cell_selection-index,
 .hover .cell_selection-index,
 tr:hover > .cell,
 .hover .cell {
-    background-color: var(--theme-colors__main_fade);
+    background-color: var(--theme-colors__highlight);
 }
 
 /* temporary disabled */
