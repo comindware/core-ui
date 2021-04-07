@@ -181,7 +181,7 @@
     height: 45px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--theme-colors__text_fadest);
+    border-bottom: 1px solid var(--theme-colors__main_strongest);
 }
 
 .subtext-list:hover {
