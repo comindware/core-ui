@@ -1,4 +1,4 @@
-:root {
+:root, .js-theme-content-region {
     /*** Primary ***/
     --theme-colors__primary_hs: 203, 95%; /* Basic HS */
 
@@ -145,7 +145,7 @@
     --grid-header-border-first: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color);
     --grid-header-border-last: var(--grid-header-border);
     --grid-header-selection-bg: var(--theme-colors__main_fadest);
-    --grid-header-icon-color-fade: rgba(var(--theme-colors__primary_fadest_rgb), 0.7);
+    --grid-header-icon-color-fade: var(--theme-colors__primary_fadest);
 
     --grid-cell-bg: var(--theme-colors__main);
     --grid-cell-border: 1px solid var(--grid-header-border-color);
@@ -198,4 +198,35 @@
     --popup-content-padding: 10px;
     --popup-header-btn-font-size_equate: 22px;
     --system-message-font-size: 15px;
+
+    /* buttons severity */
+    --toolbar-btn: var(--theme-colors__primary);
+    --toolbar-btn-selected: var(--theme-colors__primary_fade);
+    --toolbar-btn-hover: var(--theme-colors__primary_strong);
+    --toolbar-btn-active: var(--theme-colors__primary_fade);
+
+    --toolbar-btn_low: hsla(203, 50%, 56%, 1);;
+    --toolbar-btn_low-hover: hsla(203, 50%, 46%, 1);
+    --toolbar-btn_low-active: hsla(203, 50%, 66%, 1);
+    --toolbar-btn_low-txt: var(--theme-colors__primary-txt);
+
+    --toolbar-btn_normal: hsl(126, 92%, 34%);;
+    --toolbar-btn_normal-hover: hsla(126, 92%, 24%, 1);
+    --toolbar-btn_normal-active:  hsla(126, 92%, 44%, 1);
+    --toolbar-btn_normal-txt: var(--theme-colors__primary-txt);
+
+    --toolbar-btn_major: hsla(182, 100%, 32%, 1);
+    --toolbar-btn_major-hover: hsla(182, 100%, 22%, 1);
+    --toolbar-btn_major-active: hsla(182, 100%, 42%, 1);
+    --toolbar-btn_major-txt: var(--theme-colors__primary-txt);
+
+    --toolbar-btn_critical: hsl(24, 81%, 46%);
+    --toolbar-btn_critical-hover: hsl(24, 81%, 36%);
+    --toolbar-btn_critical-active: hsl(24, 81%, 56%);
+    --toolbar-btn_critical-txt: var(--theme-colors__primary-txt);
+
+    --toolbar-btn_fatal: hsl(0, 100%, 38%);
+    --toolbar-btn_fatal-hover: hsl(0, 100%, 28%);
+    --toolbar-btn_fatal-active: hsl(0, 100%, 48%);
+    --toolbar-btn_fatal-txt: var(--theme-colors__primary-txt);
 }
