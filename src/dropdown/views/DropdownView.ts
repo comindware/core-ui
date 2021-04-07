@@ -310,6 +310,10 @@ export default class DropdownView {
         }
 
         this.panelEl.style.top = `${top}px`;
+        const panelOffsetBottom = this.options.panelOffsetBottom;
+        if (panelOffsetBottom) {
+            this.panelEl.style.bottom = `${panelOffsetBottom}px`;
+        }
 
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.button.el);
