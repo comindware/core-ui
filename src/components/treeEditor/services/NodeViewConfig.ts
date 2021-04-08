@@ -4,10 +4,6 @@ const requiredClassName = 'required';
 const getConfig = (template: string, className: string) => ({
     template: Handlebars.compile(template),
 
-    attributes: {
-        draggable: 'true'
-    },
-
     className() {
         return `${className} ${this.model.get('required') ? requiredClassName : ''}`;
     },
