@@ -134,6 +134,7 @@ body {
 .editor_readonly .bubbles:hover,
 .editor.context_select.editor_readonly,
 .editor.context_select.editor_disabled {
+  background: var(--theme-colors__main_strong);
 }
 
 .editor_disabled .input,
