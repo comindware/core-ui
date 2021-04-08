@@ -15,15 +15,13 @@
     border-color: var(--input-active-border-color);
 }
 .editor_disabled {
-    filter: alpha(opacity=60);
-    opacity: .6;
     cursor: auto;
 }
 .editor_disabled.editor_bubble--single .bubbles,
 .editor_readonly.editor_bubble--single .bubbles {
     filter: alpha(opacity=60);
     cursor: auto;
-    
+
 }
 .editor_disabled.editor_bubble:not(.editor_bubble--single) .bubbles__caret,
 .editor_readonly.editor_bubble:not(.editor_bubble--single) .bubbles__caret {

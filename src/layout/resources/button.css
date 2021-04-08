@@ -1,40 +1,35 @@
 :root {
     --light: 80;
     --threshold: 30;
-    /* colors */
-    /*--toolbar-btn: hsla(203, 95%, 38%, 1);*/
-    /*--toolbar-btn-selected: hsla(203, 95%, 48%, 1);*/
-    /*--toolbar-btn-hover: hsla(203, 95%, 28%, 1);*/
-    /*--toolbar-btn-active: hsla(203, 95%, 48%, 1);*/
 }
 
 .toolbar-btn,
 .split-button-wrp {
     margin-right: 10px;
-    background-color: var(--toolbar-btn);
-    border: 1px solid var(--toolbar-btn);
-    color: var(--theme-colors__primary-txt);
+    background-color: var(--theme-colors__severity-none);
+    border: 1px solid var(--theme-colors__severity-none);
+    color: var(--theme-colors__severity-none-txt);
 }
 
 .toolbar-btn_selected,
 .toolbar .toolbar-btn_selected{
     box-shadow: none;
-    background-color: var(--toolbar-btn-selected);
-    border: 1px solid var(--toolbar-btn-selected);
-    color: var(--theme-colors__primary-txt);
+    background-color: var(--theme-colors__severity-none_strong);
+    border: 1px solid var(--theme-colors__severity-none_strong);
+    color: var(--theme-colors__severity-none-txt);
 }
 
 .toolbar-btn:hover,
 .split-btn:hover{
     box-shadow: none;
-    background-color: var(--theme-colors__primary_strong);
-    border: 1px solid var(--theme-colors__primary_strong);
-    color: var(--theme-colors__primary-txt);
+    background-color: var(--theme-colors__severity-none_fade);
+    border: 1px solid var(--theme-colors__severity-none_fade);
+    color: var(--theme-colors__severity-none-txt);
 }
 .toolbar-btn:active,
 .split-btn:active {
-    background-color: var(--toolbar-btn-active);
-    border: 1px solid var(--toolbar-btn-active);
+    background-color: var(--theme-colors__severity-none_strong);
+    border: 1px solid var(--theme-colors__severity-none_strong);
 }
 
 .toolbar-btn .checkbox i,
@@ -42,99 +37,95 @@
     color: inherit;
 }
 
-
 /* Themes color button */
 .toolbar-btn_low, .split-btn_low{
-    background-color: var(--toolbar-btn_low);
-    border: 1px solid var(--toolbar-btn_low);
-    color: var(--toolbar-btn_low-txt);
+    background-color: var(--theme-colors__severity-low);
+    border: 1px solid var(--theme-colors__severity-low);
+    color: var(--theme-colors__severity-low-txt);
 }
 .toolbar-btn_low.toolbar-btn_selected{
 
 }
 .toolbar-btn_low:hover, .split-btn_low:hover{
-    background-color: var(--toolbar-btn_low-hover);
-    border: 1px solid var(--toolbar-btn_low-hover);
-    color: var(--toolbar-btn_low-txt);
+    background-color: var(--theme-colors__severity-low_fade);
+    border: 1px solid var(--theme-colors__severity-low_fade);
+    color: var(--theme-colors__severity-low-txt);
 }
 .toolbar-btn_low:active, .split-btn_low:active{
-    background-color: var(--toolbar-btn_low-active);
-    border: 1px solid var(--toolbar-btn_low-active);
-    color: var(--toolbar-btn_low-txt);
+    background-color: var(--theme-colors__severity-low_strong);
+    border: 1px solid var(--theme-colors__severity-low_strong);
+    color: var(--theme-colors__severity-low-txt);
 }
-
 
 .toolbar-btn_normal, .split-btn_normal{
-    background-color: var(--toolbar-btn_normal);
-    border: 1px solid var(--toolbar-btn_normal);
-    color: var(--toolbar-btn_normal-txt);
+    background-color: var(--theme-colors__severity-normal);
+    border: 1px solid var(--theme-colors__severity-normal);
+    color: var(--theme-colors__severity-normal-txt);
 }
 .toolbar-btn_normal:hover, .split-btn_normal:hover{
-    background-color: var(--toolbar-btn_normal-hover);
-    border: 1px solid var(--toolbar-btn_normal-hover);
-    color: var(--toolbar-btn_normal-txt);
+    background-color: var(--theme-colors__severity-normal_fade);
+    border: 1px solid var(--theme-colors__severity-normal_fade);
+    color: var(--theme-colors__severity-normal-txt);
 }
 .toolbar-btn_normal:active, .split-btn_normal:active{
-    background-color: var(--toolbar-btn_normal-active);
-    border: 1px solid var(--toolbar-btn_normal-active);
-    color: var(--toolbar-btn_normal-txt);
+    background-color: var(--theme-colors__severity-normal_strong);
+    border: 1px solid var(--theme-colors__severity-normal_strong);
+    color: var(--theme-colors__severity-normal-txt);
 }
 
-
 .toolbar-btn_major, .split-btn_major{
-    background-color: var(--toolbar-btn_major);
-    border: 1px solid var(--toolbar-btn_major);
-    color: var(--toolbar-btn_major-txt);
+    background-color: var(--theme-colors__severity-major);
+    border: 1px solid var(--theme-colors__severity-major);
+    color: var(--theme-colors__severity-major-txt);
 }
 .toolbar-btn_major.toolbar-btn_selected{
 }
 .toolbar-btn_major:hover, .split-btn_major:hover{
-    background-color: var(--toolbar-btn_major-hover);
-    border-color: var(--toolbar-btn_major-hover);
-    color: var(--toolbar-btn_major-txt);
+    background-color: var(--theme-colors__severity-major_fade);
+    border-color: var(--theme-colors__severity-major_fade);
+    color: var(--theme-colors__severity-major-txt);
 }
 .toolbar-btn_major:active, .split-btn_major:active{
-    background-color: var(--toolbar-btn_major-active);
-    border-color: var(--toolbar-btn_major-active);
-    color: var(--toolbar-btn_major-txt);
+    background-color: var(--theme-colors__severity-major_strong);
+    border-color: var(--theme-colors__severity-major_strong);
+    color: var(--theme-colors__severity-major-txt);
 }
 
-
 .toolbar-btn_critical, .split-btn_critical{
-    background-color: var(--toolbar-btn_critical);
-    border-color: var(--toolbar-btn_critical);
-    color: var(--toolbar-btn_critical-txt);
+    background-color: var(--theme-colors__severity-critical);
+    border-color: var(--theme-colors__severity-critical);
+    color: var(--theme-colors__severity-critical-txt);
 }
 .toolbar-btn_critical.toolbar-btn_selected{
 }
 .toolbar-btn_critical:hover, .split-btn_critical:hover{
-    background-color: var(--toolbar-btn_critical-hover);
-    border-color: var(--toolbar-btn_critical-hover);
-    color: var(--toolbar-btn_critical-txt);
+    background-color: var(--theme-colors__severity-critical_fade);
+    border-color: var(--theme-colors__severity-critical_fade);
+    color: var(--theme-colors__severity-critical-txt);
 }
 .toolbar-btn_critical:active, .split-btn_critical:active{
-    background-color: var(--toolbar-btn_critical-active);
-    border-color: var(--toolbar-btn_critical-active);
-    color: var(--toolbar-btn_critical-txt);
+    background-color: var(--theme-colors__severity-critical_strong);
+    border-color: var(--theme-colors__severity-critical_strong);
+    color: var(--theme-colors__severity-critical-txt);
 }
 
 
 .toolbar-btn_fatal, .split-btn_fatal{
-    background-color: var(--toolbar-btn_fatal);
-    border-color: var(--toolbar-btn_fatal);
-    color: var(--toolbar-btn_fatal-txt);
+    background-color: var(--theme-colors__severity-fatal);
+    border-color: var(--theme-colors__severity-fatal);
+    color: var(--theme-colors__severity-fatal-txt);
 }
 .toolbar-btn_fatal.toolbar-btn_selected{
 }
 .toolbar-btn_fatal:hover, .split-btn_fatal:hover{
-    background-color: var(--toolbar-btn_fatal-hover);
-    border-color: var(--toolbar-btn_fatal-hover);
-    color: var(--toolbar-btn_fatal-txt);
+    background-color: var(--theme-colors__severity-fatal_fade);
+    border-color: var(--theme-colors__severity-fatal_fade);
+    color: var(--theme-colors__severity-fatal-txt);
 }
 .toolbar-btn_fatal:active, .split-btn_fatal:active{
-    background-color: var(--toolbar-btn_fatal-active);
-    border-color: var(--toolbar-btn_fatal-active);
-    color: var(--toolbar-btn_fatal-txt);
+    background-color: var(--theme-colors__severity-fatal_strong);
+    border-color: var(--theme-colors__severity-fatal_strong);
+    color: var(--theme-colors__severity-fatal-txt);
 }
 
 .split-button-wrp .toolbar-btn.toolbar-btn_splitButton,

@@ -410,6 +410,7 @@ body {
 .editor_disabled.editor_date-time:hover,
 .editor_readonly.editor_date-time,
 .editor_readonly.editor_date-time:hover {
+  background-color: transparent;
 }
 
 .editor_date-time .input {
