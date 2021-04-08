@@ -67,7 +67,7 @@
     --link-hover-color: var(--theme-colors__primary_fade);
     --main-color: var(--theme-colors__primary);
     --selected-background-color: var(--theme-colors__main);
-    --disabled-text-color: var(--theme-colors__main_fade);
+    --disabled-text-color: var(--theme-colors__main_strongest);
     --border-color: var(--theme-colors__main_fade);
     --border: 1px solid var(--border-color);
     --border-radius: 2px;

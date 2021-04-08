@@ -715,7 +715,7 @@ tr.grid-header.dragover td {
 
 .extend_cell_content:hover {
     cursor: pointer;
-    background-color: var(--theme-colors__primary_fadest);
+    background-color: var(--theme-colors__highlight);
 }
 
 .extend_cell_content:hover > .context-collapse-button {

@@ -1171,7 +1171,7 @@ body.non-selectable {
 .split-panel_resizer {
     z-index: 5;
 
-    background-color: rgb(230, 230, 230);
+    background-color: var(--theme-colors__main_strong);
     border-radius: 25%;
 }
 

@@ -23,7 +23,7 @@
 .editor_readonly.editor_bubble--single .bubbles {
     filter: alpha(opacity=60);
     cursor: auto;
-    color: var(--theme-colors__main_fade);
+    
 }
 .editor_disabled.editor_bubble:not(.editor_bubble--single) .bubbles__caret,
 .editor_readonly.editor_bubble:not(.editor_bubble--single) .bubbles__caret {
@@ -32,7 +32,7 @@
 .editor_disabled .checkbox-text,
 .editor_disabled .radiobutton-text,
 .editor_readonly .radiobutton-text{
-    color: var(--theme-colors__main_fade);
+
 }
 
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
