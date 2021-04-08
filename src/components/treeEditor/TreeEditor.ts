@@ -24,12 +24,28 @@ export default class TreeEditor {
         _.defaults(options, defaultOptions);
         this.storageConfigDiff = options.configDiff;
         this.configDiff = options.configDiff;
+        this.showPanelViewOnly = options.showPanelViewOnly;
         this.model = options.model;
 
         const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
         const nestingOptions = options.nestingOptions;
-
         this.controller = new DiffController({ configDiff: this.configDiff, graphModel: this.model, reqres, nestingOptions });
+
+        if (this.showPanelViewOnly) {
+            const View = NodeViewFactory.getRootView({
+                model: this.model,
+                unNamedType: options.unNamedType,
+                nestingOptions,
+                showToolbar: options.showToolbar,
+                showResetButton: options.showResetButton
+            });
+            this.view = new View({
+                ...options,
+                reqres,
+                maxWidth: 300
+            });
+            return this.view;
+        }
 
         const popoutView = Core.dropdown.factory.createPopout({
             buttonView: TEButtonView,

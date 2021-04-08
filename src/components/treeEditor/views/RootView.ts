@@ -1,8 +1,7 @@
 import BranchView from './BranchView';
 import template from '../templates/root.hbs';
 import CollapsibleBehavior from '../behaviors/CollapsibleBehavior';
-import { getIconAndPrefixerClasses, setModelHiddenAttribute } from '../meta';
-import LocalizationService from '../../../services/LocalizationService';
+import { setModelHiddenAttribute } from '../meta';
 import { GraphModel, RootViewFactoryOptions } from '../types';
 
 export default BranchView.extend({
@@ -21,8 +20,6 @@ export default BranchView.extend({
             if (filteredCollection.settingAllState) {
                 return;
             }
-
-            this.__toggleHideAll(this.__getHiddenPrevalence());
 
             // TODO refactor: do the same thing for CollapsibleBehavior, then join them into one core behavior
         });
@@ -67,10 +64,6 @@ export default BranchView.extend({
         this.children.forEach((view: Backbone.View) => view.toggleCollapsedState && view.toggleCollapsedState(options));
     },
 
-    onRender() {
-        this.__toggleHideAll(this.__getHiddenPrevalence());
-    },
-
     __getHiddenPrevalence() {
         const slicedRequiredModels = this.filteredCollection;
         const isHiddenPrevalence = slicedRequiredModels.filter((model: GraphModel) => model.get('isHidden')).length > slicedRequiredModels.length / 2;
@@ -83,20 +76,6 @@ export default BranchView.extend({
         const allChildsHidden = !this.model.allChildsHidden;
 
         this.__setHiiddenToChildsModels(allChildsHidden);
-        this.__toggleHideAll(allChildsHidden);
-    },
-
-    __toggleHideAll(allChildsHidden: boolean) {
-        const uiEyeElement = this.ui.eyeBtn[0];
-
-        if (uiEyeElement) {
-            uiEyeElement.classList.remove(...getIconAndPrefixerClasses(this.__getIconClass(allChildsHidden)));
-            uiEyeElement.classList.add(...getIconAndPrefixerClasses(this.__getIconClass(!allChildsHidden)));
-        }
-
-        this.el.querySelector('.js-root-header-name').innerText = allChildsHidden
-            ? LocalizationService.get('CORE.TOOLBAR.BLINKCHECKBOX.SHOWALL')
-            : LocalizationService.get('CORE.TOOLBAR.BLINKCHECKBOX.HIDEALL');
     },
 
     __setHiiddenToChildsModels(hidden: boolean) {
@@ -107,6 +86,7 @@ export default BranchView.extend({
     },
 
     __hasContainerChilds() {
-        return !!this.options.model.get(this.options.model.childrenAttribute).find((model: GraphModel) => model.isContainer);
+        const collection = this.options.model.get(this.options.model.childrenAttribute);
+        return !!collection.find((model: GraphModel) => model.isContainer);
     }
 });
