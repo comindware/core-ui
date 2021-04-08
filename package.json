@@ -20,7 +20,6 @@
     "main": "dist/core.bundle.min.js",
     "types": "dist/core.bundle.min.d.ts",
     "scripts": {
-        "preinstall": "npx npm-force-resolutions",
         "start": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js start",
         "develop": "cross-env NODE_ENV=development DEBUG=true node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js develop",
         "build": "cross-env NODE_ENV=production DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js build",
@@ -50,11 +49,6 @@
         "maintained node versions",
         "not dead"
     ],
-    "resolutions": {
-        "minimist": ">=1.2.3",
-        "ini": ">1.3.6",
-        "yargs-parser": ">=13.1.2 <14.0.0 || >=15.0.1 <16.0.0 || >=18.1.2"
-    },
     "devDependencies": {
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
