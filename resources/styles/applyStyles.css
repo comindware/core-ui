@@ -57,8 +57,9 @@
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
 .editor_readonly .bubbles:hover{
-    background: transparent;
+    background: var(--theme-colors__main_strong);
 }
+
 .cell > .editor {
     height: 25px;
     padding: 0 5px;
