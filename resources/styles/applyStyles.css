@@ -70,7 +70,6 @@
     border-radius: 4px;
     background-color: var(--theme-colors__main);
     border: 1px solid var(--theme-colors__main_strongest);
-    height: auto;
 }
 
 /*.input:hover {*/

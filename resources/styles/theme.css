@@ -420,6 +420,7 @@ body {
 .editor_date-time_time .input,
 .editor_date-time_date .input {
   padding-left: 5px;
+  height: auto;
 }
 
 .cell-focused .editor_date-time_time .input,
@@ -867,7 +868,7 @@ tr:not(:first-child) .cell_selection {
   background-color: var(--theme-colors__main);
   border: 1px solid var(--theme-colors__main_strongest);
   padding: var(--dropdown-padding);
-  height: var(--input-height);
+  line-height: 26px;
 }
 
 .editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {

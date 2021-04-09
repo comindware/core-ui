@@ -401,6 +401,7 @@ td > .icon-true {
 .editor_date-time .editor_date-time_date,
 .editor_date-time .editor_date-time_time {
     display: flex;
+    line-height: 20px;
 }
 
 .input.input_duration {
