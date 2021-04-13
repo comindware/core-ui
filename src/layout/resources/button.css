@@ -6,30 +6,30 @@
 .toolbar-btn,
 .split-button-wrp {
     margin-right: 10px;
-    background-color: var(--theme-colors__severity-none);
-    border: 1px solid var(--theme-colors__severity-none);
-    color: var(--theme-colors__severity-none-txt);
+    background-color: var(--theme-colors__btn);
+    border: 1px solid var(--theme-colors__btn);
+    color: var(--theme-colors__btn-txt);
 }
 
 .toolbar-btn_selected,
 .toolbar .toolbar-btn_selected{
     box-shadow: none;
-    background-color: var(--theme-colors__severity-none_strong);
-    border: 1px solid var(--theme-colors__severity-none_strong);
-    color: var(--theme-colors__severity-none-txt);
+    background-color: var(--theme-colors__btn_strong);
+    border: 1px solid var(--theme-colors__btn_strong);
+    color: var(--theme-colors__btn-txt);
 }
 
 .toolbar-btn:hover,
 .split-btn:hover{
     box-shadow: none;
-    background-color: var(--theme-colors__severity-none_fade);
-    border: 1px solid var(--theme-colors__severity-none_fade);
-    color: var(--theme-colors__severity-none-txt);
+    background-color: var(--theme-colors__btn_fade);
+    border: 1px solid var(--theme-colors__btn_fade);
+    color: var(--theme-colors__btn-txt);
 }
 .toolbar-btn:active,
 .split-btn:active {
-    background-color: var(--theme-colors__severity-none_strong);
-    border: 1px solid var(--theme-colors__severity-none_strong);
+    background-color: var(--theme-colors__btn_strong);
+    border: 1px solid var(--theme-colors__btn_strong);
 }
 
 .toolbar-btn .checkbox i,
@@ -38,6 +38,23 @@
 }
 
 /* Themes color button */
+.toolbar-btn_none, .split-btn_default{
+    background-color: var(--theme-colors__severity-none);
+    border: 1px solid var(--theme-colors__severity-none);
+    color: var(--theme-colors__severity-none-txt);
+}
+
+.toolbar-btn_none:hover, .split-btn_default:hover{
+    background-color: var(--theme-colors__severity-none_fade);
+    border: 1px solid var(--theme-colors__severity-none_fade);
+    color: var(--theme-colors__severity-none-txt);
+}
+.toolbar-btn_none:active, .split-btn_default:active{
+    background-color: var(--theme-colors__severity-none_strong);
+    border: 1px solid var(--theme-colors__severity-none_strong);
+    color: var(--theme-colors__severity-none-txt);
+}
+
 .toolbar-btn_low, .split-btn_low{
     background-color: var(--theme-colors__severity-low);
     border: 1px solid var(--theme-colors__severity-low);
