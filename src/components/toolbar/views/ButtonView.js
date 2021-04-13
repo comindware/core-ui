@@ -24,7 +24,7 @@ export default Marionette.View.extend({
 
     className() {
         const severityLevel = this.model.get('severity');
-        const severityItem = severity[severityLevel] || severity.None;
+        const severityItem = severity[severityLevel] || severity.Default;
         const type = this.model.get('type');
         const typeClass = typeof type === 'string' ? unCapitalizeFirstLetter(type) : 'withoutType';
 

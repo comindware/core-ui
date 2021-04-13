@@ -17,8 +17,8 @@
     --theme-colors__secondary_strong: #dcdcdc; /* Strong */
     --theme-colors__secondary_strongest: #c2c2c2; /* Strongest */
 
-    --theme-colors__secondary_text: var(--theme-colors__text);
-    --theme-colors__secondary_text_hover: var(--theme-colors__primary);
+    --theme-colors__secondary_txt: var(--theme-colors__text);
+    --theme-colors__secondary_txt_hover: var(--theme-colors__primary);
 
     /*** Text ***/
     --theme-colors__text: #5a5a5a; /* Basic */                     /* Базовый цвет текста */
@@ -200,12 +200,17 @@
     --system-message-font-size: 15px;
 
     /* buttons severity */
+    --theme-colors__btn: var(--theme-colors__primary);
+    --theme-colors__btn_fade: var(--theme-colors__primary_strong);
+    --theme-colors__btn_strong: var(--theme-colors__primary_fade);
+    --theme-colors__btn-txt: var(--theme-colors__primary-txt);
+
     --theme-colors__severity-none: var(--theme-colors__primary);
     --theme-colors__severity-none_fade: var(--theme-colors__primary_strong);
     --theme-colors__severity-none_strong: var(--theme-colors__primary_fade);
     --theme-colors__severity-none-txt: var(--theme-colors__primary-txt);
 
-    --theme-colors__severity-low: hsla(203, 50%, 56%, 1);;
+    --theme-colors__severity-low: hsla(203, 50%, 56%, 1);
     --theme-colors__severity-low_fade: hsla(203, 50%, 46%, 1);
     --theme-colors__severity-low_strong: hsla(203, 50%, 66%, 1);
     --theme-colors__severity-low-txt: var(--theme-colors__primary-txt);
