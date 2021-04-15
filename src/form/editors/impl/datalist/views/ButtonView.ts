@@ -5,7 +5,9 @@ import BubbleCollectionView from './BubbleCollectionView';
 export default TextEditorView.extend({
     initialize(options) {
         TextEditorView.prototype.initialize.call(this, options);
-        this.collectionView = new BubbleCollectionView(this.options);
+        if (!this.options.isAutocompleteMode) {
+            this.collectionView = new BubbleCollectionView(this.options);
+        }
     },
 
     template: Handlebars.compile(template),
@@ -21,9 +23,15 @@ export default TextEditorView.extend({
 
     focusElement: '.js-input',
 
+    templateContext() {
+        return {
+            isAutocompleteMode: this.options.isAutocompleteMode
+        };
+    },
+
     ui: {
         input: '.js-input',
-        loading: '.js-datalist-loading',
+        loading: '.js-datalit-loading',
         counterHidden: '.js-counter-hidden'
     },
 
@@ -40,10 +48,17 @@ export default TextEditorView.extend({
         }
     },
 
-    events: false,
+    events: {
+        'change @ui.input': '__change'
+    },
 
     onRender(): void {
-        this.showChildView('collectionRegion', this.collectionView);
+        if (!this.options.isAutocompleteMode) {
+            this.showChildView('collectionRegion', this.collectionView);
+        } else {
+            const value = this.getValue() || '';
+            this.ui.input.val(value);
+        }
     },
 
     setPermissions(enabled, readonly) {
@@ -73,5 +88,12 @@ export default TextEditorView.extend({
 
     setCounter(count) {
         this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
+    },
+
+    __change() {
+        if (!this.options.isAutocompleteMode) {
+            return;
+        }
+        this.trigger('input:change', this.ui.input.val());
     }
 });

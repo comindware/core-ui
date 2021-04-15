@@ -74,7 +74,8 @@ type optionsType = {
 
     //deprecated options
     controller?: Marionette.Object,
-    storeArray?: boolean
+    storeArray?: boolean,
+    isAutocompleteMode: boolean
 };
 
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
@@ -136,7 +137,10 @@ const defaultOptions = (options: optionsType): optionsType => ({
     controller: undefined,
     storeArray: false,
 
-    format: undefined //name of preset for editor
+    format: undefined, //name of preset for editor
+
+    //mode text-filed with autocomplete from collection
+    isAutocompleteMode: false
 });
 
 const presetsDefaults = {
@@ -237,12 +241,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
-                value: '',
+                value: this.options.isAutocompleteMode ? this.getValue() : '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
                 bubbleItemViewOptions: {
                     customTemplate: this.options.buttonBubbleTemplate,
                     ...bubbleItemViewOptions
                 },
+                isAutocompleteMode: this.options.isAutocompleteMode,
                 selectedPanelCollection: this.isButtonLimitMode ? this.selectedPanelCollection : undefined,
                 emptyPlaceholder: this.__getEmptyPlaceholder(),
                 readonlyPlaceholder: this.__getReadonlyPlaceholder(),
@@ -329,6 +334,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const btn = this.dropdownView;
         this.listenTo(btn, 'focus', this.__onButtonFocus);
         this.listenTo(btn, 'blur', this.__onButtonBlur);
+        this.listenTo(btn, 'input:change', this.__changeValue);
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
         this.listenTo(btn, 'click', (e: MouseEvent) => {
@@ -507,7 +513,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     blur(): void {
         // TODO clean up all, except this.__blurButton();
-        this.__setInputValue('');
+        if (!this.options.isAutocompleteMode) {
+            this.__setInputValue('');
+        }
         this.__blurButton();
         this.panelCollection.pointOff();
         this.__getSelectedBubble()?.deselect();
@@ -524,11 +532,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __clearSearch() {
-        this.__setInputValue('');
+        if (!this.options.isAutocompleteMode) {
+            this.__setInputValue('');
+        }
         this.__fetchUpdateFilter('', { open: false, isSearch: true });
     },
 
-    __getInputValue(): string {
+    __getDropdownInputValue(): string {
         return this.dropdownView ? this.dropdownView.getInputValue() : '';
     },
 
@@ -540,13 +550,21 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.debouncedFetchUpdateFilter(undefined, { isSearch: true });
     },
 
-    __fetchUpdateFilter(text = this.__getInputValue(), {
+    __getTextInput() { 
+        if (this.options.isAutocompleteMode) {
+            return this.getValue();
+        }
+        this.__getDropdownInputValue();
+    },
+
+    __fetchUpdateFilter(text = this.__getDropdownInputValue(), {
         forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess,
         openOnRender = false,
         open = true,
         isSearch = false,
         selected = this.value } = {}
     ) {
+
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
@@ -822,7 +840,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             if (this.options.maxQuantitySelected === 1) {
                 this.__value(value, { triggerChange: true });
                 this.panelCollection.selectNone({ isSilent: true });
-                this.__closeAfterPanelSelected();
+                if (this.options.isAutocompleteMode) {
+                    this.__closeAfterPanelSelected(value);
+                } else {
+                    this.__closeAfterPanelSelected();
+                }
                 return;
             }
 
@@ -841,8 +863,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __closeAfterPanelSelected() {
-        this.__setInputValue('');
+    __closeAfterPanelSelected(value) {
+        if (this.options.isAutocompleteMode && value) {
+            this.__setInputValue(value);
+        } else {
+            this.__setInputValue('');
+        }
         this.close();
     },
 
@@ -886,6 +912,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__onInputSearch();
     },
 
+    __changeValue(value): void {
+        this.value = value;
+        this.__triggerChange();
+    },
+
     __onButtonBlur(view: Marionette.View<any>, event: FocusEvent) {
         const relatedTarget = event.relatedTarget;
         if (this.dropdownView.panelView?.el.contains(relatedTarget) || this.dropdownView.el.contains(relatedTarget)) {
@@ -914,8 +945,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
         this.__focusButton();
-        const filterValue = this.dropdownView.value;
-        this.__fetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
+        if (!this.options.isAutocompleteMode) {
+            const filterValue = this.dropdownView.value;
+            this.__fetchUpdateFilter(filterValue, { forceCompareText, openOnRender });
+        }
     },
 
     __onBubbleDelete(model: Backbone.Model): void {
