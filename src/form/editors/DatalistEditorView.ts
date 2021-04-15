@@ -550,6 +550,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.debouncedFetchUpdateFilter(undefined, { isSearch: true });
     },
 
+    __getTextInput() { 
+        if (this.options.isAutocompleteMode) {
+            return this.getValue();
+        }
+        this.__getDropdownInputValue();
+    },
+
     __fetchUpdateFilter(text = this.__getDropdownInputValue(), {
         forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess,
         openOnRender = false,

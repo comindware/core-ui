@@ -1,6 +1,8 @@
 import template from '../templates/button.hbs';
 import TextEditorView from '../../../TextEditorView';
 import BubbleCollectionView from './BubbleCollectionView';
+import iconWrapRemove from '../../../../editors/iconsWraps/iconWrapRemove.html';
+import iconWrapText from '../../../../editors/iconsWraps/iconWrapText.html';
 
 export default TextEditorView.extend({
     initialize(options) {
@@ -32,6 +34,7 @@ export default TextEditorView.extend({
     ui: {
         input: '.js-input',
         loading: '.js-datalit-loading',
+        clearButton: '.js-clear-button',
         counterHidden: '.js-counter-hidden'
     },
 
@@ -48,16 +51,23 @@ export default TextEditorView.extend({
         }
     },
 
-    events: {
-        'change @ui.input': '__change'
+    events() {
+        const events = {
+            'keyup @ui.input': '__keyup',
+            'change @ui.input': '__change',
+            'click @ui.clearButton': '__onClearClickHandler'
+        };
+        if (!this.options.hideClearButton && this.options.isAutocompleteMode) {
+            events.mouseenter = '__onMouseenter';
+        }
+        return events;
     },
 
     onRender(): void {
         if (!this.options.isAutocompleteMode) {
             this.showChildView('collectionRegion', this.collectionView);
         } else {
-            const value = this.getValue() || '';
-            this.ui.input.val(value);
+            TextEditorView.prototype.onRender.apply(this);
         }
     },
 
@@ -90,10 +100,19 @@ export default TextEditorView.extend({
         this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
     },
 
+    __onClearClickHandler() { 
+        this.ui.input.val('');
+        this.trigger('input:change', '');
+    },
+
     __change() {
         if (!this.options.isAutocompleteMode) {
             return;
         }
         this.trigger('input:change', this.ui.input.val());
+    },
+
+    __keyup() {
+        this.trigger('input:keyup', this);
     }
 });
