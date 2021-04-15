@@ -1,9 +1,8 @@
-body, input, textarea, select {
-  font: var(--font);
-}
-
-body {
-  color: var(--theme-colors__text);
+input, textarea, select {
+  font-family: var(--base-font-family);
+  font-style: var(--base-font-style);
+  font-size: var(--base-font-size);
+  font-weight: var(--base-font-weight);
 }
 /* a {
   line-height: var(--line-height)
@@ -1029,6 +1028,8 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__tab-layout__header-view-item {
+  font-family: var(--headers-font-family);
+  font-style: var(--headers-font-style);
   min-height: 25px;
   padding: var(--tab-item-padding);
   font-size: var(--tab-item-font-size);
@@ -1403,7 +1404,10 @@ tr:not(:first-child) .cell_selection {
   width: 220px;
 }
 .sp-container .sp-input {
-  font: var(--font);
+  font-family: var(--base-font-family);
+  font-style: var(--base-font-style);
+  font-size: var(--base-font-size);
+  font-weight: var(--base-font-weight);
   padding: var(--input-padding);
   height: var(--input-height);
 }
@@ -1478,5 +1482,8 @@ tr:not(:first-child) .cell_selection {
 }
 
 .cke_editable{
-  font: var(--font);
+  font-family: var(--base-font-family);
+  font-style: var(--base-font-style);
+  font-size: var(--base-font-size);
+  font-weight: var(--base-font-weight);
 }

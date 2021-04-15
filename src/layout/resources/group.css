@@ -56,6 +56,10 @@
 
 
 .group-title{
+    font-family: var(--headers-font-family);
+    font-style: var(--headers-font-style);
+    font-size: var(--headers-font-size);
+    font-weight: var(--headers-font-weight);
     display: inline-flex;
     height: 100%;
     align-items: center;
@@ -64,7 +68,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--theme-colors__primary-txt);
 }
 
 .group-toggle,

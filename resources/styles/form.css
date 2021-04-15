@@ -89,6 +89,8 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .form-label__txt {
+    font-family: var(--headers-font-family);
+    font-style: var(--headers-font-style);
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
