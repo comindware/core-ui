@@ -5,6 +5,7 @@ import { helpers, keyCode } from '../../utils';
 import template from './templates/datalistEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import ButtonView from './impl/datalist/views/ButtonView';
+import TextEditorView from './impl/datalist/views/TextEditorView';
 import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/datalist/views/ReferenceListItemView';
 import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceListWithSubtextItemView';
@@ -74,7 +75,8 @@ type optionsType = {
 
     //deprecated options
     controller?: Marionette.Object,
-    storeArray?: boolean
+    storeArray?: boolean,
+    isInput: boolean
 };
 
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
@@ -83,7 +85,7 @@ const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
 
 const defaultOptions = (options: optionsType): optionsType => ({
     displayAttribute: 'name',
-    buttonView: ButtonView,
+    buttonView: options.isInput ? TextEditorView : ButtonView,
 
     showAdditionalList: false,
     subtextProperty: '',
@@ -136,7 +138,10 @@ const defaultOptions = (options: optionsType): optionsType => ({
     controller: undefined,
     storeArray: false,
 
-    format: undefined //name of preset for editor
+    format: undefined, //name of preset for editor
+
+    //mode text-filed with autocomplete from collection
+    isInput: false
 });
 
 const presetsDefaults = {
@@ -237,7 +242,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
-                value: '',
+                value: this.options.isInput ? this.getValue() : '',
                 collection: this.isButtonLimitMode ? this.selectedButtonCollection : this.selectedCollection,
                 bubbleItemViewOptions: {
                     customTemplate: this.options.buttonBubbleTemplate,
@@ -507,7 +512,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
     blur(): void {
         // TODO clean up all, except this.__blurButton();
-        this.__setInputValue('');
+        if (!this.options.isInput) {
+            this.__setInputValue('');
+        }
         this.__blurButton();
         this.panelCollection.pointOff();
         this.__getSelectedBubble()?.deselect();
@@ -524,7 +531,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __clearSearch() {
-        this.__setInputValue('');
+        if (!this.options.isInput) {
+            this.__setInputValue('');
+        }
         this.__fetchUpdateFilter('', { open: false, isSearch: true });
     },
 
@@ -822,7 +831,11 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             if (this.options.maxQuantitySelected === 1) {
                 this.__value(value, { triggerChange: true });
                 this.panelCollection.selectNone({ isSilent: true });
-                this.__closeAfterPanelSelected();
+                if (this.options.isInput) {
+                    this.__closeAfterPanelSelected(value);
+                } else {
+                    this.__closeAfterPanelSelected();
+                }
                 return;
             }
 
@@ -841,8 +854,12 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         }
     },
 
-    __closeAfterPanelSelected() {
-        this.__setInputValue('');
+    __closeAfterPanelSelected(value) {
+        if (this.options.isInput && value) {
+            this.__setInputValue(value);
+        } else {
+            this.__setInputValue('');
+        }
         this.close();
     },
 
@@ -968,6 +985,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             return;
         }
         if (!this.__getIsQuantityControl(e)) {
+            if (this.options.isInput) {
+                this.value = e.target.value;
+                this.__triggerChange();
+            }
             return;
         }
 
