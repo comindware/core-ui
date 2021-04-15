@@ -29,9 +29,14 @@
  }
 
  body {
-   margin: 0;
-   font: var(--font);
-   text-align: left;
+     margin: 0;
+     font-family: var(--base-font-family);
+     font-style: var(--base-font-style);
+     font-size: var(--base-font-size);
+     font-weight: var(--base-font-weight);
+     color: var(--theme-colors__text);
+     line-height: 1.3;
+     text-align: left;
  }
 
  [tabindex="-1"]:focus {

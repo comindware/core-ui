@@ -500,6 +500,11 @@ input::placeholder {
     font-size: 17px;
 }
 
+.left-menu-i__text {
+    font-family: var(--headers-font-family);
+    font-style: var(--headers-font-style);
+}
+
 .left-menu-i.workspace > .left-menu-i__text {
     font-size: 14px;
 }

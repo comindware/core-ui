@@ -187,7 +187,7 @@
 .subtext-list:hover {
     cursor: pointer;
     color: var(--theme-colors__primary);
-    background-color: var(--theme-colors__primary_fadest);
+    background-color: var(--theme-colors__highlight);
 }
 
 .datalist-checkbox {

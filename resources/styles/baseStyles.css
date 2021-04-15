@@ -271,6 +271,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .layout__popup-view-header-text {
+    font-family: var(--headers-font-family);
+    font-style: var(--headers-font-style);
+    font-weight: var(--headers-font-weight);
     flex: 1 1 auto;
     padding-right: 10px;
 }
