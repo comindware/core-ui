@@ -1,8 +1,10 @@
-<div class="js-tree-item branch-header root">
-    {{#if hasContainerChilds}}<i class="js-collapse-btn collapse-btn {{iconPrefixer collapseIconClass}}"></i>{{/if}}
-    <div class="branch-header-name">
-        <i class="js-eye-btn eye-btn"></i>
-        <span class="js-root-header-name root__header-name"></span>
+{{#if showHeader}}
+    <div class="js-tree-item branch-header root">
+        {{#if hasContainerChilds}}<i class="js-collapse-btn collapse-btn {{iconPrefixer collapseIconClass}}"></i>{{/if}}
+        <div class="branch-header-name">
+            <i class="js-eye-btn eye-btn"></i>
+            <span class="js-root-header-name root__header-name"></span>
+        </div>
     </div>
-</div>
+{{/if}}
 <div class="js-branch-collection branch-collection root"></div>
