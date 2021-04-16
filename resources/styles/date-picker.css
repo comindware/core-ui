@@ -1,3 +1,13 @@
+.date-mobile-input{
+	opacity: 0; 
+	width: 85%;
+	height: 100%; 
+	position: absolute;
+}
+.date-mobile-input::-webkit-calendar-picker-indicator {
+	opacity: 0; 
+	width: 100%; 
+}
 .datetimepicker {
 	padding: 16px 18px 10px;
 	direction: ltr;
