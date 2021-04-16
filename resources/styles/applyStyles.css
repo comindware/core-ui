@@ -509,6 +509,12 @@ input::placeholder {
     font-size: 14px;
 }
 
+.left-menu-workspace__header {
+    font-family: var(--headers-font-family);
+    font-style: var(--headers-font-style);
+    font-size: 14px;
+}
+
 .left-menu-switcher__text,
 .left-menu-search .tr-search__input {
     font-size: 13px;
