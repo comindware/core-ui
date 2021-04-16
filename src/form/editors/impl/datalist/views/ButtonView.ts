@@ -5,7 +5,9 @@ import BubbleCollectionView from './BubbleCollectionView';
 export default TextEditorView.extend({
     initialize(options) {
         TextEditorView.prototype.initialize.call(this, options);
-        this.collectionView = new BubbleCollectionView(this.options);
+        if (!this.options.isAutocompleteMode) {
+            this.collectionView = new BubbleCollectionView(this.options);
+        }
     },
 
     template: Handlebars.compile(template),
@@ -21,9 +23,16 @@ export default TextEditorView.extend({
 
     focusElement: '.js-input',
 
+    templateContext() {
+        return {
+            isAutocompleteMode: this.options.isAutocompleteMode
+        };
+    },
+
     ui: {
         input: '.js-input',
         loading: '.js-datalist-loading',
+        clearButton: '.js-clear-button',
         counterHidden: '.js-counter-hidden'
     },
 
@@ -40,10 +49,27 @@ export default TextEditorView.extend({
         }
     },
 
-    events: false,
+    events() {
+        if (this.options.isAutocompleteMode) {
+            const events = {
+                'keyup @ui.input': '__keyup',
+                'change @ui.input': '__change',
+                'click @ui.clearButton': '__onClearClickHandler'
+            };
+            if (!this.options.hideClearButton) {
+                events.mouseenter = '__onMouseenter';
+            }
+            return events;
+        }
+        return {};
+    },
 
     onRender(): void {
-        this.showChildView('collectionRegion', this.collectionView);
+        if (!this.options.isAutocompleteMode) {
+            this.showChildView('collectionRegion', this.collectionView);
+        } else {
+            TextEditorView.prototype.onRender.apply(this);
+        }
     },
 
     setPermissions(enabled, readonly) {
@@ -73,5 +99,10 @@ export default TextEditorView.extend({
 
     setCounter(count) {
         this.ui.counterHidden.text && this.ui.counterHidden.text(count ? `+${count}` : '');
+    },
+
+    __onClearClickHandler() {
+        this.ui.input.val('');
+        this.trigger('change');
     }
 });
