@@ -24,7 +24,7 @@ export default Marionette.Behavior.extend({
         const model = this.view.model;
         const newCollapsed = (model.collapsedNode = collapsed == null ? !model.collapsedNode : collapsed);
 
-        this.ui.collapseClassElement[0].classList.toggle(collapsedClass, newCollapsed);
+        this.ui.collapseClassElement[0]?.classList.toggle(collapsedClass, newCollapsed);
         this.view.collapseChildren({ interval, collapsed: newCollapsed });
     },
 

@@ -44,54 +44,52 @@ export default class TreeEditor {
                 reqres,
                 maxWidth: 300
             });
-            return this.view;
-        }
-
-        const popoutView = Core.dropdown.factory.createPopout({
-            buttonView: TEButtonView,
-            buttonViewOptions: {
-                iconClass: options.eyeIconClass
-            },
-
-            panelView: NodeViewFactory.getRootView({
-                model: this.model,
-                unNamedType: options.unNamedType,
-                nestingOptions,
-                showToolbar: options.showToolbar,
-                showResetButton: options.showResetButton
-            }),
-            panelViewOptions: {
-                ...options,
-                reqres,
-                maxWidth: 300
-            },
-            showDropdownAnchor: false
-        });
-
-        reqres.reply('treeEditor:collapse', () => popoutView.adjustPosition(false));
-        popoutView.listenTo(reqres, 'treeEditor:diffApplied', () => popoutView.trigger('treeEditor:diffApplied'));
-
-        popoutView.once('attach', () => popoutView.adjustPosition(false)); // TODO it doesn't work like this
-
-        if (options.showToolbar) {
-            reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
         } else {
-            popoutView.listenTo(popoutView, 'close', () => this.__onSave());
+            this.view = Core.dropdown.factory.createPopout({
+                buttonView: TEButtonView,
+                buttonViewOptions: {
+                    iconClass: options.eyeIconClass
+                },
+
+                panelView: NodeViewFactory.getRootView({
+                    model: this.model,
+                    unNamedType: options.unNamedType,
+                    nestingOptions,
+                    showToolbar: options.showToolbar,
+                    showResetButton: options.showResetButton
+                }),
+                panelViewOptions: {
+                    ...options,
+                    reqres,
+                    maxWidth: 300
+                },
+                showDropdownAnchor: false
+            });
+            reqres.reply('treeEditor:collapse', () => this.view.adjustPosition(false));
+            this.view.listenTo(reqres, 'treeEditor:diffApplied', () => this.view.trigger('treeEditor:diffApplied'));
+
+            this.view.once('attach', () => this.view.adjustPosition(false)); // TODO it doesn't work like this
+
+            if (options.showToolbar) {
+                reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
+            } else {
+                this.view.listenTo(this.view, 'close', () => this.__onSave());
+            }
+
+            if (options.hidden) {
+                this.view.el.setAttribute('hidden', true);
+            }
         }
 
-        if (options.hidden) {
-            popoutView.el.setAttribute('hidden', true);
-        }
+        this.view.getConfigDiff = this.__getConfigDiff.bind(this);
+        this.view.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
+        this.view.setConfigDiff = this.__setConfigDiff.bind(this);
+        this.view.resetConfigDiff = this.__resetConfigDiff.bind(this);
+        this.view.setInitConfig = this.setInitConfig.bind(this);
+        this.view.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
+        this.view.getRootCollection = this.__getRootCollection.bind(this);
 
-        popoutView.getConfigDiff = this.__getConfigDiff.bind(this);
-        popoutView.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
-        popoutView.setConfigDiff = this.__setConfigDiff.bind(this);
-        popoutView.resetConfigDiff = this.__resetConfigDiff.bind(this);
-        popoutView.setInitConfig = this.setInitConfig.bind(this);
-        popoutView.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
-        popoutView.getRootCollection = this.__getRootCollection.bind(this);
-
-        return (this.view = popoutView);
+        return this.view;
     }
 
     __setVisibleConfigDiffInit() {

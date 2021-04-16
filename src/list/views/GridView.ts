@@ -316,7 +316,6 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        treeEditorRegion: '.js-grid-tree-editor-region',
         headerRegion: '.js-grid-header-view',
         contentRegion: {
             el: '.js-grid-content-view',
@@ -372,10 +371,6 @@ export default Marionette.View.extend({
             this.__toggleTableWidth();
         } else {
             this.el.classList.add('grid__headless');
-        }
-
-        if (this.options.showTreeEditor) {
-            this.showChildView('treeEditorRegion', this.treeEditorView);
         }
 
         if (this.options.showToolbar) {
@@ -796,6 +791,19 @@ export default Marionette.View.extend({
         }
     },
 
+    getTreeEditorView(model) {
+        return new Core.components.TreeEditor({
+            hidden: this.options.treeEditorIsHidden,
+            model: model || this.options.treeEditorModel,
+            configDiff: this.options.treeEditorConfig,
+            getNodeName: this.options.getNodeName || (model => model.get('title')),
+            nestingOptions: this.options.nestingOptions,
+            childsFilter: this.options.childsFilter,
+            showPanelViewOnly: this.options.showPanelViewOnly,
+            showTreeEditorHeader: this.options.showTreeEditorHeader
+        });
+    },
+
     __updateEmpty() {
         if (this.required) {
             this.__toggleRequiredClass(this.collection.length === 0);
@@ -930,14 +938,7 @@ export default Marionette.View.extend({
 
         this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
 
-        this.treeEditorView = new Core.components.TreeEditor({
-            hidden: this.options.treeEditorIsHidden,
-            model: this.options.treeEditorModel,
-            configDiff: this.options.treeEditorConfig,
-            getNodeName: this.options.getNodeName || (model => model.get('title')),
-            nestingOptions: this.options.nestingOptions,
-            childsFilter: this.options.childsFilter
-        });
+        this.treeEditorView = this.getTreeEditorView();
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
             const configDiff = {
