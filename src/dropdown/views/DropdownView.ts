@@ -441,11 +441,16 @@ export default class DropdownView {
     }
 
     __handleGlobalMousedown(target) {
-        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target)) {
+        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target) || this.__isNestedInFading(target)) {
             this.__suppressHandlingBlur = true;
         } else if (!this.__isNestedInButton(target)) {
             this.close();
         }
+    }
+
+    __isNestedInFading(target) {
+        const fadingContainer = document.querySelector('.js-fading-panel');
+        return fadingContainer.contains(target);
     }
 
     __onWindowServicePopupClose(popupId) {
