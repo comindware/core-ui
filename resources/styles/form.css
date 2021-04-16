@@ -395,6 +395,7 @@ td > .icon-true {
 .form-group_dateTime,
 .form-group_date,
 .form-group_duration {
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
