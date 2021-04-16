@@ -10,6 +10,7 @@ export default TextEditorView.extend({
         if (!this.options.isAutocompleteMode) {
             this.collectionView = new BubbleCollectionView(this.options);
         }
+        this.listenTo(this, 'input:text:change', value => this.setInputValue(value));
     },
 
     template: Handlebars.compile(template),
@@ -52,15 +53,18 @@ export default TextEditorView.extend({
     },
 
     events() {
-        const events = {
-            'keyup @ui.input': '__keyup',
-            'change @ui.input': '__change',
-            'click @ui.clearButton': '__onClearClickHandler'
-        };
-        if (!this.options.hideClearButton && this.options.isAutocompleteMode) {
-            events.mouseenter = '__onMouseenter';
+        if (this.options.isAutocompleteMode) {
+            const events = {
+                'keyup @ui.input': '__keyup',
+                'change @ui.input': '__change',
+                'click @ui.clearButton': '__onClearClickHandler'
+            };
+            if (!this.options.hideClearButton) {
+                events.mouseenter = '__onMouseenter';
+            }
+            return events;
         }
-        return events;
+        return {};
     },
 
     onRender(): void {
@@ -82,9 +86,9 @@ export default TextEditorView.extend({
             return;
         }
         if (state) {
-            this.ui.loading[0].removeAttribute('hidden');
+            this.ui.loading[0]?.removeAttribute('hidden');
         } else {
-            this.ui.loading[0].setAttribute('hidden', '');
+            this.ui.loading[0]?.setAttribute('hidden', '');
         }
     },
 

@@ -336,7 +336,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.listenTo(btn, 'blur', this.__onButtonBlur);
         this.listenTo(btn, 'input:change', this.__changeValue);
         this.listenTo(btn, 'input:keydown', this.__onInputKeydown);
+        this.listenTo(btn, 'input:keyup', this.__onInputKeyup);
         this.listenTo(btn, 'input:search', this.__onInputSearch);
+        this.listenTo(btn, 'input:clear', this.__onClearClickHandler);
         this.listenTo(btn, 'click', (e: MouseEvent) => {
             if (e.target?.tagName === 'A') {
                 e.stopPropagation();
@@ -453,6 +455,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     setValue(value, { triggerChange = false, isLoadIfNeeded = true } = {}): void {
+        if(this.options.isAutocompleteMode) {
+            this.dropdownView.trigger('input:text:change', value);
+        }
         this.__value(value, { triggerChange, isLoadIfNeeded });
     },
 
@@ -538,7 +543,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.__fetchUpdateFilter('', { open: false, isSearch: true });
     },
 
-    __getDropdownInputValue(): string {
+    __getInputValue(): string {
         return this.dropdownView ? this.dropdownView.getInputValue() : '';
     },
 
@@ -550,21 +555,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.debouncedFetchUpdateFilter(undefined, { isSearch: true });
     },
 
-    __getTextInput() { 
-        if (this.options.isAutocompleteMode) {
-            return this.getValue();
-        }
-        this.__getDropdownInputValue();
-    },
-
-    __fetchUpdateFilter(text = this.__getDropdownInputValue(), {
+    __fetchUpdateFilter(text = this.__getInputValue(), {
         forceCompareText = this.options.fetchFiltered && !this.isLastFetchSuccess,
         openOnRender = false,
         open = true,
         isSearch = false,
         selected = this.value } = {}
     ) {
-
         const searchText = (text || '').toUpperCase().trim();
         if (this.searchText === searchText && !forceCompareText) {
             this.__updateSelectedOnPanel();
@@ -985,6 +982,10 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         const model = this.selectedCollection.models[this.selectedCollection.models.length - 1];
 
         this.__onBubbleDelete(model);
+    },
+
+    __onInputKeyup() {
+        this.trigger('keyup', this);
     },
 
     __onInputKeydown(button: Marionette.View<any>, e: KeyboardEvent) {
