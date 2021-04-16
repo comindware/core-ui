@@ -34,7 +34,7 @@ export default TextEditorView.extend({
 
     ui: {
         input: '.js-input',
-        loading: '.js-datalit-loading',
+        loading: '.js-datalist-loading',
         clearButton: '.js-clear-button',
         counterHidden: '.js-counter-hidden'
     },
