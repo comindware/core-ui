@@ -202,11 +202,16 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         const inEditMode = this.state.mode === stateModes.EDIT;
         const inputValue = value || this.state.displayValue;
         const minInputSize = 5;
-        const lettersQuantity = value || this.__createInputString(inputValue, inEditMode);
+        const valueString = value || this.__createInputString(inputValue, inEditMode);
         const specialCoefficient = 0.97; // to get new size, this is because length refers to number of characters, where as size in most browsers refers to em units
-        const durationCoefficient = 0.7; // because duration has ':'
-        const inputSize = lettersQuantity.length * durationCoefficient;
-        return inputSize === 0 ? minInputSize * specialCoefficient : inputSize;
+        const valueSymbols = valueString.split('');
+        if (valueSymbols.length === 0) {
+            return minInputSize * specialCoefficient;
+        }
+        const colons = valueSymbols.filter(symbol => symbol === ':').length;
+        const letters = valueSymbols.length - colons;
+        const durationSize = letters * specialCoefficient + colons * 0.3; // because duration has ':'
+        return durationSize;
     },
 
     __updateValueByInput(updateState) {
