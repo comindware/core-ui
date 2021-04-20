@@ -14,11 +14,11 @@
 .fr-alert .icon-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
     min-width: 40px;
     align-items: center;
-    font-size: 24px;
-
+    font-size: 1.25rem;
 }
 
 .notification-body_container{
@@ -31,9 +31,9 @@
 }
 
 .fr-alert .text-container {
-    text-align: left;
     display: flex;
     align-items: flex-start;
+    text-align: left;
     overflow-y: hidden;
     max-height: 3rem;
     overflow-x: hidden;
@@ -79,6 +79,12 @@
 
 .icon-close {
     padding: 0 5px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
 }
 @media (max-width: 720px) {
     .notification-container {
@@ -90,19 +96,11 @@
         margin: 0;
         margin-bottom: 0.75rem;
     }
-    .fr-alert .icon-container {
-        justify-content: flex-start;
-        padding: 0.75rem;
-    }
     .fr-alert .text-container {
         padding: 0;
     }
     .notification-body_container {
         padding: 0.75rem;
         width: 100%;
-    }
-    .icon-close {
-        margin-left: auto;
-        padding: 0.75rem;
     }
 }
