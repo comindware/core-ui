@@ -1028,8 +1028,6 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__tab-layout__header-view-item {
-  font-family: var(--headers-font-family);
-  font-style: var(--headers-font-style);
   min-height: 25px;
   padding: var(--tab-item-padding);
   font-size: var(--tab-item-font-size);
@@ -1076,6 +1074,7 @@ tr:not(:first-child) .cell_selection {
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_error:hover {
   background-color: var(--theme-colors__error-background);
   border-bottom-color: var(--theme-colors__error);
+  color: var(--theme-colors__error);
 }
 
 .layout__tab-layout__header-view-item_error.layout__tab-layout__header-view-item_selected, .layout__tab-layout__header-view-item_error:hover {
@@ -1449,6 +1448,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .documents__drop-zone {
+  max-width: 400px;
   padding: 6px;
   display: flex;
   align-items: center;

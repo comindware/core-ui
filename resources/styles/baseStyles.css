@@ -396,7 +396,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .editor_document {
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 20px;
 }
 
 .task-links__i {
