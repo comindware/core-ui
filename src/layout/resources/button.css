@@ -37,6 +37,23 @@
     color: inherit;
 }
 
+.btn-pale{
+    background-color: var(--theme-colors__cancel-btn);
+    border: 1px solid var(--theme-colors__cancel-btn);
+    color: var(--theme-colors__cancel-btn_txt);
+}
+
+.btn-pale:hover{
+    background-color: var(--theme-colors__cancel-btn_fade);
+    border: 1px solid var(--theme-colors__cancel-btn_fade);
+    color: var(--theme-colors__cancel-btn_txt);
+}
+.btn-pale:active{
+    background-color: var(--theme-colors__cancel-btn_strong);
+    border: 1px solid var(--theme-colors__cancel-btn_strong);
+    color: var(--theme-colors__cancel-btn_txt);
+}
+
 /* Themes color button */
 .toolbar-btn_none, .split-btn_default{
     background-color: var(--theme-colors__severity-none);
