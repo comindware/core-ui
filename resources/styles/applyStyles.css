@@ -368,20 +368,6 @@ input::placeholder {
     background: var(--theme-colors__main_fadest) 50% 50% no-repeat;
 }
 
-.layout__horizontal-layout-list {
-    margin-left: -10px;
-    margin-right: -10px;
-}
-
-.layout__horizontal-layout-list-item {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-
-
-
-
 .grid-header-column{
     height: 26px;
 }
