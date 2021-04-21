@@ -29,6 +29,7 @@
 
 .previews-collection-wrp {
     display: flex;
+    margin: 0 auto;
 }
 
 .previews-collection-wrp .gallery-window img,
@@ -156,10 +157,10 @@
     width: 100%;
     margin: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
     padding: 15px 0;
     flex: none;
+    overflow-x: scroll;
 }
 
 .gallery-info-widget {
@@ -247,4 +248,28 @@
     display: initial
 }
 
+@media (max-width: 720px) {
+    .gallery-window .gallery-controls-menu-wrp {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .wrapper-gallery-btn{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 20px 10px;  
+    }
+    .gallery-filename {
+        width: 90%;
+        padding: 0 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .gallery-controls-menu-wrp span {
+        margin: 0; 
+    }
+
+}
 /* -- end fullscreen-mode -- */

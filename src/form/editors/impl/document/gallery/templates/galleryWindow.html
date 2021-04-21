@@ -15,8 +15,16 @@
     <div class="js-next-image gallery-nav-btn gallery-btn gallery-next" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.NEXTIMAGE'}}"><i class="{{iconPrefixer next}}"></i></div>
 </div>
 <div class="gallery-controls-menu-wrp">
+    {{#if isMobile}}
+    <div class="js-fileName gallery-filename"></div>
+    <div class="wrapper-gallery-btn">
+        <div class="js-delete gallery-delete gallery-btn {{iconPrefixer delete}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}</span></div>
+        <div class="js-download gallery-download gallery-btn {{iconPrefixer download}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}</span></div>
+    </div>
+    {{else}}
     <div class="js-delete gallery-delete gallery-btn {{iconPrefixer delete}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DELETE'}}</span></div>
     <div class="js-fileName gallery-filename"></div>
     <div class="js-download gallery-download gallery-btn {{iconPrefixer download}}" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}"><span>{{localize 'CORE.FORM.EDITORS.DOCUMENT.GALLERY.DOWNLOAD'}}</span></div>
+    {{/if}}
 </div>
 <div class="js-previews-collection-region gallery-previews-collection"></div>

@@ -40,7 +40,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        return iconsNames;
+        const isMobile = Core.services.MobileService.isMobile;
+        return {
+            ...iconsNames,
+            isMobile
+        };
     },
 
     ui: {
@@ -70,7 +74,8 @@ export default Marionette.View.extend({
 
     regions: {
         downloadPanelRegion: {
-            el: '.js-download-panel', replaceElement: true
+            el: '.js-download-panel',
+            replaceElement: true
         },
         infoWidgetRegion: {
             el: '.js-info-widget-region',
