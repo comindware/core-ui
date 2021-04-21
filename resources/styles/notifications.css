@@ -50,8 +50,13 @@
     padding: 3px 6px;
     display: flex;
 }
+
 .fr-alert_error {
     background: var(--theme-colors__error);
+}
+
+.fr-alert_warning {
+    background: var(--theme-colors__warning);
 }
 
 .notification-container {
