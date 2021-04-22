@@ -24,8 +24,7 @@
 .popout-menu {
     min-width: 120px;
     max-width: 300px;
-    max-height: 227px;
-    font-size: 13px;
+    max-height: 240px;
     overflow-y: auto;
     display: none;
     text-align: left;
@@ -40,16 +39,15 @@
     vertical-align: middle;
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 10px;
+    cursor: pointer;
     transition: background .3s ease-in-out, color .3s ease-in-out;
 }
 .popout-menu__i:hover {
     background: var(--theme-colors__main);
 }
 .popout-menu__txt {
-    padding: 4px 7px 4px 10px;
     display: inline-block;
-    cursor: pointer;
     color: var(--theme-colors__text_fade);
     flex: 1;
 }

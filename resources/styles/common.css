@@ -959,6 +959,11 @@ body.non-selectable {
     color: inherit;
 }
 
+.toolbar-panel_container__select-state .toolbar-btn {
+    height: inherit;
+    padding: 10px;
+}
+
 .toolbar-panel_container__select-state .checkbox{
     background: unset;
     border: none;
