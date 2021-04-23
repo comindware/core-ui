@@ -317,13 +317,14 @@ export default Marionette.View.extend({
     async __onClose() {
         if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
             const isClose = await Core.services.MessageService.showMessageDialog(
-                Localizer.get('CORE.FORM.EDITORS.CODE.UNSAVEDEDITOR'), 
+                Localizer.get('CORE.FORM.EDITORS.CODE.UNSAVEDEDITOR'),
                 Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
                     id: true,
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
                 }, {
                     id: false,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO'),
+                    isCancel: true
                 }]);
             if (!isClose) {
                 return;
@@ -490,7 +491,7 @@ export default Marionette.View.extend({
 
     __isStringLiteral() {
         const token = this.codemirror.getTokenAt(this.codemirror.getCursor());
-        if (token && token.type === 'string') { 
+        if (token && token.type === 'string') {
             return true;
         }
         return false;

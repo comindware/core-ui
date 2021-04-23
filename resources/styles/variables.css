@@ -204,9 +204,9 @@
     --system-message-font-size: 15px;
 
     /* buttons severity */
-    --theme-colors__cancel-btn: #175789;
-    --theme-colors__cancel-btn_fade: #1E73B5;
-    --theme-colors__cancel-btn_strong: #103B5D;
+    --theme-colors__cancel-btn: #9D9D9D;
+    --theme-colors__cancel-btn_fade: #B6B6B6;
+    --theme-colors__cancel-btn_strong: #848484;
     --theme-colors__cancel-btn_txt: #ffffff;
 
     --theme-colors__btn: var(--theme-colors__primary);
