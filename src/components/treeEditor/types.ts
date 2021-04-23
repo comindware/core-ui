@@ -28,12 +28,14 @@ export type NestingOptions = {
 
 export type TTreeEditorOptions = {
     model: GraphModel,
+    initialModel: GraphModel,
+    calculateDiff: boolean,
     hidden?: boolean,
     eyeIconClass?: string,
     closedEyeIconClass?: string,
-    configDiff?: ConfigDiff,
+    configDiff: ConfigDiff,
     unNamedType?: string,
-    nestingOptions?: NestingOptions
+    nestingOptions?: NestingOptions,
     getNodeName?: (model: GraphModel) => string,
     showToolbar?: boolean,
     showResetButton?: boolean
@@ -44,7 +46,7 @@ export type ChildsFilter = (argument: { model: Backbone.Model }) => boolean;
 export type NodeViewFactoryOptions = {
     model: ParentModel | Backbone.Model,
     unNamedType?: string | string[],
-    nestingOptions: NestingOptions,
+    nestingOptions?: NestingOptions,
     childsFilter?: ChildsFilter
 };
 

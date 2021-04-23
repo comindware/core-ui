@@ -29,11 +29,6 @@ export default Marionette.Behavior.extend({
         drop: '__handleDrop',
         dragstart: '__handleDragStart'
     },
-
-    onRender() {
-        this.__toggleHiddenClass();
-    },
-
     __onEyeBtnClick(event: MouseEvent) {
         event.stopPropagation();
         setModelHiddenAttribute(this.view.options.model);
@@ -42,27 +37,11 @@ export default Marionette.Behavior.extend({
     __onCheckboxClick(event: MouseEvent) {
         event.stopPropagation();
         setModelHiddenAttribute(this.view.options.model);
-        this.view.render();
     },
 
     __handleHiddenChange() {
-        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(), { isHidden: this.view.model.get('isHidden') });
-
-        this.__toggleHiddenClass();
+        this.view.render();
     },
-
-    __toggleHiddenClass() {
-        const isHidden = !!this.view.model.get('isHidden');
-        const uiEyeElement = this.ui.eyeBtn[0];
-
-        if (uiEyeElement) {
-            uiEyeElement.classList.remove(...getIconAndPrefixerClasses(this.view.__getIconClass(!isHidden)));
-            uiEyeElement.classList.add(...getIconAndPrefixerClasses(this.view.__getIconClass(isHidden)));
-        }
-
-        this.el.classList.toggle(classes.hiddenClass, isHidden);
-    },
-
     __handleDragStart(event: JQueryEventObject) {
         event.stopPropagation();
         this.view.model.collection.draggingModel = this.view.model;
@@ -143,10 +122,6 @@ export default Marionette.Behavior.extend({
         const startIndex = oldIndex > newIndex ? newIndex : oldIndex;
         const endIndex = oldIndex > newIndex ? oldIndex : newIndex;
         const reqres = this.view.options.reqres;
-
-        for (let i = startIndex; i <= endIndex; i++) {
-            reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(collection.at(i)), { index: i });
-        }
     },
 
     __getWidgetId(model = this.view.model) {

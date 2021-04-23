@@ -266,9 +266,14 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.el.children[index + this.columnIndexOffset].style.minWidth = newColumnWidthPX;
-        this.el.children[index + this.columnIndexOffset].style.width = newColumnWidthPX;
+
         this.options.columns[index].width = newColumnWidth;
+        if (!this.isRendered()) {
+            return;
+        }
+        const child = this.el.children[index + this.columnIndexOffset];
+        child.style.minWidth = newColumnWidthPX;
+        child.style.width = newColumnWidthPX;
 
         //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);

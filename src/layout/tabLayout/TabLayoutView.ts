@@ -80,9 +80,10 @@ export default Marionette.View.extend({
         this.showChildView('headerRegion', tabHeaderView);
 
         if (this.showTreeEditor) {
+            this.treeEditorView = this.treeEditor.getView();
             this.showChildView('treeEditorRegion', this.treeEditorView);
 
-            const configDiff = this.treeEditorView.getConfigDiff();
+            const configDiff = this.treeEditor.getConfigDiff();
             this.__tabsCollection.forEach((model: TabModel) => {
                 const isHidden = configDiff.get(model.id)?.isHidden;
 
@@ -425,6 +426,6 @@ export default Marionette.View.extend({
             treeEditorOptions.childsFilter = childsFilter;
         }
 
-        this.treeEditorView = new Core.components.TreeEditor(treeEditorOptions);
+        this.treeEditor = new Core.components.TreeEditor(treeEditorOptions);
     }
 });

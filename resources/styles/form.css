@@ -256,6 +256,10 @@ td > .icon-true {
 .editor_disabled .checkbox {
     cursor: auto;
 }
+.editor_readonly .checkbox:hover,
+.editor_disabled .checkbox:hover {
+    box-shadow: none;
+}
 
 .checkbox-text {
     color: var(--theme-colors__text);
