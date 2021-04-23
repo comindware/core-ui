@@ -3,6 +3,8 @@ import NodeViewFactory from './services/NodeViewFactory';
 import DiffController from './controllers/DiffController';
 import { TTreeEditorOptions, GraphModel } from './types';
 import ConfigDiff from './classes/ConfigDiff';
+import Backbone from 'backbone';
+import _ from 'underscore';
 
 const defaultOptions = {
     eyeIconClass: 'eye',
@@ -16,95 +18,78 @@ const defaultOptions = {
 };
 
 export default class TreeEditor {
+    options: TTreeEditorOptions;
     configDiff: ConfigDiff;
     model: GraphModel;
-    view: Backbone.View;
+    view: Marionette.View<Backbone.Model>;
+    reqres: Backbone.Radio.Channel;
     controller: DiffController;
+
     constructor(options: TTreeEditorOptions) {
         _.defaults(options, defaultOptions);
-        this.storageConfigDiff = options.configDiff;
         this.configDiff = options.configDiff;
-        this.showPanelViewOnly = options.showPanelViewOnly;
         this.model = options.model;
+        this.options = options;
 
-        const reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
+        const reqres = this.reqres = Backbone.Radio.channel(_.uniqueId('treeEditor'));
         const nestingOptions = options.nestingOptions;
-        this.controller = new DiffController({ configDiff: this.configDiff, graphModel: this.model, reqres, nestingOptions });
+        this.controller = new DiffController({
+            configDiff: this.configDiff,
+            graphModel: this.model,
+            initialModel: options.initialModel,
+            calculateDiff: options.calculateDiff,
+            reqres,
+            nestingOptions
+        });
+    }
 
-        if (this.showPanelViewOnly) {
-            const View = NodeViewFactory.getRootView({
-                model: this.model,
-                unNamedType: options.unNamedType,
-                nestingOptions,
-                showToolbar: options.showToolbar,
-                showResetButton: options.showResetButton
-            });
-            this.view = new View({
-                ...options,
-                reqres,
-                maxWidth: 300
-            });
-        } else {
-            this.view = Core.dropdown.factory.createPopout({
-                buttonView: TEButtonView,
-                buttonViewOptions: {
-                    iconClass: options.eyeIconClass
-                },
-
-                panelView: NodeViewFactory.getRootView({
-                    model: this.model,
-                    unNamedType: options.unNamedType,
-                    nestingOptions,
-                    showToolbar: options.showToolbar,
-                    showResetButton: options.showResetButton
-                }),
-                panelViewOptions: {
-                    ...options,
-                    reqres,
-                    maxWidth: 300
-                },
-                showDropdownAnchor: false
-            });
-            reqres.reply('treeEditor:collapse', () => this.view.adjustPosition(false));
-            this.view.listenTo(reqres, 'treeEditor:diffApplied', () => this.view.trigger('treeEditor:diffApplied'));
-
-            this.view.once('attach', () => this.view.adjustPosition(false)); // TODO it doesn't work like this
-
-            if (options.showToolbar) {
-                reqres.reply('command:execute', actionModel => this.__commandExecute(actionModel));
-            } else {
-                this.view.listenTo(this.view, 'close', () => this.__onSave());
-            }
-
-            if (options.hidden) {
-                this.view.el.setAttribute('hidden', true);
-            }
-        }
-
-        this.view.getConfigDiff = this.__getConfigDiff.bind(this);
-        this.view.setVisibleConfigDiffInit = this.__setVisibleConfigDiffInit.bind(this);
-        this.view.setConfigDiff = this.__setConfigDiff.bind(this);
-        this.view.resetConfigDiff = this.__resetConfigDiff.bind(this);
-        this.view.setInitConfig = this.setInitConfig.bind(this);
-        this.view.reorderCollectionByIndex = this.controller.__reorderCollectionByIndex;
-        this.view.getRootCollection = this.__getRootCollection.bind(this);
+    getView() {
+        const options = this.options;
+        const reqres = this.reqres;
+        const nestingOptions = options.nestingOptions;
+        const View = NodeViewFactory.getRootView({
+            model: this.model,
+            unNamedType: options.unNamedType,
+            nestingOptions,
+            showToolbar: options.showToolbar,
+            showResetButton: options.showResetButton
+        });
+        this.view = new View({
+            ...options,
+            reqres,
+            maxWidth: 300
+        });
 
         return this.view;
     }
 
-    __setVisibleConfigDiffInit() {
-        this.controller.setVisibleConfigDiffInit();
+    destroy() {
+        if (this.view) {
+            this.view.destroy();
+        }
     }
 
-    __getRootCollection() {
-        return this.model.get(this.model.childrenAttribute);
+    applyModelToDiff(properties: string[]) {
+        this.controller.applyModelToDiff(properties);
     }
 
-    __getConfigDiff() {
+    applyDiffToModel(properties: string[]) {
+        this.controller.applyDiffToModel(properties);
+    }
+
+    applyInitialConfigToModel(properties: string[]) {
+        this.controller.applyInitialConfigToModel(properties);
+    }
+
+    getRootCollection() {
+        return this.model.childrenAttribute ? this.model.get(this.model.childrenAttribute) : undefined;
+    }
+
+    getConfigDiff() {
         return this.controller.configDiff.__mapChildsToObjects();
     }
 
-    __setConfigDiff(configDiff: ConfigDiff) {
+    setConfigDiff(configDiff: ConfigDiff) {
         this.controller.set(configDiff);
     }
 
@@ -112,18 +97,17 @@ export default class TreeEditor {
         this.controller.setInitConfig(initConfig);
     }
 
-    __resetConfigDiff() {
-        this.controller.reset();
-        this.controller.setVisibleConfigDiffInit();
+    resetConfigDiff(properties: string[] | void) {
+        this.controller.reset(properties);
         this.view.trigger('reset');
     }
 
     __onSave() {
-        this.view.trigger('save', this.__getConfigDiff());
+        this.view.trigger('save', this.getConfigDiff());
     }
 
     __onReset() {
-        this.__resetConfigDiff();
+        this.resetConfigDiff();
     }
 
     __commandExecute(actionModel: Backbone.Model) {

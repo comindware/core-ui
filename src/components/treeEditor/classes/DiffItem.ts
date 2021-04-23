@@ -19,7 +19,8 @@ export default class DiffItem extends BaseDiffMap<NodeConfig> {
     }
 
     set(key: string, value: SingleItem) {
-        if (_.isEqual(value, this.initialConfig[key])) {
+        // eslint-disable-next-line eqeqeq
+        if (value == undefined || _.isEqual(value, this.initialConfig[key])) {
             this.delete(key);
 
             return this;

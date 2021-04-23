@@ -186,11 +186,6 @@
     background-color: transparent;
 }
 
-.dataset-wrapper.layout-group .toolbar{
-    padding: 0 0 10px 0;
-    height: auto;
-}
-
 .group-toggle{
     margin-top: 3px;
 }

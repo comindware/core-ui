@@ -386,6 +386,11 @@ tr.empty-view {
     flex: none;
 }
 
+.grid-container .toolbar {
+    padding: 0 0 10px;
+    height: auto;
+}
+
 .grid-toolbar-wrp{
     display: flex;
     flex-direction: row;

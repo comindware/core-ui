@@ -12,17 +12,18 @@
     color: var(--theme-colors__text_strong);
 }
 
-.drag-wrap {
-    font-style: normal;
-    display: none;
+.leaf-item:hover .drag-wrap {
+    visibility: visible;
 }
 
-.leaf-item:hover .drag-wrap {
-    display: block;
+.drag-wrap {
+    visibility: hidden;
+    font-style: normal;
     font-size: 1.5em;
     position: absolute;
     left: 2px;
     cursor: move;
+    width: 10px;
 }
 
 .branch-header {
