@@ -53,6 +53,12 @@
     height: 18px;
     line-height: 18px;
 }
+
+.toolbar__icons > .editor_checkbox {
+    border: 1px solid var(--theme-colors__main);
+    border-radius: var(--checkbox-radius);
+}
+
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
