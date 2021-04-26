@@ -24,6 +24,7 @@ export default function() {
                     id: false,
                     text: 'Cancel',
                     customClass: 'btn-small btn-outline',
+                    isCancel: true,
                     handler() {
                         Core.services.WindowService.closePopup();
                     }
