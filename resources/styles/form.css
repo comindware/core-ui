@@ -193,11 +193,12 @@ rgba(5,117,189,.5) // user avatar btn
     display: block;
 }
 
+.editor_document.editor_readonly .icon-remove,
 .editor_document.editor_readonly .documents__drop-zone,
+.editor_document.editor_disabled .icon-remove,
 .editor_document.editor_disabled .documents__drop-zone{
-    display: none;
+    display: none !important;
 }
-
 .editor_document.editor_readonly .documents,
 .editor_document.editor_disabled .documents{
     margin-top: 0;
