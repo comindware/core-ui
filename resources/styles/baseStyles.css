@@ -114,7 +114,8 @@
 .selected .dd-list__i,
 .dd-list__i:hover,
 .time-dropdown__i:hover,
-.popout-menu__i:hover .popout-menu__txt {
+.popout-menu__i:hover .popout-menu__txt,
+.popout-menu__i_selected .popout-menu__txt {
     color: var(--theme-colors__primary);
 }
 
