@@ -106,12 +106,16 @@ export default Marionette.View.extend({
         regionEl.classList.add('js-core-ui__global-popup-region');
 
         const el = $el.get(0);
+        const prevSublingOfContentEl = $el.prev();
+
         const config = {
             view: $el,
             el,
             options,
             regionEl,
             popupId,
+            prevSublingOfContentEl: prevSublingOfContentEl.length ? prevSublingOfContentEl : null,
+            parentOfContentEl: prevSublingOfContentEl.length ? null: $el.parent(),
             parentPopupId: null
         };
 
@@ -119,11 +123,6 @@ export default Marionette.View.extend({
         const region = this.addRegion(popupId, {
             el: regionEl
         });
-        this.prevSublingOfContentEl = $el.prev();
-        if (this.prevSublingOfContentEl.length === 0) {
-            delete this.prevSublingOfContentEl;
-            this.parentOfContentEl = $el.parent();
-        }
         if (useWrapper) {
             const wrapper = document.createElement('div');
             wrapper.className = 'modal-window-wrapper';
@@ -241,12 +240,10 @@ export default Marionette.View.extend({
                 targets = [topMostNonTransient];
             }
         }
-        if (this.prevSublingOfContentEl) {
-            popupDef.view.insertAfter(this.prevSublingOfContentEl);
-            delete this.prevSublingOfContentEl;
+        if (popupDef.prevSublingOfContentEl) {
+            popupDef.view.insertAfter(popupDef.prevSublingOfContentEl);
         } else {
-            popupDef.view.prependTo(this.parentOfContentEl);
-            delete this.parentOfContentEl;
+            popupDef.view.prependTo(popupDef.parentOfContentEl);
         }
 
         targets.reverse().forEach(pd => this.__removePopup(pd, immediate));
