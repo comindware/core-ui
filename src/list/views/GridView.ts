@@ -921,7 +921,6 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        this.__onDiffApplied();
         const columnsCollection = this.columnsCollection;
 
         this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
@@ -936,6 +935,8 @@ export default Marionette.View.extend({
             showPanelViewOnly: this.options.showPanelViewOnly,
             showTreeEditorHeader: this.options.showTreeEditorHeader
         });
+
+        this.__onDiffApplied();
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
             const configDiff = {
