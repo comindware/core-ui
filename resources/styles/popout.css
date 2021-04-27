@@ -43,7 +43,8 @@
     cursor: pointer;
     transition: background .3s ease-in-out, color .3s ease-in-out;
 }
-.popout-menu__i:hover {
+.popout-menu__i:hover,
+.popout-menu__i_selected {
     background: var(--theme-colors__main);
 }
 .popout-menu__txt {
@@ -55,6 +56,7 @@
     color: var(--theme-colors__text);
     text-decoration: none;
 }
+
 .popout-menu__subtext {
     color: var(--theme-colors__main_strong);
 }
