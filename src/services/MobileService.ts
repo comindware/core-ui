@@ -10,9 +10,7 @@ export default class MobileService {
     static isTablet: boolean;
     static initialize() {
         const userAgent = navigator.userAgent;
-        this.isPhone = /Android|webOS|iPhone|iPod|Blackberry|Windows Phone/i.test(userAgent)
-            && window.innerWidth <= 414 
-            && window.innerHeight <= 896;
+        this.isPhone = /Android|webOS|iPhone|iPod|Blackberry|Windows Phone/i.test(userAgent) && window.innerWidth <= 1024;
         this.isTablet = /iPad|Android/i.test(userAgent) && window.innerWidth <= 1280 && window.innerHeight <= 1366;
         this.isMobile = this.isPhone || this.isTablet;
 

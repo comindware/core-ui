@@ -418,7 +418,7 @@ export default Marionette.View.extend({
     },
 
     onAttach() {
-        if (this.options.maxHeight) {
+        if (!Core.services.MobileService.isMobile && this.options.maxHeight) {
             this.ui.tableTopMostWrapper.get(0).style.maxHeight = `${this.options.maxHeight}px`;
         }
         const childView = this.options.childView || RowView;
