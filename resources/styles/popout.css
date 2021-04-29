@@ -11,6 +11,15 @@
     cursor: pointer;
 }
 
+.toolbar-btn .popout__action {
+    display: flex;
+}
+
+.toolbar-btn .popout__action .anchor{
+    font-size: 20px;
+    margin-left: 5px;
+}
+
 .popout__action.open .anchor{
     transform: rotate(180deg);
 }
