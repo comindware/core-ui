@@ -99,6 +99,10 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
             return;
         }
         this.value = value;
+        if (updateUi) {
+            this.ui.input.prop?.('value', value);
+            this.__changedHex();
+        }
 
         if (this.getOption('showTitle') && this.isRendered()) {
             this.ui.input.prop?.('title', value);
