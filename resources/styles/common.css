@@ -690,7 +690,7 @@ body.non-selectable {
 
 .drawer_children-container {
     height: 100%;
-    color: var(--theme-colors__secondary_txt);
+    color: var(--theme-colors__secondary-txt);
     background-color: var(--theme-colors__secondary);
     position: relative;
     z-index: 2;

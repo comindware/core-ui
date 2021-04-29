@@ -721,6 +721,7 @@ tr.grid-header.dragover td {
 .extend_cell_content:hover {
     cursor: pointer;
     background-color: var(--theme-colors__highlight);
+    color: var(--theme-colors__highlight-txt);
 }
 
 .extend_cell_content:hover > .context-collapse-button {
@@ -890,6 +891,7 @@ tr.row-checked > .cell,
 .dd-list__i.selected,
 .dd-list__i:hover {
     background-color: var(--theme-colors__highlight);
+    color: var(--theme-colors__highlight-txt);
 }
 
 tr:hover > .cell_selection,
@@ -899,6 +901,7 @@ tr:hover > .cell_selection-index,
 tr:hover > .cell,
 .hover .cell {
     background-color: var(--theme-colors__highlight);
+    color: var(--theme-colors__highlight-txt);
 }
 
 /* temporary disabled */

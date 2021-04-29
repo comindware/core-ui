@@ -1,49 +1,51 @@
 :root, .js-theme-content-region {
     /*** Primary ***/
-    --theme-colors__primary: hsla(203, 95%, 38%, 1); /* Basic */
-    --theme-colors__primary_fade: hsla(203, 95%, 48%, 1); /* Fade */
-    --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1); /* The most fade */
-    --theme-colors__primary_strong: hsla(203, 95%, 28%, 1); /* Strong */
-    --theme-colors__primary_strongest: hsla(203, 95%, 18%, 1); /* Strongest */
+    --theme-colors__primary: hsla(203, 95%, 38%, 1);
+    --theme-colors__primary_fade: hsla(203, 95%, 48%, 1);
+    --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1);
+    --theme-colors__primary_strong: hsla(203, 95%, 28%, 1);
+    --theme-colors__primary_strongest: hsla(203, 95%, 18%, 1);
 
     --theme-colors__primary-txt: var(--theme-colors__main);
 
     /*** Secondary ***/
-    --theme-colors__secondary: #f5f5f5; /* Basic */
-    --theme-colors__secondary_fade: #ffffff; /* Fade */
-    --theme-colors__secondary_fadest: #ffffff; /* The most fade */
-    --theme-colors__secondary_strong: #dcdcdc; /* Strong */
-    --theme-colors__secondary_strongest: #c2c2c2; /* Strongest */
+    --theme-colors__secondary: #f5f5f5;
+    --theme-colors__secondary_fade: #ffffff;
+    --theme-colors__secondary_fadest: #ffffff;
+    --theme-colors__secondary_strong: #dcdcdc;
+    --theme-colors__secondary_strongest: #c2c2c2;
 
-    --theme-colors__secondary_txt: var(--theme-colors__text);
-    --theme-colors__secondary_txt_hover: var(--theme-colors__primary);
+    --theme-colors__secondary-txt: var(--theme-colors__text);
+    --theme-colors__secondary-txt_hover: var(--theme-colors__primary);
 
     /*** Text ***/
-    --theme-colors__text: #5a5a5a; /* Basic */                     /* Базовый цвет текста */
-    --theme-colors__text_fade: #666; /* Fade  #666;*/        /* Базовый цвет заголовков */
-    --theme-colors__text_fadest: #999; /* The most fade */      /* Цвет текста скрытый */
-    --theme-colors__text_strong: #404040; /* Strong */
+    --theme-colors__text: #5a5a5a;
+    --theme-colors__text_fade: #666;
+    --theme-colors__text_fadest: #999;
+    --theme-colors__text_strong: #404040;
 
     /*** Highlight ***/
-    --theme-colors__highlight: #e8f6ff; /* text highlight */
+    --theme-colors__highlight: #e8f6ff;
+    --theme-colors__highlight-txt: var(--theme-colors__text);
 
     /*** Background ***/
-    --theme-colors__background: #e3e3e3; /* main background */
+    --theme-colors__background: #e3e3e3;
     --theme-colors__background-txt: var(--theme-colors__primary);
 
     /*** Main ***/
-    --theme-colors__main: #ffffff; /* Basic */
-    --theme-colors__main_fade: #efefef;/* Fade */
-    --theme-colors__main_fadest: #f5f5f5; /* The most fade */
-    --theme-colors__main_strong: #e2e2e2;/* Strong */
-    --theme-colors__main_strongest: #c1c1c1;/* Strongest */
+    --theme-colors__main: #ffffff;
+    --theme-colors__main_fade: #efefef;
+    --theme-colors__main_fadest: #f5f5f5;
+    --theme-colors__main_strong: #e2e2e2;
+    --theme-colors__main_strongest: #c1c1c1;
 
     /*** Notification ***/
     --theme-colors__warning: #ffda44;
+    --theme-colors__warning-txt: var(--theme-colors__main);
     --theme-colors__error: #e1462c;
-    --theme-colors__error_rgb: 225, 70, 44;
-    --theme-colors__error-background: rgba(var(--theme-colors__error_rgb), 0.2);
+    --theme-colors__error-txt: var(--theme-colors__main);
     --theme-colors__success: #74c365;
+    --theme-colors__success-txt: var(--theme-colors__main);
 
     /* box-shadow variables */
     --black-20: rgba(0,0,0,.2);
@@ -207,7 +209,7 @@
     --theme-colors__cancel-btn: #9D9D9D;
     --theme-colors__cancel-btn_fade: #B6B6B6;
     --theme-colors__cancel-btn_strong: #848484;
-    --theme-colors__cancel-btn_txt: #ffffff;
+    --theme-colors__cancel-btn-txt: #ffffff;
 
     --theme-colors__btn: var(--theme-colors__primary);
     --theme-colors__btn_fade: var(--theme-colors__primary_strong);
@@ -217,30 +219,30 @@
     --theme-colors__severity-none: var(--theme-colors__primary);
     --theme-colors__severity-none_fade: var(--theme-colors__primary_strong);
     --theme-colors__severity-none_strong: var(--theme-colors__primary_fade);
-    --theme-colors__severity-none-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-none-txt: var(--theme-colors__severity-none-txt);
 
     --theme-colors__severity-low: hsla(203, 50%, 56%, 1);
     --theme-colors__severity-low_fade: hsla(203, 50%, 46%, 1);
     --theme-colors__severity-low_strong: hsla(203, 50%, 66%, 1);
-    --theme-colors__severity-low-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-low-txt: var(--theme-colors__severity-low-txt);
 
     --theme-colors__severity-normal: hsl(126, 92%, 34%);;
     --theme-colors__severity-normal_fade: hsla(126, 92%, 24%, 1);
     --theme-colors__severity-normal_strong:  hsla(126, 92%, 44%, 1);
-    --theme-colors__severity-normal-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-normal-txt: var(--theme-colors__severity-normal-txt);
 
     --theme-colors__severity-major: hsla(182, 100%, 32%, 1);
     --theme-colors__severity-major_fade: hsla(182, 100%, 22%, 1);
     --theme-colors__severity-major_strong: hsla(182, 100%, 42%, 1);
-    --theme-colors__severity-major-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-major-txt: var(--theme-colors__severity-major-txt);
 
     --theme-colors__severity-critical: hsl(24, 81%, 46%);
     --theme-colors__severity-critical_fade: hsl(24, 81%, 36%);
     --theme-colors__severity-critical_strong: hsl(24, 81%, 56%);
-    --theme-colors__severity-critical-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-critical-txt: var(--theme-colors__severity-critical-txt);
 
     --theme-colors__severity-fatal: hsl(0, 100%, 38%);
     --theme-colors__severity-fatal_fade: hsl(0, 100%, 28%);
     --theme-colors__severity-fatal_strong: hsl(0, 100%, 48%);
-    --theme-colors__severity-fatal-txt: var(--theme-colors__primary-txt);
+    --theme-colors__severity-fatal-txt: var(--theme-colors__severity-fatal-txt);
 }
