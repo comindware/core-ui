@@ -40,18 +40,18 @@
 .btn-pale{
     background-color: var(--theme-colors__cancel-btn);
     border: 1px solid var(--theme-colors__cancel-btn);
-    color: var(--theme-colors__cancel-btn_txt);
+    color: var(--theme-colors__cancel-btn-txt);
 }
 
 .btn-pale:hover{
     background-color: var(--theme-colors__cancel-btn_strong);
     border: 1px solid var(--theme-colors__cancel-btn_strong);
-    color: var(--theme-colors__cancel-btn_txt);
+    color: var(--theme-colors__cancel-btn-txt);
 }
 .btn-pale:active{
     background-color: var(--theme-colors__cancel-btn_fade);
     border: 1px solid var(--theme-colors__cancel-btn_fade);
-    color: var(--theme-colors__cancel-btn_txt);
+    color: var(--theme-colors__cancel-btn-txt);
 }
 
 /* Themes color button */

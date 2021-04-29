@@ -67,7 +67,7 @@
 
 .tree-item:hover {
     background: var(--theme-colors__highlight);
-    color: var(--theme-colors__primary);
+    color: var(--theme-colors__highlight-txt);
 }
 
 .tree-item,

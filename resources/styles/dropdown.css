@@ -186,7 +186,7 @@
 
 .subtext-list:hover {
     cursor: pointer;
-    color: var(--theme-colors__primary);
+    color: var(--theme-colors__highlight-txt);
     background-color: var(--theme-colors__highlight);
 }
 
@@ -281,6 +281,7 @@
 /* list search */
 .highlight {
     background-color: var(--theme-colors__highlight);
+    color: var(--theme-colors__highlight-txt);
 }
 /* /search */
 

@@ -1,7 +1,7 @@
 ﻿.fr-alert {
     max-width: 475px;
     font-size: 13px;
-    color: var(--theme-colors__main);
+    color: var(--theme-colors__success-txt);
     border-radius: 5px;
     background: var(--theme-colors__success);
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -53,10 +53,12 @@
 
 .fr-alert_error {
     background: var(--theme-colors__error);
+    color: var(--theme-colors__error-txt);
 }
 
 .fr-alert_warning {
     background: var(--theme-colors__warning);
+    color: var(--theme-colors__warning-txt);
 }
 
 .notification-container {

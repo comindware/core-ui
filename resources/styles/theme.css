@@ -1068,11 +1068,8 @@ tr:not(:first-child) .cell_selection {
 .popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
   color: var(--theme-colors__error);
 }
-.popout-menu__i.popout-menu__i_error:hover .popout-menu__txt {
-  background-color: var(--theme-colors__error-background);
-}
+
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_error:hover {
-  background-color: var(--theme-colors__error-background);
   border-bottom-color: var(--theme-colors__error);
   color: var(--theme-colors__error);
 }
