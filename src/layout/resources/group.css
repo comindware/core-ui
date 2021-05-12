@@ -99,7 +99,8 @@
     width: 20px;
     height: 25px;
     font-weight: 300;
-    opacity: 0;
+    opacity: 1;
+    cursor: pointer;
     font-size: 1.2em;
 }
 .group-menu i{
@@ -120,12 +121,6 @@
 
 :not(.layout-group__head_maximized) > .group-restore {
     display:none;
-}
-
-.layout-group__head:hover .group-menu:not(:empty),
-.layout-group__head_menu-shown .layout-group__menu:not(:empty) {
-    opacity: 1;
-    cursor: pointer;
 }
 
 .layout-group__content{

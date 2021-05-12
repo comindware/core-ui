@@ -1172,8 +1172,8 @@ tr:not(:first-child) .cell_selection {
 
 .toolbar__icons .checkbox,
 .toolbar__icons .checkbox:not(:empty) {
-  background: unset;
-  border: unset;
+  background: var(--theme-colors__primary);
+  border: var(--theme-colors__primary);
 }
 
 .toolbar-btn__text > .editor_checkbox {
