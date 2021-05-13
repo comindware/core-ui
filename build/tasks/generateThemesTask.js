@@ -6,15 +6,13 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postCSSCustomProperties = require('postcss-custom-properties');
-const apply = require('postcss-apply');
 const pathResolver = require('../pathResolver');
 
 const themes = ['main_compact', 'main'];
 
 const themeTask = name => {
-    const themePath = `styles/themes/${name}`;
-    const theme = require(pathResolver.resources(themePath));
-    const sources = [pathResolver.resources('styles/themes/theme.css'), pathResolver.resources(`${themePath}/styles.css`)];
+    const themePath = 'styles';
+    const sources = [pathResolver.resources('styles/theme.css'), pathResolver.resources(`${themePath}/baseStyles.css`)];
 
     return gulp
         .src(sources)
@@ -22,11 +20,7 @@ const themeTask = name => {
             postcss([
                 postCSSCustomProperties({
                     preserve: false,
-                    warnings: true,
-                    variables: theme.variables
-                }),
-                apply({
-                    sets: theme.apply
+                    warnings: true
                 }),
                 autoprefixer(),
                 cssnano({

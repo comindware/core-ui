@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     max-height: 100%;
-    max-width: 100%;    
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@
     top: 0;
     transform: translateY(-50px);
     max-height: 100%;
-    max-width: 100%;    
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,8 +99,8 @@
     line-height: 28px;
     vertical-align: middle;
     white-space: nowrap;
-    background: #f7f6f6;
-    border: 1px solid #dfe4e8;
+    background: var(--theme-colors__main_fadest);
+    border: var(--border);
     border-radius: 2px;
     position: relative;
     overflow: hidden;
@@ -111,12 +111,12 @@
 }
 
 .layout__popup-view-button:hover {
-    border-color: #bfc2c4;
-    box-shadow: inset 0 2px 3px #fff;
+    border-color: var(--theme-colors__main_strongest);
+    box-shadow: inset 0 2px 3px var(--theme-colors__main);
 }
 
 .layout__popup-view-button:hover {
-    color: #009BFE;
+    color: var(--theme-colors__primary_fade);
 }
 
 .layout__popup-view-button[disabled] {
@@ -128,7 +128,7 @@
     max-width: 100%;
     font-size: 11px;
     font-weight: 500;
-    color: #636262;
+    color: var(--theme-colors__text_fade);
     line-height: inherit;
     vertical-align: middle;
     overflow: hidden;
@@ -137,7 +137,7 @@
 }
 
 .layout__popup-view-button:hover .layout__popup-view-button__text {
-    color: #000;
+    color: var(--theme-colors__text);
 }
 
 .layout__popup-view-header__btn {
@@ -148,10 +148,11 @@
 .layout__popup-view-content .layout__group {
     width: 100%;
     margin: 22px 0;
+    padding: 10px;
 }
 
 .modal-window-wrapper {
-    background-color: white;
+    background-color: var(--theme-colors__main);
     height: 100%;
     width: 100%;
 }
@@ -163,5 +164,5 @@
 }
 
 .presented-modal-window .popout-menu__i:hover {
-    background: #d6e7f2;
+    background: var(--theme-colors__primary_fadest);
 }

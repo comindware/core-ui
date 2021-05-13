@@ -7,17 +7,31 @@
     position: relative;
 }
 
+.popout__action {
+    cursor: pointer;
+}
+
+.toolbar-btn .popout__action {
+    display: flex;
+}
+
+.toolbar-btn .popout__action .anchor {
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.popout__action.open .anchor {
+    transform: rotate(180deg);
+}
+
 /* popout-menu */
 .popout-menu {
     position: fixed;
-    background-color: white;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
-    z-index: 10;
+    box-shadow: 0 5px 5px -3px var(--black-20), 0 8px 10px 1px var(--black-14), 0 3px 14px 2px var(--black-12);
     padding: 0;
     min-width: 120px;
     max-width: 300px;
-    max-height: 227px;
-    font-size: 12px;
+    max-height: 240px;
     overflow-y: auto;
     display: none;
     text-align: left;
@@ -35,25 +49,27 @@
     vertical-align: middle;
     display: flex;
     align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background .3s ease-in-out, color .3s ease-in-out;
 }
 
-.popout-menu__i:hover {
-    background: #edf3fb;
+.popout-menu__i:hover,
+.popout-menu__i_selected {
+    background: var(--theme-colors__main);
 }
 
 .popout-menu__txt {
-    padding: 5px 7px 5px 10px;
     display: inline-block;
-    cursor: pointer;
-    color: #636262;
+    color: var(--theme-colors__text_fade);
     flex: 1;
 }
 
 .popout-menu__txt:hover {
-    color: #000000;
+    color: var(--theme-colors__text);
     text-decoration: none;
 }
 
 .popout-menu__subtext {
-    color: #d3d5d6;
+    color: var(--theme-colors__main_strong);
 }

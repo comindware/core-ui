@@ -53,6 +53,18 @@ export default class ConfigDiff extends BaseDiffMap<DiffItem> {
         return super.set(key, diffItem);
     }
 
+
+    unset(properties: string[] = []) {
+        this.forEach((value, key) => {
+            const diffItem = this.get(key);
+            if (diffItem) {
+                properties.forEach(property => {
+                    diffItem.delete(property);
+                })
+            }
+        });
+    }
+
     renameKeys(replacer: (key: string) => string) {
         const mappedInitialConfig = new Map();
 

@@ -114,11 +114,13 @@ export default {
                     radioOptions: [
                         {
                             id: true,
-                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.EXIST')
+                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.EXIST'),
+                            isCancel: true
                         },
                         {
                             id: false,
-                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NOTEXIST')
+                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NOTEXIST'),
+                            isCancel: true
                         }
                     ]
                 };

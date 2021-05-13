@@ -6,6 +6,7 @@ export default MenuItemView.extend({
     },
 
     onRender() {
+        MenuItemView.prototype.onRender.apply(this);
         this.__applyClasses();
     },
 

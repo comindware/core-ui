@@ -136,7 +136,7 @@
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
-<http://comindware.com/text/core/grid/emptyView#empty> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Liste ist leer"; l10n:isBeingTranslated true; l10n:originalData "The list is empty"].
+<http://comindware.com/text/core/grid/emptyView#empty> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Liste ist leer"; l10n:originalData "The list is empty"].
 
 <http://comindware.com/text/core/grid/loadingRow#loading> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 

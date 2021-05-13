@@ -38,7 +38,11 @@ export default {
                 case 'tab':
                     return new TabLayoutView(
                         Object.assign({}, child, {
-                            tabs: this.__parseConfiguration(child.items)
+                            tabs: this.__parseConfiguration(child.items).map((item, index) => ({
+                                view: item,
+                                id: child.items[index].id,
+                                name: child.items[index].name
+                            }))
                         })
                     );
                 case 'group':

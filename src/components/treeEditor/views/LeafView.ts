@@ -6,12 +6,8 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             text: this.__getNodeName(),
-            eyeIconClass: this.__getIconClass()
+            isVisible: !this.model.get('isHidden')
         };
-    },
-
-    attributes: {
-        draggable: 'true'
     },
 
     behaviors: {

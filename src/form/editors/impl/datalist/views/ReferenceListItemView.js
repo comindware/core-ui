@@ -33,6 +33,10 @@ export default Marionette.View.extend({
         };
     },
 
+    ui: {
+        checkbox: '.js-checkbox'
+    },
+
     onRender() {
         if (this.model.selected) {
             this.__markSelected();
@@ -47,12 +51,16 @@ export default Marionette.View.extend({
     },
 
     __markSelected() {
-        this.el.classList.add(classes.SELECTED);
-        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').addClass(classes.SELECTED);
+        const checkbox = this.ui.checkbox.get(0);
+        if (checkbox) {
+            checkbox.innerHTML = '<i class="fas fa-check"></i>';
+        }
     },
 
     __markDeselected() {
-        this.el.classList.remove(classes.SELECTED);
-        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').removeClass(classes.SELECTED);
+        const checkbox = this.ui.checkbox.get(0);
+        if (checkbox) {
+            checkbox.innerHTML = '';
+        }
     }
 });

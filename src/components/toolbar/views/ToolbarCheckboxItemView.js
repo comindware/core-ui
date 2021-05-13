@@ -1,13 +1,10 @@
-//@flow
 import ActionView from './ActionView';
+
+const checkedIcon = '<i class="fas fa-check"></i>';
 
 export default ActionView.extend({
     ui: {
-        check: '.js-check'
-    },
-
-    classes: {
-        CHECKED: 'editor_checked'
+        checkbox: '.js-checkbox'
     },
 
     templateContext() {
@@ -21,13 +18,18 @@ export default ActionView.extend({
     },
 
     onRender() {
-        this.ui.check.toggleClass(this.classes.CHECKED, !!this.model.get('isChecked'));
+        this.__toggleIcon(!!this.model.get('isChecked'));
     },
 
     __handleClick() {
         const newState = !this.model.get('isChecked');
         this.model.set('isChecked', newState);
-        this.ui.check.toggleClass(this.classes.CHECKED, newState);
+        this.__toggleIcon(newState);
         this.trigger('action:click', this.model);
+    },
+
+    __toggleIcon(state) {
+        const checkboxEl = this.ui.checkbox.get(0);
+        checkboxEl.innerHTML = state ? checkedIcon: '';
     }
 });

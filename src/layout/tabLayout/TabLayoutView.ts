@@ -80,9 +80,10 @@ export default Marionette.View.extend({
         this.showChildView('headerRegion', tabHeaderView);
 
         if (this.showTreeEditor) {
+            this.treeEditorView = this.treeEditor.getView();
             this.showChildView('treeEditorRegion', this.treeEditorView);
 
-            const configDiff = this.treeEditorView.getConfigDiff();
+            const configDiff = this.treeEditor.getConfigDiff();
             this.__tabsCollection.forEach((model: TabModel) => {
                 const isHidden = configDiff.get(model.id)?.isHidden;
 
@@ -99,14 +100,16 @@ export default Marionette.View.extend({
             this.__setNoTabsState(true);
         } else {
             const selectedTab = this.__getSelectedTab();
-            if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
-                this.__renderTab(selectedTab, false);
-            } else {
-                this.__tabsCollection.forEach(model => {
-                    this.__renderTab(model, false);
-                });
+            if (this.options.autoRender !== false) {
+                if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
+                    this.renderTab(selectedTab, false);
+                } else {
+                    this.__tabsCollection.forEach(model => {
+                        this.renderTab(model, false);
+                    });
+                }
             }
-    
+
             if (selectedTab) {
                 this.selectTab(selectedTab.id);
             }
@@ -169,8 +172,8 @@ export default Marionette.View.extend({
 
         if (tab.get('enabled')) {
             tab.set('selected', true);
-            if (!tab.get('isRendered') && this.isRendered()) {
-                this.__renderTab(tab, Boolean(this.getOption('deferRender')));
+            if (!tab.get('isRendered') && this.isRendered() && this.options.autoRender !== false) {
+                this.renderTab(tab, Boolean(this.getOption('deferRender')));
             }
 
             this.selectTabIndex = this.__getTabIndex(tab);
@@ -317,7 +320,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean): void {
+    renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean): void {
         const regionEl = document.createElement('div');
         regionEl.className = classes.PANEL_REGION;
         this.ui.panelContainer.append(regionEl);
@@ -431,6 +434,6 @@ export default Marionette.View.extend({
             treeEditorOptions.childsFilter = childsFilter;
         }
 
-        this.treeEditorView = new Core.components.TreeEditor(treeEditorOptions);
+        this.treeEditor = new Core.components.TreeEditor(treeEditorOptions);
     }
 });

@@ -26,7 +26,7 @@ export default BaseMembersGridView.extend({
     onRender() {
         BaseMembersGridView.prototype.onRender.apply(this);
         this.showChildView('quantityWarningRegion', this.quantityWarningView);
-        this.getRegion('quantityWarningRegion').$el.hide();
+        this.getRegion('quantityWarningRegion').el.style.display = 'none';
     },
 
     onAttach() {
@@ -42,10 +42,11 @@ export default BaseMembersGridView.extend({
 
     __toggleQuantityWarning() {
         if (!this.isDestroyed()) {
+            const region = this.getRegion('quantityWarningRegion');
             if (this.model.get('available').length + this.model.get('selected').length < this.collection.totalCount) {
-                this.getRegion('quantityWarningRegion').$el.show();
+                delete region.el.style.display;
             } else {
-                this.getRegion('quantityWarningRegion').$el.hide();
+                region.el.style.display = 'none';
             }
         }
     }

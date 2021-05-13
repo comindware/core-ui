@@ -161,7 +161,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
             this.ui.input.prop?.('title', value);
         }
         if (updateUi) {
-            this.ui.input.val(value);
+            this.__updateInputValue(value);
         }
     },
 
@@ -182,6 +182,10 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         if (!this.options.hideClearButton) {
             this.renderIcons(iconWrapText, iconWrapRemove);
         }
+    },
+
+    __updateInputValue(value) {
+        this.ui.input.val(value);
     },
 
     __setMaskByFormat(format, defaults) {

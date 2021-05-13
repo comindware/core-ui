@@ -9,7 +9,7 @@ describe('Editors', () => {
                 const model = new Backbone.Model({
                     radioValue: 'value2'
                 });
-    
+
                 return new core.form.editors.RadioGroupEditor({
                     model,
                     key: 'radioValue',
@@ -57,7 +57,8 @@ describe('Editors', () => {
                     },
                     {
                         id: false,
-                        displayText: 'falseText'
+                        displayText: 'falseText',
+                        isCancel: true
                     }
                 ]
             });

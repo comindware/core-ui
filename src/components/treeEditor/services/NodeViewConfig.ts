@@ -1,12 +1,8 @@
 const requiredIconClass = 'lock';
-const requiredClassName = 'required';
+const requiredClassName = 'editor_readonly';
 
 const getConfig = (template: string, className: string) => ({
     template: Handlebars.compile(template),
-
-    attributes: {
-        draggable: 'true'
-    },
 
     className() {
         return `${className} ${this.model.get('required') ? requiredClassName : ''}`;

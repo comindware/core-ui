@@ -6,7 +6,7 @@ export default function() {
 
         template: Handlebars.compile(`<div class="ld-canvas-wrp__info">
         <span class="js-toggle ld-group-toggle">
-            <svg viewBox="0 0 12 12"><polygon class="d-svg-icons d-svg-icons_arrow" points="8,2 4.5,5.5 1,2 0,2 0,3 4,7 5,7 9,3 9,2 "/></svg>
+           <i class="fas fa-angle-up"></i>
         </span>
         <span class="ld-canvas-wrp-info js-name">{{name}}</span>
     </div>

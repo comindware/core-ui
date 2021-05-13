@@ -125,6 +125,6 @@ export default Marionette.View.extend({
     },
 
     __setIconsColor() {
-        this.getRegion('collectionAreaRegion').$el.css({ color: this.model.get('color') });
+        this.getRegion('collectionAreaRegion').el.style.color = this.model.get('color');
     }
 });

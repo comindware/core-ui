@@ -12,6 +12,7 @@
     flex: 1 1 0;
     overflow-x: auto;
     min-width: 0;
+    padding: 5px;
 }
 
 /*for IE */
@@ -39,6 +40,7 @@
 
 .layout__horizontal-layout > .layout__button {
     min-width: auto;
+    flex: none;
 }
 
 .layout__horizontal-layout-list {
@@ -48,7 +50,7 @@
 }
 
 .layout__horizontal-layout-list-item {
-    flex: 1 1 0%;
+    flex: 1 1 0;
 }
 
 .layout__horizontal-layout-title {
@@ -59,6 +61,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #384650;
+    color: var(--theme-colors__text);
     margin-bottom: 6px;
 }

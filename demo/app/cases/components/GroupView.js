@@ -6,6 +6,7 @@ export default function () {
         view: new Core.layout.Group({
             name: 'Group',
             collapsible: false, // defauft value -- true
+            showMenu: true,
             view: new Core.layout.VerticalLayout({
                 rows: [
                     new Core.form.editors.TextEditor({

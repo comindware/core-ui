@@ -149,6 +149,7 @@ export const classes = {
     hover: 'hover',
     hover__transition: 'hover__transition',
     rowChecked: 'row-checked',
+    rowCheckedSome: 'row-checked-some',
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
     collapsibleIcon: 'js-tree-first-cell',
@@ -161,11 +162,14 @@ export const classes = {
     hiddenColumns: 'hidden-columns',
     sortingUp: 'arrow-up',
     sortingDown: 'arrow-down',
+    selectedSorting: 'sorting-selected',
     required: 'required',
     readonly: 'readonly',
     error: 'error',
     tableWidthAuto: 'grid-content-wrp_width-auto',
-    dropdownRoot: 'js-dropdown__root'
+    dropdownRoot: 'js-dropdown__root',
+    timeIcon: 'cell-time-icon__wrap',
+    dateIcon: 'cell-date-icon__wrap'
 };
 
 export default {
