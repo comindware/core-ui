@@ -1082,8 +1082,9 @@ tr:not(:first-child) .cell_selection {
 .popout-menu__i_disabled {
 }
 
-.layout__tab-layout__header-view-item_hidden,
+.layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_hidden,
 .popout-menu__i_hidden {
+  display: none;
 }
 
 .layout__tab-layout__panel-container {
