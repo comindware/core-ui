@@ -281,11 +281,13 @@ export default class DropdownView {
         const indent = this.options.panelOffsetBottom || WINDOW_BORDER_OFFSET;
         switch (position) {
             case panelPosition.UP:
+                this.panelEl.style.removeProperty('top');
                 panelBottom = viewportHeight - buttonRect.bottom + buttonRect.height;
                 this.panelEl.style.bottom = `${panelBottom}px`;
                 maxHeight = viewportHeight - panelBottom - indent;
                 break;
             case panelPosition.DOWN:
+                this.panelEl.style.removeProperty('bottom');
                 top = buttonRect.top + buttonRect.height;
                 this.panelEl.style.top = `${top}px`;
                 maxHeight = viewportHeight - top - indent;
