@@ -476,7 +476,8 @@ export default Marionette.View.extend({
             return false;
         }
         const column = this.getOption('columns')[columnIndex];
-        return column.editable && !column.cellView && (!column.getReadonly || !column.getReadonly(this.model)) && (!column.getHidden || !column.getHidden(this.model));
+        const isAlwaysRenderCellView = column.isAlwaysRenderCellView;
+        return column.editable && !column.cellView && (isAlwaysRenderCellView || (!column.getReadonly || !column.getReadonly(this.model))) && (!column.getHidden || !column.getHidden(this.model));
     },
 
     __insertEditableCell({ column, index, CellView }: { column: Column, index: number, CellView: Marionette.View<Backbone.Model> }) {
