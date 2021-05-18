@@ -1170,8 +1170,8 @@ tr:not(:first-child) .cell_selection {
   margin-left: 0;
 }
 
-.toolbar__icons .checkbox,
-.toolbar__icons .checkbox:not(:empty) {
+.toolbar-btn .toolbar__icons .checkbox,
+.toolbar-btn .toolbar__icons .checkbox:not(:empty) {
   background: var(--theme-colors__primary);
   border: var(--theme-colors__primary);
 }

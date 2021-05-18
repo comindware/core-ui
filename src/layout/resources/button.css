@@ -26,10 +26,23 @@
     border: 1px solid var(--theme-colors__btn_strong);
     color: var(--theme-colors__btn-txt);
 }
+
 .toolbar-btn:active,
 .split-btn:active {
     background-color: var(--theme-colors__btn_fade);
     border: 1px solid var(--theme-colors__btn_fade);
+}
+
+.toolbar-btn.toolbar-btn_checkbox,
+.toolbar-btn.toolbar-btn_checkbox:hover {
+    background: transparent;
+    color: var(--theme-colors__text_strong);
+    border: none;
+}
+
+.toolbar-btn.toolbar-btn_checkbox .checkbox {
+    border: solid 1px var(--checkbox-border-color);
+    background: transparent;
 }
 
 .toolbar-btn .checkbox i,
