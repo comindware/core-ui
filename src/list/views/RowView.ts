@@ -476,6 +476,10 @@ export default Marionette.View.extend({
             return false;
         }
         const column = this.getOption('columns')[columnIndex];
+        const isAlwaysEditable = column.viewModel.get('config').get('isAlwaysEditable');
+        if (isAlwaysEditable) {
+            return column.editable && !column.cellView && (!column.getHidden || !column.getHidden(this.model));
+        }
         return column.editable && !column.cellView && (!column.getReadonly || !column.getReadonly(this.model)) && (!column.getHidden || !column.getHidden(this.model));
     },
 
