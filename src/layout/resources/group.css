@@ -30,7 +30,7 @@
     max-height: 100%;
     flex-direction: column;
     border-radius: 4px;
-    box-shadow: 0 2px 6px var(--black-16);
+    box-shadow: 0 2px var(--menu-shadow-blur-radius) rgba(var(--menu-shadow-color), var(--menu-shadow-opacity));
     min-height: 0;
     height: 100%;
 }

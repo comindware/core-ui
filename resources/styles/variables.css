@@ -1,5 +1,6 @@
 :root, .js-theme-content-region {
     /*** Primary ***/
+    --comindware-color: #0575bd;
     --theme-colors__primary: hsla(203, 95%, 38%, 1);
     --theme-colors__primary_fade: hsla(203, 95%, 48%, 1);
     --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1);
@@ -25,8 +26,8 @@
     --theme-colors__text_strong: #404040;
 
     /*** Highlight ***/
-    --theme-colors__highlight: #e8f6ff;
-    --theme-colors__highlight-txt: var(--theme-colors__text);
+    --theme-colors__highlight: #e8f6ff; /* highlight */
+    --theme-colors__highlight-txt: var(--theme-colors__text) ; /* text highlight */
 
     /*** Background ***/
     --theme-colors__background: #e3e3e3;
@@ -48,14 +49,19 @@
     --theme-colors__success-txt: var(--theme-colors__main);
 
     /* box-shadow variables */
-    --black-20: rgba(0,0,0,.2);
-    --black-50: rgba(0,0,0,.5);
-    --black-70: rgba(0,0,0,.7);
-    --black-14: rgba(0,0,0,.14);
-    --black-12: rgba(0,0,0,.12);
-    --black-16: rgba(0, 0, 0,.16);
-    --black-23: rgba(0, 0, 0,.23);
-    --black-24: rgba(0, 0, 0,.24);
+    --black: #000000;
+    --black-14: rgba(var(--black),.14);
+    --black-12: rgba(var(--black),.12);
+    --black-16: rgba(var(--black),.16);
+    --black-23: rgba(var(--black),.23);
+    --black-24: rgba(var(--black),.24);
+    --black-25: rgba(var(--black),.25);
+    --black-20: rgba(var(--black), .2);
+    --black-40: rgba(var(--black), .4);
+    --black-50: rgba(var(--black), .5);
+    --black-70: rgba(var(--black), .7);
+    --black-80: rgba(var(--black), .8);
+    --black-90: rgba(var(--black), .9);
 
     --theme-colors__warning-color: var(--theme-colors__main);
     --theme-colors__error-color: var(--theme-colors__main);
@@ -67,7 +73,8 @@
     --link-hover-color: var(--theme-colors__primary_fade);
     --main-color: var(--theme-colors__primary);
     --selected-background-color: var(--theme-colors__main);
-    --disabled-text-color: var(--theme-colors__main_strongest);
+    --disabled-text-color: #444444;
+    --disabled-input-color: #b1b1b1;
     --border-color: var(--theme-colors__main_fade);
     --border: 1px solid var(--border-color);
     --border-radius: 2px;
@@ -82,7 +89,7 @@
 
     --headers-font-family: OpenSans;
     --headers-font-style: normal;
-    --headers-font-size: 14px;
+    --headers-font-size: 19px;
     --headers-font-weight: 400;
 
     --form-input-padding: 10px;
@@ -105,6 +112,10 @@
     --editor-text-color: var(--theme-colors__text);
     --editor-empty-text-color: var(--theme-colors__text_fadest);
 
+    --editors-color-border: #d6d6d6;
+    --grids-color-border: #d6d6d6;
+    --menu-items-clor-border: #d6d6d6;
+
     /* input */
     --input-padding: 4px 18px 4px var(--form-input-padding);
     --input-height: 30px;
@@ -124,7 +135,7 @@
     /* checkbox */
     --checkbox-size: 18px;
     --checkbox-radius: 4px;
-    --checkbox-border-color: var(--theme-colors__main_strongest);
+    --checkbox-border-color: var(--grids-color-border);
     --checkbox-intermediate-size: 8px;
     --checkbox-checked-color: var(--theme-colors__main_fadest);
 
@@ -154,10 +165,10 @@
     --grid-header-icon-color-fade: var(--theme-colors__primary_fadest);
 
     --grid-cell-bg: var(--theme-colors__main);
-    --grid-cell-border: 1px solid var(--grid-header-border-color);
-    --grid-cell-border-first: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color);
-    --grid-cell-border-headless: inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color);
-    --grid-cell-border-first-headless: inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color);
+    --grid-cell-border: 1px solid var(--grids-color-border);
+    --grid-cell-border-first: inset -1px -1px 0 0 var(--grids-color-border), inset 1px 0 0 0 var(--grids-color-border);
+    --grid-cell-border-headless: inset -1px -1px 0 0 var(--grids-color-border), inset 0px 1px 0 0 var(--grids-color-border);
+    --grid-cell-border-first-headless: inset -1px -1px 0 0 var(--grids-color-border), inset 1px 1px 0 0 var(--grids-color-border);
     --grid-cell-height: 25px;
     --grid-cell-padding: 0 5px;
     --grid-cell-size: 13px;
@@ -245,4 +256,16 @@
     --theme-colors__severity-fatal_fade: hsl(0, 100%, 28%);
     --theme-colors__severity-fatal_strong: hsl(0, 100%, 48%);
     --theme-colors__severity-fatal-txt: var(--theme-colors__severity-fatal-txt);
+
+    --menu-shadow-color: var(--black);
+    --menu-shadow-opacity: 0.16;
+    --menu-shadow-blur-radius: 6px;
+
+    --dropdown-shadow-color: var(--black);
+    --dropdown-shadow-opacity: 0.24;
+    --dropdown-shadow-blur-radius: 3px;
+
+    --popup-shadow-color: var(--black);
+    --popup-shadow-opacity: 0.23;
+    --popup-shadow-blur-radius: 6px;
 }

@@ -78,8 +78,8 @@
 }
 
 .grid-header > .cell_selection {
-    box-shadow: inset -1px 0 0 0 var(--theme-colors__main), inset 1px 1px 0 0 var(--theme-colors__primary);
-    background-color: var(--theme-colors__primary);
+    box-shadow: inset -1px 0 0 0 var(--theme-colors__primary-txt), inset 1px 1px 0 0 var(--theme-colors__primary);
+    background-color: transparent;
     position: sticky;
     top: 0;
     z-index: 2;
@@ -212,7 +212,7 @@
 }
 
 .grid-header.sorting-selected .grid-header-column-sorting.sorting-selected {
-    color: var(--theme-colors__main);
+    color: var(--theme-colors__primary-txt);
     display: inline-block;
 }
 
@@ -357,7 +357,7 @@ tr.empty-view {
     white-space: nowrap;
     height: 100px;
     font-size: 1.1em;
-    border: 1px solid var(--theme-colors__main_strong);
+    border: 1px solid var(--editors-color-border);
 }
 
 /* /Empty View */
@@ -518,7 +518,7 @@ tr.empty-view {
     vertical-align: middle;
     width: 47px;
     min-width: 47px;
-    border: 1px solid var(--theme-colors__main_strong);
+    border: 1px solid var(--grids-color-border);
     position: relative;
     /*height: 35px;
     line-height: 35px;*/

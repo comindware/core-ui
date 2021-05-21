@@ -732,7 +732,7 @@ export default Marionette.View.extend({
     },
 
     __confirmUserAction(text: string = '', title: string = '', yesButtonText: string = 'Yes', noButtonText: string = 'No') {
-        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, text: noButtonText }, { id: true, text: yesButtonText }]);
+        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, isCancel: true, text: noButtonText }, { id: true, text: yesButtonText }]);
     },
 
     __triggerAction(model, selected, ...rest) {

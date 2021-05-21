@@ -12,7 +12,7 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-bottom: 1px solid var(--theme-colors__main_fade);
+    border-bottom: 1px solid var(--menu-items-clor-border);
     display: flex;
 }
 
@@ -23,7 +23,6 @@
     text-overflow: ellipsis;
     font-size: 18px;
     font-weight: 500;
-    color: var(--theme-colors__primary);
     cursor: pointer;
     vertical-align: middle;
 }
@@ -48,7 +47,7 @@
 }
 
 .filter-icon-list__i:hover{
-    background-color: var(--theme-colors__main);
+    background-color: var(--theme-colors__secondary_strong);
 }
 
 .filter-icon-list-eye {
@@ -67,7 +66,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-top: 1px solid var(--theme-colors__main_fade);
+    border-top: 1px solid var(--menu-items-clor-border);
     flex: 1;
     padding-left: 8px;
 }
@@ -98,20 +97,21 @@
     flex: 0 0 auto;
     height: 45px;
     line-height: 40px;
-    border-top: 1px solid var(--theme-colors__main_fade);
+    border-top: 1px solid var(--menu-items-clor-border);
     text-align: center;
     vertical-align: middle;
 }
 
 .filter-icon-lists-save-txt{
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
-    color: var(--theme-colors__primary);
+    color: var(--theme-colors__secondary-txt);
     cursor: pointer;
     vertical-align: middle;
 }
+
 .filter-icon-lists-save-txt:hover{
-    color: var(--theme-colors__primary_fade);
+    color: var(--theme-colors__primary);
 }
 
 .filter-icon-lists__dragging {
@@ -148,7 +148,7 @@
 }
 
 .filter-disabled {
-    color: var(--theme-colors__main_fade);
+    color: var(--theme-colors__secondary-txt);
 }
 
 /* /filter-icon-list */
