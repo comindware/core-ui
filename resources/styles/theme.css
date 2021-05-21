@@ -114,7 +114,7 @@ input, textarea, select {
 /*------------------ Form Editor ------------------*/
 .editor {
   font-size: var(--editor-font-size);
-  color: var(--editor-text-color);
+  color: var(--theme-colors__text);
 }
 
 .editor.context_select.editor_empty{
@@ -133,7 +133,8 @@ input, textarea, select {
 .editor_readonly .bubbles:hover,
 .editor.context_select.editor_readonly,
 .editor.context_select.editor_disabled {
-  background: var(--theme-colors__main_strong);
+  background: var(--disabled-input-color);
+  color: var(--disabled-text-color);
 }
 
 .editor_disabled .input,
@@ -198,7 +199,7 @@ input, textarea, select {
 .editor_error .bubbles,
 .editor_error .editor_date-time {
   border-color: var(--theme-colors__error);
-  background-color: var(--theme-colors__main);
+  background-color: var(--theme-colors__primary-txt);
   color: var(--theme-colors__error);
 }
 
@@ -227,7 +228,7 @@ input, textarea, select {
 .editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
   width: var(--checkbox-intermediate-size);
   height: var(--checkbox-intermediate-size);
-  background-color: var(--theme-colors__main);
+  background-color: var(--theme-colors__primary-txt);
 }
 
 .editor_icons .caret {
@@ -315,7 +316,7 @@ input, textarea, select {
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   border-radius: var(--checkbox-radius);
-  border: solid 1px var(--checkbox-border-color);
+  border: solid 1px var(--editors-color-border);
 }
 
 .checkbox-text {
@@ -397,8 +398,7 @@ input, textarea, select {
 /* Date Time */
 .editor_date-time {
   border-radius: 4px;
-  background-color: var(--theme-colors__main);
-  border: 1px solid var(--theme-colors__main_strongest);
+  border: 1px solid var(--editors-color-border);
   padding: var(--input-padding);
   overflow: hidden;
 }
@@ -409,7 +409,7 @@ input, textarea, select {
 .editor_disabled.editor_date-time:hover,
 .editor_readonly.editor_date-time,
 .editor_readonly.editor_date-time:hover {
-  background-color: var(--theme-colors__main_strong);
+  background-color: var(--disabled-input-color);
 }
 
 .editor_date-time .input {
@@ -477,7 +477,7 @@ svg.svg-grid-icons {
 
 .grid-header-column {
   background-color: var(--grid-header-bg);
-  box-shadow: inset -1px 0 0 0 var(--theme-colors__main), inset 1px 1px 0 0 var(--theme-colors__primary);
+  box-shadow: inset -1px 0 0 0 var(--theme-colors__primary-txt), inset 1px 1px 0 0 var(--theme-colors__primary);
   color: var(--theme-colors__primary-txt);
   line-height: var(--grid-header-height);
   padding: var(--grid-header-padding);
@@ -537,13 +537,13 @@ svg.svg-grid-icons {
 
 .grid-header .checkbox:not(:empty) {
   color: var(--theme-colors__primary);
-  border-color: var(--theme-colors__main_fadest);
-  background-color: var(--theme-colors__main_fadest);
+  border-color: var(--theme-colors__primary-txt);
+  background-color: var(--theme-colors__primary-txt);
 }
 
 .row-checked-some .checkbox:not(:empty) {
   color: var(--theme-colors__primary);
-  background-color: var(--theme-colors__main);
+  background-color: var(--theme-colors__primary-txt);
 }
 
 .row-checked-some .checkbox i {
@@ -654,6 +654,7 @@ tr.row-checked,
     width: var(--grid-checkbox-size);
     height: var(--grid-checkbox-size);
     margin: 0 auto;
+    border: solid 1px var(--checkbox-border-color);
 }
 
 .cell_selection-index > .checkbox {
@@ -682,16 +683,16 @@ tr.row-checked,
     background-clip: padding-box;
     max-width: 0;
     width: auto;
-    border: 1px solid var(--theme-colors__main_strong);
+    border: 1px solid var(--grids-color-border);
     border-top: none;
-    border-right: 1px solid var(--theme-colors__main_strong);
-    border-bottom: 1px solid var(--theme-colors__main_strong);
+    border-right: 1px solid var(--grids-color-border);
+    border-bottom: 1px solid var(--grids-color-border);
     border-left: none;
     border-top: none;
 }
 
 .cell:first-child {
-    border-left: 1px solid var(--theme-colors__main_strong);
+    border-left: 1px solid var(--grids-color-border);
 }
 
 .grid-selection-cell-all {
@@ -865,7 +866,7 @@ tr:not(:first-child) .cell_selection {
 .bubbles {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
-  border: 1px solid var(--theme-colors__main_strongest);
+  border: 1px solid var(--editors-color-border);
   padding: var(--dropdown-padding);
   line-height: 26px;
 }
@@ -928,7 +929,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .bubbles__caret {
-  color: var(--theme-colors__main_strongest);
+  color: var(--theme-colors__text);
   right: 10px;
   font-size: 16px;
 }
@@ -1039,7 +1040,7 @@ tr:not(:first-child) .cell_selection {
   border-bottom: 3px solid transparent;
 }
 .layout__tab-layout__header-view-item:hover {
-  border-bottom-color: var(--theme-colors__main_strongest);
+  border-bottom-color: transparent;
 }
 
 .layout__tab-layout__header-view-item_selected {
@@ -1090,7 +1091,7 @@ tr:not(:first-child) .cell_selection {
 .layout__tab-layout__panel-container {
   border-radius: 0 0 4px 4px;
   background-color: var(--popup-window-bg);
-  border: 1px solid var(--theme-colors__main_strongest);
+  border: 1px solid var(--editors-color-border);
   padding: var(--tab-panel-container-padding);
 }
 
@@ -1173,8 +1174,7 @@ tr:not(:first-child) .cell_selection {
 
 .toolbar-btn .toolbar__icons .checkbox,
 .toolbar-btn .toolbar__icons .checkbox:not(:empty) {
-  background: var(--theme-colors__primary);
-  border: var(--theme-colors__primary);
+  background: var(--theme-colors__btn);
 }
 
 .toolbar-btn__text > .editor_checkbox {
@@ -1267,7 +1267,7 @@ tr:not(:first-child) .cell_selection {
 
 .layout__popup-view-window {
   background: var(--popup-window-bg);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px var(--popup-shadow-blur-radius) rgba(var(--popup-shadow-color), var(--popup-shadow-opacity));
   border-radius: 5px;
 }
 
@@ -1281,7 +1281,7 @@ tr:not(:first-child) .cell_selection {
   font-size: 18px;
   padding: 15px;
   background: var(--theme-colors__primary);
-  color: var(--theme-colors__main);
+  color: var(--theme-colors__primary-txt);
   border: 1px solid var(--theme-colors__primary);
 }
 
@@ -1463,7 +1463,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .documents__wrapper {
-  border: 1px dashed var(--border-color);
+  border: 1px dashed var(--editors-color-border);
   border-radius: 6px;
   padding: 20px;
   height: 100%;

@@ -19,7 +19,6 @@ export default Marionette.CollectionView.extend({
     initialize() {
         const columns = this.options.model.get('columns');
         this.collection = columns instanceof Backbone.Collection ? columns : new Backbone.Collection(columns);
-        this.listenTo(this, 'childview:click', this.__itemClick);
         _.bindAll(this, '__documentMouseMove', '__documentMouseUp');
     },
 
@@ -29,7 +28,8 @@ export default Marionette.CollectionView.extend({
     },
 
     childViewEvents: {
-        drag: '__onDrag'
+        drag: '__onDrag',
+        click: '__itemClick'
     },
 
     ui: {

@@ -27,6 +27,7 @@ export default {
             [
                 {
                     id: false,
+                    isCancel: true,
                     text: noText,
                     default: true
                 },
@@ -46,6 +47,7 @@ export default {
             [
                 {
                     id: false,
+                    isCancel: true,
                     text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.OK'),
                     default: true
                 }
@@ -104,6 +106,7 @@ export default {
         const buttons = [
             {
                 id: false,
+                isCancel: true,
                 text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY'),
                 customClass: 'btn-small'
             },

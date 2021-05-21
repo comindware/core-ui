@@ -1,12 +1,12 @@
 .date-mobile-input{
-	opacity: 0; 
+	opacity: 0;
 	width: 85%;
-	height: 100%; 
+	height: 100%;
 	position: absolute;
 }
 .date-mobile-input::-webkit-calendar-picker-indicator {
-	opacity: 0; 
-	width: 100%; 
+	opacity: 0;
+	width: 100%;
 }
 .datetimepicker {
 	padding: 16px 18px 10px;
@@ -168,8 +168,8 @@
 
 .datetimepicker table tr td.disabled,
 .datetimepicker table tr td.disabled:hover {
-	background: var(--theme-colors__main_fade);
-	color: var(--theme-colors__main_strongest);
+	background: var(--disabled-input-color);
+	color: var(--disabled-text-color);
 	cursor: default;
 }
 
@@ -187,7 +187,7 @@
 .datetimepicker tbody td.active.disabled:hover {
 	background-color: var(--theme-colors__primary);
 	border-color: var(--theme-colors__primary);
-	color: var(--theme-colors__main);
+	color: var(--theme-colors__primary-txt);
 }
 
 

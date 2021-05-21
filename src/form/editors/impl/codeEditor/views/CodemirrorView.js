@@ -323,8 +323,7 @@ export default Marionette.View.extend({
                     text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
                 }, {
                     id: false,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO'),
-                    isCancel: true
+                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
                 }]);
             if (!isClose) {
                 return;

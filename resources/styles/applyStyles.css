@@ -3,7 +3,7 @@
 /*------------------ Form Editor ------------------*/
 .editor {
     font-size: var(--editor-font-size);
-    color: var(--editor-text-color);
+    color: var(--theme-colors__text);
 }
 .editor_bubble,
 .editor_document {
@@ -49,21 +49,21 @@
   width: 0;
 }*/
 
-.editor_checkbox {
-    height: 18px;
-    line-height: 18px;
+.toolbar__icons > .editor_checkbox {
+    border: 1px solid var(--theme-colors__btn-txt);
+    border-radius: var(--checkbox-radius);
 }
 
-.toolbar__icons > .editor_checkbox {
-    border: 1px solid var(--theme-colors__main);
-    border-radius: var(--checkbox-radius);
+.toolbar-btn_checkbox > .toolbar__icons > .editor_checkbox {
+    border: none;
 }
 
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
 .editor_readonly .bubbles:hover{
-    background: var(--theme-colors__main_strong);
+    background: var(--disabled-input-color);
+    color: var(--disabled-text-color);
 }
 
 .cell > .editor {
@@ -75,8 +75,8 @@
 .input {
     padding: var(--input-padding);
     border-radius: 4px;
-    background-color: var(--theme-colors__main);
-    border: 1px solid var(--theme-colors__main_strongest);
+    background-color: transparent;
+    border: 1px solid var(--editors-color-border);
 }
 
 /*.input:hover {*/
@@ -128,7 +128,7 @@ input::placeholder {
 .textarea {
     border-radius: 4px;
     background-color: var(--theme-colors__main);
-    border: 1px solid var(--theme-colors__main_strongest);
+    border: 1px solid var(--editors-color-border);
 }
 
 /*------------------ SVG Icons ------------------*/
@@ -287,9 +287,6 @@ input::placeholder {
     padding-left: 5px;
 }
 
-.bubbles:hover {
-    border-bottom-color: var(--theme-colors__main_strongest);
-}
 .editor:not(.editor_readonly).bubbles__i:hover,
 .editor:not(.editor_disabled).bubbles__i:hover {
     background: var(--theme-colors__main_fadest);
@@ -354,10 +351,6 @@ input::placeholder {
 
 .group-title.layout__group-collapsed__button{
     transform: rotate(0);
-}
-
-.layout__popup-view-window {
-    box-shadow: 0 3px 6px var(--black-16), 0 3px 6px var(--black-23);
 }
 
 .layout__popup-view-header__btn:hover {
