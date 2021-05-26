@@ -613,6 +613,7 @@ td > .icon-true {
     border: 0;
     padding: 0;
     background: transparent;
+    color: var(--theme-colors__text);
 }
 
 .editor_disabled .bubbles__input,
