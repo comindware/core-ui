@@ -168,8 +168,8 @@
 
 .datetimepicker table tr td.disabled,
 .datetimepicker table tr td.disabled:hover {
-    background: var(--theme-colors__main_fade);
-    color: var(--theme-colors__main_strongest);
+    background: var(--disabled-input-color);
+    color: var(--disabled-text-color);
     cursor: default;
 }
 
@@ -187,7 +187,7 @@
 .datetimepicker tbody td.active.disabled:hover {
     background-color: var(--theme-colors__primary);
     border-color: var(--theme-colors__primary);
-    color: var(--theme-colors__main);
+    color: var(--theme-colors__primary-txt);
 }
 
 .datetimepicker thead tr,

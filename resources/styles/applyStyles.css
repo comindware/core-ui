@@ -3,7 +3,7 @@
 /* ------------------ Form Editor ------------------ */
 .editor {
     font-size: var(--editor-font-size);
-    color: var(--editor-text-color);
+    color: var(--theme-colors__text);
 }
 
 .editor_bubble,
@@ -53,21 +53,21 @@
   width: 0;
 } */
 
-.editor_checkbox {
-    height: 18px;
-    line-height: 18px;
+.toolbar__icons > .editor_checkbox {
+    border: 1px solid var(--theme-colors__btn-txt);
+    border-radius: var(--checkbox-radius);
 }
 
-.toolbar__icons > .editor_checkbox {
-    border: 1px solid var(--theme-colors__main);
-    border-radius: var(--checkbox-radius);
+.toolbar-btn_checkbox > .toolbar__icons > .editor_checkbox {
+    border: none;
 }
 
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
 .editor_readonly .bubbles:hover {
-    background: var(--theme-colors__main_strong);
+    background: var(--disabled-input-color);
+    color: var(--disabled-text-color);
 }
 
 .cell > .editor {
@@ -79,8 +79,8 @@
 .input {
     padding: var(--input-padding);
     border-radius: 4px;
-    background-color: var(--theme-colors__main);
-    border: 1px solid var(--theme-colors__main_strongest);
+    background-color: transparent;
+    border: 1px solid var(--editors-color-border);
 }
 
 /* .input:hover { */
@@ -129,14 +129,10 @@ input::placeholder {
 }
 
 /* textarea */
-.editor_textarea {
-
-}
-
 .textarea {
     border-radius: 4px;
     background-color: var(--theme-colors__main);
-    border: 1px solid var(--theme-colors__main_strongest);
+    border: 1px solid var(--editors-color-border);
 }
 
 /* ------------------ SVG Icons ------------------ */
@@ -269,7 +265,6 @@ input::placeholder {
     padding-right: 0;
 }
 
-
 /* /Date Time/ */
 
 /* Button */
@@ -360,11 +355,6 @@ input::placeholder {
     padding: 0 15px;
 }
 
-.layout__vertical-layout > div,
-.layout__vertical-layout-item{
-
-}
-
 .group-toggle svg {
     transform: translateY(2px);
 }
@@ -375,10 +365,6 @@ input::placeholder {
 
 .group-title.layout__group-collapsed__button {
     transform: rotate(0);
-}
-
-.layout__popup-view-window {
-    box-shadow: 0 3px 6px var(--black-16), 0 3px 6px var(--black-23);
 }
 
 .layout__popup-view-header__btn:hover {
@@ -408,9 +394,6 @@ input::placeholder {
 .toolbar-btn,
 .tree-editor-btn {
     height: 26px;
-}
-
-.split-button-wrp {
 }
 
 .toolbar-btn__text {
@@ -487,15 +470,6 @@ input::placeholder {
 }
 
 /* -------------------- Left Menu List -------------------- */
-.left-menu-i-group {
-
-}
-
-.left-menu-i-group .left-menu__list-l,
-.left-menu-i-group .left-menu__item {
-
-}
-
 .left-menu-i-group .left-menu-i.action {
     margin: 0 3px 0 0;
     max-width: calc(100% - 18px);
@@ -530,11 +504,6 @@ input::placeholder {
 
 .left-menu-view-switcher .toolbar__icons_arrow {
     margin: 2px 0 0 0;
-}
-
-.left-menu-view-switcher__container .toolbar-btn {
-    font-size: 13px;
-    padding: 3px 15px;
 }
 
 .top-nav_icon > .icon_text {

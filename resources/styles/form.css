@@ -242,7 +242,7 @@ input[type="checkbox"].checkbox {
     cursor: pointer;
     transition: box-shadow .5s;
     border-radius: var(--checkbox-radius);
-    background-color: var(--theme-colors__main);
+    background-color: var(--theme-colors__primary-txt);
 }
 
 td .checkbox i,
@@ -470,7 +470,7 @@ td > .icon-true {
 }
 
 .editor_date-time .btn-separator {
-    color: var(--theme-colors__main_strongest);
+    color: var(--theme-colors__text);
     height: 16px;
 }
 
@@ -613,6 +613,7 @@ td > .icon-true {
     border: 0;
     padding: 0;
     background: transparent;
+    color: var(--theme-colors__text);
 }
 
 .editor_disabled .bubbles__input,

@@ -60,8 +60,6 @@
 }
 
 .tr-search__input {
-    border: 1px solid var(--theme-colors__main_strongest);
-    border-radius: 4px;
     height: var(--input-height);
     background-size: 14px 14px;
     text-overflow: ellipsis;

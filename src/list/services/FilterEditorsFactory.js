@@ -114,8 +114,7 @@ export default {
                     radioOptions: [
                         {
                             id: true,
-                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.EXIST'),
-                            isCancel: true
+                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.EXIST')
                         },
                         {
                             id: false,

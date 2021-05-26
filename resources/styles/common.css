@@ -414,7 +414,8 @@ body.non-selectable {
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, .65);
+    background: var(--theme-colors__background);
+    opacity: 0.7;
     z-index: 100;
 }
 
@@ -427,7 +428,7 @@ body.non-selectable {
     height: 30px;
     line-height: 21px;
     font-size: 13px;
-    color: var(--theme-colors__primary);
+    color: var(--theme-colors__background);
     font-weight: 600;
     display: block;
     text-align: center;
@@ -482,6 +483,12 @@ body.non-selectable {
     box-sizing: content-box;
     z-index: 44;
     background-color: var(--theme-colors__main);
+    border: 1px solid var(--editors-color-border);
+    border-radius: 4px;
+}
+
+.tr-search {
+    background-color: var(--theme-colors__main_fade);
 }
 
 .tr-search_report {
@@ -1163,8 +1170,9 @@ body.non-selectable {
 .btn.disabled:hover,
 .btn.disabled:hover:active {
     cursor: default;
-    background-color: var(--theme-colors__main_strongest);
-    border-color: var(--theme-colors__main_strongest);
+    background-color: var(--disabled-input-color);
+    border-color: var(--disabled-input-color);
+    color: var(--disabled-text-color);
     box-shadow: none;
     pointer-events: none;
 }
