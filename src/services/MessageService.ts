@@ -73,6 +73,7 @@ export default {
                 },
                 buttons: buttons.map(button => ({
                     id: button.id,
+                    isCancel: button.isCancel,
                     text: button.text,
                     customClass: button.customClass,
                     handler: () => {
