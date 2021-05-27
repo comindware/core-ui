@@ -299,7 +299,7 @@ export default class DropdownView {
                     top = buttonRect.top + buttonRect.height/2;
                 }
                 if (top <= WINDOW_BORDER_OFFSET) {
-                    top = WINDOW_BORDER_OFFSET; 
+                    top = WINDOW_BORDER_OFFSET;
                 }
                 maxHeight = viewportHeight - top - indent;
                 this.panelEl.style.top = `${top}px`;
@@ -351,7 +351,6 @@ export default class DropdownView {
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
 
-        GlobalEventService.on('window:keydown:captured', (document, event) => this.__keyAction(event));
         GlobalEventService.on('window:mousedown:captured', this.__handleGlobalMousedown.bind(this));
         WindowService.on('popup:close', this.__onWindowServicePopupClose.bind(this));
 
@@ -401,12 +400,6 @@ export default class DropdownView {
             this.close(...args);
         } else {
             this.open(...args);
-        }
-    }
-
-    __keyAction(event) {
-        if (event.keyCode === 27) {
-            this.close();
         }
     }
 

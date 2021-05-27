@@ -299,7 +299,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
     top: 0;
     left: 0;
     right: 0;
-    padding: var(--grid-cell-padding);
+    padding: 0 15px;
 }
 
 .cell > .collapsible-btn + .editor {
