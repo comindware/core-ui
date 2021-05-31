@@ -5,27 +5,30 @@ import LayoutBehavior from '../behaviors/LayoutBehavior';
 const classes = {
     CLASS_NAME: 'layout__button',
     PALE: 'btn-pale',
-    STRONG: 'btn-strong'
+    STRONG: 'btn-strong',
+    DISABLED: 'btn-disabled',
+    ICON_RIGHT: 'btn-rightside-icon'
 };
 
 export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'text');
-        helpers.ensureOption(options, 'handler');
     },
 
     template: Handlebars.compile(template),
 
     templateContext() {
         return {
-            customClass: this.options.class || '',
             brightnessClass: this.options.id === false ? classes.PALE : classes.STRONG,
             text: this.options.text,
-            iconClass: this.options.iconClass
+            iconClass: this.options.iconClass,
+            iconPosition: this.options.iconPosition
         };
     },
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.options.class || ''}`;
+    },
 
     behaviors: {
         LayoutBehavior: {
@@ -39,18 +42,25 @@ export default Marionette.View.extend({
 
     events: {
         'click @ui.btn': '__onClick',
-        keyup: function(event) {
+        keyup(event) {
             [keyCode.ENTER, keyCode.SPACE].includes(event.keyCode) && this.__onClick();
         }
     },
 
     onRender() {
+        this.on('change:enabled', (view, state) => this.$el.toggleClass(classes.DISABLED, !state));
         this.__updateState();
+
+        if (this.options.iconPosition === 'right') {
+            this.ui.btn.addClass(classes.ICON_RIGHT);
+        }
     },
 
     __onClick() {
+        if (typeof this.options.handler === 'function') {
+            this.handlerResult = this.options.handler(this.options.context);
+        }
         this.trigger('click');
-        this.options.handler(this.options.context);
     },
 
     update() {

@@ -250,6 +250,8 @@
 
 <http://comindware.com/text/core/form/editors/password#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите пароль"; l10n:originalData "Enter password"].
 
+<http://comindware.com/text/core/form/editors/radioGroup#emptyRadiogroup> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Радиогруппа пуста"; l10n:originalData "Radiogroup is empty"].
+
 <http://comindware.com/text/core/form/editors/reference#createNew> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Создать"; l10n:originalData "Create new"].
 
 <http://comindware.com/text/core/form/editors/reference#loading> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].

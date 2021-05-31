@@ -16,20 +16,29 @@ export default Marionette.Behavior.extend({
             this.$el.toggleClass(classes.HIDDEN, !nextState.visible);
             this.view.trigger('change:visible', this.view, nextState.visible);
         }
+        if (this.__state.enabled !== nextState.enabled) {
+            this.view.trigger('change:enabled', this.view, nextState.enabled);
+        }
         this.__state = nextState;
     },
 
-    __computeViewState(): { visible: boolean } {
+    __computeViewState(): { visible: boolean, enabled: boolean } {
         let visible = this.view.options.visible;
+        let enabled = this.view.options.enabled;
 
         if (visible == null) {
             visible = true;
         }
+        if (enabled == null) {
+            enabled = true;
+        }
 
         visible = typeof visible === 'function' ? visible.call(this.view) : visible;
+        enabled = typeof enabled === 'function' ? enabled.call(this.view) : enabled;
 
         return {
-            visible: Boolean(visible)
+            visible: Boolean(visible),
+            enabled: Boolean(enabled)
         };
     }
 });

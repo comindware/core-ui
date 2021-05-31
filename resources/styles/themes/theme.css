@@ -1180,9 +1180,8 @@ tr:not(:first-child) .cell_selection {
 }
 
 .layout__horizontal-layout > .layout__button {
-    align-self: baseline;
+    align-self: center;
 }
-
 
 /* Group */
 

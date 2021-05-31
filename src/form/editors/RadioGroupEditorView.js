@@ -5,11 +5,7 @@ import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollec
 import template from './impl/radioGroup/templates/radioGroup.hbs';
 import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
-
-const defaultOptions = {
-    radioOptions: [{ id: '', displayText: '' }],
-    class: undefined
-};
+import EmptyRadioGroupView from './impl/radioGroup/views/EmptyRadioGroupView';
 
 /**
  * @name RadioGroupEditorView
@@ -24,10 +20,12 @@ const defaultOptions = {
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
     /** @lends module:core.form.editors.RadioGroupEditorView.prototype */ {
         initialize(options = {}) {
-            this.__applyOptions(options, defaultOptions);
+            this.__applyOptions(options, {});
             this.collection = new RadioGroupCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
+
+        emptyView: EmptyRadioGroupView,
 
         template: Handlebars.compile(template),
 
