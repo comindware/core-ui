@@ -199,17 +199,13 @@ input, textarea, select {
 .editor_error .bubbles,
 .editor_error .editor_date-time {
   border-color: var(--theme-colors__error);
-  background-color: var(--theme-colors__primary-txt);
-  color: var(--theme-colors__error);
 }
 
 .editor_error.editor_focused .input,
 .editor_error.editor_focused .textarea,
 .editor_error.editor_focused .bubbles,
 .editor_error.editor_focused .editor_date-time {
-  background-color: transparent;
   border-color: var(--theme-colors__error);
-  color: var(--theme-colors__error);
 }
 
 
