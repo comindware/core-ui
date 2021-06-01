@@ -1,5 +1,3 @@
-// @flow
-import { helpers } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
@@ -39,6 +37,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
+            windowClass: this.options.windowClass || '',
             headerText: this.options.header,
             ...iconsNames
         };
@@ -93,7 +92,9 @@ export default Marionette.View.extend({
         }
         this.__setExpandState(this.options.expand);
         this.showChildView('contentRegion', this.options.content);
-        this.showChildView('buttonsRegion', this.__createButtonsView());
+        if (this.options.buttons) {
+            this.showChildView('buttonsRegion', this.__createButtonsView());
+        }
         this.__updateState();
 
         if (!this.options.newTabUrl) {
