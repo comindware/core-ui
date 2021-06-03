@@ -15,7 +15,7 @@
 	<span class="js-help-text-region collection-grid-header__help"></span>
         {{#if alignRight}}<div class="grid-header-column-title">{{title}}
         </div>{{/if}}
-        <div class="grid-header-dragger" />
+        {{#unless @last}}<div class="grid-header-dragger"></div>{{/unless}}
     </div>
 </td>
 {{/each}}

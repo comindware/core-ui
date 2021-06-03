@@ -28,7 +28,7 @@ const defaultOptions = {
     useSlidingWindow: true,
     disableKeydownHandler: false,
     customHeight: false,
-    childHeight: 35
+    childHeight: 29
 };
 
 /**

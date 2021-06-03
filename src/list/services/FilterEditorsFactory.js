@@ -118,7 +118,8 @@ export default {
                         },
                         {
                             id: false,
-                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NOTEXIST')
+                            displayText: Localizer.get('PROCESS.DATASET.EDITORPREDICATES.NOTEXIST'),
+                            isCancel: true
                         }
                     ]
                 };

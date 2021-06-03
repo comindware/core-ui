@@ -129,6 +129,12 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
 
     template: Handlebars.compile(template),
 
+    templateContext() {
+        return {
+            size: this.__getInputSize()
+        };
+    },
+
     focusElement: '.js-input',
 
     className: 'js-duration editor editor_duration',
@@ -190,6 +196,22 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         }
 
         this.__updateValueByInput(true);
+    },
+
+    __getInputSize(value) {
+        const inEditMode = this.state.mode === stateModes.EDIT;
+        const inputValue = value || this.state.displayValue;
+        const minInputSize = 5;
+        const valueString = value || this.__createInputString(inputValue, inEditMode);
+        const specialCoefficient = 0.97; // to get new size, this is because length refers to number of characters, where as size in most browsers refers to em units
+        const valueSymbols = valueString.split('');
+        if (valueSymbols.length === 0) {
+            return minInputSize * specialCoefficient;
+        }
+        const colons = valueSymbols.filter(symbol => symbol === ':').length;
+        const letters = valueSymbols.length - colons;
+        const durationSize = letters * specialCoefficient + colons * 0.3; // because duration has ':'
+        return durationSize;
     },
 
     __updateValueByInput(updateState) {
@@ -663,6 +685,7 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         const normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
         const inEditMode = this.state.mode === stateModes.EDIT;
         const val = this.__createInputString(normalizedDisplayValue, inEditMode);
+        this.ui.input.get(0).size = this.__getInputSize(val);
         this.ui.input.val(val);
         if (this.options.showTitle && !inEditMode) {
             this.$editorEl.prop('title', val);

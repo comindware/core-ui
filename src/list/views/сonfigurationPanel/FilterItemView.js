@@ -117,6 +117,11 @@ export default Marionette.View.extend({
     },
 
     __applyEditorVisibility() {
-        this.getRegion('filterRegion').$el.toggle(enabledFilterEditor(this.model));
+        const region = this.getRegion('filterRegion');
+        if (enabledFilterEditor(this.model)) {
+            delete region.el.style.display;
+        } else {
+            region.el.style.display = 'none';
+        }
     }
 });

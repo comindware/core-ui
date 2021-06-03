@@ -1,4 +1,5 @@
 import formRepository from '../formRepository';
+import { fieldTypes } from 'Meta';
 import _ from 'underscore';
 
 type EditorOptions = {
@@ -42,6 +43,8 @@ export default class FieldView {
 
         const schema = { ...options.schema, ...schemaExtension };
         const { tagName, attributes } = options;
+        const fieldType = fieldTypes[schema.type];
+        const fieldClass = fieldType ? `form-group_${fieldType}` : '';
         const editorOptions = {
             ...schema,
             form: options.form,
@@ -57,7 +60,7 @@ export default class FieldView {
                 helpText: schema.helpText,
                 tagName: tagName || 'div',
                 attributes,
-                className: options.class || 'form-group'
+                className: options.class || `form-group ${fieldClass}`
             }
         };
 

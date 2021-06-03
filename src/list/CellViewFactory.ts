@@ -70,7 +70,7 @@ class CellViewFactory implements ICellViewFactory {
         const value = model.get(columnWithExtension.key);
 
         if ((this.__isEmpty(value) && columnWithExtension.type !== objectPropertyTypes.BOOLEAN) || columnWithExtension.getHidden?.(model)) {
-            return `<td class="${this.__getCellClass(columnWithExtension, model)}" tabindex="-1"></td>`;
+            return `<td class="${this.__getCellClass(columnWithExtension, model)}" tabindex="-1">&nbsp</td>`;
         }
 
         const values = Array.isArray(value) ? value : [value];
@@ -192,7 +192,11 @@ class CellViewFactory implements ICellViewFactory {
         if (column.formatOptions) {
             const dateDisplayValue = column.formatOptions.dateDisplayFormat ? DateTimeService.getDateDisplayValue(value, column.formatOptions.dateDisplayFormat) : '';
             const timeDisplayValue = column.formatOptions.timeDisplayFormat ? DateTimeService.getTimeDisplayValue(value, column.formatOptions.timeDisplayFormat) : '';
-            return `${dateDisplayValue} ${timeDisplayValue}`;
+            let icon;
+            if (column.editable) {
+                icon = `<i class="${classes.dateIcon} ${Handlebars.helpers.iconPrefixer('calendar-alt')}"></i>`;
+            }
+            return `${dateDisplayValue} ${timeDisplayValue} ${icon || ''}`;
         }
         return dateHelpers.dateToDateTimeString(value, dateHelpers.dateTimeFormats.GENERAL_DATE_SHORT_TIME);
     }
@@ -235,7 +239,11 @@ class CellViewFactory implements ICellViewFactory {
             result += `${Math.floor(totalMilliseconds / oneSecondMs) + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS')} `;
             totalMilliseconds %= oneSecondMs;
         }
-        return result;
+        let icon;
+        if (column.editable) {
+            icon = `<i class="${classes.timeIcon} ${Handlebars.helpers.iconPrefixer('clock')}"></i>`;
+        }
+        return `${result} ${icon || ''}`;
     }
 
     __getFormattedBooleanValue({ value, column, model }: ValueFormatOption) {
@@ -612,7 +620,7 @@ class CellViewFactory implements ICellViewFactory {
         if ((column.editable && (column.getReadonly?.(model) || column.getHidden?.(model)))) {
             classNames.push(classes.readonly);
         }
-	    const validationClass = column.getValidationClassName?.(model);
+        const validationClass = column.getValidationClassName?.(model);
         if (validationClass) {
             classNames.push(validationClass);
         }

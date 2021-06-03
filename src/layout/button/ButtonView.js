@@ -19,7 +19,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            brightnessClass: this.options.id === false ? classes.PALE : classes.STRONG,
+            brightnessClass: this.getOption('isCancel') ? classes.PALE : classes.STRONG,
             text: this.options.text,
             iconClass: this.options.iconClass,
             iconPosition: this.options.iconPosition

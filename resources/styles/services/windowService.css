@@ -11,11 +11,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #ffffff;
+    background: var(--theme-colors__main);
 }
 
 .fadingPanel {
-    background-color: #023f67;
+    background-color: var(--theme-colors__primary_strongest);
     position: absolute;
     left: 0;
     right: 0;

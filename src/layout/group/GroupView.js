@@ -1,6 +1,6 @@
-// @flow
 import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import MenuButtonView from './MenuButtonView';
 
 const defaultOptions = ({ view }) => ({
     collapsed: false,
@@ -9,7 +9,13 @@ const defaultOptions = ({ view }) => ({
 
 const classes = {
     CLASS_NAME: 'layout-group',
-    COLLAPSED_CLASS: 'layout__group-collapsed__button'
+    COLLAPSED_CLASS: 'group-collapsed',
+    MENU_SHOWN: 'layout-group__head_menu-shown',
+    MAXIMIZED: 'layout-group__head_maximized'
+};
+
+const menuItemsIds = {
+    maximize: 'maximize'
 };
 
 export default Marionette.View.extend({
@@ -23,10 +29,13 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.options.class || ''}`;
+    },
 
     regions: {
-        containerRegion: '.js-container-region'
+        containerRegion: '.js-container-region',
+        menuRegion: '.js-menu-region'
     },
 
     behaviors: {
@@ -37,11 +46,20 @@ export default Marionette.View.extend({
 
     ui: {
         toggleCollapseButtons: '.js-toggle',
-        containerRegion: '.js-container-region'
+        header: '.js-header',
+        containerRegion: '.js-container-region',
+        menuRegion: '.js-menu-region',
+        restore: '.js-restore'
     },
 
     events: {
-        'click @ui.toggleCollapseButtons': 'onToggleButtonClick'
+        'click @ui.toggleCollapseButtons': 'onClickToggleButton',
+        'click @ui.menuRegion': 'onMenuClick',
+        'click @ui.restore': '__onRestore'
+    },
+
+    modelEvents: {
+        'change:isMaximized': '__onMaximizedChange'
     },
 
     onRender() {
@@ -53,6 +71,11 @@ export default Marionette.View.extend({
         }
         this.__updateState();
         this.__onCollapsedChange();
+        // TODO: toolbar?
+        if (this.options.showMenu) {
+            this.__createMenu();
+            this.showChildView('menuRegion', this.menu);
+        }
     },
 
     update() {
@@ -70,8 +93,8 @@ export default Marionette.View.extend({
         }
     },
 
-    onToggleButtonClick(e) {
-        if ([ ...this.ui.toggleCollapseButtons].some(el => el === e.currentTarget)) {
+    onClickToggleButton(e) {
+        if (this.ui.toggleCollapseButtons.get(0) === e.currentTarget) {
             this.toggleCollapse();
         }
     },
@@ -84,11 +107,70 @@ export default Marionette.View.extend({
     },
 
     __onCollapsedChange(model = this.model, collapsed = this.model.get('collapsed')) {
-        this.ui.toggleCollapseButtons.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
+        this.$el.toggleClass(classes.COLLAPSED_CLASS, Boolean(collapsed));
         if (collapsed) {
-            this.ui.containerRegion.hide(200);
+            this.ui.containerRegion.slideUp(200);
         } else {
-            this.ui.containerRegion.show(200);
+            this.ui.containerRegion.slideDown(200);
         }
-    }
+    },
+
+    __onMaximizedChange(model, isMaximized) {
+        this.ui.header.get(0).classList.toggle(classes.MAXIMIZED, isMaximized);
+    },
+
+    __createMenu() {
+        this.menuItemsCollection = new Backbone.Collection(this.__getMenuItems());
+        this.menu = Core.dropdown.factory.createMenu({
+            buttonView: MenuButtonView,
+            items: this.menuItemsCollection,
+            showDropdownAnchor: false,
+            popoutFlow: 'right'
+        });
+        this.listenTo(this.menu, 'open', () => this.ui.header.addClass(classes.MENU_SHOWN));
+        this.listenTo(this.menu, 'close', () => this.ui.header.removeClass(classes.MENU_SHOWN));
+        this.listenTo(this.menu, 'execute', this.__execute);
+    },
+
+    __getMenuItems() {
+        return [
+            {
+                id: menuItemsIds.maximize,
+                icon: 'window-maximize',
+                name: Localizer.get('CORE.LAYOUT.GROUPLAYOUT.MENU.MAXIMIZE')
+            }
+        ];
+    },
+
+    __execute(id) {
+        switch (id) {
+            case menuItemsIds.maximize:
+                this.__onMaximize();
+                break;
+            default:
+                break;
+        }
+    },
+
+    onMenuClick() {
+        return false;
+    },
+
+    __onRestore() {
+        Core.services.WindowService.closeElPopup(this.modalCollectionViewId, true);
+    },
+
+    __onMaximize() {
+        this.modalCollectionViewId = Core.services.WindowService.showElInPopup(this.$el);
+        this.listenTo(Core.services.WindowService, 'popup:close', this.__onPopupClosing);
+        this.model.set('isMaximized', true);
+    },
+
+    __onPopupClosing(closedPopupId) {
+        if (closedPopupId === this.modalCollectionViewId) {
+            this.stopListening(Core.services.WindowService, 'popup:close', this.__onPopupClosing);
+            delete this.modalCollectionViewId;
+            this.model.set('isMaximized', false);
+        }
+    },
 });

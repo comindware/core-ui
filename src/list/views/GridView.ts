@@ -50,11 +50,11 @@ const defaultOptions = options => ({
     showHeader: true,
     handleSearch: true,
     updateToolbarEvents: '',
-    childHeight: 35,
+    childHeight: 29,
     showTreeEditor: false,
     treeEditorIsHidden: false,
     treeEditorConfig: new Map(),
-    headerHeight: 36
+    headerHeight: 30
 });
 
 /**
@@ -188,7 +188,10 @@ export default Marionette.View.extend({
         const columnModel = this.options.columns[index].columnModel;
         if (columnModel) {
             columnModel.set('width', newColumnWidth);
-            this.treeEditorView.setConfigItem(this.options.columns[index].columnModel.id, { width: newColumnWidth });
+            const configWidthColumn = new Map();
+            configWidthColumn.set(this.options.columns[index].columnModel.id, { width: newColumnWidth });
+            this.setConfigDiff(configWidthColumn);
+            this.trigger('treeEditor:save', this.getConfigDiff());
         }
     },
 
@@ -318,7 +321,6 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        treeEditorRegion: '.js-grid-tree-editor-region',
         headerRegion: '.js-grid-header-view',
         contentRegion: {
             el: '.js-grid-content-view',
@@ -374,10 +376,6 @@ export default Marionette.View.extend({
             this.__toggleTableWidth();
         } else {
             this.el.classList.add('grid__headless');
-        }
-
-        if (this.options.showTreeEditor) {
-            this.showChildView('treeEditorRegion', this.treeEditorView);
         }
 
         if (this.options.showToolbar) {
@@ -750,7 +748,7 @@ export default Marionette.View.extend({
     },
 
     __confirmUserAction(text: string = '', title: string = '', yesButtonText: string = 'Yes', noButtonText: string = 'No') {
-        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, text: noButtonText }, { id: true, text: yesButtonText }]);
+        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, isCancel: true, text: noButtonText }, { id: true, text: yesButtonText }]);
     },
 
     __triggerAction(model, selected, ...rest) {
@@ -939,19 +937,22 @@ export default Marionette.View.extend({
     },
 
     __initTreeEditor() {
-        this.__onDiffApplied();
         const columnsCollection = this.columnsCollection;
 
         this.listenTo(columnsCollection, 'columns:move', config => this.__reorderColumns(config));
 
-        this.treeEditorView = new Core.components.TreeEditor({
+        this.treeEditor = new Core.components.TreeEditor({
             hidden: this.options.treeEditorIsHidden,
             model: this.options.treeEditorModel,
             configDiff: this.options.treeEditorConfig,
             getNodeName: this.options.getNodeName || (model => model.get('title')),
             nestingOptions: this.options.nestingOptions,
-            childsFilter: this.options.childsFilter
+            childsFilter: this.options.childsFilter,
+            showPanelViewOnly: this.options.showPanelViewOnly,
+            showTreeEditorHeader: this.options.showTreeEditorHeader
         });
+
+        this.__onDiffApplied();
 
         this.listenTo(columnsCollection, 'add', (model: GraphModel) => {
             const configDiff = {
@@ -960,32 +961,29 @@ export default Marionette.View.extend({
             };
             this.__moveColumn(configDiff);
         });
-        this.listenTo(this.treeEditorView, 'treeEditor:diffAplied', () => this.trigger('treeEditor:diffAplied'));
-        this.listenTo(this.treeEditorView, 'reset', () => this.trigger('treeEditor:reset'));
         this.listenTo(columnsCollection, 'change:isHidden change:required', model => {
             this.__setColumnVisibility(model.id, !model.get('isHidden') || model.get('required'));
         });
-        this.listenTo(this.treeEditorView, 'save', (config: ConfigDiff) => this.trigger('treeEditor:save', config));
+    },
+
+    getTreeEditorView() {
+        return this.treeEditor.getView();
     },
 
     setConfigDiff(configDiff) {
-        this.treeEditorView.setConfigDiff(configDiff);
-    },
-
-    setInitConfig(initConfig) {
-        this.treeEditorView.setInitConfig(initConfig);
+        this.treeEditor.setConfigDiff(configDiff);
     },
 
     resetConfigDiff() {
-        this.treeEditorView.resetConfigDiff();
+        this.treeEditor.resetConfigDiff(['index', 'isHidden']);
+    },
+
+    setInitConfig(initConfig) {
+        this.treeEditor.setInitConfig(initConfig);
     },
 
     getConfigDiff() {
-        return this.treeEditorView.getConfigDiff();
-    },
-
-    setVisibleConfigDiffInit() {
-        this.treeEditorView.setVisibleConfigDiffInit();
+        return this.treeEditor.getConfigDiff();
     },
 
     __setVisibilityAllColumns() {

@@ -118,7 +118,7 @@ const GridHeaderView = Marionette.View.extend({
             this.$el
                 .find('.header-column-wrp')[0]                
                 .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
-                fa fa-angle-down ${expandOnShow ? classes.expanded : ''}"></i/`);
+                ${Handlebars.helpers.iconPrefixer('angle-down')} ${expandOnShow ? classes.expanded : ''}"></i/`);
             this.collapsed = !this.options.expandOnShow;
         }
 
@@ -267,9 +267,14 @@ const GridHeaderView = Marionette.View.extend({
             return;
         }
 
-        this.el.children[index + this.columnIndexOffset].style.minWidth = newColumnWidthPX;
-        this.el.children[index + this.columnIndexOffset].style.width = newColumnWidthPX;
+
         this.options.columns[index].width = newColumnWidth;
+        if (!this.isRendered()) {
+            return;
+        }
+        const child = this.el.children[index + this.columnIndexOffset];
+        child.style.minWidth = newColumnWidthPX;
+        child.style.width = newColumnWidthPX;
 
         //this.trigger('update:width', index, newColumnWidth, this.el.scrollWidth);
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
@@ -277,7 +282,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __updateColumnAndNeighbourWidths(column: HTMLElement) {
-        for (let i = 0; i < this.options.columns.length; i++) {
+        for (let i = 0; i < this.options.columns.length - 1; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
 
@@ -364,11 +369,17 @@ const GridHeaderView = Marionette.View.extend({
             if (oldSortingEl) {
                 oldSortingEl.parentElement.removeChild(oldSortingEl);
             }
-            if (column.sorting) {
-                const sortingClass = column.sorting === 'asc' ? classes.sortingDown : classes.sortingUp;
-                const sortingHTML = `<i class="js-sorting ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
-                el.querySelector('.js-help-text-region').insertAdjacentHTML('beforebegin', sortingHTML);
-            }
+
+            const defaultSortingDirection = 'desc';
+            const sortingDirection = column.sorting || defaultSortingDirection;
+
+            const sortingClass = sortingDirection === 'desc' ? classes.sortingDown : classes.sortingUp;
+            const selectedSortingClass = column.sorting && classes.selectedSorting;
+
+            const sortingHTML = `<i class="js-sorting grid-header-column-sorting ${selectedSortingClass} ${Handlebars.helpers.iconPrefixer(sortingClass)}"></i>`;
+
+            column.sorting && el.parentElement.classList.add(selectedSortingClass);
+            el.querySelector('.grid-header-column-title').insertAdjacentHTML('beforeend', sortingHTML);
         });
     },
 

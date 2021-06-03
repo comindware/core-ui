@@ -112,13 +112,13 @@
 
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].
 
-<http://comindware.com/text/core/form/editors/document#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "выберите файл"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/form/editors/document#choose> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите файл"; l10n:originalData "select file "].
 
 <http://comindware.com/text/core/form/editors/document#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
 
 <http://comindware.com/text/core/form/editors/document#download> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать"; l10n:originalData "Download"].
 
-<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите файл для загрузки <br> или "; l10n:originalData "dragFile"].
+<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда файл <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
 
 <http://comindware.com/text/core/form/editors/document#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "Edit"].
 
@@ -130,7 +130,7 @@
 
 <http://comindware.com/text/core/form/editors/document#replaceDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить документ"; l10n:originalData "Replace document"].
 
-<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отобразить больше..."; l10n:originalData "Show more..."].
+<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать больше..."; l10n:originalData "Show more..."].
 
 <http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "История"; l10n:originalData "History"].
 
@@ -392,11 +392,15 @@
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Да"; l10n:originalData "Yes"].
 
-<http://comindware.com/text/core/grid/emptyView#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Список пуст"; l10n:originalData "The list is empty"].
+<http://comindware.com/text/core/grid/emptyView#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет данных для отображения"; l10n:originalData "No data to show"].
 
 <http://comindware.com/text/core/grid/loadingRow#loading> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ЗАГРУЗКА"; l10n:originalData "LOADING"].
 
 <http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
+
+<http://comindware.com/text/core/layout/groupLayout/menu#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "На весь экран"; l10n:originalData "In full screen"].
+
+<http://comindware.com/text/core/layout/groupLayout/menu#restore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Восстановить размер"; l10n:originalData "Restore size"].
 
 <http://comindware.com/text/core/layout/tabLayout#noTabMessage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все вкладки скрыты"; l10n:originalData "All tabs are hidden"].
 

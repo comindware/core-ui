@@ -2,8 +2,7 @@ import { getIconAndPrefixerClasses, setModelHiddenAttribute } from '../meta';
 
 const classes = {
     hiddenClass: 'hidden-node',
-    dragover: 'dragover',
-    dragoverContainer: 'dragover-container'
+    dragover: 'dragover'
 };
 
 const getSiblings = (element: ChildNode) => {
@@ -16,11 +15,13 @@ export default Marionette.Behavior.extend({
     },
 
     ui: {
-        eyeBtn: '.js-eye-btn'
+        eyeBtn: '.js-eye-btn',
+        checkbox: '.js-checkbox'
     },
 
     events: {
         'click @ui.eyeBtn': '__onEyeBtnClick',
+        'click @ui.checkbox': '__onCheckboxClick',
         dragenter: '__handleDragEnter',
         dragover: '__handleDragOver',
         dragleave: '__handleDragLeave',
@@ -28,38 +29,22 @@ export default Marionette.Behavior.extend({
         drop: '__handleDrop',
         dragstart: '__handleDragStart'
     },
-
-    onRender() {
-        this.__toggleHiddenClass();
-    },
-
     __onEyeBtnClick(event: MouseEvent) {
         event.stopPropagation();
         setModelHiddenAttribute(this.view.options.model);
     },
 
+    __onCheckboxClick(event: MouseEvent) {
+        event.stopPropagation();
+        setModelHiddenAttribute(this.view.options.model);
+    },
+
     __handleHiddenChange() {
-        this.view.options.reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(), { isHidden: this.view.model.get('isHidden') });
-
-        this.__toggleHiddenClass();
+        this.view.render();
     },
-
-    __toggleHiddenClass() {
-        const isHidden = !!this.view.model.get('isHidden');
-        const uiEyeElement = this.ui.eyeBtn[0];
-
-        if (uiEyeElement) {
-            uiEyeElement.classList.remove(...getIconAndPrefixerClasses(this.view.__getIconClass(!isHidden)));
-            uiEyeElement.classList.add(...getIconAndPrefixerClasses(this.view.__getIconClass(isHidden)));
-        }
-
-        this.el.classList.toggle(classes.hiddenClass, isHidden);
-    },
-
     __handleDragStart(event: JQueryEventObject) {
         event.stopPropagation();
         this.view.model.collection.draggingModel = this.view.model;
-        this.__getRealTargetElement(event.target).parentElement.classList.add(classes.dragoverContainer);
     },
 
     __handleDragEnter(event: JQueryEventObject) {
@@ -106,7 +91,6 @@ export default Marionette.Behavior.extend({
 
     __handleDragEnd(event: JQueryEventObject) {
         delete this.view.model.collection?.draggingModel;
-        this.__removeContainerDragoverClass();
     },
 
     __handleDrop(event: JQueryEventObject) {
@@ -126,25 +110,18 @@ export default Marionette.Behavior.extend({
         const collection = this.view.model.collection;
         const draggingModel = collection.draggingModel;
         const oldIndex = collection.indexOf(draggingModel);
-        const newIndex = collection.lastIndexOf(this.view.model);
+        let newIndex = collection.lastIndexOf(this.view.model);
+        if (newIndex !== 0 && newIndex - oldIndex < 0) {
+            newIndex++;
+        }
 
         collection.remove(draggingModel);
         collection.add(draggingModel, { at: newIndex });
         delete collection.draggingModel;
 
-        this.__removeContainerDragoverClass();
-
         const startIndex = oldIndex > newIndex ? newIndex : oldIndex;
         const endIndex = oldIndex > newIndex ? oldIndex : newIndex;
         const reqres = this.view.options.reqres;
-
-        for (let i = startIndex; i <= endIndex; i++) {
-            reqres.request('treeEditor:setWidgetConfig', this.__getWidgetId(collection.at(i)), { index: i });
-        }
-    },
-
-    __removeContainerDragoverClass() {
-        this.el.parentElement.classList.remove(classes.dragoverContainer);
     },
 
     __getWidgetId(model = this.view.model) {

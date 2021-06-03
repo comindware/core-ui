@@ -105,12 +105,17 @@ export default Marionette.View.extend({
         regionEl.setAttribute('data-popup-id', popupId);
         regionEl.classList.add('js-core-ui__global-popup-region');
 
+        const el = $el.get(0);
+        const prevSublingOfContentEl = $el.prev();
+
         const config = {
             view: $el,
-            el: $el.get(0),
+            el,
             options,
             regionEl,
             popupId,
+            prevSublingOfContentEl: prevSublingOfContentEl.length ? prevSublingOfContentEl : null,
+            parentOfContentEl: prevSublingOfContentEl.length ? null: $el.parent(),
             parentPopupId: null
         };
 
@@ -118,17 +123,13 @@ export default Marionette.View.extend({
         const region = this.addRegion(popupId, {
             el: regionEl
         });
-        this.prevSublingOfContentEl = $el.prev();
-        if (this.prevSublingOfContentEl.length === 0) {
-            delete this.prevSublingOfContentEl;
-            this.parentOfContentEl = $el.parent();
-        }
         if (useWrapper) {
-            this.getRegion(popupId).$el.append('<div class="modal-window-wrapper"></div>');
-
-            $el.appendTo(region.$el.children('.modal-window-wrapper'));
+            const wrapper = document.createElement('div');
+            wrapper.className = 'modal-window-wrapper';
+            wrapper.appendChild(el);
+            region.el.appendChild(wrapper);
         } else {
-            $el.appendTo(region.$el);
+            region.el.appendChild(el);
         }
 
         if (fadeBackground) {
@@ -239,12 +240,10 @@ export default Marionette.View.extend({
                 targets = [topMostNonTransient];
             }
         }
-        if (this.prevSublingOfContentEl) {
-            popupDef.view.insertAfter(this.prevSublingOfContentEl);
-            delete this.prevSublingOfContentEl;
+        if (popupDef.prevSublingOfContentEl) {
+            popupDef.view.insertAfter(popupDef.prevSublingOfContentEl);
         } else {
-            popupDef.view.prependTo(this.parentOfContentEl);
-            delete this.parentOfContentEl;
+            popupDef.view.prependTo(popupDef.parentOfContentEl);
         }
 
         targets.reverse().forEach(pd => this.__removePopup(pd, immediate));
@@ -339,7 +338,7 @@ export default Marionette.View.extend({
 
     fadeBackground(fade) {
         this.__forceFadeBackground = fade;
-        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
+        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.some(x => x.options.fadeBackground));
     },
 
     __toggleFadedBackground(fade) {

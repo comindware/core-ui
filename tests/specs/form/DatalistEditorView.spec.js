@@ -15,7 +15,7 @@ describe('Editors', () => {
     const getItemOfList = index => getElement(Backbone, `.dd-list__i:eq(${index})`);
     const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
     const getCheckboxes = () => document.querySelectorAll('.checkbox');
-    const getCheckedCheckboxes = () => document.querySelectorAll('.checkbox.editor_checked');
+    const getCheckedCheckboxes = () => document.querySelectorAll('.checkbox:not(:empty)');
     const getAddNewButton = () => document.querySelector('.js-add-new');
 
     const getInput = view => getElement(view, '.js-input');

@@ -62,13 +62,13 @@ export default Marionette.View.extend({
     },
 
     __displayVisibility(isVisible) {
-        const filterIcon = this.ui.filterIcon;
+        const elClassList = this.el.classList;
         if (isVisible) {
-            filterIcon.removeClass(constants.colorIconDisabled);
-            filterIcon.addClass(constants.colorIconEnabled);
+            elClassList.remove(constants.colorIconDisabled);
+            elClassList.add(constants.colorIconEnabled);
         } else {
-            filterIcon.addClass(constants.colorIconDisabled);
-            filterIcon.removeClass(constants.colorIconEnabled);
+            elClassList.add(constants.colorIconDisabled);
+            elClassList.remove(constants.colorIconEnabled);
         }
     }
 });

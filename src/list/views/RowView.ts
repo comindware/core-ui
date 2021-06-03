@@ -331,7 +331,7 @@ export default Marionette.View.extend({
             if (hasChildren) {
                 el.insertAdjacentHTML(
                     'beforeend',
-                    `<i class="${classes.collapsible} js-tree-first-cell context-collapsible-btn fa fa-angle-down ${this.model.collapsed === false ? classes.expanded : ''}"></i>`
+                    `<i class="${classes.collapsible} js-tree-first-cell context-collapsible-btn ${Handlebars.helpers.iconPrefixer('angle-down')} ${this.model.collapsed === false ? classes.expanded : ''}"></i>`
                 );
             }
             isContext.style.marginLeft = `${margin + defaultOptions.subGroupMargin}px`;
@@ -339,7 +339,7 @@ export default Marionette.View.extend({
             el.insertAdjacentHTML(
                 'afterbegin',
                 `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
-                 fa fa-angle-down ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
+                 ${Handlebars.helpers.iconPrefixer('angle-down')} ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
             );
         } else {
             el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
@@ -694,15 +694,16 @@ export default Marionette.View.extend({
             case 'checked':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
                 this.el.classList.add(classes.rowChecked);
+                this.el.classList.remove(classes.rowCheckedSome);
                 break;
             case 'checkedSome':
                 this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
-                this.el.classList.add(classes.rowChecked);
+                this.el.classList.add(classes.rowChecked, classes.rowCheckedSome);
                 break;
             case 'unchecked':
             default:
                 this.ui.checkbox.get(0).innerHTML = '';
-                this.el.classList.remove(classes.rowChecked);
+                this.el.classList.remove(classes.rowChecked, classes.rowCheckedSome);
                 break;
         }
     },

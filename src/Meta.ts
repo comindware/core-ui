@@ -46,6 +46,7 @@ const meta = {
     case: 'cube',
     list: 'align-justify',
     group: 'clone',
+    chart: 'file-chart-pie',
     roleTemplate: 'user-shield',
     organizationalUnit: 'sitemap'
 };
@@ -71,8 +72,20 @@ export const objectPropertyTypes = {
     INSTANCE: 'Instance',
     COLLECTION: 'Collection',
     ENUM: 'Enum',
-    ROLE: 'Role',
+    ROLE: 'Role',    
     ORGANIZATION_UNIT: 'OrganizationalUnit'
+};
+
+export const fieldTypes = {
+    Text: 'text',
+    Number: 'number',
+    Duration: 'duration',
+    DateTime: 'dateTime',
+    Date: 'date',
+    Boolean: 'boolean',
+    Document: 'document',
+    Datalist: 'dataList',
+    RadioGroup: 'radioGroup'
 };
 
 export const presentingComponentsTypes = {
@@ -186,6 +199,7 @@ export const DOUBLECLICK_DELAY = 500;
 
 export default {
     objectPropertyTypes,
+    fieldTypes,
     contextIconType,
     presentingComponentsTypes,
     splitViewTypes,

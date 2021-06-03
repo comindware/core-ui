@@ -109,7 +109,6 @@ export default Marionette.View.extend({
                 }
             });
         }, debounceInterval.medium);
-        //TODO: move menu dropdown on resize
         this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', debouncedRebuild);
     },
 

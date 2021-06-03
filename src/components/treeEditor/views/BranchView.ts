@@ -8,8 +8,13 @@ import { NodeViewFactoryOptions, GraphModel } from '../types';
 
 const iconNames = meta.iconNames;
 
+const defaultOptions = options => ({
+    showHeader: true
+});
+
 export default Marionette.CollectionView.extend({
     initialize(options: NodeViewFactoryOptions) {
+        this.options = _.defaults({}, options, defaultOptions);
         this.collection = options.model.get(options.model.childrenAttribute);
         this.__initCollapsedState();
         this.collapseClassElement = [...this.el.childNodes].find(childNode => childNode.classList.contains('js-tree-item'));
@@ -24,7 +29,8 @@ export default Marionette.CollectionView.extend({
             text: this.__getNodeName(),
             eyeIconClass: this.__getIconClass(),
             collapseIconClass: iconNames.expand,
-            collapsed: this.model.collapsedNode
+            collapsed: this.model.collapsedNode,
+            showHeader: this.options.showTreeEditorHeader
         };
     },
 

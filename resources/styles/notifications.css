@@ -1,9 +1,9 @@
 .fr-alert {
     max-width: 475px;
     font-size: 13px;
-    color: #ffffff;
+    color: var(--theme-colors__success-txt);
     border-radius: 5px;
-    background: #eb6c16;
+    background: var(--theme-colors__success);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     z-index: 560;
     overflow: hidden;
@@ -15,17 +15,16 @@
 .fr-alert .icon-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
     min-width: 40px;
     align-items: center;
-    background-color: white;
-    color: #eb6c16;
-    font-size: 24px;
+    font-size: 1.25rem;
 }
 
 .notification-body_container {
     padding: 0.75rem 0 0.75rem 0.75rem;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .notification-body__show-more-btn {
@@ -47,11 +46,11 @@
 }
 
 .fr-alert .text-container {
-    text-align: left;
     display: flex;
     align-items: flex-start;
-    overflow-y: auto;
-    max-height: calc(2em + 1rem);
+    text-align: left;
+    overflow-y: hidden;
+    max-height: 3rem;
     overflow-x: hidden;
     white-space: normal;
     padding-right: 0.75rem;
@@ -64,19 +63,13 @@
 }
 
 .fr-alert_error {
-    background: #eb6c16;
+    background: var(--theme-colors__error);
+    color: var(--theme-colors__error-txt);
 }
 
-.fr-alert_error .icon-container {
-    color: #eb6c16;
-}
-
-.alert_success {
-    background-color: #74c365;
-}
-
-.fr-alert.alert_success .icon-container {
-    color: #74c365;
+.fr-alert_warning {
+    background: var(--theme-colors__warning);
+    color: var(--theme-colors__warning-txt);
 }
 
 .notification-container {
@@ -98,10 +91,38 @@
 
 .fr-alert-title {
     font-weight: 600;
-    overflow-y: auto;
+    overflow-y: hidden;
     max-height: calc(1em + 1rem);
 }
 
 .icon-close {
     padding: 0 5px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
+}
+
+@media (max-width: 720px) {
+    .notification-container {
+        width: 100%;
+        padding: 15px;
+        align-items: stretch;
+    }
+
+    .fr-alert {
+        margin: 0;
+        margin-bottom: 0.75rem;
+    }
+
+    .fr-alert .text-container {
+        padding: 0;
+    }
+
+    .notification-body_container {
+        padding: 0.75rem;
+        width: 100%;
+    }
 }

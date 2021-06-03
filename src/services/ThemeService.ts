@@ -72,7 +72,7 @@ export default class ThemeService {
         if (!thema) {
             return;
         }
-        this.__setStyle(thema);
+        // this.__setStyle(thema);
         this.__setSprite(thema);
     }
 

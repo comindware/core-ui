@@ -12,11 +12,12 @@ const classes = {
     VISIBLE_COLLECTION: 'visible-collection',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
+    DEFAULT_ANCHOR: 'angle-down'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
 const MIN_DROPDOWN_PANEL_WIDTH = 100;
+const MIN_HEIGHT_TO_OPEN_DOWN = 300;
 
 enum popoutFlow {
     LEFT = 'left',
@@ -25,7 +26,8 @@ enum popoutFlow {
 
 enum panelPosition {
     DOWN = 'down',
-    UP = 'up'
+    UP = 'up',
+    RIGHT = 'right'
 };
 
 type optionsType = {
@@ -39,7 +41,8 @@ type optionsType = {
     panelViewOptions?: object,
     buttonViewOptions?: object,
     showDropdownAnchor?: boolean,
-    customAnchor?: boolean
+    customAnchor?: boolean,
+    fadeBackground?: boolean
 };
 
 const defaultOptions: optionsType = {
@@ -47,11 +50,13 @@ const defaultOptions: optionsType = {
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
+    panelOffsetLeft: 0,
     panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
     externalBlurHandler: () => false,
     showDropdownAnchor: false,
-    customAnchor: false
+    customAnchor: false,
+    fadeBackground: false
 };
 
 /**
@@ -140,7 +145,7 @@ export default class DropdownView {
         buttonEl.classList.toggle(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
         if (!this.options.customAnchor && this.options.showDropdownAnchor) {
             this.button.on('render', () => {
-                buttonEl.insertAdjacentHTML('beforeend', `<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
+                buttonEl.insertAdjacentHTML('beforeend', `<i class="js-default-anchor ${Handlebars.helpers.iconPrefixer(classes.DEFAULT_ANCHOR)} anchor"></i>`);
             });
         }
 
@@ -199,7 +204,7 @@ export default class DropdownView {
         }
 
         const viewport = {
-            height: window.innerHeight,
+            height: viewportHeight,
             width: window.innerWidth
         };
 
@@ -271,37 +276,43 @@ export default class DropdownView {
 
         // panel positioning
         let top: number = 0;
+        let panelBottom: number = 0;
+        let maxHeight: number = 0;
+        const indent = this.options.panelOffsetBottom || WINDOW_BORDER_OFFSET;
         switch (position) {
             case panelPosition.UP:
-                top = buttonRect.top - offsetHeight;
+                this.panelEl.style.removeProperty('top');
+                panelBottom = viewportHeight - buttonRect.bottom + buttonRect.height;
+                this.panelEl.style.bottom = `${panelBottom}px`;
+                maxHeight = viewportHeight - panelBottom - indent;
                 break;
             case panelPosition.DOWN:
+                this.panelEl.style.removeProperty('bottom');
                 top = buttonRect.top + buttonRect.height;
+                this.panelEl.style.top = `${top}px`;
+                maxHeight = viewportHeight - top - indent;
+                break;
+            case panelPosition.RIGHT:
+                if ((viewportHeight - buttonRect.bottom < MIN_HEIGHT_TO_OPEN_DOWN) || bottom < this.options.minAvailableHeight + offsetHeight) {
+                    top = buttonRect.top + buttonRect.height/2 - offsetHeight;
+                } else {
+                    top = buttonRect.top + buttonRect.height/2;
+                }
+                if (top <= WINDOW_BORDER_OFFSET) {
+                    top = WINDOW_BORDER_OFFSET; 
+                }
+                maxHeight = viewportHeight - top - indent;
+                this.panelEl.style.top = `${top}px`;
+                left = buttonRect.left + buttonRect.width + this.options.panelOffsetLeft;
+                this.panelEl.style.left = `${left}px`;
                 break;
             default:
                 break;
         }
 
-        // trying to fit into viewport
-        if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
-            top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight; // todo add border offset
-            if (offsetHeight + WINDOW_BORDER_OFFSET > bottom) {
-                const diff = offsetHeight + WINDOW_BORDER_OFFSET - bottom;
-                top += diff;
-                this.panelEl.style.height = `${offsetHeight + WINDOW_BORDER_OFFSET - diff}px`;
-            }
+        if (maxHeight !== 0) {
+            this.panelEl.style.maxHeight = `${maxHeight}px`;
         }
-        if (top <= WINDOW_BORDER_OFFSET) {
-            top = WINDOW_BORDER_OFFSET;
-
-            if (offsetHeight > buttonRect.top) {
-                const diff = offsetHeight - buttonRect.top;
-                this.panelEl.style.height = `${offsetHeight - diff}px`;
-            }
-        }
-
-        this.panelEl.style.top = `${top}px`;
-
         if (isNeedToRefreshAnchorPosition) {
             this.__updateAnchorPosition(this.button.el);
         }
@@ -331,7 +342,8 @@ export default class DropdownView {
         this.panelEl.classList.add('dropdown__wrp');
 
         this.popupId = WindowService.showTransientPopup(this.panelView, {
-            hostEl: this.button.el
+            hostEl: this.button.el,
+            fadeBackground: this.options.fadeBackground
         });
 
         this.__adjustPosition();
@@ -412,7 +424,8 @@ export default class DropdownView {
     __isNestedInPanel(testedEl) {
         const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
 
-        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.button.el.contains(testedEl)) || (palet && palet.contains(testedEl));
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.button.el.contains(testedEl) || x.el.parentElement === testedEl)
+            || (palet && palet.contains(testedEl));
     }
 
     __handleBlur() {
@@ -427,11 +440,16 @@ export default class DropdownView {
     }
 
     __handleGlobalMousedown(target) {
-        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target)) {
+        if (this.__isNestedInPanel(target) || this.options.externalBlurHandler(target) || this.__isNestedInFading(target)) {
             this.__suppressHandlingBlur = true;
         } else if (!this.__isNestedInButton(target)) {
             this.close();
         }
+    }
+
+    __isNestedInFading(target) {
+        const fadingContainer = document.querySelector('.js-fading-panel');
+        return fadingContainer.contains(target);
     }
 
     __onWindowServicePopupClose(popupId) {

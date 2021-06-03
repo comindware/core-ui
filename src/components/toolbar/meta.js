@@ -12,8 +12,13 @@ import HeadLineView from './views/HeadLineView';
 import TreeEditorView from './views/TreeEditorView';
 
 const __getSeverity = (classPrefix = 'toolbar-btn') => ({
+    Default: {
+        class: `${classPrefix}`,
+        text: 'None',
+        id: 'None'
+    },
     None: {
-        class: classPrefix,
+        class: `${classPrefix} ${classPrefix}_none`,
         text: 'None',
         id: 'None'
     },

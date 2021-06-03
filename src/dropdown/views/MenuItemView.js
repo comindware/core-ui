@@ -24,6 +24,12 @@ export default Marionette.View.extend({
         };
     },
 
+    onRender() {
+        if (this.model.get('selected')) {
+            this.el.classList.add('popout-menu__i_selected');
+        }
+    },
+
     events: {
         click() {
             this.trigger('execute', this.model);

@@ -38,6 +38,12 @@ export default Marionette.View.extend({
         this.ui.name.html(name);
     },
 
+    onAttach() {
+        if (this.model.get('selected')) {
+            this.__scrollIntoViewIfNeeded();
+        }
+    },
+
     __applyClasses() {
         this.$el.toggleClass('layout__tab-layout__header-view-item_selected', Boolean(this.model.get('selected')));
         this.$el.toggleClass('layout__tab-layout__header-view-item_error', Boolean(this.model.get('error')));

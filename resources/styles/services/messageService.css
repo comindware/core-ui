@@ -25,13 +25,13 @@
     overflow: auto;
     display: inline-block;
     vertical-align: middle;
-    background: #ffffff;
+    background: var(--theme-colors__main);
 }
 
 .msg-popup__title {
     font-size: 22px;
     line-height: 1.2;
-    color: #384650;
+    color: var(--theme-colors__text);
     font-weight: 300;
     text-align: center;
 }
@@ -51,25 +51,25 @@
     padding: 5px 25px;
     display: inline-block;
     font-size: 14px;
-    color: #0575bd;
+    color: var(--theme-colors__primary);
     outline: 0;
-    border: 1px solid #ced3d7;
-    background: #ffffff;
+    border: 1px solid var(--theme-colors__main_strongest);
+    background: var(--theme-colors__main);
     cursor: pointer;
 }
 
 .msg-popup__button:hover {
-    color: #009bfe;
-    border-color: #009bfe;
+    color: var(--theme-colors__primary_fade);
+    border-color: var(--theme-colors__primary_fade);
 }
 
 .msg-popup__button_default {
-    color: #ffffff;
-    border-color: #0575bd;
-    background: #0575bd;
+    color: var(--theme-colors__main);
+    border-color: var(--theme-colors__primary);
+    background: var(--theme-colors__primary);
 }
 
 .msg-popup__button_default:hover {
-    color: #ffffff;
-    background-color: #009bfe;
+    color: var(--theme-colors__main);
+    background-color: var(--theme-colors__primary_fade);
 }
