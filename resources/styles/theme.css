@@ -1239,7 +1239,7 @@ tr:not(:first-child) .cell_selection {
   flex: none;
 }
 .layout__horizontal-layout > .layout__button {
-  align-self: baseline;
+  align-self: center;
 }
 
 

@@ -93,6 +93,8 @@
 
 <http://comindware.com/text/core/form/editors#password> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Denis Krasnovsky"; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-08-27T07:10:15.3832807Z"; l10n:modificationDate "2015-09-03T15:21:59.1058761Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "password"].
 
+<http://comindware.com/text/core/form/editors#radioGroup> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Balanov"; l10n:modifiedBy "Vladislav Balanov"; l10n:creationDate "2021-05-13T14:23:57.3104803Z"; l10n:modificationDate "2021-05-13T14:23:57.3104803Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/form/editors#reference> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-05-25T14:54:24.6280688Z"; l10n:modificationDate "2016-01-13T11:29:01.2410651Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data " "].
 
 <http://comindware.com/text/core/form/editors#splitEditor> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Smirnov"; l10n:modifiedBy "Vladislav Smirnov"; l10n:creationDate "2017-10-04T08:45:59.8028571Z"; l10n:modificationDate "2017-10-04T08:45:59.8018535Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "splitEditor"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
@@ -374,6 +376,8 @@
 <http://comindware.com/text/core/form/editors/number#notSetPlaceholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Denis Krasnovsky"; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-08-03T14:47:21.4175735Z"; l10n:modificationDate "2015-09-03T15:21:44.8304487Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Not set"].
 
 <http://comindware.com/text/core/form/editors/password#placeholder> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:createdBy "Denis Krasnovsky"; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-08-27T07:11:10.0382807Z"; l10n:modificationDate "2015-09-03T15:24:16.7366378Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter password"].
+
+<http://comindware.com/text/core/form/editors/radioGroup#emptyRadiogroup> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vladislav Balanov"; l10n:modifiedBy "Vladislav Balanov"; l10n:creationDate "2021-05-13T14:24:18.7180633Z"; l10n:modificationDate "2021-05-13T14:26:11.4396226Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Radiogroup is empty"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/reference#createNew> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Denis Krasnovsky"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2016-02-17T12:45:54.8745851Z"; l10n:modificationDate "2017-05-17T13:55:45.5789929Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Create"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 

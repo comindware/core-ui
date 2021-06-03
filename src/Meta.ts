@@ -1,6 +1,11 @@
 import LocalizationService from 'services/LocalizationService';
 
 const meta = {
+    logoItem: 'newspaper',
+    socialLinksLoginPage: 'globe',
+    linksLoginPage: 'external-link',
+    infoNewsItem: 'info-square',
+    formRoot: 'window',
     reference: 'link',
     instance: 'link',
     instanceproperty: 'link',
