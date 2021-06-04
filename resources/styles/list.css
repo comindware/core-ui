@@ -644,6 +644,7 @@ tr.grid-header.dragover td {
     background-clip: padding-box;
     margin-right: 25px;
     margin-left: 3px;
+    padding-right: 28px;
 }
 
 .cell-right,

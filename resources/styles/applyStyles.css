@@ -70,11 +70,6 @@
     color: var(--disabled-text-color);
 }
 
-.cell > .editor {
-    height: 25px;
-    padding: 0 5px;
-}
-
 /* ------------------ Input ------------------ */
 .input {
     padding: var(--input-padding);

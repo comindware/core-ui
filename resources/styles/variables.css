@@ -75,7 +75,7 @@
     --disabled-input-color: #b1b1b1;
     --border-color: var(--theme-colors__main_fade);
     --border: 1px solid var(--border-color);
-    --border-radius: 2px;
+    --border-radius: 4px;
     --focus: 1px solid var(--theme-colors__primary);
     --toolbar-background: transparent;
 

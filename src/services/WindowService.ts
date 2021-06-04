@@ -1,5 +1,6 @@
 import PopupStackView from '../views/PopupStackView';
 import GlobalEventService from './GlobalEventService';
+import { keyCode } from "../utils";
 
 export default {
     initialize() {
@@ -109,7 +110,7 @@ export default {
     },
 
     __keyAction(event) {
-        if (event.keyCode === 27) {
+        if (event.keyCode === keyCode.ESCAPE) {
             this.__popupStackView.closeTopPopup();
         }
     }
