@@ -1,6 +1,5 @@
 //@flow
 import template from './templates/splitPanel.hbs';
-import SplitPanelResizer from './SplitPanelResizer';
 import { splitViewTypes } from '../Meta';
 
 const orientationClasses = {
@@ -17,7 +16,6 @@ const defaultOptions = {
 export default Marionette.View.extend({
     initialize() {
         this.regionModulesMap = [];
-        this.resisersList = [];
     },
 
     template: Handlebars.compile(template),
@@ -37,23 +35,19 @@ export default Marionette.View.extend({
 
     toggleOrientation(viewType = defaultOptions.viewType, position) {
         this.options.viewType = viewType;
-        this.resisersList.forEach(resizer => resizer.toggleOrientation(this.options.viewType, position));
         this.el.className = this.className();
         this.__showPanels();
-    },
-
-    onAttach() {
-        this.__initializeResizers();
-    },
-
-    onDestroy() {
-        this.resisersList.forEach(resizer => resizer.destroy());
     },
 
     __initializeViews(handlerRoutPairs) {
         handlerRoutPairs.forEach((pair, i) => {
             const regionEl = document.createElement('div');
             regionEl.className = `js-tile${i + 1}-region split-panel__tile${i === 0 ? ' general' : ''}`;
+            this.on('scroll:view', () => {
+                if (i !== 0) {
+                    regionEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
 
             this.el.insertAdjacentElement('beforeEnd', regionEl);
 
@@ -69,29 +63,11 @@ export default Marionette.View.extend({
         });
     },
 
-    __initializeResizers() {
-        for (let i = 0; i < this.regionModulesMap.length - 1; i++) {
-            //after each, except last
-            const resizer = new SplitPanelResizer({
-                orientation: this.options.viewType,
-                firstPanel: this.regionModulesMap[i].region,
-                secondPanel: this.regionModulesMap[i + 1] ?.region,
-                splitViewPosition: this.options.splitViewPosition
-            });
-            this.listenTo(resizer, 'change:resizer', (splitPosition, viewType) => {
-                this.trigger('change:resizer', splitPosition, viewType);
-            });
-            this.resisersList.push(resizer);
-            this.regionModulesMap[i].region.el.insertAdjacentElement('afterEnd', resizer.render().el);
-        }
-    },
-
     __hidePanels() {
         const regions = Object.values(this.regions);
         regions[0].el.style.flex = '';
 
         for (let i = 1; i < regions.length; i++) {
-            this.resisersList[i - 1].el.setAttribute('hidden', true);
             regions[i].el.setAttribute('hidden', '');
         }
     },
@@ -101,12 +77,7 @@ export default Marionette.View.extend({
         regions[0].el.style.flex = '';
 
         for (let i = 1; i < regions.length; i++) {
-            const resizer = this.resisersList[i - 1];
-
-            resizer.el.removeAttribute('hidden');
             regions[i].el.removeAttribute('hidden');
-
-            resizer.render();
         }
     }
 });
