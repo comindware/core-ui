@@ -1,4 +1,3 @@
-import * as elementsFactory from '../factory';
 import VerticalLayout from '../VerticalLayoutView';
 import HorizontalLayout from '../HorizontalLayoutView';
 import TabLayoutView from '../tabLayout/TabLayoutView';
@@ -10,151 +9,94 @@ import GridView from '../../list/views/GridView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
 import FormFieldAnchor from './FormFieldAnchor';
 
-export default {
-    __uniqueFormId: '',
+import { formComponentTypes } from 'Meta';
 
-    getContentFromSchema(schema: Array<any>, uniqueFormId: String) {
+export default class FormContentFactory {
+    static getContentFromSchema(schema: Array<any>, uniqueFormId: String): Backbone.View {
         this.__uniqueFormId = uniqueFormId;
         return this.__parseConfiguration(schema)[0];
-    },
-
-    __parseConfiguration(schema: Array<any>) {
-        return schema.map(child => {
-            switch (child.type) {
-                //auto layout components
-                case 'v-container': // vertical layout container
-                    return new VerticalLayout(
-                        Object.assign({}, child, {
-                            rows: this.__parseConfiguration(child.items)
-                        })
-                    );
-                case 'h-container': // horizontal layout container
-                    return new HorizontalLayout(
-                        Object.assign({}, child, {
-                            columns: this.__parseConfiguration(child.items)
-                        })
-                    );
-                //complex components
-                case 'tab':
-                    return new TabLayoutView(
-                        Object.assign({}, child, {
-                            tabs: this.__parseConfiguration(child.items).map((item, index) => ({
-                                view: item,
-                                id: child.items[index].id,
-                                name: child.items[index].name
-                            }))
-                        })
-                    );
-                case 'group':
-                    return new Group(
-                        Object.assign({}, child, {
-                            view: this.__parseConfiguration(child.items)[0]
-                        })
-                    );
-                case 'Popup':
-                case 'popup':
-                    return new Popup(_.omit(child, 'type'));
-                case 'Button':
-                case 'button':
-                    return new Button(_.omit(child, 'type'));
-                case 'grid': {
-                    const gridView = new GridView(child);
-                    if (typeof child.executeAction === 'function') {
-                        gridView.listenTo(gridView, 'execute', child.executeAction);
-                    }
-
-                    if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => gridView.on(key, child.viewEvents[key]));
-                    }
-
-                    return gridView;
-                }
-                case 'toolbar': {
-                    const toolbar = new ToolbarView(child);
-
-                    toolbar.on('command:execute', function(...args) {
-                        child.handler.apply(this, args);
-                    });
-
-                    return toolbar;
-                }
-                case 'plainText':
-                    return new PlainText(_.omit(child, 'type'));
-                case 'custom':
-                default: {
-                    if (child.type) {
-                        const kind = child.type.match(/editor|field/)[0];
-
-                        return new FormFieldAnchor({
-                            ...child,
-                            uniqueFormId: this.__uniqueFormId,
-                            type: child.type.replace(`-${kind}`, ''),
-                            kind
-                        });
-                    }
-                    const childContructor = new child.view(_.omit(child, 'view'));
-
-                    if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => childContructor.on(key, child.viewEvents[key]));
-                    }
-
-                    return childContructor.view ? childContructor.view : childContructor;
-                }
-            }
-        });
-    },
-
-    __parseConfigurationOld(schema: Array<any>) {
-        return schema.map(child => {
-            switch (child.cType) {
-                case 'container':
-                    switch (child.layout) {
-                        case 'vertical':
-                            return new VerticalLayout(
-                                Object.assign({}, child, {
-                                    rows: this.__parseConfiguration(child.items)
-                                })
-                            );
-                        case 'tab':
-                            return new TabLayoutView(
-                                Object.assign({}, child, {
-                                    tabs: this.__parseConfiguration(child.items)
-                                })
-                            );
-                        case 'group':
-                            return new Group(
-                                Object.assign({}, child, {
-                                    view: this.__parseConfiguration(child.items)[0]
-                                })
-                            );
-                        case 'horizontal':
-                        default:
-                            return new HorizontalLayout(
-                                Object.assign({}, child, {
-                                    columns: this.__parseConfiguration(child.items)
-                                })
-                            );
-                    }
-                case 'field':
-                    return elementsFactory.createFieldAnchor(child.key, Object.assign({ uniqueFormId: this.__uniqueFormId }, child));
-                case 'editor':
-                    return elementsFactory.createEditorAnchor(child.key, Object.assign({ uniqueFormId: this.__uniqueFormId }, child));
-                case 'popup':
-                    return new Popup(_.pick(child, ['size', 'header', 'content']));
-                case 'button':
-                case 'Button':
-                    return new Button(_.omit(child, 'cType'));
-                case 'plainText':
-                    return new PlainText(_.omit(child, 'cType'));
-                case 'custom':
-                default: {
-                    const view = new child.view(_.omit(child, 'view'));
-                    if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => view.on(key, child.viewEvents[key]));
-                    }
-                    return view;
-                }
-            }
-        });
     }
-};
+
+    static __parseConfiguration(schema: Array<any>): Array<Backbone.View> {
+        return schema.map(this.__parseChildConfiguration.bind(this));
+    }
+
+    static __parseChildConfiguration(child: any): Backbone.View {
+        switch (child.type) {
+            //auto layout components
+            case formComponentTypes.verticalLayout: // vertical layout container
+                return new VerticalLayout({ ...child, rows: this.__parseConfiguration(child.items) });
+            case formComponentTypes.horizontalLayout: // horizontal layout container
+                return new HorizontalLayout({ ...child, columns: this.__parseConfiguration(child.items) });
+            //complex components
+            case formComponentTypes.tabs: {
+                const tabs = child.items.map((item: any) => {
+                    const { view, ...tabOptions } = item;
+                    return {
+                        ...tabOptions,
+                        view: view ? this.__getView(item) : this.__parseChildConfiguration(item)
+                    };
+                });
+                return new TabLayoutView({ ...child, tabs });
+            }
+            case formComponentTypes.group:
+                return new Group({ ...child, view: this.__parseConfiguration(child.items)[0] });
+            case formComponentTypes.popup: {
+                const { type, ...options } = child;
+                return new Popup({ ...options });
+            }
+            case formComponentTypes.button: {
+                const { type, ...options } = child;
+                return new Button({ ...options });
+            }
+            case formComponentTypes.grid: {
+                const { viewEvents, executeAction, ...gridOptions } = child;
+                const gridView = new GridView({ ...gridOptions });
+                if (typeof executeAction === 'function') {
+                    gridView.on('execute', child.executeAction);
+                }
+
+                if (viewEvents) {
+                    Object.entries(viewEvents).forEach(([key, event]) => gridView.on(key, event));
+                }
+
+                return gridView;
+            }
+            case formComponentTypes.toolbar: {
+                const toolbar = new ToolbarView(child);
+                if (typeof child.handler === 'function') {
+                    toolbar.on('command:execute', child.handler);
+                }
+
+                return toolbar;
+            }
+            case formComponentTypes.plainText: {
+                const { type, ...options } = child;
+                return new PlainText({ ...options });
+            }
+            case formComponentTypes.custom:
+            default: {
+                if (child.type) {
+                    const kind = child.type.match(/editor|field/)[0];
+
+                    return new FormFieldAnchor({
+                        ...child,
+                        uniqueFormId: this.__uniqueFormId,
+                        type: child.type.replace(`-${kind}`, ''),
+                        kind
+                    });
+                }
+                return this.__getView(child);
+            }
+        }
+    }
+
+    static __getView(child: any): Backbone.View {
+        const { view, viewEvents, ...viewOptions } = child;
+        const viewInstance = view instanceof Backbone.View ? view : new view({ ...viewOptions });
+        if (viewEvents) {
+            Object.entries(viewEvents).forEach(([key, event]) => viewInstance.on(key, event));
+        }
+        return viewInstance;
+    }
+}

@@ -329,10 +329,12 @@ export default Marionette.View.extend({
         });
         const view = tabModel.get('view');
 
-        view.on('all', (...args) => {
+        this.listenTo(view, 'all', (...args) => {
             args[0] = `tab:${args[0]}`;
             this.trigger(...args);
         });
+        this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
+        this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
         if (isLoadingNeeded) {
             this.setLoading(true);
             setTimeout(() => {

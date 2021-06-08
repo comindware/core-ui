@@ -197,6 +197,19 @@ export const validationSeverityClasses = {
 
 export const DOUBLECLICK_DELAY = 500;
 
+export const formComponentTypes = {
+    verticalLayout: 'v-container',
+    horizontalLayout: 'h-container',
+    tabs: 'tabs',
+    group: 'group',
+    popup: 'popup',
+    button: 'button',
+    grid: 'grid',
+    toolbar: 'toolbar',
+    plainText: 'plainText',
+    custom: 'custom'
+};
+
 export default {
     objectPropertyTypes,
     fieldTypes,
@@ -209,5 +222,6 @@ export default {
     validationSeverityTypes,
     validationSeverityClasses,
     getComplexValueTypesLocalization,
-    DOUBLECLICK_DELAY
+    DOUBLECLICK_DELAY,
+    formComponentTypes
 };
