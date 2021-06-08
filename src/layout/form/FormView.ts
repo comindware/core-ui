@@ -1,7 +1,9 @@
 import form from 'form';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import LoadingBehavior from 'views/behaviors/LoadingBehavior';
 import FormContentFactory from './FormContentFactory';
 import FormSchemaFactory from './FormSchemaFactory';
+import template from './form.hbs';
 
 const classes = {
     CLASS_NAME: 'layout__form-view'
@@ -25,7 +27,7 @@ export default Marionette.View.extend({
         this.__addUniqueFormIdToModel();
     },
 
-    template: Handlebars.compile('<div class="form-class"></div>'),
+    template: Handlebars.compile(template),
 
     tagName: 'form',
 
@@ -37,7 +39,8 @@ export default Marionette.View.extend({
         contentRegion: {
             el: '.form-class',
             replaceElement: true
-        }
+        },
+        loadingRegion: '.js-loading-region'
     },
 
     behaviors: {
@@ -56,6 +59,10 @@ export default Marionette.View.extend({
             options() {
                 return this.options;
             }
+        },
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion',
         }
     },
 

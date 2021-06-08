@@ -48,7 +48,7 @@ export default function() {
                     },
                     {
                         text: 'Commit',
-                        type: 'Button',
+                        type: 'button',
                         handler() {
                             console.log((window.temp = view));
                             view.form.commit();

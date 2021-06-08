@@ -1,14 +1,23 @@
-export default {
-    getSchema(schema: Array<any>) {
+import { formComponentTypes } from 'Meta';
+
+const isContainer = item => item.type && [
+    formComponentTypes.verticalLayout,
+    formComponentTypes.horizontalLayout,
+    formComponentTypes.tabs,
+    formComponentTypes.group
+].includes(item.type);
+
+export default class FormSchemaFactory {
+    static getSchema(schema: Array<any>) {
         const schemaPlain = {};
         this.__fillConfiguration(schema, schemaPlain);
 
         return schemaPlain;
-    },
+    }
 
-    __fillConfiguration(schemaTree: Array<any>, schemaPlain: Object) {
+    static __fillConfiguration(schemaTree: Array<any>, schemaPlain: Object) {
         schemaTree.forEach(item => {
-            if (item.type && (item.type.includes('container') || item.type.includes('group'))) {
+            if (isContainer(item)) {
                 this.__fillConfiguration(item.items, schemaPlain);
             } else if (item.key) {
                 if (!/editor|field/.test(item.type)) {

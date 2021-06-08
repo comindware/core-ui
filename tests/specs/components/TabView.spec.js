@@ -55,7 +55,7 @@ describe('Components', () => {
                                         },
                                         {
                                             text: 'Commit',
-                                            type: 'Button',
+                                            type: 'button',
                                             handler() {
                                                 view.form.commit();
                                             }
@@ -152,7 +152,7 @@ describe('Components', () => {
                                     },
                                     {
                                         text: 'Commit',
-                                        type: 'Button',
+                                        type: 'button',
                                         handler() {
                                             view.form.commit();
                                         }
