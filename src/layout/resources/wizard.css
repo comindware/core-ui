@@ -1,3 +1,7 @@
+:root .layout__wizard {
+    --wizard-orange: #ffa500;
+}
+
 .layout__popup-view > .wizard__popup-view {
     background-color: var(--theme-colors__main);
 }
@@ -38,7 +42,7 @@
     flex: 0 1 100%;
     border-radius: 4px 4px 0 0;
     margin-bottom: 0;
-    background-color: var(--theme-colors__secondary_fadest);
+    background-color: var(--theme-colors__main_strong);
     color: var(--theme-colors__text);
     padding: 4px 15px;
     font-size: 14px;
@@ -69,7 +73,7 @@
 .layout__wizard__header-view-item:last-child::after {
     bottom: 0;
     right: 0;
-    background-color: var(--theme-colors__secondary_fadest);
+    background-color: var(--theme-colors__main_strong);
 }
 
 .layout__wizard__header-view-item_selected:last-child::after,
@@ -84,12 +88,13 @@
 .layout__wizard__header-view-item_selected,
 .layout__wizard__header-view-item_completed {
     background-color: var(--theme-colors__primary);
-    color: var(--theme-colors__main);
+    color: var(--theme-colors__primary-txt);
 }
 
 .layout__wizard__header-view-item_selected .layout__wizard__header-view-item-index,
 .layout__wizard__header-view-item_completed .layout__wizard__header-view-item-index {
     color: var(--theme-colors__primary);
+    background-color: var(--theme-colors__primary-txt);
 }
 
 .layout__wizard__header-view-item_hidden {
@@ -132,8 +137,7 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    background-color: var(--theme-colors__main);
-    border: 1px solid var(--theme-colors__secondary);
+    border: 1px solid var(--editors-color-border);
     border-top: none;
     border-radius: 0 0 4px 4px;
     padding: 20px 15px;
@@ -154,11 +158,11 @@
 }
 
 .layout__wizard__final-button > .toolbar-btn {
-    background-color: #ffa500;
-    border: 1px solid #ffa500;
+    background-color: var(--wizard-orange);
+    border: 1px solid var(--wizard-orange);
 }
 
 .layout__wizard__final-button > .toolbar-btn:hover {
-    background-color: #ff8800;
-    border: 1px solid #ff8800;
+    background-color: var(--wizard-orange);
+    border: 1px solid var(--wizard-orange);
 }
