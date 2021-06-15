@@ -99,6 +99,10 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    setLoading(state: Boolean) {
+        this.loading.setLoading(state);
+    },
+
     validate() {
         let fieldErrors;
         let contentErrors;
