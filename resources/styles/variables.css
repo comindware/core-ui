@@ -49,25 +49,27 @@
     --theme-colors__success-txt: var(--theme-colors__main);
 
     /* box-shadow variables */
-    --black: #000000;
-    --black-14: rgba(var(--black),.14);
-    --black-12: rgba(var(--black),.12);
-    --black-16: rgba(var(--black),.16);
-    --black-23: rgba(var(--black),.23);
-    --black-24: rgba(var(--black),.24);
-    --black-25: rgba(var(--black),.25);
-    --black-20: rgba(var(--black), .2);
-    --black-40: rgba(var(--black), .4);
-    --black-50: rgba(var(--black), .5);
-    --black-70: rgba(var(--black), .7);
-    --black-80: rgba(var(--black), .8);
-    --black-90: rgba(var(--black), .9);
+    --black-rgb: 0, 0, 0;
+    --black-14: rgba(var(--black-rgb),.14);
+    --black-12: rgba(var(--black-rgb),.12);
+    --black-16: rgba(var(--black-rgb),.16);
+    --black-23: rgba(var(--black-rgb),.23);
+    --black-24: rgba(var(--black-rgb),.24);
+    --black-25: rgba(var(--black-rgb),.25);
+    --black-20: rgba(var(--black-rgb), .2);
+    --black-40: rgba(var(--black-rgb), .4);
+    --black-50: rgba(var(--black-rgb), .5);
+    --black-70: rgba(var(--black-rgb), .7);
+    --black-80: rgba(var(--black-rgb), .8);
+    --black-90: rgba(var(--black-rgb), .9);
 
     --theme-colors__warning-color: var(--theme-colors__main);
     --theme-colors__error-color: var(--theme-colors__main);
     --theme-colors__success-color: var(--theme-colors__main);
 
     /* other variables */
+    --black: #000000;
+    --white: #ffffff;
     --red-dark: #ac1e1a; /* use for red control elements */
     --link-color: var(--theme-colors__primary);
     --link-hover-color: var(--theme-colors__primary_fade);
