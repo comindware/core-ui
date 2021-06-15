@@ -1105,9 +1105,9 @@ input[type="color"],
 .form-group .dev-expression-editor-field-inline {
     display: flex;
     flex-direction: row;
-    border: 1px solid #c1c1c1;
+    border: 1px solid var(--editors-color-border);
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: var(--white);
 }
 
 .dev-expression-editor-field-inline .dev-complex-padding {

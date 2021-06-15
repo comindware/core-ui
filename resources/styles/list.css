@@ -137,7 +137,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 12px;
-    color: #000000;
+    color: var(--black);
     cursor: default;
     min-width: 50px;
 }
@@ -523,7 +523,6 @@ tr.empty-view {
     top: 0;
     left: 0;
     z-index: 1;
-    background-color: #ffffff;
     background-clip: padding-box;
 }
 

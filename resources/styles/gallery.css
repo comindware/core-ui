@@ -31,7 +31,7 @@
 
 .gallery-close:hover {
     background-color: var(--black-30);
-    color: #ffffff;
+    color: var(--white);
     font-size: 32px;
 }
 
@@ -248,7 +248,7 @@
 
 .gallery-download:hover,
 .gallery-more:hover {
-    color: #ffffff;
+    color: var(--white);
     background-color: var(--black-30);
     font-size: 28px;
 }

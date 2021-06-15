@@ -31,8 +31,8 @@
     cursor: pointer;
     padding: 0.3rem 0.3rem;
     border-radius: 2px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--white);
+    color: var(--black);
     margin: 5px;
     text-align: center;
 }
