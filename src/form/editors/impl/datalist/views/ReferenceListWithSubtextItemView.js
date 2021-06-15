@@ -17,6 +17,7 @@ export default ReferenceListItemView.extend({
             text: this.options.getDisplayText(this.model.toJSON()),
             iconType,
             iconLink,
+            showIcons: options.showIcons,
             subtext: this.model.get(options.subtextProperty),
             showCheckboxes: this.options.showCheckboxes,
             url: _.getResult(this.options.model.get('url'))

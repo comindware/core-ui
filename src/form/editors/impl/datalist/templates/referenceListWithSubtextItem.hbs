@@ -6,7 +6,9 @@
     </span>
 {{/if}}
 <div class="datalist-container-item">
-    <i class="{{iconPrefixer iconType}} datalist-icon" aria-hidden="true"></i>
+    {{#if showIcons}}
+      <i class="{{iconPrefixer iconType}} datalist-icon" aria-hidden="true"></i>
+    {{/if}}
     <div class="datalist-text-container">
         <span class="datalist-container-text" title="{{text}}">{{text}}</span>
         <span class="datalist-container-subtext" title="{{subtext}}">{{subtext}}</span>

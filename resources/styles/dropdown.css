@@ -236,15 +236,15 @@
 .datalist-text-container {
     display: flex;
     flex-direction: column;
-    padding-left: 39px;
+    padding-left: 10px;
     overflow: hidden;
 }
 
 .datalist-icon {
     font-size: 20px;
     color: var(--theme-colors__text_fadest);
-    width: 16px;
-    padding-left: 20px;
+    width: 30px;
+    padding-left: 10px;
 }
 
 .datalist-container-text {

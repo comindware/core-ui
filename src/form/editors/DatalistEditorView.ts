@@ -29,6 +29,7 @@ type optionsType = {
 
     showAdditionalList?: boolean,
     subtextProperty?: string,
+    showIcons?: boolean,
     iconProperty?: string,
     metaIcons?: Object,
 
@@ -88,6 +89,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
 
     showAdditionalList: false,
     subtextProperty: '',
+    showIcons: true,
     iconProperty: '',
     metaIcons: Core.meta.contextIconType,
 
@@ -275,6 +277,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 canAddItem: this.__canAddItem.bind(this),
                 subTextOptions: {
                     subtextProperty: this.options.subtextProperty,
+                    showIcons: this.options.showIcons,
                     iconProperty: this.options.iconProperty,
                     metaIcons: this.options.metaIcons
                 },
