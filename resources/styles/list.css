@@ -725,7 +725,7 @@ tr.grid-header.dragover td {
     display: flex;
     overflow: hidden;
     height: 54px;
-    border-bottom: 1px solid var(--theme-colors__main_strongest);
+    padding: 5px;
     position: relative;
 }
 
