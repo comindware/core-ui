@@ -135,6 +135,7 @@ input, textarea, select {
 .editor.context_select.editor_disabled {
   background: var(--disabled-input-color);
   color: var(--disabled-text-color);
+  opacity: 0.7;
 }
 
 .editor_disabled .input,
