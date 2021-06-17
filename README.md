@@ -1,6 +1,6 @@
 [![NPM](https://nodei.co/npm/comindware.core.ui.png?compact=true)](https://nodei.co/npm/comindware.core.ui/)
 
-[![Build Status](https://travis-ci.org/comindware/core-ui.svg)](https://travis-ci.org/comindware/core-ui) [![Coverage Status](https://coveralls.io/repos/github/comindware/core-ui/badge.svg?branch=1.5%2Frelease)](https://coveralls.io/github/comindware/core-ui?branch=master)
+[![Build Status](https://travis-ci.com/comindware/core-ui.svg)](https://travis-ci.com/comindware/core-ui) [![Coverage Status](https://coveralls.io/repos/github/comindware/core-ui/badge.svg?branch=1.5%2Frelease)](https://coveralls.io/github/comindware/core-ui?branch=master)
 
 # core-ui
 
