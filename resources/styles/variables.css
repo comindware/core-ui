@@ -6,6 +6,7 @@
     --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1);
     --theme-colors__primary_strong: hsla(203, 95%, 28%, 1);
     --theme-colors__primary_strongest: hsla(203, 95%, 18%, 1);
+    --theme-colors__primary-hsl: 203, 95%, 38%;
 
     --theme-colors__primary-txt: var(--theme-colors__main);
 
