@@ -1091,6 +1091,13 @@ tr:not(:first-child) .cell_selection {
   padding: var(--tab-panel-container-padding);
 }
 
+@media (max-width: 1024px) {
+  .layout__tab-layout__panel-container {
+      padding-left: 0;
+      padding-right: 0;
+  }
+}
+
 .layout__configuration-panel-container {
   padding: var(--tab-panel-container-padding);
   border: 1px solid var(--theme-colors__main_strongest);

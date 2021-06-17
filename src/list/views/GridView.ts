@@ -466,7 +466,9 @@ export default Marionette.View.extend({
         }
 
         this.listenTo(this.listView, 'drag:drop', this.__onItemMoved);
-        this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
+        if (this.options.isSliding) {
+            this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
+        }
 
         if (this.options.columns.length) {
             this.__toggleNoColumnsMessage(this.options.columns);
