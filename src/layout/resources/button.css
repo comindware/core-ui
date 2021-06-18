@@ -206,3 +206,9 @@
 .toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {
     margin: 0;
 }
+
+.toolbar-panel_container .btn-separator {
+    margin: 0 15px;
+    width: calc(100% - 30px);
+    border-bottom: 1px solid var(--theme-colors__secondary-txt);
+}
