@@ -498,7 +498,7 @@ export default Marionette.PartialCollectionView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        if (this.collection.length) {
+        if (this.collection.length && !Core.services.MobileService.isMobile) {
             this.state.allItemsHeight = this.childHeight * this.collection.length + this.options.headerHeight + configurationConstants.HEIGHT_STOCK_TO_SCROLL;
         } else {
             this.state.allItemsHeight = 'auto';
