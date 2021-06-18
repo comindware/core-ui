@@ -67,6 +67,11 @@
     color: var(--theme-colors__cancel-btn-txt);
 }
 
+.btn-disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
 /* Themes color button */
 .toolbar-btn_none, .split-btn_default{
     background-color: var(--theme-colors__severity-none);

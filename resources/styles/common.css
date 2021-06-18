@@ -394,7 +394,6 @@ body.non-selectable {
     top: 0;
     bottom: 0;
     background: hsla(var(--theme-colors__primary-hsl), 0.2);
-    opacity: 0.7;
     z-index: 100;
 }
 
@@ -951,6 +950,7 @@ body.non-selectable {
 .toolbar-panel_container .toolbar-btn {
     background-color: var(--theme-colors__secondary);
     color: var(--theme-colors__text);
+    height: 30px;
 }
 
 .toolbar-panel_container .toolbar-btn:not(.toolbar-btn_headline):hover{
@@ -967,8 +967,7 @@ body.non-selectable {
 }
 
 .toolbar-panel_container__select-state .toolbar-btn {
-    height: inherit;
-    padding: 10px;
+    height: 30px;
 }
 
 .toolbar-panel_container__select-state .checkbox{
