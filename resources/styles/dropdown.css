@@ -359,7 +359,10 @@
     width: 100%;
 }
 /*-----//------*/
-
+.datalist-panel.dropdown__wrp {
+    background-color: var(--theme-colors__main);
+    color: var(--theme-colors__text);
+}
 
 .datalist-panel.dropdown__wrp_down {
     border-radius: 0 0 4px 4px;

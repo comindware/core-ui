@@ -1087,7 +1087,7 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__panel-container {
   border-radius: 0 0 4px 4px;
-  background-color: var(--popup-window-bg);
+  background-color: var(--theme-colors__main);
   border: 1px solid var(--editors-color-border);
   padding: var(--tab-panel-container-padding);
 }
@@ -1270,7 +1270,7 @@ tr:not(:first-child) .cell_selection {
 /* Popup */
 
 .layout__popup-view-window {
-  background: var(--popup-window-bg);
+  background: var(--theme-colors__main);
   box-shadow: 0 3px var(--popup-shadow-blur-radius) rgba(var(--popup-shadow-color), var(--popup-shadow-opacity));
   border-radius: 5px;
 }
