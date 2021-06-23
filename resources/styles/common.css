@@ -404,9 +404,6 @@ body.non-selectable {
 
 .loader {
     width: 100%;
-    height: 30px;
-    line-height: 21px;
-    font-size: 13px;
     color: var(--theme-colors__background);
     font-weight: 600;
     display: block;

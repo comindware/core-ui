@@ -35,6 +35,7 @@ type optionsType = {
     autoOpen?: boolean,
     renderAfterClose?: boolean,
     panelPosition?: panelPosition,
+    panelOffsetLeft?: number,
     panelMinWidth?: number,
     allowNestedFocus?: boolean,
     externalBlurHandler?: Function,
@@ -42,7 +43,8 @@ type optionsType = {
     buttonViewOptions?: object,
     showDropdownAnchor?: boolean,
     customAnchor?: boolean,
-    fadeBackground?: boolean
+    fadeBackground?: boolean,
+    alwaysAlignByButton?: boolean
 };
 
 const defaultOptions: optionsType = {
@@ -56,7 +58,8 @@ const defaultOptions: optionsType = {
     externalBlurHandler: () => false,
     showDropdownAnchor: false,
     customAnchor: false,
-    fadeBackground: false
+    fadeBackground: false,
+    alwaysAlignByButton: false
 };
 
 /**
@@ -182,12 +185,17 @@ export default class DropdownView {
         const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        if (this.maxWidth) {
-            this.panelEl.style.maxWidth = `${this.maxWidth}px`;
+        if (this.options.alwaysAlignByButton) {
+            this.panelEl.style.minWidth = this.panelEl.style.maxWidth = `${buttonRect.width}px`;
+        } else {
+            if (this.maxWidth) {
+                this.panelEl.style.maxWidth = `${this.maxWidth}px`;
+            }
+
+            const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+            this.panelEl.style.minWidth = `${minWidth}px`;
         }
 
-        const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
-        this.panelEl.style.minWidth = `${minWidth}px`;
 
         let offsetHeight = this.panelEl.offsetHeight;
 

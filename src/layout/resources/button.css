@@ -199,7 +199,7 @@
     text-align: left;
 }
 
-.toolbar-panel_container .toolbar-btn .toolbar__icons{
+.toolbar-panel_container .toolbar-btn .toolbar__icons:not(.toolbar__icons_arrow){
     margin: 0 5px 0 -5px;
 }
 
@@ -209,6 +209,6 @@
 
 .toolbar-panel_container .btn-separator {
     margin: 0 15px;
-    width: calc(100% - 30px);
-    border-bottom: 1px solid var(--theme-colors__secondary-txt);
+    width: 100%;
+    border-bottom: 1px solid var(--menu-items-clor-border);
 }

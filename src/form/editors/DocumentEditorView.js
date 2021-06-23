@@ -99,6 +99,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         const isDropZoneCollapsed = this.isDropZoneCollapsed;
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+            isMobile: Core.services.MobileService.isMobile,
             placeHolderText: isDropZoneCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)

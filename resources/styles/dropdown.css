@@ -87,6 +87,10 @@
     display: none;
 }
 
+.datalist-panel .grid-content-wrp {
+    width: 100%;
+}
+
 .dd-list__list {
     position: relative;
     flex-grow: 1;

@@ -58,7 +58,7 @@ ul .layout__tab-layout__header-view-item:last-child {
 .layout__tab-layout__header-view-item.tab-layout__headers-menu {
     font-size: 16px;
     font-weight: bold;
-    padding: 0 20px;
+    padding: 0 5px 0 15px;
 }
 
 /* panel */

@@ -127,6 +127,8 @@ input, textarea, select {
 .editor_readonly .input:hover,
 .editor_disabled .textarea,
 .editor_readonly .textarea,
+.editor_disabled .btn-separator,
+.editor_readonly .btn-separator,
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
@@ -1090,13 +1092,6 @@ tr:not(:first-child) .cell_selection {
   background-color: var(--theme-colors__main);
   border: 1px solid var(--editors-color-border);
   padding: var(--tab-panel-container-padding);
-}
-
-@media (max-width: 1024px) {
-  .layout__tab-layout__panel-container {
-      padding-left: 0;
-      padding-right: 0;
-  }
 }
 
 .layout__configuration-panel-container {

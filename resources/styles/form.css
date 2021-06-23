@@ -130,6 +130,10 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
+.form-label__tooltip-panel.dropdown__wrp {
+    background: var(--theme-colors__main);
+}
+
 .form-label__error-panel {
     min-width: 200px;
     max-width: 400px;
