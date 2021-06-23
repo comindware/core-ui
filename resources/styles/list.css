@@ -816,7 +816,6 @@ tr.grid-header.dragover td {
     line-height: 23px;
     border-radius: 50%;
     box-sizing: content-box;
-    border: 1px solid var(--theme-colors__main_strong);
     flex: 0 0 auto;
     display: inline-block;
 }
