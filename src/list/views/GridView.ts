@@ -1026,6 +1026,9 @@ export default Marionette.View.extend({
     },
 
     __setColumnVisibility(id: string, visibility = true) {
+        if (!this.options.showHeader) {
+            return;
+        }
         const isHidden = !visibility;
         const columns = this.options.columns;
         const index = columns.findIndex(item => item.id === id);
