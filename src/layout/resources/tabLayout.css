@@ -28,8 +28,14 @@
     width: 100%;
     min-width: 0;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     position: relative; /* for __scrollIntoViewIfNeeded */
+}
+
+.layout__tab-layout__header-view ul::-webkit-scrollbar {
+    display: none;
 }
 
 ul .layout__tab-layout__header-view-item:last-child {

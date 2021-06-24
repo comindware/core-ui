@@ -326,10 +326,6 @@ input::placeholder {
     display:none;
 }
 
-.toolbar-btn {
-    padding: 0 15px;
-}
-
 .layout__vertical-layout > div,
 .layout__vertical-layout-item{
 
@@ -370,9 +366,7 @@ input::placeholder {
     height: 30px;
     padding: 0 5px;
 }
-.toolbar-btn, .tree-editor-btn {
-    height: 26px;
-}
+
 .split-button-wrp {
 }
 

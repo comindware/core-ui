@@ -396,6 +396,7 @@ td > .icon-true {
 
 .layout__horizontal-layout .editor_date-time {
     width: auto;
+    max-width: 100%;
 }
 
 .form-group_dateTime,

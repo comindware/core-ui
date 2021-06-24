@@ -397,6 +397,9 @@ body.non-selectable {
     z-index: 100;
 }
 
+.l-loader .loader {
+    height: auto;
+}
 
 .datalist-panel .l-loader:not(:empty)  {
     z-index: 601;
@@ -405,6 +408,7 @@ body.non-selectable {
 .loader {
     width: 100%;
     color: var(--theme-colors__background);
+    height: 30px;
     font-weight: 600;
     display: block;
     text-align: center;

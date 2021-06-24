@@ -1118,8 +1118,9 @@ tr:not(:first-child) .cell_selection {
   cursor: pointer;
   overflow: hidden;
   border-radius: 4px;
-  min-width: 50px;
-  height: 25px;
+  min-width: 26px;
+  height: 26px;
+  padding: 3px;
   transition: all .3s ease-in-out;
 }
 
@@ -1136,9 +1137,9 @@ tr:not(:first-child) .cell_selection {
   font-size: 12px;
   min-width: auto;
 }
-.toolbar-items-wrp > div:last-child.toolbar-btn,
-.toolbar-items-wrp > div:last-child .toolbar-btn{
-  margin-right: 20px;
+
+.toolbar-btn_withName {
+  padding: 3px 10px;
 }
 
 .toolbar-btn__text {

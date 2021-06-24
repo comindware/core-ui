@@ -5,10 +5,14 @@
 
 .toolbar-btn,
 .split-button-wrp {
-    margin-right: 10px;
     background-color: var(--theme-colors__btn);
     border: 1px solid var(--theme-colors__btn);
     color: var(--theme-colors__btn-txt);
+}
+
+.toolbar-btn:not(:last-child),
+.split-button-wrp:not(:last-child) {
+    margin-right: 10px;
 }
 
 .toolbar-btn_selected,

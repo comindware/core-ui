@@ -42,6 +42,8 @@ export default Marionette.View.extend({
             enabled = enabled();
         }
 
-        return `${severityItem.class} ${this.model.get('class') || ''} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED}`;
+        const name = this.model.get('name');
+
+        return `${severityItem.class} ${this.model.get('class') || ''} ${name ? 'toolbar-btn_withName' : ''} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED}`;
     }
 });
