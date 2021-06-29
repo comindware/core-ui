@@ -47,6 +47,9 @@
 .layout__horizontal-layout > .layout__button {
     min-width: auto;
     flex: none;
+}
+
+.layout__horizontal-layout > .layout__button:not(:last-child) {
     padding-right: 10px;
 }
 

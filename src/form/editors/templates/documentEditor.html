@@ -1,14 +1,13 @@
 {{#if isMobile}}
     <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
 {{else}}
-    <div class="js-file-zone documents__drop-zone">
+    <form class="js-file-zone documents__drop-zone">
         <i class="documents-collapse-icon {{iconPrefixer 'angle-up'}} js-collapse-icon"></i>
         <div class="documents__wrapper">
-                <span class="documents__text">{{{placeHolderText}}}
-                    <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
-                </span>
+            <span class="documents__text">{{{placeHolderText}}}</span>
+            <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
         </div>
-    </div>
+    </form>
 {{/if}}
 
 

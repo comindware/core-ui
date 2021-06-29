@@ -1107,7 +1107,6 @@ tr:not(:first-child) .cell_selection {
 /* Toolbar component */
 
 .toolbar-btn{
-  margin-right: 10px;
   font-size: 1em;
   white-space: nowrap;
   display: inline-flex;
@@ -1120,7 +1119,7 @@ tr:not(:first-child) .cell_selection {
   border-radius: 4px;
   min-width: 26px;
   height: 26px;
-  padding: 3px;
+  padding: 0 10px;
   transition: all .3s ease-in-out;
 }
 
@@ -1138,8 +1137,8 @@ tr:not(:first-child) .cell_selection {
   min-width: auto;
 }
 
-.toolbar-btn_withName {
-  padding: 3px 10px;
+.toolbar-btn_withoutName {
+  padding: 3px;
 }
 
 .toolbar-btn__text {
@@ -1468,7 +1467,9 @@ tr:not(:first-child) .cell_selection {
   min-width: 120px;
   min-height: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .documents__upload {

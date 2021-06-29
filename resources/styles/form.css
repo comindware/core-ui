@@ -1020,6 +1020,10 @@ input[type="color"], .colorpicker{
     margin: 0;
 }
 
+.documents-collapse_collapsed .documents__text {
+    display: none;
+}
+
 .cell.editor_document .documents {
     margin: 0;
     line-height: initial;
