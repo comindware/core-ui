@@ -7,6 +7,7 @@
     --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1);
     --theme-colors__primary_strong: hsla(203, 95%, 28%, 1);
     --theme-colors__primary_strongest: hsla(203, 95%, 18%, 1);
+    --theme-colors__primary-hsl: 203, 95%, 38%;
     --theme-colors__primary-txt: var(--theme-colors__main);
     --theme-colors__primary-hsl: 203, 95%, 38%;
 
@@ -202,7 +203,6 @@
     --tab-item-font-size: var(--base-font-size);
     --tab-panel-container-padding: 20px 15px;
     --tab-header-justify: flex-start;
-    --popup-window-bg: var(--theme-colors__main);
     --popup-content-padding: 10px;
     --popup-header-btn-font-size_equate: 22px;
     --system-message-font-size: 15px;

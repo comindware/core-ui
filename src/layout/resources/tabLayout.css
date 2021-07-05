@@ -27,9 +27,15 @@
     width: 100%;
     min-width: 0;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     position: relative; /* for __scrollIntoViewIfNeeded */
     padding: 0;
+}
+
+.layout__tab-layout__header-view ul::-webkit-scrollbar {
+    display: none;
 }
 
 ul .layout__tab-layout__header-view-item:last-child {
@@ -58,7 +64,7 @@ ul .layout__tab-layout__header-view-item:last-child {
 .layout__tab-layout__header-view-item.tab-layout__headers-menu {
     font-size: 16px;
     font-weight: bold;
-    padding: 0 20px;
+    padding: 0 5px 0 15px;
 }
 
 /* panel */

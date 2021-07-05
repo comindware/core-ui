@@ -128,6 +128,10 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
+.form-label__tooltip-panel.dropdown__wrp {
+    background: var(--theme-colors__main);
+}
+
 .form-label__error-panel {
     min-width: 200px;
     max-width: 400px;
@@ -393,6 +397,7 @@ td > .icon-true {
 
 .layout__horizontal-layout .editor_date-time {
     width: auto;
+    max-width: 100%;
 }
 
 .form-group_dateTime,
@@ -719,7 +724,7 @@ td > .icon-true {
     left: -3px;
     right: -3px;
     margin-top: -15px;
-    color: var(--theme-colors__main);
+    color: var(--theme-colors__primary-txt);
     font-weight: 600;
     font-size: 14px;
     background: var(--theme-colors__primary_fade);
@@ -1011,6 +1016,10 @@ input[type="color"],
 
 .documents-collapse_collapsed .documents__upload {
     margin: 0;
+}
+
+.documents-collapse_collapsed .documents__text {
+    display: none;
 }
 
 .cell.editor_document .documents {

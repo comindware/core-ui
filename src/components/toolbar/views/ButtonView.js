@@ -3,7 +3,8 @@ import { severity } from '../meta';
 
 const classes = {
     PALE: 'btn-pale',
-    STRONG: 'btn-strong'
+    STRONG: 'btn-strong',
+    DISABLED: 'btn-disabled'
 };
 
 function unCapitalizeFirstLetter(string) {
@@ -34,7 +35,15 @@ export default Marionette.View.extend({
         const type = this.model.get('type');
         const typeClass = typeof type === 'string' ? unCapitalizeFirstLetter(type) : 'withoutType';
         const cancelClass = isCancel ? classes.PALE : null;
+        let enabled = this.model.get('enabled');
+        if (enabled === undefined) {
+            enabled = true;
+        } else if (typeof enabled === 'function') {
+            enabled = enabled();
+        }
 
-        return `${severityItem.class} ${this.model.get('class') || ''} ${cancelClass || ''} toolbar-btn_${typeClass}`;
+        const name = this.model.get('name');
+
+        return `${severityItem.class} ${this.model.get('class') || ''} ${name ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED}`;
     }
 });

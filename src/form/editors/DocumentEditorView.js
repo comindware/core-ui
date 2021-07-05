@@ -42,6 +42,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
         this.collection = new DocumentsCollection(this.value);
         this.listenTo(this.collection, 'attachments:remove', this.removeItem);
+        this.listenTo(this.collection, 'add remove reset', this.__onCollectionChange);
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -96,10 +97,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     focusElement: '.js-file-button',
 
     templateContext() {
-        const isDropZoneCollapsed = this.isDropZoneCollapsed;
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            placeHolderText: isDropZoneCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            isMobile: Core.services.MobileService.isMobile,
+            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -532,6 +533,11 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         }
     },
 
+    __onCollectionChange() {
+        this.isDropZoneCollapsed = Boolean(this.collection?.length);
+        this.__updateCollapseButton();
+    },
+
     __onCollapseClick() {
         const collapsed = this.isDropZoneCollapsed;
         this.isDropZoneCollapsed = !collapsed;
@@ -539,7 +545,6 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     __updateCollapseButton() {
-        this.render();
         this.$el.toggleClass(classes.collapsed, this.isDropZoneCollapsed);
     }
 });

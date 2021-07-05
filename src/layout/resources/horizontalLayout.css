@@ -34,12 +34,23 @@
     .layout__horizontal-layout > * {
         flex-basis: 200px;
         min-width: 200px;
+        padding-right: 0;
+    }
+
+    .layout__horizontal-layout > div:not(:last-child),
+    .layout__horizontal-layout-list-item:not(:last-child) {
+        margin-bottom: 20px;
+        padding-right: 0;
     }
 }
 
 .layout__horizontal-layout > .layout__button {
     min-width: auto;
     flex: none;
+}
+
+.layout__horizontal-layout > .layout__button:not(:last-child) {
+    padding-right: 10px;
 }
 
 .layout__horizontal-layout-list {
