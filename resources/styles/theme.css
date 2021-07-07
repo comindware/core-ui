@@ -246,10 +246,10 @@ input, textarea, select {
   padding: 2px;
 }
 .reference-btn.bubble__focused{
-  border: 1px solid var(--theme-colors__main_strongest);
-  border-radius: 2px;
-  background: var(--theme-colors__main_fadest);
-  padding: 2px;
+  box-shadow: none;
+  background-color: var(--theme-colors__btn_strong);
+  border: 1px solid var(--theme-colors__btn_strong);
+  color: var(--theme-colors__btn-txt);
 }
 /*------------------ End Form Editor ------------------*/
 

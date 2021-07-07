@@ -212,7 +212,7 @@
 }
 
 .toolbar-panel_container .btn-separator {
-    margin: 0 15px;
+    margin: 5px 0;
     width: 100%;
     border-bottom: 1px solid var(--menu-items-clor-border);
 }
