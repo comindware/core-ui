@@ -70,6 +70,11 @@ export default {
                     description: 'Nested Group'
                 },
                 {
+                    id: 'CarouselView',
+                    displayName: 'Carousel',
+                    description: 'Carousel'
+                },
+                {
                     id: 'Button',
                     displayName: 'Button',
                     description: 'Button'
