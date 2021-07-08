@@ -75,6 +75,11 @@ export default {
                     description: 'Carousel'
                 },
                 {
+                    id: 'ShowcaseView',
+                    displayName: 'Showcase',
+                    description: 'Showcase'
+                },
+                {
                     id: 'Button',
                     displayName: 'Button',
                     description: 'Button'
