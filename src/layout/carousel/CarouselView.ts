@@ -29,7 +29,7 @@ export default Marionette.View.extend({
             currentIndex: this.currentIndex
         });
         this.listenTo(this.collection, 'update', this.__onCollectionUpdate);
-        this.listenTo(this.dotsView, 'select:page', index => this.__onSelectPage(index));
+        this.listenTo(this.dotsView, 'select:page', (index: number) => this.__onSelectPage(index));
     },
 
     regions: {
@@ -69,7 +69,7 @@ export default Marionette.View.extend({
 
     __inactivateArrows() {
         this.ui.arrowLeft.toggleClass('carousel__arrow_inactive', this.currentIndex - this.options.slidesToScroll < 0);
-        this.ui.arrowRight.toggleClass('carousel__arrow_inactive', this.options.slidesToShow + this.currentIndex >= this.parentCollection.length - 1);
+        this.ui.arrowRight.toggleClass('carousel__arrow_inactive', this.options.slidesToShow + this.currentIndex >= this.parentCollection.length);
     },
 
     __onLeftArrowClick() {
@@ -81,20 +81,20 @@ export default Marionette.View.extend({
     },
 
     __onRightArrowClick() {
-        if (this.options.slidesToShow + this.currentIndex >= this.parentCollection.length - 1) {
+        if (this.options.slidesToShow + this.currentIndex >= this.parentCollection.length) {
             return;
         }
         this.currentIndex += this.options.slidesToScroll;
         this.__resetCurrentCollection();
     },
 
-    __onSelectPage(index) {
+    __onSelectPage(index: number) {
         this.currentIndex = index;
         this.__resetCurrentCollection();
     },
 
     __getCurrentCollection() {
-        return this.parentCollection.slice(Math.max(0, this.currentIndex), Math.min(this.options.slidesToShow + this.currentIndex, this.parentCollection.length - 1));
+        return this.parentCollection.slice(Math.max(0, this.currentIndex), Math.min(this.options.slidesToShow + this.currentIndex, this.parentCollection.length));
     },
 
     __resetCurrentCollection() {
@@ -102,8 +102,8 @@ export default Marionette.View.extend({
     },
 
     __getDotsCollection() {
-        const dots = this.parentCollection.reduce((dotsArray, model, index) => {
-            const lastIndex = this.parentCollection.length - this.options.slidesToShow - 1;
+        const dots = this.parentCollection.reduce((dotsArray: Array<{ id: number }>, model: Backbone.Model, index: number) => {
+            const lastIndex = this.parentCollection.length - this.options.slidesToShow;
             if (lastIndex === index) {
                 dotsArray.push({ id: lastIndex });
                 return dotsArray;

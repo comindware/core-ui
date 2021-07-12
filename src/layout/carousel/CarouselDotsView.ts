@@ -5,7 +5,7 @@ export default Marionette.CollectionView.extend({
 
     childView: DotView,
 
-    updateActive(currentIndex) {
+    updateActive(currentIndex: number) {
         this.children.forEach(child => child.updateActive(currentIndex));
     },
 
