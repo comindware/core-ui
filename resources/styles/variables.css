@@ -7,6 +7,7 @@
     --theme-colors__primary_fadest: hsla(203, 95%, 58%, 1);
     --theme-colors__primary_strong: hsla(203, 95%, 28%, 1);
     --theme-colors__primary_strongest: hsla(203, 95%, 18%, 1);
+    --theme-colors__primary-hsl: 203, 95%, 38%;
     --theme-colors__primary-txt: var(--theme-colors__main);
     --theme-colors__primary-hsl: 203, 95%, 38%;
 
@@ -202,7 +203,6 @@
     --tab-item-font-size: var(--base-font-size);
     --tab-panel-container-padding: 20px 15px;
     --tab-header-justify: flex-start;
-    --popup-window-bg: var(--theme-colors__main);
     --popup-content-padding: 10px;
     --popup-header-btn-font-size_equate: 22px;
     --system-message-font-size: 15px;
@@ -249,4 +249,19 @@
     --popup-shadow-color: var(--black);
     --popup-shadow-opacity: 0.23;
     --popup-shadow-blur-radius: 6px;
+    --theme-colors__dashboard-color1: #177fb0;
+    --theme-colors__dashboard-color2: #17b9e5;
+    --theme-colors__dashboard-color3: #1ad2eb;
+    --theme-colors__dashboard-color4: #1bdadc;
+    --theme-colors__dashboard-color5: #1de6c9;
+    --theme-colors__dashboard-color6: #9155cd;
+    --theme-colors__dashboard-color7: #bf67d7;
+    --theme-colors__dashboard-color8: #e468bf;
+    --theme-colors__dashboard-color9: #f16e9d;
+    --theme-colors__dashboard-color10: #f0897c;
+    --theme-colors__dashboard-color11: #ce382e;
+    --theme-colors__dashboard-color12: #e76a39;
+    --theme-colors__dashboard-color13: #f49240;
+    --theme-colors__dashboard-color14: #f3aa4a;
+    --theme-colors__dashboard-color15: #efc74b;
 }

@@ -5,10 +5,14 @@
 
 .toolbar-btn,
 .split-button-wrp {
-    margin-right: 10px;
     background-color: var(--theme-colors__btn);
     border: 1px solid var(--theme-colors__btn);
     color: var(--theme-colors__btn-txt);
+}
+
+.toolbar-btn:not(:last-child),
+.split-button-wrp:not(:last-child) {
+    margin-right: 10px;
 }
 
 .toolbar-btn_selected,
@@ -65,6 +69,11 @@
     background-color: var(--theme-colors__cancel-btn_fade);
     border: 1px solid var(--theme-colors__cancel-btn_fade);
     color: var(--theme-colors__cancel-btn-txt);
+}
+
+.btn-disabled {
+    pointer-events: none;
+    opacity: .5;
 }
 
 /* Themes color button */
@@ -198,10 +207,16 @@
 
 
 
-.toolbar-panel_container .toolbar-btn .toolbar__icons {
+.toolbar-panel_container .toolbar-btn .toolbar__icons:not(.toolbar__icons_arrow){
     margin: 0 5px 0 -5px;
 }
 
 .toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {
     margin: 0;
+}
+
+.toolbar-panel_container .btn-separator {
+    margin: 0 15px;
+    width: 100%;
+    border-bottom: 1px solid var(--menu-items-clor-border);
 }

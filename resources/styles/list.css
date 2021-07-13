@@ -27,7 +27,6 @@
 }
 
 .visible-collection {
-    background: var(--theme-colors__main);
     height: 100%;
     width: auto;
 }
@@ -810,7 +809,6 @@ tr.grid-header.dragover td {
     max-height: 100%;
     will-change: scroll-position;
     contain: content;
-    border-radius: 4px;
 }
 
 /* .toolbar + .grid-table-wrapper-war { */
@@ -830,7 +828,6 @@ tr.grid-header.dragover td {
     line-height: 23px;
     border-radius: 50%;
     box-sizing: content-box;
-    border: 1px solid var(--theme-colors__main_strong);
     flex: 0 0 auto;
     display: inline-block;
 }

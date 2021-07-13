@@ -398,9 +398,17 @@
 
 <http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
 
+<http://comindware.com/text/core/layout#showcase> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Витрина"; l10n:originalData "Showcase"].
+
 <http://comindware.com/text/core/layout/groupLayout/menu#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "На весь экран"; l10n:originalData "In full screen"].
 
 <http://comindware.com/text/core/layout/groupLayout/menu#restore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Восстановить размер"; l10n:originalData "Restore size"].
+
+<http://comindware.com/text/core/layout/showcase#count> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Всего"; l10n:originalData "All"].
+
+<http://comindware.com/text/core/layout/showcase#showAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все"; l10n:originalData "Show all"].
+
+<http://comindware.com/text/core/layout/showcase#showby> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показывать по"; l10n:originalData "Show by"].
 
 <http://comindware.com/text/core/layout/tabLayout#noTabMessage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все вкладки скрыты"; l10n:originalData "All tabs are hidden"].
 

@@ -21,6 +21,7 @@ const MIN_HEIGHT_TO_OPEN_DOWN = 300;
 
 enum popoutFlow {
     LEFT = 'left',
+    CENTER = 'center',
     RIGHT = 'right'
 };
 
@@ -35,6 +36,7 @@ type optionsType = {
     autoOpen?: boolean,
     renderAfterClose?: boolean,
     panelPosition?: panelPosition,
+    panelOffsetLeft?: number,
     panelMinWidth?: number,
     allowNestedFocus?: boolean,
     externalBlurHandler?: Function,
@@ -42,7 +44,9 @@ type optionsType = {
     buttonViewOptions?: object,
     showDropdownAnchor?: boolean,
     customAnchor?: boolean,
-    fadeBackground?: boolean
+    fadeBackground?: boolean,
+    panelOffsets?: object
+    alwaysAlignByButton?: boolean
 };
 
 const defaultOptions: optionsType = {
@@ -50,13 +54,19 @@ const defaultOptions: optionsType = {
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
-    panelOffsetLeft: 0,
+    panelOffsets: {
+        up: 0,
+        down: 0,
+        right: 0,
+        left: 0
+    },
     panelMinWidth: MIN_DROPDOWN_PANEL_WIDTH,
     allowNestedFocus: true,
     externalBlurHandler: () => false,
     showDropdownAnchor: false,
     customAnchor: false,
-    fadeBackground: false
+    fadeBackground: false,
+    alwaysAlignByButton: false
 };
 
 /**
@@ -81,12 +91,13 @@ const defaultOptions: optionsType = {
  * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
- * @constructor
+ * @constructor 
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
  * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
  * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
+ * @param {Object} [options.offsets = panelOffsets] Options for offsets.
  * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
  * @param {String} [options.panelPosition='down'] Opening direction:
  *       <ul><li><code>'down'</code> - opens down.</li>
@@ -182,12 +193,17 @@ export default class DropdownView {
         const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        if (this.maxWidth) {
-            this.panelEl.style.maxWidth = `${this.maxWidth}px`;
+        if (this.options.alwaysAlignByButton) {
+            this.panelEl.style.minWidth = this.panelEl.style.maxWidth = `${buttonRect.width}px`;
+        } else {
+            if (this.maxWidth) {
+                this.panelEl.style.maxWidth = `${this.maxWidth}px`;
+            }
+
+            const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
+            this.panelEl.style.minWidth = `${minWidth}px`;
         }
 
-        const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
-        this.panelEl.style.minWidth = `${minWidth}px`;
 
         let offsetHeight = this.panelEl.offsetHeight;
 
@@ -228,6 +244,18 @@ export default class DropdownView {
                 this.panelEl.style.left = `${left}px`;
                 break;
             }
+            case popoutFlow.CENTER: {
+                if ((buttonRect.left + buttonRect.right) / 2 < panelRect.width / 2 + WINDOW_BORDER_OFFSET) {
+                    left = WINDOW_BORDER_OFFSET;
+                } else if ( (buttonRect.left + buttonRect.right ) / 2  > viewport.width - WINDOW_BORDER_OFFSET - panelRect.width / 2) {
+                    left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else {
+                    left = (buttonRect.left + buttonRect.right - panelRect.width) / 2;
+                }
+
+                this.panelEl.style.left = `${left}px`;
+                break;
+            }
             case popoutFlow.LEFT: {
                 const anchorRightCenter = viewport.width - (buttonRect.left + buttonRect.width);
 
@@ -235,6 +263,8 @@ export default class DropdownView {
                     right = WINDOW_BORDER_OFFSET;
                 } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
                     right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+                } else if (buttonRect.left - panelRect.width < 0) {
+                    right = WINDOW_BORDER_OFFSET + panelRect.width;
                 } else {
                     right = anchorRightCenter;
                 }
@@ -282,13 +312,13 @@ export default class DropdownView {
         switch (position) {
             case panelPosition.UP:
                 this.panelEl.style.removeProperty('top');
-                panelBottom = viewportHeight - buttonRect.bottom + buttonRect.height;
+                panelBottom = viewportHeight - buttonRect.bottom + buttonRect.height + this.options.panelOffsets.up;
                 this.panelEl.style.bottom = `${panelBottom}px`;
                 maxHeight = viewportHeight - panelBottom - indent;
                 break;
             case panelPosition.DOWN:
                 this.panelEl.style.removeProperty('bottom');
-                top = buttonRect.top + buttonRect.height;
+                top = buttonRect.top + buttonRect.height + this.options.panelOffsets.down; 
                 this.panelEl.style.top = `${top}px`;
                 maxHeight = viewportHeight - top - indent;
                 break;
@@ -303,7 +333,7 @@ export default class DropdownView {
                 }
                 maxHeight = viewportHeight - top - indent;
                 this.panelEl.style.top = `${top}px`;
-                left = buttonRect.left + buttonRect.width + this.options.panelOffsetLeft;
+                left = buttonRect.left + buttonRect.width + this.options.panelOffsets.left;
                 this.panelEl.style.left = `${left}px`;
                 break;
             default:

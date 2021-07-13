@@ -127,6 +127,8 @@ input, textarea, select {
 .editor_readonly .input:hover,
 .editor_disabled .textarea,
 .editor_readonly .textarea,
+.editor_disabled .btn-separator,
+.editor_readonly .btn-separator,
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
@@ -135,6 +137,7 @@ input, textarea, select {
 .editor.context_select.editor_disabled {
   background: var(--disabled-input-color);
   color: var(--disabled-text-color);
+  opacity: 0.7;
 }
 
 .editor_disabled .input,
@@ -1086,7 +1089,7 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__panel-container {
   border-radius: 0 0 4px 4px;
-  background-color: var(--popup-window-bg);
+  background-color: var(--theme-colors__main);
   border: 1px solid var(--editors-color-border);
   padding: var(--tab-panel-container-padding);
 }
@@ -1104,7 +1107,6 @@ tr:not(:first-child) .cell_selection {
 /* Toolbar component */
 
 .toolbar-btn{
-  margin-right: 10px;
   font-size: 1em;
   white-space: nowrap;
   display: inline-flex;
@@ -1115,8 +1117,9 @@ tr:not(:first-child) .cell_selection {
   cursor: pointer;
   overflow: hidden;
   border-radius: 4px;
-  min-width: 50px;
-  height: 25px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 10px;
   transition: all .3s ease-in-out;
 }
 
@@ -1133,9 +1136,9 @@ tr:not(:first-child) .cell_selection {
   font-size: 12px;
   min-width: auto;
 }
-.toolbar-items-wrp > div:last-child.toolbar-btn,
-.toolbar-items-wrp > div:last-child .toolbar-btn{
-  margin-right: 20px;
+
+.toolbar-btn_withoutName {
+  padding: 3px;
 }
 
 .toolbar-btn__text {
@@ -1262,7 +1265,7 @@ tr:not(:first-child) .cell_selection {
 /* Popup */
 
 .layout__popup-view-window {
-  background: var(--popup-window-bg);
+  background: var(--theme-colors__main);
   box-shadow: 0 3px var(--popup-shadow-blur-radius) rgba(var(--popup-shadow-color), var(--popup-shadow-opacity));
   border-radius: 5px;
 }
@@ -1418,11 +1421,9 @@ tr:not(:first-child) .cell_selection {
   background-image: none;
 }
 .sp-container button.sp-choose:hover {
-  @apply --button-strong-hover-theme;
   background-image: none;
 }
 .sp-container button.sp-choose:active {
-  @apply --button-strong-active-theme;
   background-image: none;
 }
 .sp-dragger {
@@ -1466,7 +1467,9 @@ tr:not(:first-child) .cell_selection {
   min-width: 120px;
   min-height: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .documents__upload {

@@ -49,7 +49,8 @@
     vertical-align: middle;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0 10px;
+    height: 30px;
     cursor: pointer;
     transition: background .3s ease-in-out, color .3s ease-in-out;
 }
@@ -68,6 +69,12 @@
 .popout-menu__txt:hover {
     color: var(--theme-colors__text);
     text-decoration: none;
+}
+
+.popout-menu__icon {
+    text-align: center;
+    width: 30px;
+    margin-right: 10px;
 }
 
 .popout-menu__subtext {

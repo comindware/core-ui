@@ -418,16 +418,18 @@ body.non-selectable {
     z-index: 100;
 }
 
+.l-loader .loader {
+    height: auto;
+}
+
 .datalist-panel .l-loader:not(:empty) {
     z-index: 601;
 }
 
 .loader {
     width: 100%;
-    height: 30px;
-    line-height: 21px;
-    font-size: 13px;
     color: var(--theme-colors__background);
+    height: 30px;
     font-weight: 600;
     display: block;
     text-align: center;
@@ -977,6 +979,7 @@ body.non-selectable {
 .toolbar-panel_container .toolbar-btn {
     background-color: var(--theme-colors__secondary);
     color: var(--theme-colors__text);
+    height: 30px;
 }
 
 .toolbar-panel_container .toolbar-btn:not(.toolbar-btn_headline):hover {
@@ -993,8 +996,7 @@ body.non-selectable {
 }
 
 .toolbar-panel_container__select-state .toolbar-btn {
-    height: inherit;
-    padding: 10px;
+    height: 30px;
 }
 
 .toolbar-panel_container__select-state .checkbox {

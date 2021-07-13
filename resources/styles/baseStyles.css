@@ -6,10 +6,16 @@
     border-color: var(--input-active-border-color);
 }
 
-.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.open.editor_focused {
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.open.dropdown__wrp_down.editor_focused {
     border-bottom-color: transparent;
     box-shadow: 0 1px 3px var(--black-12), 0 -1px 2px var(--black-24);
     border-radius: 4px 4px 0 0;
+}
+
+.editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.open.dropdown__wrp_up.editor_focused {
+    border-top-color: transparent;
+    box-shadow: 0 1px 3px var(--black-12), 0 -1px 2px var(--black-24);
+    border-radius: 0 0 4px 4px;
 }
 
 .focused input,

@@ -346,10 +346,6 @@ input::placeholder {
     display: none;
 }
 
-.toolbar-btn {
-    padding: 0 15px;
-}
-
 .group-toggle svg {
     transform: translateY(2px);
 }
@@ -386,10 +382,6 @@ input::placeholder {
     padding: 0 5px;
 }
 
-.toolbar-btn,
-.tree-editor-btn {
-    height: 26px;
-}
 
 .toolbar-btn__text {
     vertical-align: baseline;

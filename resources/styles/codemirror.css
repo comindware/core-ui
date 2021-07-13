@@ -599,8 +599,8 @@ li.CodeMirror-hint-active {
 .dev-code-button-edit {
     cursor: pointer;
     overflow: hidden;
-    background-color: #ffffff;
-    border: 1px solid #c1c1c1;
+    background-color: transparent;
+    border: 1px solid var(--editors-color-border);
     border-radius: 4px;
     height: 23px;
     padding: 0 20px 0 10px;
