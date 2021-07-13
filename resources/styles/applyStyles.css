@@ -74,7 +74,7 @@
 .input {
     padding: var(--input-padding);
     border-radius: 4px;
-    background-color: transparent;
+    background-color: var(--theme-colors__main);
     border: 1px solid var(--editors-color-border);
 }
 
