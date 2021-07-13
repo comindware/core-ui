@@ -20,7 +20,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name')
+            getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name'),
         };
     },
 

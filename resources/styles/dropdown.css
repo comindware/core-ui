@@ -2,7 +2,6 @@
 
 .core-ui__global-popup-region > .dropdown__wrp_down,
 .core-ui__global-popup-region > .dropdown__wrp_up {
-    background-color: var(--theme-colors__main);
     position: fixed;
     z-index: 600;
     border-radius: 4px;

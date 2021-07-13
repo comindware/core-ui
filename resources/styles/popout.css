@@ -71,6 +71,12 @@
     text-decoration: none;
 }
 
+.popout-menu__icon {
+    text-align: center;
+    width: 30px;
+    margin-right: 10px;
+}
+
 .popout-menu__subtext {
     color: var(--theme-colors__main_strong);
 }
