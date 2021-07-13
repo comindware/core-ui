@@ -201,7 +201,7 @@ const GridHeaderView = Marionette.View.extend({
             dragger,
             draggedColumn
         };
-
+        this.offScreenWidth = 0;
         this.__updateColumnAndNeighbourWidths(columnElement);
 
         dragger.classList.add('active');
@@ -229,16 +229,41 @@ const GridHeaderView = Marionette.View.extend({
         if (!this.dragContext) {
             return;
         }
+        const deltaOffScreenWidth = 3;
 
         const ctx = this.dragContext;
-        const delta = e.pageX - ctx.pageOffsetX;
+        const index = ctx.draggedColumn.index;
+        const widthBrawserWindow = window.innerWidth;
+        const currentCoordinateX = e.pageX;
+        let deltaX = currentCoordinateX - ctx.pageOffsetX;
 
-        if (delta !== 0) {
-            const index = ctx.draggedColumn.index;
-            this.__setColumnWidth(index, this.dragContext.draggedColumn.initialWidth + delta);
+        if (widthBrawserWindow - currentCoordinateX <= 2) {
+            this.__increaseColumnWidth(index, deltaOffScreenWidth, deltaX);
+            return false;
+        }
+        
+        if (this.offScreenWidth > 0) {
+            this.__subtractionColumnWidth(index, deltaOffScreenWidth, deltaX);
+            return false;
+        }
+
+        if (deltaX !== 0) {
+            this.__setColumnWidth(index, this.dragContext.draggedColumn.initialWidth + deltaX);
         }
 
         return false;
+    },
+
+    __subtractionColumnWidth(index: any, deltaOffScreenWidth: any, deltaX: any) {
+        this.offScreenWidth -= deltaOffScreenWidth;
+        const newWidthColumn = this.dragContext.draggedColumn.initialWidth + deltaX + this.offScreenWidth;
+        this.__setColumnWidth(index, newWidthColumn);
+    },
+
+    __increaseColumnWidth(index: any, deltaOffScreenWidth: any, deltaX: any) {
+        this.offScreenWidth += deltaOffScreenWidth;
+        const newWidthColumn = this.dragContext.draggedColumn.initialWidth + deltaX + this.offScreenWidth;
+        this.__setColumnWidth(index, newWidthColumn);
     },
 
     __draggerMouseUp() {
