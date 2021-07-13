@@ -37,8 +37,8 @@ export default class Controller {
         return this.__checkPromisesAndLeave(true);
     }
 
-    static setLoading(isLoading: boolean, message: string | undefined): void {
-        RoutingService.setModuleLoading(isLoading, { message });
+    static setLoading(isLoading: boolean, message: string | undefined, parent: Object | undefined): void {
+        RoutingService.setModuleLoading(isLoading, { message }, parent);
         if (isLoading === false) {
             Core.Controller.__onModuleReady();
         }
