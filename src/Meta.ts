@@ -52,9 +52,9 @@ const meta = {
 };
 
 Object.entries(meta).forEach(([key, value]) => {
-    const keyUp = key[0].toUpperCase() + key.slice(1); 
+    const keyUp = key[0].toUpperCase() + key.slice(1);
     meta[keyUp] = value;
-})
+});
 
 export const contextIconType = meta;
 
@@ -69,10 +69,11 @@ export const objectPropertyTypes = {
     DOUBLE: 'Double',
     ACCOUNT: 'Account',
     DOCUMENT: 'Document',
+    IMAGE: 'Image',
     INSTANCE: 'Instance',
     COLLECTION: 'Collection',
     ENUM: 'Enum',
-    ROLE: 'Role',    
+    ROLE: 'Role',
     ORGANIZATION_UNIT: 'OrganizationalUnit'
 };
 
@@ -168,7 +169,7 @@ export const complexValueTypes = {
     template: 'template'
 };
 
-export const getComplexValueTypesLocalization = complexValueType => {
+export const getComplexValueTypesLocalization = (complexValueType: string) => {
     switch (complexValueType) {
         case complexValueTypes.value:
             return LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE');

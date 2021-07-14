@@ -1,0 +1,17 @@
+/* Cropper */
+
+.cropper-img__wrp {
+    display: flex;
+    max-height: 725px;
+    min-height: 200px;
+}
+
+.cropper-img_container {
+    height: auto;
+    max-width: 75%;
+}
+
+.cropper-img__item {
+    display: block;
+    max-width: 100%;
+}
