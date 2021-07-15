@@ -1,7 +1,7 @@
 import meta from '../Meta';
 
 const formatLocalisePrefix = 'PROCESS.RECORDTYPES.CONTEXT.FORMATS';
-
+//test
 export default {
     getEditorTypeByFormat(format) {
         switch (format) {
