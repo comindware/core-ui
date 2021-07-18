@@ -7,6 +7,7 @@ import BooleanGroupEditorView from './editors/BooleanGroupEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
 import TextEditorView from './editors/TextEditorView';
+import UriEditorView from './editors/UriEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
 import DatalistEditorView from './editors/DatalistEditorView';
 import DurationEditorView from './editors/DurationEditorView';
@@ -138,6 +139,7 @@ const api = /** @lends module:core.form */ {
         MentionEditor: MentionEditorView,
         AvatarEditor: AvatarEditorView,
         DocumentEditor: DocumentEditorView,
+        UriEditor: UriEditorView,
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         MembersSplitEditor: MembersSplitEditorView,
