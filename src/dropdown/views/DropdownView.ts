@@ -263,8 +263,6 @@ export default class DropdownView {
                     right = WINDOW_BORDER_OFFSET;
                 } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
                     right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
-                } else if (buttonRect.left - panelRect.width < 0) {
-                    right = WINDOW_BORDER_OFFSET + panelRect.width;
                 } else {
                     right = anchorRightCenter;
                 }
