@@ -5,7 +5,8 @@ import Backbone from 'backbone';
 
 const defaultOptions = {
     groupBy: [3, 6, 10, Infinity],
-    startPage: 0
+    startPage: 0,
+    ContentView: ShowcaseContentView
 };
 
 export default Marionette.View.extend({
@@ -15,12 +16,10 @@ export default Marionette.View.extend({
         this.currentPage = this.options.startPage;
         this.currentPaging = this.options.groupBy[0];
         this.collection = new Backbone.Collection();
-        this.contentView = new ShowcaseContentView({
+        const { collection, ...contentViewOptions } = this.options;
+        this.contentView = new this.options.ContentView({
             collection: this.collection,
-            childView: this.options.view,
-            childViewOptions: this.options.viewOptions,
-            emptyView: this.options.emptyView,
-            emptyViewOptions: this.options.emptyViewOptions
+            ...contentViewOptions
         });
         const groupingModel = new Backbone.Model({ groupBy: this.currentPaging });
         this.groupingView = new DatalistEditorView({
@@ -34,6 +33,8 @@ export default Marionette.View.extend({
         this.__resetCurrentCollection();
         this.listenTo(groupingModel, 'change:groupBy', this.__onChangeGroupBy);
     },
+
+    className: 'showcase-wrapper',
 
     regions: {
         content: {
