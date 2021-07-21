@@ -7,11 +7,11 @@ import icons from './impl/iconEditor/icons';
 import BaseEditorView from './base/BaseEditorView';
 import keyCode from '../../../src/utils/keyCode';
 import formRepository from '../formRepository';
+import Backbone from 'backbone';
 
 const defaultOptions = () => {
     const iconService = window.application.options.iconService;
     return {
-        modelIconProperty: 'iconClass',
         iconsMeta: iconService?.iconsMeta || icons,
         iconsCategories: iconService?.iconsCategories || categories
     };
@@ -21,10 +21,7 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
         const defaults = defaultOptions();
         this.__applyOptions(options, defaults);
-
-        if (this.options.modelIconProperty !== defaults.modelIconProperty) {
-            this.model.set('iconClass', this.model.get(this.options.modelIconProperty));
-        }
+        this.iconModel = new Backbone.Model({ color: '#000000', iconClass: this.value });
     },
 
     template: Handlebars.compile(template),
@@ -46,19 +43,16 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     onRender() {
-        //TODO split internal model from external, move 'color', 'iconClass', '#000000' to defaults
-        !this.model.get('color') && this.model.set('color', '#000000');
-
         this.popupPanel = Core.dropdown.factory.createDropdown({
             buttonView: IconButtonView,
             panelView: IconPanelView,
             buttonViewOptions: {
-                model: this.model
+                model: this.iconModel
             },
             panelViewOptions: {
                 collection: this.__getConfig(),
                 showColorPicker: this.options.showColorPicker,
-                model: this.model
+                model: this.iconModel
             },
             autoOpen: false
         });
@@ -71,9 +65,8 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
 
     onBeforeAttach() {
         this.listenTo(this.popupPanel, 'panel:click:item', id => {
-            // TODO transfer this logic to __value method
             this.ui.deleteIconButton[0].removeAttribute('hidden');
-            this.model.set('iconClass', id);
+            this.__value(id, true, true);
             this.trigger('click:item', id);
             this.__updateEmpty();
             this.ui.deleteIconButton.show();
@@ -105,7 +98,11 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     isEmptyValue() {
-        return !this.model.get('iconClass');
+        return !this.value;
+    },
+
+    setValue(value) {
+        this.__value(value, true, false);
     },
 
     __getConfig() {
@@ -133,8 +130,23 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     __onDeleteIconClick() {
-        this.model.set('iconClass', null);
+        this.__value(null, true, true);
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
+    },
+
+    __value(value, updateUi, triggerChange) {
+        if (this.value === value) {
+            return;
+        }
+        this.value = value;
+
+        if (updateUi) {
+            this.iconModel.set({ iconClass: value });
+        }
+
+        if (triggerChange) {
+            this.__triggerChange();
+        }
     }
 }));
