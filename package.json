@@ -146,6 +146,7 @@
         "backbone.radio": "^2.0.0",
         "codemirror": "^5.62.0",
         "core-js": "^3.6.4",
+        "cropperjs": "^1.5.12",
         "css-vars-ponyfill": "^2.2.1",
         "jquery": "^3.5.1",
         "marionette.approuter": "^1.0.2",

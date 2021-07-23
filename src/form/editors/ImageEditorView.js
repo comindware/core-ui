@@ -1,22 +1,27 @@
 // @flow
 import PromiseService from '../../services/PromiseService';
-import template from './templates/documentEditor.html';
+import template from './templates/imageEditor.html';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
 import PanelView from './impl/datalist/views/PanelView';
-import DocumentBubbleItemView from './impl/document/views/DocumentBubbleItemView';
+import ImageBubbleItemView from './impl/document/views/ImageBubbleItemView';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 import DocumentsCollection from './impl/document/collections/DocumentsCollection';
+import WindowService from '../../services/WindowService';
+import CropperEditorView from './CropperEditorView';
 
 const classes = {
     dropZone: 'documents__drop-zone',
     activeDropZone: 'documents__drop-zone--active',
     collapsed: 'documents-collapse_collapsed',
     collapseRotated: 'documents-collapse-icon-more-rotated',
-    documentsMoreHide: 'documents-more__hide'
+    imageMoreHide: 'image-more__hide'
 };
+
+const tempIdPrefix = 'temp.';
+const serverTempIdPrefix = 'cmw.temp.';
 
 const MultiselectAddButtonView = Marionette.View.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
@@ -30,21 +35,25 @@ const defaultOptions = options => ({
     multiple: true,
     fileFormat: '',
     showRevision: true,
-    createDocument: null,
-    removeDocument: null,
+    createImage: null,
+    editImage: null,
+    removeImage: null,
     displayText: '',
     isInline: false
 });
 
 const MAX_NUMBER_VISIBLE_DOCS = 4;
 
-export default formRepository.editors.Document = BaseCollectionEditorView.extend({
+export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
+        const cropHeight = options.model.get('height');
+        const cropWidth = options.model.get('width');
+        this.aspectRatio = cropWidth && cropHeight ? cropWidth / cropHeight : undefined;
+
         this.collection = new DocumentsCollection(this.value);
         this.listenTo(this.collection, 'attachments:remove', this.removeItem);
-        this.listenTo(this.collection, 'add remove reset', this.__onCollectionChange);
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -65,11 +74,11 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     canAdd: false,
 
-    className: 'editor editor_document',
+    className: 'editor editor_image',
 
     template: Handlebars.compile(template),
 
-    childView: DocumentBubbleItemView,
+    childView: ImageBubbleItemView,
 
     childViewContainer: '.js-collection-container',
 
@@ -79,7 +88,8 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             allowDelete: this.options.allowDelete,
             showRevision: this.options.showRevision,
             isInline: this.options.isInline,
-            readonly: this.readonly
+            readonly: this.readonly,
+            editorHasHistory: false
         };
     },
 
@@ -101,11 +111,13 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     focusElement: '.js-file-button',
 
+    cropTemps: [],
+
     templateContext() {
+        const isDropZoneCollapsed = this.isDropZoneCollapsed;
         return Object.assign(this.options, {
-            displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
-            isMobile: Core.services.MobileService.isMobile,
-            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.DRAGFILE'),
+            displayText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.ADDIMAGE'),
+            placeHolderText: isDropZoneCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.IMAGE.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -125,9 +137,36 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         };
     },
 
-    setValue(value) {
+    async setValue(value) {
         this.__value(value);
         this.update();
+        if (value) {
+            this.files = [];
+            this.collection.forEach(model => {
+                model.set({ isLoading: false });
+            });
+            for (let i = 0; i < value.length; i++) {
+                if (this.isTemp(value[i].id) && !this.cropTemps.includes(value[i].id) && value[i].extension !== 'tiff') {
+                    this.cropTemps.push(value[i].id);
+                    await this.__getCropperPopup(value[i]);
+                }
+            }
+
+            if (this.files.length) {
+                this.__editElementsCollection(this.files);
+                this.files.forEach(model => {
+                    model.uniqueId = this.options.editImage?.(model);
+                    const savingModel = this.collection.findWhere({ id: model.id });
+                    savingModel.set({ isLoading: true });
+                });
+                this.ui.fileZone.trigger('reset');
+                this.__triggerChange();
+            }
+        }
+    },
+
+    isTemp(objectId) {
+        return !objectId || objectId.startsWith(tempIdPrefix) || objectId.startsWith(serverTempIdPrefix);
     },
 
     getValue() {
@@ -195,13 +234,10 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     syncValue() {
         this.value = this.collection
-            ? this.collection
-                  .toJSON()
-                  .filter(model => !model.isLoading)
-                  .map(m => {
-                      const { file, isLoading, uniqueId, ...rest } = m;
-                      return rest;
-                  })
+            ? this.collection.toJSON().map(m => {
+                const { file, isLoading, uniqueId, ...rest } = m;
+                return rest;
+            })
             : [];
     },
 
@@ -212,7 +248,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     removeItem(model) {
         this.collection.remove(model);
-        this.options.removeDocument?.(model.id);
+        this.options.removeImage?.(model.id);
         this.__triggerChange();
     },
 
@@ -265,18 +301,21 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         }
     },
 
-    _uploadFiles(files, items) {
+    _uploadFiles(fileList, items) {
         this.trigger('beforeUpload');
         this.trigger('set:loading', true);
-        //todo loading
+        const files = this.__tryImages(fileList);
         if (items) {
-            //todo wtf
             Promise.resolve(this._readFileEntries(items)).then(fileEntrie => {
                 this._sendFilesToServer(fileEntrie);
             });
-        } else {
+        } else if (files.length) {
             this._sendFilesToServer(files);
         }
+    },
+
+    __tryImages(fileList) {
+        return Array.prototype.filter.call(fileList, file => file.type.split('/')[0] === 'image');
     },
 
     // recursive loading of folders is currently supported only in chrome
@@ -334,9 +373,8 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
                 url: tempUrl,
                 file: files[i],
                 isLoading: true,
-                uniqueId: _.uniqueId('document-')
+                uniqueId: _.uniqueId('image-')
             };
-
             resultObjects.push(obj);
         }
         this.trigger('uploaded', resultObjects);
@@ -365,10 +403,9 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
                     if (model) {
                         const streamId = tempResult.fileIds[i];
                         model.set({
-                            streamId,
-                            isLoading: false
+                            streamId
                         });
-                        const id = this.options.createDocument?.(model.toJSON());
+                        const id = this.options.createImage?.(model.toJSON());
                         if (id) {
                             model.set({ id });
                         }
@@ -390,6 +427,13 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
         // eslint-disable-next-line no-undef
         PromiseService.registerPromise($.ajax(config), true);
+    },
+
+    __editElementsCollection(resultObjects) {
+        resultObjects.forEach(changeModel => {
+            this.collection.remove(this.collection.find(model => model.id === changeModel.id));
+            this.collection.add(changeModel);
+        });
     },
 
     __validate(files) {
@@ -489,7 +533,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             this.expandShowMore();
         }
         this.ui.collapseMoreIcon.toggleClass(classes.collapseRotated, this.collapsed);
-        this.ui.collectionContainer.toggleClass(classes.documentsMoreHide, !this.collapsed);
+        this.ui.collectionContainer.toggleClass(classes.imageMoreHide, !this.collapsed);
     },
 
     update() {
@@ -540,11 +584,6 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         }
     },
 
-    __onCollectionChange() {
-        this.isDropZoneCollapsed = Boolean(this.collection?.length);
-        this.__updateCollapseButton();
-    },
-
     __onCollapseClick() {
         const collapsed = this.isDropZoneCollapsed;
         this.isDropZoneCollapsed = !collapsed;
@@ -552,6 +591,71 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     __updateCollapseButton() {
+        this.render();
         this.$el.toggleClass(classes.collapsed, this.isDropZoneCollapsed);
+    },
+
+    __getCropperPopup(file) {
+        this.trigger('set:loading', true);
+        return new Promise(resolve => {
+            const cropperView = new CropperEditorView({
+                file,
+                cropOptions: {
+                    aspectRatio: this.aspectRatio
+                }
+            });
+            const cropPopup = new Core.layout.Popup({
+                size: {
+                    width: 'auto',
+                    height: 'auto'
+                },
+                header: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.CROPPER'),
+                onClose() {
+                    resolve(true);
+                },
+                buttons: [
+                    {
+                        id: false,
+                        text: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.CANCELCROP'),
+                        isCancel: true,
+                        handler() {
+                            resolve(true);
+                        }
+                    },
+                    {
+                        id: true,
+                        text: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.CUT'),
+                        handler() {
+                            cropPopup.trigger('save:upload', cropperView.getCrop());
+                            resolve(true);
+                        }
+                    }
+                ],
+                content: new Core.layout.Form({
+                    model: new Backbone.Model(),
+                    schema: [
+                        {
+                            type: 'v-container',
+                            items: [
+                                {
+                                    id: 'expression',
+                                    name: 'Computed Expression',
+                                    view: cropperView
+                                }
+                            ]
+                        }
+                    ]
+                })
+            });
+            this.listenTo(cropPopup, 'save:upload', changedFile => {
+                if (changedFile.imageTransformations.length) {
+                    this.files.push(changedFile);
+                }
+            });
+            WindowService.showPopup(cropPopup);
+        }).then(() => {
+            WindowService.closePopup();
+            this.trigger('set:loading', false);
+        });
     }
 });

@@ -38,7 +38,7 @@
     --theme-colors__main: #ffffff;
     --theme-colors__main_fade: #efefef;
     --theme-colors__main_fadest: #f5f5f5;
-    --theme-colors__main_strong: #e2e2e2;
+    --theme-colors__main_strong: #e6e6e6;
     --theme-colors__main_strongest: #c1c1c1;
 
     /*** Notification ***/
@@ -112,9 +112,9 @@
     --editor-font-size: var(--base-font-size);
     --editor-text-color: var(--theme-colors__text);
     --editor-empty-text-color: var(--theme-colors__text_fadest);
-    --editors-color-border: #d6d6d6;
-    --grids-color-border: #d6d6d6;
-    --menu-items-clor-border: #d6d6d6;
+    --editors-color-border: #c5c5c5;
+    --grids-color-border: #c5c5c5;
+    --menu-items-clor-border: #c5c5c5;
 
     /* input */
     --input-padding: 4px 18px 4px var(--form-input-padding);

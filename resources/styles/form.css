@@ -138,7 +138,6 @@ rgba(5,117,189,.5) // user avatar btn
     padding: 0 10px;
 }
 
-
 .form-label__error-item {
     margin: 5px 0;
     overflow: hidden;
@@ -187,6 +186,7 @@ rgba(5,117,189,.5) // user avatar btn
     align-items: center;
     justify-content: flex-start;
     flex: 1 0 auto;
+    max-width: 400px;
 }
 
 .editor_document .emptyDocumentPlaceholder {
@@ -200,7 +200,11 @@ rgba(5,117,189,.5) // user avatar btn
 .editor_document.editor_readonly .icon-remove,
 .editor_document.editor_readonly .documents__drop-zone,
 .editor_document.editor_disabled .icon-remove,
-.editor_document.editor_disabled .documents__drop-zone {
+.editor_document.editor_disabled .documents__drop-zone,
+.editor_image.editor_readonly .icon-remove,
+.editor_image.editor_readonly .documents__drop-zone,
+.editor_image.editor_disabled .icon-remove,
+.editor_image.editor_disabled .documents__drop-zone {
     display: none !important;
 }
 
@@ -927,7 +931,7 @@ input[type="color"],
 }
 
 .document-buttons__link {
-    max-width: 100%;
+    max-width: 330px;
     text-decoration: none;
     display: inline-block;
     overflow: hidden;
@@ -960,13 +964,31 @@ input[type="color"],
     width: 100%;
     position: relative;
     overflow: hidden;
-    margin: 4px 0;
+    margin: 2px 0;
+    padding: 2px 0;
+    color: var(--theme-colors__text);
+}
+
+.document-list a {
+    color: var(--theme-colors__text);
+}
+
+.document-list:hover {
+    border-radius: 4px;
+    color: var(--theme-colors__primary);
+    background-color: var(--theme-colors__highlight);
+}
+
+.document-list:hover a {
+    color: var(--theme-colors__primary);
+    text-decoration: none;
 }
 
 .document-buttons__list {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
     line-height: 1;
     margin: 4px 0;
 }

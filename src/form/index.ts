@@ -18,6 +18,7 @@ import initializeDatePicker from './editors/impl/dateTime/views/initializeDatePi
 import MentionEditorView from './editors/MentionEditorView';
 import AvatarEditorView from './editors/AvatarEditorView';
 import DocumentEditorView from './editors/DocumentEditorView';
+import ImageEditorView from './editors/ImageEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
@@ -138,6 +139,7 @@ const api = /** @lends module:core.form */ {
         MentionEditor: MentionEditorView,
         AvatarEditor: AvatarEditorView,
         DocumentEditor: DocumentEditorView,
+        ImageEditor: ImageEditorView,
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         MembersSplitEditor: MembersSplitEditorView,
