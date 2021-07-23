@@ -534,10 +534,6 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 }
             });
 
-            if (this.options.type === 'Uri' && validators.length > errors.length) {
-                errors = [];
-            }
-
             if (this.isRendered() && !this.isDestroyed()) {
                 this.$editorEl.toggleClass(classes.ERROR, !!errors.length);
                 if (errors.length) {
