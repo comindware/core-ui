@@ -9,9 +9,9 @@ export default () =>
 
         const err = {
             type: 'uri',
-            message: LocalizationService.get('CORE.FORM.EDITORS.URIEDITOR.MSGVALIDATORSSH')
+            message: LocalizationService.get('CORE.FORM.EDITORS.URIEDITOR.MSGVALIDATORFTP')
         };
-        if (!/^ssh:\/\//.test(value)) {
+        if (!/^ftps:\/\//.test(value)) {
             return err;
         }
     };
