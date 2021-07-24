@@ -1,8 +1,9 @@
 import dropdown from 'dropdown';
-import template from '../templates/documentBubbleItem.html';
+import template from '../templates/imageBubbleItem.html';
 import DocumentItemController from '../controllers/DocumentItemController';
-import ExtensionIconService from '../services/ExtensionIconService';
 import TooltipPanelView from './TooltipPanelView';
+import Marionette from 'backbone.marionette';
+import Backbone from 'backbone';
 
 const tooltipButtonTemplate = `
     <span class="js-tooltip-button buttons__i btn-image-tooltip" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
@@ -16,7 +17,6 @@ const tooltipButtonView = Marionette.View.extend({
 
 const actions = {
     DOWNLOAD: 'download',
-    // REVISION: 'revision',
     REMOVE: 'remove'
 };
 
@@ -27,12 +27,12 @@ export default Marionette.View.extend({
         this.reqres = controller.reqres;
         this.readonly = this.options.readonly;
         this.allowDelete = this.options.allowDelete;
+        this.editorHasHistory = this.options.editorHasHistory;
         this.attachmentsController = options.attachmentsController;
         this.listenTo(this.model, 'attachments:download', this.__download);
     },
 
     regions: {
-        reviseRegion: '.js-revise-button-region',
         tooltipButtonRegion: '.js-btn-tooltip-region'
     },
 
@@ -41,15 +41,15 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        const { text, name, isLoading, extension, embeddedType } = this.model.toJSON();
+        const { text, name, creator, creationDate } = this.model.toJSON();
         return {
             text: text || name,
-            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
-            isInline: this.options.isInline && embeddedType
+            creator,
+            creationDate
         };
     },
 
-    className: 'document-list',
+    className: 'image-list',
 
     ui: {
         remove: '.js-delete-button',
@@ -85,7 +85,8 @@ export default Marionette.View.extend({
                 reqres: this.reqres,
                 model: this.model,
                 readonly: this.readonly,
-                allowDelete: this.allowDelete
+                allowDelete: this.allowDelete,
+                editorHasHistory: this.editorHasHistory
             },
             panelPosition: 'right',
             panelOffsetLeft: -171,
@@ -124,7 +125,7 @@ export default Marionette.View.extend({
     },
 
     __executeDownload(linkDownloadEvent: MouseEvent) {
-        if (window.navigator.msSaveOrOpenBlob) {
+        if (this.__isNew() && window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
             linkDownloadEvent.preventDefault();
         }

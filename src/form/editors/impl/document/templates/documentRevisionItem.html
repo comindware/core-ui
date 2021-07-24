@@ -1,8 +1,9 @@
-{{#unless isSingleRevision}}<td>{{version}}</td>{{/unless}}
+<td>{{version}}</td>
 <td>{{creationDate}}</td>
 <td>{{creator}}</td>
-{{#unless isSingleRevision}}
-<td><a href="{{url}}" target="_blank" class="btn btn-icon">
-    <i class="far fa-arrow-to-bottom"></i>
-</a></td>
-{{/unless}}
+<td>
+    <a href="{{url}}" target="_blank" class="document-revision__download">
+        <i class="{{iconPrefixer 'cloud-download'}}"></i>
+        <div class="document-revision-download__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</div>
+    </a>
+</td>

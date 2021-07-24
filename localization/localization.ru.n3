@@ -108,6 +108,8 @@
 
 <http://comindware.com/text/core/form/editors/date#timeEmptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Время"; l10n:originalData "Time"].
 
+<http://comindware.com/text/core/form/editors/document#actions> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Действия"; l10n:originalData "Actions"].
+
 <http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].
 
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].
@@ -130,7 +132,7 @@
 
 <http://comindware.com/text/core/form/editors/document#replaceDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить документ"; l10n:originalData "Replace document"].
 
-<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать больше..."; l10n:originalData "Show more..."].
+<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать больше"; l10n:originalData "Show more"].
 
 <http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "История"; l10n:originalData "History"].
 
@@ -205,6 +207,16 @@
 <http://comindware.com/text/core/form/editors/iconEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "search"].
 
 <http://comindware.com/text/core/form/editors/iconEditor#searchTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Результаты поиска"; l10n:originalData "searchTitle"].
+
+<http://comindware.com/text/core/form/editors/image#addImage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить изображение"; l10n:originalData "Add Image"].
+
+<http://comindware.com/text/core/form/editors/image#cancelCrop> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить обрезку"; l10n:originalData "Cancel Crop"].
+
+<http://comindware.com/text/core/form/editors/image#cropper> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Кроппер"; l10n:originalData "Cropper"].
+
+<http://comindware.com/text/core/form/editors/image#cut> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Обрезать"; l10n:originalData "Cut"].
+
+<http://comindware.com/text/core/form/editors/image#dragfile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда изображение <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#allUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все пользователи"; l10n:originalData "allUsers"].
 

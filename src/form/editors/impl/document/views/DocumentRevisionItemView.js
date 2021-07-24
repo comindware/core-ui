@@ -8,8 +8,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            version: this.model.get('version') + 1,
-            isSingleRevision: this.model.collection.length === 1
+            version: this.model.get('version') + 1
         };
     }
 });
