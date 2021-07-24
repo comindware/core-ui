@@ -194,9 +194,9 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                         e.validationResult = validationResult;
                     }
                 });
-                if (options.getReadonly || options.getHidden) {
-                    this.model.on('change', () => this.__updateDynamicFieldAccess(options));
-                    this.once('render', () => this.__updateDynamicFieldAccess(options));
+                if (options.getReadonly || options.getHidden || options.getRequired) {
+                    this.model.on('change', () => this.updateDynamicFieldAccess(options));
+                    this.once('render', () => this.updateDynamicFieldAccess(options));
                 }
             }
 
@@ -306,10 +306,19 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
 
         setRequired(required = this.options.required) {
             this.options.required = required;
+            const requiredValidatorName = 'required';
             if (required) {
                 this.__updateEmpty();
+                if (!this.validators) {
+                    this.validators = [requiredValidatorName];
+                } else if (!this.validators.includes(requiredValidatorName)) {
+                    this.validators.push(requiredValidatorName);
+                }
             } else {
                 this.__toggleRequiredClass(false);
+                if (this.validators?.length) {
+                    this.validators = this.validators.filter(v => v !== requiredValidatorName);
+                }
             }
         },
 
@@ -681,12 +690,15 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
             return this.isRendered() && !this.isDestroyed();
         },
 
-        __updateDynamicFieldAccess(options) {
+        updateDynamicFieldAccess(options = this.options) {
             if (typeof options.getReadonly === 'function') {
                 this.setReadonly(Boolean(options.getReadonly(options.model)));
             }
             if (typeof options.getHidden === 'function') {
                 this.setHidden(Boolean(options.getHidden(options.model)));
+            }
+            if (typeof options.getRequired === 'function') {
+                this.setRequired(Boolean(options.getRequired(options.model)));
             }
         },
 

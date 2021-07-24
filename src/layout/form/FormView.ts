@@ -14,13 +14,7 @@ const anchors = ['field', 'editor'];
 export default Marionette.View.extend({
     initialize(options) {
         this.uniqueFormId = _.uniqueId('form-');
-        if (!('content' in options)) {
-            this.content = FormContentFactory.getContentFromSchema(options.schema, this.uniqueFormId);
-            this.schema = FormSchemaFactory.getSchema(options.schema);
-        } else {
-            this.content = options.content;
-            this.schema = options.schema;
-        }
+        this.__updateContent(options);
 
         const model = this.options.model;
         this.model = typeof model === 'function' ? model.call(this) : model;
@@ -66,6 +60,14 @@ export default Marionette.View.extend({
         }
     },
 
+    updateContent(options) {
+        if (this.content) {
+            this.content.destroy();
+        }
+        this.__updateContent(options);
+        this.render();
+    },
+
     onRender() {
         this.showChildView('contentRegion', this.content);
         if ('content' in this.options) {
@@ -97,6 +99,9 @@ export default Marionette.View.extend({
             this.content.update();
         }
         this.__updateState();
+        if (this.form) {
+            Object.values(this.form.fields).forEach(field => field.updateDynamicFieldAccess());
+        }
     },
 
     setLoading(state: Boolean) {
@@ -114,5 +119,15 @@ export default Marionette.View.extend({
         }
 
         return fieldErrors || contentErrors;
-    }
+    },
+
+    __updateContent(options) {
+        if (!('content' in options)) {
+            this.content = FormContentFactory.getContentFromSchema(options.schema, this.uniqueFormId);
+            this.schema = FormSchemaFactory.getSchema(options.schema);
+        } else {
+            this.content = options.content;
+            this.schema = options.schema;
+        }
+    },
 });
