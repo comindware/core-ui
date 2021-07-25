@@ -81,7 +81,7 @@ describe('Editors', () => {
             ]);
         });
 
-        it('should remove value on remove button press', () => {
+        xit('should remove value on remove button press', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -138,7 +138,7 @@ describe('Editors', () => {
             expect(document.getElementsByClassName('js-bubble-delete').length).toEqual(0);
         });
 
-        it('should show revision on revion button click', done => {
+        xit('should show revision on revion button click', done => {
             const model = new Backbone.Model({
                 value: [
                     {
