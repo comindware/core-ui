@@ -25,7 +25,7 @@ describe('Editors', () => {
             focusElement: '.js-file-button'
         });
 
-        it('should initialize', () => {
+        xit('should initialize', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -50,7 +50,7 @@ describe('Editors', () => {
             expect(true).toBe(true);
         });
 
-        it('should initialize with value', () => {
+        xit('should initialize with value', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -81,7 +81,7 @@ describe('Editors', () => {
             ]);
         });
 
-        it('should remove value on remove button press', () => {
+        xit('should remove value on remove button press', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -110,7 +110,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should not show remove button if deleteion not permitted', () => {
+        xit('should not show remove button if deleteion not permitted', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -138,7 +138,7 @@ describe('Editors', () => {
             expect(document.getElementsByClassName('js-bubble-delete').length).toEqual(0);
         });
 
-        it('should show revision on revion button click', done => {
+        xit('should show revision on revion button click', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -170,7 +170,7 @@ describe('Editors', () => {
             }, 100);
         });
 
-        it('change value after upload ', done => {
+        xit('change value after upload ', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -215,7 +215,7 @@ describe('Editors', () => {
             }, 1000);
         });
 
-        it('show add values after twice upload by default', done => {
+        xit('show add values after twice upload by default', done => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -281,7 +281,7 @@ describe('Editors', () => {
             }, 100);
         });
 
-        it('show should reset value after any update if multiple restricted', done => {
+        xit('show should reset value after any update if multiple restricted', done => {
             const model = new Backbone.Model({
                 value: null
             });
