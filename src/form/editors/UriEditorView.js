@@ -35,10 +35,20 @@ const classes = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
+const CLASS_HIDDEN = 'hidden';
+
 export default formRepository.editors.Uri = BaseEditorView.extend({
     initialize(options) {
         this.errors = [];
         this.validators = options.allowedUriSchemes;
+        this.isHiddenInput = false;
+        if (this.value) {
+            this.validate();
+            this.isHiddenInput = true;
+            if (this.errors.length === 0) {
+                this.href = this.__getHrefFormat(this.validatorOptions);
+            }
+        }
     },
 
     focusElement: '.js-input',
@@ -52,6 +62,15 @@ export default formRepository.editors.Uri = BaseEditorView.extend({
     className: 'editor_uri',
 
     template: Handlebars.compile(template),
+
+    templateContext() {
+        return {
+            href: this.href,
+            classHiddenInput: this.isHiddenInput ? CLASS_HIDDEN : '',
+            classHiddenUri: !this.isHiddenInput ? CLASS_HIDDEN : '',
+            value: this.value
+        };
+    },
 
     events() {
         const events = {
@@ -78,7 +97,6 @@ export default formRepository.editors.Uri = BaseEditorView.extend({
         this.ui.link[0].classList.add('hidden');
         this.ui.input[0].classList.remove('hidden');
         this.ui.iconEdit[0].classList.add('hidden');
-
         this.onFocus();
     },
 
