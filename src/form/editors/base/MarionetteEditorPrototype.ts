@@ -517,7 +517,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
          */
         validate({ internal } = {}) {
-            const errors: Array<Object> = [];
+            let errors: Array<Object> = [];
             const value = this.getValue();
             const formValues = this.form ? this.form.getValue() : {};
             const validators = this.validators;

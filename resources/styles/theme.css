@@ -862,12 +862,14 @@ tr:not(:first-child) .cell_selection {
 
 /* Dropdown Bubbles */
 
+.editor_uri,
 .bubbles {
   border-radius: 4px;
   background-color: var(--theme-colors__main);
   border: 1px solid var(--editors-color-border);
   padding: var(--dropdown-padding);
-  line-height: 26px;
+  flex: none;
+  height: 30px;
 }
 
 .editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {

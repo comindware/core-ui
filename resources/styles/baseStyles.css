@@ -1,5 +1,6 @@
 .editor_focused:not(.editor_readonly):not(.editor_disabled) .input,
 .editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea,
+.editor_focused:not(.editor_readonly):not(.editor_disabled) .editor_uri,
 .editor_bubble:not(.editor_readonly):not(.editor_disabled) .bubbles.editor_focused,
 .editor_checkbox.editor_focused:not(.editor_readonly):not(.editor_disabled) .checkbox,
 .editor_date-time.editor_focused:not(.editor_readonly):not(.editor_disabled) {
