@@ -543,8 +543,29 @@ td > .icon-true {
     font-size: 11px;
 }
 
+.editor_uri,
 .bubbles {
     position: relative;
+}
+
+.icon-edit_uri {
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.uri-form a {
+    overflow: hidden;
+    max-width: 95%;
+    text-overflow: ellipsis;
+}
+
+.editor_uri {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .bubbles__list {
@@ -617,6 +638,7 @@ td > .icon-true {
     min-width: 0;
 }
 
+.uri-input,
 .bubbles__input {
     width: 100%;
     height: 100%;
@@ -1204,4 +1226,19 @@ input[type="color"],
 
 .cell .complex-editor-field .dev-complex-editor-item {
     flex: 2;
+}
+
+.uri-form {
+    width: 100%;
+    max-width: 100%;
+    display: inline-flex;
+    line-height: initial;
+}
+
+.editor_uri:hover .icon-edit_uri {
+    visibility: visible;
+}
+
+.icon-edit_uri {
+    visibility: hidden;
 }

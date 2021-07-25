@@ -5,6 +5,7 @@ const meta = {
     socialLinksLoginPage: 'globe',
     linksLoginPage: 'external-link',
     infoNewsItem: 'info-square',
+    uri: 'arrow-alt-from-bottom',
     formRoot: 'window',
     reference: 'link',
     instance: 'link',
@@ -74,11 +75,13 @@ export const objectPropertyTypes = {
     INSTANCE: 'Instance',
     COLLECTION: 'Collection',
     ENUM: 'Enum',
-    ROLE: 'Role',
-    ORGANIZATION_UNIT: 'OrganizationalUnit'
+    ROLE: 'Role',    
+    ORGANIZATION_UNIT: 'OrganizationalUnit',
+    URI: 'Uri'
 };
 
 export const fieldTypes = {
+    Uri: 'uri',
     Text: 'text',
     Number: 'number',
     Duration: 'duration',
