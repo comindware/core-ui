@@ -7,6 +7,13 @@ import EmailValidator from './validators/emailValidator';
 import CodeValidation from './validators/codeValidation';
 import RegExpValidator from './validators/regExpValidator';
 import LoginValidator from './validators/loginValidator';
+import Http from './validators/httpValidator';
+import Https from './validators/httpsValidator';
+import Telegram from './validators/tgValidator';
+import MailTo from  './validators/mailtoValidator';
+import Ftp from './validators/ftpValidator';
+import Git from './validators/gitValidator';
+import Ssh from './validators/sshValidator';
 
 export default {
     editors: {},
@@ -19,7 +26,14 @@ export default {
         email: EmailValidator,
         code: CodeValidation,
         regexp: RegExpValidator,
-        login: LoginValidator
+        login: LoginValidator,
+        http: Http,
+        https: Https,
+        telegram: Telegram,
+        mailto: MailTo,
+        git: Git,
+        ssh: Ssh,
+        ftp: Ftp
     },
     getValidator(validator: string | Function) {
         const validators = this.validators;
