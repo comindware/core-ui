@@ -75,9 +75,14 @@ export const objectPropertyTypes = {
     INSTANCE: 'Instance',
     COLLECTION: 'Collection',
     ENUM: 'Enum',
+<<<<<<< HEAD
+    ROLE: 'Role',
+    ORGANIZATION_UNIT: 'OrganizationalUnit'
+=======
     ROLE: 'Role',    
     ORGANIZATION_UNIT: 'OrganizationalUnit',
     URI: 'Uri'
+>>>>>>> 2.1/bug/664980
 };
 
 export const fieldTypes = {

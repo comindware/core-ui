@@ -140,8 +140,11 @@ const api = /** @lends module:core.form */ {
         MentionEditor: MentionEditorView,
         AvatarEditor: AvatarEditorView,
         DocumentEditor: DocumentEditorView,
+<<<<<<< HEAD
         ImageEditor: ImageEditorView,
-	UriEditor: UriEditorView,
+=======
+        UriEditor: UriEditorView,
+>>>>>>> 2.1/bug/664980
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         MembersSplitEditor: MembersSplitEditorView,
