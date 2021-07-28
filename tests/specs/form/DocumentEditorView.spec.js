@@ -81,7 +81,7 @@ describe('Editors', () => {
             ]);
         });
 
-        xit('should remove value on remove button press', () => {
+        it('should remove value on remove button press', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -105,12 +105,13 @@ describe('Editors', () => {
 
             view.$('.document-list').trigger('mouseenter');
 
+            document.getElementsByClassName('js-tooltip-button')[0].click();
             document.getElementsByClassName('js-delete-button')[0].click();
 
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should not show remove button if deleteion not permitted', () => {
+        it('should not show remove button if deletion not permitted', () => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -138,7 +139,7 @@ describe('Editors', () => {
             expect(document.getElementsByClassName('js-bubble-delete').length).toEqual(0);
         });
 
-        xit('should show revision on revion button click', done => {
+        xit('should show revision on revision button click', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -163,6 +164,7 @@ describe('Editors', () => {
                 .show(view);
 
             view.$('.document-list').trigger('mouseenter');
+            document.getElementsByClassName('js-tooltip-button')[0].click();
             view.$('.js-revise-button-region').click();
             setTimeout(() => {
                 expect(document.getElementsByClassName('js-revision-list').length).toEqual(1);
