@@ -2,6 +2,7 @@
 
 import EdgeService from './EdgeService';
 import 'innersvg-polyfill';
+import ResizeObserver from 'resize-observer-polyfill';
 import cssVars from 'css-vars-ponyfill';
 
 const classListToggle = function (name: string, flag = !this.contains(name)) {
@@ -26,6 +27,7 @@ export default class IEService extends EdgeService {
         this.__addParendAppend();
         this.__addOnceListeners();
         this.__addNumberIsNaN();
+        this.__addResizeObserver();
 
         super.initialize();
     }
@@ -164,5 +166,9 @@ export default class IEService extends EdgeService {
         Number.isNaN = Number.isNaN || function(value) {
             return typeof value === 'number' && isNaN(value);
         };
+    }
+
+    static __addResizeObserver() {
+        window.ResizeObserver = ResizeObserver;
     }
 }

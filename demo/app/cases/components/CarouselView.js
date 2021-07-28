@@ -15,7 +15,7 @@ export default function() {
     return new CanvasView({
         view: new Core.layout.Carousel({
             collection: new Backbone.Collection(elements),
-            view: innerView
+            childView: innerView
         }),
         canvas: {
             width: '500px'

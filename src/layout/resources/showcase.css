@@ -1,18 +1,18 @@
 .showcase {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-flow: column nowrap;
 }
 
 .showcase-wrapper {
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .showcase__content-wrapper {
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .showcase__content {
@@ -23,7 +23,7 @@
     overflow: hidden;
     min-height: 0;
     justify-content: space-around;
-    align-items: start;
+    align-items: flex-end;
     align-content: space-around;
 }
 
