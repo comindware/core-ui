@@ -14,7 +14,7 @@ export default function() {
     return new CanvasView({
         view: new Core.layout.Showcase({
             collection: new Backbone.Collection(elements),
-            view: innerView
+            childView: innerView
         }),
         canvas: {
             width: '500px'
