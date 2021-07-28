@@ -284,7 +284,7 @@ export default function() {
 
     const getNodeName = model => model.get('name');
 
-    const view = new Core.components.TreeEditor({
+    const treeEditor = new Core.components.TreeEditor({
         model: createTreeModel(tree),
         getNodeName,
         unNamedType: 'unNamed',
@@ -300,7 +300,8 @@ export default function() {
             ['1.4', { isHidden: true }]
         ])
     });
-    console.log(view.getConfigDiff());
+    const view = treeEditor.getView();
+    console.log(treeEditor.getConfigDiff());
     view.listenTo(view, 'save', config => console.log(`saved: ${config}`));
     view.listenTo(view, 'reset', () => console.log('reseted'));
 
