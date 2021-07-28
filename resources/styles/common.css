@@ -929,6 +929,10 @@ body.non-selectable {
     align-items: stretch;
 }
 
+.layout-group__content .toolbar-container {
+    padding: 10px 0;
+}
+
 .toolbar-container .tr-search__input {
     height: 100%;
 }
