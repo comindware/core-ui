@@ -23,10 +23,14 @@
     flex-flow: row nowrap;
     overflow: hidden;
     min-height: 0;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.carousel__content > * {
+    margin: 5px;
 }
 
 .carousel__dots {
