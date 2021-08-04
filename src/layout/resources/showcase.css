@@ -22,7 +22,7 @@
     flex-flow: row wrap;
     overflow: hidden;
     min-height: 0;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: flex-end;
     align-content: space-around;
 }
