@@ -517,13 +517,11 @@ export default Marionette.View.extend({
     },
 
     __handleTouchEnd() {
-        if (MobileService.isMobile) {
-            if (this.isTouchMoveEvent) {
-                this.isTouchMoveEvent = false;
-                return;
-            }
-            this.gridEventAggregator.trigger('row:pointer:down', this.model);
+        if (this.isTouchMoveEvent) {
+            this.isTouchMoveEvent = false;
+            return;
         }
+        this.gridEventAggregator.trigger('row:pointer:down', this.model);
     },
 
     __handleTouchCancel() {
