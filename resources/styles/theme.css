@@ -671,6 +671,7 @@ tr.row-checked,
 /* stylelint-disable */
 
 .cell {
+    touch-action: manipulation;
     height: 29px;
     line-height: 29px;
     font-size: 13px;
