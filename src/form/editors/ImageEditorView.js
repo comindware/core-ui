@@ -48,8 +48,8 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
 
-        const cropHeight = options.model.get('height');
-        const cropWidth = options.model.get('width');
+        const cropHeight = options.model?.get('height');
+        const cropWidth = options.model?.get('width');
         this.aspectRatio = cropWidth && cropHeight ? cropWidth / cropHeight : undefined;
 
         this.collection = new DocumentsCollection(this.value);

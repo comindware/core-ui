@@ -7,6 +7,7 @@ import DateTimeService from '../form/editors/services/DateTimeService';
 import CellFieldView from './views/CellFieldView';
 import getIconPrefixer from '../utils/handlebars/getIconPrefixer';
 import compositeDocumentCell from './templates/compositeDocumentCell.html';
+import compositeImageCell from './templates/compositeImageCell.html';
 import compositeUserCell from './templates/compositeUserCell.html';
 import compositeReferenceCell from './templates/compositeReferenceCell.html';
 import Backbone from 'backbone';
@@ -16,6 +17,7 @@ import DropdownView from '../dropdown/views/DropdownView';
 import { classes } from './meta';
 
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
+const compiledCompositeImageCell = Handlebars.compile(compositeImageCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
 const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
 const compiledStringValueCell = Handlebars.compile('{{{value}}}');
@@ -27,6 +29,7 @@ const getWrappedTemplate = (template: string) => `<div class="composite-cell__wr
     </div>`;
 
 const compiledWrappedCompositeDocumentCell = Handlebars.compile(getWrappedTemplate(compositeDocumentCell));
+const compiledWrappedCompositeImageCell = Handlebars.compile(getWrappedTemplate(compositeImageCell));
 const compiledWrappedCompositeReferenceCell = Handlebars.compile(getWrappedTemplate(compositeReferenceCell));
 const compiledWrappedCompositeUserCell = Handlebars.compile(getWrappedTemplate(compositeUserCell));
 const compiledWrappedStringValueCell = Handlebars.compile(getWrappedTemplate('{{{value}}}'));
@@ -97,6 +100,8 @@ class CellViewFactory implements ICellViewFactory {
                 return this.__getDateTimeCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.DOCUMENT:
                 return this.__getDocumentCell({ values, column: columnWithExtension, model });
+            case objectPropertyTypes.IMAGE:
+                return this.__getImageCell({ values, column: columnWithExtension, model });
             case 'Complex':
                 return this.__getComplexCell({ values, column: columnWithExtension, model });
             case 'ContextSelect':
@@ -122,36 +127,40 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 template = compiledCompositeReferenceCell;
-                formattedValues = value.map(v => this.__getFormattedReferenceValue({ value: v, column, model }));
+                formattedValues = value.map((v: any) => this.__getFormattedReferenceValue({ value: v, column, model }));
                 break;
             case objectPropertyTypes.ACCOUNT:
                 template = compiledCompositeUserCell;
-                formattedValues = value.map(v => this.__getFormattedUserValue({ value: v, column, model }));
+                formattedValues = value.map((v: any) => this.__getFormattedUserValue({ value: v, column, model }));
                 break;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
                 template = compiledValueCell;
-                formattedValues = value.map(v => ({ value: this.__getFormattedNumberValue({ value: v, column }) }));
+                formattedValues = value.map((v: any) => ({ value: this.__getFormattedNumberValue({ value: v, column }) }));
                 break;
             case objectPropertyTypes.DURATION:
                 template = compiledValueCell;
-                formattedValues = value.map(v => ({ value: this.__getFormattedDurationValue({ value: v, column }) }));
+                formattedValues = value.map((v: any) => ({ value: this.__getFormattedDurationValue({ value: v, column }) }));
                 break;
             case objectPropertyTypes.DATETIME:
                 template = compiledValueCell;
-                formattedValues = value.map(v => ({ value: this.__getFormattedDateTimeValue({ value: v, column }) }));
+                formattedValues = value.map((v: any) => ({ value: this.__getFormattedDateTimeValue({ value: v, column }) }));
                 break;
             case objectPropertyTypes.DOCUMENT:
                 template = compiledCompositeDocumentCell;
-                formattedValues = value.map(v => this.__getFormattedDocumentValue({ value: v, column }));
+                formattedValues = value.map((v: any) => this.__getFormattedDocumentValue({ value: v, column }));
+                break;
+            case objectPropertyTypes.IMAGE:
+                template = compiledCompositeImageCell;
+                formattedValues = value.map((v: any) => this.__getFormattedImageValue({ value: v, column }));
                 break;
             case objectPropertyTypes.BOOLEAN:
                 return null;
             case objectPropertyTypes.STRING:
             default:
                 template = compiledStringValueCell;
-                formattedValues = value.map(v => ({ value: v }));
+                formattedValues = value.map((v: any) => ({ value: v }));
                 break;
         }
         const panelViewOptions = {
@@ -264,7 +273,7 @@ class CellViewFactory implements ICellViewFactory {
         let v = value;
         let result;
         if (column.valueType === 'id') {
-            const item = column.collection?.find(m => m.id === value);
+            const item = column.collection?.find((m: { id: any; }) => m.id === value);
             if (item) {
                 const data = item instanceof Backbone.Model ? item.toJSON() : item;
                 const text = data[column.displayAttribute] || data.text || data.name;
@@ -300,6 +309,17 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedDocumentValue({ value }: ValueFormatOption) {
+        const { name, text, isLoading, extension } = value;
+        value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
+        value.name = name || text;
+        return {
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension }),
+            name: value.text,
+            ...value
+        };
+    }
+
+    __getFormattedImageValue({ value }: ValueFormatOption) {
         const { name, text, isLoading, extension } = value;
         value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
         value.name = name || text;
@@ -346,7 +366,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getNumberCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedNumberValue({ value, column }));
+        const mappedValues = values.map((value: any) => this.__getFormattedNumberValue({ value, column }));
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
@@ -365,7 +385,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getDateTimeCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedDateTimeValue({ value, column }));
+        const mappedValues = values.map((value: any) => this.__getFormattedDateTimeValue({ value, column }));
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
@@ -384,7 +404,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getDurationCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedDurationValue({ value, column }));
+        const mappedValues = values.map((value: any) => this.__getFormattedDurationValue({ value, column }));
 
         const title = this.__getTitle({ column, model, values: mappedValues });
 
@@ -403,7 +423,7 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getBooleanCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedBooleanValue({ value, column, model }));
+        const mappedValues = values.map((value: any) => this.__getFormattedBooleanValue({ value, column, model }));
         const cellInnerHTML = mappedValues.join('');
         return { cellInnerHTML, title: '' };
     }
@@ -414,8 +434,8 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getReferenceCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedReferenceValue({ value, column, model }));
-        const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.text) });
+        const mappedValues = values.map((value: any) => this.__getFormattedReferenceValue({ value, column, model }));
+        const title = this.__getTitle({ column, model, values: mappedValues.map((v: { text: any; }) => v.text) });
 
         let cellInnerHTML;
         if (mappedValues.length === 1) {
@@ -432,9 +452,9 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getDocumentCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedDocumentValue({ value, column }));
+        const mappedValues = values.map((value: any) => this.__getFormattedDocumentValue({ value, column }));
 
-        const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.name) });
+        const title = this.__getTitle({ column, model, values: mappedValues.map((v: { name: any; }) => v.name) });
 
         let cellInnerHTML;
         if (mappedValues.length === 1) {
@@ -445,15 +465,33 @@ class CellViewFactory implements ICellViewFactory {
         return { cellInnerHTML, title };
     }
 
+    __getImageCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
+        const mappedValues = values.map((value: any) => this.__getFormattedImageValue({ value, column }));
+
+        const title = this.__getTitle({ column, model, values: mappedValues.map((v: { name: any; }) => v.name) });
+
+        let cellInnerHTML;
+        if (mappedValues.length === 1) {
+            cellInnerHTML = compiledCompositeImageCell(mappedValues[0]);
+        } else {
+            cellInnerHTML = compiledWrappedCompositeImageCell({ ...mappedValues[0], count: values.length - 1 });
+        }
+        return { cellInnerHTML, title };
+    }
+
     __getDocumentCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getDocumentCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 
-    __getUserCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
-        const mappedValues = values.map(value => this.__getFormattedUserValue({ value, column, model }));
+    __getImageCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getImageCellInnerHTML({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
+    }
 
-        const title = this.__getTitle({ column, model, values: mappedValues.map(v => v.name) });
+    __getUserCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
+        const mappedValues = values.map((value: any) => this.__getFormattedUserValue({ value, column, model }));
+        const title = this.__getTitle({ column, model, values: mappedValues.map((v: { name: any; }) => v.name) });
 
         let cellInnerHTML;
         if (mappedValues.length === 1) {
@@ -469,7 +507,7 @@ class CellViewFactory implements ICellViewFactory {
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 
-    __createContextString({ values, column, model }: GetCellOptions): string{
+    __createContextString({ values, column, model }: GetCellOptions): string {
         const type = contextIconType[model.get('type').toLocaleLowerCase()];
         const getIcon = getIconPrefixer(type);
         return `
