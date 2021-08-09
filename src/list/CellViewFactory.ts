@@ -600,8 +600,9 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getContextCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
+        const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
         let valueInnerHTML = '';
-        if (!values || values === 'False' || !column.context || !column.recordTypeId) {
+        if (!values || values === 'False' || !columnWithExtension.recordTypeId) {
             valueInnerHTML = '';
         } else if (typeof values === 'string') {
             valueInnerHTML = values;
@@ -609,7 +610,7 @@ class CellViewFactory implements ICellViewFactory {
             let instanceTypeId = column.recordTypeId;
             const parts: string[] = [];
             values.forEach((item: string) => {
-                const searchItem = column.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
                 if (searchItem) {
                     parts.push(searchItem.name);
                     instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
