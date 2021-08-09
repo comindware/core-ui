@@ -87,7 +87,8 @@
 
 .grid-header > .cell_selection > .checkbox,
 .grid-header > .cell_selection-index > .checkbox {
-    z-index: 1
+    z-index: 1;
+    background-color: var(--theme-colors__primary-txt);
 }
 
 .grid-header:hover > .cell_selection {
