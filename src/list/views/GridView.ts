@@ -470,7 +470,7 @@ export default Marionette.View.extend({
             this.listenTo(GlobalEventService, 'window:resize', () => this.updateListViewResize({ newMaxHeight: window.innerHeight, shouldUpdateScroll: false }));
         }
 
-        if (this.options.columns.length) {
+        if (this.options.columns.length && this.options.showHeader) {
             this.__toggleNoColumnsMessage(this.options.columns);
         }
     },
@@ -1043,6 +1043,9 @@ export default Marionette.View.extend({
     },
 
     setClassToColumn(id: string, state = false, index: number, classCell: string) {
+        if (!this.options.showHeader) {
+            return;
+        }
         const columns = this.options.columns;
         let elementIndex = index + 1;
         const column = columns[index];

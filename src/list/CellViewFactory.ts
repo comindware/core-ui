@@ -555,7 +555,7 @@ class CellViewFactory implements ICellViewFactory {
     __getContextCellInnerHtml({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult  {
         const columnWithExtension = { ...column, ...(column.schemaExtension?.(model) || {}) };
         let valueInnerHTML = '';
-        if (!values || values === 'False' || !columnWithExtension.context || !columnWithExtension.recordTypeId) {
+        if (!values || values === 'False' || !columnWithExtension.recordTypeId) {
             valueInnerHTML = '';
         } else if (typeof values === 'string') {
             valueInnerHTML = values;
@@ -563,7 +563,7 @@ class CellViewFactory implements ICellViewFactory {
             let instanceTypeId = columnWithExtension.recordTypeId;
             const parts: string[] = [];
             values.forEach((item: string) => {
-                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                const searchItem = columnWithExtension.context && columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item || contextItem.alias === item);
                 if (searchItem) {
                     parts.push(searchItem.name);
                     instanceTypeId = searchItem[columnWithExtension.instanceValueProperty || 'instanceTypeId'];
