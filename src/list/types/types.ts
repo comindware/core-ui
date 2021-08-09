@@ -11,7 +11,7 @@ export interface Column {
     dataType: string;
     format: string;
     getHidden?: (model: Backbone.Model) => boolean;
-    getReadonly?: (model: Backbone.Model) => boolean;
+    getReadonly?: (model: Backbone.Model | undefined) => boolean;
     getRequired?: (model: Backbone.Model) => boolean;
     getValidationClassName?: (model: Backbone.Model) => boolean;
     [propertyName: string]: any;

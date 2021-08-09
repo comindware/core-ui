@@ -218,6 +218,8 @@
 
 <http://comindware.com/text/core/form/editors/image#dragfile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда изображение <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
 
+<http://comindware.com/text/core/form/editors/image#replaceImage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить изображение"; l10n:originalData "Replace Image"].
+
 <http://comindware.com/text/core/form/editors/memberSelect#allUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все пользователи"; l10n:originalData "allUsers"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].

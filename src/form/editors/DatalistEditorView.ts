@@ -11,8 +11,10 @@ import ReferenceListWithSubtextItemView from './impl/datalist/views/ReferenceLis
 import formRepository from '../formRepository';
 import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
 import DocumentEditorView from './DocumentEditorView';
+import ImageEditorView from './ImageEditorView';
 import compositeReferenceCell from '../../list/templates/compositeReferenceCell.html';
 import compositeDocumentCell from '../../list/templates/compositeDocumentCell.html';
+import compositeImageCell from '../../list/templates/compositeImageCell.html';
 import compositeUserCell from '../../list/templates/compositeUserCell.html';
 import Backbone from 'backbone';
 import _ from 'underscore';
@@ -57,7 +59,7 @@ type optionsType = {
     buttonBubbleTemplate?: Function,
     panelBubbleTemplate?: Function,
 
-    format?: 'user' | 'document', //name of preset for editor
+    format?: 'user' | 'document' | 'image', //name of preset for editor
 
     boundEditor?: Marionette.View<Backbone.Model>,
     boundEditorOptions?: Object,
@@ -81,6 +83,7 @@ type optionsType = {
 
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
+const compiledCompositeImageCell = Handlebars.compile(compositeImageCell);
 const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
 
 const defaultOptions = (options: optionsType): optionsType => ({
@@ -165,6 +168,31 @@ const presetsDefaults = {
             if (options.maxQuantitySelected === 1) {
                 if (!isEmpty) {
                     addNameButtonText = 'CORE.FORM.EDITORS.DOCUMENT.REPLACEDOCUMENT';
+                }
+                return LocalizationService.get(addNameButtonText);
+            }
+            return LocalizationService.get(addNameButtonText);
+        }
+    }),
+    image: (options: optionsType) => ({
+        listTitle: options.title,
+        panelClass: 'datalist-panel__formatted',
+        buttonBubbleTemplate: compiledCompositeImageCell,
+        panelBubbleTemplate: compiledCompositeImageCell,
+        valueType: 'normal',
+        showCollection: false,
+        idProperty: 'uniqueId',
+        showSearch: false,
+        addNewItem: datalistView => datalistView.boundEditor.openFileUploadWindow(),
+        boundEditor: ImageEditorView,
+        boundEditorOptions: {
+            multiple: options.maxQuantitySelected !== 1
+        },
+        addNewButtonText: (isEmpty : boolean) : string => {
+            let addNameButtonText = 'CORE.FORM.EDITORS.IMAGE.ADDIMAGE';
+            if (options.maxQuantitySelected === 1) {
+                if (!isEmpty) {
+                    addNameButtonText = 'CORE.FORM.EDITORS.IMAGE.REPLACEIMAGE';
                 }
                 return LocalizationService.get(addNameButtonText);
             }
@@ -1138,7 +1166,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         if (!this.options.showAddNewButton) {
             return;
         }
-        this.__focusButton();
         this.close();
         this.options.addNewItem(this);
     },
