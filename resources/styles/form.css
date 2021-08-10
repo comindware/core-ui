@@ -251,7 +251,7 @@ input[type="checkbox"].checkbox {
     cursor: pointer;
     transition: box-shadow .5s;
     border-radius: var(--checkbox-radius);
-    background-color: var(--theme-colors__primary-txt);
+    background-color: var(--theme-colors__main);
 }
 
 td .checkbox i,

@@ -12,7 +12,7 @@ export default Marionette.View.extend({
 
     attributes() {
         return {
-            title: (this.model && this.model.get('title')) || null
+            title: this.model.get('title') || this.model.get('displayText')
         };
     },
 
