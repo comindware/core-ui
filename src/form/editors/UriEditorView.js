@@ -59,7 +59,7 @@ export default formRepository.editors.Uri = BaseEditorView.extend({
         iconEdit: '.js-icon-edit'
     },
 
-    className: 'editor_uri',
+    className: 'editor editor_uri',
 
     template: Handlebars.compile(template),
 

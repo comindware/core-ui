@@ -108,6 +108,8 @@ class CellViewFactory implements ICellViewFactory {
                 return this.__getContextCell({ values, column: columnWithExtension, model });
             case 'Code':
                 return this.__getCodeCell({ values, column: columnWithExtension, model });
+            case objectPropertyTypes.URI:
+                return this.__getUriCell({ values, column: columnWithExtension, model });
             case objectPropertyTypes.STRING:
             default:
                 return this.__getStringCell({ values, column: columnWithExtension, model });
@@ -157,6 +159,11 @@ class CellViewFactory implements ICellViewFactory {
                 break;
             case objectPropertyTypes.BOOLEAN:
                 return null;
+
+            case objectPropertyTypes.URI:
+                template = compiledCompositeReferenceCell;
+                formattedValues = value.map((v: any) => this.__getFormattedUriValue({ value: v, column }));
+                break;
             case objectPropertyTypes.STRING:
             default:
                 template = compiledStringValueCell;
@@ -306,6 +313,10 @@ class CellViewFactory implements ICellViewFactory {
         }
 
         return result;
+    }
+
+    __getFormattedUriValue({ value }: ValueFormatOption) {
+        return typeof value === 'string' ? { url: value, text: value } : value;
     }
 
     __getFormattedDocumentValue({ value }: ValueFormatOption) {
@@ -504,6 +515,24 @@ class CellViewFactory implements ICellViewFactory {
 
     __getUserCell({ values, column, model }: GetCellOptions): string {
         const { title, cellInnerHTML } = this.__getUserCellInnerHTML({ values, column, model });
+        return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
+    }
+
+    __getUriCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
+        const mappedValues = values.map((value: any) => this.__getFormattedUriValue({ value, column, model }));
+        const title = this.__getTitle({ column, model, values: mappedValues.map((v: { text: any; }) => v.text) });
+
+        let cellInnerHTML;
+        if (mappedValues.length === 1) {
+            cellInnerHTML = compiledCompositeReferenceCell(mappedValues[0]);
+        } else {
+            cellInnerHTML = compiledWrappedCompositeReferenceCell({ ...mappedValues[0], count: values.length - 1 });
+        }
+        return { cellInnerHTML, title };
+    }
+
+    __getUriCell({ values, column, model }: GetCellOptions): string {
+        const { title, cellInnerHTML } = this.__getUriCellInnerHTML({ values, column, model });
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title });
     }
 

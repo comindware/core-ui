@@ -86,6 +86,7 @@ export const getComparatorByDataType = function(dataType, sorting) {
 
     switch (dataType) {
         case objectPropertyTypes.STRING:
+        case objectPropertyTypes.URI:
             comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
             break;
         case objectPropertyTypes.DOUBLE:
