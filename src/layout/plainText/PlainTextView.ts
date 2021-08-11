@@ -33,6 +33,7 @@ export default Marionette.View.extend({
         } else {
             this.el.innerHTML = this.text;
         }
+        this.__updateState();
     },
 
     update() {
