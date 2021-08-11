@@ -372,10 +372,6 @@ export default Marionette.View.extend({
     },
 
     __setDraggable(draggable: boolean): void {
-        if (!this.options.draggable) {
-            console.warn('Can not set draggable cause draggable options is false');
-            return;
-        }
         this.model.__draggable = draggable;
 
         const checkboxCellEl = this.el.querySelector(`.${classes.checkboxCell}`);
