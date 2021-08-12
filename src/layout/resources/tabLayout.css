@@ -111,13 +111,13 @@ ul .layout__tab-layout__header-view-item:last-child {
 
 .layout__tab-layout__header-view-item_disabled,
 .popout-menu__i_disabled {
-    color: var(--disabled-input-color);
+    color: var(--disabled-text-color);
     cursor: default;
     opacity: .4
 }
 
 .layout__tab-layout .layout__tab-layout__header-view-item_disabled:hover {
-    color: var(--disabled-input-color);
+    color: var(--disabled-text-color);
     background: none;
 }
 
