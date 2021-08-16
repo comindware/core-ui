@@ -1142,6 +1142,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .toolbar-btn_withoutName {
+  width: 40px;
   padding: 3px;
 }
 
