@@ -99,7 +99,7 @@ export default {
             if (this.openedPopupId) {
                 WindowService.closePopup(this.openedPopupId);
             }
-            this.openedPopupId = WindowService.showTransientPopup(view, { fadeBackground: true });
+            this.openedPopupId = WindowService.showPopup(view, { fadeBackground: true });
         });
     },
 
