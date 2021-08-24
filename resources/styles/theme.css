@@ -515,6 +515,23 @@ svg.svg-grid-icons {
   position: sticky;
 }
 
+.grid-header .cell_selection-index {
+  line-height: var(--grid-header-height);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.grid-header .cell_selection-index::after {
+  display: inline-block;
+  width: 1px;
+  content: "\00a0";
+}
+
+.visible-collection .cell_selection-index {
+  height: 29px;
+  line-height: 29px;
+}
+
 .grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
   box-shadow: var(--grid-header-border-first);
 }
