@@ -83,6 +83,7 @@
 .layout__popup-view-button-list {
     text-align: right;
 }
+
 .layout__popup-view-button-list > .layout__horizontal-layout  {
     display: flex;
     justify-content: flex-end;
@@ -90,6 +91,14 @@
 
 .layout__popup-view-button-list .layout__horizontal-layout-list-item {
     flex: 1 1 auto;
+}
+
+.layout__popup-view-button-list > .layout__horizontal-layout > div {
+    margin: 10px 0 0;
+}
+
+.layout__popup-view-button-list > .layout__horizontal-layout > div:last-child {
+    padding-right: 10px;
 }
 
 .layout__popup-view-button {
