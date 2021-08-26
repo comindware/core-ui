@@ -1,5 +1,6 @@
 /* General */
 :root{
+    --theme-colors__background: #ffffff;
     --demo-nav__i_selected: #11547f;
     --demo-welcome__item-bg-clr: #0376b8;
     --demo-welcome__item-box-sh1: rgba(0,0,0,0.16);

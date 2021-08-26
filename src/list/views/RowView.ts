@@ -634,7 +634,7 @@ export default Marionette.View.extend({
                 this.__insertReadonlyCell({ column, index: columnIndex })
             }
         }
-        
+
         this.gridEventAggregator.pointedCell = columnIndex;
         const pointedEl = this.__getCellByColumnIndex(columnIndex);
         if (!focusEditor || !isColumnEditable) {
@@ -741,6 +741,7 @@ export default Marionette.View.extend({
             case objectPropertyTypes.DOCUMENT:
             case objectPropertyTypes.ACCOUNT:
             case objectPropertyTypes.ENUM:
+            case objectPropertyTypes.IMAGE:
                 return classes.dropdownRoot;
             default:
                 return '';
