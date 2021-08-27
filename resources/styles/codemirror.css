@@ -686,13 +686,13 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-error {
-    color: #ffa5a0;
-    background: #ffa5a0;
+    color: var(--theme-colors__text);
+    background: var(--theme-colors__error);
 }
 
 .dev-code-editor-warning {
-    color: #feffa8;
-    background: #feffa8;
+    color: var(--theme-colors__text);
+    background: var(--theme-colors__warning);
 }
 
 /* CodeEditor */

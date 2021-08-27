@@ -44,15 +44,17 @@ export default Marionette.View.extend({
 
         this.listenTo(errorsGridController, 'dblclick', model => {
             const cursorPos = {
-                ch: model.get('column') - 2,
-                line: model.get('line') - 1
+                ch: model.get('offsetStart'),
+                line: model.get('line') - 1,
+                offsetEnd: model.get('offsetEnd') + 1
             };
             this.trigger('changeCursorPos', cursorPos, 'error');
         });
         this.listenTo(warningsGridController, 'dblclick', model => {
             const cursorPos = {
-                ch: model.get('column') - 2,
-                line: model.get('line') - 1
+                ch: model.get('offsetStart'),
+                line: model.get('line') - 1,
+                offsetEnd: model.get('offsetEnd') + 1
             };
             this.trigger('changeCursorPos', cursorPos, 'warning');
         });

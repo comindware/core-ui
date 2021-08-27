@@ -212,16 +212,45 @@ export default Marionette.View.extend({
             }
             this.codemirror.focus();
             this.__jumpToLine(pos.line);
-            if (type === 'error') {
-                this.codemirror.addLineClass(pos.line, 'background', 'dev-code-editor-error');
-            }
-            if (type === 'warning') {
-                this.codemirror.addLineClass(pos.line, 'background', 'dev-code-editor-warning');
+            if (type === 'error' || type === 'warning') {
+                this.clearMarks();
+                this.markerText(type, pos);
             }
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
         this.codemirror.setSize(null, this.options.height);
+    },
+
+    clearMarks() {
+        const marks = this.codemirror.getAllMarks();
+        marks.forEach(item => {
+            item.clear(item);
+        });
+    },
+
+    markerText(type, pos) {
+        let className;
+        if (type === 'error') {
+            className = constants.classes.colorError;
+        }
+        if (type === 'warning') {
+            className = constants.classes.colorWarning;
+        }
+        this.codemirror.markText(
+            {
+                line: pos.line,
+                ch: pos.ch
+            },
+            {
+                line: pos.line,
+                ch: pos.offsetEnd
+            },
+            {
+                className,
+                clearOnEnter: true
+            }
+        );
     },
 
     __inputСharacterСhecking(options = {}) {
@@ -298,7 +327,11 @@ export default Marionette.View.extend({
     },
 
     async __getAttributeN3() {
-        const { numberLine, cursor, token } = this.__getOptionCodemirror([constants.optionsCodemirror.cursor, constants.optionsCodemirror.numberLine, constants.optionsCodemirror.token]);
+        const { numberLine, cursor, token } = this.__getOptionCodemirror([
+            constants.optionsCodemirror.cursor,
+            constants.optionsCodemirror.numberLine,
+            constants.optionsCodemirror.token
+        ]);
         this.numberLineCallHints = numberLine;
         try {
             this.setLoading(true);
@@ -507,13 +540,18 @@ export default Marionette.View.extend({
         if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
             const isClose = await Core.services.MessageService.showMessageDialog(
                 Localizer.get('CORE.FORM.EDITORS.CODE.UNSAVEDEDITOR'),
-                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
-                    id: true,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
-                }, {
-                    id: false,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
-                }]);
+                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'),
+                [
+                    {
+                        id: true,
+                        text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
+                    },
+                    {
+                        id: false,
+                        text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
+                    }
+                ]
+            );
             if (!isClose) {
                 return;
             }
@@ -1266,7 +1304,7 @@ export default Marionette.View.extend({
             codemirror: this.codemirror,
 
             attributes: this.options.hintAttributes,
-            templateId: this.options.templateId || this.templateId,
+            templateId: this.options.templateId || this.templateId
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
@@ -1461,15 +1499,15 @@ export default Marionette.View.extend({
     __onKeyDown(editor, event) {
         const charCode = event.which === null ? event.keyCode : event.which;
         this.isExternalChange = !(
-            !event.altKey
-            && !event.ctrlKey
-            && !event.metaKey
-            && (charCode === keyCode['>']
-                || charCode === keyCode.HOME
-                || (charCode >= keyCode[0] && charCode <= keyCode.Z)
-                || (charCode > keyCode._ && charCode < keyCode['{'])
-                || charCode === keyCode.BACKSPACE
-                || charCode === keyCode.PERIOD)
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            (charCode === keyCode['>'] ||
+                charCode === keyCode.HOME ||
+                (charCode >= keyCode[0] && charCode <= keyCode.Z) ||
+                (charCode > keyCode._ && charCode < keyCode['{']) ||
+                charCode === keyCode.BACKSPACE ||
+                charCode === keyCode.PERIOD)
         );
         if (charCode === keyCode.ESCAPE && !this.hintIsShown) {
             if (!this.isDestroyed()) {
