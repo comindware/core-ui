@@ -686,12 +686,12 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-error {
-    color: #ffa5a0;
+    color: #000000;
     background: #ffa5a0;
 }
 
 .dev-code-editor-warning {
-    color: #feffa8;
+    color: #000000;
     background: #feffa8;
 }
 
