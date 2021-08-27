@@ -17,7 +17,7 @@ const classes = {
     hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty',
-    ERROR: 'editor_error error',
+    ERROR: 'js-editor_error editor_error error',
     REQUIRED: 'required'
 };
 
