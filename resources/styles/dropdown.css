@@ -290,7 +290,7 @@
 .datalist-panel__formatted .bubbles {
     padding: 0 0 0 14px;
     max-height: 130px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     border: none;
 }
 

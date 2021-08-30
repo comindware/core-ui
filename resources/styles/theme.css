@@ -726,6 +726,7 @@ tr.row-checked,
     border-bottom: 1px solid var(--grids-color-border);
     border-left: none;
     border-top: none;
+    background-color: var(--theme-colors__main);
 }
 
 .cell:first-child {

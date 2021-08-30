@@ -194,13 +194,13 @@ export default Marionette.PartialCollectionView.extend({
             return;
         }
 
-        let childHeight = firstChild.offsetHeight;
+        let childHeight = firstChild.getBoundingClientRect().height;
         if (!childHeight) {
             const element = document.createElement('div');
             const rowClone = firstChild.cloneNode(true);
             element.appendChild(rowClone);
             document.body.appendChild(element);
-            childHeight = rowClone.offsetHeight;
+            childHeight = rowClone.getBoundingClientRect().height;
             document.body.removeChild(element);
         }
         if (childHeight > 0) {

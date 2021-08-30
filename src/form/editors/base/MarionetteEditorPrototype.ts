@@ -417,7 +417,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         setHidden(hidden: Boolean) {
             this.hidden = hidden;
-            this.$editorEl.toggleClass(classes.hidden, hidden);
+            this.$el.toggleClass(classes.hidden, hidden);
         },
 
         __setEnabled(enabled: Boolean) {

@@ -362,7 +362,8 @@ tr.empty-view {
     max-height: 100%;
 
     /* Hack for scroll event firing immediatly for further research */
-    transform: translateY(0);
+
+    /* transform: translateY(0); */
 }
 
 .modal-window-wrapper .grid-container {
@@ -512,18 +513,15 @@ tr.empty-view {
     width: 47px;
     min-width: 47px;
     border: 1px solid var(--grids-color-border);
-    position: relative;
-
-    /* height: 35px;
-    line-height: 35px; */
-}
-
-.cell_selection {
     position: sticky;
     top: 0;
     left: 0;
     z-index: 1;
     background-clip: padding-box;
+    background-color: var(--theme-colors__main);
+
+    /* height: 35px;
+    line-height: 35px; */
 }
 
 /* tr.row-checked .cell_selection{ */
