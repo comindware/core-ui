@@ -70,7 +70,7 @@
 
 <http://comindware.com/text/core/form/editors/code/output#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "hhhhhhhhhh"; l10n:needsReview true; l10n:originalData "message"].
 
-<http://comindware.com/text/core/form/editors/code/output/errors#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+<http://comindware.com/text/core/form/editors/code/output/errors#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Столбец"; l10n:originalData "Column"].
 
 <http://comindware.com/text/core/form/editors/code/output/errors#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
 
@@ -78,7 +78,7 @@
 
 <http://comindware.com/text/core/form/editors/code/output/errors#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "messcode"].
 
-<http://comindware.com/text/core/form/editors/code/output/info#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "column"].
+<http://comindware.com/text/core/form/editors/code/output/info#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Столбец"; l10n:originalData "Column"].
 
 <http://comindware.com/text/core/form/editors/code/output/info#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "line"].
 
@@ -86,7 +86,7 @@
 
 <http://comindware.com/text/core/form/editors/code/output/info#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "messcode"].
 
-<http://comindware.com/text/core/form/editors/code/output/warnings#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+<http://comindware.com/text/core/form/editors/code/output/warnings#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Столбец"; l10n:originalData "Column"].
 
 <http://comindware.com/text/core/form/editors/code/output/warnings#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
 
@@ -352,7 +352,7 @@
 
 <http://comindware.com/text/core/form/validation#requiredGrid> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Таблица должна иметь как минимум одну запись"; l10n:originalData "Grid must have at least one record"].
 
-<http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Системное имя может содержать только буквы латинского алфавита и арабские цифры. Первый символ должен быть буквой.\r\n"; l10n:originalData "The system name may contain only characters of the Latin alphabet and Arabic numerals. The first symbol should be a letter."].
+<http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Системное имя может состоять из латинских букв (A–Z, a–z), цифр (0–9) и символов подчеркивания (_). Системное имя не должно начинаться с цифры."; l10n:originalData "The system name may contain only characters of the Latin alphabet and Arabic numerals. The first symbol should be a letter."].
 
 <http://comindware.com/text/core/formats/datetime#daysFull> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Воскресенье,Понедельник,Вторник,Среда,Четверг,Пятница,Суббота"; l10n:originalData "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"].
 
