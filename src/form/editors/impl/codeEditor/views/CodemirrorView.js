@@ -212,40 +212,45 @@ export default Marionette.View.extend({
             }
             this.codemirror.focus();
             this.__jumpToLine(pos.line);
-            if (type === 'error') {
-                this.codemirror.markText(
-                    {
-                        line: pos.line,
-                        ch: pos.ch
-                    },
-                    {
-                        line: pos.line,
-                        ch: pos.offsetEnd
-                    },
-                    {
-                        className: 'dev-code-editor-error'
-                    }
-                );
-            }
-            if (type === 'warning') {
-                this.codemirror.markText(
-                    {
-                        line: pos.line,
-                        ch: pos.ch
-                    },
-                    {
-                        line: pos.line,
-                        ch: pos.offsetEnd
-                    },
-                    {
-                        className: 'dev-code-editor-warning'
-                    }
-                );
+            if (type === 'error' || type === 'warning') {
+                this.clearMarks();
+                this.markerText(type, pos);
             }
             this.codemirror.setCursor(pos);
             this.currentHighlightedLine = pos.line;
         });
         this.codemirror.setSize(null, this.options.height);
+    },
+
+    clearMarks() {
+        const marks = this.codemirror.getAllMarks();
+        marks.forEach(item => {
+            item.clear(item);
+        });
+    },
+
+    markerText(type, pos) {
+        let className;
+        if (type === 'error') {
+            className = constants.classes.colorError;
+        }
+        if (type === 'warning') {
+            className = constants.classes.colorWarning;
+        }
+        this.codemirror.markText(
+            {
+                line: pos.line,
+                ch: pos.ch
+            },
+            {
+                line: pos.line,
+                ch: pos.offsetEnd
+            },
+            {
+                className,
+                clearOnEnter: true
+            }
+        );
     },
 
     __inputСharacterСhecking(options = {}) {
