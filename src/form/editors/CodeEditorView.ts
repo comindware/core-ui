@@ -139,6 +139,9 @@ export default formRepository.editors.Code = BaseEditorView.extend({
 
     async isCompilationError(isHideCompileMessage) {
         const isErrors = await this.editor.__isCompilationError(isHideCompileMessage);
+        if (isErrors) {
+            this.setError([{ id: `${this.key}`, message: Localizer.get('PROCESS.PROCESSTEMPLATES.DESIGNER.VALIDATION.ERRORS.CSHARPCOMPILATIONERROR') }]);
+        }
         return isErrors;
     },
 
