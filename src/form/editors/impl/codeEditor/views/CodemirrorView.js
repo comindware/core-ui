@@ -30,7 +30,7 @@ const lineSeparatorLF = '\n';
 export default Marionette.View.extend({
     initialize(options = {}) {
         this.tt = new Backbone.Model();
-        this.currentAttributeModel = options.model;
+        this.alias = options.model.get('alias');
         this.isCallMethodAnywhere = false;
         this.getCmwOntology = CmwCodeAssistantServices.getCmwOntology.bind(this);
         _.bindAll(
@@ -1272,7 +1272,7 @@ export default Marionette.View.extend({
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
         if (options.token.string === constants.activeSymbol.dollar) {
-            autoCompleteObject.list = autoCompleteObject.list.filter(atribute => atribute.text !== this.currentAttributeModel.get('alias'));
+            autoCompleteObject.list = autoCompleteObject.list.filter(atribute => atribute.text !== this.alias);
         }
         if (autoCompleteObject.list) {
             this.__renderConfigListToolbar(autoCompleteObject.list);
