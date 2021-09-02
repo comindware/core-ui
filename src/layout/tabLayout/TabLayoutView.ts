@@ -8,7 +8,7 @@ import TabModel from './models/TabModel';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 import { ChildsFilter, TreeConfig, GraphModel } from '../../components/treeEditor/types';
 
-type Tab = { view: Backbone.View, id: string, name: string, enabled?: boolean, visible?: boolean, error?: string };
+type Tab = { view: Backbone.View, id: string, name: string, enabled?: any, visible?: boolean, error?: string };
 type TabsList = Array<Tab>;
 type TabsKeyValue = { [key: string]: Backbone.View };
 type ShowTabOptions = { region: Marionette.Region, tabModel: TabModel, view: Backbone.View, regionEl: HTMLElement };
@@ -185,7 +185,8 @@ export default Marionette.View.extend({
         }
     },
 
-    setEnabled(tabId: string, enabled: boolean): void {
+    setEnabled(tabId: string, condition: any): void {
+        const enabled = typeof condition === 'function' ? condition() : condition ?? true;
         this.__findTab(tabId).set({ enabled });
     },
 
@@ -295,18 +296,7 @@ export default Marionette.View.extend({
 
         this.__tabsCollection = tabsCollection instanceof Backbone.Collection ? tabsCollection : new Backbone.Collection(tabsCollection, { model: TabModel });
 
-        this.__tabsCollection.forEach((model: TabModel) => {
-            if (model.get('enabled') == null) {
-                model.set('enabled', true);
-            }
-            if (model.get('visible') == null) {
-                model.set('visible', true);
-            }
-
-            if (model.isShow == null) {
-                model.isShow = TabModel.prototype.isShow;
-            }
-        });
+        this.__setTabsPropertiesIfNull(this.__tabsCollection);
 
         let selectedTab = this.__getSelectedTab();
         if (!selectedTab) {
@@ -334,7 +324,7 @@ export default Marionette.View.extend({
             this.trigger(...args);
         });
         this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
-        this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
+        this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, tabModel.get('enableCondition') ?? tabModel.get('enabled')));
         if (isLoadingNeeded) {
             this.setLoading(true);
             setTimeout(() => {
@@ -343,6 +333,24 @@ export default Marionette.View.extend({
             });
         } else {
             this.__showTab({ region, tabModel, view, regionEl });
+        }
+    },
+
+    __setTabsPropertiesIfNull(tabsCollection: Backbone.Collection | TabsList): void { 
+        tabsCollection.forEach((model: TabModel) => {
+            this.setEnabled(model.id, model.get('enableCondition') ?? model.get('enabled'));
+            this.__setVisible(model);
+            this.__setIsShow(model);
+        });
+    },
+    __setVisible(model: TabModel) {
+        if (model.get('visible') == null) {
+            model.set('visible', true);
+        }
+    },
+    __setIsShow(model: TabModel) {
+        if (model.isShow == null) {
+            model.isShow = TabModel.prototype.isShow;
         }
     },
 
