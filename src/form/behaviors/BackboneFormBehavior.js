@@ -281,7 +281,7 @@ const Form = Marionette.MnObject.extend({
         target.querySelectorAll(`[data-${componentType}s]`).forEach(el => {
             if ((!this.model.uniqueFormId && !el.hasAttribute(`${componentType}-for`)) || this.model.uniqueFormId.has(el.getAttribute(`${componentType}-for`))) {
                 const key = el.getAttribute(`data-${componentType}s`);
-                const regionName = `${key}Region`;
+                const regionName = _.uniqueId('field-region');
                 const fieldRegion = view.addRegion(regionName, { el });
                 this.regions.push(fieldRegion); //todo chech this out
                 if (this.fields[key]) {
