@@ -39,12 +39,6 @@
     opacity: 0.7;
 }
 
-.editor_disabled .checkbox-text,
-.editor_disabled .radiobutton-text,
-.editor_readonly .radiobutton-text{
-
-}
-
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
 .editor_checked.checkbox {
     line-height: normal;
@@ -399,7 +393,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
     top: 0;
     background-color: transparent;
     cursor: pointer;
-    font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro'; /* stylelint-disable-line */
     font-weight: 900;
 }
 

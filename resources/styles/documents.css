@@ -44,7 +44,6 @@ a.image-buttons__link:hover {
     justify-content: center;
     padding: 0 10px;
     margin: 0;
-    //max-height: 240px;
     max-height: 320px;
     overflow: hidden;
 }

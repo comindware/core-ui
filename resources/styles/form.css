@@ -433,6 +433,8 @@ td > .icon-true {
 
 .editor_date-time .input {
     width: auto;
+    border: 0;
+    border-radius: 0;
 }
 
 .cell .date-time_icon {
@@ -451,6 +453,7 @@ td > .icon-true {
 
 .editor_date-time .editor_duration .date-time_icon {
     position: static;
+    top: 2px;
 }
 
 .input_duration__wrapper {
@@ -484,18 +487,9 @@ td > .icon-true {
     height: 16px;
 }
 
-.editor_date-time .editor_duration .date-time_icon {
-    top: 2px;
-}
-
 .editor_date-time .date-time_icon {
     line-height: inherit;
     margin-right: 5px;
-}
-
-.editor_date-time .input {
-    border: 0;
-    border-radius: 0;
 }
 
 /* /Date Time/ */
@@ -553,6 +547,7 @@ td > .icon-true {
     top: 50%;
     cursor: pointer;
     transform: translateY(-50%);
+    visibility: hidden;
 }
 
 .uri-form a {
@@ -1237,8 +1232,4 @@ input[type="color"],
 
 .editor_uri:hover .icon-edit_uri {
     visibility: visible;
-}
-
-.icon-edit_uri {
-    visibility: hidden;
 }
