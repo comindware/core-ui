@@ -488,10 +488,6 @@ body.non-selectable {
     border-radius: 4px;
 }
 
-.tr-search {
-    background-color: var(--theme-colors__main_fade);
-}
-
 .tr-search_report {
     width: 50%;
     margin: 0;

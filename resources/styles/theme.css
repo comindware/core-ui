@@ -1,23 +1,17 @@
-input, textarea, select {
+input,
+textarea,
+select {
     font-family: var(--base-font-family);
     font-style: var(--base-font-style);
     font-size: var(--base-font-size);
     font-weight: var(--base-font-weight);
 }
 
-/* a {
-  line-height: var(--line-height)
-} */
-/*.selected {*/
-/*  background-color: var(--selected-color);*/
-/*}*/
-
 .field-width + .field-width {
     margin-top: var(--form-field-margin);
 }
 
-
-/*------------------ Form Label ------------------*/
+/* Form Label */
 .form-label {
     font-size: var(--form-label-font-size);
     font-weight: var(--form-label-font-weight);
@@ -113,7 +107,7 @@ input, textarea, select {
     display: none;
 }
 
-/*------------------ Form Editor ------------------*/
+/* Form Editor */
 .editor {
     font-size: var(--editor-font-size);
     color: var(--theme-colors__text);
@@ -188,20 +182,6 @@ input, textarea, select {
     height: auto;
 }
 
-.cell .editor_disabled .input,
-.cell .editor_disabled .input:hover,
-.cell .editor_readonly .input,
-.cell .editor_readonly .input:hover,
-.cell .editor_disabled .textarea,
-.cell .editor_readonly .textarea,
-.cell .editor_disabled .bubbles,
-.cell .editor_disabled .bubbles:hover,
-.cell .editor_readonly .bubbles,
-.cell .editor_readonly .bubbles:hover,
-.cell .editor.context_select.editor_readonly,
-.cell .editor.context_select.editor_disabled {
-}
-
 .editor_error .input,
 .editor_error .textarea,
 .editor_error .bubbles,
@@ -216,7 +196,6 @@ input, textarea, select {
     border-color: var(--theme-colors__error);
 }
 
-
 .warning .editor .input,
 .warning .editor .textarea,
 .warning .editor .bubbles,
@@ -229,7 +208,8 @@ input, textarea, select {
     outline-offset: -1px;
 }
 
-.editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after {
+.editor_checked_some .checkbox::after,
+.checkbox .editor_checked_some::after {
     width: var(--checkbox-intermediate-size);
     height: var(--checkbox-intermediate-size);
     background-color: var(--theme-colors__primary-txt);
@@ -258,7 +238,7 @@ input, textarea, select {
     color: var(--theme-colors__btn-txt);
 }
 
-/*------------------ End Form Editor ------------------*/
+/* End Form Editor */
 
 /* input */
 .input {
@@ -291,7 +271,6 @@ input, textarea, select {
 }
 
 /* /input/ */
-
 
 /* textarea */
 .textarea {
@@ -350,20 +329,11 @@ input, textarea, select {
     cursor: auto;
 }
 
-.editor_checkbox.editor_readonly .checkbox,
-.editor_checkbox.editor_disabled .checkbox {
-}
-
 /* /checkbox */
 
 /* radiobutton */
 .editor_radiobutton {
     margin-bottom: var(--custom-control-spacer-y);
-}
-
-.aggregation-panel .editor_radiobutton,
-.dev-button-group .editor_radiobutton {
-    /*margin: var(--radio-margin_reduced);*/
 }
 
 .editor_disabled .editor_radiobutton,
@@ -389,18 +359,14 @@ input, textarea, select {
     line-height: var(--line-height);
 }
 
-.editor_disabled .radiobutton,
-.editor_readonly .radiobutton {
-}
-
-.editor_checked .radiobutton:after {
+.editor_checked .radiobutton::after {
     width: var(--radio-inner-size);
     height: var(--radio-inner-size);
     background-color: var(--theme-colors__primary);
 }
 
-.editor_disabled .editor_checked .radiobutton:after,
-.editor_readonly .editor_checked .radiobutton:after {
+.editor_disabled .editor_checked .radiobutton::after,
+.editor_readonly .editor_checked .radiobutton::after {
     background-color: var(--radio-checked-disabled-color);
 }
 
@@ -476,7 +442,6 @@ svg.svg-grid-icons {
 }
 
 /* /svg icons/ */
-
 
 /* List/Grid CSS */
 
@@ -588,7 +553,6 @@ svg.svg-grid-icons {
     font-size: 8px;
 }
 
-
 .cell.editor {
     line-height: initial;
 }
@@ -633,15 +597,14 @@ svg.svg-grid-icons {
     background-color: var(--grid-selection-bg);
 }
 
-.cell_selection[draggable], .cell_selection-index[draggable] {
+.cell_selection[draggable],
+.cell_selection-index[draggable] {
     cursor: move;
 }
 
 .cell_selection[draggable]:hover::before,
 .cell_selection-index[draggable]:hover::before {
     content: '⋮';
-
-    /* rem? */
     font-size: 1.5em;
     position: absolute;
     top: 50%;
@@ -657,19 +620,15 @@ svg.svg-grid-icons {
     box-shadow: var(--grid-cell-border-first);
 }
 
-/*
-tr.row-checked,
-.cell_selection.row-checked,
-.cell_selection-index.row-checked{
-  background-color: var(--selected-color);
-}*/
 .cell_selection.row-checked,
 .cell_selection-index.row-checked {
     color: var(--theme-colors__text_fade);
 }
 
-.row.hover__transition .cell, .cell_selection.hover__transition, .cell_selection-index.hover__transition {
-    /* delay used in js TRANSITION_DELAY*/
+.row.hover__transition .cell,
+.cell_selection.hover__transition,
+.cell_selection-index.hover__transition {
+    /* delay used in js TRANSITION_DELAY */
     transition: background-color 300ms ease-in-out;
 }
 
@@ -858,13 +817,6 @@ tr:not(:first-child) .cell_selection {
     border-top-color: transparent;
 }
 
-.dd-list__i,
-.toolbar-panel_container__select-state .toolbar-btn,
-.popout-menu__txt {
-    /*padding: var(--dropdown-item-padding);
-    font-size: var(--dropdown-font-size);*/
-}
-
 .dd-list__i {
     padding: var(--dropdown-item-padding)
 }
@@ -966,12 +918,6 @@ tr:not(:first-child) .cell_selection {
     white-space: nowrap;
     width: 100%;
     flex: 0 1 auto;
-}
-
-.bubble__pencil-edit:hover a,
-.bubble__pencil-edit:hover span {
-
-
 }
 
 .editor_readonly .bubble__pencil-edit:hover a,
@@ -1140,10 +1086,6 @@ tr:not(:first-child) .cell_selection {
     border-bottom-color: var(--theme-colors__error);
 }
 
-.layout__tab-layout__header-view-item_disabled,
-.popout-menu__i_disabled {
-}
-
 .layout__tab-layout__header-view-item.layout__tab-layout__header-view-item_hidden,
 .popout-menu__i_hidden {
     display: none;
@@ -1161,9 +1103,6 @@ tr:not(:first-child) .cell_selection {
     border: 1px solid var(--theme-colors__main_strongest);
     border-radius: 0 0 4px 4px;
     background-color: var(--theme-colors__main);
-}
-
-.layout__tab-layout_move-button.prev-layout_move-button {
 }
 
 /* Toolbar component */
@@ -1352,9 +1291,6 @@ tr:not(:first-child) .cell_selection {
 
 .layout__popup-view-button-list {
     padding: 0 0 10px 10px;
-}
-
-.layout__popup-view-header__btn {
 }
 
 .layout__popup-view-header__btn_equate {

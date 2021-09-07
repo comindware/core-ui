@@ -441,7 +441,7 @@ input::placeholder {
 }
 
 .left-menu-view-switcher .toolbar__icons_arrow {
-    margin: 0 0 0 4px;
+    margin: 2px 0 0 0;
 }
 
 .left-menu-view-switcher__container .toolbar-btn {
@@ -486,10 +486,6 @@ input::placeholder {
 .left-menu-switcher__text,
 .left-menu-search .tr-search__input {
     font-size: 13px;
-}
-
-.left-menu-view-switcher .toolbar__icons_arrow {
-    margin: 2px 0 0 0;
 }
 
 .top-nav_icon > .icon_text {
