@@ -54,6 +54,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
 
         this.collection = new DocumentsCollection(this.value);
         this.listenTo(this.collection, 'attachments:remove', this.removeItem);
+        this.listenTo(this.collection, 'add remove reset', this.__onCollectionChange);
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -114,10 +115,9 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     cropTemps: [],
 
     templateContext() {
-        const isDropZoneCollapsed = this.isDropZoneCollapsed;
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.ADDIMAGE'),
-            placeHolderText: isDropZoneCollapsed ? '' : LocalizationService.get('CORE.FORM.EDITORS.IMAGE.DRAGFILE'),
+            placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
@@ -584,6 +584,11 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         }
     },
 
+    __onCollectionChange() {
+        this.isDropZoneCollapsed = Boolean(this.collection?.length);
+        this.__updateCollapseButton();
+    },
+
     __onCollapseClick() {
         const collapsed = this.isDropZoneCollapsed;
         this.isDropZoneCollapsed = !collapsed;
@@ -591,7 +596,6 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     },
 
     __updateCollapseButton() {
-        this.render();
         this.$el.toggleClass(classes.collapsed, this.isDropZoneCollapsed);
     },
 
