@@ -639,7 +639,7 @@ class CellViewFactory implements ICellViewFactory {
             let instanceTypeId = column.recordTypeId;
             const parts: string[] = [];
             values.forEach((item: string) => {
-                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item);
+                const searchItem = columnWithExtension.context[instanceTypeId]?.find((contextItem: any) => contextItem.id === item || contextItem.alias === item);
                 if (searchItem) {
                     parts.push(searchItem.name);
                     instanceTypeId = searchItem[column.instanceValueProperty || 'instanceTypeId'];
