@@ -7,6 +7,10 @@ import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
 import EmptyRadioGroupView from './impl/radioGroup/views/EmptyRadioGroupView';
 
+const defaultOptions = {
+    valueAttribute: 'id'
+};
+
 /**
  * @name RadioGroupEditorView
  * @memberof module:core.form.editors
@@ -17,10 +21,11 @@ import EmptyRadioGroupView from './impl/radioGroup/views/EmptyRadioGroupView';
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
+
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
     /** @lends module:core.form.editors.RadioGroupEditorView.prototype */ {
         initialize(options = {}) {
-            this.__applyOptions(options, {});
+            this.__applyOptions(options, defaultOptions);
             this.collection = new RadioGroupCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
@@ -40,7 +45,8 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
         childViewOptions() {
             return {
                 selected: this.getValue(),
-                enabled: this.getEditable()
+                enabled: this.getEditable(),
+                valueAttribute: this.options.valueAttribute
             };
         },
 
@@ -50,11 +56,11 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
         },
 
         __onSelectChild(model) {
-            this.__value(model.get('id'), true);
+            this.__value(model.get(this.options.valueAttribute), true, false);
         },
 
         setValue(value) {
-            this.__value(value, false);
+            this.__value(value, false, true);
         },
 
         __setEditorEnable(isEnable = this.getEditable()) {
@@ -74,17 +80,23 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
             }
         },
 
-        __value(value, triggerChange) {
+        __value(value, triggerChange, updateUi) {
             if (this.value === value) {
                 return;
             }
             this.value = value;
-            const model = this.collection.findWhere({ id: value });
-            if (model) {
-                model.select();
+            if (updateUi) {
+                this.__updateUi();
             }
             if (triggerChange) {
                 this.__triggerChange();
+            }
+        },
+
+        __updateUi() {
+            const model = this.collection.findWhere({ [this.options.valueAttribute]: this.value });
+            if (model) {
+                model.select();
             }
         },
 

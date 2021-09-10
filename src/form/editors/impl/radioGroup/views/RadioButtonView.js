@@ -34,7 +34,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.model.get('id') === this.options.selected) {
+        if (this.model.get(this.options.valueAttribute) === this.options.selected) {
             this.model.select();
         }
     },
