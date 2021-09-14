@@ -436,7 +436,7 @@ class CellViewFactory implements ICellViewFactory {
     __getBooleanCellInnerHTML({ values, column, model }: GetCellOptions): GetCellInnerHTMLResult {
         const mappedValues = values.map((value: any) => this.__getFormattedBooleanValue({ value, column, model }));
         const cellInnerHTML = mappedValues.join('');
-        return { cellInnerHTML, title: '' };
+        return { cellInnerHTML, title: column.titleAttribute ? this.__getTitle({ values, column, model }) : '' };
     }
 
     __getBooleanCell({ values, column, model }: GetCellOptions): string {
