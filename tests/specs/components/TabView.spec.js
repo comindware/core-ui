@@ -110,7 +110,7 @@ describe('Components', () => {
                 blocked: true
             });
 
-            const tabsCollection = new Backbone.Collection([
+            const tabs = [
                 {
                     id: 'tab1',
                     name: 'Tab 1',
@@ -185,10 +185,10 @@ describe('Components', () => {
                         value: 'Content 4'
                     })
                 }
-            ]);
+            ];
 
             const view = new core.layout.TabLayout({
-                tabs: tabsCollection,
+                tabs,
                 showStepper: true,
                 showMoveButtons: true
             });
@@ -197,13 +197,13 @@ describe('Components', () => {
                 let selectedTabs;
 
                 //default first is selected
-                selectedTabs = tabsCollection.filter(tab => tab.get('selected'));
+                selectedTabs = view.getTabsCollection().filter(tab => tab.get('selected'));
                 expect(selectedTabs).toBeArrayOfSize(1, 'many tabs are selected!');
                 expect(selectedTabs[0].id).toBe('tab1');
 
                 const testedTabId = 'tab2';
                 document.getElementById(testedTabId).click();
-                selectedTabs = tabsCollection.filter(tab => tab.get('selected'));
+                selectedTabs = view.getTabsCollection().filter(tab => tab.get('selected'));
                 expect(selectedTabs).toBeArrayOfSize(1, 'many tabs are selected!');
                 expect(selectedTabs[0].id).toBe(testedTabId);
             });
