@@ -7,8 +7,9 @@ import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import TabModel from './models/TabModel';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 import { ChildsFilter, TreeConfig, GraphModel } from '../../components/treeEditor/types';
+import Backbone from 'backbone';
 
-type Tab = { view: Backbone.View, id: string, name: string, enabled?: boolean, visible?: boolean, error?: string };
+type Tab = { view?: Backbone.View, id: string, name: string, enabled?: boolean, visible?: boolean, error?: string };
 type TabsList = Array<Tab>;
 type TabsKeyValue = { [key: string]: Backbone.View };
 type ShowTabOptions = { region: Marionette.Region, tabModel: TabModel, view: Backbone.View, regionEl: HTMLElement };
@@ -25,16 +26,14 @@ const defaultOptions = {
 };
 
 export default Marionette.View.extend({
-    initialize(options: { tabs: TabsList, showTreeEditor?: boolean }) {
-        helpers.ensureOption(options, 'tabs');
-        _.defaults(options, defaultOptions);
-
+    initialize(options: { tabs: TabsList, showTreeEditor?: boolean, getView: Function }) {
+        _.defaults(this.options, defaultOptions);
+        this.tabsViewById = {};
         this.showTreeEditor = options.showTreeEditor;
-        this.__initializeTabCollection(options.tabs);
-        this.tabs = this.__tabsCollection.reduce((tabsViewById, tabOptionsModel) => {
-            tabsViewById[tabOptionsModel.id] = tabOptionsModel.get('view');
-            return tabsViewById;
-        }, {});
+        this.initializeTabCollection(options.tabs);
+        if (this.showTreeEditor) {
+            this.__initTreeEditor();
+        }
     },
 
     template: Handlebars.compile(template),
@@ -100,14 +99,12 @@ export default Marionette.View.extend({
             this.__setNoTabsState(true);
         } else {
             const selectedTab = this.__getSelectedTab();
-            if (this.options.autoRender !== false) {
-                if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
-                    this.renderTab(selectedTab, false);
-                } else {
-                    this.__tabsCollection.forEach(model => {
-                        this.renderTab(model, false);
-                    });
-                }
+            if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
+                this.renderTab(selectedTab, false);
+            } else {
+                this.__tabsCollection.forEach(model => {
+                    this.renderTab(model, false);
+                });
             }
 
             if (selectedTab) {
@@ -124,7 +121,7 @@ export default Marionette.View.extend({
     },
 
     update(): void {
-        Object.values(this.tabs).forEach(view => {
+        Object.values(this.tabsViewById).forEach(view => {
             if (view && typeof view.update === 'function') {
                 view.update();
             }
@@ -134,11 +131,10 @@ export default Marionette.View.extend({
 
     validate(): void {
         let result;
-        Object.entries(this.tabs).forEach(entrie => {
-            const view = entrie[1];
+        Object.entries(this.tabsViewById).forEach(([tabId, view]) => {
             if (view && typeof view.validate === 'function') {
                 const error = view.validate();
-                this.setTabError(entrie[0], error);
+                this.setTabError(tabId, error);
                 if (error) {
                     result = true;
                 }
@@ -148,7 +144,7 @@ export default Marionette.View.extend({
     },
 
     getViewById(tabId: string) {
-        return this.__findTab(tabId).get('view');
+        return this.tabsViewById[tabId];
     },
 
     selectTab(tabId: string): void | boolean {
@@ -162,7 +158,8 @@ export default Marionette.View.extend({
 
         if (previousSelectedTab) {
             if (this.getOption('validateBeforeMove')) {
-                const errors = !previousSelectedTab.get('view').form || previousSelectedTab.get('view').form.validate();
+                const view = this.tabsViewById[previousSelectedTab.id];
+                const errors = view?.form.validate();
                 this.setTabError(previousSelectedTab.id, errors);
                 if (errors) {
                     return false;
@@ -172,7 +169,7 @@ export default Marionette.View.extend({
 
         if (tab.get('enabled')) {
             tab.set('selected', true);
-            if (!tab.get('isRendered') && this.isRendered() && this.options.autoRender !== false) {
+            if (!tab.get('isRendered') && this.isRendered()) {
                 this.renderTab(tab, Boolean(this.getOption('deferRender')));
             }
 
@@ -182,6 +179,18 @@ export default Marionette.View.extend({
         // For IE (scroll position jumped up when tabs reselected)
         if (previousSelectedTab) {
             previousSelectedTab.set('selected', false);
+        }
+    },
+
+    addTabs(tabList: TabsList, selectFirst: boolean, index: number) {
+        if (!Array.isArray(tabList)) {
+            Core.InterfaceError.logError('tabs must be passed as Array');
+            return;
+        }
+        this.__prepareTabs(tabList);
+        this.__tabsCollection.add(tabList, { at: index || this.__tabsCollection.length });
+        if (selectFirst) {
+            this.selectTab(tabList[0].id);
         }
     },
 
@@ -288,25 +297,22 @@ export default Marionette.View.extend({
         element.removeAttribute('hidden');
     },
 
-    __initializeTabCollection(tabsCollection: Backbone.Collection | TabsList): void {
-        if (!tabsCollection) {
-            Core.InterfaceError.logError('tabsCollection must be passed');
+    initializeTabCollection(tabs: Backbone.Collection | TabsList): void {
+        let tabList = [];
+        if (tabs instanceof Backbone.Collection) {
+            tabList = tabs.toJSON();
+            this.listenTo(tabs, 'add remove reset', () => {
+                this.__tabsCollection.reset(tabs.toJSON());
+            });
+            Core.InterfaceError.logError('Passing tabs as Backbone.Collection is deprecated');
+        } else if (Array.isArray(tabs)) {
+            tabList = [...tabs];
+        } else {
+            Core.InterfaceError.logError('tabs must be passed');
         }
 
-        this.__tabsCollection = tabsCollection instanceof Backbone.Collection ? tabsCollection : new Backbone.Collection(tabsCollection, { model: TabModel });
-
-        this.__tabsCollection.forEach((model: TabModel) => {
-            if (model.get('enabled') == null) {
-                model.set('enabled', true);
-            }
-            if (model.get('visible') == null) {
-                model.set('visible', true);
-            }
-
-            if (model.isShow == null) {
-                model.isShow = TabModel.prototype.isShow;
-            }
-        });
+        this.__prepareTabs(tabList);
+        this.__tabsCollection = new Backbone.Collection(tabList, { model: TabModel });
 
         let selectedTab = this.__getSelectedTab();
         if (!selectedTab) {
@@ -314,47 +320,56 @@ export default Marionette.View.extend({
             this.selectTab(selectedTab.id);
         }
         this.selectTabIndex = this.__getTabIndex(selectedTab);
-
-        if (this.showTreeEditor) {
-            this.__initTreeEditor();
-        }
     },
 
     renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean): void {
+        const viewGetter = this.tabsViewById[tabModel.id];
         const regionEl = document.createElement('div');
         regionEl.className = classes.PANEL_REGION;
         this.ui.panelContainer.append(regionEl);
         const region = this.addRegion(`${tabModel.id}TabRegion`, {
             el: regionEl
         });
-        const view = tabModel.get('view');
-
-        this.listenTo(view, 'all', (...args) => {
-            args[0] = `tab:${args[0]}`;
-            this.trigger(...args);
-        });
-        this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
-        this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
-        if (isLoadingNeeded) {
-            this.setLoading(true);
-            setTimeout(() => {
+        isLoadingNeeded && this.setLoading(true);
+        Promise.resolve(typeof viewGetter === 'function' ? viewGetter(tabModel) : viewGetter)
+            .then(view => {
+                if (!(view instanceof Backbone.View)) {
+                    Core.InterfaceError.logError('Invalid view argument');
+                    isLoadingNeeded && this.setLoading(false);
+                    return;
+                }
                 this.__showTab({ region, tabModel, view, regionEl });
-                this.setLoading(false);
+                this.tabsViewById[tabModel.id] = view;
+                this.listenTo(view, 'all', (...args) => {
+                    args[0] = `tab:${args[0]}`;
+                    this.trigger(...args);
+                });
+                this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
+                this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
+                isLoadingNeeded && this.setLoading(false);
+            })
+            .catch(error => {
+                isLoadingNeeded && this.setLoading(false);
+                Core.InterfaceError.logError(error);
             });
-        } else {
-            this.__showTab({ region, tabModel, view, regionEl });
-        }
+    },
+
+    getTabRegion(tabId: number) {
+        return this.getRegion(`${tabId}TabRegion`);
+    },
+
+    __prepareTabs(tabList: TabsList) {
+        tabList.forEach((t: Tab) => {
+            this.tabsViewById[t.id] = t.view;
+            delete t.view;
+        });
     },
 
     __showTab(options: ShowTabOptions): void {
-        const { region, tabModel, view, regionEl } = options;
+        const { region, tabModel, view } = options;
 
         region.show(view);
-        tabModel.set({
-            region,
-            regionEl,
-            isRendered: true
-        });
+        tabModel.set({ isRendered: true });
 
         this.__updateTabRegion(tabModel);
     },
@@ -370,9 +385,7 @@ export default Marionette.View.extend({
     },
 
     __findTab(tabId: string): Backbone.Model {
-        helpers.assertArgumentNotFalsy(tabId, 'tabId');
-
-        const tabModel = this.__tabsCollection.find(x => x.id === tabId);
+        const tabModel = this.__tabsCollection.get(tabId);
         if (!tabModel) {
             helpers.throwInvalidOperationError(`TabLayout: tab '${tabId}' is not present in the collection.`);
         }
@@ -387,16 +400,18 @@ export default Marionette.View.extend({
         this.__updateTabRegion(model);
     },
 
-    __updateTabRegion(model: Backbone.Model): void {
-        const regionEl = model.get('regionEl');
-        if (!regionEl) {
+    __updateTabRegion(tabModel: Backbone.Model): void {
+        const region = this.getTabRegion(tabModel.id);
+        if (!region) {
             return;
         }
-        const selected = model.get('selected');
+
+        const regionEl = region.el;
+        const selected = tabModel.get('selected');
 
         regionEl.classList.toggle(classes.HIDDEN, !selected);
 
-        this.trigger('changed:selectedTab', model);
+        this.trigger('changed:selectedTab', tabModel);
 
         Core.services.GlobalEventService.trigger('popout:resize', false);
     },
