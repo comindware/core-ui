@@ -1138,6 +1138,53 @@ input[type="color"],
 
 .context_select {
     cursor: pointer;
+    display: flex;
+    width: auto;
+    align-items: center;
+}
+
+.context_select .context-wrp {
+    display: flex;
+}
+
+.context_select .icon-remove {
+    position: static;
+    transform: none;
+}
+
+.context_select .editor_bubble {
+    width: auto;
+    display: flex;
+}
+
+.context_select .editor_bubble .bubbles__form {
+    width: 0;
+    padding: 0;
+}
+
+.context_select .editor_bubble.editor_focused .bubbles__form {
+    width: auto;
+}
+
+.context_select .editor_bubble.editor_focused .bubbles__i {
+    display: none;
+}
+
+.context_select .editor_bubble .bubbles {
+    background-color: var(--theme-colors__secondary);
+    border-radius: 10px;
+    height: 22px;
+    min-width: 44px;
+    padding: 0 5px;
+}
+
+.context_select .editor_bubble .bubbles .bubbles__caret {
+    right: 5px;
+}
+
+.context_select .editor_bubble:not(:last-child)::after {
+    content: '\2192';
+    padding: 0 5px;
 }
 
 .editor_readonly.context_select,

@@ -1199,7 +1199,7 @@ tr:not(:first-child) .cell_selection {
 .btn-separator {
     display: inline-block;
     width: 0;
-    height: 75%;
+    height: 20px;
     margin: 0 9px 0 10px;
     border-right: 1px solid;
     align-self: center;

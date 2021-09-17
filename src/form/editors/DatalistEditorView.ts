@@ -317,7 +317,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             },
             autoOpen: false,
             renderAfterClose: false,
-            alwaysAlignByButton: true,
             externalBlurHandler: this.options.externalBlurHandler,
             minAvailableHeight: this.options.minAvailableHeight
         });

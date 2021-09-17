@@ -531,10 +531,6 @@ li.CodeMirror-hint-active {
     height: 100%;
 }
 
-.dev-codemirror > .code-editor-container {
-    height: calc(100% - 31px);
-}
-
 .dev-code-editor-toolbar {
     display: flex;
     flex-wrap: wrap;

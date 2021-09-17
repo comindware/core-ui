@@ -1,10 +1,16 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
+    const model = new Backbone.Model({
+        value: ['op.2', 'op.20', 'creationDate'],
+    });
+
     return new CanvasView({
         view: new Core.form.editors.ContextSelectEditor({
-            key: 'context',
-            usePropertyTypes: false,
+            key: 'value',
+            model,
+            autocommit: true,
+            propertyTypes: ['DateTime'],
             context: {
                 'oa.1': [
                     {
@@ -45,7 +51,7 @@ export default function() {
                         alias: 'lastWriteDate_alias'
                     },
                     {
-                        instanceTypeId: 'oa.1',
+                        instanceTypeId: 'oa.2',
                         type: 'Collection',
                         format: 'Undefined',
                         name: 'coll',
@@ -132,8 +138,8 @@ export default function() {
                         alias: 'op.13_alias'
                     },
                     {
-                        instanceTypeId: 'oa.1',
-                        type: 'Collection',
+                        instanceTypeId: 'oa.2',
+                        type: 'Instance',
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -180,6 +186,46 @@ export default function() {
                         id: 'creator',
                         alias: 'creator_alias'
                     }
+                ],
+                'oa.2': [
+                    {
+                        instanceTypeId: 'cmw.instanceProperty',
+                        type: 'Instance',
+                        format: 'Undefined',
+                        name: 'ID',
+                        displayAttribute: false,
+                        isBuiltIn: false,
+                        calculated: false,
+                        isSystem: false,
+                        isDisabled: false,
+                        id: 'id',
+                        alias: 'id_alias'
+                    },
+                    {
+                        type: 'Account',
+                        format: 'Undefined',
+                        name: 'Last Modifier2',
+                        displayAttribute: false,
+                        isBuiltIn: false,
+                        calculated: false,
+                        isSystem: false,
+                        isDisabled: false,
+                        id: 'lastModifier2',
+                        alias: 'lastModifier2_alias'
+                    },
+                    {
+                        instanceTypeId: 'oa.1',
+                        type: 'Instance',
+                        format: 'Undefined',
+                        name: 'coll2',
+                        displayAttribute: false,
+                        isBuiltIn: false,
+                        calculated: false,
+                        isSystem: false,
+                        isDisabled: false,
+                        id: 'op.20',
+                        alias: 'op.20_alias'
+                    },
                 ]
             },
             recordTypeId: 'oa.1'

@@ -6,6 +6,8 @@ import formRepository from '../formRepository';
 import BaseEditorView from './base/BaseEditorView';
 import dropdownFactory from '../../dropdown/factory';
 import { objectPropertyTypes } from '../../Meta';
+import DatalistEditorView from './DatalistEditorView';
+import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 
 const defaultOptions = () => ({
     recordTypeId: undefined,
@@ -21,9 +23,12 @@ const defaultOptions = () => ({
     instanceValueProperty: 'instanceTypeId'
 });
 
-export default formRepository.editors.ContextSelect = BaseEditorView.extend({
+export default formRepository.editors.ContextSelect = BaseCollectionEditorView.extend({
     initialize(options = {}) {
+        // BaseCollectionEditorView.prototype.initialize.apply(this, arguments);
         this.__applyOptions(options, defaultOptions);
+        this.collection = new Backbone.Collection();
+        this.listenTo(this.collection, 'change', this.__onCollectionChange);
         this.recordTypeId = options.recordTypeId;
 
         if (this.options.contextModel) {
@@ -43,7 +48,7 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
-                placeholder: this.__placeholderShouldBe()
+                // placeholder: this.__placeholderShouldBe()
             }),
             panel: model
         });
@@ -55,92 +60,137 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         clearButton: '.js-clear-button'
     },
 
+    childView: DatalistEditorView,
+
     regions: {
-        contextPopoutRegion: '.js-context-popout-region'
+        dropdownRegion: '.js-context-popout-region'
     },
 
     template: Handlebars.compile(template),
 
-    className: 'editor context_select js-dropdown__root',
+    className: 'editor context_select',
 
     events: {
         'click @ui.clearButton': '__onClearClickHandler',
         'dblclick @ui.clearButton': '__onClearDblclick'
     },
 
-    onRender() {
-        if (!this.enabled) {
-            this.contextPopoutRegion.show(
-                new PopoutButtonView({
-                    model: this.viewModel.get('button')
-                })
-            );
-            return;
-        }
+    // onRender() {
+    //     if (!this.enabled) {
+    //         this.contextPopoutRegion.show(
+    //             new PopoutButtonView({
+    //                 model: this.viewModel.get('button')
+    //             })
+    //         );
+    //         return;
+    //     }
+    //
+    //     this.popoutView = dropdownFactory.createDropdown({
+    //         panelView: PopoutWrapperView,
+    //         panelViewOptions: {
+    //             maxWidth: 390,
+    //             model: this.viewModel.get('panel')
+    //         },
+    //         buttonView: PopoutButtonView,
+    //         buttonViewOptions: {
+    //             model: this.viewModel.get('button')
+    //         },
+    //         autoOpen: false
+    //     });
+    //
+    //     this.showChildView('contextPopoutRegion', this.popoutView);
+    //
+    //     this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
+    //     this.listenTo(this.popoutView, 'before:open', this.__onBeforeOpen);
+    //     this.listenTo(this.popoutView, 'click', this.__onButtonClick);
+    // },
 
-        this.popoutView = dropdownFactory.createDropdown({
-            panelView: PopoutWrapperView,
-            panelViewOptions: {
-                maxWidth: 390,
-                model: this.viewModel.get('panel')
-            },
-            buttonView: PopoutButtonView,
-            buttonViewOptions: {
-                model: this.viewModel.get('button')
-            },
-            autoOpen: false
-        });
-
-        this.showChildView('contextPopoutRegion', this.popoutView);
-
-        this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
-        this.listenTo(this.popoutView, 'before:open', this.__onBeforeOpen);
-        this.listenTo(this.popoutView, 'click', this.__onButtonClick);
+    getPropertiesCollection() {
+        return this.collection;
     },
 
     setPermissions(enabled, readonly) {
-        BaseEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.viewModel.get('button').set('placeholder', this.__placeholderShouldBe());
+        BaseCollectionEditorView.prototype.setPermissions.call(this, enabled, readonly);
+        // this.viewModel.get('button').set('placeholder', this.__placeholderShouldBe());
     },
 
     setValue(value) {
-        this.__value(value, false);
+        this.__value(value, false, true);
     },
 
     updateContext(recordTypeId, context) {
         const panelModel = this.viewModel.get('panel');
 
         this.context = context;
-        panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
-
-        panelModel.set('instanceTypeId', recordTypeId);
         this.recordTypeId = recordTypeId;
 
-        if (this.__isInstanceInContext(this.value)) {
-            this.__updateDisplayValue();
-        } else {
+        if (!this.__isInstanceInContext(this.value)) {
             this.setValue();
         }
-
-        this.render();
     },
 
-    onFocus() {
-        BaseEditorView.prototype.onFocus.apply(this, arguments);
-        if (this.getReadonly()) {
-            return;
-        }
-        this.popoutView.open();
+    // onFocus() {
+    //     BaseEditorView.prototype.onFocus.apply(this, arguments);
+    //     if (this.getReadonly()) {
+    //         return;
+    //     }
+    //     this.popoutView.open();
+    // },
+
+    childViewContainer: '.js-child-view-container',
+
+    childViewOptions(model) {
+        const index = this.collection.indexOf(model);
+        const recordTypeId = index === 0 ? this.recordTypeId : this.collection.at(index - 1).get(this.options.instanceValueProperty);
+        return {
+            ...this.options,
+            key: 'id',
+            valueType: 'id',
+            // idAttribute: 'alias',
+            autocommit: true,
+            allowEmptyValue: false,
+            emptyPlaceholder: '…',
+            showAdditionalList: true,
+            iconProperty: 'type',
+            subtextProperty: 'alias',
+            model,
+            collection: this.context[recordTypeId]?.filter(property => this.__isPropertyValid(property))
+        };
     },
 
-    __value(value, triggerChange, newValue) {
-        this.value = newValue || value;
+    __value(value, triggerChange, updateUi) {
+        this.value = value;
 
         if (triggerChange) {
             this.__triggerChange();
         }
+        if (true) {
+            let recordTypeId = this.recordTypeId;
+            this.collection.set(value?.map(v => {
+                const property = this.context[recordTypeId]?.find(p => p.id === v || p.alias === v);
+                if (!property) {
+                    return {};
+                }
+                recordTypeId = property[this.options.instanceValueProperty];
+                return property;
+            }) || [], { remove: true });
+        }
 
+        if (!this.collection.length || this.options.instanceTypeProperties.includes(this.collection.last().get('type'))) {
+            this.collection.add({});
+            this.children.last().focus();
+        }
         this.__updateDisplayValue();
+    },
+
+    __onCollectionChange() {
+        const value = this.collection.reduce((acc, model) => {
+            if (model.id) {
+                acc.push(model.id);
+            }
+            return acc;
+        }, []);
+        this.__value(value, true, false);
     },
 
     __getButtonText(value) {
@@ -173,10 +223,10 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     },
 
     __onButtonClick() {
-        if (this.getReadonly()) {
-            return;
-        }
-        this.popoutView.trigger('toggle');
+        // if (this.getReadonly()) {
+        //     return;
+        // }
+        // this.popoutView.trigger('toggle');
     },
 
     __isInstanceInContext(item) {
@@ -192,8 +242,8 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
         }
         const newValue = this.__collectPropertyPath(selected);
 
-        this.popoutView.close();
-        this.__value(selected.id, true, newValue);
+        // this.popoutView.close();
+        this.__value(newValue, true);
     },
 
     __onContextChange(newData) {
@@ -288,6 +338,6 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
             this.__isDoubleClicked = false;
             return;
         }
-        this.__value(null, true, null);
+        this.__value(null, true, true);
     }
 });

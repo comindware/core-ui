@@ -10,12 +10,13 @@
     src: url("../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2") format("woff2"),
       url("../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff") format("woff"),
       url("../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.svg#fontawesome") format("svg"); }
-  
+
   .fa,
+  .fal,
   .fas {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900; }
-  
+
 
 .default-fontawesome:before{
     content:"\f023"
