@@ -1147,11 +1147,6 @@ input[type="color"],
     display: flex;
 }
 
-.context_select .icon-remove {
-    position: static;
-    transform: none;
-}
-
 .context_select .editor_bubble {
     width: auto;
     display: flex;

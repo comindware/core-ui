@@ -154,6 +154,9 @@ export default formRepository.editors.ContextSelect = BaseCollectionEditorView.e
             iconProperty: 'type',
             subtextProperty: 'alias',
             model,
+            popoutFlow: 'right',
+            panelClass: 'datalist-panel-default-focus',
+            alwaysAlignByButton: false,
             collection: this.context[recordTypeId]?.filter(property => this.__isPropertyValid(property))
         };
     },
@@ -161,11 +164,8 @@ export default formRepository.editors.ContextSelect = BaseCollectionEditorView.e
     __value(value, triggerChange, updateUi) {
         this.value = value;
 
-        if (triggerChange) {
-            this.__triggerChange();
-        }
-        if (true) {
-            let recordTypeId = this.recordTypeId;
+        let recordTypeId = this.recordTypeId;
+        if (value) {
             this.collection.set(value?.map(v => {
                 const property = this.context[recordTypeId]?.find(p => p.id === v || p.alias === v);
                 if (!property) {
@@ -174,6 +174,11 @@ export default formRepository.editors.ContextSelect = BaseCollectionEditorView.e
                 recordTypeId = property[this.options.instanceValueProperty];
                 return property;
             }) || [], { remove: true });
+        } else {
+            this.collection.reset();
+        }
+        if (triggerChange) {
+            this.__triggerChange();
         }
 
         if (!this.collection.length || this.options.instanceTypeProperties.includes(this.collection.last().get('type'))) {

@@ -67,6 +67,8 @@ type optionsType = {
     //dropdown options
     externalBlurHandler?: any,
     minAvailableHeight?: any,
+    popoutFlow?: 'right' | 'left',
+    alwaysAlignByButton?: boolean,
 
     //controller's methods
     createValueUrl?: Function,
@@ -130,6 +132,8 @@ const defaultOptions = (options: optionsType): optionsType => ({
     //dropdown options
     externalBlurHandler: undefined,
     minAvailableHeight: undefined,
+    popoutFlow: 'left',
+    alwaysAlignByButton: true,
 
     //controller's methods
     createValueUrl: undefined,
@@ -318,7 +322,9 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             autoOpen: false,
             renderAfterClose: false,
             externalBlurHandler: this.options.externalBlurHandler,
-            minAvailableHeight: this.options.minAvailableHeight
+            minAvailableHeight: this.options.minAvailableHeight,
+            popoutFlow: this.options.popoutFlow,
+            alwaysAlignByButton: this.options.alwaysAlignByButton
         });
 
         this.__addButtonListeners();
