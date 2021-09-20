@@ -323,7 +323,6 @@ export default Marionette.View.extend({
     },
 
     renderTab(tabModel: Backbone.Model, isLoadingNeeded: boolean): void {
-        const viewGetter = this.tabsViewById[tabModel.id];
         const regionEl = document.createElement('div');
         regionEl.className = classes.PANEL_REGION;
         this.ui.panelContainer.append(regionEl);
@@ -331,27 +330,32 @@ export default Marionette.View.extend({
             el: regionEl
         });
         isLoadingNeeded && this.setLoading(true);
-        Promise.resolve(typeof viewGetter === 'function' ? viewGetter(tabModel) : viewGetter)
-            .then(view => {
-                if (!(view instanceof Backbone.View)) {
-                    Core.InterfaceError.logError('Invalid view argument');
-                    isLoadingNeeded && this.setLoading(false);
-                    return;
-                }
-                this.__showTab({ region, tabModel, view, regionEl });
-                this.tabsViewById[tabModel.id] = view;
-                this.listenTo(view, 'all', (...args) => {
-                    args[0] = `tab:${args[0]}`;
-                    this.trigger(...args);
-                });
-                this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
-                this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
+        const __view = this.tabsViewById[tabModel.id];
+        const view = typeof __view === 'function' ? __view(tabModel) : __view;
+        if (helpers.isPromise(view)) {
+            view.then((_view: Backbone.View) => {
+                this.showTab({ view: _view, tabModel, region, regionEl });
                 isLoadingNeeded && this.setLoading(false);
-            })
-            .catch(error => {
-                isLoadingNeeded && this.setLoading(false);
-                Core.InterfaceError.logError(error);
             });
+        } else {
+            this.showTab({ view, tabModel, region, regionEl });
+            isLoadingNeeded && this.setLoading(false);
+        }
+    },
+
+    showTab({ view, tabModel, region, regionEl } = {}) {
+        if (!(view instanceof Backbone.View)) {
+            Core.InterfaceError.logError('Invalid view argument');
+            return;
+        }
+        this.__showTab({ region, tabModel, view, regionEl });
+        this.tabsViewById[tabModel.id] = view;
+        this.listenTo(view, 'all', (...args) => {
+            args[0] = `tab:${args[0]}`;
+            this.trigger(...args);
+        });
+        this.listenTo(view, 'change:visible', (model, visible) => this.setVisible(tabModel.id, visible));
+        this.listenTo(view, 'change:enabled', (model, enabled) => this.setEnabled(tabModel.id, enabled));
     },
 
     getTabRegion(tabId: number) {

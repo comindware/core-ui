@@ -372,5 +372,14 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     throwNotFoundError(message) {
         this.throwError(message || 'Object not found', 'NotFoundError');
+    },
+
+    /**
+     * Returns boolean value if requested object is a Promise or a thenable object
+     * @param {*} Value to check for Promise or thenable object
+     * */
+
+    isPromise(promise: any) {
+        return Boolean(promise) && typeof promise.then === 'function';
     }
 };
