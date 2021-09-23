@@ -3,7 +3,7 @@ import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import _ from 'underscore';
 import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
-import { classes } from '../meta';
+import meta, { classes } from '../meta';
 import dropdown from 'dropdown';
 import MobileService from '../../services/MobileService';
 import CellViewFactory from '../CellViewFactory';
@@ -601,8 +601,8 @@ export default Marionette.View.extend({
     __deselectPointed() {
         if (this.lastPointedIndex > -1) {
             const isColumnEditable = this.__isColumnEditable(this.lastPointedIndex);
-            if (isColumnEditable) {
-                const column = this.getOption('columns')[this.lastPointedIndex];
+            const column = this.getOption('columns')[this.lastPointedIndex]
+            if (isColumnEditable && column.type !== meta.columnTypes.colorPicker) {
                 this.cellViewsByKey[column.key]?.blur?.();
                 this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
             }

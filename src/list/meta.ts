@@ -37,6 +37,7 @@ export const columnTypes = {
     enumerable: 'EnumProperty',
     document: 'DocumentProperty',
     collection: 'Collection',
+    colorPicker: 'ColorPicker',
     id: 'id'
 };
 

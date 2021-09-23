@@ -50,7 +50,9 @@ export default (formRepository.editors.ColorPicker = BaseEditorView.extend({
     },
 
     __changedColorPicker() {
-        this.ui.input.val(this.ui.colorpicker.val());
+        if (this.ui.colorpicker.val) {
+            this.ui.input.val(this.ui.colorpicker.val());
+        }
     },
 
     __change() {
