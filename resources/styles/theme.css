@@ -417,10 +417,6 @@ select {
     transform: translateY(-50%);
 }
 
-.icon-remove {
-    color: var(--red-dark);
-}
-
 /* svg icons */
 
 svg.svg-icons,

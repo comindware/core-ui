@@ -857,13 +857,17 @@ input[type="color"],
     visibility: visible;
 }
 
-.svg-icons-wrp__empty,
-.editor__icons.icon-remove {
+.svg-icons-wrp__empty {
+    display: none;
+}
+
+.button-remove-icon {
+    cursor: pointer;
     display: none;
 }
 
 .editor:hover.editor_empty:not(.editor_readonly):not(.editor_disabled) .svg-icons-wrp__empty,
-.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .editor__icons.icon-remove {
+.editor:hover:not(.editor_empty):not(.editor_readonly):not(.editor_disabled) .button-remove-icon {
     display: inline-block;
 }
 

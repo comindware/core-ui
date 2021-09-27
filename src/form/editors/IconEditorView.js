@@ -56,7 +56,6 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
             },
             autoOpen: false
         });
-
         this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
         if (this.isEmptyValue()) {
             this.ui.deleteIconButton.get(0).hidden = true;

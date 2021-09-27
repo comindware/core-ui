@@ -4,7 +4,7 @@
 
 .icons-panel-category {
     width: 100%;
-    margin-bottom: 20px;
+    padding: 20px;
 }
 
 .icons-panel-category__name {
@@ -13,10 +13,12 @@
     color: var(--theme-colors__text);
     border-bottom: 1px solid var(--theme-colors__text);
     padding-bottom: 3px;
+    border-color: var(--severity-low-back);
 }
 
 .icons-panel-category__palette {
     width: 100%;
+    font-weight: bold;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -37,8 +39,16 @@
     text-overflow: ellipsis;
 }
 
+.button-icons-panel-close {
+    cursor: pointer;
+}
+
 .icons-panel-i:hover {
     background: var(--theme-colors__main);
+}
+
+.icon-header-panel {
+    cursor: none;
 }
 
 .icons-panel-i__img {
@@ -75,6 +85,13 @@
 
 .editor_icons .editor_icons--preview {
     font-size: 20px;
+}
+
+.editor_icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
 }
 
 .svg-icons-remove {
@@ -135,4 +152,8 @@
 
 .ld-setting-dd-panel__i:empty {
     display: none;
+}
+
+.collection-icons {
+    overflow: auto;
 }

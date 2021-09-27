@@ -16,15 +16,17 @@ export default Marionette.View.extend({
     regions: {
         searchInputRegion: '.js-search-input-region',
         searchAreaRegion: '.js-search-area',
-        collectionAreaRegion: {
-            el: '.js-collection-area',
-            replaceElement: true
-        },
+        collectionAreaRegion: '.js-collection-area',
         colorPickerRegion: '.js-color-picker-region'
     },
 
     ui: {
-        colorPickerTitle: '.js-color-picker-title'
+        colorPickerTitle: '.js-color-picker-title',
+        closeButton: '.js-close'
+    },
+
+    events: {
+        'click @ui.closeButton': '__close'
     },
 
     modelEvents() {
@@ -34,16 +36,11 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.search = new Core.form.editors.TextEditor({
-            model: this.model,
-            key: 'searchKey',
-            changeMode: 'keydown',
-            autocommit: true
-        });
+        const search = new Core.views.SearchBarView();
+        search.on('search', text => this.__changeSearchKey(text));
 
         if (this.options.showColorPicker) {
             this.ui.colorPickerTitle[0].removeAttribute('hidden');
-
             this.colorPicker = new Core.form.editors.ColorPickerEditor({
                 model: this.model,
                 key: 'color',
@@ -58,12 +55,9 @@ export default Marionette.View.extend({
             this.showChildView('colorPickerRegion', this.colorPicker);
         }
 
-        this.showChildView('searchInputRegion', this.search);
+        const iconCollectionView = new IconCollectionView({ collection: this.options.collection });
 
-        const iconCollectionView = new IconCollectionView({
-            collection: this.options.collection
-        });
-
+        this.showChildView('searchInputRegion', search);
         this.showChildView('collectionAreaRegion', iconCollectionView);
 
         this.listenTo(iconCollectionView, 'click:item', id => this.trigger('click:item', id));
@@ -73,7 +67,7 @@ export default Marionette.View.extend({
         this.trigger('change:color', this.model.get('color'));
     },
 
-    __changeSearchKey(model, searchKey) {
+    __changeSearchKey(searchKey) {
         if (searchKey) {
             const matchesItems = this.__searchItem(searchKey);
             this.__showSearchResult(matchesItems);
@@ -126,5 +120,9 @@ export default Marionette.View.extend({
 
     __setIconsColor() {
         this.getRegion('collectionAreaRegion').el.style.color = this.model.get('color');
+    },
+
+    __close() {
+        this.options.parent.close();
     }
 });

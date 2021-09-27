@@ -202,9 +202,7 @@
 
 <http://comindware.com/text/core/form/editors/expression#valueAlias> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Знач."; l10n:originalData "valueAlias"].
 
-<http://comindware.com/text/core/form/editors/iconEditor#color> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите цвет"; l10n:originalData "color"].
-
-<http://comindware.com/text/core/form/editors/iconEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "search"].
+<http://comindware.com/text/core/form/editors/iconEditor#color> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Галерея иконок "; l10n:originalData "Gallery of icons"].
 
 <http://comindware.com/text/core/form/editors/iconEditor#searchTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Результаты поиска"; l10n:originalData "searchTitle"].
 
