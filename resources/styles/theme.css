@@ -710,6 +710,9 @@ svg.svg-grid-icons {
 .cell_selection, .cell_selection-index {
     border-top: none;
     z-index: 2;
+}
+
+.cell_selection-index {
     padding-left: 4px;
 }
 

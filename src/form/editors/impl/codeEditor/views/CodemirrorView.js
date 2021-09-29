@@ -298,7 +298,9 @@ export default Marionette.View.extend({
     },
 
     async __getAttributeN3() {
-        const { numberLine, cursor, token } = this.__getOptionCodemirror([constants.optionsCodemirror.cursor, constants.optionsCodemirror.numberLine, constants.optionsCodemirror.token]);
+        const { numberLine, cursor, token } = this.__getOptionCodemirror([
+            constants.optionsCodemirror.cursor, constants.optionsCodemirror.numberLine, constants.optionsCodemirror.token
+        ]);
         this.numberLineCallHints = numberLine;
         try {
             this.setLoading(true);
@@ -507,13 +509,18 @@ export default Marionette.View.extend({
         if (this.options.showMode === showModes.button && this.valueAfterMaximize !== this.codemirror.getValue()) {
             const isClose = await Core.services.MessageService.showMessageDialog(
                 Localizer.get('CORE.FORM.EDITORS.CODE.UNSAVEDEDITOR'),
-                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'), [{
-                    id: true,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
-                }, {
-                    id: false,
-                    text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
-                }]);
+                Localizer.get('PROCESS.FORMDESIGNER.DIALOGMESSAGES.WARNING'),
+                [
+                    {
+                        id: true,
+                        text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.YES')
+                    },
+                    {
+                        id: false,
+                        text: Localizer.get('TEAMNETWORK.COMMUNICATIONCHANNELS.DELETECHANNEL.NO')
+                    }
+                ]
+            );
             if (!isClose) {
                 return;
             }
@@ -1043,7 +1050,6 @@ export default Marionette.View.extend({
             return;
         }
         this.autoCompleteModel = new Backbone.Model();
-        this.templateId = this.options.templateId;
         const ontologyModel = await this.options.ontologyService.getFunctions();
         const functionsExpression = constants.autoCompleteContext.functions;
         if (ontologyModel.functions) {
@@ -1121,7 +1127,7 @@ export default Marionette.View.extend({
             useOntologyLibriary: this.options.config?.useOntologyLibriary
         };
         if (this.options.mode === constants.mode.expression) {
-            userCompileQuery.container = this.options.templateId;
+            userCompileQuery.container = this.__getTemplateId();
         }
         const content = this.codemirror.getValue();
         this.setLoading(true);
@@ -1253,9 +1259,6 @@ export default Marionette.View.extend({
         const cursor = this.codemirror.getCursor();
         const token = this.codemirror.getTokenAt(cursor);
 
-        if (this.options.getTemplate) {
-            this.templateId = this.options.getTemplate();
-        }
         const options = {
             token,
             types,
@@ -1265,8 +1268,8 @@ export default Marionette.View.extend({
             intelliAssist: this.intelliAssist,
             codemirror: this.codemirror,
 
-            attributes: this.options.hintAttributes,
-            templateId: this.options.templateId || this.templateId,
+            attributes: this.__getHintAttributes(),
+            templateId: this.__getTemplateId()
         };
 
         autoCompleteObject = await CmwCodeAssistantServices.getAutoCompleteObject(options);
@@ -1584,6 +1587,18 @@ export default Marionette.View.extend({
             }
         }
         return totalChars / totalCommentsChars <= 4;
+    },
+
+    __getTemplateId() {
+        if (this.options.templateId) {
+            return _.result(this.options, 'templateId');
+        }
+    },
+
+    __getHintAttributes() {
+        if (this.options.hintAttributes) {
+            return _.result(this.options, 'hintAttributes');
+        }
     },
 
     setLoading(loading) {
