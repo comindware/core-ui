@@ -857,8 +857,8 @@ input[type="color"],
     visibility: visible;
 }
 
-.svg-icons-wrp__empty,
-.editor__icons.icon-remove {
+.editor__icons.icon-remove,
+.svg-icons-wrp__empty {
     display: none;
 }
 
