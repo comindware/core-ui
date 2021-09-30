@@ -11,20 +11,12 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'dropdown__wrp dropdown__icons',
+    className: 'icons-panel-container',
 
     regions: {
         searchInputRegion: '.js-search-input-region',
-        searchAreaRegion: '.js-search-area',
-        collectionAreaRegion: {
-            el: '.js-collection-area',
-            replaceElement: true
-        },
-        colorPickerRegion: '.js-color-picker-region'
-    },
-
-    ui: {
-        colorPickerTitle: '.js-color-picker-title'
+        searchAreaRegion: '.js-search-area-region',
+        collectionAreaRegion: '.js-collection-area-region'
     },
 
     modelEvents() {
@@ -34,46 +26,16 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.search = new Core.form.editors.TextEditor({
-            model: this.model,
-            key: 'searchKey',
-            changeMode: 'keydown',
-            autocommit: true
-        });
-
-        if (this.options.showColorPicker) {
-            this.ui.colorPickerTitle[0].removeAttribute('hidden');
-
-            this.colorPicker = new Core.form.editors.ColorPickerEditor({
-                model: this.model,
-                key: 'color',
-                changeMode: 'keydown',
-                autocommit: true
-            });
-
-            this.listenTo(this.colorPicker, 'attach', () => {
-                this.getRegion('colorPickerRegion').el.removeAttribute('hidden');
-            });
-
-            this.showChildView('colorPickerRegion', this.colorPicker);
-        }
-
-        this.showChildView('searchInputRegion', this.search);
-
-        const iconCollectionView = new IconCollectionView({
-            collection: this.options.collection
-        });
-
+        const searchView = new Core.views.SearchBarView();
+        const iconCollectionView = new IconCollectionView({ collection: this.options.collection });
+        searchView.on('search', text => this.__changeSearchKey(text));
+        this.showChildView('searchInputRegion', searchView);
         this.showChildView('collectionAreaRegion', iconCollectionView);
-
         this.listenTo(iconCollectionView, 'click:item', id => this.trigger('click:item', id));
         this.listenTo(this.model, 'change:color', this.__setIconsColor);
-
-        this.__setIconsColor();
-        this.trigger('change:color', this.model.get('color'));
     },
 
-    __changeSearchKey(model, searchKey) {
+    __changeSearchKey(searchKey) {
         if (searchKey) {
             const matchesItems = this.__searchItem(searchKey);
             this.__showSearchResult(matchesItems);
@@ -88,11 +50,7 @@ export default Marionette.View.extend({
             name: Localizer.get('CORE.FORM.EDITORS.ICONEDITOR.SEARCHTITLE'),
             groupItems: matchesItems
         });
-
-        const iconItemCategoryView = new IconItemCategoryView({
-            model
-        });
-
+        const iconItemCategoryView = new IconItemCategoryView({ model });
         const searchAreaRegion = this.getRegion('searchAreaRegion');
         searchAreaRegion.show(iconItemCategoryView);
         searchAreaRegion.el.removeAttribute('hidden');
@@ -122,9 +80,5 @@ export default Marionette.View.extend({
             });
         });
         return matchesItems;
-    },
-
-    __setIconsColor() {
-        this.getRegion('collectionAreaRegion').el.style.color = this.model.get('color');
     }
 });

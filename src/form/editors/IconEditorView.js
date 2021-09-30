@@ -1,13 +1,13 @@
 //@flow
-import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import categories from './impl/iconEditor/categories';
 import icons from './impl/iconEditor/icons';
 import BaseEditorView from './base/BaseEditorView';
-import keyCode from '../../../src/utils/keyCode';
 import formRepository from '../formRepository';
 import Backbone from 'backbone';
+
+const DEFAULT_ICON_CLASS = 'level-down-alt';
 
 const defaultOptions = () => {
     const iconService = window.application.options.iconService;
@@ -21,80 +21,66 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     initialize(options) {
         const defaults = defaultOptions();
         this.__applyOptions(options, defaults);
-        this.iconModel = new Backbone.Model({ color: '#000000', iconClass: this.value });
+        this.iconModel = new Backbone.Model({
+            iconClass: this.value ?? DEFAULT_ICON_CLASS
+        });
     },
 
     template: Handlebars.compile(template),
 
-    className: 'editor editor_icon',
-
-    regions: {
-        iconSelectorHeaderRegion: '.js-icon-selector-header'
+    templateContext() {
+        return {
+            iconClass: this.iconModel.get('iconClass')
+        };
     },
 
+    className: 'editor editor_icon',
+
     ui: {
+        iconButton: '.js-icon-button',
         deleteIconButton: '.js-delete-icon'
     },
 
     events: {
         'click @ui.deleteIconButton': '__onDeleteIconClick',
-        click: 'open',
-        keydown: '__keydown'
+        'click @ui.iconButton': '__showPopup'
     },
 
     onRender() {
-        this.popupPanel = Core.dropdown.factory.createDropdown({
-            buttonView: IconButtonView,
-            panelView: IconPanelView,
-            buttonViewOptions: {
-                model: this.iconModel
-            },
-            panelViewOptions: {
-                collection: this.__getConfig(),
-                showColorPicker: this.options.showColorPicker,
-                model: this.iconModel
-            },
-            autoOpen: false
-        });
-
-        this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
         if (this.isEmptyValue()) {
             this.ui.deleteIconButton.get(0).hidden = true;
         }
     },
 
-    onBeforeAttach() {
-        this.listenTo(this.popupPanel, 'panel:click:item', id => {
-            this.ui.deleteIconButton[0].removeAttribute('hidden');
-            this.__value(id, true, true);
-            this.trigger('click:item', id);
-            this.__updateEmpty();
-            this.ui.deleteIconButton.show();
-            this.close();
+    __getPopupView() {
+        return new Core.layout.Popup({
+            size: {
+                width: '860px',
+                height: '600px'
+            },
+            header: Localizer.get('CORE.FORM.EDITORS.ICONEDITOR.COLOR'),
+            content: this.panelView
         });
-
-        this.listenTo(this.popupPanel, 'click', this.open);
     },
 
-    __keydown(event) {
-        if (event.keyCode === keyCode.ENTER) {
-            this.open();
-        }
+    __showPopup() {
+        this.panelView = new IconPanelView({
+            collection: this.__getConfig(),
+            model: this.iconModel
+        });
+        this.listenTo(this.panelView, 'click:item', id => {
+            this.ui.deleteIconButton[0].removeAttribute('hidden');
+            this.__value(id, true);
+            this.__updateEmpty();
+            this.ui.deleteIconButton.show();
+            this.popupView.close();
+        });
+        this.popupView = this.__getPopupView();
+        Core.services.WindowService.showPopup(this.popupView);
     },
 
     getIsOpenAllowed() {
         return this.getEnabled() && !this.getReadonly() && !this.popupPanel.isOpen;
-    },
-
-    open() {
-        if (!this.getIsOpenAllowed()) {
-            return;
-        }
-        this.popupPanel.open();
-    },
-
-    close() {
-        this.popupPanel.close();
     },
 
     isEmptyValue() {
@@ -130,21 +116,27 @@ export default (formRepository.editors.Icon = BaseEditorView.extend({
     },
 
     __onDeleteIconClick() {
-        this.__value(null, true, true);
+        this.__value(null, true);
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
     },
 
-    __value(value, updateUi, triggerChange) {
+    __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
+
+        this.ui.iconButton.removeClass(Handlebars.helpers.iconPrefixer(this.iconModel.get('iconClass')));
+
         this.value = value;
 
-        if (updateUi) {
-            this.iconModel.set({ iconClass: value });
+        if (this.value) {
+            this.ui.iconButton.addClass(Handlebars.helpers.iconPrefixer(this.value));
+            this.iconModel.set({ iconClass: this.value });
+        } else {
+            this.ui.iconButton.addClass(Handlebars.helpers.iconPrefixer(DEFAULT_ICON_CLASS));
+            this.iconModel.set({ iconClass: DEFAULT_ICON_CLASS });
         }
-
         if (triggerChange) {
             this.__triggerChange();
         }
