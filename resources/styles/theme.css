@@ -1093,8 +1093,6 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__panel-container {
     border-radius: 0 0 4px 4px;
-    background-color: var(--theme-colors__main);
-    border: 1px solid var(--editors-color-border);
     padding: var(--tab-panel-container-padding);
 }
 
