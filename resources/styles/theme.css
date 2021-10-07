@@ -1488,8 +1488,6 @@ tr:not(:first-child) .cell_selection {
 }
 
 .documents__wrapper {
-    border: 1px dashed var(--editors-color-border);
-    border-radius: 6px;
     padding: 20px;
     height: 100%;
     min-width: 120px;

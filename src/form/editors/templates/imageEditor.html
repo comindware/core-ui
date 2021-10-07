@@ -14,9 +14,9 @@
 
 <!--<div class="documents emptyDocumentPlaceholder">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>-->
 
-<ul class="images js-collection-container"></ul>
+<ul class="{{#if showAsPicture}}picture{{else}}images{{/if}} js-collection-container"></ul>
 
-<div class="document-show_more js-show-more">
+<div class="js-show-more document-show_more {{#if showAsPicture}}pictures{{/if}}">
     <span class="js-show-more-text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWMORE'}}</span>
     <i class="js-collapse-icon-more documents-collapse-icon-more {{iconPrefixer 'angle-up'}}"></i>
 </div>

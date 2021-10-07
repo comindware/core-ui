@@ -35,17 +35,26 @@ a.image-buttons__link:hover {
     align-items: center;
     justify-content: flex-start;
     flex: 1 0 auto;
-    max-width: 400px;
 }
 
 .editor_image > .images {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0 10px;
     margin: 0;
     max-height: 320px;
+    max-width: 400px;
     overflow: hidden;
+}
+
+.editor_image > .picture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
 }
 
 .editor_document > .documents {
@@ -96,6 +105,11 @@ a.image-buttons__link:hover {
     background-color: var(--black);
 }
 
+.img_container.picture {
+    max-height: none;
+    width: 100%;
+}
+
 .img_container .buttons__i {
     font-size: 77px;
 }
@@ -120,7 +134,14 @@ a.image-buttons__link:hover {
     visibility: hidden;
 }
 
-.image-buttons__list:hover .img_hover-container {
+.img_hover-container.picture {
+    height: 150px;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+}
+
+.image-list:hover .img_hover-container {
     opacity: 1;
     transition: all 1s;
     visibility: visible;
@@ -130,6 +151,10 @@ a.image-buttons__link:hover {
     width: 180px;
 }
 
+.img__item.picture {
+    width: 100%;
+}
+
 .img__tooltip {
     position: absolute;
     left: 150px;
@@ -137,6 +162,13 @@ a.image-buttons__link:hover {
     color: var(--white);
     z-index: 1;
     visibility: hidden;
+}
+
+.img__tooltip.picture {
+    left: auto;
+    right: 10px;
+    top: auto;
+    bottom: 15px;
 }
 
 .document_tooltip {
@@ -175,6 +207,11 @@ a.image-buttons__link:hover {
     padding-bottom: 4px;
 }
 
+.img__meta.picture {
+    padding-left: 10px;
+    padding-bottom: 8px;
+}
+
 .img__author {
     max-width: 150px;
     text-overflow: ellipsis;
@@ -183,8 +220,20 @@ a.image-buttons__link:hover {
     padding-bottom: 2px;
 }
 
+.picture .img__author {
+    max-width: 100%;
+}
+
 .img__date {
     font-size: 12px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.picture .img__date {
+    width: 100%;
 }
 
 .tooltip_item {
@@ -220,6 +269,10 @@ a.image-buttons__link:hover {
     border-radius: 4px;
     text-align: center;
     cursor: pointer;
+}
+
+.document-show_more.pictures {
+    max-width: 100%;
 }
 
 .document-show_more:hover {

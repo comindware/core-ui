@@ -26,6 +26,7 @@ export default Marionette.View.extend({
         const controller = new DocumentItemController({ view: this });
         this.reqres = controller.reqres;
         this.readonly = this.options.readonly;
+        this.displayFormat = this.options.displayFormat;
         this.allowDelete = this.options.allowDelete;
         this.editorHasHistory = this.options.editorHasHistory;
         this.attachmentsController = options.attachmentsController;
@@ -44,6 +45,7 @@ export default Marionette.View.extend({
         const { text, name, creator, creationDate } = this.model.toJSON();
         return {
             text: text || name,
+            showAsPicture: this.displayFormat === 'ShowAsPicture',
             creator,
             creationDate
         };
@@ -88,7 +90,6 @@ export default Marionette.View.extend({
                 allowDelete: this.allowDelete,
                 editorHasHistory: this.editorHasHistory
             },
-            panelPosition: 'right',
             panelOffsetLeft: -171,
             panelMinWidth: '180px',
             autoOpen: true

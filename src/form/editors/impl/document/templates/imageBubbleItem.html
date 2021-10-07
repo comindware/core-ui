@@ -1,22 +1,23 @@
 <div class="image-buttons__list">
     <div class="js-revise-button-region img__revision"></div>
-    <div class="js-btn-tooltip-region img__tooltip"></div>
+    <div class="js-btn-tooltip-region img__tooltip {{#if showAsPicture}}picture{{/if}}"></div>
     <a class="image-buttons__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">
         <div class="img_wrp">
-            <div class="img_container {{#if isLoading}} i_container {{/if}}">
+
+            <div class="img_container {{#if showAsPicture}}picture{{/if}} {{#if isLoading}} i_container {{/if}}">
                 {{#if isLoading}}
                     <i class="buttons__i {{iconPrefixer 'spinner pulse'}}"></i>
                 {{else}}
-                    <img class="img__item" src="{{url}}" alt=""/>
+                    <img class="img__item {{#if showAsPicture}}picture{{/if}}" src="{{url}}" alt=""/>
                 {{/if}}
             </div>
-            <div class="img_hover-container">
-                <div class="img__meta">
+            <div class="img_hover-container {{#if showAsPicture}}picture{{/if}}">
+                <div class="img__meta {{#if showAsPicture}}picture{{/if}}">
                     <div class="img__author">{{creator}}</div>
                     <div class="img__date">{{creationDate}}</div>
                 </div>
             </div>
         </div>
-        <div class="image__name">{{text}}</div>
+        {{#unless showAsPicture}}<div class="image__name">{{text}}</div>{{/unless}}
     </a>
 </div>
