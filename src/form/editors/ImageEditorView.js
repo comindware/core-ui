@@ -11,6 +11,7 @@ import AttachmentsController from './impl/document/gallery/AttachmentsController
 import DocumentsCollection from './impl/document/collections/DocumentsCollection';
 import WindowService from '../../services/WindowService';
 import CropperEditorView from './CropperEditorView';
+import MultiselectAddButtonView from './MultiselectAddButtonView';
 
 const classes = {
     dropZone: 'documents__drop-zone',
@@ -22,12 +23,6 @@ const classes = {
 
 const tempIdPrefix = 'temp.';
 const serverTempIdPrefix = 'cmw.temp.';
-
-const MultiselectAddButtonView = Marionette.View.extend({
-    className: 'button-sm_h3 button-sm button-sm_add',
-    tagName: 'button',
-    template: Handlebars.compile('{{text}}')
-});
 
 const defaultOptions = options => ({
     readonly: false,
@@ -42,12 +37,13 @@ const defaultOptions = options => ({
     isInline: false
 });
 
-const MAX_NUMBER_VISIBLE_DOCS = 4;
+const MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS = 4;
+const MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES = 1;
 
 export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-
+        this.model = this.options.model;
         const cropHeight = options.model?.get('height');
         const cropWidth = options.model?.get('width');
         this.aspectRatio = cropWidth && cropHeight ? cropWidth / cropHeight : undefined;
@@ -71,6 +67,10 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
         this.createdUrls = [];
+
+        if (this.model.get('values')?.length) {
+            this.__onCollapseClick();
+        }
     },
 
     canAdd: false,
@@ -90,6 +90,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
             showRevision: this.options.showRevision,
             isInline: this.options.isInline,
             readonly: this.readonly,
+            displayFormat: this.model.get('displayFormat'),
             editorHasHistory: false
         };
     },
@@ -119,7 +120,8 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
             displayText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.ADDIMAGE'),
             placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.DRAGFILE'),
             multiple: this.options.multiple,
-            fileFormat: this.__adjustFileFormat(this.options.fileFormat)
+            fileFormat: this.__adjustFileFormat(this.options.fileFormat),
+            showAsPicture: this.model.get('displayFormat') === 'ShowAsPicture'
         });
     },
 
@@ -555,12 +557,14 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         const childViews = documentElements;
         const length = this.collection.length;
         // invisible children
-        for (let i = MAX_NUMBER_VISIBLE_DOCS; i < length; i++) {
+        const maxNumbers = this.model.get('displayFormat') === 'ShowAsCards' ? MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS : MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES;
+        for (let i = maxNumbers; i < length; i++) {
             childViews[i].style.display = 'none';
         }
-        if (length - MAX_NUMBER_VISIBLE_DOCS > 0) {
+        const countInvisibleElements = length - maxNumbers;
+        if (countInvisibleElements > 0) {
             this.ui.showMore.show();
-            this.ui.invisibleCount.html(length - MAX_NUMBER_VISIBLE_DOCS);
+            this.ui.invisibleCount.html(countInvisibleElements);
             this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
         } else {
             this.ui.showMore.hide();
