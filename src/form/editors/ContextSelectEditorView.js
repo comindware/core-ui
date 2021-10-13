@@ -24,12 +24,14 @@ const defaultOptions = () => ({
 export default formRepository.editors.ContextSelect = BaseEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        this.recordTypeId = options.recordTypeId;
 
         if (this.options.contextModel) {
+            this.listenTo(this.options.contextModel, 'change:recordTypeId', (model, value) => this.__onRecordTypeChange(value));
             this.listenTo(this.options.contextModel, 'change:items', (model, value) => this.__onContextChange(value));
+            this.recordTypeId = this.options.contextModel.get('recordTypeId');
             this.context = this.options.contextModel.get('items');
         } else {
+            this.recordTypeId = this.options.recordTypeId;
             this.context = this.options.context;
         }
 
@@ -194,6 +196,10 @@ export default formRepository.editors.ContextSelect = BaseEditorView.extend({
 
         this.popoutView.close();
         this.__value(selected.id, true, newValue);
+    },
+
+    __onRecordTypeChange(newData) {
+        this.recordTypeId = newData;
     },
 
     __onContextChange(newData) {
