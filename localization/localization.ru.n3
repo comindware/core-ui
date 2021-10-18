@@ -210,7 +210,7 @@
 
 <http://comindware.com/text/core/form/editors/image#cancelCrop> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить обрезку"; l10n:originalData "Cancel Crop"].
 
-<http://comindware.com/text/core/form/editors/image#cropper> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Кроппер"; l10n:originalData "Cropper"].
+<http://comindware.com/text/core/form/editors/image#cropper> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Кадрирование изображения"; l10n:originalData "Crop the image"].
 
 <http://comindware.com/text/core/form/editors/image#cut> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Обрезать"; l10n:originalData "Cut"].
 
