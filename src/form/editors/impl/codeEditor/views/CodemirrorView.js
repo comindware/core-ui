@@ -597,9 +597,7 @@ export default Marionette.View.extend({
         if (this.options.mode === constants.mode.expression || this.options.mode === constants.mode.notation3) {
             this.options.mode = this.__checkModeN3();
             this.__setLanguageModeCodemirror(this.options.mode);
-            return;
         }
-        this.__change();
     },
 
     __undo() {
@@ -1479,9 +1477,7 @@ export default Marionette.View.extend({
                 this.minimize();
                 event.stopPropagation();
             }
-            return;
         }
-        this.__change();
     },
 
     __onMouseover(e) {
