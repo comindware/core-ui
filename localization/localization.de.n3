@@ -100,7 +100,7 @@
 
 <http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ungültige Telefonnummer"; l10n:originalData "Invalid phone number"].
 
-<http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:isBeingTranslated true; l10n:originalData "This field is required."].
+<http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:originalData "This field is required"].
 
 <http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
