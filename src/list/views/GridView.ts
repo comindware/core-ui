@@ -263,7 +263,8 @@ export default Marionette.View.extend({
             return;
         }
         const popupContainer = document.querySelector('.js-global-popup-stack');
-        const isElementOutOfElementOrPopup = this.el.contains(target) || popupContainer?.contains(target);
+        const spContainer = document.querySelector('.sp-container');
+        const isElementOutOfElementOrPopup = this.el.contains(target) || popupContainer?.contains(target) || spContainer?.contains(target);
         if (!isElementOutOfElementOrPopup) {
             this.collection.selectNone ? this.collection.selectNone() : this.collection.deselect();
             this.stopListening(GlobalEventService, 'window:mousedown:captured', this.__checkBlur);
