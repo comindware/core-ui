@@ -43,7 +43,7 @@ const MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES = 1;
 export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        this.model = this.options.model;
+        this.model = this.options.model || new Backbone.Model();
         const cropHeight = options.model?.get('height');
         const cropWidth = options.model?.get('width');
         this.aspectRatio = cropWidth && cropHeight ? cropWidth / cropHeight : undefined;
