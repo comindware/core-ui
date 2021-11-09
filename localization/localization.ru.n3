@@ -334,7 +334,7 @@
 
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 
-<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содержат ошибки"; l10n:originalData "Grid fields has errors"].
+<http://comindware.com/text/core/form/validation#gridError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поля таблицы содержат ошибки"; l10n:originalData "There are errors in the table fields"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 
@@ -346,9 +346,9 @@
 
 <http://comindware.com/text/core/form/validation#phone> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат телефонного номера"; l10n:originalData "Invalid phone number"].
 
-<http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поле обязательно для заполнения."; l10n:originalData "This field is required."].
+<http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Это поле необходимо заполнить."; l10n:originalData "This field is required"].
 
-<http://comindware.com/text/core/form/validation#requiredGrid> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Таблица должна иметь как минимум одну запись"; l10n:originalData "Grid must have at least one record"].
+<http://comindware.com/text/core/form/validation#requiredGrid> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Таблица должна содержать как минимум одну запись"; l10n:originalData "Grid must have at least one record"].
 
 <http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Системное имя может состоять из латинских букв (A–Z, a–z), цифр (0–9) и символов подчеркивания (_). Системное имя не должно начинаться с цифры."; l10n:originalData "The system name may contain only characters of the Latin alphabet and Arabic numerals. The first symbol should be a letter."].
 
