@@ -1202,7 +1202,7 @@ tr:not(:first-child) .cell_selection {
 .btn-separator {
     display: inline-block;
     width: 0;
-    height: 75%;
+    height: 20px;
     margin: 0 9px 0 10px;
     border-right: 1px solid;
     align-self: center;
@@ -1273,6 +1273,7 @@ tr:not(:first-child) .cell_selection {
 /* Popup */
 
 .layout__popup-view-window {
+    z-index: 99;
     background: var(--theme-colors__main);
     box-shadow: 0 3px var(--popup-shadow-blur-radius) rgba(var(--popup-shadow-color), var(--popup-shadow-opacity));
     border-radius: 5px;

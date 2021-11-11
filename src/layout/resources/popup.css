@@ -1,4 +1,5 @@
 .layout__popup-view, .layout__popup-view_mobile-system-type {
+    z-index: 99;
     position: absolute;
     left: 0;
     opacity: 0;
