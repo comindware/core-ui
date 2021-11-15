@@ -493,7 +493,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     },
 
     update() {
-        if (this.collapsed) {
+        if (this.collapsed && this.isRendered()) {
             this.$container.children().show();
             this.collapseShowMore();
         }

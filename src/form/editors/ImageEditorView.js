@@ -21,6 +21,11 @@ const classes = {
     imageMoreHide: 'image-more__hide'
 };
 
+const displayFormats = {
+    SHOW_AS_CARDS: 'ShowAsCards',
+    SHOW_AS_PICTURE: 'ShowAsPicture'
+};
+
 const tempIdPrefix = 'temp.';
 const serverTempIdPrefix = 'cmw.temp.';
 
@@ -34,7 +39,10 @@ const defaultOptions = options => ({
     editImage: null,
     removeImage: null,
     displayText: '',
-    isInline: false
+    isInline: false,
+    width: null,
+    height: null,
+    displayFormat: displayFormats.SHOW_AS_CARDS
 });
 
 const MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS = 4;
@@ -43,9 +51,9 @@ const MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES = 1;
 export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     initialize(options = {}) {
         this.__applyOptions(options, defaultOptions);
-        this.model = this.options.model;
-        const cropHeight = options.model?.get('height');
-        const cropWidth = options.model?.get('width');
+        this.displayFormat = this.options.displayFormat;
+        const cropHeight = this.options.height;
+        const cropWidth = this.options.width;
         this.aspectRatio = cropWidth && cropHeight ? cropWidth / cropHeight : undefined;
 
         this.collection = new DocumentsCollection(this.value);
@@ -68,7 +76,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         window.addEventListener('resize', this._windowResize);
         this.createdUrls = [];
 
-        if (this.model.get('values')?.length) {
+        if (this.collection.length) {
             this.__onCollapseClick();
         }
     },
@@ -90,7 +98,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
             showRevision: this.options.showRevision,
             isInline: this.options.isInline,
             readonly: this.readonly,
-            displayFormat: this.model.get('displayFormat'),
+            displayFormat: this.displayFormat,
             editorHasHistory: false
         };
     },
@@ -121,7 +129,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
             placeHolderText: LocalizationService.get('CORE.FORM.EDITORS.IMAGE.DRAGFILE'),
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat),
-            showAsPicture: this.model.get('displayFormat') === 'ShowAsPicture'
+            showAsPicture: this.displayFormat === displayFormats.SHOW_AS_PICTURE
         });
     },
 
@@ -139,32 +147,9 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         };
     },
 
-    async setValue(value) {
+    setValue(value) {
         this.__value(value);
         this.update();
-        if (value) {
-            this.files = [];
-            this.collection.forEach(model => {
-                model.set({ isLoading: false });
-            });
-            for (let i = 0; i < value.length; i++) {
-                if (this.isTemp(value[i].id) && !this.cropTemps.includes(value[i].id) && value[i].extension !== 'tiff') {
-                    this.cropTemps.push(value[i].id);
-                    await this.__getCropperPopup(value[i]);
-                }
-            }
-
-            if (this.files.length) {
-                this.__editElementsCollection(this.files);
-                this.files.forEach(model => {
-                    model.uniqueId = this.options.editImage?.(model);
-                    const savingModel = this.collection.findWhere({ id: model.id });
-                    savingModel.set({ isLoading: true });
-                });
-                this.ui.fileZone.trigger('reset');
-                this.__triggerChange();
-            }
-        }
     },
 
     isTemp(objectId) {
@@ -254,12 +239,35 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         this.__triggerChange();
     },
 
-    __value(value, triggerChange) {
+    async __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
         this.value = value;
-        this.collection.set(value || []);
+
+        this.files = [];
+        this.collection.forEach(model => {
+            model.set({ isLoading: false });
+        });
+        for (let i = 0; i < value.length; i++) {
+            if (this.isTemp(value[i].id) && !this.cropTemps.includes(value[i].id) && value[i].extension !== 'tiff') {
+                this.cropTemps.push(value[i].id);
+                await this.__getCropperPopup(value[i]);
+            }
+        }
+
+        if (this.files.length) {
+            this.__editElementsCollection(this.files);
+            this.files.forEach(model => {
+                model.uniqueId = this.options.editImage?.(model);
+                const savingModel = this.collection.findWhere({ id: model.id });
+                savingModel.set({ isLoading: true });
+            });
+            this.ui.fileZone.trigger('reset');
+            this.__triggerChange();
+        }
+
+        this.collection.reset(value || []);
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -539,7 +547,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     },
 
     update() {
-        if (this.collapsed) {
+        if (this.collapsed && this.isRendered()) {
             this.$container.children().show();
             this.collapseShowMore();
         }
@@ -557,7 +565,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         const childViews = documentElements;
         const length = this.collection.length;
         // invisible children
-        const maxNumbers = this.model.get('displayFormat') === 'ShowAsCards' ? MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS : MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES;
+        const maxNumbers = this.displayFormat === displayFormats.SHOW_AS_CARDS ? MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS : MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES;
         for (let i = maxNumbers; i < length; i++) {
             childViews[i].style.display = 'none';
         }
