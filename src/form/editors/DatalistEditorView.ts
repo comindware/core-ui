@@ -400,7 +400,6 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     __bindEditorsState() {
         this.listenTo(this.boundEditor, 'set:loading', this.setLoading.bind(this));
         this.listenTo(this.boundEditor, 'change', () => this.setValue(this.boundEditor.getValue(), { triggerChange: true }));
-        this.listenTo(this, 'change', () => this.boundEditor.setValue(this.getValue()));
     },
 
     __createPanelVirtualCollection() {
@@ -833,6 +832,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             this.value = this.value == null ? this.value : [this.value];
         }
 
+        this.boundEditor?.setValue(this.getValue());
         this.__resetSelectedCollection(adjustedValue);
 
         if (triggerChange) {
