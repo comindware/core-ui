@@ -560,40 +560,48 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getComplexCell({ values, column, model }: GetCellOptions): string {
-        let valueHTMLResult;
-        let valueInnerHTML = '';
+        // let valueHTMLResult;
+        // let valueInnerHTML = '';
         let title = '';
         const value = values[0];
-        const valueTypeHTML = getComplexValueTypesLocalization(value.type);
-        if (value.value === null || value.value === undefined) {
+        const editor = new Core.form.editors.ComplexEditor({
+            ...column,
+            class: 'editor_empty',
+            value
+        });
+        editor.render();
+        const cellInnerHTML = editor.el.outerHTML;
+        if (value.type && value.value == null) {
             return this.__getTaggedCellHTML({ column, model, cellInnerHTML: '', title: '' });
-        } else {
-            switch (value.type) {
-                case complexValueTypes.value:
-                    valueHTMLResult = this.__getHTMLbyValueEditor({ value: value.value, column, model });
-                    title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
-                    break;
-                case complexValueTypes.context: {
-                    valueHTMLResult = this.__getContextCellInnerHtml({ values: value.value, column, model });
-                    title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
-                    break;
-                }
-                case complexValueTypes.expression:
-                case complexValueTypes.script:
-                    valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
-                    title = valueHTMLResult.title;
-                    valueInnerHTML = valueHTMLResult.cellInnerHTML;
-                    break;
-                case complexValueTypes.template:
-                    title = valueInnerHTML = value.value.name;
-                    break;
-                default:
-                    break;
-            }
         }
-        const cellInnerHTML = `${valueTypeHTML}: ${valueInnerHTML}`;
+        // TODO: Remove after testing
+        // else {
+        //     switch (value.type) {
+        //         case complexValueTypes.value:
+        //             valueHTMLResult = this.__getHTMLbyValueEditor({ value: value.value, column, model });
+        //             title = valueHTMLResult.title;
+        //             valueInnerHTML = valueHTMLResult.cellInnerHTML;
+        //             break;
+        //         case complexValueTypes.context: {
+        //             valueHTMLResult = this.__getContextCellInnerHtml({ values: value.value, column, model });
+        //             title = valueHTMLResult.title;
+        //             valueInnerHTML = valueHTMLResult.cellInnerHTML;
+        //             break;
+        //         }
+        //         case complexValueTypes.expression:
+        //         case complexValueTypes.script:
+        //             valueHTMLResult = this.__getCodeCellInnerHtml({ values: value.value, column, model });
+        //             title = valueHTMLResult.title;
+        //             valueInnerHTML = valueHTMLResult.cellInnerHTML;
+        //             break;
+        //         case complexValueTypes.template:
+        //             title = valueInnerHTML = value.value.name;
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+        // const cellInnerHTML = `${valueTypeHTML}: ${valueInnerHTML}`;
         return this.__getTaggedCellHTML({ column, model, cellInnerHTML, title});
     }
 
