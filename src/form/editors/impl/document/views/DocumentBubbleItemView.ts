@@ -87,7 +87,6 @@ export default Marionette.View.extend({
                 readonly: this.readonly,
                 allowDelete: this.allowDelete
             },
-            panelPosition: 'right',
             panelOffsetLeft: -171,
             panelMinWidth: '180px',
             autoOpen: true

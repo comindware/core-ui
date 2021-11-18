@@ -28,7 +28,8 @@ enum popoutFlow {
 enum panelPosition {
     DOWN = 'down',
     UP = 'up',
-    RIGHT = 'right'
+    RIGHT = 'right',
+    LEFT = 'left'
 };
 
 type optionsType = {
@@ -187,6 +188,7 @@ export default class DropdownView {
         this.panelEl.style.height = ''; //resetting custom height
 
         const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
         const dropDownRoot = this.button.$el.closest('.js-dropdown__root')[0];
         const isDropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
         const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
@@ -206,6 +208,7 @@ export default class DropdownView {
 
 
         let offsetHeight = this.panelEl.offsetHeight;
+        let offsetWidth = this.panelEl.offsetWidth;
 
         let position = this.options.panelPosition;
 
@@ -218,6 +221,11 @@ export default class DropdownView {
         } else if (position === panelPosition.UP && buttonRect.top < offsetHeight && bottom > buttonRect.top) {
             position = panelPosition.DOWN;
         }
+        if (position === panelPosition.LEFT && buttonRect.left - WINDOW_BORDER_OFFSET < offsetWidth) {
+            position = panelPosition.RIGHT
+        } else if (position === panelPosition.RIGHT && viewportWidth - buttonRect.right - WINDOW_BORDER_OFFSET < offsetWidth){
+            position = panelPosition.LEFT;
+        };
 
         const viewport = {
             height: viewportHeight,
@@ -321,17 +329,13 @@ export default class DropdownView {
                 maxHeight = viewportHeight - top - indent;
                 break;
             case panelPosition.RIGHT:
-                if ((viewportHeight - buttonRect.bottom < MIN_HEIGHT_TO_OPEN_DOWN) || bottom < this.options.minAvailableHeight + offsetHeight) {
-                    top = buttonRect.top + buttonRect.height/2 - offsetHeight;
-                } else {
-                    top = buttonRect.top + buttonRect.height/2;
-                }
-                if (top <= WINDOW_BORDER_OFFSET) {
-                    top = WINDOW_BORDER_OFFSET;
-                }
-                maxHeight = viewportHeight - top - indent;
-                this.panelEl.style.top = `${top}px`;
+                this.panelEl.style.top = `${this.__getTop()}px`;
                 left = buttonRect.left + buttonRect.width + this.options.panelOffsets.left;
+                this.panelEl.style.left = `${left}px`;
+                break;
+            case panelPosition.LEFT:
+                this.panelEl.style.top = `${this.__getTop()}px`;
+                left = buttonRect.left - offsetWidth;
                 this.panelEl.style.left = `${left}px`;
                 break;
             default:
@@ -437,6 +441,25 @@ export default class DropdownView {
         }
         this.button.trigger('click', ...args);
     }
+
+    __getTop () {
+        let top : number = 0;
+        const viewportHeight = window.innerHeight;
+        const dropDownRoot = this.button.$el.closest('.js-dropdown__root')[0];
+        const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
+        let offsetHeight = this.panelEl.offsetHeight;
+        if ((viewportHeight - buttonRect.top - offsetHeight) > WINDOW_BORDER_OFFSET) {
+            top = buttonRect.top;
+        } else if((viewportHeight - buttonRect.bottom) < (offsetHeight - buttonRect.height + WINDOW_BORDER_OFFSET) && (viewportHeight - buttonRect.bottom) > WINDOW_BORDER_OFFSET) {
+            top = (viewportHeight - offsetHeight - WINDOW_BORDER_OFFSET);
+        } else {
+            top = buttonRect.top + buttonRect.height - offsetHeight;
+        }
+        if (top <= WINDOW_BORDER_OFFSET) {
+            top = WINDOW_BORDER_OFFSET;
+        }
+        return top;
+    };
 
     __isNestedInButton(testedEl) {
         return this.button.el === testedEl || this.button.el.contains(testedEl);
