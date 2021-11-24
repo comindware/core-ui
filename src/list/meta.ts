@@ -36,7 +36,6 @@ export const columnTypes = {
     reference: 'InstanceProperty',
     enumerable: 'EnumProperty',
     document: 'DocumentProperty',
-    collection: 'Collection',
     id: 'id'
 };
 
@@ -45,7 +44,6 @@ export const columnType = columnTypes;
 export const columnWidthByType = {
     [objectPropertyTypes.ACCOUNT]: 120,
     [objectPropertyTypes.BOOLEAN]: 120,
-    [objectPropertyTypes.COLLECTION]: 120,
     [objectPropertyTypes.DATETIME]: 120,
     [objectPropertyTypes.DECIMAL]: 120,
     [objectPropertyTypes.DOCUMENT]: 120,
