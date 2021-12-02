@@ -292,6 +292,15 @@ select {
 /* /textarea/ */
 
 /* checkbox */
+
+.editor_checkbox.editor_checkbox_label-left {
+    flex-direction: row-reverse;
+}
+
+.checkbox-group .editor_checkbox:not(:last-child) {
+    margin-bottom: 10px;
+}
+
 .checkbox {
     font-size: var(--base-font-size);
     line-height: normal;
@@ -305,6 +314,42 @@ select {
     border: solid 1px var(--editors-color-border);
 }
 
+.checkbox_switch {
+    border-radius: 25% / 50%;
+    justify-content: flex-end;
+    width: calc(var(--checkbox-size) * 2);
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.editor_checkbox_label-left .checkbox {
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.editor_checkbox_justified .checkbox {
+    margin-right: 10px;
+}
+
+.editor_checkbox_label-left.editor_checkbox_justified .checkbox {
+    margin-right: 0;
+}
+
+.checkbox.checkbox_switch:not(.checked) {
+    justify-content: flex-start;
+    background-color: var(--editors-color-border);
+    border-color: var(--editors-color-border);
+}
+
+.checkbox.checkbox_switch:not(.checked):hover {
+    background-color: var(--theme-colors__main_fade);
+}
+
+td .checkbox.checkbox_switch i,
+.editor_checkbox .checkbox.checkbox_switch i {
+    font-size: calc(var(--checkbox-size) - 4px);
+}
+
 .checkbox-text {
     color: var(--theme-colors__text);
     cursor: pointer;
@@ -315,6 +360,18 @@ select {
     white-space: nowrap;
     margin-left: 10px;
     user-select: none;
+}
+
+.editor_checkbox_justified .checkbox-text {
+    margin-left: auto;
+}
+
+.editor_checkbox_label-left .checkbox-text {
+    margin-left: 0;
+}
+
+.editor_checkbox_label-left.editor_checkbox_justified .checkbox-text {
+    margin-right: auto;
 }
 
 .editor_readonly .checkbox-text,

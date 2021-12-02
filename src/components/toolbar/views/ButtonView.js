@@ -4,7 +4,8 @@ import { severity } from '../meta';
 const classes = {
     PALE: 'btn-pale',
     STRONG: 'btn-strong',
-    DISABLED: 'btn-disabled'
+    DISABLED: 'btn-disabled',
+    CLEAR: 'btn-clear'
 };
 
 function unCapitalizeFirstLetter(string) {
@@ -35,6 +36,7 @@ export default Marionette.View.extend({
         const type = this.model.get('type');
         const typeClass = typeof type === 'string' ? unCapitalizeFirstLetter(type) : 'withoutType';
         const cancelClass = isCancel ? classes.PALE : null;
+        const clearClass = this.model.get('isClear') ? classes.CLEAR : '';
         let enabled = this.model.get('enabled');
         if (enabled === undefined) {
             enabled = true;
@@ -44,6 +46,6 @@ export default Marionette.View.extend({
 
         const name = this.model.get('name');
 
-        return `${severityItem.class} ${this.model.get('class') || ''} ${name ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED}`;
+        return `${severityItem.class} ${this.model.get('class') || ''} ${name ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED} ${clearClass}`;
     }
 });
