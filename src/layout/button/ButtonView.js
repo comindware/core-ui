@@ -7,6 +7,7 @@ const classes = {
     PALE: 'btn-pale',
     STRONG: 'btn-strong',
     DISABLED: 'btn-disabled',
+    CLEAR: 'btn-clear',
     ICON_RIGHT: 'btn-rightside-icon'
 };
 
@@ -20,9 +21,11 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             brightnessClass: this.getOption('isCancel') ? classes.PALE : classes.STRONG,
+            clearClass: this.getOption('isClear') ? classes.CLEAR : '',
             text: this.options.text,
             iconClass: this.options.iconClass,
-            iconPosition: this.options.iconPosition
+            iconPosition: this.options.iconPosition,
+            customClass: this.options.customClass
         };
     },
 

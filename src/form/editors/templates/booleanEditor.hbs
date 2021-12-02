@@ -1,4 +1,8 @@
-<span class="js-editor-checkbox__toggle-button checkbox"></span>
+<span class="js-editor-checkbox__toggle-button checkbox{{#if displayAsSwitch}} checkbox_switch{{/if}}">
+    {{#if displayAsSwitch}}
+        <i class="fas fa-circle"></i>
+    {{/if}}
+</span>
 {{#if displayText}}
 <span class="checkbox-text js-editor-checkbox__display-text">{{displayText}}</span>
 {{else}}

@@ -4,14 +4,23 @@ import template from './templates/booleanEditor.hbs';
 import BaseEditorView from './base/BaseEditorView';
 import formRepository from '../formRepository';
 
-const defaultOptions = {
-    displayText: '',
-    thirdState: false
-};
-
 const icons = {
     CHECKED: '<i class="fas fa-check"></i>',
-    CHECKED_SOME: '<i class="fas fa-sqaure"></i>'
+    CHECKED_SOME: '<i class="fas fa-sqaure"></i>',
+    SWITCH: '<i class="fas fa-circle"></i>'
+};
+
+const displayTextPositions = {
+    RIGHT: 'right',
+    LEFT: 'left'
+};
+
+const defaultOptions = {
+    displayText: '',
+    displayAsSwitch: false,
+    thirdState: false,
+    displayTextPosition: displayTextPositions.RIGHT,
+    isJustified: true
 };
 
 /**
@@ -22,6 +31,9 @@ const icons = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
  * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
+ * @param {Boolean} [options.displayAsSwitch=false] True when the component should be displayed as a switch
+ * @param {String} [options.displayTextPosition='right'] 'left' for displaing to display a label to the left of a switch
+ * @param {Boolean} [options.isFullWidth=false] True when the component should be strtched to fill full width of a container
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
@@ -42,7 +54,11 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
             keydown: '__onKeyDown'
         },
 
-        className: 'editor editor_checkbox',
+        className() {
+            const displayTextPositionClass = this.getOption('displayTextPosition') === displayTextPositions.LEFT ? 'editor_checkbox_label-left' : '';
+            const justifiedClass = this.getOption('isFullWidth') ? 'editor_checkbox_justified' : '';
+            return `editor editor_checkbox ${displayTextPositionClass} ${justifiedClass}`;
+        },
 
         attributes() {
             return {
@@ -55,7 +71,8 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
         templateContext() {
             return {
                 displayText: this.options.displayText,
-                displayHtml: this.options.displayHtml
+                displayHtml: this.options.displayHtml,
+                displayAsSwitch: this.options.displayAsSwitch
             };
         },
 
@@ -95,6 +112,10 @@ export default formRepository.editors.Boolean = BaseEditorView.extend(
                 return;
             }
             const toggleButtonEl = this.ui.toggleButton.get(0);
+            if (this.options.displayAsSwitch) {
+                toggleButtonEl.classList.toggle('checked', this.value);
+                return;
+            }
             if (this.value) {
                 toggleButtonEl.innerHTML = icons.CHECKED;
             } else if (this.value === false || !this.options.thirdState) {
