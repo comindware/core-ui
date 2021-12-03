@@ -112,8 +112,10 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         }
     },
 
-    onDestroy() {
-        Inputmask.remove(this.ui.input[0]);
+    onBeforeDestroy() {
+        if (this.ui.input[0].inputmask) {
+            this.ui.input[0].inputmask.remove();
+        }
     },
 
     __keyup(event) {

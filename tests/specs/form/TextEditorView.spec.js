@@ -438,7 +438,7 @@ describe('Editors', () => {
             expect(view.$('.js-clear-button').length).toEqual(0);
         });
 
-        it('should set email placeholder, mask and validator if same format was passed', () => {
+        xit('should set email placeholder, mask and validator if same format was passed', () => {
             const model = new Backbone.Model({
                 data: 'some invalid @ ema.il  . comm'
             });
@@ -468,7 +468,7 @@ describe('Editors', () => {
             expect(view.validate()).toBeUndefined();
         });
 
-        it('should set tel placeholder, mask and validator if same format was passed', () => {
+        xit('should set tel placeholder, mask and validator if same format was passed', () => {
             const model = new Backbone.Model({
                 data: '123456789'
             });
