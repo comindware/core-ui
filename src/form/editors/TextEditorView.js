@@ -1,4 +1,4 @@
-import { maskInput, emailMask } from 'lib';
+import Inputmask from 'inputmask';
 import BaseEditorView from './base/BaseEditorView';
 import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
@@ -13,17 +13,26 @@ const changeMode = {
     keydown: 'keydown'
 };
 
+const serverMaskTypes = {
+    TEL: 'PhoneRuMask',
+    PASSPORT: 'PassportRuMask',
+    INDEX: 'IndexRuMask',
+    INN: 'INNMask',
+    OGRN: 'OGRNMask',
+    CUSTOM: 'CustomMask',
+    EMAIL: 'EmailMask',
+    LICENSE_PLATE_NUMBER_RU: 'LicensePlateNumberRuMask'
+};
+
 const defaultOptions = () => ({
     changeMode: 'blur',
     maxLength: undefined,
-    mask: undefined,
-    placeholderChar: '_',
-    maskOptions: {},
     showTitle: true,
     allowEmptyValue: true,
     class: undefined,
-    format: 'text',
-    hideClearButton: false
+    hideClearButton: false,
+    validationMaskRegex: null,
+    errorMessageExpression: ''
 });
 
 /**
@@ -37,25 +46,20 @@ const defaultOptions = () => ({
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
- * @param {String} [options.format=''] ('email'/'tel') set the predefined input mask, validator and type for input.
- * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
- * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
- * @param {String} [options.placeholderChar='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
- * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
 export default formRepository.editors.Text = BaseEditorView.extend({
     initialize(options) {
         const defOps = defaultOptions();
-        if (options.format) {
-            this.__setMaskByFormat(options.format, defOps);
-        } else {
-            this.mask = this.options.mask;
-        }
-
         this.__applyOptions(options, defOps);
         this.__debounceOnClearClick = _.debounce((...args) => this.__onClearClick(...args), DOUBLECLICK_DELAY);
+
+        this.format = options.format;
+        this.isMaskFormat = Object.values(serverMaskTypes).includes(options.format);
+        if (this.isMaskFormat) {
+            this.__setMaskByFormat();
+        }
     },
 
     focusElement: '.js-input',
@@ -70,9 +74,13 @@ export default formRepository.editors.Text = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
+        let type = 'text';
+        if (this.format === serverMaskTypes.TEL) {
+            type = 'tel';
+        }
         return {
             ...this.options,
-            type: this.options.format === 'tel' ? 'tel' : 'text'
+            type
         };
     },
 
@@ -90,19 +98,22 @@ export default formRepository.editors.Text = BaseEditorView.extend({
     },
 
     onAttach() {
-        if (this.mask) {
-            this.maskedInputController = maskInput({
-                inputElement: this.ui.input[0],
-                mask: this.mask,
-                placeholderChar: this.options.placeholderChar,
-                autoUnmask: true,
-                ...(this.options.maskOptions || {})
-            });
+        if (this.isMaskFormat) {
+            switch (this.format) {
+                case serverMaskTypes.EMAIL:
+                    Inputmask({ alias: 'email' }).mask(this.ui.input[0]);
+                    break;
+                default:
+                    Inputmask({
+                        regex: this.options.validationMaskRegex
+                    }).mask(this.ui.input[0]);
+                    break;
+            }
         }
     },
 
     onDestroy() {
-        this.maskedInputController && this.maskedInputController.destroy();
+        Inputmask.remove(this.ui.input[0]);
     },
 
     __keyup(event) {
@@ -139,14 +150,10 @@ export default formRepository.editors.Text = BaseEditorView.extend({
     },
 
     __value(value, updateUi, triggerChange) {
-        let realValue = value;
-        if (!updateUi && value && this.options.format === 'tel') {
-            realValue = realValue.replace(/[^\d]/g, '');
-        }
-        if (this.value === realValue) {
+        if (this.value === value) {
             return;
         }
-        this.value = realValue;
+        this.value = value;
         this.__updateEmpty();
 
         if (triggerChange) {
@@ -188,31 +195,34 @@ export default formRepository.editors.Text = BaseEditorView.extend({
         this.ui.input.val(value);
     },
 
-    __setMaskByFormat(format, defaults) {
-        let additionalValidator;
-        switch (format) {
-            case 'email':
-                this.mask = emailMask;
-                additionalValidator = 'email';
-                defaults.emptyPlaceholder = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.EMAILPLACEHOLDER');
+    __setMaskByFormat() {
+        const validator = {
+            message: '',
+            regexp: '',
+            type: 'regexp'
+        };
+
+        switch (this.format) {
+            case serverMaskTypes.TEL:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PHONEREGEXP');
                 break;
-            case 'tel':
-                this.mask = [/[1-9]/, ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
-                defaults.emptyPlaceholder = '5 (555) 555-55-55';
-                this.options.maskOptions = {
-                    guide: true
-                };
-                additionalValidator = 'phone';
+            case serverMaskTypes.PASSPORT:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PASSPORTREGEXP');
+                break;
+            case serverMaskTypes.INDEX:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INDEXREGEXP');
+                break;
+            case serverMaskTypes.INN:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INNREGEXP');
+                break;
+            case serverMaskTypes.OGRN:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.OGRNREGEXP');
+                break;
+            case serverMaskTypes.LICENSE_PLATE_NUMBER_RU:
+                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.LICENSEPLATEREGEXP');
                 break;
             default:
                 break;
-        }
-        if (additionalValidator) {
-            if (this.validators) {
-                this.validators.push(additionalValidator);
-            } else {
-                this.validators = [additionalValidator];
-            }
         }
     }
 });

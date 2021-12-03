@@ -282,7 +282,47 @@
 
 <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поле недоступно"; l10n:originalData "Field is disabled"].
 
-<http://comindware.com/text/core/form/editors/textEditor#emailPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите адрес электронной почты"; l10n:originalData "Enter email"].
+<http://comindware.com/text/core/form/editors/textEditor#emailErrorMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите адрес эл. почты в формате @.*"; l10n:originalData "Enter the e-mail address in @.* format"].
+
+<http://comindware.com/text/core/form/editors/textEditor#emailPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ivanov@comindware.com"; l10n:originalData "ivanov@comindware.com"].
+
+<http://comindware.com/text/core/form/editors/textEditor#emailRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "^(([a-zа-я0-9_-]+\\.)*[a-zа-я0-9_-]+@[a-zа-я0-9-]+(\\.[a-zа-я0-9-]+)*\\.[a-zа-я]{2,6})?$"; l10n:originalData "/^(([a-zа-я0-9_-]+\\.)*[a-zа-я0-9_-]+@[a-zа-я0-9-]+(\\.[a-zа-я0-9-]+)*\\.[a-zа-я]{2,6})?$"].
+
+<http://comindware.com/text/core/form/editors/textEditor#indexMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите индекс в формате 000000"; l10n:originalData "Enter index in the format 000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#indexPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "000000"; l10n:originalData "000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#indexRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{6})"; l10n:originalData "([0-9]{6})"].
+
+<http://comindware.com/text/core/form/editors/textEditor#innMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите ИНН в формате 000000000099"; l10n:originalData "Enter INN in the format 0000000000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#innPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "000000000099"; l10n:originalData "000000000099"].
+
+<http://comindware.com/text/core/form/editors/textEditor#innRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "(([0-9]{12})|([0-9]{10}))"; l10n:originalData "(([0-9]{12})|([0-9]{10}))\r\n"].
+
+<http://comindware.com/text/core/form/editors/textEditor#licensePlateErrorMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите номер машины в формате А999АА 099"; l10n:originalData "Enter car number in the format *@*.*"].
+
+<http://comindware.com/text/core/form/editors/textEditor#licensePlatePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "A 000 AA 000"; l10n:originalData "A 000 AA 000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#licensePlateRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([АВЕКМНОРСТУХавекмнорстух]{1}[0-9]{3}[АВЕКМНОРСТУХавекмнорстух]{2} [0-9]{3})"; l10n:originalData "([АВЕКМНОРСТУХавекмнорстух]{1}[0-9]{3}[АВЕКМНОРСТУХавекмнорстух]{2} [0-9]{3})"].
+
+<http://comindware.com/text/core/form/editors/textEditor#ogrnMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите ОГРН в формате 0000000000000"; l10n:originalData "Enter OGRN in the format 0000000000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#ogrnPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "0000000000000"; l10n:originalData "0000000000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#ogrnRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{13})"; l10n:originalData "([0-9]{13})\r\n"].
+
+<http://comindware.com/text/core/form/editors/textEditor#passportMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите серию и номер паспорта в формате 0000 000000"; l10n:originalData "Enter the series and number of the passport in the format 0000 000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#passportPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "0000 000000"; l10n:originalData "0000 000000"].
+
+<http://comindware.com/text/core/form/editors/textEditor#passportRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{4} [0-9]{6})"; l10n:originalData "([0-9]{4} [0-9]{6})"].
+
+<http://comindware.com/text/core/form/editors/textEditor#phoneMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите номер телефона в формате +7 (999) 999-99-99"; l10n:originalData "Enter phone number in the format +7 (999) 999-99-99"].
+
+<http://comindware.com/text/core/form/editors/textEditor#phonePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "+7 (999) 999-99-99"; l10n:originalData "+7 (999) 999-99-99"].
+
+<http://comindware.com/text/core/form/editors/textEditor#phoneRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "(\\+7 \\([0-9]{3}\\) [0-9]{3}-[0-9]{2}-[0-9]{2})"; l10n:originalData "(\\+7 \\([0-9]{3}\\) [0-9]{3}-[0-9]{2}-[0-9]{2})"].
 
 <http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите текст"; l10n:originalData "Enter text here"].
 

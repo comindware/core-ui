@@ -45,6 +45,11 @@ export default {
                     description: 'Form using form behaviour'
                 },
                 {
+                    id: 'TextMasks',
+                    displayName: 'Text masks',
+                    description: 'Text masks'
+                },
+                {
                     id: 'TabLayout',
                     displayName: 'Tab Layout',
                     description: 'Tab Layout'
