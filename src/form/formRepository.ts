@@ -10,7 +10,7 @@ import LoginValidator from './validators/loginValidator';
 import Http from './validators/httpValidator';
 import Https from './validators/httpsValidator';
 import Telegram from './validators/tgValidator';
-import MailTo from  './validators/mailtoValidator';
+import MailTo from './validators/mailtoValidator';
 import Ftp from './validators/ftpValidator';
 import Git from './validators/gitValidator';
 import Ssh from './validators/sshValidator';

@@ -1,4 +1,3 @@
-// import { maskInput, emailMask } from 'lib';
 import BaseEditorView from './base/BaseEditorView';
 import template from './templates/uriEditor.hbs';
 import formRepository from '../formRepository';
