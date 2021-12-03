@@ -100,7 +100,7 @@ export default Marionette.View.extend({
         } else {
             const selectedTab = this.__getSelectedTab();
             if (this.getOption('deferRender') && !this.isAllHiddenTab()) {
-                this.renderTab(selectedTab, false);
+                this.renderTab(selectedTab, true);
             } else {
                 this.__tabsCollection.forEach(model => {
                     this.renderTab(model, false);
