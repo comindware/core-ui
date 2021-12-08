@@ -143,7 +143,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Collection',
+                        type: 'Instance',
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -151,6 +151,7 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
+                        isMultiValue: true,
                         id: 'op.2'
                     },
                     {
@@ -223,7 +224,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Collection',
+                        type: 'Instance',
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -231,6 +232,7 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
+                        isMultiValue: true,
                         id: 'op.14'
                     },
                     {

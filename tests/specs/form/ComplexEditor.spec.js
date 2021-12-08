@@ -42,7 +42,7 @@ const context = {
         },
         {
             instanceTypeId: 'oa.1',
-            type: 'Collection',
+            type: 'Instance',
             format: 'Undefined',
             name: 'coll',
             displayAttribute: false,
@@ -50,7 +50,8 @@ const context = {
             calculated: false,
             isSystem: false,
             isDisabled: false,
-            id: 'op.2'
+            id: 'op.2',
+            isMultiValue: true
         },
         {
             instanceTypeId: 'oa.1',
@@ -122,7 +123,7 @@ const context = {
         },
         {
             instanceTypeId: 'oa.1',
-            type: 'Collection',
+            type: 'Instance',
             format: 'Undefined',
             name: 'coll',
             displayAttribute: false,
@@ -130,7 +131,8 @@ const context = {
             calculated: false,
             isSystem: false,
             isDisabled: false,
-            id: 'op.14'
+            id: 'op.14',
+            isMultiValue: true
         },
         {
             type: 'String',
