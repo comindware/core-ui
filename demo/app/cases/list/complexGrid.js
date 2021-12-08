@@ -296,8 +296,7 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.2',
-                        isMultiValue: true
+                        id: 'op.2'
                     },
                     {
                         instanceTypeId: 'oa.1',
@@ -377,8 +376,7 @@ export default function() {
                         calculated: false,
                         isSystem: false,
                         isDisabled: false,
-                        id: 'op.14',
-                        isMultiValue: true
+                        id: 'op.14'
                     },
                     {
                         type: 'String',
