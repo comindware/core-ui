@@ -54,7 +54,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Collection',
+                        type: 'Instance',
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -134,7 +134,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Collection',
+                        type: 'Instance',
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,

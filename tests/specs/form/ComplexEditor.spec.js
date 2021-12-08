@@ -42,7 +42,7 @@ const context = {
         },
         {
             instanceTypeId: 'oa.1',
-            type: 'Collection',
+            type: 'Instance',
             format: 'Undefined',
             name: 'coll',
             displayAttribute: false,
@@ -122,7 +122,7 @@ const context = {
         },
         {
             instanceTypeId: 'oa.1',
-            type: 'Collection',
+            type: 'Instance',
             format: 'Undefined',
             name: 'coll',
             displayAttribute: false,
