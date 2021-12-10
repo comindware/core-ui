@@ -57,6 +57,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
 
         this.format = options.format;
         this.isMaskFormat = Object.values(serverMaskTypes).includes(options.format);
+        this.validationMaskRegex = options.validationMaskRegex;
         if (this.isMaskFormat) {
             this.__setMaskByFormat();
         }
@@ -105,7 +106,7 @@ export default formRepository.editors.Text = BaseEditorView.extend({
                     break;
                 default:
                     Inputmask({
-                        regex: this.options.validationMaskRegex
+                        regex: this.validationMaskRegex
                     }).mask(this.ui.input[0]);
                     break;
             }
@@ -198,30 +199,24 @@ export default formRepository.editors.Text = BaseEditorView.extend({
     },
 
     __setMaskByFormat() {
-        const validator = {
-            message: '',
-            regexp: '',
-            type: 'regexp'
-        };
-
         switch (this.format) {
             case serverMaskTypes.TEL:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PHONEREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PHONEREGEXP');
                 break;
             case serverMaskTypes.PASSPORT:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PASSPORTREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PASSPORTREGEXP');
                 break;
             case serverMaskTypes.INDEX:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INDEXREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INDEXREGEXP');
                 break;
             case serverMaskTypes.INN:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INNREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INNREGEXP');
                 break;
             case serverMaskTypes.OGRN:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.OGRNREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.OGRNREGEXP');
                 break;
             case serverMaskTypes.LICENSE_PLATE_NUMBER_RU:
-                this.options.validationMaskRegex = Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.LICENSEPLATEREGEXP');
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.LICENSEPLATEREGEXP');
                 break;
             default:
                 break;
