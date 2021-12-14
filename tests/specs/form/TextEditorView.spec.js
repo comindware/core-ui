@@ -438,7 +438,7 @@ describe('Editors', () => {
             expect(view.$('.js-clear-button').length).toEqual(0);
         });
 
-        xit('should set email placeholder, mask and validator if same format was passed', () => {
+        it('should set email placeholder and mask', () => {
             const model = new Backbone.Model({
                 data: 'some invalid @ ema.il  . comm'
             });
@@ -447,7 +447,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown',
                 autocommit: true,
-                format: 'email'
+                format: 'EmailMask'
             });
 
             window.app
@@ -456,19 +456,11 @@ describe('Editors', () => {
                 .show(view);
 
             const input = view.ui.input;
-            expect(input.prop('placeholder')).toEqual('Enter email');
-            expect(input.val()).toEqual('someinvalid@email.comm');
-            model.set('data', 'invalid');
-            expect(view.validate()).toEqual([{
-                type: 'email',
-                message: 'Invalid email address'
-            }]);
-
-            model.set('data', 'valid@email.com');
-            expect(view.validate()).toBeUndefined();
+            expect(input.prop('placeholder')).toEqual('Enter text here');
+            expect(input.val()).toEqual('someinvalid@ema.il.comm');
         });
 
-        xit('should set tel placeholder, mask and validator if same format was passed', () => {
+        it('should set phone placeholder and mask', () => {
             const model = new Backbone.Model({
                 data: '123456789'
             });
@@ -477,7 +469,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown',
                 autocommit: true,
-                format: 'tel'
+                format: 'PhoneRuMask'
             });
 
             window.app
@@ -486,15 +478,30 @@ describe('Editors', () => {
                 .show(view);
 
             const input = view.ui.input;
-            expect(input.prop('placeholder')).toBe('5 (555) 555-55-55');
-            expect(input.val()).toBe('1 (234) 567-89-__');
-            model.set('data', 'invalid');
-            expect(view.validate()).toEqual([{
-                type: 'phone',
-                message: 'Invalid phone number'
-            }]);
-            model.set('data', '5 (555) 555-55-55');
-            expect(view.validate()).toBeUndefined();
+            expect(input.prop('placeholder')).toBe('Enter text here');
+            expect(input.val()).toBe('+7 (123) 456-78-9_');
+        });
+
+        it('should set passport placeholder and mask', () => {
+            const model = new Backbone.Model({
+                data: '1234567890'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                format: 'PassportRuMask'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            const input = view.ui.input;
+            expect(input.prop('placeholder')).toBe('Enter text here');
+            expect(input.val()).toBe('1234 567890');
         });
     });
 });
