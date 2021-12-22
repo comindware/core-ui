@@ -24,7 +24,7 @@ const defaultOptions = {
     allowFloat: defaultAllowFroat,
     requireDecimal: false,
     allowNegative: true,
-    allowLeadingZeroes: false,
+    allowLeadingZeroes: true,
     intlOptions: {
         style: 'decimal',
         useGrouping: true,
