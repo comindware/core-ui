@@ -18,7 +18,8 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             isMobile: this.options.mode === 'Mobile',
-            showName: (this.options.showName || !this.model.get('iconClass')) && this.model.get('name')
+            showName: this.options.isPopup || ((this.options.showName || !this.model.get('iconClass')) && this.model.get('name')),
+            displayName: this.options.isPopup ? this.model.get('name') ?? this.model.get('description') : this.model.get('name')
         };
     },
 
@@ -44,8 +45,8 @@ export default Marionette.View.extend({
             enabled = enabled();
         }
 
-        const name = this.model.get('name');
+        const useName = this.model.get('name') || this.options.isPopup;
 
-        return `${severityItem.class} ${this.model.get('class') || ''} ${name ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED} ${clearClass}`;
+        return `${severityItem.class} ${this.model.get('class') || ''} ${useName ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED} ${clearClass}`;
     }
 });

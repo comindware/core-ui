@@ -9,6 +9,7 @@ import RowView from './RowView';
 import GridHeaderView from './header/GridHeaderView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
+import ActionMenuView from '../../components/toolbar/views/ActionMenuView';
 import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
@@ -25,6 +26,10 @@ import GlobalEventService from '../../services/GlobalEventService';
 import { GraphModel } from '../../components/treeEditor/types';
 import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
 import { Column } from '../types/types';
+import Backbone from "backbone";
+import { GridItemBehavior } from "../behaviors/GridItemBehavior";
+import VirtualCollection from "../../collections/VirtualCollection";
+import CheckableBehavior from "../../models/behaviors/CheckableBehavior";
 
 /*
     Public interface:
@@ -52,6 +57,7 @@ const defaultOptions = options => ({
     updateToolbarEvents: '',
     childHeight: 29,
     showTreeEditor: false,
+    showContextMenu: true,
     treeEditorIsHidden: false,
     treeEditorConfig: new Map(),
     headerHeight: 30
@@ -145,6 +151,10 @@ export default Marionette.View.extend({
             this.listenTo(this.collection, 'keydown:default', this.__onKeydown);
             this.listenTo(this.collection, 'keydown:escape', e => this.__triggerSelectedModel('selected:exit', e));
             this.listenTo(this.collection, 'change', this.__validateModel);
+        }
+
+        if (this.options.showContextMenu) {
+            this.listenTo(this.collection, 'contextmenu', this.__onContextMenu);
         }
 
         this.__initializeToolbar();
@@ -436,7 +446,8 @@ export default Marionette.View.extend({
             isTree: this.options.isTree,
             showCheckbox: this.options.showCheckbox,
             draggable: this.options.draggable,
-            showRowIndex
+            showRowIndex,
+            showContextMenu: this.options.showContextMenu
         });
 
         this.listView = new CollectionView({
@@ -592,7 +603,7 @@ export default Marionette.View.extend({
             return errors;
         }
         this.clearError();
-        
+
 	return null;
     },
 
@@ -1127,5 +1138,25 @@ export default Marionette.View.extend({
 
     __toggleTableWidth() {
         this.ui.table.get(0).classList.toggle(classes.tableWidthAuto, this.headerView.isEveryColumnSetPxWidth);
+    },
+
+    __onContextMenu(model: Backbone.Model & GridItemBehavior, event: MouseEvent) {
+        if (this.menu) {
+            this.menu.destroy();
+        }
+        this.collection.uncheckAll();
+        model.check();
+        const collection = this.toolbarView.getCustomItems();
+        this.menu = new ActionMenuView({
+            model: new Backbone.Model({ items: collection }),
+            showName: true,
+            adjustmentPosition: {
+                x: event.pageX,
+                y: event.pageY
+            }
+        });
+        this.listenTo(this.menu, 'action:click', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
+        this.menu.open();
+        event.preventDefault();
     }
 });

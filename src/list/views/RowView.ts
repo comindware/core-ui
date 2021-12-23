@@ -55,7 +55,6 @@ export default Marionette.View.extend({
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
-        pointerup: '__handlePointerDown',
         contextmenu: '__handleContextMenu',
         touchend: '__handleTouchEnd',
         touchmove: '__handleTouchMove',
@@ -289,7 +288,15 @@ export default Marionette.View.extend({
     },
 
     __handleContextMenu(event: MouseEvent) {
-        this.model.trigger('contextmenu', event);
+        if (this.__isNeedToShowMenu(event)) {
+            this.model.trigger('contextmenu', this.model, event);
+        }
+    },
+
+    __isNeedToShowMenu(e: MouseEvent) {
+        const target = <Element>e.target;
+        const selection = document.getSelection();
+        return e.button === 0 || e.ctrlKey || !((selection?.toString().length && selection.focusNode?.contains(target)) || target.tagName === 'A');
     },
 
     __handleHighlight(fragment: string) {

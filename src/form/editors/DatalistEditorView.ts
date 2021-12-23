@@ -648,14 +648,24 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __filterPanelCollection(searchText) {
-        const filter = attributes => {
-            const displayText = this.__getDisplayText(attributes);
+        const filter = model => {
+            const displayText = this.__getDisplayText(model);
             if (!displayText) {
                 return false;
             }
-            return String(displayText)
+            const result = String(displayText)
                 .toUpperCase()
                 .includes(searchText);
+            if (result) {
+                return true;
+            }
+            if (this.options.subtextProperty) {
+                const subtext = model.get(this.options.subtextProperty);
+                return String(subtext)
+                  .toUpperCase()
+                  .includes(searchText);
+            }
+            return false;
         };
 
         this.panelCollection.filter(filter);

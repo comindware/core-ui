@@ -143,7 +143,7 @@
     color: var(--theme-colors__severity-none-txt);
 }
 
-.toolbar-btn_none:active, 
+.toolbar-btn_none:active,
 .split-btn_default:active {
     background-color: var(--theme-colors__severity-none_fade);
     border: 1px solid var(--theme-colors__severity-none_fade);
@@ -412,6 +412,16 @@
 
 .toolbar-panel_container .toolbar-btn .toolbar__icons:not(.toolbar__icons_arrow){
     margin: 0 5px 0 -5px;
+}
+
+.popout__action.open .anchor,
+.popout__action.open .toolbar__icons_arrow {
+    transform: rotate(180deg);
+}
+
+.toolbar-panel_container .toolbar__icons_arrow,
+.toolbar-panel_container .popout__action.open .toolbar__icons_arrow {
+    transform: rotate(-90deg);
 }
 
 .toolbar-panel_container .toolbar-btn .toolbar__icons + .toolbar-btn__text {

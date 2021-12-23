@@ -15,16 +15,20 @@ export default class ActionMenuView {
                 class: options.model.get('dropdownClass'),
                 mode: options.mode,
                 showName: options.showName,
+                isPopup: true,
                 className() {
                     return `toolbar-panel_container ${this.options.class || ''}`;
                 }
             },
+            panelPosition: options.isPopup ? 'right' : 'down',
+            popoutFlow: 'right',
             buttonViewOptions: {
                 model: options.model,
                 mode: options.mode,
                 showName: options.showName,
                 customAnchor: options.customAnchor
-            }
+            },
+            adjustmentPosition: options.adjustmentPosition
         });
 
         menu.listenTo(menu, 'panel:command:execute', this.__onPanelCommandExecute);

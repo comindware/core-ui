@@ -14,7 +14,8 @@ export default Marionette.CollectionView.extend({
         return {
             reqres: this.getOption('reqres'),
             mode: this.options.mode,
-            showName: this.options.showName
+            showName: this.options.showName,
+            isPopup: this.options.isPopup
         };
     },
 

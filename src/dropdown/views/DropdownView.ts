@@ -47,7 +47,11 @@ type optionsType = {
     customAnchor?: boolean,
     fadeBackground?: boolean,
     panelOffsets?: object
-    alwaysAlignByButton?: boolean
+    alwaysAlignByButton?: boolean,
+    adjustmentPosition?: {
+        x: number,
+        y: number
+    }
 };
 
 const defaultOptions: optionsType = {
@@ -92,7 +96,7 @@ const defaultOptions: optionsType = {
  * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
- * @constructor 
+ * @constructor
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -192,7 +196,7 @@ export default class DropdownView {
         const dropDownRoot = this.button.$el.closest('.js-dropdown__root')[0];
         const isDropDownRootPositionUp = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_up');
         const isDropDownRootPositionDown = dropDownRoot && dropDownRoot.classList.contains('dropdown__wrp_down');
-        const buttonRect = (dropDownRoot || this.button.el).getBoundingClientRect();
+        const buttonRect = this.__getAdjustmentRect(dropDownRoot || this.button.el);
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
         if (this.options.alwaysAlignByButton) {
@@ -318,13 +322,13 @@ export default class DropdownView {
         switch (position) {
             case panelPosition.UP:
                 this.panelEl.style.removeProperty('top');
-                panelBottom = viewportHeight - buttonRect.bottom + buttonRect.height + this.options.panelOffsets.up;
+                panelBottom = viewportHeight - buttonRect.top + this.options.panelOffsets.up;
                 this.panelEl.style.bottom = `${panelBottom}px`;
                 maxHeight = viewportHeight - panelBottom - indent;
                 break;
             case panelPosition.DOWN:
                 this.panelEl.style.removeProperty('bottom');
-                top = buttonRect.top + buttonRect.height + this.options.panelOffsets.down; 
+                top = buttonRect.top + buttonRect.height + this.options.panelOffsets.down;
                 this.panelEl.style.top = `${top}px`;
                 maxHeight = viewportHeight - top - indent;
                 break;
@@ -582,5 +586,25 @@ export default class DropdownView {
                 top: Math.floor(top)
             };
         }
+    }
+
+    __getAdjustmentRect(adjustmentElement: Element): DOMRect {
+        if (this.options.adjustmentPosition) {
+            const { x, y } = this.options.adjustmentPosition;
+            return {
+                x,
+                y,
+                top: y,
+                left: x,
+                bottom: y,
+                right: x,
+                width: 0,
+                height: 0,
+                toJSON(): any {
+                    return this;
+                }
+            }
+        }
+        return adjustmentElement.getBoundingClientRect();
     }
 }

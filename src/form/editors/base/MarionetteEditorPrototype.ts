@@ -99,7 +99,7 @@ const defaultOptions = {
     enabled: true,
     readonly: false,
     hidden: false,
-    forceCommit: false,
+    forceCommit: true,
     validators: undefined,
     getFocusElementReadonly: (readonly: boolean) => readonly,
     getFocusElementTabindex: (readonly: boolean) => (readonly ? -1 : 0)
@@ -311,8 +311,6 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 this.__updateEmpty();
                 if (!this.validators) {
                     this.validators = [requiredValidatorName];
-                } else if (!this.validators.includes(requiredValidatorName)) {
-                    this.validators.push(requiredValidatorName);
                 }
             } else {
                 this.__toggleRequiredClass(false);
@@ -497,7 +495,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
          */
         commit(options: Object = {}) {
             let error = this.validate({ internal: true });
-            if (error && this.options.forceCommit !== false) {
+            if (error && this.options.forceCommit === false) {
                 return error;
             }
 
@@ -511,7 +509,7 @@ export default function(viewClass: Marionette.View | Marionette.CollectionView) 
                 isEditorSetValue: true
             });
 
-            if (error && this.options.forceCommit !== false) {
+            if (error && this.options.forceCommit === false) {
                 return error;
             }
             this.trigger(`${this.key}:committed`, this, this.model, this.getValue());

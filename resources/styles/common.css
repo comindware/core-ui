@@ -921,8 +921,8 @@ body.non-selectable {
     width: 100%;
     height: auto;
     flex: 1 1 auto;
-    justify-content: space-between;
     align-items: stretch;
+    min-width: 0;
 }
 
 .toolbar-container .tr-search__input {
@@ -1005,7 +1005,6 @@ body.non-selectable {
 }
 
 .toolbar-menu-actions {
-    margin-right: auto;
     display: flex;
     align-items: center;
 }
