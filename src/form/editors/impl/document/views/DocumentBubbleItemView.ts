@@ -4,7 +4,8 @@ import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
 import ExtensionIconService from '../services/ExtensionIconService';
-import meta from '../meta';
+import meta, { documentRevisionStatuses } from "../meta";
+import LocalizationService from 'services/LocalizationService';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -25,15 +26,32 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        const { text, name, isLoading, extension } = this.model.toJSON();
+        const { text, name, isLoading, extension, status } = this.model.toJSON();
+        let statusTitle = '';
+        if (this.model.get('status') === documentRevisionStatuses.REJECTED) {
+            statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.REJECTED');
+        }
+        if (this.model.get('status') === documentRevisionStatuses.PROCESSING) {
+            statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.PROCESSING');
+        }
         return {
             text: text || name,
-            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
-            isInline: this.options.isInline
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name, status }),
+            isInline: this.options.isInline,
+            statusTitle
         };
     },
 
-    className: 'document-list',
+    className() {
+        let className = 'document-list';
+        if (this.model.get('status') === documentRevisionStatuses.REJECTED) {
+            className += ' document_rejected';
+        }
+        if (this.model.get('status') === documentRevisionStatuses.PROCESSING) {
+            className += ' document_processing';
+        }
+        return className;
+    },
 
     ui: {
         remove: '.js-delete-button',
@@ -146,6 +164,9 @@ export default Marionette.View.extend({
     },
 
     __addDownloadButton() {
+        if (!this.model.get('url')) {
+            return;
+        }
         this.ui.downloadButton.show();
     },
 

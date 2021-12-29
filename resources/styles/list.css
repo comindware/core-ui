@@ -903,6 +903,21 @@ tr:hover > .cell,
     color: var(--theme-colors__highlight-txt);
 }
 
+.bubble-doc__wrp {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+}
+
+.bubble-doc_icon {
+    margin-right: 10px;
+}
+
+.bubble-doc_text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* temporary disabled */
 /*--- Fix colletion scroll header ---*/
 /* .dev-collection .grid-table-wrapper-war {

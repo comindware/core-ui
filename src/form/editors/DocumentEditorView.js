@@ -341,7 +341,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this.addItems(resultObjects);
 
         const config = {
-            url: this.uploadUrl,
+            url: this.getOption('uploadUrl'),
             data: form,
             processData: false,
             type: 'POST',

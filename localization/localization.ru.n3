@@ -156,6 +156,10 @@
 
 <http://comindware.com/text/core/form/editors/document/gallery#zoomout> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Уменьшить"; l10n:originalData "Zoom out"].
 
+<http://comindware.com/text/core/form/editors/document/statuses#proceccing> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Идет проверка"; l10n:originalData "Checking"].
+
+<http://comindware.com/text/core/form/editors/document/statuses#rejected> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Проверка не пройдена"; l10n:originalData "Check failed"].
+
 <http://comindware.com/text/core/form/editors/dropdown#notset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notset"].
 
 <http://comindware.com/text/core/form/editors/dropdown#search> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].

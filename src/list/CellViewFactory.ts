@@ -14,7 +14,8 @@ import Marionette from 'backbone.marionette';
 import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
 import { classes } from './meta';
-
+import { documentRevisionStatuses } from '../form/editors/impl/document/meta';
+import LocalizationService from 'services/LocalizationService';
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeReferenceCell = Handlebars.compile(compositeReferenceCell);
 const compiledCompositeUserCell = Handlebars.compile(compositeUserCell);
@@ -291,12 +292,18 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getFormattedDocumentValue({ value }: ValueFormatOption) {
-        const { name, text, isLoading, extension } = value;
-        value.icon = ExtensionIconService.getIconForDocument({ isLoading, extension });
-        value.name = name || text;
+        const { name, text, isLoading, extension, status } = value;
+        if (status === documentRevisionStatuses.REJECTED) {
+            value.statusClass = 'document_rejected';
+            value.statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.REJECTED');
+        }
+        if (status === documentRevisionStatuses.PROCESSING) {
+            value.statusClass = 'document_processing';
+            value.statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.PROCECCING');
+        }
         return {
-            icon: ExtensionIconService.getIconForDocument({ isLoading, extension }),
-            name: value.text,
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, status }),
+            name: name || text,
             ...value
         };
     }
