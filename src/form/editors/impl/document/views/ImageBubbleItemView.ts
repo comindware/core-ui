@@ -45,13 +45,15 @@ export default Marionette.View.extend({
         const { text, name, creator, creationDate } = this.model.toJSON();
         return {
             text: text || name,
-            showAsPicture: this.displayFormat === 'ShowAsPicture',
+            showAsPicture: this.__showAsPicture(),
             creator,
             creationDate
         };
     },
 
-    className: 'image-list',
+    className() {
+        return `image-list ${this.__showAsPicture() ? 'picture' : ''}`;
+    },
 
     ui: {
         remove: '.js-delete-button',
@@ -130,5 +132,9 @@ export default Marionette.View.extend({
             window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
             linkDownloadEvent.preventDefault();
         }
+    },
+
+    __showAsPicture() {
+        return this.options.displayFormat === 'ShowAsPicture';
     }
 });

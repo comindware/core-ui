@@ -1,14 +1,17 @@
 <div class="image-buttons__list">
     <div class="js-revise-button-region img__revision"></div>
-    <div class="js-btn-tooltip-region img__tooltip {{#if showAsPicture}}picture{{/if}}"></div>
     <a class="image-buttons__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">
         <div class="img_wrp">
-
+            <div class="js-btn-tooltip-region img__tooltip {{#if showAsPicture}}picture{{/if}}"></div>
             <div class="img_container {{#if showAsPicture}}picture{{/if}} {{#if isLoading}} i_container {{/if}}">
                 {{#if isLoading}}
                     <i class="buttons__i {{iconPrefixer 'spinner pulse'}}"></i>
                 {{else}}
-                    <img class="img__item {{#if showAsPicture}}picture{{/if}}" src="{{url}}" alt=""/>
+                    {{#if showAsPicture}}
+                        <img class="img__item picture" src="{{url}}" alt=""/>
+                    {{else}}
+                        <div class="img__item" style="background-image: url({{url}})" alt=""></div>
+                    {{/if}}
                 {{/if}}
             </div>
             <div class="img_hover-container {{#if showAsPicture}}picture{{/if}}">
