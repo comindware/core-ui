@@ -69,10 +69,14 @@ a.image-buttons__link:hover {
 
 .image-list {
     display: flex;
-    flex-flow: column nowrap;
     position: relative;
     overflow: hidden;
     margin: 4px 5px;
+}
+
+.image-list.picture {
+    justify-content: center;
+    width: 100%;
 }
 
 .img_wrp {
@@ -99,15 +103,16 @@ a.image-buttons__link:hover {
     max-height: 110px;
     min-height: 110px;
     width: 165px;
+    border: 1px solid var(--editors-color-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--black);
 }
 
 .img_container.picture {
     max-height: none;
     width: 100%;
+    background-color: var(--black);
 }
 
 .img_container .buttons__i {
@@ -123,8 +128,8 @@ a.image-buttons__link:hover {
     display: inline-flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 110px;
-    width: 170px;
+    height: 100%;
+    width: 100%;
     top: 0;
     padding-bottom: 3px;
     background-image: linear-gradient(to top, var(--black), transparent);
@@ -147,12 +152,14 @@ a.image-buttons__link:hover {
     visibility: visible;
 }
 
-.img__item {
-    width: 180px;
-}
-
 .img__item.picture {
     width: 100%;
+}
+
+div.img__item:not(.picture) {
+    width: 165px;
+    height: 110px;
+    background: center/contain no-repeat;
 }
 
 .img__tooltip {
