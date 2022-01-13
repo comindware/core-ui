@@ -328,7 +328,6 @@ input::placeholder {
 }
 
 .form-label_required {
-    padding-left: 10px;
     position: relative;
 }
 
