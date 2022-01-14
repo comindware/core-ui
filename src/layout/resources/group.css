@@ -100,12 +100,16 @@
     height: 25px;
     font-weight: 300;
     opacity: 1;
-    cursor: pointer;
     font-size: 1.2em;
 }
-.group-menu i{
+
+.group-menu:not(:empty) {
+    cursor: pointer;
+}
+
+.group-menu i {
     font-weight: 300;
-    padding: 0 10px
+    padding: 0 10px;
 }
 
 .layout-group__head_maximized {
@@ -115,6 +119,7 @@
 .layout-group__head_maximized > .group-toggle {
     display: none;
 }
+
 .layout-group__head_maximized > .group-menu {
     visibility: hidden;
 }
