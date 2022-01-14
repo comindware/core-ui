@@ -54,6 +54,7 @@ ul .layout__tab-layout__header-view-item:last-child {
 
 .layout__tab-layout__header-view-item {
     display: inline-block;
+    max-width: 200px;
     text-align: center;
     cursor: pointer;
     white-space: nowrap;
