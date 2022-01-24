@@ -6,6 +6,7 @@ const pathResolver = require('../pathResolver');
 module.exports = callback => {
     if (!process.env.PREVIOUTS_PACKAGE_VERSION || !process.env.PACKAGE_VERSION) {
         callback();
+        return;
     }
     exec(`git log --pretty=format:"%s" ${process.env.PREVIOUTS_PACKAGE_VERSION}...${process.env.PACKAGE_VERSION}`, (err, stdout, stderr) => {
         if (err) {

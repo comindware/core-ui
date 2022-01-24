@@ -35,6 +35,10 @@ const copyDoc = resolver => {
 };
 
 module.exports = callback => {
+    if (!process.env.PACKAGE_VERSION) {
+        callback();
+        return;
+    }
     const token = process.env.GH_TOKEN;
     const ref = process.env.GH_REF;
 

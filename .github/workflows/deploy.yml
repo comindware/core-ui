@@ -18,9 +18,14 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Install
+        run: |
+          chmod +x ./build/npm-install.sh
+          ./build/npm-install.sh
+        shell: bash
+
       - name: Deploy
         run: |
-          npm install
           npm run deploy
           npm run deploy:pages
           node ./node_modules/coveralls/bin/coveralls.js < ./reports/lcov.info
