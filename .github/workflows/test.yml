@@ -26,9 +26,4 @@ jobs:
         run: npm install
 
       - name: Test
-        run: npm run test:coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "./reports/lcov.info"
+        run: npm run test
