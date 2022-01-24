@@ -19,6 +19,7 @@ module.exports = callback => {
         const matchResult = stdout.split('\n').filter(i => i);
         if (!matchResult || !matchResult.length) {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
+            callback();
             return;
         }
         const version = matchResult[matchResult.length - 1];
