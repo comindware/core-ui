@@ -94,7 +94,7 @@ gulp.task('build', gulp.series('build:core:prod', 'localization', 'generateSprit
 
 gulp.task('build:min', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes'));
 
-gulp.task('deploy', gulp.series('build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage:internal', 'prepareToPublish', 'generateChangeLogTask'));
+gulp.task('deploy', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage:internal', 'prepareToPublish', 'generateChangeLogTask'));
 
 gulp.task('test:coverage', gulp.series('build:core:prod', 'localization', 'generateSprites', 'generateThemes', 'test:coverage:internal'));
 
