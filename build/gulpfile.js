@@ -57,21 +57,12 @@ gulp.task('test:watch', done => {
     ).start();
 });
 
-gulp.task('test:coverage', done => {
+gulp.task('test:coverage:internal', done => {
     new karma.Server(
         {
             configFile: pathResolver.root('karma.conf.js'),
             singleRun: true,
             coverage: true
-        },
-        done
-    ).start();
-});
-
-gulp.task('test:watch', done => {
-    new karma.Server(
-        {
-            configFile: pathResolver.root('karma.conf.js')
         },
         done
     ).start();
@@ -103,6 +94,8 @@ gulp.task('build', gulp.series('build:core:prod', 'localization', 'generateSprit
 
 gulp.task('build:min', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes'));
 
-gulp.task('deploy', gulp.series('build:core:prod', 'build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', 'generateChangeLogTask'));
+gulp.task('deploy', gulp.series('build:core:deploy', 'localization', 'generateSprites', 'generateThemes', 'test:coverage:internal', 'prepareToPublish', 'generateChangeLogTask'));
+
+gulp.task('test:coverage', gulp.series('build:core:prod', 'localization', 'generateSprites', 'generateThemes', 'test:coverage:internal'));
 
 gulp.task('default', gulp.series('start'));

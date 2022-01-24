@@ -26,7 +26,8 @@
         "build:min": "cross-env NODE_ENV=development DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js build:min",
         "deploy": "cross-env BUILD_ENV=deploy NODE_ENV=production DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js deploy",
         "deploy:pages": "cross-env NODE_ENV=production DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js deploy:pages",
-        "test": "cross-env NODE_ENV=test DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js test:coverage",
+        "test": "cross-env NODE_ENV=test DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js test",
+        "test:coverage": "cross-env NODE_ENV=test DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js test:coverage",
         "test:watch": "cross-env NODE_ENV=test DEBUG=false node_modules/gulp/bin/gulp.js --gulpfile build/gulpfile.js test:watch"
     },
     "repository": {
