@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ 2.1/release ]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
