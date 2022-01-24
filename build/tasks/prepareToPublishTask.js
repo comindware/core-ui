@@ -16,7 +16,7 @@ module.exports = callback => {
             console.log(stderr);
         }
 
-        const matchResult = stdout.split('\n').filter(i => i);
+        const matchResult = stdout.split(/\r\n|\n/).filter(i => i);
         if (!matchResult || !matchResult.length) {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
             callback();
