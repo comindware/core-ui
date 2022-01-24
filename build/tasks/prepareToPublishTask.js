@@ -23,11 +23,12 @@ module.exports = callback => {
             return;
         }
         const version = matchResult[matchResult.length - 1];
+        const previousVersion = matchResult[matchResult.length - 2];
 
         process.env.PACKAGE_VERSION = version;
-        process.env.PREVIOUS_PACKAGE_VERSION = matchResult[matchResult.length - 2];
+        process.env.PREVIOUTS_PACKAGE_VERSION = previousVersion;
 
-        console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json with version ${version}...`);
+        console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json version from ${previousVersion} to ${version}...`);
         const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
         packageJson.version = version;
         fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
