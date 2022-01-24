@@ -5,6 +5,8 @@ on:
     branches: [ 2.1/release ]
   pull_request:
     branches: [ 2.1/release ]
+  release:
+    types: [ published ]
 
 concurrency:
   group: ${{ github.ref }}
