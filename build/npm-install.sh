@@ -1,4 +1,4 @@
 #!/bin/bash
-npm install;
+npm ci;
 cd demo;
-npm install;
+npm ci;
