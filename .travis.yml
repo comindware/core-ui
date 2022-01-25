@@ -11,7 +11,7 @@ sudo: required
 deploy:
   - provider: npm
     skip_cleanup: true
-    email: comindware-awesome-bot@comindware.com
+    email: comindware-awesome-b@comindware.com
     api_key:
       secure: ob/yPO1A90kV7gAMmlDiPpYZLy5zN/khhCN/MiI17XnichG+iARQ7J8rfUP/49+/NnchOOTaVOBSdX32KChyeC5ywNUHUgVLLDBoXmYLfgV5Q9M4gG6C2xbQ3s3TNdoWQcgxgLau8RXNWwjmVZmbfzoHLYu3X1xmrdpxl1aae0ntmAEQye1RY9TlJqDTipkGpkaWG0NfZdc0dXjo0NfruazymdiVGAGIzmsIhKInRzP5Zd3sarKzgQcVaRmxnU0mn4C20jBk3zEZVdAMSLSWfYxBndO6pde8Xc9dkEzQQ0l4FHCIJ7d/iO7j5hYgNp0kTfzg4r257x4WvwUcsgZ3n+fmxzfk4Zc0anvGMHsH2Riol7rMcncLRuCJ33ZkCZmg1/33x5UMcBmJrXYgv/KqfNvsu9mhWNKpNNv5jY/Rt/085R2q1cqUgzIyjP+TRVJPW55SFF7fKYUbBqTzX58+R0K7qx+wqFEtJvQBvUrq1LfnVXvQ5RP7eSYcilPnt0gXMibLkOz5F/W0UzyK6pv9v43r7W79fCNHh/z6gJb/iIEw287o/fa1kaKsGvPuA0W2mPbmMGpIwb1U4R0snlYUkSa+zCDMNc4qVtAud9BEGhc9fNsbJouK/wYeMA71M/5v3tZZokrDimVlMFdhWg5rU2DD81mYcCa+SeUqju5ey70=
     on:

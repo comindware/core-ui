@@ -22,6 +22,8 @@ module.exports = callback => {
             callback();
             return;
         }
+
+        console.log(matchResult);
         const version = matchResult[matchResult.length - 1];
         const previousVersion = matchResult[matchResult.length - 2];
 
