@@ -241,6 +241,15 @@ select {
 /* End Form Editor */
 
 /* input */
+.tr-search_compact {
+    display: flex;
+    border: none;
+    position: relative;
+    align-items: center;
+    min-height: 26px;
+    padding-left: 10px;
+}
+
 .input {
     padding: var(--input-padding);
     height: var(--input-height);
@@ -252,10 +261,28 @@ select {
     background: var(--input-search-bg);
 }
 
-.tr-search_compact .tr-search__input,
-.tr-search_compact .tr-search__clear,
-.tr-search_compact.closed .tr-search__input,
-.tr-search_compact.closed .tr-search__clear {
+.tr-search_compact .tr-search__input {
+    width: 0;
+    padding: 0;
+}
+
+.tr-search_compact .tr-search__clear {
+    width: 0;
+    right: 5px;
+}
+
+.tr-search_compact.open .tr-search__input {
+    width: auto;
+    padding: var(--input-search-padding);
+    border: 1px solid var(--editors-color-border);
+    border-radius: 4px;
+}
+
+.tr-search_compact.open .tr-search__clear {
+    width: auto;
+}
+
+.tr-search_compact.open .tr-search_compact-button {
     display: none;
 }
 
