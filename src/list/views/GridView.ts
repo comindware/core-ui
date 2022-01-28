@@ -44,6 +44,7 @@ import CheckableBehavior from "../../models/behaviors/CheckableBehavior";
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
+    searchBarOptions:{ isAutoHideable: true },
     columns: [],
     emptyView: EmptyGridView,
     emptyViewOptions: {
@@ -160,7 +161,7 @@ export default Marionette.View.extend({
         this.__initializeToolbar();
 
         if (this.options.showSearch) {
-            this.searchView = new SearchBarView();
+            this.searchView = new SearchBarView(this.options.searchBarOptions);
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
         if (this.options.showTreeEditor) {
