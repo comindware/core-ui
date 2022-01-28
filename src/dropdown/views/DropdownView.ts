@@ -206,8 +206,7 @@ export default class DropdownView {
                 this.panelEl.style.maxWidth = `${this.maxWidth}px`;
             }
 
-            const minWidth = Math.max(this.options.panelMinWidth, buttonRect.width);
-            this.panelEl.style.minWidth = `${minWidth}px`;
+            this.panelEl.style.minWidth = `${this.options.panelMinWidth}px`;
         }
 
 

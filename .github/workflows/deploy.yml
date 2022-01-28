@@ -25,15 +25,14 @@ jobs:
         shell: bash
 
       - name: Deploy
-        run: npm run deploy
+        run: |
+          npm run deploy
+          npm run deploy:pages
 
       - name: Publish
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Deploy pages
-        run: npm run deploy:pages
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
