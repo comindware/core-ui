@@ -379,7 +379,8 @@ tr.empty-view {
 }
 
 .grid-container .toolbar {
-    padding: 0 0 10px;
+    padding: 0;
+    margin-bottom: 10px;
     height: auto;
 }
 

@@ -94,6 +94,17 @@ rgba(5,117,189,.5) // user avatar btn
     margin-bottom: 0;
 }
 
+.form-label.form-label_toolbar {
+    font-size: var(--headers-font-size);
+    font-weight: var(--headers-font-weight);
+    color: var(--theme-colors__secondary-txt);
+    margin-right: 10px;
+}
+
+.form-label.form-label_toolbar .form-label__txt {
+    font-size: .9em;
+}
+
 .required .form-label__txt,
 .required .form-group .form-label__txt {
     padding-right: 10px;
