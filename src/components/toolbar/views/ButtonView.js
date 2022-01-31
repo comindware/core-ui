@@ -15,6 +15,10 @@ function unCapitalizeFirstLetter(string) {
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
+    triggers: {
+        mouseenter: 'mouseenter'
+    },
+
     templateContext() {
         return {
             isMobile: this.options.mode === 'Mobile',

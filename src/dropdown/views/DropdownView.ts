@@ -153,6 +153,7 @@ export default class DropdownView {
             this.button.on('change:content', () => this.__adjustPosition(true));
             this.button.on('toggle', () => this.toggle());
             buttonEl.addEventListener('click', this.__handleClick.bind(this));
+            buttonEl.addEventListener('mouseenter', this.__handleMousenter.bind(this));
             buttonEl.addEventListener('blur', this.__onBlur.bind(this));
             buttonEl.addEventListener('touchend', e => e.stopPropagation());
         });
@@ -443,6 +444,13 @@ export default class DropdownView {
             this.toggle();
         }
         this.button.trigger('click', ...args);
+    }
+
+    __handleMousenter(el: HTMLElement) {
+        if (!this.options.openOnMouseenter) {
+            return;
+        }
+        this.open();
     }
 
     __getTop () {
