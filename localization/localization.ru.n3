@@ -424,6 +424,8 @@
 
 <http://comindware.com/text/core/grid/actions#archive> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивировать"; l10n:originalData "Archive"].
 
+<http://comindware.com/text/core/grid/actions#create> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Создать"; l10n:originalData "Create"].
+
 <http://comindware.com/text/core/grid/actions#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
 
 <http://comindware.com/text/core/grid/actions#unArchive> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивировать"; l10n:originalData "Unarchive"].
