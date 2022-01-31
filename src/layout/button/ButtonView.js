@@ -18,7 +18,6 @@ const defaultOptions = {
 export default Marionette.View.extend({
     initialize(options) {
         this.options = _.defaults({}, options, defaultOptions);
-        console.log( this.getOption('isSolid') );
         helpers.ensureOption(options, 'text');
     },
 
