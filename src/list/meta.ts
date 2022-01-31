@@ -61,7 +61,7 @@ export const columnWidthByType = {
 export const getDefaultActions = () => [
     {
         id: 'add',
-        name: Localizer.get('CORE.GRID.ACTIONS.ADD'),
+        name: Localizer.get('CORE.GRID.ACTIONS.CREATE'),
         iconClass: 'plus'
     },
     {
