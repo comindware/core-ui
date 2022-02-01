@@ -13,6 +13,11 @@ const focusablePartId = {
     SECONDS: 'seconds'
 };
 
+const changeModes = {
+    keydown: 'keydown',
+    blur: 'blur'
+};
+
 const createFocusableParts = function(options) {
     const result = [];
     const settings = {};
@@ -77,6 +82,7 @@ const defaultOptions = () => ({
     showTitle: true,
     showEmptyParts: false,
     hideClearButton: false,
+    changeMode: changeModes.blur,
     fillZero: false,
     normalTime: false,
     class: '',
@@ -497,6 +503,9 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
         if (event.ctrlKey || this.readonly) {
             return;
         }
+        if (event.keyCode === keyCode.ENTER || this.options.changeMode === changeModes.keydown) {
+            this.__updateValueByInput();
+        }
         if (
             (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) ||
             (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) ||
@@ -526,9 +535,6 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
             if (this.atSegmentStart(position)) {
                 this.__setCaretToPreviousPart(index);
             }
-        }
-        if (event.keyCode === keyCode.ENTER) {
-            this.__updateValueByInput();
         }
     },
 
