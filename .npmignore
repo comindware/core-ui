@@ -4,3 +4,10 @@ node_modules/
 localization/.backup/
 demo/assets/
 reports/
+flow-typed/
+localization/
+resources/
+tests/
+demo/public/
+demo/node_modules/
+demo/assets/
