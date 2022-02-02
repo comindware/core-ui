@@ -152,8 +152,8 @@
     --grid-checkbox-size: 18px;
     --grid-checkbox-icon-size: 11px;
     --grid-header-font-size: var(--base-font-size);
-    --grid-header-color: var(--theme-colors__main);
-    --grid-header-bg: var(--theme-colors__primary);
+    --grid-header-color: var(--theme-colors__secondary-txt);
+    --grid-header-bg: var(--theme-colors__secondary);
     --grid-header-border-color: var(--theme-colors__main_fade);
     --grid-header-height: 30px;
     --grid-header-padding: 0 15px;

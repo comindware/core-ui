@@ -541,8 +541,8 @@ svg.svg-grid-icons {
 
 .grid-header-column {
     background-color: var(--grid-header-bg);
-    box-shadow: inset -1px 0 0 0 var(--theme-colors__primary-txt), inset 1px 1px 0 0 var(--theme-colors__primary);
-    color: var(--theme-colors__primary-txt);
+    box-shadow: inset -1px -1px 0 0 var(--grids-color-border), inset 0 1px 0 0 var(--grids-color-border);
+    color: var(--grid-header-color);
     line-height: var(--grid-header-height);
     padding: var(--grid-header-padding);
     vertical-align: top;
