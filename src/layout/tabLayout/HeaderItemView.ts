@@ -9,7 +9,7 @@ export default Marionette.View.extend({
     },
 
     attributes() {
-        return { ...(this.model?.get('description') ? { title: this.model.get('description') } : {}) };
+        return { title: this.model.get('description') || this.model.get('name') };
     },
 
     template: Handlebars.compile(template),

@@ -925,16 +925,17 @@ export default Marionette.View.extend({
     __updateActions(allToolbarActions, selected = this.__getSelectedItems(this.collection)) {
         const selectedLength = selected.length;
 
-        const actionsCount = this.originalToolbar ? this.originalToolbar.length : allToolbarActions.length;
+        const customItems = this.toolbarView.getCustomItems();
+        const actionsCount = this.originalToolbar ? this.originalToolbar.length : customItems.length;
         if (allToolbarActions.parentCollection && actionsCount > 3) {
             if (selectedLength) {
                 allToolbarActions.reset(this.originalToolbar);
             } else {
-                this.originalToolbar = allToolbarActions.parentCollection.toJSON();
+                this.originalToolbar = customItems.toJSON();
                 const actions = {
                     type: 'Group',
                     name: 'Действия',
-                    items: this.toolbarView.getCustomItems().toJSON()
+                    items: customItems.toJSON()
                 };
                 allToolbarActions.reset([actions, ...this.toolbarView.getConstItems().toJSON()]);
             }
