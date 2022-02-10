@@ -75,6 +75,7 @@
     text-align: center;
     width: 20px;
     margin-right: 5px;
+    flex: none;
 }
 
 .popout-menu__subtext {

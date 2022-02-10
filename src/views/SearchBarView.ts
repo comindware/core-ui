@@ -10,10 +10,9 @@ const defaultOptions = () => ({
 
 const classes = {
     defaultSearchClass: 'tr-search tr-search_mselect',
-    compactSearchClass: 'tr-search_compact',
+    compactSearchClass: 'tr-search tr-search_compact',
     open: 'open',
-    closed: 'closed',
-    static: 'static'
+    closed: 'closed'
 };
 
 export default Marionette.View.extend({
@@ -36,6 +35,10 @@ export default Marionette.View.extend({
     },
 
     className() { return this.__getClassName(); },
+
+    regions: {
+        compactButton: '.js-search-compact-button'
+    },
 
     ui: {
         input: '.js-search-input',
@@ -71,14 +74,21 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.options.isGlobalSearch === true) {
-            this.$el.addClass(classes.closed);
-        } else {
-            this.$el.addClass(classes.static);
-        }
-
         if (this.options.searchText) {
             this.ui.input.val(this.options.searchText);
+        }
+
+        if (this.options.isAutoHideable) {
+            const compactBtn = new Core.layout.Button({
+                text: '',
+                iconClass: 'search',
+                customClass: 'toolbar-btn_withoutName',
+                isSolid: false,
+                handler: () => {
+                    this.__showSearchBar();
+                }
+            });
+            this.showChildView('compactButton', compactBtn);
         }
 
         const value = this.__toggleClearIcon();
@@ -132,8 +142,8 @@ export default Marionette.View.extend({
         }
     },
 
-    __getClassName({ searchBarIsOpen } = {}) {
-        if (!searchBarIsOpen && this.options.isAutoHideable === true) {
+    __getClassName() {
+        if (this.options.isAutoHideable) {
             return classes.compactSearchClass;
         }
         return classes.defaultSearchClass;
@@ -162,22 +172,14 @@ export default Marionette.View.extend({
 
     __showSearchBar() {
         this.$el.addClass(classes.open);
-        const currentClassName = this.__getClassName({ searchBarIsOpen: true });
-        this.el.className = currentClassName;
-        this.__toggleClearIcon();
+        this.ui.clear.toggle(true);
         this.focus();
     },
 
     __hideSearchBar() {
-        if (this.options.isAutoHideable === true) {
-            if (!this.el.classList.contains(classes.closed)) {
-                const currentClassName = this.__getClassName();
-                this.el.className = currentClassName;
-                this.$el.addClass(classes.closed);
-            }
-            this.ui.clear.toggle(false);
-            this.ui.input.val('');
-        }
+        this.$el.removeClass(classes.open);
+        this.ui.clear.toggle(false);
+        this.ui.input.val('');
     },
 
     __search() {

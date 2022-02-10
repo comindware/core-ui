@@ -241,6 +241,15 @@ select {
 /* End Form Editor */
 
 /* input */
+.tr-search_compact {
+    display: flex;
+    border: none;
+    position: relative;
+    align-items: center;
+    min-height: 26px;
+    padding-left: 10px;
+}
+
 .input {
     padding: var(--input-padding);
     height: var(--input-height);
@@ -252,10 +261,28 @@ select {
     background: var(--input-search-bg);
 }
 
-.tr-search_compact .tr-search__input,
-.tr-search_compact .tr-search__clear,
-.tr-search_compact.closed .tr-search__input,
-.tr-search_compact.closed .tr-search__clear {
+.tr-search_compact .tr-search__input {
+    width: 0;
+    padding: 0;
+}
+
+.tr-search_compact .tr-search__clear {
+    width: 0;
+    right: 5px;
+}
+
+.tr-search_compact.open .tr-search__input {
+    width: auto;
+    padding: var(--input-search-padding);
+    border: 1px solid var(--editors-color-border);
+    border-radius: 4px;
+}
+
+.tr-search_compact.open .tr-search__clear {
+    width: auto;
+}
+
+.tr-search_compact.open .tr-search_compact-button {
     display: none;
 }
 
@@ -514,8 +541,8 @@ svg.svg-grid-icons {
 
 .grid-header-column {
     background-color: var(--grid-header-bg);
-    box-shadow: inset -1px 0 0 0 var(--theme-colors__primary-txt), inset 1px 1px 0 0 var(--theme-colors__primary);
-    color: var(--theme-colors__primary-txt);
+    box-shadow: inset -1px -1px 0 0 var(--grids-color-border), inset 0 1px 0 0 var(--grids-color-border);
+    color: var(--grid-header-color);
     line-height: var(--grid-header-height);
     padding: var(--grid-header-padding);
     vertical-align: top;
@@ -1088,15 +1115,12 @@ tr:not(:first-child) .cell_selection {
     font-size: var(--tab-item-font-size);
 }
 
-.layout__tab-layout__header-view ul {
-    justify-content: var(--tab-header-justify);
-}
-
 .layout__tab-layout__header-view-item {
+    flex: 1 0 auto;
+    max-width: 200px;
     min-height: 25px;
     padding: var(--tab-item-padding);
     font-size: var(--tab-item-font-size);
-    flex: 0 0 auto;
     margin: 0 2px;
     background-color: transparent;
     position: relative;
@@ -1106,6 +1130,11 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__header-view-item:hover {
     border-bottom-color: transparent;
+}
+
+.layout__tab-layout__header-view-item-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .layout__tab-layout__header-view-item_selected {
@@ -1311,10 +1340,6 @@ tr:not(:first-child) .cell_selection {
 .layout-group__head {
     font-size: 16px;
     padding: 0 20px 0 0;
-}
-
-.layout-group__content {
-    padding: 15px;
 }
 
 .layout__group-collapsed__button svg {

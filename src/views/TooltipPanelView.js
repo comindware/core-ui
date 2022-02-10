@@ -8,10 +8,10 @@ export default Marionette.View.extend({
     template: _.noop,
 
     onRender() {
-        this.$el.text(this.model.get(this.options.textAttribute));
+        this.el.innerHTML = this.model.get(this.options.textAttribute);
     },
 
     onChange() {
-        this.$el.text(this.model.get(this.options.textAttribute));
+        this.el.innerHTML = this.model.get(this.options.textAttribute);
     }
 });

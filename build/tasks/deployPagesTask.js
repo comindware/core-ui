@@ -36,6 +36,7 @@ const copyDoc = resolver => {
 
 module.exports = callback => {
     if (!process.env.PACKAGE_VERSION) {
+        console.log('PrepareToPublishTask: no tags found, skip pages update.');
         callback();
         return;
     }

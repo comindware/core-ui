@@ -28,7 +28,8 @@ export default class ActionMenuView {
                 showName: options.showName,
                 customAnchor: options.customAnchor
             },
-            adjustmentPosition: options.adjustmentPosition
+            adjustmentPosition: options.adjustmentPosition,
+            openOnMouseenter: options.isPopup
         });
 
         menu.listenTo(menu, 'panel:command:execute', this.__onPanelCommandExecute);

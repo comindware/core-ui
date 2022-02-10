@@ -1,6 +1,7 @@
 // @flow
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
+import factory from '../factory';
 
 /**
  * @name MenuPanelView
@@ -24,15 +25,45 @@ export default ListPanelView.extend({
         if (model.get('customView')) {
             return model.get('customView');
         }
+        if (model.get('isSubMenu')) {
+            return class Test {
+                constructor() {
+                    return factory.createMenu({
+                        items: model.get('items'),
+                        buttonModel: model,
+                        buttonView: MenuItemView,
+                        popoutFlow: 'right',
+                        panelPosition: 'right',
+                        openOnMouseenter: true
+                    });
+                }
+            };
+        }
         return MenuItemView;
     },
 
     childViewEvents: {
-        execute: '__execute'
+        execute: '__execute',
+        mouseenter: '__onMouseEnter',
+        open: '__onChildOpen'
     },
 
-    __execute(model) {
+    __execute(first, second) {
+        const model = typeof first === 'string' ? second : first;
+        if (model.get('isSubMenu')) {
+            return;
+        }
         this.options.parent.close();
         this.options.parent.button.trigger('execute', model.id, model);
+    },
+
+    __onMouseEnter() {
+        if (this.__opendItem) {
+            this.__opendItem.close();
+        }
+    },
+
+    __onChildOpen(item) {
+        this.__opendItem = item;
     }
 });

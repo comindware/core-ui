@@ -38,15 +38,16 @@
 .layout-group__head {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 56;
     display: flex;
     align-items: center;
     flex: none;
-    color: var(--theme-colors__main);
-    background: var(--group-back);
+    color: var(--theme-colors__secondary-txt);
+    background-color: var(--theme-colors__secondary);
+    border-bottom: 1px solid var(--menu-items-clor-border);
     border-radius: 4px 4px 0 0;
     font-size: 18px;
-    height: 50px;
+    height: 40px;
 }
 
 .group-collapsed .layout-group__head{
@@ -54,6 +55,9 @@
     border-bottom-color: var(--theme-colors__main_fadest);
 }
 
+.layout-group_squashed-tabs .layout-group__head {
+    display: none;
+}
 
 .group-title{
     font-family: var(--headers-font-family);
@@ -100,12 +104,18 @@
     height: 25px;
     font-weight: 300;
     opacity: 1;
-    cursor: pointer;
+    cursor: auto;
     font-size: 1.2em;
 }
-.group-menu i{
-    font-weight: 300;
-    padding: 0 10px
+
+.group-menu:not(:empty) {
+    cursor: pointer;
+}
+
+.group-menu i {
+    font-size: 1rem;
+    font-weight: var(--headers-font-weight);
+    padding: 0 10px;
 }
 
 .layout-group__head_maximized {
@@ -123,12 +133,18 @@
     display:none;
 }
 
-.layout-group__content{
+.layout-group__content {
+    padding: 15px;
     background: var(--theme-colors__main);
     border-radius: 0 0 4px 4px;
     flex: 1 1 auto;
 }
 
+.layout-group_squashed-tabs .layout-group__content {
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+}
 
 /* fix group on group and group in tabs*/
 .layout-group .layout-group:not(.layout-group_not-nested),
@@ -183,16 +199,16 @@
     background-color: transparent;
 }
 
-.group-toggle{
+.group-toggle {
     margin-top: 3px;
 }
-.group-toggle i{
-    font-size: 27px;
-    font-weight: 300;
+.group-toggle i {
+    font-size: 1rem;
+    font-weight: var(--headers-font-weight);
 }
 
 .layout-group .toolbar,
-.layout-group .toolbar-container{
+.layout-group .toolbar-container {
     background-color: transparent;
 }
 

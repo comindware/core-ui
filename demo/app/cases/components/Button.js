@@ -27,16 +27,17 @@ export default function() {
             new Core.layout.HorizontalLayout({
                 columns: [
                     new Core.layout.Button({
-                        text: 'Say hello!',
+                        text: 'Solid',
                         iconClass: 'plus',
+                        isSolid: true,
                         handler() {
                             alert('Hello!');
                         }
                     }),
                     new Core.layout.Button({
-                        text: 'Say cheese!',
+                        text: 'Clear',
                         iconClass: 'plus',
-                        isClear: true,
+                        isSolid: false,
                         handler() {
                             alert('Cheese!');
                         }
@@ -44,7 +45,15 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Say nothing!',
                         iconClass: 'plus',
-                        isClear: true,
+                        isSolid: true,
+                        isCancel: true,
+                        handler() {
+                            alert('Nothing!');
+                        }
+                    }),
+                    new Core.layout.Button({
+                        text: 'Say nothing!',
+                        iconClass: 'plus',
                         isCancel: true,
                         handler() {
                             alert('Nothing!');
@@ -57,7 +66,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'None?',
                         iconClass: 'plus',
-                        isClear: true,
+                        isSolid: false,
                         customClass: 'toolbar-btn_none',
                         handler() {
                             alert('What?');
@@ -66,7 +75,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Low?',
                         iconClass: 'plus',
-                        isClear: true,
+                        isSolid: false,
                         customClass: 'toolbar-btn_low',
                         handler() {
                             alert('What?');
@@ -75,7 +84,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Normal?',
                         iconClass: 'plus',
-                        isClear: true,
+                        isSolid: false,
                         customClass: 'toolbar-btn_normal',
                         handler() {
                             alert('What?');
@@ -84,7 +93,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Critical?',
                         iconClass: 'plus',
-                        isClear: true,
+
                         customClass: 'toolbar-btn_critical',
                         handler() {
                             alert('What?');
@@ -93,7 +102,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Major?',
                         iconClass: 'plus',
-                        isClear: true,
+
                         customClass: 'toolbar-btn_major',
                         handler() {
                             alert('What?');
@@ -102,7 +111,7 @@ export default function() {
                     new Core.layout.Button({
                         text: 'Fatal?',
                         iconClass: 'plus',
-                        isClear: true,
+
                         customClass: 'toolbar-btn_fatal',
                         handler() {
                             alert('What?');
@@ -119,14 +128,14 @@ export default function() {
                                 id: 'none',
                                 visibleOptions: true,
                                 name: 'None',
-                                isClear: true
+                                isSolid: true,
                             },
                             {
                                 iconClass: 'save',
                                 id: 'low',
                                 visibleOptions: true,
                                 name: 'Low',
-                                isClear: true,
+                                isSolid: true,
                                 severity: 'Low'
                             },
                             {
@@ -134,7 +143,7 @@ export default function() {
                                 id: 'normal',
                                 visibleOptions: true,
                                 name: 'Normal',
-                                isClear: true,
+                                isSolid: true,
                                 severity: 'Normal'
                             },
                             {
@@ -142,7 +151,7 @@ export default function() {
                                 id: 'critical',
                                 visibleOptions: true,
                                 name: 'Critical',
-                                isClear: true,
+                                isSolid: true,
                                 severity: 'Critical'
                             },
                             {
@@ -150,7 +159,7 @@ export default function() {
                                 id: 'major',
                                 visibleOptions: true,
                                 name: 'Major',
-                                isClear: true,
+                                isSolid: true,
                                 severity: 'Major'
                             },
                             {
@@ -158,7 +167,7 @@ export default function() {
                                 id: 'fatal',
                                 visibleOptions: true,
                                 name: 'Fatal',
-                                isClear: true,
+                                isSolid: true,
                                 severity: 'Fatal'
                             }
                         ]

@@ -21,6 +21,8 @@ export default Marionette.CollectionView.extend({
 
     childViewEvents: {
         'action:click': '__handleCommand',
+        mouseenter: '__onMouseEnter',
+        open: '__onChildOpen',
         search(searchString, { model }) {
             return this.__handleCommand(model, { searchString });
         }
@@ -31,5 +33,15 @@ export default Marionette.CollectionView.extend({
             return;
         }
         this.trigger('command:execute', model, options);
+    },
+
+    __onMouseEnter() {
+        if (this.__opendItem) {
+            this.__opendItem.close();
+        }
+    },
+
+    __onChildOpen(item) {
+        this.__opendItem = item;
     }
 });

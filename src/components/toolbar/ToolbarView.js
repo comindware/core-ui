@@ -120,6 +120,10 @@ export default Marionette.View.extend({
         return this.groupedCollection.allCollapsibleItems;
     },
 
+    getConstItems() {
+        return this.groupedCollection.groups[groupNames.const];
+    },
+
     __createActionsGroupsView(collection) {
         const view = new CustomActionGroupView({
             collection,
