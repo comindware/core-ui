@@ -1115,15 +1115,12 @@ tr:not(:first-child) .cell_selection {
     font-size: var(--tab-item-font-size);
 }
 
-.layout__tab-layout__header-view ul {
-    justify-content: var(--tab-header-justify);
-}
-
 .layout__tab-layout__header-view-item {
+    flex: 1 0 auto;
+    max-width: 200px;
     min-height: 25px;
     padding: var(--tab-item-padding);
     font-size: var(--tab-item-font-size);
-    flex: 0 0 auto;
     margin: 0 2px;
     background-color: transparent;
     position: relative;
@@ -1133,6 +1130,11 @@ tr:not(:first-child) .cell_selection {
 
 .layout__tab-layout__header-view-item:hover {
     border-bottom-color: transparent;
+}
+
+.layout__tab-layout__header-view-item-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .layout__tab-layout__header-view-item_selected {
@@ -1338,10 +1340,6 @@ tr:not(:first-child) .cell_selection {
 .layout-group__head {
     font-size: 16px;
     padding: 0 20px 0 0;
-}
-
-.layout-group__content {
-    padding: 15px;
 }
 
 .layout__group-collapsed__button svg {

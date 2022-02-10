@@ -12,6 +12,7 @@
     display: flex;
     justify-content: space-between;
 }
+
 .layout__tab-layout__header-view {
     margin-bottom: -3px;
     overflow-x: hidden;
@@ -20,7 +21,17 @@
     flex-flow: row nowrap;
     align-items: flex-end;
 }
-.layout__tab-layout__header-view ul{
+
+.layout-group_squashed-tabs .layout__tab-layout__header-view {
+    width: 100%;
+    min-height: 40px;
+    color: var(--theme-colors__secondary-txt);
+    background-color: var(--theme-colors__secondary);
+    border-bottom: 1px solid var(--menu-items-clor-border);
+    align-items: stretch;
+}
+
+.layout__tab-layout__header-view ul {
     display: flex;
     align-items: flex-end;
     flex-wrap: nowrap;
@@ -31,6 +42,22 @@
     -ms-overflow-style: none;
     position: relative; /* for __scrollIntoViewIfNeeded */
     padding: 0;
+    justify-content: var(--tab-header-justify);
+}
+
+.layout-group_squashed-tabs .layout__tab-layout__header-view > ul {
+    align-items: stretch;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.layout-group_squashed-tabs .layout__tab-layout__header-view > ul > li.layout__tab-layout__header-view-item {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .layout__tab-layout__header-view ul::-webkit-scrollbar {
@@ -63,7 +90,7 @@ ul .layout__tab-layout__header-view-item:last-child {
 .layout__tab-layout__header-view-item.tab-layout__headers-menu {
     font-size: 16px;
     font-weight: bold;
-    padding: 0 5px 0 15px;
+    padding: 5px 10px 0 10px;
 }
 
 /* panel */
@@ -73,6 +100,11 @@ ul .layout__tab-layout__header-view-item:last-child {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+}
+
+.layout-group_squashed-tabs .layout__tab-layout__panel-container {
+    border: none;
+    border-top: 1px solid var(--editors-color-border);
 }
 
 .layout__tab-layout__panel-region {
