@@ -44,6 +44,7 @@ import CheckableBehavior from "../../models/behaviors/CheckableBehavior";
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
+    searchBarOptions:{ isAutoHideable: true },
     columns: [],
     emptyView: EmptyGridView,
     emptyViewOptions: {
@@ -160,7 +161,7 @@ export default Marionette.View.extend({
         this.__initializeToolbar();
 
         if (this.options.showSearch) {
-            this.searchView = new SearchBarView();
+            this.searchView = new SearchBarView(this.options.searchBarOptions);
             this.listenTo(this.searchView, 'search', this.__onSearch);
         }
         if (this.options.showTreeEditor) {
@@ -178,8 +179,8 @@ export default Marionette.View.extend({
         });
 
         const allToolbarActions = this.toolbarView.getToolbarItems();
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, this.collection), 10);
-        this.__updateActions(allToolbarActions, this.collection);
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions), 10);
+        this.__updateActions(allToolbarActions);
 
         if (this.options.showCheckbox) {
             this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
@@ -903,6 +904,10 @@ export default Marionette.View.extend({
         });
     },
 
+    updateToolbar() {
+        this.__updateActions(this.toolbarView.getToolbarItems());
+    },
+
     __getToolbarActions() {
         let toolbarActions = [];
         const defaultActions = getDefaultActions();
@@ -917,11 +922,35 @@ export default Marionette.View.extend({
         return toolbarActions;
     },
 
-    __updateActions(allToolbarActions, collection) {
-        const selected = this.__getSelectedItems(collection);
+    __updateActions(allToolbarActions, selected = this.__getSelectedItems(this.collection)) {
         const selectedLength = selected.length;
 
-        allToolbarActions.filter(action => {
+        const customItems = this.toolbarView.getCustomItems();
+        const actionsCount = this.originalToolbar ? this.originalToolbar.length : customItems.length;
+        if (allToolbarActions.parentCollection && actionsCount > 3) {
+            if (selectedLength) {
+                allToolbarActions.reset(this.originalToolbar);
+            } else {
+                this.originalToolbar = customItems.toJSON();
+                const actions = {
+                    type: 'Group',
+                    name: 'Действия',
+                    items: customItems.toJSON()
+                };
+                allToolbarActions.reset([actions, ...this.toolbarView.getConstItems().toJSON()]);
+            }
+        }
+
+        return allToolbarActions.filter(action => {
+            if (action.get('type') === 'Group') {
+                const items = action.get('originalItems') || action.get('items');
+                const filtered = this.__updateActions(items, selected);
+                if (!filtered.length) {
+                    return false;
+                }
+                action.set('originalItems', items);
+                action.set('items', filtered);
+            }
             let isActionApplicable;
             switch (action.get('contextType')) {
                 case 'one':
@@ -931,6 +960,8 @@ export default Marionette.View.extend({
                     isActionApplicable = selectedLength;
                     break;
                 case 'void':
+                    isActionApplicable = !selectedLength;
+                    break;
                 default:
                     isActionApplicable = true;
             }

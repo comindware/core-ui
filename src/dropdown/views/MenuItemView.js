@@ -34,5 +34,9 @@ export default Marionette.View.extend({
         click() {
             this.trigger('execute', this.model);
         }
+    },
+
+    triggers: {
+        mouseenter: 'mouseenter'
     }
 });

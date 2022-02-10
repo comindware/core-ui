@@ -5,7 +5,7 @@ const classes = {
     PALE: 'btn-pale',
     STRONG: 'btn-strong',
     DISABLED: 'btn-disabled',
-    CLEAR: 'btn-clear'
+    SOLID: 'btn-solid'
 };
 
 function unCapitalizeFirstLetter(string) {
@@ -14,6 +14,10 @@ function unCapitalizeFirstLetter(string) {
 
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
+
+    triggers: {
+        mouseenter: 'mouseenter'
+    },
 
     templateContext() {
         return {
@@ -37,7 +41,8 @@ export default Marionette.View.extend({
         const type = this.model.get('type');
         const typeClass = typeof type === 'string' ? unCapitalizeFirstLetter(type) : 'withoutType';
         const cancelClass = isCancel ? classes.PALE : null;
-        const clearClass = this.model.get('isClear') ? classes.CLEAR : '';
+        const solidClass = this.model.get('isSolid') ? classes.SOLID : '';
+
         let enabled = this.model.get('enabled');
         if (enabled === undefined) {
             enabled = true;
@@ -47,6 +52,6 @@ export default Marionette.View.extend({
 
         const useName = this.model.get('name') || this.options.isPopup;
 
-        return `${severityItem.class} ${this.model.get('class') || ''} ${useName ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED} ${clearClass}`;
+        return `${severityItem.class} ${this.model.get('class') || ''} ${useName ? '' : 'toolbar-btn_withoutName'} ${cancelClass || ''} toolbar-btn_${typeClass} ${enabled ? '' : classes.DISABLED} ${solidClass}`;
     }
 });

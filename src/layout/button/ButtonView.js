@@ -7,12 +7,17 @@ const classes = {
     PALE: 'btn-pale',
     STRONG: 'btn-strong',
     DISABLED: 'btn-disabled',
-    CLEAR: 'btn-clear',
+    SOLID: 'btn-solid',
     ICON_RIGHT: 'btn-rightside-icon'
+};
+
+const defaultOptions = {
+    isSolid: false
 };
 
 export default Marionette.View.extend({
     initialize(options) {
+        this.options = _.defaults({}, options, defaultOptions);
         helpers.ensureOption(options, 'text');
     },
 
@@ -21,7 +26,7 @@ export default Marionette.View.extend({
     templateContext() {
         return {
             brightnessClass: this.getOption('isCancel') ? classes.PALE : classes.STRONG,
-            clearClass: this.getOption('isClear') ? classes.CLEAR : '',
+            solidClass: this.getOption('isSolid') ? classes.SOLID : '',
             text: this.options.text,
             iconClass: this.options.iconClass,
             iconPosition: this.options.iconPosition,

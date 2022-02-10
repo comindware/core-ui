@@ -16,6 +16,12 @@ import template from '../templates/defaultButton.hbs';
 export default Marionette.View.extend({
     tagName: 'span',
 
+    attributes() {
+        return {
+            title: this.model.get('text')
+        };
+    },
+
     template: Handlebars.compile(template),
 
     modelEvents: {
