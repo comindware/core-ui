@@ -311,6 +311,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
     display: none;
 }
 
+.layout__popup-view_mobile .layout__popup-view-header__btn_equate {
+    display: inline-block;
+}
+
 .cell .date-view,
 .cell .time-view,
 .editable-grid-field {

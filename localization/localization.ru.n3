@@ -418,6 +418,8 @@
 
 <http://comindware.com/text/core/formats/moment#yearMonth> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "MMMM, YYYY"; l10n:originalData "MMMM, YYYY"].
 
+<http://comindware.com/text/core/grid#actions> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Действия"; l10n:originalData "actions"].
+
 <http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notSet"].
 
 <http://comindware.com/text/core/grid/actions#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].

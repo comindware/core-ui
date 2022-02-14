@@ -55,7 +55,7 @@
     border-bottom-color: var(--theme-colors__main_fadest);
 }
 
-.layout-group_squashed-tabs .layout-group__head {
+.layout-group_squashed-tabs  > .layout-group-wrp > .layout-group__head {
     display: none;
 }
 

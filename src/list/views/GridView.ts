@@ -2,6 +2,7 @@
 import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
+import LocalizationService from "services/LocalizationService";
 import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import template from '../templates/grid.hbs';
 import CollectionView from './CollectionView';
@@ -16,7 +17,7 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
-import { getDefaultActions, classes, configurationConstants } from '../meta';
+import { getDefaultActions, classes, configurationConstants, contextTypes } from "../meta";
 import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
@@ -24,12 +25,8 @@ import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrorsPanelView from '../../views/ErrorsPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
 import { GraphModel } from '../../components/treeEditor/types';
-import ConfigDiff from '../../components/treeEditor/classes/ConfigDiff';
-import { Column } from '../types/types';
 import Backbone from "backbone";
 import { GridItemBehavior } from "../behaviors/GridItemBehavior";
-import VirtualCollection from "../../collections/VirtualCollection";
-import CheckableBehavior from "../../models/behaviors/CheckableBehavior";
 
 /*
     Public interface:
@@ -925,17 +922,17 @@ export default Marionette.View.extend({
     __updateActions(allToolbarActions, selected = this.__getSelectedItems(this.collection)) {
         const selectedLength = selected.length;
 
-        const customItems = this.toolbarView.getCustomItems();
-        const actionsCount = this.originalToolbar ? this.originalToolbar.length : customItems.length;
+        const customItems = this.toolbarView.getCustomItems().toJSON();
+        const actionsCount = (this.originalToolbar ?? customItems).filter(action => ![contextTypes.any, contextTypes.one].includes(action.contextType)).length;
         if (allToolbarActions.parentCollection && actionsCount > 3) {
             if (selectedLength) {
-                allToolbarActions.reset(this.originalToolbar);
+                allToolbarActions.reset([...this.originalToolbar, ...this.toolbarView.getConstItems().toJSON()]);
             } else {
-                this.originalToolbar = customItems.toJSON();
+                this.originalToolbar = customItems;
                 const actions = {
                     type: 'Group',
-                    name: 'Действия',
-                    items: customItems.toJSON()
+                    name: LocalizationService.get('CORE.GRID.ACTIONS'),
+                    items: customItems
                 };
                 allToolbarActions.reset([actions, ...this.toolbarView.getConstItems().toJSON()]);
             }

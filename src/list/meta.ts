@@ -60,7 +60,8 @@ export const getDefaultActions = () => [
     {
         id: 'add',
         name: Localizer.get('CORE.GRID.ACTIONS.CREATE'),
-        iconClass: 'plus'
+        iconClass: 'plus',
+        contextType: contextTypes.void
     },
     {
         id: 'archive',
