@@ -386,9 +386,36 @@ tr.empty-view {
 }
 
 .grid-container .toolbar {
-    padding: 0;
+    padding: 2px 2px;
     margin-bottom: 10px;
     height: auto;
+}
+
+.grid-container .toolbar .tr-search {
+    background-color: transparent;
+    padding-left: 0;
+}
+
+.grid-container .toolbar .tr-search.open {
+    margin-left: 2px;
+}
+
+.grid-container .toolbar .tr-search__input {
+    background-color: var(--theme-colors__main);
+    height: 24px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+    transition: none;
+}
+
+.grid-container .toolbar .tr-search__clear {
+    right: 2px;
+}
+
+.grid-container .toolbar .toolbar-buttons_container__const {
+    margin-right: 0;
+    margin-left: auto;
 }
 
 .grid-toolbar-wrp {

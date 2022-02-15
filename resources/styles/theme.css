@@ -1125,6 +1125,7 @@ tr:not(:first-child) .cell_selection {
     background-color: transparent;
     position: relative;
     color: var(--theme-colors__text_strong);
+    border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
 }
 
@@ -1206,6 +1207,7 @@ tr:not(:first-child) .cell_selection {
     flex-wrap: nowrap;
     cursor: pointer;
     overflow: hidden;
+    text-overflow: ellipsis;
     border-radius: 4px;
     min-width: 26px;
     height: 26px;
@@ -1213,19 +1215,13 @@ tr:not(:first-child) .cell_selection {
     transition: all .3s ease-in-out;
 }
 
-.toolbar-btn > .toolbar__icons > i,
-.toolbar-btn > i {
+.toolbar-btn > .toolbar__icons > i {
     width: 100%;
     height: auto;
     font-weight: 300;
     min-width: 18px;
     flex: none;
-    font-size: 15px;
-}
-
-.toolbar-btn > .toolbar__icons_arrow > i {
-    font-size: 12px;
-    min-width: auto;
+    font-size: 1.1em;
 }
 
 .toolbar-btn_withoutName {
@@ -1245,13 +1241,16 @@ tr:not(:first-child) .cell_selection {
 
 .toolbar__icons {
     display: inline-flex;
-    min-width: 20px;
     max-height: 100%;
     height: 100%;
     align-items: center;
     justify-content: center;
     flex: none;
     font-size: 15px;
+}
+
+.toolbar__icons:not(.toolbar__icons_arrow) {
+    min-width: 20px;
 }
 
 .toolbar__icons + .toolbar-btn__text {
@@ -1270,12 +1269,6 @@ tr:not(:first-child) .cell_selection {
 .toolbar-btn__text > .editor_checkbox {
     padding-right: 5px;
 }
-
-.toolbar__icons_arrow {
-    min-width: auto;
-    margin-left: 5px;
-}
-
 
 .split-button-wrp {
     display: flex;

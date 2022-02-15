@@ -84,7 +84,7 @@ export default Marionette.View.extend({
                 model: this.model,
                 mode: this.options.mode,
                 customAnchor: true,
-                iconClass: 'chevron-down'
+                iconClass: 'angle-down'
             }
         });
 

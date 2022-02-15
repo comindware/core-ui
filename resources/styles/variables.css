@@ -100,9 +100,9 @@
     --form-label-font-weight: 600;
     --form-label-color: var(--theme-colors__text);
     --form-label-margin: 2px;
-    --form-label-padding: 0 var(--form-input-padding);
+    --form-label-padding: 0 2px 0 var(--form-input-padding);
     --form-label-icon-size: 12px;
-    --form-label-icon-margin-x: 3px;
+    --form-label-icon-margin-x: 2px;
 
     /* form editor */
     --editor-height: 20px;
