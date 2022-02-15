@@ -15,9 +15,12 @@
     display: flex;
 }
 
-.toolbar-btn .popout__action .anchor {
-    font-size: 20px;
-    margin-left: 5px;
+.toolbar-btn .popout__action .anchor,
+.toolbar-btn.popout__action .toolbar__icons_arrow i {
+    font-size: .8rem;
+    margin-left: 2px;
+    line-height: 1.4;
+    min-width: auto;
 }
 
 .popout__action.open .anchor {
