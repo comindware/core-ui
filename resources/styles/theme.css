@@ -1224,6 +1224,10 @@ tr:not(:first-child) .cell_selection {
     font-size: 1.1em;
 }
 
+.toolbar-btn:hover {
+    text-decoration: none;
+}
+
 .toolbar-btn_withoutName {
     padding: 3px;
 }

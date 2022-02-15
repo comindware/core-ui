@@ -27,11 +27,22 @@ export default Marionette.View.extend({
         };
     },
 
+    tagName() {
+        const url = this.model.get('url');
+        return url ? 'a' : 'div';
+    },
+
     attributes() {
-        return {
+        const attributes = {
             tabindex: 0,
             title: this.model.get('description') || this.model.get('name') || ''
         };
+        const url = this.model.get('url');
+        if (url) {
+            attributes.href = url;
+        }
+
+        return attributes;
     },
 
     className() {
