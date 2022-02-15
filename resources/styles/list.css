@@ -224,7 +224,7 @@
     height: 35px;
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 10;
     background-clip: padding-box;
     max-width: 0; /* hack to set width less than cells content */
     line-height: 30px;
