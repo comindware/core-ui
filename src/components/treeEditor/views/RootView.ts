@@ -50,7 +50,9 @@ export default BranchView.extend({
 
     attributes: {},
 
-    className() {},
+    className() {
+        return 'tree-editor tree-editor_root';
+    },
 
     ui: {
         eyeBtn: '.js-eye-btn'

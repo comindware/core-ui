@@ -354,7 +354,6 @@ tr.empty-view {
     height: 100px;
     font-size: 1.1em;
     border: 1px solid var(--editors-color-border);
-    border-top-color: transparent;
 }
 
 /* /Empty View */
@@ -386,9 +385,7 @@ tr.empty-view {
 }
 
 .grid-container .toolbar {
-    padding: 2px 2px;
     margin-bottom: 10px;
-    height: auto;
 }
 
 .grid-container .toolbar .tr-search {
@@ -411,11 +408,6 @@ tr.empty-view {
 
 .grid-container .toolbar .tr-search__clear {
     right: 2px;
-}
-
-.grid-container .toolbar .toolbar-buttons_container__const {
-    margin-right: 0;
-    margin-left: auto;
 }
 
 .grid-toolbar-wrp {
