@@ -2,14 +2,23 @@
 import template from './templates/headerItem.hbs';
 
 export default Marionette.View.extend({
-    tagName: 'li',
+    tagName() {
+        return this.model.get('url') ? 'a' : 'li';
+    },
 
     className() {
         return `layout__tab-layout__header-view-item ${this.model.get('tabClass') || ''}`;
     },
 
     attributes() {
-        return { title: this.model.get('description') || this.model.get('name') };
+        const attributes = {
+            title: this.model.get('description') || this.model.get('name1')
+        };
+        const url = this.model.get('url');
+        if (url) {
+            attributes.href = url;
+        }
+        return attributes;
     },
 
     template: Handlebars.compile(template),
@@ -52,7 +61,7 @@ export default Marionette.View.extend({
     },
 
     __onClick() {
-        if (this.model.get('enabled')) {
+        if (this.model.get('enabled') && !this.model.get('url')) {
             this.trigger('select', this.model);
         }
     },

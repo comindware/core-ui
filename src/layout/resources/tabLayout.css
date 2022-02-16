@@ -49,13 +49,18 @@
     margin-right: 5px;
 }
 
-.layout-group_squashed-tabs .layout__tab-layout__header-view > ul > li.layout__tab-layout__header-view-item {
+.layout-group_squashed-tabs .layout__tab-layout__header-view > ul > .layout__tab-layout__header-view-item {
     padding-right: 0;
     padding-left: 0;
     margin-right: 10px;
     margin-left: 10px;
     display: inline-flex;
     align-items: center;
+}
+
+a.layout__tab-layout__header-view-item:hover {
+    text-decoration: none;
+    color: var(--theme-colors__text_strong);
 }
 
 .layout__tab-layout__header-view ul::-webkit-scrollbar {

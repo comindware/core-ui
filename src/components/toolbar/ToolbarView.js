@@ -17,6 +17,8 @@ const debounceInterval = {
     short: 5
 };
 
+const menuWidth = 30;
+
 const getDefaultOptions = options => ({
     mode: 'Normal', // 'Mobile'
     showName: options.mode !== 'Mobile',
@@ -82,13 +84,14 @@ export default Marionette.View.extend({
         this.showChildView('popupMenuRegion', this.popupMenuView);
         this.showChildView('toolbarConstItemsRegion', this.constActionsView);
         const popupMenuRegionElementStyle = this.getRegion('popupMenuRegion').el.style;
-        popupMenuRegionElementStyle.visibility = 'hidden';
+        popupMenuRegionElementStyle.display = 'none';
+
         const menuItems = this.groupedCollection.groups[groupNames.menu];
         this.listenTo(menuItems, 'reset update', () => {
             if (menuItems.length) {
-                popupMenuRegionElementStyle.visibility = 'visible';
+                popupMenuRegionElementStyle.removeProperty('display');
             } else {
-                popupMenuRegionElementStyle.visibility = 'hidden';
+                popupMenuRegionElementStyle.display = 'none';
             }
         });
     },
@@ -109,7 +112,9 @@ export default Marionette.View.extend({
                 }
             });
         }, debounceInterval.medium);
-        this.listenTo(Core.services.GlobalEventService, 'window:load window:resize', debouncedRebuild);
+        const resizeObserver = new ResizeObserver(debouncedRebuild);
+        resizeObserver.observe(this.el);
+        this.listenTo(Core.services.GlobalEventService, 'window:load', debouncedRebuild);
     },
 
     getToolbarItems() {
@@ -163,7 +168,7 @@ export default Marionette.View.extend({
         menuCollection.reset();
 
         const toolbarElementsItems = [...this.getRegion('toolbarItemsRegion').el.firstElementChild.children];
-        const maxRight = Math.round(this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width);
+        const maxRight = Math.round(this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - menuWidth);
         const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => {
             const currentRight = Math.round(btn.getBoundingClientRect().right);
             return currentRight > maxRight;
