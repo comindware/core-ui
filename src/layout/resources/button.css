@@ -402,7 +402,7 @@
     margin: 0 5px 0 -5px;
 }
 
-.popout__action.open .toolbar__icons_arrow {
+.popout__action.open .toolbar__icons_arrow i {
     transform: rotate(180deg);
 }
 
@@ -429,7 +429,7 @@
 
 .toolbar-buttons_container__adjust .btn-separator {
     color: var(--theme-colors__text);
-    border-right-width: 1.5px;
+    border-right-width: 1px;
     opacity: .7;
 }
 

@@ -844,18 +844,41 @@ body.non-selectable {
 /* End Two Columns Switch */
 
 /* Toolbar component */
+
 .toolbar {
-    height: 40px;
-    padding: 7px 20px;
-    white-space: nowrap;
     display: flex;
+    box-sizing: border-box;
+    flex: none;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     align-content: center;
-    box-sizing: border-box;
-    z-index: 55; /* bigger then grid */
-    flex: none;
+    height: 30px;
+    padding: 2px;
+    white-space: nowrap;
+    z-index: 55; /* bigger than grid */
+    background-color: var(--theme-colors__secondary);
+    color: var(--theme-colors__secondary-txt);
+    border-radius: var(--border-radius);
+}
+
+.toolbar-container {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    align-items: stretch;
+    min-width: 0;
+    padding: 2px;
+    background-color: var(--theme-colors__secondary);
+    color: var(--theme-colors__secondary-txt);
+    margin-bottom: 20px;
+}
+
+.toolbar .toolbar-container {
+    padding: 0;
+    background: none;
+    margin-bottom: 0;
 }
 
 .toolbar__i {
@@ -916,15 +939,6 @@ body.non-selectable {
     margin-left: 5px;
 }
 
-.toolbar-container {
-    display: flex;
-    width: 100%;
-    height: auto;
-    flex: 1 1 auto;
-    align-items: stretch;
-    min-width: 0;
-}
-
 .toolbar-container .tr-search__input {
     height: 100%;
 }
@@ -937,7 +951,7 @@ body.non-selectable {
 
 .toolbar-buttons_container__const {
     flex: 0 0 auto;
-    margin-right: 20px;
+    margin-left: auto;
 }
 
 .toolbar-panel_container {

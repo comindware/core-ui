@@ -11,8 +11,6 @@
     flex: 0 0 auto;
     display: flex;
     justify-content: space-between;
-    background-color: var(--theme-colors__secondary);
-    color: var(--theme-colors__secondary-txt);
 }
 
 .layout__tab-layout__header-view {
