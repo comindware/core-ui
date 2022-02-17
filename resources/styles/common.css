@@ -873,6 +873,7 @@ body.non-selectable {
     background-color: var(--theme-colors__secondary);
     color: var(--theme-colors__secondary-txt);
     margin-bottom: 20px;
+    border-radius: var(--border-radius);
 }
 
 .toolbar .toolbar-container {
