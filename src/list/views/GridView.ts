@@ -928,7 +928,9 @@ export default Marionette.View.extend({
             if (selectedLength) {
                 allToolbarActions.reset([...this.originalToolbar, ...this.toolbarView.getConstItems().toJSON()]);
             } else {
-                this.originalToolbar = customItems;
+                if (!this.originalToolbar) {
+                    this.originalToolbar = customItems;
+                }
                 const actions = {
                     type: 'Group',
                     name: LocalizationService.get('CORE.GRID.ACTIONS'),
@@ -1172,7 +1174,9 @@ export default Marionette.View.extend({
         if (this.menu) {
             this.menu.destroy();
         }
-        this.collection.uncheckAll();
+        if (!model.checked) {
+            this.collection.uncheckAll();
+        }
         model.check();
         const collection = this.toolbarView.getCustomItems();
         this.menu = new ActionMenuView({

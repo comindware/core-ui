@@ -17,8 +17,6 @@ const debounceInterval = {
     short: 5
 };
 
-const menuWidth = 30;
-
 const getDefaultOptions = options => ({
     mode: 'Normal', // 'Mobile'
     showName: options.mode !== 'Mobile',
@@ -83,17 +81,8 @@ export default Marionette.View.extend({
         this.showChildView('toolbarItemsRegion', this.mainActionsView);
         this.showChildView('popupMenuRegion', this.popupMenuView);
         this.showChildView('toolbarConstItemsRegion', this.constActionsView);
-        const popupMenuRegionElementStyle = this.getRegion('popupMenuRegion').el.style;
-        popupMenuRegionElementStyle.display = 'none';
-
         const menuItems = this.groupedCollection.groups[groupNames.menu];
-        this.listenTo(menuItems, 'reset update', () => {
-            if (menuItems.length) {
-                popupMenuRegionElementStyle.removeProperty('display');
-            } else {
-                popupMenuRegionElementStyle.display = 'none';
-            }
-        });
+        this.listenTo(menuItems, 'reset update', () => this.ui.popupMenuRegion.toggle(Boolean(menuItems.length)));
     },
 
     onAttach() {
@@ -166,9 +155,9 @@ export default Marionette.View.extend({
 
         mainCollection.reset(allCollapsibleModels);
         menuCollection.reset();
-
+        this.ui.popupMenuRegion.show();
         const toolbarElementsItems = [...this.getRegion('toolbarItemsRegion').el.firstElementChild.children];
-        const maxRight = Math.round(this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - menuWidth);
+        const maxRight = Math.round(this.ui.toolbarConstItemsRegion.get(0).getBoundingClientRect().left - this.ui.popupMenuRegion.get(0).getBoundingClientRect().width);
         const indexOfNotFitItem = toolbarElementsItems.findIndex(btn => {
             const currentRight = Math.round(btn.getBoundingClientRect().right);
             return currentRight > maxRight;
@@ -179,6 +168,8 @@ export default Marionette.View.extend({
 
             mainCollection.reset(allCollapsibleModels.slice(0, sliceIndex));
             menuCollection.reset(allCollapsibleModels.slice(sliceIndex));
+        } else {
+            this.ui.popupMenuRegion.hide();
         }
 
         clearInterval(interval);

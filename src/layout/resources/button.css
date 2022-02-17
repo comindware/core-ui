@@ -223,7 +223,7 @@
 .toolbar-btn_normal:hover,
 .split-btn_normal:hover {
     background-color: var(--theme-colors__highlight);
-    color: var(--theme-colors__severity-normal_strong);    
+    color: var(--theme-colors__severity-normal_strong);
 }
 
 .toolbar-btn_normal:active,
@@ -406,8 +406,8 @@
     transform: rotate(180deg);
 }
 
-.toolbar-panel_container .toolbar__icons_arrow,
-.toolbar-panel_container .popout__action.open .toolbar__icons_arrow {
+.toolbar-panel_container .toolbar__icons_arrow  i,
+.toolbar-panel_container .popout__action.open .toolbar__icons_arrow i {
     transform: rotate(-90deg);
 }
 
