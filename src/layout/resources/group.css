@@ -191,10 +191,6 @@
     padding: 0;
 }
 
-.layout-group .layout-group:not(.layout-group_not-nested){
-    margin: 0;
-}
-
 .group-toggle {
     margin-top: 3px;
 }

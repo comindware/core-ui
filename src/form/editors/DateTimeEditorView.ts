@@ -132,7 +132,8 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
         return _.defaultsPure(
             {
                 isMobile: MobileService.isMobile,
-                mobileInputType: mobileInputType[this.editorType]
+                mobileInputType: mobileInputType[this.editorType],
+                showSeparator: this.options.showTime && this.options.showDate
             },
             this.options
         );
@@ -622,6 +623,7 @@ export default formRepository.editors.DateTime = BaseEditorView.extend({
             },
             renderAfterClose: false,
             autoOpen: false,
+            alwaysAlignByButton: true,
             class: 'editor_date-time_time',
             externalBlurHandler: (target: Element) => this.__checkBlur(target)
         });

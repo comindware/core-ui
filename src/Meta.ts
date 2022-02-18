@@ -73,7 +73,7 @@ export const objectPropertyTypes = {
     IMAGE: 'Image',
     INSTANCE: 'Instance',
     ENUM: 'Enum',
-    ROLE: 'Role',    
+    ROLE: 'Role',
     ORGANIZATION_UNIT: 'OrganizationalUnit',
     URI: 'Uri'
 };
@@ -85,6 +85,7 @@ export const fieldTypes = {
     Duration: 'duration',
     DateTime: 'dateTime',
     Date: 'date',
+    Time: 'time',
     Boolean: 'boolean',
     Document: 'document',
     Datalist: 'dataList',
