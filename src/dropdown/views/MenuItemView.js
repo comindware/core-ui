@@ -1,4 +1,3 @@
-// @flow
 import template from '../templates/menuItem.hbs';
 
 /**
@@ -32,6 +31,9 @@ export default Marionette.View.extend({
 
     events: {
         click() {
+            if (this.model.get('url')) {
+                return;
+            }
             this.trigger('execute', this.model);
         }
     },

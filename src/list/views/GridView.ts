@@ -172,7 +172,8 @@ export default Marionette.View.extend({
         }
 
         this.toolbarView = new ToolbarView({
-            toolbarItems: this.__getToolbarActions() || []
+            toolbarItems: this.__getToolbarActions() || [],
+            skipActionHandlers: true
         });
 
         const allToolbarActions = this.toolbarView.getToolbarItems();
@@ -764,6 +765,11 @@ export default Marionette.View.extend({
     },
 
     __triggerAction(model, selected, ...rest) {
+        const handler = model.get('handler');
+        if (typeof handler === 'function') {
+            handler(model, selected, ...rest);
+            return;
+        }
         this.trigger('execute', model, selected, ...rest);
     },
 

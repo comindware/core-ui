@@ -101,8 +101,10 @@ export default Marionette.View.extend({
                 }
             });
         }, debounceInterval.medium);
-        const resizeObserver = new ResizeObserver(debouncedRebuild);
-        resizeObserver.observe(this.el);
+        if (this.el.parentElement) {
+            const resizeObserver = new ResizeObserver(debouncedRebuild);
+            resizeObserver.observe(this.el.parentElement);
+        }
         this.listenTo(Core.services.GlobalEventService, 'window:load', debouncedRebuild);
     },
 
@@ -125,7 +127,7 @@ export default Marionette.View.extend({
             mode: this.options.mode,
             showName: this.options.showName
         });
-        this.listenTo(view, 'command:execute', (model, options = {}) => this.trigger('command:execute', model, options));
+        this.listenTo(view, 'command:execute', this.__executeCommand);
         return view;
     },
 
@@ -149,6 +151,7 @@ export default Marionette.View.extend({
             clearInterval(interval);
             return;
         }
+        this.trigger('before:rebuild');
 
         const mainCollection = this.groupedCollection.groups[groupNames.main];
         const menuCollection = this.groupedCollection.groups[groupNames.menu];
@@ -172,6 +175,8 @@ export default Marionette.View.extend({
             this.ui.popupMenuRegion.hide();
         }
 
+        this.trigger('rebuild');
+
         clearInterval(interval);
     },
 
@@ -186,11 +191,16 @@ export default Marionette.View.extend({
             customAnchor: actionsMenuLabel
         });
 
-        this.listenTo(view, 'action:click', this.__executeDropdownCommand);
+        this.listenTo(view, 'action:click', this.__executeCommand);
         return view;
     },
 
-    __executeDropdownCommand(model, options = {}) {
+    __executeCommand(model, options = {}) {
+        const handler = model.get('handler');
+        if (typeof handler === 'function' && !this.options.skipActionHandlers) {
+            handler(model, options);
+            return;
+        }
         this.trigger('command:execute', model, options);
     }
 });
