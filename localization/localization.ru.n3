@@ -120,7 +120,7 @@
 
 <http://comindware.com/text/core/form/editors/document#download> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать"; l10n:originalData "Download"].
 
-<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда файл <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
+<http://comindware.com/text/core/form/editors/document#dragFile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда <br> или <br>"; l10n:originalData "Drop here <br>  or <br>"].
 
 <http://comindware.com/text/core/form/editors/document#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "Edit"].
 
@@ -202,7 +202,7 @@
 
 <http://comindware.com/text/core/form/editors/expression#valueAlias> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Знач."; l10n:originalData "valueAlias"].
 
-<http://comindware.com/text/core/form/editors/iconEditor#color> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Галерея иконок "; l10n:originalData "Gallery of icons"].
+<http://comindware.com/text/core/form/editors/iconEditor#color> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Галерея значков"; l10n:originalData "Gallery of icons"].
 
 <http://comindware.com/text/core/form/editors/iconEditor#searchTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Результаты поиска"; l10n:originalData "searchTitle"].
 
@@ -214,7 +214,7 @@
 
 <http://comindware.com/text/core/form/editors/image#cut> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Обрезать"; l10n:originalData "Cut"].
 
-<http://comindware.com/text/core/form/editors/image#dragfile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда изображение <br> или <br>"; l10n:originalData "Drag file for download <br>  or <br>"].
+<http://comindware.com/text/core/form/editors/image#dragfile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите сюда изображение <br> или <br>"; l10n:originalData "Drop image here <br>  or <br>"].
 
 <http://comindware.com/text/core/form/editors/image#replaceImage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Заменить изображение"; l10n:originalData "Replace Image"].
 
@@ -230,7 +230,7 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отмена"; l10n:originalData "cancel"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди или группы не найдены"; l10n:originalData "No people or group found"].
+<http://comindware.com/text/core/form/editors/memberSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Аккаунты и группы не найдены"; l10n:originalData "No accounts or groups found"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#emptyText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет пользователей или групп для отображения"; l10n:originalData "No users or groups to display"].
 
@@ -240,7 +240,7 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей или группы"; l10n:originalData "Select users or groups"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#people> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди"; l10n:originalData "People"].
+<http://comindware.com/text/core/form/editors/memberSplit#people> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Аккаунты"; l10n:originalData "Accounts"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#performersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, которые могут стать ответственными по задаче"; l10n:originalData "Select users who may be task assignee"].
 
@@ -436,7 +436,7 @@
 
 <http://comindware.com/text/core/grid/actions/archive/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
 
-<http://comindware.com/text/core/grid/actions/archive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите архивировать выбранные объекты?"; l10n:originalData "Do you want to archive selected items?"].
+<http://comindware.com/text/core/grid/actions/archive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивировать выбранные объекты?"; l10n:originalData "Do you want to archive selected items?"].
 
 <http://comindware.com/text/core/grid/actions/archive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивирование"; l10n:originalData "Archiving"].
 
@@ -446,7 +446,7 @@
 
 <http://comindware.com/text/core/grid/actions/delete/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
 
-<http://comindware.com/text/core/grid/actions/delete/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите удалить выбранные объекты?"; l10n:originalData "Do you want to delete selected items?"].
+<http://comindware.com/text/core/grid/actions/delete/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить выбранные объекты?"; l10n:originalData "Do you want to delete selected items?"].
 
 <http://comindware.com/text/core/grid/actions/delete/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удаление"; l10n:originalData "Deleting"].
 
@@ -456,7 +456,7 @@
 
 <http://comindware.com/text/core/grid/actions/unArchive/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
 
-<http://comindware.com/text/core/grid/actions/unArchive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите разархивировать выбранные объекты?"; l10n:originalData "Do you want to unarchive selected items?"].
+<http://comindware.com/text/core/grid/actions/unArchive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивировать выбранные объекты?"; l10n:originalData "Do you want to unarchive selected items?"].
 
 <http://comindware.com/text/core/grid/actions/unArchive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивирование"; l10n:originalData "Unarchiving"].
 
@@ -470,7 +470,7 @@
 
 <http://comindware.com/text/core/grid/loadingRow#loading> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ЗАГРУЗКА"; l10n:originalData "LOADING"].
 
-<http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
+<http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden"].
 
 <http://comindware.com/text/core/layout#showcase> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Витрина"; l10n:originalData "Showcase"].
 
@@ -486,9 +486,9 @@
 
 <http://comindware.com/text/core/layout/tabLayout#noTabMessage> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все вкладки скрыты"; l10n:originalData "All tabs are hidden"].
 
-<http://comindware.com/text/core/layoutDesigner#addHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите элементы из левой панели"; l10n:originalData "Drag elements from left panel"].
+<http://comindware.com/text/core/layoutDesigner#addHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите элементы из левой панели"; l10n:originalData "Drag elements from the left panel"].
 
-<http://comindware.com/text/core/layoutDesigner#removeHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Для удаления перетащите элемент за границы"; l10n:originalData "removeHint"].
+<http://comindware.com/text/core/layoutDesigner#removeHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Для удаления перетащите элемент за границы"; l10n:originalData "To remove elements, drag them out of the layout"].
 
 <http://comindware.com/text/core/services/localization#pluralForm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2) "].
 
@@ -509,6 +509,8 @@
 <http://comindware.com/text/core/services/message/unsavedChanges#saveAndLeave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить и выйти"; l10n:originalData "Save and leave"].
 
 <http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Изменения не сохранены"; l10n:originalData "There are unsaved changes"].
 
 <http://comindware.com/text/core/toolbar/blinkCheckbox#hideAll> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть все"; l10n:originalData "Hide all"].
 

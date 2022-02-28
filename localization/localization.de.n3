@@ -14,9 +14,6 @@
 
 <http://comindware.com/text/core/demo/cases/other/localizationService#daysPlural> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Tag,Tage"; l10n:originalData "day,days"].
 
-<http://comindware.com/text/core/form/editors#dropdown> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
-<http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/color#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Farbe hier eingeben"; l10n:originalData "Enter color here"].
 
@@ -62,21 +59,17 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#users> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "{0} Personen,{0} Personen"; l10n:originalData "{0} person,{0} people"].
 
-<http://comindware.com/text/core/form/editors/mentions#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
-<http://comindware.com/text/core/form/editors/number#notSetPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/password#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Kennwort eingeben"; l10n:isBeingTranslated true; l10n:originalData "Enter password"].
 
 <http://comindware.com/text/core/form/editors/reference#loading> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Wird geladen"; l10n:originalData "Loading"].
 
-<http://comindware.com/text/core/form/editors/reference#noItems> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/reference#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:originalData "Not set"].
 
 <http://comindware.com/text/core/form/editors/reference#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suchen..."; l10n:originalData "Search..."].
 
-<http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""].
 
 <http://comindware.com/text/core/form/editors/splitEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suche"; l10n:originalData "search"].
 
@@ -84,9 +77,7 @@
 
 <http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Text hier eingeben"; l10n:originalData "Enter text here"].
 
-<http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
-<http://comindware.com/text/core/form/editors/time#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/workSpaceItemSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Abbrechen"; l10n:originalData "Cancel"].
 
@@ -102,7 +93,6 @@
 
 <http://comindware.com/text/core/form/validation#required> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Dies ist ein Pflichtfeld."; l10n:originalData "This field is required"].
 
-<http://comindware.com/text/core/form/validation#systemName> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/formats/datetime#daysFull> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag"; l10n:originalData "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"].
 
@@ -132,21 +122,11 @@
 
 <http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht eingerichtet"; l10n:originalData "notSet"].
 
-<http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#no> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
-<http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/grid/emptyView#empty> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Liste ist leer"; l10n:originalData "The list is empty"].
 
-<http://comindware.com/text/core/grid/loadingRow#loading> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
-<http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
 <http://comindware.com/text/core/services/localization#pluralForm> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "(n != 1)"; l10n:isBeingTranslated true; l10n:originalData "(n != 1)"].
 
-<http://comindware.com/text/core/services/message/buttons#no> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
-
-<http://comindware.com/text/core/services/message/buttons#yes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/services/message/title#confirmation> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Warnung"; l10n:isBeingTranslated true; l10n:originalData "Warning"].
 

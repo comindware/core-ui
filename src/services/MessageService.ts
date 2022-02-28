@@ -130,6 +130,7 @@ export default {
         const systemMessages = {
             unsavedChanges: {
                 description: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.DESCRIPTION'),
+                text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.TITLE'),
                 buttons
             }
         };
