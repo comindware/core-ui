@@ -1253,6 +1253,7 @@ body.non-selectable {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    flex-basis: 50%;
     overflow-x: unset;
 }
 
