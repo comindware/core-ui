@@ -12,7 +12,7 @@ export default Marionette.View.extend({
 
     attributes() {
         const attributes = {
-            title: this.model.get('description') || this.model.get('name1')
+            title: this.model.get('description') || this.model.get('name')
         };
         const url = this.model.get('url');
         if (url) {
