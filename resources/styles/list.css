@@ -833,7 +833,6 @@ tr.grid-header.dragover td {
     flex-grow: 1;
     flex-shrink: 1;
     max-height: 100%;
-    will-change: scroll-position;
     contain: content;
 }
 

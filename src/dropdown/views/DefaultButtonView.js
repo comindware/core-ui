@@ -1,5 +1,6 @@
 // @flow
 import template from '../templates/defaultButton.hbs';
+import { htmlHelpers } from 'utils';
 
 /**
  * @name DefaultButtonView
@@ -18,7 +19,7 @@ export default Marionette.View.extend({
 
     attributes() {
         return {
-            title: this.model.get('text')
+            title: htmlHelpers.getTextfromHTML(this.model.get('text'))
         };
     },
 
