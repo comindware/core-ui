@@ -141,9 +141,7 @@ export default function() : GridItemBehavior {
             this.highlighted = true;
             this.highlightedFragment = text;
             this.set('highlightedFragment', text);
-            this.trigger('highlighted', {
-                text
-            });
+            this.trigger('highlighted');
         },
 
         unhighlight() {

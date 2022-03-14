@@ -2,29 +2,33 @@ import UserService from 'services/UserService';
 
 export default /** @lends module:core.utils.htmlHelpers */ {
     /**
-     * Highlights fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
+     * Highlights fragments within a text with &lt;span mark='highlight'&gt;&lt;/span&gt;.
      * @param {String} rawText Text to highlight.
      * @param {String} fragment highlighted fragment.
      * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightText(rawText, fragment, escape) {
+    highlightText(rawText: string, fragment: any, escape = true) {
+        if (!fragment || typeof fragment !== 'string') {
+            return rawText;
+        }
         let text = rawText;
         if (!text) {
             return '';
         }
-        if (escape || escape === undefined) {
+        if (escape) {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        const lowerText = text.toLowerCase();
+        const lowerText = String(text).toLowerCase();
         let startIndex = 0;
         let index;
         let output = '';
-        while ((index = lowerText.indexOf(fragment, startIndex)) !== -1) {
+        const fragmentLower = fragment.toLowerCase();
+        while ((index = lowerText.indexOf(fragmentLower, startIndex)) !== -1) {
             const index2 = index + fragment.length;
-            output += `${text.substring(startIndex, index)}<span class='highlight'>${text.substring(index, index2)}</span>`;
+            output += `${text.substring(startIndex, index)}<mark class='highlight'>${text.substring(index, index2)}</mark>`;
             startIndex = index2;
         }
 
@@ -34,6 +38,25 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
         return output;
     },
+
+    /**
+     * Highlights html fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
+     * @param {String} rawHTML Html to highlight.
+     * @param {String} fragment highlighted fragment.
+     * @return {String} Highlighted text
+     * */
+    highlightHtml(rawHTML: any, fragment: string) {
+        if (!rawHTML) {
+            return;
+        }
+        const stringHtml = String(rawHTML).trim();
+        if (stringHtml.startsWith('<') && stringHtml.endsWith('>')) {
+            return stringHtml
+              .replace(/>[^>]*<\//g, str=> this.highlightText(str, fragment, false));
+        }
+        return this.highlightText(stringHtml, fragment, false);
+    },
+
 
     /**
      * Highlights mentions within a text with &lt;a href='...'&gt;&lt;/a&gt;.

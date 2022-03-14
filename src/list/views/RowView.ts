@@ -94,7 +94,6 @@ export default Marionette.View.extend({
             }
         });
         this.__debounceSelectPointedOnClick = _.debounce((...args) => this.__selectPointedOnClick(...args), DOUBLECLICK_DELAY);
-        this.__debounceDeselectPointed = _.debounce((...args) => this.__deselectPointed(...args), DOUBLECLICK_DELAY);
     },
 
     getValue(id: string) {
@@ -106,12 +105,6 @@ export default Marionette.View.extend({
 
         if (model.selected) {
             this.__handleSelection();
-            if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
-                this.__selectPointed(this.gridEventAggregator.pointedCell);
-            }
-        }
-        if (model.highlighted) {
-            this.__handleHighlight(model.highlightedFragment);
         }
         if (this.model.checked !== undefined) {
             this.__updateState();
@@ -300,11 +293,11 @@ export default Marionette.View.extend({
     },
 
     __handleHighlight(fragment: string) {
-        this.model.set('highlightedFragment', fragment);
+        this.render();
     },
 
     __handleUnhighlight() {
-        this.model.set('highlightedFragment', null);
+        this.render();
     },
 
     updateIndex(index: number) {
@@ -448,6 +441,9 @@ export default Marionette.View.extend({
     },
 
     __selectPointedOnClick({ isErrorButtonClicked, column, columnIndex }: { isErrorButtonClicked: boolean, column: Column, columnIndex: number }) {
+        if (!this.model.selected) {
+            return;
+        }
         if (this.__isDoubleClicked) {
             if (this.lastPointedIndex > -1 && this.lastPointedIndex === columnIndex) {
                 this.__deselectPointed();
@@ -547,11 +543,14 @@ export default Marionette.View.extend({
 
     __handleSelection() {
         this.el.classList.add(classes.selected);
+        if (this.gridEventAggregator.pointedCell !== undefined) {
+            this.__selectPointed(this.gridEventAggregator.pointedCell);
+        }
     },
 
     __handleDeselection() {
         this.el.classList.remove(classes.selected);
-        this.__debounceDeselectPointed();
+        this.__deselectPointed();
     },
 
     __toggleCollapse(event: MouseEvent) {
@@ -693,21 +692,26 @@ export default Marionette.View.extend({
                 state = 'checkedSome';
             }
         }
+        let innerHTML
+        const checkbox = this.ui.checkbox.get(0);
         switch (state) {
             case 'checked':
-                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-check"></i>';
+                innerHTML = '<i class="fas fa-check"></i>';
                 this.el.classList.add(classes.rowChecked);
                 this.el.classList.remove(classes.rowCheckedSome);
                 break;
             case 'checkedSome':
-                this.ui.checkbox.get(0).innerHTML = '<i class="fas fa-square"></i>';
+                innerHTML = '<i class="fas fa-square"></i>';
                 this.el.classList.add(classes.rowChecked, classes.rowCheckedSome);
                 break;
             case 'unchecked':
             default:
-                this.ui.checkbox.get(0).innerHTML = '';
+                innerHTML = '';
                 this.el.classList.remove(classes.rowChecked, classes.rowCheckedSome);
                 break;
+        }
+        if (checkbox) {
+            checkbox.innerHTML = innerHTML;
         }
     },
 

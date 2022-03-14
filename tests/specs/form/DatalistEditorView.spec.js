@@ -13,6 +13,7 @@ describe('Editors', () => {
     const getBubble = (view, index) => getElement(view, `.bubbles__i:eq(${index})`);
     const getBubbleDelete = view => getElement(view, '.js-bubble-delete');
     const getItemOfList = index => getElement(Backbone, `.dd-list__i:eq(${index})`);
+    const getSelectedItem = index => getElement(Backbone, '.dd-list__i.selected');
     const getTextElOfInputList = index => getElement(Backbone, `.dd-list__text:eq(${index})`);
     const getCheckboxes = () => document.querySelectorAll('.checkbox');
     const getCheckedCheckboxes = () => document.querySelectorAll('.checkbox:not(:empty)');
@@ -489,7 +490,6 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
-        /*
         it('should set size for panel', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
@@ -504,13 +504,19 @@ describe('Editors', () => {
             });
 
             show(view);
+            view.on('attach', () => {
+                actionForOpen(view);
+            });
 
-            view.$('.js-button-region').outerWidth(70);
-            view.$('.bubbles').click();
-            let panel = document.getElementsByClassName('dropdown__wrp')[0];
-            expect(panel.clientHeight).toEqual(200);
+            view.on('dropdown:open', () => {
+                view.$('.js-button-region').outerWidth(70);
+                view.$('.bubbles').click();
+                const panel = document.getElementsByClassName('dropdown__wrp')[0];
+                const itemHeight = document.querySelector('.dd-list__i').offsetHeight + 1;
+                expect(panel.offsetHeight).toEqual(itemHeight * collectionData3.length);
+            });
         });
-        */
+
         it('should remove items on uncheck in panel', () => {
             const model = new Backbone.Model({
                 value: [{ id: 0, name: 'Test Reference 0' }, { id: 1, name: 'Test Reference 1' }]
@@ -967,7 +973,7 @@ describe('Editors', () => {
                     }
                     expect(view.panelCollection.length).toEqual(1);
 
-                    // need wait __tryPointFirstRow
+                    // need wait __tryPointSelectedOrFirstRow
                     _.defer(() => Backbone.$('input').trigger({ type: 'keydown', keyCode: keyCode.ENTER }));
                 });
 
@@ -2200,6 +2206,98 @@ describe('Editors', () => {
 
                 model.on('change:value', (model, value) => {
                     expect(value).toBeObject();
+                });
+
+                show(view);
+            });
+        });
+
+        describe('Item selection', () => {
+            it('should select first item if not value', done => {
+                const model = new Backbone.Model();
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: arrayObjects15,
+                    key: 'value',
+                    allowEmptyValue: false,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 1
+                });
+
+                view.on('attach', () => {
+                    actionForOpen(view);
+                });
+
+                view.on('dropdown:open', () => {
+                    setTimeout(() => {
+                        const selectedItem = getSelectedItem();
+                        expect(selectedItem.get(0).innerText).toBe('Text 0', 'Item is not selected');
+                        done();
+                    });
+                });
+
+                show(view);
+            });
+
+            it('should select value item if value set', done => {
+                const model = new Backbone.Model({
+                    value: 13
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: arrayObjects15,
+                    key: 'value',
+                    allowEmptyValue: false,
+                    autocommit: true,
+                    valueType: 'id',
+                    maxQuantitySelected: 1
+                });
+
+                view.on('attach', () => {
+                    actionForOpen(view);
+                });
+
+                view.on('dropdown:open', () => {
+                    setTimeout(() => {
+                        const selectedItem = getSelectedItem();
+                        expect(selectedItem.get(0).innerText).toBe('Text 13', 'Item is not selected');
+                        done();
+                    });
+                });
+
+                show(view);
+            });
+
+            it('should select first value item if multiple values set', done => {
+                const model = new Backbone.Model({
+                    value: [7, 12]
+                });
+
+                const view = new core.form.editors.DatalistEditor({
+                    model,
+                    collection: arrayObjects15,
+                    key: 'value',
+                    allowEmptyValue: false,
+                    autocommit: true,
+                    storeArray: true,
+                    valueType: 'id',
+                    showCheckboxes: true,
+                    maxQuantitySelected: 3
+                });
+
+                view.on('attach', () => {
+                    actionForOpen(view);
+                });
+
+                view.on('dropdown:open', () => {
+                    setTimeout(() => {
+                        const selectedItem = getSelectedItem();
+                        expect(selectedItem.get(0).innerText).toBe('Text 7', 'Item is not selected');
+                        done();
+                    });
                 });
 
                 show(view);
