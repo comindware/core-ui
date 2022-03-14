@@ -15,6 +15,7 @@ import Marionette from 'backbone.marionette';
 import moment from 'moment';
 import DropdownView from '../dropdown/views/DropdownView';
 import { classes } from './meta';
+import { htmlHelpers } from 'utils';
 
 const compiledCompositeDocumentCell = Handlebars.compile(compositeDocumentCell);
 const compiledCompositeImageCell = Handlebars.compile(compositeImageCell);
@@ -350,7 +351,11 @@ class CellViewFactory implements ICellViewFactory {
     }
 
     __getTaggedCellHTML({ column, model, cellInnerHTML, title }: { column: Column, model: Backbone.Model, cellInnerHTML: string, title: string }): string {
-        return `<td class="${this.__getCellClass(column, model)}" title="${title}" tabindex="-1">${cellInnerHTML}</td>`;
+        let innerHTML = cellInnerHTML;
+        if (model.highlighted) {
+            innerHTML = htmlHelpers.highlightHtml(innerHTML, model.highlightedFragment, false);
+        }
+        return `<td class="${this.__getCellClass(column, model)}" title="${title}" tabindex="-1">${innerHTML}</td>`;
     }
 
     __getFormattedHTMLValue(cellInnerHTML: string) {

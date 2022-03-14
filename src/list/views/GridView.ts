@@ -53,7 +53,6 @@ const defaultOptions = options => ({
     showHeader: true,
     handleSearch: true,
     updateToolbarEvents: '',
-    childHeight: 29,
     showTreeEditor: false,
     showContextMenu: true,
     treeEditorIsHidden: false,
@@ -232,7 +231,7 @@ export default Marionette.View.extend({
     },
 
     __updateTop() {
-        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight);
+        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.listView.childHeight + (this.options.showHeader ? 0 : 1)); // first item border
         if (top !== this.oldTop) {
             this.oldTop = top;
             this.ui.content[0].style.top = `${top}px`;
@@ -457,6 +456,7 @@ export default Marionette.View.extend({
             emptyView: this.options.emptyView,
             emptyViewOptions: this.options.emptyViewOptions,
             childHeight: this.options.childHeight,
+            showHeader: this.options.showHeader,
             childViewOptions,
             filter: this.options.filter,
             loadingChildView: this.options.loadingChildView || LoadingChildView,

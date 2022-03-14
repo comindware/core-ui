@@ -548,6 +548,10 @@ svg.svg-grid-icons {
     vertical-align: top;
 }
 
+.grid-header-column:first-child {
+    box-shadow: inset 1px -1px 0 0 var(--grids-color-border), inset -1px 1px 0 0 var(--grids-color-border);
+}
+
 .grid-header-column.selected {
     background-color: var(--theme-colors__primary_fade);
 }
@@ -621,7 +625,6 @@ svg.svg-grid-icons {
 
 .grid-header .checkbox:not(:empty) {
     color: var(--theme-colors__primary);
-    border-color: var(--theme-colors__primary-txt);
     background-color: var(--theme-colors__primary-txt);
 }
 
@@ -776,6 +779,10 @@ svg.svg-grid-icons {
     border-left: 1px solid var(--grids-color-border);
 }
 
+.grid__headless tr:first-child .cell {
+    border-top: 1px solid var(--grids-color-border);
+}
+
 .grid-selection-cell-all {
     min-width: var(--grid-selection-width);
 }
@@ -810,7 +817,7 @@ tr:not(:first-child) .cell_selection {
     max-height: var(--grid-cell-height);
     overflow: hidden;
     text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
 }
 

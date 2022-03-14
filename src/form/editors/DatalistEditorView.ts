@@ -418,7 +418,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         if (collectionIsBackbone) {
             this.listenTo(collection, 'reset update', () => {
-                this.__tryPointFirstRow();
+                this.__tryPointSelectedOrFirstRow();
                 this.__updateSelectedOnPanel();
                 this.valueTypeId && this.__value(this.value, { triggerChange: false }); // add condition some values has #.
             });
@@ -429,7 +429,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
 
         if (!this.options.fetchFiltered) {
             this.listenTo(this.panelCollection, 'filter', () => {
-                this.__tryPointFirstRow();
+                this.__tryPointSelectedOrFirstRow();
                 this.__updateSelectedOnPanel();
             });
         }
@@ -630,7 +630,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 throw new Error('searched was updated');
             }
 
-            this.__tryPointFirstRow();
+            this.__tryPointSelectedOrFirstRow();
             this.__updateSelectedOnPanel();
 
             this.isLastFetchSuccess = true;
@@ -762,7 +762,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__fetchUpdateFilter('');
             } else {
                 this.dropdownView.open();
-                this.__tryPointFirstRow();
+                this.__tryPointSelectedOrFirstRow();
             }
         }
     },
@@ -1058,7 +1058,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         } else if (this.options.addNewItem) {
             this.__addNewItemKeydown(e);
         } else {
-            this.__tryPointFirstRow();
+            this.__tryPointSelectedOrFirstRow();
             this.__isQuantityControl = false;
         }
     },
@@ -1076,13 +1076,13 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
             stop(e);
             selectedBubble.deselect();
             if (this.panelCollection.length) {
-                this.__tryPointFirstRow();
+                this.__tryPointSelectedOrFirstRow();
                 return;
             }
             if (this.options.addNewItem) {
                 this.__addNewItemKeydown(e);
             } else {
-                this.__tryPointFirstRow();
+                this.__tryPointSelectedOrFirstRow();
             }
         }
         switch (e.keyCode) {
@@ -1287,10 +1287,25 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
         this.dropdownView.setLoading(state);
     },
 
-    __tryPointFirstRow() {
+    __tryPointSelectedOrFirstRow() {
         if (this.panelCollection.length) {
             this.__getSelectedBubble()?.deselect();
-            this.panelCollection.selectSmart(this.panelCollection.at(0), false, false, false);
+            let modelToSelect;
+            if (this.value) {
+                let valueToSelect;
+                if (Array.isArray(this.value)) {
+                    valueToSelect = this.value[0];
+                } else {
+                    valueToSelect = this.value;
+                }
+                const id = valueToSelect && valueToSelect[this.options.idProperty] !== undefined ? valueToSelect[this.options.idProperty] : valueToSelect;
+                modelToSelect = this.panelCollection.get(id);
+            }
+            if (!modelToSelect) {
+                modelToSelect = this.panelCollection.at(0);
+            }
+            this.panelCollection.selectSmart(modelToSelect, false, false, false);
+            this.panelCollection.trigger('scrollTo', this.panelCollection.indexOf(modelToSelect), true);
         } else {
             this.panelCollection.pointOff();
         }

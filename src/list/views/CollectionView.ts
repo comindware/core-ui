@@ -28,7 +28,8 @@ const defaultOptions = {
     useSlidingWindow: true,
     disableKeydownHandler: false,
     customHeight: false,
-    childHeight: 29
+    showHeader: true,
+    childHeight: 30
 };
 
 /**
@@ -110,6 +111,7 @@ export default Marionette.PartialCollectionView.extend({
         this.listenTo(this.collection, 'prevModel', () => this.moveCursorBy(-1, { isLoop: true }));
         this.listenTo(this.collection, 'reorder', this.reorder);
         this.listenTo(this.collection, 'moveCursorBy', this.moveCursorBy);
+        this.listenTo(this.collection, 'scrollTo', this.scrollTo);
 
         if (this.options.draggable) {
             this.__setDraggableListeners();
@@ -204,7 +206,7 @@ export default Marionette.PartialCollectionView.extend({
             document.body.removeChild(element);
         }
         if (childHeight > 0) {
-            this.childHeight = childHeight;
+            this.childHeight = this.options.showHeader ? childHeight : childHeight - 1; // first item border
             this.__isChildHeightSpecified = true;
             this.stopListening(this.collection.parentCollection, 'add remove reset ', this.__specifyChildHeight);
         }
@@ -427,17 +429,18 @@ export default Marionette.PartialCollectionView.extend({
         const isInverseScrollLogic = isOverflow;
 
         if (correctIndex !== indexCurrentModel) {
-            this.__selectModelByIndex(correctIndex, shiftPressed);
             if (this.__getIsModelInScrollByIndex(correctIndex)) {
                 (isInverseScrollLogic ? !isPositiveDelta : isPositiveDelta) ? this.scrollToByLast(correctIndex) : this.scrollToByFirst(correctIndex);
             }
+            this.__selectModelByIndex(correctIndex, shiftPressed);
         }
     },
 
-    __getIsModelInScrollByIndex(modelIndex) {
+    __getIsModelInScrollByIndex(modelIndex: number) {
         const modelTopOffset = modelIndex * this.childHeight;
+        const modelBottomOffset = (modelIndex + 1) * this.childHeight;
         const scrollTop = this.parent$el.scrollTop();
-        return scrollTop > modelTopOffset || modelTopOffset > scrollTop + this.state.viewportHeight * this.childHeight;
+        return scrollTop > modelTopOffset || modelBottomOffset > scrollTop + this.state.viewportHeight * this.childHeight;
     },
 
     scrollTo(topIndex, shouldScrollElement = false) {
@@ -450,7 +453,7 @@ export default Marionette.PartialCollectionView.extend({
 
     scrollToByLast(bottomIndex) {
         //strange that size is equal index
-        const topIndex = this.__checkMaxMinIndex(bottomIndex - this.state.viewportHeight);
+        const topIndex = this.__checkMaxMinIndex(bottomIndex + 1 - this.state.viewportHeight);
         this.scrollTo(topIndex, true);
     },
 
@@ -519,7 +522,7 @@ export default Marionette.PartialCollectionView.extend({
             ? parentElHeight
             : window.innerHeight;
 
-        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
+        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight - (this.options.showHeader ? this.options.headerHeight : 1), window.innerHeight) / this.childHeight));
 
         const isAllItemHeightLessAvailable = typeof this.state.allItemsHeight === 'number' && this.state.allItemsHeight <= availableHeight;
         if (this.state.viewportHeight === oldViewportHeight) {

@@ -1,14 +1,14 @@
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
-    
+
     The selectable behavior expects that the model implements SelectableBehavior and works as follows:
-    
+
     1. The 'selected' class is set to $el when the model is selected.
     2. The item becomes selected on $el `mousedown` event. NOTE: use stopPropagation() method in a child element's `mousedown` callback
         to prevent item selection.
-    
+
     The highlightable behavior expects that the model implements HighlightableBehavior and works as follows:
-    
+
     1. Highlighting expect that view has onHighlighted(fragment) and onUnhighlighted() methods to render text highlighting.
 
     IMPLEMENTATION NOTE: onHighlighted(text) and onUnhighlighted() methods are expected to modify element's DOM marking
@@ -43,6 +43,9 @@ export default Marionette.Behavior.extend({
         const model = this.view.model;
         if (model.selected) {
             this.__handleSelection();
+        }
+        if (model.pointed) {
+            this.__handlePointedOn();
         }
         if (model.highlighted) {
             this.__highlight(model.highlightedFragment);
