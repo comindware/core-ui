@@ -583,7 +583,7 @@ svg.svg-grid-icons {
     background-color: var(--grid-header-bg);
     top: 0;
     border: none;
-    z-index: 3;
+    z-index: 11;
     position: sticky;
 }
 
@@ -818,7 +818,7 @@ tr:not(:first-child) .cell_selection {
     max-height: var(--grid-cell-height);
     overflow: hidden;
     text-overflow: clip; /* made because text-overflow: ellipsis doesn't work with HTML elements in Chrome */
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
 }
 
