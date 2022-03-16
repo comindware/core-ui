@@ -2,7 +2,7 @@
 import form from 'form';
 import dropdown from 'dropdown';
 import { transliterator } from 'utils';
-import LocalizationService from "services/LocalizationService";
+import LocalizationService from 'services/LocalizationService';
 import { validationSeverityTypes, validationSeverityClasses } from 'Meta';
 import template from '../templates/grid.hbs';
 import CollectionView from './CollectionView';
@@ -17,7 +17,7 @@ import SearchBarView from '../../views/SearchBarView';
 import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
-import { getDefaultActions, classes, configurationConstants, contextTypes } from "../meta";
+import { getDefaultActions, classes, configurationConstants, contextTypes } from '../meta';
 import factory from '../factory';
 import ErrorButtonView from '../../views/ErrorButtonView';
 import InfoButtonView from '../../views/InfoButtonView';
@@ -25,8 +25,8 @@ import TooltipPanelView from '../../views/TooltipPanelView';
 import ErrorsPanelView from '../../views/ErrorsPanelView';
 import GlobalEventService from '../../services/GlobalEventService';
 import { GraphModel } from '../../components/treeEditor/types';
-import Backbone from "backbone";
-import { GridItemBehavior } from "../behaviors/GridItemBehavior";
+import Backbone from 'backbone';
+import { GridItemBehavior } from '../behaviors/GridItemBehavior';
 
 /*
     Public interface:
@@ -41,7 +41,7 @@ import { GridItemBehavior } from "../behaviors/GridItemBehavior";
 
 const defaultOptions = options => ({
     focusSearchOnAttach: !MobileService.isMobile,
-    searchBarOptions:{ isAutoHideable: true },
+    searchBarOptions: { isAutoHideable: true },
     columns: [],
     emptyView: EmptyGridView,
     emptyViewOptions: {
@@ -205,7 +205,11 @@ export default Marionette.View.extend({
 
     updatePosition(position, shouldScrollElement = false) {
         const newPosition = this.__checkFillingViewport(position);
-        if (newPosition === this.listView.state.position || !this.collection.isSliding || Math.abs(newPosition - this.listView.state.position) < configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF - 1 ) {
+        if (
+            newPosition === this.listView.state.position
+            || !this.collection.isSliding
+            || Math.abs(newPosition - this.listView.state.position) < configurationConstants.VISIBLE_COLLECTION_RESERVE_HALF - 1
+        ) {
             return;
         }
 
@@ -280,7 +284,7 @@ export default Marionette.View.extend({
     },
 
     __onCursorMove(delta, options = {}) {
-        const rangeVisibleCellIndex = this.editableCellsIndexes.filter((indexColumn : number) => {
+        const rangeVisibleCellIndex = this.editableCellsIndexes.filter((indexColumn: number) => {
             const column = this.options.columns[indexColumn];
             if (column && column.getStateHidden) {
                 return !column.getStateHidden();
@@ -437,7 +441,7 @@ export default Marionette.View.extend({
         const childView = this.options.childView || RowView;
         const showRowIndex = this.getOption('showRowIndex');
 
-        const childViewOptions = this.childViewOptions = Object.assign(this.options.childViewOptions || {}, {
+        const childViewOptions = (this.childViewOptions = Object.assign(this.options.childViewOptions || {}, {
             columns: this.options.columns,
             transliteratedFields: this.options.transliteratedFields,
             gridEventAggregator: this,
@@ -446,7 +450,7 @@ export default Marionette.View.extend({
             draggable: this.options.draggable,
             showRowIndex,
             showContextMenu: this.options.showContextMenu
-        });
+        }));
 
         this.listView = new CollectionView({
             collection: this.collection,
@@ -603,13 +607,13 @@ export default Marionette.View.extend({
         }
         this.clearError();
 
-	return null;
+        return null;
     },
 
     setDraggable(draggable: boolean): void {
         this.childViewOptions.draggable = draggable;
         this.trigger('set:draggable', draggable);
-	this.listView.setDraggable(draggable);
+        this.listView.setDraggable(draggable);
     },
 
     __validateModel(model) {
@@ -761,7 +765,9 @@ export default Marionette.View.extend({
     },
 
     __confirmUserAction(text: string = '', title: string = '', yesButtonText: string = 'Yes', noButtonText: string = 'No') {
-        return Core.services.MessageService.showMessageDialog(text, title, [{ id: false, isCancel: true, text: noButtonText }, { id: true, text: yesButtonText }]);
+        return Core.services.MessageService.showMessageDialog(text, title, [
+            { id: false, isCancel: true, text: noButtonText }, { id: true, text: yesButtonText }
+        ]);
     },
 
     __triggerAction(model, selected, ...rest) {
@@ -1112,7 +1118,6 @@ export default Marionette.View.extend({
         const columns = this.options.columns;
         let elementIndex = index + 1;
         const column = columns[index];
-
 
         if (column.customClass && column.customClass.length) {
             const arrayCustomClasses = column.customClass.split(' ');

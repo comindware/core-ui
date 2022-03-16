@@ -33,7 +33,8 @@ select {
 .form-label__info:not(:empty),
 .error .form-label__error,
 .warning .form-label__error {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     margin: 0 var(--form-label-icon-margin-x);
 }
 
