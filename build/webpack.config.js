@@ -8,7 +8,6 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -213,16 +212,7 @@ module.exports = options => {
             new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
-            new TypedocWebpackPlugin({
-                out: './docs',
-                module: 'commonjs',
-                target: 'es6',
-                exclude: '**/node_modules/**/*.*',
-                tsconfig: '../tsconfig.json',
-                experimentalDecorators: true,
-                ignoreCompilerErrors: true
-            })
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],
