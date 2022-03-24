@@ -536,7 +536,9 @@ export default Marionette.PartialCollectionView.extend({
                 if (!view) {
                     this.scrollTo(rowIndex, true);
                 }
-                model.trigger('blink');
+                if (options.blink){
+                    model.trigger('blink');
+                }
             } else if (options.scroll !== false) {
                 this.scrollTo(0, true);
             }
