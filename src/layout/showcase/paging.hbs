@@ -1,0 +1,25 @@
+<div class="dataset-footer__left">
+    <div class="js-total-records-count-region">{{localize 'PROCESS.LISTS.LISTCONTEXT.TOTALROWSCOUNT'}}: <b>{{recordsTotal}}</b> {{#if selectedRowsCount}} ({{localize 'PROCESS.LISTS.LISTCONTEXT.SELECTEDROWSCOUNT'}}: <b>{{selectedRowsCount}}</b>){{/if}}</div>
+</div>
+{{#if pageControls.multiPage}}
+<div class="dataset-footer__center pagination">
+    {{#if pageControls.firstButton}}<span class="js-first-button pagination__i pagination__i_btn"><i class="{{iconPrefixer 'angle-double-left'}}"></i></span>{{/if}}
+    {{#if pageControls.previousButton}}<span class="js-previous-button pagination__i pagination__i_btn"><i class="{{iconPrefixer 'angle-left'}}"></i></span>{{/if}}
+
+    {{#if pageControls.firstPage}}<span class="js-first-page-button pagination__i">{{pageControls.firstPage}}</span>{{/if}}
+    {{#if pageControls.hasPrevItems}}<span class="pagination__i">...</span>{{/if}}
+    {{#if pageControls.doublePrevPage}}<span class="js-doublePrev-button pagination__i">{{pageControls.doublePrevPage}}</span>{{/if}}
+    {{#if pageControls.prevPage}}<span class="js-prevPage-button pagination__i">{{pageControls.prevPage}}</span>{{/if}}
+    {{#if pageControls.currentPage}}<span class="js-currentPage-button pagination__i pagination__i_selected">{{pageControls.currentPage}}</span>{{/if}}
+    {{#if pageControls.nextPage}}<span class="js-nextPage-button pagination__i">{{pageControls.nextPage}}</span>{{/if}}
+    {{#if pageControls.doubleNext}}<span class="js-doubleNext-button pagination__i">{{pageControls.doubleNext}}</span>{{/if}}
+    {{#if pageControls.hasPostItems}}<span class="pagination__i">...</span>{{/if}}
+    {{#if pageControls.lastPage}}<span class="js-last-page-button pagination__i">{{pageControls.lastPage}}</span>{{/if}}
+
+    {{#if pageControls.nextButton}}<span class="js-next-button pagination__i pagination__i_btn"><i class="{{iconPrefixer 'angle-right'}}"></i></span>{{/if}}
+    {{#if pageControls.lastButton}}<span class="js-last-button pagination__i pagination__i_btn"><i class="{{iconPrefixer 'angle-double-right'}}"></i></span>{{/if}}
+</div>
+{{/if}}
+<div class="dataset-footer__right">
+    <div class="js-records-per-page-region"></div>
+</div>
