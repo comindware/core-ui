@@ -5458,53 +5458,6 @@
     "unicode": "f070",
     "label": "Eye Slash"
   },
-  "facebook": {
-    "search": {
-      "terms": [
-        "facebook-official",
-        "social network"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f09a",
-    "label": "Facebook"
-  },
-  "facebook-f": {
-    "search": {
-      "terms": [
-        "facebook"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f39e",
-    "label": "Facebook F"
-  },
-  "facebook-messenger": {
-    "search": {
-      "terms": []
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f39f",
-    "label": "Facebook Messenger"
-  },
-  "facebook-square": {
-    "search": {
-      "terms": [
-        "social network"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f082",
-    "label": "Facebook Square"
-  },
   "fantasy-flight-games": {
     "search": {
       "terms": [
@@ -9369,30 +9322,6 @@
     ],
     "unicode": "f0c1",
     "label": "Link"
-  },
-  "linkedin": {
-    "search": {
-      "terms": [
-        "linkedin-square"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f08c",
-    "label": "LinkedIn"
-  },
-  "linkedin-in": {
-    "search": {
-      "terms": [
-        "linkedin"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f0e1",
-    "label": "LinkedIn In"
   },
   "linode": {
     "search": {
@@ -15761,32 +15690,6 @@
     ],
     "unicode": "f1e8",
     "label": "Twitch"
-  },
-  "twitter": {
-    "search": {
-      "terms": [
-        "social network",
-        "tweet"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f099",
-    "label": "Twitter"
-  },
-  "twitter-square": {
-    "search": {
-      "terms": [
-        "social network",
-        "tweet"
-      ]
-    },
-    "styles": [
-      "brands"
-    ],
-    "unicode": "f081",
-    "label": "Twitter Square"
   },
   "typo3": {
     "search": {
