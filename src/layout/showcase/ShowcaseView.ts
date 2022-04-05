@@ -65,17 +65,16 @@ export default Marionette.View.extend({
         this.containerWidth = entry[0].contentRect.width;
         this.recordsPerPageValues = this.__countRecordsPerPageValues(this.containerWidth + this.options.childMargins * 2);
 
-        if (this.containerWidth === this.containerWidthOld || this.recordsPerPageValues[0] === this.paginationModel.get('recordsPerPage')) {
-            return;
+        if (this.containerWidth !== this.containerWidthOld && this.recordsPerPageValues[0] !== this.paginationModel.get('recordsPerPage')) {
+            this.containerWidthOld = this.containerWidth;
+
+            this.paginationModel.set({ recordsPerPage: this.recordsPerPageValues[0], recordsPerPageValues: this.recordsPerPageValues });
+            if (this.paginationModel.get('currentPage') > this.paginationModel.pagesTotal() - 1) {
+                this.paginationModel.set('currentPage', this.paginationModel.pagesTotal() - 1);
+            }
+            this.paginationView.__updateRecordsPerPageValues();
         }
 
-        this.containerWidthOld = this.containerWidth;
-
-        this.paginationModel.set({ recordsPerPage: this.recordsPerPageValues[0], recordsPerPageValues: this.recordsPerPageValues });
-        if (this.paginationModel.get('currentPage') > this.paginationModel.pagesTotal() - 1) {
-            this.paginationModel.set('currentPage', this.paginationModel.pagesTotal() - 1);
-        }
-        this.paginationView.__updateRecordsPerPageValues();
         this.__resetCurrentCollection();
     },
 
