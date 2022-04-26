@@ -243,31 +243,36 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         if (this.value === value) {
             return;
         }
+
         this.value = value;
 
-        this.files = [];
-        this.collection.forEach(model => {
-            model.set({ isLoading: false });
-        });
-        for (let i = 0; i < value.length; i++) {
-            if (this.isTemp(value[i].id) && !this.cropTemps.includes(value[i].id) && value[i].extension !== 'tiff') {
-                this.cropTemps.push(value[i].id);
-                await this.__getCropperPopup(value[i]);
+        if (value) {
+            this.files = [];
+            this.collection.forEach(model => {
+                model.set({ isLoading: false });
+            });
+
+            for (let i = 0; i < value.length; i++) {
+                if (this.isTemp(value[i].id) && !this.cropTemps.includes(value[i].id) && value[i].extension !== 'tiff') {
+                    this.cropTemps.push(value[i].id);
+                    await this.__getCropperPopup(value[i]);
+                }
+            }
+
+            if (this.files.length) {
+                this.__editElementsCollection(this.files);
+                this.files.forEach(model => {
+                    model.uniqueId = this.options.editImage?.(model);
+                    const savingModel = this.collection.findWhere({ id: model.id });
+                    savingModel.set({ isLoading: true });
+                });
+                this.ui.fileZone.trigger('reset');
+                this.__triggerChange();
             }
         }
 
-        if (this.files.length) {
-            this.__editElementsCollection(this.files);
-            this.files.forEach(model => {
-                model.uniqueId = this.options.editImage?.(model);
-                const savingModel = this.collection.findWhere({ id: model.id });
-                savingModel.set({ isLoading: true });
-            });
-            this.ui.fileZone.trigger('reset');
-            this.__triggerChange();
-        }
-
         this.collection.reset(value || []);
+
         if (triggerChange) {
             this.__triggerChange();
         }
