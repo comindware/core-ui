@@ -889,7 +889,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
                 this.__closeAfterPanelSelected();
                 return;
             }
-            this.__value(this.value.concat(value), { triggerChange: true });
+            this.value = this.value ? this.value.concat(value) : value;
+            this.__value(this.value, { triggerChange: true });
         } else {
             model.deselect({ isSilent: true });
         }
