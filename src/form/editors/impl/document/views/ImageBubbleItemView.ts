@@ -96,7 +96,13 @@ export default Marionette.View.extend({
             panelMinWidth: '180px',
             autoOpen: true
         });
+
         this.showChildView('tooltipButtonRegion', tooltipView);
+
+        tooltipView.on('click', (event: MouseEvent) => {
+            event.stopPropagation();
+            event.preventDefault();
+        });
         tooltipView.on('item:execute', (actionId: string) => {
             switch (actionId) {
                 case actions.DOWNLOAD:
@@ -128,7 +134,7 @@ export default Marionette.View.extend({
     },
 
     __executeDownload(linkDownloadEvent: MouseEvent) {
-        if (this.__isNew() && window.navigator.msSaveOrOpenBlob) {
+        if (window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(this.model.get('file'), this.model.get('name'));
             linkDownloadEvent.preventDefault();
         }
