@@ -418,7 +418,8 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
                     if (model) {
                         const streamId = tempResult.fileIds[i];
                         model.set({
-                            streamId
+                            streamId,
+                            isLoading: false
                         });
                         const id = this.options.createImage?.(model.toJSON());
                         if (id) {

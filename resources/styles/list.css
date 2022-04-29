@@ -256,7 +256,7 @@
     bottom: 0;
     width: 8px;
     cursor: e-resize;
-    z-index: 3;
+    z-index: 11;
     opacity: .8;
 }
 

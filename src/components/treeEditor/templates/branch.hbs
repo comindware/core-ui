@@ -1,6 +1,7 @@
 <div class="js-tree-item branch-header tree-item {{#if collapsed}}collapsed{{/if}}">
-    <i class="js-collapse-btn collapse-btn {{iconPrefixer collapseIconClass}}"></i>
+    <div class="drag-wrap" draggable="true">⋮</div>
+    <div class="checkbox js-checkbox">{{#if isVisible}}<i class="js-check fas fa-check"></i>{{/if}}</div>
     <span class="branch-header-name js-collapse-btn">{{text}}</span>
-    <i class="js-eye-btn eye-btn {{iconPrefixer eyeIconClass}}"></i>
+    <i class="js-collapse-btn collapse-btn {{iconPrefixer collapseIconClass}}"></i>
 </div>
 <div class="js-branch-collection branch-collection" {{#if collapsed}}style="display: none" {{/if}}></div>

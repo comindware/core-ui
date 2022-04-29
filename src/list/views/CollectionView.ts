@@ -197,6 +197,7 @@ export default Marionette.PartialCollectionView.extend({
         }
 
         let childHeight = firstChild.getBoundingClientRect().height;
+        const borderTop = parseInt(getComputedStyle(firstChild).borderTopWidth?.replace('px', ''));
         if (!childHeight) {
             const element = document.createElement('div');
             const rowClone = firstChild.cloneNode(true);
@@ -206,7 +207,7 @@ export default Marionette.PartialCollectionView.extend({
             document.body.removeChild(element);
         }
         if (childHeight > 0) {
-            this.childHeight = this.options.showHeader ? childHeight : childHeight - 1; // first item border
+            this.childHeight = this.options.showHeader || !borderTop ? childHeight : childHeight - 1; // first item border
             this.__isChildHeightSpecified = true;
             this.stopListening(this.collection.parentCollection, 'add remove reset ', this.__specifyChildHeight);
         }

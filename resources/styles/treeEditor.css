@@ -12,7 +12,8 @@
     color: var(--theme-colors__text_strong);
 }
 
-.leaf-item:hover .drag-wrap {
+.leaf-item:hover .drag-wrap,
+.branch-header:hover .drag-wrap {
     visibility: visible;
 }
 
@@ -32,11 +33,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    padding-left: 12px;
 }
 
-.branch-header-name {
-    font-weight: 600;
-    font-size: 1.05rem;
+.branch-item .branch-collection .tree-item {
+    padding-left: 22px;
 }
 
 .root > .branch-header-name {
@@ -52,10 +54,7 @@
     white-space: nowrap;
     width: 100%;
     margin: 2px auto 2px 0;
-}
-
-.branch-item {
-    margin-bottom: 8px;
+    padding-left: 10px;
 }
 
 .branch-item:hover,
@@ -136,6 +135,7 @@
     justify-content: center;
     height: 22px;
     width: 22px;
+    transform: rotate(-180deg);
 }
 
 .root *:not(.required) > .eye-btn {
@@ -147,7 +147,7 @@
 }
 
 .collapsed .collapse-btn {
-    transform: rotate(-90deg);
+    transform: rotate(0);
 }
 
 .branch-header .eye-btn,

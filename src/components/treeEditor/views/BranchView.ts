@@ -30,7 +30,8 @@ export default Marionette.CollectionView.extend({
             eyeIconClass: this.__getIconClass(),
             collapseIconClass: iconNames.expand,
             collapsed: this.model.collapsedNode,
-            showHeader: this.options.showTreeEditorHeader
+            showHeader: this.options.showTreeEditorHeader,
+            isVisible: !this.model.get('isHidden')
         };
     },
 
