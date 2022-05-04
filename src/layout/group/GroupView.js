@@ -25,6 +25,7 @@ export default Marionette.View.extend({
     initialize(options) {
         _.defaults(options, defaultOptions(options));
         this.model = new Backbone.Model(options);
+        this.listenTo(this.model, 'click:hideGroup', this.hideGroup);
         this.listenTo(this.model, 'change:collapsed', this.__onCollapsedChange);
         this.update = this.update.bind(this);
     },
@@ -76,8 +77,8 @@ export default Marionette.View.extend({
         } else {
             this.ui.containerRegion[0].setAttribute('hidden', '');
         }
-        if(this.model.get('groupHidden')){
-            this.ui.layoutGroupWrp.hide()
+        if (this.model.get('groupHidden')) {
+            this.ui.layoutGroupWrp.hide();
         }
         this.__updateState();
         this.__onCollapsedChange();
@@ -129,14 +130,14 @@ export default Marionette.View.extend({
         this.ui.header.get(0).classList.toggle(classes.MAXIMIZED, isMaximized);
     },
 
-    onClickHideGroupButton(e) {
-        this.hideGroup()
+    onClickHideGroupButton() {
+        this.hideGroup();
     },
 
     hideGroup() {
         if (!this.model.get('groupHidden')) { 
-            this.model.set('groupHidden', true)
-            this.ui.layoutGroupWrp.hide()
+            this.model.set('groupHidden', true);
+            this.ui.layoutGroupWrp.hide();
         }
     },
 
