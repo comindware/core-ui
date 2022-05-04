@@ -74,6 +74,12 @@
     text-overflow: ellipsis;
 }
 
+.group-hide {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+    color: var(--theme-colors__primary);
+}
+
 .group-toggle,
 .group-restore {
     display: inline-flex;

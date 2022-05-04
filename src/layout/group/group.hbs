@@ -1,7 +1,10 @@
-<div class="layout-group-wrp">
+<div class="js-layout-group-wrp layout-group-wrp">
     <div class="js-header layout-group__head {{#if collapsible}} layout-group__head_collabsible{{/if}}">
         <span class="js-menu-region group-menu layout-group__menu"></span>
         <span class="group-title">{{{name}}}</span>
+        {{#if showHideGroupBtn}}
+        <span class="js-hide-group group-hide">не показывать</span>
+        {{/if}}
         {{#if collapsible}}
             <span class="js-toggle group-toggle"><i class="{{iconPrefixer 'angle-up'}}"></i></span>
         {{/if}}
