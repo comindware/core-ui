@@ -775,6 +775,7 @@ body.non-selectable {
 /* mselect new */
 .member-split {
     height: 100%;
+    min-height: 300px;
     width: 100%;
     display: flex;
     flex: 0 1 auto;
@@ -1234,6 +1235,10 @@ body.non-selectable {
 }
 
 /* member-split custom styles */
+
+.form-field_memberssplit {
+    min-height: 320px;
+}
 
 .layout__horizontal-layout.member-split-wrp {
     width: 100%;

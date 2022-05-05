@@ -1085,7 +1085,7 @@ tr:not(:first-child) .cell_selection {
 }
 
 .datalist-panel_list .grid-content-wrp {
-    width: 100%;
+    max-width: 100%;
 }
 
     /* columns select */

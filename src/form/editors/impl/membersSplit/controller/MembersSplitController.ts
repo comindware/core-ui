@@ -295,12 +295,13 @@ export default Marionette.MnObject.extend({
 
         target.parentCollection.add(movingModels);
         source.parentCollection.remove(movingModels);
-        _.debounce(this.__updateMembers(), model ? debounceInterval.medium : debounceInterval.short);
+        this.__updateMembers();
         target.rebuild();
         source.rebuild();
         if (!model) {
             source.trigger('filter');
         }
+        this.__updateMemberItems();
     },
 
     __setLoading(state, { both } = { both: true }) {

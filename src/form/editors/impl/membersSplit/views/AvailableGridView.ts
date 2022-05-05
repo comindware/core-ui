@@ -44,7 +44,7 @@ export default BaseMembersGridView.extend({
         if (!this.isDestroyed()) {
             const region = this.getRegion('quantityWarningRegion');
             if (this.model.get('available').length + this.model.get('selected').length < this.collection.totalCount) {
-                delete region.el.style.display;
+                region.el.style.removeProperty('display');
             } else {
                 region.el.style.display = 'none';
             }

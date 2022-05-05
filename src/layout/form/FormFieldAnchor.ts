@@ -11,7 +11,9 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'form-field',
+    className() {
+        return `form-field form-field_${this.options.type?.split('-')?.[0].toLowerCase()}`;
+    },
 
     behaviors: {
         LayoutBehavior: {
