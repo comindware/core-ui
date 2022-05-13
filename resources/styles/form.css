@@ -1015,6 +1015,14 @@ input[type="color"],
     text-decoration: none;
 }
 
+.document_rejected {
+    color: var(--theme-colors__error);
+}
+
+.document_processing {
+    color: var(--theme-colors__warning);
+}
+
 .document-buttons__list {
     display: flex;
     flex-flow: row nowrap;

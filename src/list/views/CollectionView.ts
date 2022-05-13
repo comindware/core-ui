@@ -3,6 +3,7 @@ import { configurationConstants } from '../meta';
 import GlobalEventService from '../../services/GlobalEventService';
 import _ from 'underscore';
 import Backbone from 'backbone';
+import Marionette from "backbone.marionette";
 
 /*
     Public interface:
@@ -56,7 +57,7 @@ const defaultOptions = {
  * должны быть указаны cellView для каждой колонки.
  * */
 
-export default Marionette.PartialCollectionView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -213,33 +214,9 @@ export default Marionette.PartialCollectionView.extend({
         }
     },
 
-    _showCollection() {
-        const models = this.collection.visibleModels;
-
-        models.forEach((child, index) => {
-            this._addChild(child, index);
-        });
-        this.children._updateLength();
-    },
-
-    _filteredSortedModels() {
-        return this._filterModels(this.collection.visibleModels); //returns models if no filter applied (!this.filter)
-    },
-
-    // override default method to correct add twhen index === 0 in visible collection
-    _onCollectionAdd(child, collection, opts) {
-        let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
-
-        if (this.filter || index === false) {
-            index = _.indexOf(this._filteredSortedModels(index), child);
-        }
-
-        if (this._shouldAddChild(child, index)) {
-            this._destroyEmptyView();
-            if (collection.visibleModels.find(model => model === child)) {
-                this._addChild(child, index);
-            }
-        }
+    _addChildModels(models) {
+        const modelsToAdd = this.collection.models === models ? this.collection.visibleModels : models;
+        return Marionette.CollectionView.prototype._addChildModels.call(this, modelsToAdd);
     },
 
     onAddChild(view, child) {
@@ -276,11 +253,6 @@ export default Marionette.PartialCollectionView.extend({
         });
     },
 
-    _setupChildView(view, index) {
-        if (this.sort) {
-            view._index = index;
-        }
-    },
 
     childView(child) {
         if (child.get('isLoadingRowModel')) {
