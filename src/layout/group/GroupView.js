@@ -130,8 +130,8 @@ export default Marionette.View.extend({
     },
 
     onClickHideGroupButton(e) {
-        if (this.ui.hideGroup.get(0) === e.currentTarget ) {
-            this.removeGroup && this.removeGroup();
+        if (this.ui.hideGroup.get(0) === e.currentTarget && typeof this.options.hideGroup === 'function') {
+            this.handlerResult = this.options.hideGroup(this.options.context);
         }
     },
 
