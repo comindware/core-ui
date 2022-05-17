@@ -76,9 +76,7 @@ export default Marionette.View.extend({
         } else {
             this.ui.containerRegion[0].setAttribute('hidden', '');
         }
-        if (this.model.get('groupHidden')) {
-            this.ui.layoutGroupWrp.hide();
-        }
+
         this.__updateState();
         this.__onCollapsedChange();
         // TODO: toolbar?
@@ -130,8 +128,9 @@ export default Marionette.View.extend({
     },
 
     onClickHideGroupButton(e) {
-        if (this.ui.hideGroup.get(0) === e.currentTarget && typeof this.options.hideGroup === 'function') {
-            this.handlerResult = this.options.hideGroup(this.options.context);
+        e.stopPropagation();
+        if (typeof this.options.hideGroup === 'function') {
+            this.options.hideGroup(this.options.context);
         }
     },
 

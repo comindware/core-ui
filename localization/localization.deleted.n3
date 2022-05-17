@@ -70,5 +70,4 @@
 
 <http://comindware.com/text/core/grid/toolbar#delete> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Delete"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/layout/groupLayout/btn#DONTSHOW> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:deleted true; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Don't show"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 

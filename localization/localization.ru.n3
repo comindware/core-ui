@@ -474,7 +474,7 @@
 
 <http://comindware.com/text/core/layout#showcase> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Витрина"; l10n:originalData "Showcase"].
 
-<http://comindware.com/text/core/layout/groupLayout/btn#Dontshow> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не показывать"; l10n:originalData "Don't show"].
+<http://comindware.com/text/core/layout/groupLayout#dontShow> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не показывать"; l10n:originalData "Don't show"].
 
 <http://comindware.com/text/core/layout/groupLayout/menu#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "На весь экран"; l10n:originalData "In full screen"].
 

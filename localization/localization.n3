@@ -635,11 +635,9 @@
 
 <http://comindware.com/text/core/layout#tabLayout> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Vasiliy Zorin"; l10n:modifiedBy "Vasiliy Zorin"; l10n:creationDate "2019-08-13T11:16:41.8575173Z"; l10n:modificationDate "2019-08-13T11:16:41.8575173Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "tabLayout"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/layout/groupLayout#btn> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Boris Volkov"; l10n:modifiedBy "Boris Volkov"; l10n:creationDate "2022-05-04T15:22:00.4925310Z"; l10n:modificationDate "2022-05-04T15:22:00.4915335Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "btn"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/layout/groupLayout#dontShow> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:needsReview true; l10n:createdBy "Boris Volkov"; l10n:modifiedBy "Boris Volkov"; l10n:creationDate "2022-05-17T08:34:44.9931947Z"; l10n:modificationDate "2022-05-17T08:34:54.4233929Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Don't show"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/layout/groupLayout#menu> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2021-03-02T15:46:07.2970727Z"; l10n:modificationDate "2021-03-02T15:46:07.2970727Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "menu"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
-
-<http://comindware.com/text/core/layout/groupLayout/btn#Dontshow> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:needsReview true; l10n:createdBy "Boris Volkov"; l10n:modifiedBy "Boris Volkov"; l10n:creationDate "2022-05-04T15:23:44.6381471Z"; l10n:modificationDate "2022-05-04T16:01:25.4216546Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Don't show"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/layout/groupLayout/menu#maximize> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2021-03-02T15:47:07.2984994Z"; l10n:modificationDate "2021-03-02T15:47:10.6325880Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "In full screen"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
