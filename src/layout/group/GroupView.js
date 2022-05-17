@@ -36,7 +36,6 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        layoutGroupWrp: '.js-layout-group-wrp',
         containerRegion: '.js-container-region',
         menuRegion: '.js-menu-region',
         hideGroup: '.js-hide-group'
@@ -51,7 +50,6 @@ export default Marionette.View.extend({
     ui: {
         toggleCollapseButtons: '.js-toggle',
         header: '.js-header',
-        layoutGroupWrp: '.js-layout-group-wrp',
         containerRegion: '.js-container-region',
         menuRegion: '.js-menu-region',
         restore: '.js-restore',
