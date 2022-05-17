@@ -2,11 +2,14 @@ import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import MenuButtonView from './MenuButtonView';
 
-const defaultOptions = ({ view }) => ({
+const defaultOptions = ({ view }) =>{
+    return ({
     collapsed: false,
-    collapsible: Boolean(view)
+    collapsible: Boolean(view),
+    showHideGroupBtn: false,
+    groupHidden: false
 });
-
+}
 const classes = {
     CLASS_NAME: 'layout-group',
     COLLAPSED_CLASS: 'group-collapsed',
@@ -23,7 +26,6 @@ export default Marionette.View.extend({
         _.defaults(options, defaultOptions(options));
         this.model = new Backbone.Model(options);
         this.listenTo(this.model, 'change:collapsed', this.__onCollapsedChange);
-
         this.update = this.update.bind(this);
     },
 
@@ -35,7 +37,8 @@ export default Marionette.View.extend({
 
     regions: {
         containerRegion: '.js-container-region',
-        menuRegion: '.js-menu-region'
+        menuRegion: '.js-menu-region',
+        hideGroup: '.js-hide-group'
     },
 
     behaviors: {
@@ -49,13 +52,15 @@ export default Marionette.View.extend({
         header: '.js-header',
         containerRegion: '.js-container-region',
         menuRegion: '.js-menu-region',
-        restore: '.js-restore'
+        restore: '.js-restore',
+        hideGroup: '.js-hide-group'
     },
 
     events: {
         'click @ui.toggleCollapseButtons': 'onClickToggleButton',
         'click @ui.menuRegion': 'onMenuClick',
-        'click @ui.restore': '__onRestore'
+        'click @ui.restore': '__onRestore',
+        'click @ui.hideGroup': 'onClickHideGroupButton'
     },
 
     modelEvents: {
@@ -69,6 +74,7 @@ export default Marionette.View.extend({
         } else {
             this.ui.containerRegion[0].setAttribute('hidden', '');
         }
+
         this.__updateState();
         this.__onCollapsedChange();
         // TODO: toolbar?
@@ -117,6 +123,13 @@ export default Marionette.View.extend({
 
     __onMaximizedChange(model, isMaximized) {
         this.ui.header.get(0).classList.toggle(classes.MAXIMIZED, isMaximized);
+    },
+
+    onClickHideGroupButton(e) {
+        e.stopPropagation();
+        if (typeof this.options.hideGroup === 'function') {
+            this.options.hideGroup(this.options.context);
+        }
     },
 
     __createMenu() {

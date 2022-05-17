@@ -74,6 +74,14 @@
     text-overflow: ellipsis;
 }
 
+.group-hide {
+    border-bottom: 1px dashed;
+    font-size: 13px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: var(--theme-colors__primary);
+}
+
 .group-toggle,
 .group-restore {
     display: inline-flex;
