@@ -8,7 +8,6 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const babelConfig = require('../babel.config.json');
 
@@ -194,18 +193,6 @@ module.exports = options => {
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
-            new TypedocWebpackPlugin(
-                {
-                    out: './docs',
-                    module: 'commonjs',
-                    target: 'es6',
-                    exclude: '**/node_modules/**/*.*',
-                    tsconfig: '../tsconfig.json',
-                    experimentalDecorators: true,
-                    ignoreCompilerErrors: true
-                },
-                // '../src'
-            ),
             new StylelintPlugin({
                 files: ['../resources/styles/*.css', '../resources/styles/**/*.css', '../resources/styles/**/**/*.css'],
                 fix: true

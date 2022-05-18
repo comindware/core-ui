@@ -1,7 +1,13 @@
-import { fileIconClasses } from '../meta';
+import { documentRevisionStatuses, fileIconClasses } from '../meta';
 
 export default {
-    getIconForDocument({ isLoading, name, extension, type } = {} ) {
+    getIconForDocument({ isLoading, name, extension, type, status } = {}) {
+        if (status === documentRevisionStatuses.REJECTED) {
+            return 'exclamation-circle';
+        }
+        if (status === documentRevisionStatuses.PROCESSING) {
+            return 'history';
+        }
         if (isLoading) {
             return 'spinner pulse';
         }

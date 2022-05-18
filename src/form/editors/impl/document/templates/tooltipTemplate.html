@@ -1,10 +1,12 @@
 <div class="js-revise-button-region"></div>
+{{#if url}}
 <div class="js-download-button tooltip_item">
         <span class="buttons__i" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}">
             <i class="{{iconPrefixer 'download'}}"></i>
         </span>
-  <div class="tooltip-item__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</div>
+    <div class="tooltip-item__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</div>
 </div>
+{{/if}}
 {{#unless readonly}}
 {{#if allowDelete}}
 <div class="js-delete-button tooltip_item">

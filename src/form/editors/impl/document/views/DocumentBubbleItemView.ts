@@ -3,6 +3,8 @@ import template from '../templates/documentBubbleItem.html';
 import DocumentItemController from '../controllers/DocumentItemController';
 import ExtensionIconService from '../services/ExtensionIconService';
 import TooltipPanelView from './TooltipPanelView';
+import { documentRevisionStatuses } from '../meta';
+import LocalizationService from 'services/LocalizationService';
 
 const tooltipButtonTemplate = `
     <span class="js-tooltip-button buttons__i btn-image-tooltip" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
@@ -41,15 +43,32 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateContext() {
-        const { text, name, isLoading, extension, embeddedType } = this.model.toJSON();
+        const { text, name, isLoading, extension, embeddedType, status } = this.model.toJSON();
+        let statusTitle = '';
+        if (this.model.get('status') === documentRevisionStatuses.REJECTED) {
+            statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.REJECTED');
+        }
+        if (this.model.get('status') === documentRevisionStatuses.PROCESSING) {
+            statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.PROCESSING');
+        }
         return {
             text: text || name,
-            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name }),
-            isInline: this.options.isInline && embeddedType
+            icon: ExtensionIconService.getIconForDocument({ isLoading, extension, name, status }),
+            isInline: this.options.isInline && embeddedType,
+            statusTitle
         };
     },
 
-    className: 'document-list',
+    className() {
+        let className = 'document-list';
+        if (this.model.get('status') === documentRevisionStatuses.REJECTED) {
+            className += ' document_rejected';
+        }
+        if (this.model.get('status') === documentRevisionStatuses.PROCESSING) {
+            className += ' document_processing';
+        }
+        return className;
+    },
 
     ui: {
         remove: '.js-delete-button',

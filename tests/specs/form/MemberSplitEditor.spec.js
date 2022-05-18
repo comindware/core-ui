@@ -22,7 +22,8 @@ describe('Editors', () => {
                     key: 'selected',
                     autocommit: true,
                     users: core.services.UserService.listUsers(),
-                    groups: new Backbone.Collection()
+                    groups: new Backbone.Collection(),
+                    memberService
                 });
             }
         });
@@ -434,7 +435,7 @@ describe('Editors', () => {
 
             const listGroups = core.services.UserService.listGroups();
             const listUsers = core.services.UserService.listUsers();
-            const memberService = {
+            const service = {
                 filterFnParameters: {
                     users: 'users',
                     groups: 'groups'
@@ -455,7 +456,7 @@ describe('Editors', () => {
                 autocommit: true,
                 users: listUsers,
                 groups: listGroups,
-                memberService
+                memberService: service
             });
 
              const getFirstAvailableElement = () => view

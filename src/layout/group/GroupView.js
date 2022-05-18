@@ -2,14 +2,12 @@ import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import MenuButtonView from './MenuButtonView';
 
-const defaultOptions = ({ view }) =>{
-    return ({
+const defaultOptions = ({ view }) => ({
     collapsed: false,
     collapsible: Boolean(view),
     showHideGroupBtn: false,
     groupHidden: false
 });
-}
 const classes = {
     CLASS_NAME: 'layout-group',
     COLLAPSED_CLASS: 'group-collapsed',
@@ -185,5 +183,5 @@ export default Marionette.View.extend({
             delete this.modalCollectionViewId;
             this.model.set('isMaximized', false);
         }
-    },
+    }
 });

@@ -53,6 +53,12 @@ export const videoFileExtensions = [
     'yuv'
 ];
 
+export const documentRevisionStatuses = {
+    UNDEFINED: 'Undefined',
+    PROCESSING: 'Processing',
+    REJECTED: 'Rejected'
+};
+
 export const embeddedTypes = {
     txt: 'text/plain',
     jpg: 'image/jpeg',
@@ -75,5 +81,6 @@ export default {
     savedDocumentPrefix: 'document',
     embeddedTypes,
     graphicFileExtensions,
-    videoFileExtensions
+    videoFileExtensions,
+    documentRevisionStatuses
 };

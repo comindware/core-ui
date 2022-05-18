@@ -301,7 +301,7 @@ export default Marionette.MnObject.extend({
         if (!model) {
             source.trigger('filter');
         }
-        this.__updateMemberItems();
+        this.updateItems();
     },
 
     __setLoading(state, { both } = { both: true }) {
