@@ -775,10 +775,13 @@ body.non-selectable {
 /* mselect new */
 .member-split {
     height: 100%;
-    min-height: 300px;
     width: 100%;
     display: flex;
     flex: 0 1 auto;
+}
+
+.member-split:not(.member-split_button) {
+    min-height: 300px;
 }
 
 .columns-select {

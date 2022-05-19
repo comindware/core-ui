@@ -33,7 +33,9 @@ export default (formRepository.editors.MembersSplit = BaseEditorView.extend({
         this.__initializeController(this.options);
     },
 
-    className: 'member-split',
+    className() {
+        return `member-split ${this.getOption('showMode') === 'button' ? 'member-split_button' : ''}`
+    },
 
     regions: {
         splitPanelRegion: {
