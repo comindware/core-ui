@@ -42,6 +42,7 @@
 }
 
 .carousel__dot {
+    flex: 0 0 auto;
     border-radius: 50%;
     margin: 0 10px 0 10px;
     cursor: pointer;
@@ -56,28 +57,24 @@
 
 .carousel__arrow {
     position: absolute;
+    font-size: 2rem;
+    color: var(--theme-colors__primary);
     top: 50%;
     width: 20px;
     height: 20px;
     z-index: 100;
-    border: 2px solid var(--theme-colors__primary);
-    border-right-color: transparent;
-    border-top-color: transparent;
     cursor: pointer;
 }
 
 .carousel__arrow_left {
-    left: 5px;
-    margin-right: 5px;
-    transform: rotate(45deg);
+    left: -10px;
 }
 
 .carousel__arrow_right {
-    right: 5px;
-    margin-left: 5px;
-    transform: rotate(225deg);
+    right: -10px;
 }
 
 .carousel__arrow_inactive {
     opacity: 0.5;
+    cursor: auto;
 }
