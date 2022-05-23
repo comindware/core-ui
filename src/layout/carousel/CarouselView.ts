@@ -3,26 +3,28 @@ import CarouselDotsView from './CarouselDotsView';
 import template from './carousel.hbs';
 import Backbone from 'backbone';
 
-const MIN_MARGIN = 5;
 const PADDING = 15;
+const TILE_MARGINS = 15;
 
 const defaultOptions = {
-    slidesToShow: 3,
+    slidesPerPage: 3,
     slidesToScroll: 1,
     ContentView: CarouselContentView,
     toggleUI: true,
     isAutoFill: true,
-    childWidth: 240
+    childWidth: 285
 };
 
 export default Marionette.View.extend({
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.parentCollection = this.options.collection;
+
         this.currentIndex = 0;
         this.collection = new Backbone.Collection();
         this.dotsCollection = new Backbone.Collection();
-        this.slidesToShow = this.options.slidesToShow;
+        this.slidesPerPage = this.options.slidesPerPage;
+        this.model.set('childWidth', this.options.childWidth);
         const { collection, ...contentOptions } = this.options;
         this.contentView = new this.options.ContentView({
             collection: this.collection,
@@ -31,7 +33,7 @@ export default Marionette.View.extend({
         });
         this.dotsView = new CarouselDotsView({
             collection: this.dotsCollection,
-            slidesToShow: this.slidesToShow,
+            slidesPerPage: this.slidesPerPage,
             currentIndex: this.currentIndex
         });
         this.listenTo(this.parentCollection, 'add remove reset', this.__refreshCollections);
@@ -77,8 +79,9 @@ export default Marionette.View.extend({
         }
     },
 
-    __countSlidesToShow(containerWidth: number) {
-        this.slidesToShow = Math.floor((containerWidth - PADDING * 2) / (this.options.childWidth + 2 * MIN_MARGIN));
+    __countSlidesPerPage(containerWidth: number) {
+        const slidesFit = Math.floor((containerWidth - PADDING * 2) / (this.model.get('childWidth') + TILE_MARGINS * 2));
+        return Math.max(slidesFit, 1);
     },
 
     __onResize(entry: Array<ResizeObserverEntry>) {
@@ -86,7 +89,8 @@ export default Marionette.View.extend({
         if (containerWidth === 0) {
             return;
         }
-        this.__countSlidesToShow(containerWidth);
+        this.slidesPerPage = this.__countSlidesPerPage(containerWidth);
+        this.currentIndex = 0;
         this.__refreshCollections();
     },
 
@@ -97,34 +101,39 @@ export default Marionette.View.extend({
     },
 
     __updateUI() {
-        this.__inactivateArrows();
+        this.__updateArrows();
         this.__updateDots();
     },
 
-    __inactivateArrows() {
+    __updateArrows() {
+        const scrollLeftDisabled = this.currentIndex - this.slidesPerPage < 0;
+        const scrollRightDisabled = this.slidesPerPage + this.currentIndex > this.parentCollection.length - 1;
         if (this.options.toggleUI) {
-            const isNothingToScroll = this.currentIndex - this.options.slidesToScroll < 0 && this.slidesToShow + this.currentIndex >= this.parentCollection.length;
+            const isNothingToScroll = scrollLeftDisabled && scrollRightDisabled;
             this.ui.arrowLeft.toggle(!isNothingToScroll);
             this.ui.arrowRight.toggle(!isNothingToScroll);
         }
-        this.ui.arrowLeft.toggleClass('carousel__arrow_inactive', this.currentIndex - this.options.slidesToScroll < 0);
-        this.ui.arrowRight.toggleClass('carousel__arrow_inactive', this.slidesToShow + this.currentIndex >= this.parentCollection.length);
+        this.ui.arrowLeft.toggleClass('carousel__arrow_inactive', scrollLeftDisabled);
+        this.ui.arrowRight.toggleClass('carousel__arrow_inactive', scrollRightDisabled);
     },
 
     __onLeftArrowClick() {
-        if (this.currentIndex - this.options.slidesToScroll < 0) {
+        const newIndexVal = this.currentIndex - this.slidesPerPage;
+        if (newIndexVal < 0) {
             return;
         }
-        this.currentIndex -= this.options.slidesToScroll;
+        this.currentIndex = newIndexVal;
+
         this.__resetCurrentCollection();
         this.__updateUI();
     },
 
     __onRightArrowClick() {
-        if (this.slidesToShow + this.currentIndex >= this.parentCollection.length) {
+        const newIndexVal = this.currentIndex + this.slidesPerPage;
+        if (newIndexVal > this.parentCollection.length - 1) {
             return;
         }
-        this.currentIndex += this.options.slidesToScroll;
+        this.currentIndex = newIndexVal;
         this.__resetCurrentCollection();
         this.__updateUI();
     },
@@ -132,10 +141,11 @@ export default Marionette.View.extend({
     __onSelectPage(index: number) {
         this.currentIndex = index;
         this.__resetCurrentCollection();
+        this.__updateUI();
     },
 
     __getCurrentCollection() {
-        return this.parentCollection.slice(Math.max(0, this.currentIndex), Math.min(this.slidesToShow + this.currentIndex, this.parentCollection.length));
+        return this.parentCollection.slice(Math.max(0, this.currentIndex), Math.min(this.slidesPerPage + this.currentIndex, this.parentCollection.length));
     },
 
     __resetCurrentCollection() {
@@ -143,18 +153,13 @@ export default Marionette.View.extend({
     },
 
     __getDots() {
-        const dots = this.parentCollection.reduce((dotsArray: Array<{ id: number }>, model: Backbone.Model, index: number) => {
-            const lastIndex = this.parentCollection.length - this.slidesToShow;
-            if (lastIndex === index) {
-                dotsArray.push({ id: lastIndex });
-                return dotsArray;
-            }
+        const dots: Array<{ id: number }> = [];
+        let startTileForPage = 0;
+        do {
+            dots.push({ id: startTileForPage });
+            startTileForPage += this.slidesPerPage;
+        } while (startTileForPage < this.parentCollection.length);
 
-            if (index % this.slidesToShow === 0 && index < lastIndex) {
-                dotsArray.push({ id: index });
-            }
-            return dotsArray;
-        }, []);
         return dots;
     },
 
@@ -164,7 +169,7 @@ export default Marionette.View.extend({
 
     __updateDots() {
         if (this.options.toggleUI) {
-            const isNothingToScroll = this.currentIndex - this.options.slidesToScroll < 0 && this.slidesToShow + this.currentIndex >= this.parentCollection.length;
+            const isNothingToScroll = this.currentIndex - this.options.slidesToScroll < 0 && this.slidesPerPage + this.currentIndex >= this.parentCollection.length;
             this.dotsView.$el.toggle(!isNothingToScroll);
         }
         this.dotsView.updateActive(this.currentIndex);
