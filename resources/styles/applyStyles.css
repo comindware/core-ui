@@ -189,10 +189,6 @@ input::placeholder {
     margin-top: -10px;
 }
 
-.bubbles .editor__icons {
-    font-size: 14px;
-}
-
 .d-svg-icons {
     fill: var(--theme-colors__text_fadest);
 }

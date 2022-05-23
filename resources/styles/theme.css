@@ -976,7 +976,7 @@ tr:not(:first-child) .cell_selection {
     transform: none;
     right: 2px;
     top: 3px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .editor_bubble--edit.editor_bubble--delete .icon-edit {
@@ -1013,6 +1013,10 @@ tr:not(:first-child) .cell_selection {
     white-space: nowrap;
     width: 100%;
     flex: 0 1 auto;
+}
+
+.bubble__pencil-edit .editor__icons.icon-edit {
+    right: 1.6em;
 }
 
 .editor_readonly .bubble__pencil-edit:hover a,
