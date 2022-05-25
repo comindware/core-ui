@@ -34,6 +34,10 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
 
         template: Handlebars.compile(template),
 
+        className() {
+            return 'editor_radiogroup';
+        },
+
         childViewContainer: '.js-container',
 
         childView: RadioButtonView,

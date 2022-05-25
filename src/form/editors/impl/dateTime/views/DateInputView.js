@@ -8,7 +8,8 @@ export default TextEditorView.extend({
         return {
             ...this.options,
             type: 'text',
-            size: this.__getInputSize()
+            size: this.__getInputSize(),
+            showIcon: !this.readonly || this.value
         };
     },
 

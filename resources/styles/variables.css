@@ -78,7 +78,7 @@
     --main-color: var(--theme-colors__primary);
     --selected-background-color: var(--theme-colors__main);
     --disabled-text-color: #444444;
-    --disabled-input-color: #b1b1b1;
+    --disabled-input-color: transparent;
     --border-color: var(--theme-colors__main_fade);
     --border: 1px solid var(--border-color);
     --border-radius: 4px;

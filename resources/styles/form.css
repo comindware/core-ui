@@ -252,6 +252,10 @@ input[type="checkbox"].checkbox {
     flex-shrink: 0;
 }
 
+.editor_checkbox.editor_readonly {
+    padding-left: 10px;
+}
+
 .editor_checkbox.cell {
     display: table-cell;
 }
@@ -440,6 +444,14 @@ td > .icon-true {
     padding-left: 30px;
 }
 
+.editor_readonly.editor_empty .input.input_duration {
+    padding-left: 10px;
+}
+
+.editor_date-time_date.editor_readonly.editor_empty ~ .editor_date-time_time.editor_readonly.editor_empty {
+    display: none;
+}
+
 .cell .input.input_duration,
 .editor_date-time .input.input_duration {
     padding-left: 5px;
@@ -475,6 +487,10 @@ td > .icon-true {
     border-radius: 4px;
     display: flex;
     height: 100%;
+}
+
+.editor_readonly .input_duration__wrapper {
+    border-color: transparent;
 }
 
 .cell .input_duration__wrapper,

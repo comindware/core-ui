@@ -6,7 +6,7 @@
 
 const defaultOptions = () => ({
     emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-    readonlyPlaceholder: '-'
+    readonlyPlaceholder: '–'
 });
 
 import MarionetteEditorPrototype from './MarionetteEditorPrototype';
