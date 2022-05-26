@@ -316,7 +316,7 @@ export default Marionette.View.extend({
         let margin = level * this.options.levelMargin;
         const hasChildren = Boolean(this.model.children?.length);
         const el = this.__getCellByColumnIndex(0);
-        if (!el.children[0].classList.contains('js-tree-first-cell')) {
+        if (!el?.children[0]?.classList.contains('js-tree-first-cell')) {
             el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
         }
         
