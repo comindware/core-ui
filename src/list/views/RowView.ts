@@ -315,10 +315,14 @@ export default Marionette.View.extend({
         const level = this.model.level || 0;
         let margin = level * this.options.levelMargin;
         const hasChildren = Boolean(this.model.children?.length);
+        const el = this.__getCellByColumnIndex(0);
+        if (!el.children[0].classList.contains('js-tree-first-cell')) {
+            el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
+        }
+        
         if (!force && this.lastHasChildren === hasChildren && this.lastMargin === margin) {
             return;
         }
-        const el = this.__getCellByColumnIndex(0);
         const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
 
         if (treeFirstCell?.parentElement === el) {
@@ -341,8 +345,6 @@ export default Marionette.View.extend({
                 `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
                  ${Handlebars.helpers.iconPrefixer('angle-down')} ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></i/`
             );
-        } else {
-            el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.subGroupMargin}px;"></span>`);
         }
         this.lastHasChildren = hasChildren;
         this.lastMargin = margin;

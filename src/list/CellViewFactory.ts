@@ -352,7 +352,7 @@ class CellViewFactory implements ICellViewFactory {
 
     __getTaggedCellHTML({ column, model, cellInnerHTML, title }: { column: Column, model: Backbone.Model, cellInnerHTML: string, title: string }): string {
         let innerHTML = cellInnerHTML;
-        if (model.highlighted) {
+        if (model.highlighted && cellInnerHTML.length > 0) {
             innerHTML = htmlHelpers.highlightHtml(innerHTML, model.highlightedFragment, false);
         }
         return `<td class="${this.__getCellClass(column, model)}" title="${title}" tabindex="-1">${innerHTML}</td>`;
