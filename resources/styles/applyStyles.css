@@ -156,6 +156,13 @@ input::placeholder {
     transform: scale(1.2) translate(3px, 4px);
 }
 
+.input .svg-icons_date,
+.input .svg-icons_time,
+.input .svg-icons_member,
+.input .svg-icons_reference {
+    transform: none;
+}
+
 .editor_checked .svg-icons_checked {
     transform: scale(1.1) translate(0, 0);
 }
