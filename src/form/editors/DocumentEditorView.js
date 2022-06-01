@@ -60,7 +60,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
         this.createdUrls = [];
-        this.$el.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
+        this.$editorEl.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
     },
 
     canAdd: false,

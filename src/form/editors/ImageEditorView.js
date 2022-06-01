@@ -80,7 +80,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
             this.__onCollapseClick();
         }
 
-        this.$el.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
+        this.$editorEl.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
     },
 
     canAdd: false,
