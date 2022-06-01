@@ -137,7 +137,8 @@ export default formRepository.editors.Duration = BaseEditorView.extend({
 
     templateContext() {
         return {
-            size: this.__getInputSize()
+            size: this.__getInputSize(),
+            showIcon: !this.readonly || this.value
         };
     },
 

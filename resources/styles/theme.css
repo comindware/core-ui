@@ -134,7 +134,8 @@ select {
 .editor.context_select.editor_disabled {
     background: var(--disabled-input-color);
     color: var(--disabled-text-color);
-    opacity: 0.7;
+    border-color: transparent;
+    border-left-width: 0;
 }
 
 .editor_disabled .input,
@@ -426,6 +427,14 @@ td .checkbox.checkbox_switch i,
     padding: var(--form-label-padding);
 }
 
+.editor_radiogroup.editor_readonly.editor_empty::after,
+.editor_radiogroup.editor_disabled.editor_empty::after {
+    display: block;
+    content: "–";
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
 .editor_document.editor_empty.editor_disabled .emptyDocumentPlaceholder,
 .editor_document.editor_empty.editor_readonly .emptyDocumentPlaceholder {
     padding: var(--form-label-padding);
@@ -463,6 +472,18 @@ td .checkbox.checkbox_switch i,
     border: 1px solid var(--editors-color-border);
     padding: var(--input-padding);
     overflow: hidden;
+}
+
+.editor_date-time.editor_readonly {
+    border-color: transparent;
+}
+
+.editor_date-time.editor_readonly.editor_empty {
+    padding-left: 5px;
+}
+
+.editor_date-time.editor_readonly .btn-separator {
+    display: none;
 }
 
 .cell.editor_date-time {
