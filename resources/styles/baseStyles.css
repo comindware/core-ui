@@ -378,17 +378,12 @@ svg.svg-grid-icons.svg-icons_flag-none {
     flex-wrap: nowrap;
 }
 
-.cell > .editor.editor_document > .documents .task-links__i {
-    margin-bottom: 0;
-    margin-right: 2em;
-}
-
-.cell .documents__text,
+.cell .drop-zone__text,
 .cell .field-documents__more {
     display: none;
 }
 
-.cell .documents__drop-zone {
+.cell .editor__drop-zone {
     height: auto;
     position: absolute;
     left: 0;
@@ -401,15 +396,10 @@ svg.svg-grid-icons.svg-icons_flag-none {
     font-weight: 900;
 }
 
-.cell .editor_empty .documents__drop-zone::before {
+.cell .editor_empty .editor__drop-zone::before {
     content: "\F0C6";
     color: grey;
     position: absolute;
-}
-
-.cell .documents__wrapper {
-    padding: 0;
-    border: none;
 }
 
 .layout__popup-view-content > .layout__form-view {
@@ -425,10 +415,6 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .editor_document {
     flex-direction: column;
     align-items: flex-start;
-}
-
-.task-links__i {
-    margin-bottom: 10px;
 }
 
 .btn.field-documents__more {

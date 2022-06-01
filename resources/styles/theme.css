@@ -1063,7 +1063,7 @@ tr:not(:first-child) .cell_selection {
     line-height: 12px;
 }
 
-.bubbles .bubble-doc_icon {
+.bubbles .bubble-doc__icon {
     /* @apply --relative-center-y-theme; this stuff not working! */
     position: relative;
     margin-top: auto;
@@ -1071,7 +1071,7 @@ tr:not(:first-child) .cell_selection {
     margin-right: 10px;
 }
 
-.bubbles .bubble-doc_text {
+.bubbles .bubble-doc__text {
     line-height: 100%;
     flex: 0 1 auto;
 }
@@ -1576,49 +1576,6 @@ tr:not(:first-child) .cell_selection {
     height: 7px;
     border-radius: 50%;
     background: transparent;
-}
-
-
-.task-links__link {
-    color: var(--theme-colors__text_fade);
-}
-
-.task-links__link:hover {
-    color: var(--link-color);
-}
-
-.documents__drop-zone {
-    max-width: 400px;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    text-align: center;
-    flex: 0 0 auto;
-    position: relative;
-}
-
-.editor_document.editor_readonly .documents__drop-zone,
-.editor_document.editor_disabled .documents__drop-zone {
-    display: none;
-}
-
-.documents__wrapper {
-    padding: 20px;
-    height: 100%;
-    min-width: 120px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.documents__upload {
-    cursor: pointer;
-    color: var(--theme-colors__main);
-    margin: 5px 0 0 0;
 }
 
 .cke_editable {

@@ -1,11 +1,26 @@
 export const fileIconClasses = {
-    image: 'jpeg jpg jif jfif png gif tif tiff bmp',
+    'file-image': 'jpeg jpg jif jfif png gif tif tiff bmp',
     'file-word': 'docx doc rtf',
     'file-excel': 'xls xlsx xlsm xlsb',
     'file-pdf': 'pdf'
 };
 
-export const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg2000', 'exif', 'tiff', 'ppm', 'pgm', 'pbm', 'pnm', 'webp', 'bpg', 'bat'];
+export const graphicFileExtensions = ['gif',
+'png',
+'bmp',
+'jpg',
+'jpeg',
+'jfif',
+'jpeg2000',
+'exif',
+'tiff',
+'ppm',
+'pgm',
+'pbm',
+'pnm',
+'webp',
+'bpg',
+'bat'];
 export const videoFileExtensions = [
     '3g2',
     '3gp',

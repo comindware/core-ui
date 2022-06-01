@@ -14,11 +14,11 @@ import CropperEditorView from './CropperEditorView';
 import MultiselectAddButtonView from './MultiselectAddButtonView';
 
 const classes = {
-    dropZone: 'documents__drop-zone',
-    activeDropZone: 'documents__drop-zone--active',
-    collapsed: 'documents-collapse_collapsed',
-    collapseRotated: 'documents-collapse-icon-more-rotated',
-    imageMoreHide: 'image-more__hide'
+    dropZone: 'editor__drop-zone',
+    activeDropZone: 'editor__drop-zone_active',
+    collapsed: 'editor_collapsed',
+    listCollapsed: 'l-list_collapsed',
+    imageDisabled: 'image-item_disabled'
 };
 
 const displayFormats = {
@@ -79,6 +79,8 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         if (this.collection.length) {
             this.__onCollapseClick();
         }
+
+        this.$el.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
     },
 
     canAdd: false,
@@ -89,7 +91,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
 
     childView: ImageBubbleItemView,
 
-    childViewContainer: '.js-collection-container',
+    childViewContainer: '.js-collection-list',
 
     childViewOptions() {
         return {
@@ -112,11 +114,11 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
         fileZone: '.js-file-zone',
-        showMore: '.js-show-more',
+        showMoreBtn: '.js-more-btn',
         invisibleCount: '.js-invisible-count',
-        showMoreText: '.js-show-more-text',
-        collectionContainer: '.js-collection-container',
-        collapseMoreIcon: '.js-collapse-icon-more'
+        listContainer: '.js-list',
+        showMoreText: '.js-more-btn-text',
+        showMoreContainer: '.js-show-more'
     },
 
     focusElement: '.js-file-button',
@@ -136,7 +138,7 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     events() {
         return {
             'click @ui.collapseIcon': '__onCollapseClick',
-            'click @ui.showMore': 'toggleShowMore',
+            'click @ui.showMoreBtn': 'toggleShowMore',
             keydown: '__handleKeydown',
             'change @ui.fileUpload': 'onSelectFiles',
             'click @ui.fileUploadButton': '__onItemClick',
@@ -222,9 +224,9 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
     syncValue() {
         this.value = this.collection
             ? this.collection.toJSON().map(m => {
-                const { file, isLoading, uniqueId, ...rest } = m;
-                return rest;
-            })
+                  const { file, isLoading, uniqueId, ...rest } = m;
+                  return rest;
+              })
             : [];
     },
 
@@ -548,8 +550,8 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         } else {
             this.expandShowMore();
         }
-        this.ui.collapseMoreIcon.toggleClass(classes.collapseRotated, this.collapsed);
-        this.ui.collectionContainer.toggleClass(classes.imageMoreHide, !this.collapsed);
+
+        this.ui.listContainer.toggleClass(classes.listCollapsed, this.collapsed);
     },
 
     update() {
@@ -565,28 +567,39 @@ export default formRepository.editors.Image = BaseCollectionEditorView.extend({
         }
         const documentElements = this.$container.children();
         if (documentElements.length === 0) {
-            this.ui.showMore.hide();
+            this.ui.showMoreContainer.hide();
             return;
         }
         const childViews = documentElements;
         const length = this.collection.length;
         // invisible children
-        const maxNumbers = this.displayFormat === displayFormats.SHOW_AS_CARDS ? MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS : MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES;
+        const isShowAsCards = this.displayFormat === displayFormats.SHOW_AS_CARDS;
+        const maxNumbers = isShowAsCards ? MAX_NUMBER_VISIBLE_DOCS_FOR_CARDS : MAX_NUMBER_VISIBLE_DOCS_FOR_PICTURES;
+
         for (let i = maxNumbers; i < length; i++) {
-            childViews[i].style.display = 'none';
+            const child = childViews[i];
+
+            if (isShowAsCards && i < maxNumbers + 2) {
+                child.classList.add(classes.imageDisabled);
+                continue;
+            }
+            child.style.display = 'none';
         }
         const countInvisibleElements = length - maxNumbers;
         if (countInvisibleElements > 0) {
-            this.ui.showMore.show();
+            this.ui.showMoreContainer.show();
             this.ui.invisibleCount.html(countInvisibleElements);
             this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
         } else {
-            this.ui.showMore.hide();
+            this.ui.showMoreContainer.hide();
         }
     },
 
     expandShowMore() {
-        this.$container.children().show();
+        this.$container
+            .children()
+            .removeClass(classes.imageDisabled)
+            .show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },

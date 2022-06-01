@@ -1,23 +1,23 @@
 {{#if isMobile}}
-    <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
+    <span class="toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
 {{else}}
-    <form class="js-file-zone documents__drop-zone">
-        <i class="documents-collapse-icon {{iconPrefixer 'angle-up'}} js-collapse-icon"></i>
-        <div class="documents__wrapper">
-            <span class="documents__text">{{{placeHolderText}}}</span>
-            <span class="documents__upload toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
-        </div>
-    </form>
+    <i class="editor__collapse-i {{iconPrefixer 'angle-up'}} js-collapse-icon"></i>
+    <div class="drop-zone editor__drop-zone js-file-zone">
+        <span class="drop-zone__text">{{{placeHolderText}}}</span>
+        <span class="toolbar-btn js-file-button" tabindex="0" title="{{displayText}}">{{localize 'CORE.FORM.EDITORS.DOCUMENT.CHOOSE'}}</span>
+    </div>
 {{/if}}
 
+<input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input" accept="{{fileFormat}}" style="display: none">
 
-<input name="fileId" type="file" {{#if multiple}} multiple {{/if}} class="js-file-input input-upload" accept="{{fileFormat}}" style="display: none">
-
-<!--<div class="documents emptyDocumentPlaceholder">{{localize 'CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'}}</div>-->
-
-<ul class="documents js-collection-container"></ul>
-
-<div class="document-show_more js-show-more">
-    <span class="js-show-more-text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWMORE'}}</span>
-    <i class="documents-collapse-icon-more {{iconPrefixer 'angle-up'}} js-collapse-icon-more"></i>
+<div class="l-list js-list">
+    <ul class="editor__list l-list__list js-collection-list"></ul>
+    <div class="l-list__show-more l-list__show-more_shadow js-show-more">
+        <div class="l-list__show-more-btn js-more-btn">
+            <span class="l-list__more-text js-more-btn-text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.SHOWMORE'}}</span>
+            <i class="l-list__caret-i {{iconPrefixer 'angle-up'}}"></i>
+        </div>
+    </div>
 </div>
+
+

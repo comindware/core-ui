@@ -126,6 +126,8 @@
 
 <http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
 
+<http://comindware.com/text/core/form/editors/document#noDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет данных для отображения"; l10n:originalData "No data to show"].
+
 <http://comindware.com/text/core/form/editors/document#preview> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Просмотр"; l10n:originalData "Preview"].
 
 <http://comindware.com/text/core/form/editors/document#remove> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Remove"].

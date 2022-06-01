@@ -11,11 +11,10 @@ import AttachmentsController from './impl/document/gallery/AttachmentsController
 import DocumentsCollection from './impl/document/collections/DocumentsCollection';
 
 const classes = {
-    dropZone: 'documents__drop-zone',
-    activeDropZone: 'documents__drop-zone--active',
-    collapsed: 'documents-collapse_collapsed',
-    collapseRotated: 'documents-collapse-icon-more-rotated',
-    documentsMoreHide: 'documents-more__hide'
+    dropZone: 'editor__drop-zone',
+    activeDropZone: 'editor__drop-zone_active',
+    collapsed: 'editor_collapsed',
+    listCollapsed: 'l-list_collapsed'
 };
 
 const MultiselectAddButtonView = Marionette.View.extend({
@@ -36,7 +35,7 @@ const defaultOptions = options => ({
     isInline: false
 });
 
-const MAX_NUMBER_VISIBLE_DOCS = 4;
+const MAX_NUMBER_VISIBLE_DOCS = 5;
 
 export default formRepository.editors.Document = BaseCollectionEditorView.extend({
     initialize(options = {}) {
@@ -61,6 +60,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
         this.createdUrls = [];
+        this.$el.attr('data-empty-text', LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.NODOCUMENT'));
     },
 
     canAdd: false,
@@ -71,7 +71,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
 
     childView: DocumentBubbleItemView,
 
-    childViewContainer: '.js-collection-container',
+    childViewContainer: '.js-collection-list',
 
     childViewOptions() {
         return {
@@ -92,11 +92,11 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
         fileZone: '.js-file-zone',
-        showMore: '.js-show-more',
+        showMoreBtn: '.js-more-btn',
         invisibleCount: '.js-invisible-count',
-        showMoreText: '.js-show-more-text',
-        collectionContainer: '.js-collection-container',
-        collapseMoreIcon: '.js-collapse-icon-more'
+        listContainer: '.js-list',
+        showMoreText: '.js-more-btn-text',
+        showMoreContainer: '.js-show-more'
     },
 
     focusElement: '.js-file-button',
@@ -114,7 +114,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     events() {
         return {
             'click @ui.collapseIcon': '__onCollapseClick',
-            'click @ui.showMore': 'toggleShowMore',
+            'click @ui.showMoreBtn': 'toggleShowMore',
             keydown: '__handleKeydown',
             'change @ui.fileUpload': 'onSelectFiles',
             'click @ui.fileUploadButton': '__onItemClick',
@@ -196,12 +196,12 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
     syncValue() {
         this.value = this.collection
             ? this.collection
-                  .toJSON()
-                  .filter(model => !model.isLoading)
-                  .map(m => {
-                      const { file, isLoading, uniqueId, ...rest } = m;
-                      return rest;
-                  })
+                .toJSON()
+                .filter(model => !model.isLoading)
+                .map(m => {
+                    const { file, isLoading, uniqueId, ...rest } = m;
+                    return rest;
+                })
             : [];
     },
 
@@ -488,8 +488,8 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         } else {
             this.expandShowMore();
         }
-        this.ui.collapseMoreIcon.toggleClass(classes.collapseRotated, this.collapsed);
-        this.ui.collectionContainer.toggleClass(classes.documentsMoreHide, !this.collapsed);
+
+        this.ui.listContainer.toggleClass(classes.listCollapsed, this.collapsed);
     },
 
     update() {
@@ -505,7 +505,7 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
         }
         const documentElements = this.$container.children();
         if (documentElements.length === 0) {
-            this.ui.showMore.hide();
+            this.ui.showMoreContainer.hide();
             return;
         }
         const childViews = documentElements;
@@ -515,11 +515,11 @@ export default formRepository.editors.Document = BaseCollectionEditorView.extend
             childViews[i].style.display = 'none';
         }
         if (length - MAX_NUMBER_VISIBLE_DOCS > 0) {
-            this.ui.showMore.show();
+            this.ui.showMoreContainer.show();
             this.ui.invisibleCount.html(length - MAX_NUMBER_VISIBLE_DOCS);
             this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
         } else {
-            this.ui.showMore.hide();
+            this.ui.showMoreContainer.hide();
         }
     },
 

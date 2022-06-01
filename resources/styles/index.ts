@@ -3,6 +3,7 @@ import './date-picker.css';
 import './fonts.css';
 import './common.css';
 import './gallery.css';
+import './layout/l-list.css';
 import './services/messageService.css';
 import './services/windowService.css';
 import './form.css';

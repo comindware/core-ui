@@ -1,21 +1,18 @@
-<div class="document-buttons__list">
-    <div class="document-buttons">
-        <i class="document-buttons__i {{iconPrefixer icon}}" title="{{statusTitle}}"></i>
-        {{#if url}}
-        <a class="document-buttons__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">{{text}}</a>
-        {{else}}
-        <span>{{text}}</span>
-        {{/if}}
-        {{#if isInline}}
-        {{#if editLink}}
-        <a href="{{editLink}}" class="js-document-edit-btn" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.EDIT'}}">
-            <i class="{{iconPrefixer 'pencil'}}"></i></span>
-        </a>
-        {{/if}}
-        {{/if}}
-    </div>
-    <div class="js-btn-tooltip-region document_tooltip"></div>
+<div class="document-item__container">
+    {{#if url}}
+    <a class="document-item__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">
+        <i class="document-item__i {{iconPrefixer icon}}" title="{{statusTitle}}"></i>
+        {{~text~}}
+    </a>
+    {{else}}
+    <span class="document-item__title">
+        <i class="document-item__i {{iconPrefixer icon}}" title="{{statusTitle}}"></i>
+        {{~text~}}
+    </span>
+    {{/if}}
+    <div class="document-item__tooltip js-btn-tooltip-region"></div>
 </div>
+
 {{#if isInline}}
 <div class="document-embedded">
     <object data="{{url}}" class="document-embedded-content" type="{{embeddedType}}"></object>

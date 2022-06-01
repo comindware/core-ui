@@ -113,6 +113,7 @@
     --editor-text-color: var(--theme-colors__text);
     --editor-empty-text-color: var(--theme-colors__text_fadest);
     --editors-color-border: #c5c5c5;
+    --editors-bg-color: var(--theme-colors__secondary);
     --grids-color-border: #c5c5c5;
     --menu-items-clor-border: #c5c5c5;
 
@@ -240,13 +241,13 @@
     --theme-colors__severity-fatal_fade: hsl(0, 100%, 28%);
     --theme-colors__severity-fatal_strong: hsl(0, 100%, 48%);
     --theme-colors__severity-fatal-txt: var(--theme-colors__severity-fatal-txt);
-    --menu-shadow-color: var(--black);
+    --menu-shadow-color: 0, 0, 0;
     --menu-shadow-opacity: 0.16;
     --menu-shadow-blur-radius: 6px;
-    --dropdown-shadow-color: var(--black);
+    --dropdown-shadow-color: 0, 0, 0;
     --dropdown-shadow-opacity: 0.24;
     --dropdown-shadow-blur-radius: 3px;
-    --popup-shadow-color: var(--black);
+    --popup-shadow-color: 0, 0, 0;
     --popup-shadow-opacity: 0.23;
     --popup-shadow-blur-radius: 6px;
     --theme-colors__dashboard-color1: #177fb0;

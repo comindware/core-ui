@@ -6,7 +6,7 @@ import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 
 const tooltipButtonTemplate = `
-    <span class="js-tooltip-button buttons__i btn-image-tooltip" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
+    <span class="image-item__tooltip-btn" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
         <i class="{{iconPrefixer 'ellipsis-v'}}"></i>
     </span>
 `;
@@ -38,6 +38,9 @@ export default Marionette.View.extend({
     },
 
     tagName: 'li',
+    className() {
+        return `image-item l-list__item ${this.__showAsPicture() ? 'image-item_picture' : ''}`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -49,10 +52,6 @@ export default Marionette.View.extend({
             creator,
             creationDate
         };
-    },
-
-    className() {
-        return `image-list ${this.__showAsPicture() ? 'picture' : ''}`;
     },
 
     ui: {

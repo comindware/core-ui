@@ -324,11 +324,11 @@ class CellViewFactory implements ICellViewFactory {
     __getFormattedDocumentValue({ value }: ValueFormatOption) {
         const { name, text, isLoading, extension, status } = value;
         if (status === documentRevisionStatuses.REJECTED) {
-            value.statusClass = 'document_rejected';
+            value.statusClass = 'bubble-doc_rejected';
             value.statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.REJECTED');
         }
         if (status === documentRevisionStatuses.PROCESSING) {
-            value.statusClass = 'document_processing';
+            value.statusClass = 'bubble-doc_processing';
             value.statusTitle = LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.STATUSES.PROCECCING');
         }
         return {

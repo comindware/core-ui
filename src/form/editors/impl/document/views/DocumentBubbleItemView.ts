@@ -6,8 +6,12 @@ import TooltipPanelView from './TooltipPanelView';
 import { documentRevisionStatuses } from '../meta';
 import LocalizationService from 'services/LocalizationService';
 
+const classes = {
+    selected: 'document-item_selected'
+};
+
 const tooltipButtonTemplate = `
-    <span class="js-tooltip-button buttons__i btn-image-tooltip" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
+    <span class="document-item__tooltip-btn" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.ACTIONS'}}">
         <i class="{{iconPrefixer 'ellipsis-v'}}"></i>
     </span>
 `;
@@ -18,13 +22,11 @@ const tooltipButtonView = Marionette.View.extend({
 
 const actions = {
     DOWNLOAD: 'download',
-    // REVISION: 'revision',
     REMOVE: 'remove'
 };
 
 export default Marionette.View.extend({
     initialize(options: { attachmentsController: any }) {
-        this.revisionCollection = new Backbone.Collection();
         const controller = new DocumentItemController({ view: this });
         this.reqres = controller.reqres;
         this.readonly = this.options.readonly;
@@ -34,11 +36,23 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        reviseRegion: '.js-revise-button-region',
         tooltipButtonRegion: '.js-btn-tooltip-region'
     },
 
     tagName: 'li',
+    className() {
+        const status = this.model.get('status');
+        let className = 'document-item l-list__item';
+
+        if (status === documentRevisionStatuses.REJECTED) {
+            className += ' document-item_rejected';
+        }
+        if (status === documentRevisionStatuses.PROCESSING) {
+            className += ' document-item_processing';
+        }
+
+        return className;
+    },
 
     template: Handlebars.compile(template),
 
@@ -58,21 +72,8 @@ export default Marionette.View.extend({
             statusTitle
         };
     },
-
-    className() {
-        let className = 'document-list';
-        if (this.model.get('status') === documentRevisionStatuses.REJECTED) {
-            className += ' document_rejected';
-        }
-        if (this.model.get('status') === documentRevisionStatuses.PROCESSING) {
-            className += ' document_processing';
-        }
-        return className;
-    },
-
     ui: {
         remove: '.js-delete-button',
-        revise: '.js-revise-button-region',
         link: '.js-link',
         downloadButton: '.js-download-button',
         edit: '.js-document-edit-btn'
@@ -83,7 +84,6 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.revise': '__getDocumentRevision',
         'click @ui.link': '__onLinkClick'
     },
 
@@ -123,6 +123,12 @@ export default Marionette.View.extend({
                 default:
                     break;
             }
+        });
+        tooltipView.on('open', () => {
+            this.$el.addClass(classes.selected);
+        });
+        tooltipView.on('close', () => {
+            this.$el.removeClass(classes.selected);
         });
     },
 

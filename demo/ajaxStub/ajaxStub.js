@@ -19,6 +19,26 @@ export default {
                             }
                         }
                     }
+                    case 'Documents/GetDocumentRevisions': {
+                        const responseData = {
+                            success: true,
+                            data: [
+                                {
+                                    id: _.guid(),
+                                    creatorName: 'Sergey Sergeev',
+                                    revisionLink: 'images/image2.jpg',
+                                    creationDate: Date.now() + _.random(-100, 100) * 1000 * 60,
+                                    revisionIndex: 1
+                                }
+                            ]
+                        };
+
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve(responseData);
+                            }, 1000);
+                        });
+                    }
                     default: {
                         request.success(response);
                     }

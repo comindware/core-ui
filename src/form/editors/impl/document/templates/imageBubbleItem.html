@@ -1,26 +1,19 @@
-<div class="image-buttons__list">
-    <div class="js-revise-button-region img__revision"></div>
-    <a class="image-buttons__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">
-        <div class="img_wrp">
-            <div class="js-btn-tooltip-region img__tooltip {{#if showAsPicture}}picture{{/if}}"></div>
-            <div class="img_container {{#if showAsPicture}}picture{{/if}} {{#if isLoading}} i_container {{/if}}">
-                {{#if isLoading}}
-                    <i class="buttons__i {{iconPrefixer 'spinner pulse'}}"></i>
-                {{else}}
-                    {{#if showAsPicture}}
-                        <img class="img__item picture" src="{{url}}" alt=""/>
-                    {{else}}
-                        <div class="img__item" style="background-image: url({{url}})" alt=""></div>
-                    {{/if}}
-                {{/if}}
-            </div>
-            <div class="img_hover-container {{#if showAsPicture}}picture{{/if}}">
-                <div class="img__meta {{#if showAsPicture}}picture{{/if}}">
-                    <div class="img__author">{{creator}}</div>
-                    <div class="img__date">{{creationDate}}</div>
-                </div>
+<div class="image-item__container">
+    <div class="js-revise-button-region"></div>
+    <a class="image-item__link js-link" target="_blank" href="{{url}}" rel="noopener" title="{{text}}" download="{{text}}">
+        <div class="image-item__picture">
+            {{#if isLoading}}
+                <i class="image-item__loading {{iconPrefixer 'spinner pulse'}}"></i>
+            {{else}}
+                <img class="image-item__img" src="{{url}}" alt=""/>
+            {{/if}}
+
+            <div class="image-item__meta">
+                <div class="image-item__author">{{creator}}</div>
+                <div class="image-item__date">{{creationDate}}</div>
+                <div class="image-item__tooltip js-btn-tooltip-region"></div>
             </div>
         </div>
-        {{#unless showAsPicture}}<div class="image__name">{{text}}</div>{{/unless}}
+        {{#unless showAsPicture}}<div class="image-item__title">{{text}}</div>{{/unless}}
     </a>
 </div>
