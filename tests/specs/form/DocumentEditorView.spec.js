@@ -103,10 +103,10 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view.$('.document-list').trigger('mouseenter');
+            view.$('.l-list__item').trigger('mouseenter');
 
-            document.getElementsByClassName('js-tooltip-button')[0].click();
-            document.getElementsByClassName('js-delete-button')[0].click();
+            view.$('.document-item__tooltip-btn').click();
+            document.querySelector('.js-delete-button').click();
 
             expect(view.getValue()).toEqual([]);
         });
@@ -134,12 +134,10 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view.$('.task-links__i').trigger('mouseenter');
-
-            expect(document.getElementsByClassName('js-bubble-delete').length).toEqual(0);
+            expect(document.querySelector('.js-bubble-delete')).toEqual(null);
         });
 
-        xit('should show revision on revision button click', done => {
+        it('should show revision on revision button click', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -163,11 +161,12 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            view.$('.document-list').trigger('mouseenter');
-            document.getElementsByClassName('js-tooltip-button')[0].click();
-            view.$('.js-revise-button-region').click();
+            view.$('.l-list__item').trigger('mouseenter');
+            view.$('.document-item__tooltip-btn').click();
+            document.querySelector('.js-revise-button-region').click();
+
             setTimeout(() => {
-                expect(document.getElementsByClassName('js-revision-list').length).toEqual(1);
+                expect(document.querySelector('.js-revision-list')).toBeTruthy();
                 done();
             }, 100);
         });

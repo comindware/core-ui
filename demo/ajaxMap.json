@@ -20,5 +20,16 @@
       }
     ],
     "url": "Case/Reopen"
+  },
+  {
+    "className": "Documents",
+    "methodName": "GetDocumentRevisions",
+    "parameters": [
+      {
+        "name": "documentId",
+        "typeName": "System.String"
+      }
+    ],
+    "url": "Documents/GetDocumentRevisions"
   }
 ]

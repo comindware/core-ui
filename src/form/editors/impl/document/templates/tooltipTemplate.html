@@ -1,17 +1,17 @@
-<div class="js-revise-button-region"></div>
 {{#if url}}
-<div class="js-download-button tooltip_item">
-        <span class="buttons__i" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}">
-            <i class="{{iconPrefixer 'download'}}"></i>
+<div class="js-download-button tooltip-item">
+        <span class="tooltip-item__i" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}">
+            <i class="{{iconPrefixer 'download'}} fa-fw"></i>
         </span>
     <div class="tooltip-item__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</div>
 </div>
 {{/if}}
+<div class="js-revise-button-region"></div>
 {{#unless readonly}}
 {{#if allowDelete}}
-<div class="js-delete-button tooltip_item">
-        <span class="buttons__i icon-remove" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DELETE'}}">
-            <i class="{{iconPrefixer 'times'}}"></i>
+<div class="js-delete-button tooltip-item">
+        <span class="tooltip-item__i" title="{{localize 'CORE.FORM.EDITORS.DOCUMENT.DELETE'}}">
+            <i class="{{iconPrefixer 'times'}} fa-fw"></i>
         </span>
   <div class="tooltip-item__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DELETE'}}</div>
 </div>

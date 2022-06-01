@@ -1,8 +1,8 @@
-<div class="bubble-doc__wrp {{statusClass}}">
-    <i class="bubble-doc_icon {{documentIcon}}" title="{{statusTitle}}"></i>
+<div class="bubble-doc {{statusClass}}">
+    <i class="bubble-doc__icon {{documentIcon}}" title="{{statusTitle}}"></i>
     {{#if url}}
-        <a class="task-links__link" target="_blank" href="{{url}}" download="{{name}}">{{name}}</a>
+        <a class="bubble-doc__link" target="_blank" href="{{url}}" download="{{name}}">{{name}}</a>
     {{else}}
-        <span class="bubble-doc_text">{{name}}</span>
+        <span class="bubble-doc__text">{{name}}</span>
     {{/if}}
 </div>

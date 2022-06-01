@@ -340,6 +340,12 @@ export default {
                     attributesConfig: [commonAttributes.autocommit]
                 },
                 {
+                    id: 'ImageEditor',
+                    displayName: 'Image editor',
+                    description: 'Image editor',
+                    attributesConfig: [commonAttributes.autocommit]
+                },
+                {
                     id: 'DurationEditor',
                     displayName: 'Duration Editor',
                     description: 'Duration editor',
