@@ -36,7 +36,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __onMouseEnter() {
-        if (this.__opendItem) {
+        if (this.__opendItem && this.options.isPopup) {
             this.__opendItem.close();
         }
     },

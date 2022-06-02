@@ -116,7 +116,7 @@ const GridHeaderView = Marionette.View.extend({
         if (this.options.isTree) {
             const expandOnShow = this.getOption('expandOnShow')
             this.$el
-                .find('.header-column-wrp')[0]                
+                .find('.header-column-wrp')[0]
                 .insertAdjacentHTML('afterbegin', `<i class="js-tree-first-cell collapsible-btn ${classes.collapsible}
                 ${Handlebars.helpers.iconPrefixer('angle-down')} ${expandOnShow ? classes.expanded : ''}"></i/`);
             this.collapsed = !this.options.expandOnShow;
@@ -231,11 +231,29 @@ const GridHeaderView = Marionette.View.extend({
         }
 
         const ctx = this.dragContext;
-        const delta = e.pageX - ctx.pageOffsetX;
+        const index = ctx.draggedColumn.index;
+        const child = this.el.children[index + this.columnIndexOffset];
+
+        // end of screen
+        if (Math.ceil(e.pageX) === window.innerWidth) {
+            if (!this.interval) {
+                this.interval = setInterval(() => {
+                    ctx.edgeOffset = (ctx.edgeOffset ?? 0) + 1;
+                    this.__setColumnWidth(index, this.dragContext.draggedColumn.initialWidth + e.pageX - ctx.pageOffsetX + ctx.edgeOffset);
+                    this.trigger('scroll:left', child.offsetLeft + child.offsetWidth);
+                }, 0);
+            }
+            return;
+        }
+        clearInterval(this.interval);
+        delete this.interval;
+        const delta = e.pageX - ctx.pageOffsetX + (ctx.edgeOffset ?? 0);
 
         if (delta !== 0) {
-            const index = ctx.draggedColumn.index;
             this.__setColumnWidth(index, this.dragContext.draggedColumn.initialWidth + delta);
+            if (e.pageX > window.innerWidth) {
+                this.trigger('scroll:left', child.offsetLeft + child.offsetWidth);
+            }
         }
 
         return false;
@@ -243,6 +261,8 @@ const GridHeaderView = Marionette.View.extend({
 
     __draggerMouseUp() {
         this.__stopDrag();
+        clearInterval(this.interval);
+        delete this.interval;
 
         this.trigger('header:columnResizeFinished');
         return false;
@@ -282,7 +302,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __updateColumnAndNeighbourWidths(column: HTMLElement) {
-        for (let i = 0; i < this.options.columns.length - 1; i++) {
+        for (let i = 0; i < this.options.columns.length; i++) {
             const child = this.el.children[i + this.columnIndexOffset];
             const width = this.__getElementOuterWidth(child);
 
@@ -291,7 +311,9 @@ const GridHeaderView = Marionette.View.extend({
                 this.dragContext.draggedColumn.initialWidth = width;
             }
             // freeze width all columns in pix
-            this.__setColumnWidth(i, width);
+            if (i !== this.options.columns.length - 1) {
+                this.__setColumnWidth(i, width);
+            }
         }
         this.isEveryColumnSetPxWidth = true;
         this.trigger('change:isEveryColumnSetPxWidth');

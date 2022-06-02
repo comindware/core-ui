@@ -132,6 +132,7 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', (config: { index: number, newColumnWidth: number }) => this.__handleColumnWidthChange(config));
             this.listenTo(this.headerView, 'change:isEveryColumnSetPxWidth', () => this.__toggleTableWidth());
+            this.listenTo(this.headerView, 'scroll:left', this.__scrollLeft);
         }
 
         this.isEditable = typeof this.options.editable === 'boolean' ? this.options.editable : this.options.columns.some(column => column.editable);
@@ -1201,5 +1202,10 @@ export default Marionette.View.extend({
         this.listenTo(this.menu, 'action:click', (model, ...rest) => this.__executeAction(model, this.collection, ...rest));
         this.menu.open();
         event.preventDefault();
+    },
+
+    __scrollLeft(columnRight: number) {
+        const containerEl = this.ui.tableTopMostWrapper.get(0);
+        containerEl.scrollLeft = columnRight - containerEl.offsetWidth;
     }
 });

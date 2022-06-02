@@ -110,7 +110,7 @@ export default Marionette.View.extend({
             this.__updateState();
         }
         if (this.getOption('isTree')) {
-            this.insertFirstCellHtml();
+            this.insertFirstCellHtml(true);
         }
         this.__updateValidationErrors();
     },

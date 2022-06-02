@@ -267,6 +267,10 @@ body {
     overflow: hidden;
 }
 
+.demo-content__present .toolbar-container {
+    flex: none;
+}
+
 /*-------------------------*/
 .demo-content__attributes{
     position: relative;
