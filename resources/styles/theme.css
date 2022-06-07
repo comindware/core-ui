@@ -160,8 +160,6 @@ select {
 
 .member-split.editor_readonly.editor_empty *,
 .member-split.editor_disabled.editor_empty *,
-.user-avatar-wrp.editor_readonly.editor_empty *,
-.user-avatar-wrp.editor_disabled.editor_empty *,
 .editor_icon.editor_readonly.editor_empty *,
 .editor_icon.editor_disabled.editor_empty * {
     display: none;
@@ -169,8 +167,6 @@ select {
 
 .member-split.editor_readonly.editor_empty::after,
 .member-split.editor_disabled.editor_empty::after,
-.user-avatar-wrp.editor_readonly.editor_empty::after,
-.user-avatar-wrp.editor_disabled.editor_empty::after,
 .editor_icon.editor_readonly.editor_empty::after,
 .editor_icon.editor_disabled.editor_empty::after {
     content: '-';

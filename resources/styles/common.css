@@ -1239,10 +1239,6 @@ body.non-selectable {
 
 /* member-split custom styles */
 
-.form-field_memberssplit {
-    min-height: 320px;
-}
-
 .layout__horizontal-layout.member-split-wrp {
     width: 100%;
     height: 100%;

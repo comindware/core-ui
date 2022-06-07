@@ -506,7 +506,8 @@ export default Marionette.View.extend({
 
     updateListViewResize(options) {
         if (options.newMaxHeight) {
-            this.ui.tableTopMostWrapper.get(0).style.maxHeight = `${options.newMaxHeight}px`;
+            const table = this.ui.tableTopMostWrapper.get(0);
+            table.style.maxHeight = `${options.newMaxHeight - table.getBoundingClientRect().top}px`;
         }
         this.listView.handleResize(options.shouldUpdateScroll);
     },
