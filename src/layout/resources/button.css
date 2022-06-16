@@ -425,6 +425,7 @@
 
 /* Toolabar ajustable buttons */
 
+.toolbar-panel_container .toolbar-btn,
 .toolbar-buttons_container__adjust .toolbar-btn {
     color: var(--theme-colors__btn);
 }
@@ -460,8 +461,15 @@
 }
 
 .toolbar-buttons_container__adjust .toolbar-btn:not(:hover):not(.open) .toolbar-btn__text,
-.toolbar-buttons_container__adjust .toolbar-btn:not(:hover):not(.open) .toolbar__icons_arrow {
+.toolbar-buttons_container__adjust .toolbar-btn:not(:hover):not(.open) .toolbar__icons_arrow,
+.ld-toolbar-container .toolbar-btn:not(:hover):not(.open) .toolbar-btn__text,
+.ld-toolbar-container .toolbar-btn:not(:hover):not(.open) .toolbar__icons_arrow {
     color: var(--theme-colors__text);
+}
+
+.toolbar-buttons_container__adjust .toolbar-btn:hover,
+.toolbar-buttons_container__adjust .toolbar-btn.open {
+    background-color: var(--theme-colors__highlight);
 }
 
 .toolbar-buttons_container__adjust .toolbar-btn:hover .toolbar-btn__text,
