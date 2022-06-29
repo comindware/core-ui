@@ -1,5 +1,7 @@
 import template from '../templates/menuItem.hbs';
 
+const separator = 'Separator';
+
 /**
  * @name MenuView
  * @memberof module:core.dropdown.views
@@ -13,13 +15,19 @@ import template from '../templates/menuItem.hbs';
 export default Marionette.View.extend({
     tagName: 'li',
 
-    className: 'popout-menu__i',
+    className() {
+        const isSeparator = this.model.get('type') === separator;
+        if (isSeparator) {
+            return 'menu-btn-separator';
+        }
+        return 'popout-menu__i';
+    },
 
     template: Handlebars.compile(template),
 
     templateContext() {
         return {
-            getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name'),
+            getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name')
         };
     },
 

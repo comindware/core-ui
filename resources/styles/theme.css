@@ -1324,6 +1324,13 @@ tr:not(:first-child) .cell_selection {
     align-self: center;
 }
 
+.menu-btn-separator {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-bottom: 1px solid var(--menu-items-clor-border);
+}
+
 .split-button-wrp .btn-separator {
     margin: 0 0 0 1px;
 }
