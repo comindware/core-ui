@@ -414,11 +414,12 @@ body.non-selectable {
     right: 0;
     top: 0;
     bottom: 0;
-    background: hsla(var(--theme-colors__primary-hsl), 0.2);
+    background: rgba(var(--black-rgb), .4);
     z-index: 100;
 }
 
 .l-loader .loader {
+    color: var(--white);
     height: auto;
 }
 
@@ -445,6 +446,10 @@ body.non-selectable {
     background-color: var(--theme-colors__primary);
     bottom: 0;
     border-radius: 50%;
+}
+
+.l-loader .loader span {
+    background-color: var(--white);
 }
 
 .loader span:nth-child(1) {
