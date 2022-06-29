@@ -23,6 +23,12 @@
     min-width: auto;
 }
 
+.toolbar-btn .popout__action.open {
+    color: var(--theme-colors__btn);
+    background-color: var(--theme-colors__highlight);
+    outline: 3px solid var(--theme-colors__highlight);
+}
+
 .popout__action.open .anchor {
     transform: rotate(180deg);
 }
