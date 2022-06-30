@@ -173,6 +173,10 @@
     transition: transform 0.1s linear, opacity 0.1s linear;
 }
 
+.gallery-window.presented-modal-window {
+    background: none;
+}
+
 .presented-modal-window .popout-menu__i:hover {
     background: var(--theme-colors__primary_fadest);
 }
