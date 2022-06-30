@@ -42,7 +42,7 @@ export default function() {
             case 5:
                 return 'Reference';
             case 6:
-                return 'Document';
+                return Core.meta.objectPropertyTypes.DOCUMENT;
             case 7:
                 return 'Boolean';
             case 0:
@@ -197,12 +197,12 @@ export default function() {
             title: 'Reference Cell',
             helpText: 'Reference Cell',
             editable: true,
-            dataType: 'Instance',
+            dataType: Core.meta.objectPropertyTypes.INSTANCE,
             width: 100
         },
         {
             key: 'documentCell',
-            type: 'Document',
+            type: Core.meta.objectPropertyTypes.DOCUMENT,
             title: 'Document Cell',
             helpText: 'Document Cell',
             editable: true,
@@ -254,7 +254,7 @@ export default function() {
                 'oa.1': [
                     {
                         instanceTypeId: 'cmw.instanceProperty',
-                        type: 'Instance',
+                        type: Core.meta.objectPropertyTypes.INSTANCE,
                         format: 'Undefined',
                         name: 'ID',
                         displayAttribute: false,
@@ -265,7 +265,7 @@ export default function() {
                         id: 'id'
                     },
                     {
-                        type: 'Account',
+                        type: Core.meta.objectPropertyTypes.ACCOUNT,
                         format: 'Undefined',
                         name: 'Last Modifier',
                         displayAttribute: false,
@@ -288,7 +288,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Instance',
+                        type: Core.meta.objectPropertyTypes.INSTANCE,
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -300,7 +300,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Instance',
+                        type: Core.meta.objectPropertyTypes.INSTANCE,
                         format: 'Undefined',
                         name: 'refToCol',
                         displayAttribute: false,
@@ -333,7 +333,7 @@ export default function() {
                         id: 'isDisabled'
                     },
                     {
-                        type: 'Account',
+                        type: Core.meta.objectPropertyTypes.ACCOUNT,
                         format: 'Undefined',
                         name: 'Creator',
                         displayAttribute: false,
@@ -356,7 +356,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Instance',
+                        type: Core.meta.objectPropertyTypes.INSTANCE,
                         format: 'Undefined',
                         name: 'sdfsf',
                         displayAttribute: false,
@@ -368,7 +368,7 @@ export default function() {
                     },
                     {
                         instanceTypeId: 'oa.1',
-                        type: 'Instance',
+                        type: Core.meta.objectPropertyTypes.INSTANCE,
                         format: 'Undefined',
                         name: 'coll',
                         displayAttribute: false,
@@ -401,7 +401,7 @@ export default function() {
                         id: 'id'
                     },
                     {
-                        type: 'Account',
+                        type: Core.meta.objectPropertyTypes.ACCOUNT,
                         format: 'Undefined',
                         name: 'Process Initiator',
                         displayAttribute: false,

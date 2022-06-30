@@ -14,7 +14,6 @@ import ActionMenuView from '../../components/toolbar/views/ActionMenuView';
 import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
-import ConfigurationPanel from './ConfigurationPanel';
 import EmptyGridView from './EmptyGridView';
 import LayoutBehavior from '../../layout/behaviors/LayoutBehavior';
 import { getDefaultActions, classes, configurationConstants, contextTypes } from '../meta';
@@ -851,10 +850,6 @@ export default Marionette.View.extend({
 
     __checkUiReady() {
         return this.isRendered() && !this.isDestroyed();
-    },
-
-    __initializeConfigurationPanel() {
-        this.__configurationPanel = new ConfigurationPanel();
     },
 
     __onSearch(text) {

@@ -9,11 +9,11 @@ export default function() {
             numberCell: i + 1,
             dateTimeCell: '2015-07-24T08:13:13.847Z',
             durationCell: 'P12DT5H42M',
-            booleanCell: true,
+            booleanCell: '',
             userCell:
                 i > 4
                     ? [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }]
-                    : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
+                    : null,
             referenceCell: i > 4 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
             documentCell: i > 4 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
             enumCell: { valueExplained: ['123'] },
@@ -28,7 +28,6 @@ export default function() {
                     : [{ id: 'user.1', name: 'Nicola Tesla', avatarUrl: 'images/image2.jpg' }, { id: 'user.2', name: 'Thomas Edison' }],
             referenceCell1: i > 400 ? [{ id: '1', name: 'Ref 1', url: 'url2' }] : [{ id: '1', name: 'Ref 1' }, { id: '2', name: 'Ref 2', url: 'url2' }],
             documentCell1: i > 400 ? [{ id: '1', name: 'Doc 1', url: 'url1' }] : [{ id: '1', name: 'Doc1.jpg', url: 'url1' }, { id: '2', name: 'Doc 2', url: 'url2' }],
-            enumCell: { valueExplained: ['123'] }
         });
     }
 
@@ -56,7 +55,7 @@ export default function() {
         },
         {
             key: 'userCell',
-            type: 'Account',
+            type: Core.meta.objectPropertyTypes.ACCOUNT,
             title: 'User'
         },
         {
@@ -66,12 +65,12 @@ export default function() {
         },
         {
             key: 'referenceCell',
-            type: 'Instance',
+            type: Core.meta.objectPropertyTypes.INSTANCE,
             title: 'Reference Cell'
         },
         {
             key: 'documentCell',
-            type: 'Document',
+            type: Core.meta.objectPropertyTypes.DOCUMENT,
             title: 'Document Cell'
         },
         {
@@ -96,7 +95,7 @@ export default function() {
         },
         {
             key: 'userCell1',
-            type: 'Account',
+            type: Core.meta.objectPropertyTypes.ACCOUNT,
             title: 'User'
         },
         {
@@ -106,12 +105,12 @@ export default function() {
         },
         {
             key: 'referenceCell1',
-            type: 'Instance',
+            type: Core.meta.objectPropertyTypes.INSTANCE,
             title: 'Reference Cell'
         },
         {
             key: 'documentCell1',
-            type: 'Document',
+            type: Core.meta.objectPropertyTypes.DOCUMENT,
             title: 'Document Cell'
         }
     ];

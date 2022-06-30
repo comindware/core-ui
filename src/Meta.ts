@@ -9,22 +9,22 @@ const meta = {
     formRoot: 'window',
     reference: 'link',
     instance: 'link',
-    instanceproperty: 'link',
-    tablayout: 'folders',
-    tabpanel: 'folder',
+    instanceProperty: 'link',
+    tabLayout: 'folders',
+    tabPanel: 'folder',
     member: 'user',
     account: 'user',
-    accountproperty: 'user',
+    accountProperty: 'user',
     image: 'image',
     document: 'paperclip',
-    documentproperty: 'paperclip',
+    documentProperty: 'paperclip',
     enum: 'list-radio',
     enums: 'list-ul',
     contextIconType: 'list-ul',
-    grouppanel: 'list-alt',
-    horizontallayout: 'columns',
+    groupPanel: 'list-alt',
+    horizontalLayout: 'columns',
     integer: 'superscript',
-    staticcontent: 'stream',
+    staticContent: 'stream',
     date: 'calendar-alt',
     datetime: 'calendar-alt',
     duration: 'stopwatch',
@@ -32,9 +32,10 @@ const meta = {
     number: 'superscript',
     action: 'hand-pointer',
     role: 'address-card',
+    roleProperty: 'address-card',
     orgStructureTemplate: 'sitemap',
     orgStructure: 'sitemap',
-    actionbutton: 'hand-pointer',
+    actionButton: 'hand-pointer',
     text: 'font',
     string: 'font',
     boolean: 'check-square',
@@ -43,7 +44,7 @@ const meta = {
     undefined: 'dot-circle',
     task: 'tasks',
     record: 'list-alt',
-    recordtemplate: 'list-alt',
+    recordTemplate: 'list-alt',
     process: 'cogs',
     case: 'cube',
     list: 'align-justify',
@@ -54,7 +55,7 @@ const meta = {
 };
 
 Object.entries(meta).forEach(([key, value]) => {
-    const keyUp = key[0].toUpperCase() + key.slice(1);
+    const keyUp = _.capitalize(value);
     meta[keyUp] = value;
 });
 
@@ -62,21 +63,23 @@ export const contextIconType = meta;
 
 export const objectPropertyTypes = {
     STRING: 'String',
-    EXTENDED_STRING: 'ExtendedString',
     BOOLEAN: 'Boolean',
     DATETIME: 'DateTime',
     DURATION: 'Duration',
     DECIMAL: 'Decimal',
     INTEGER: 'Integer',
     DOUBLE: 'Double',
-    ACCOUNT: 'Account',
-    DOCUMENT: 'Document',
-    IMAGE: 'Image',
-    INSTANCE: 'Instance',
-    ENUM: 'Enum',
-    ROLE: 'Role',
-    ORGANIZATION_UNIT: 'OrganizationalUnit',
-    URI: 'Uri'
+    ACCOUNT: 'AccountProperty',
+    DOCUMENT: 'DocumentProperty',
+    IMAGE: 'ImageProperty',
+    INSTANCE: 'InstanceProperty',
+    ROLE: 'RoleProperty',
+    ENUM: 'EnumProperty',
+    ORGANIZATIONAL_UNIT: 'OrganizationalUnit',
+    CONVERSATION: 'Conversation',
+    URI: 'UriProperty',
+    COMPLEX: 'ComplexProperty',
+    EXTENDED_STRING: 'ExtendedString'
 };
 
 export const fieldTypes = {
