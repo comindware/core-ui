@@ -336,23 +336,23 @@
 
 <http://comindware.com/text/core/form/editors/time#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Время"; l10n:originalData "Time"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorCallTo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату ссылки телефонных звонков"; l10n:originalData "Doesn't match the phone call link format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorCallTo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату ссылки на номер телефона"; l10n:originalData "Doesn't match the phone call link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorFtp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату FTP ссылки"; l10n:originalData "Не соответствует формату FTP URI"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorFtp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату FTP-ссылки"; l10n:originalData "Doesn't match FTP link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorFtps> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату FTPS ссылки"; l10n:originalData "Doesn't match FTPS link format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorFtps> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату FTPS-ссылки"; l10n:originalData "Doesn't match FTPS link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorGit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату GIT ссылки"; l10n:originalData "Doesn't match GIT link format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorGit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату Git-ссылки"; l10n:originalData "Doesn't match GIT link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorHttp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату HTTP ссылки"; l10n:originalData "Doesn't match HTTP link format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorHttp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату HTTP-ссылки"; l10n:originalData "Doesn't match HTTP link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorHttps> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату HTTPS ссылки"; l10n:originalData "Doesn't match HTTPS link format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorHttps> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату HTTPS-ссылки"; l10n:originalData "Doesn't match HTTPS link format"].
 
 <http://comindware.com/text/core/form/editors/uriEditor#msgValidatorMailTo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату ссылки электронной почты"; l10n:originalData "Doesn't match the email link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorSsh> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату SSH ссылки"; l10n:originalData "msgValidatorSsh"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorSsh> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату SSH-ссылки"; l10n:originalData "Doesn't match SSH link format"].
 
-<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorTelegram> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату ссылки мессенджера Telegram"; l10n:originalData "The link does not match the Telegram messenger format"].
+<http://comindware.com/text/core/form/editors/uriEditor#msgValidatorTelegram> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не соответствует формату ссылки на Telegram"; l10n:originalData "Doesn't match the Telegram messenger link format"].
 
 <http://comindware.com/text/core/form/editors/workSpaceItemSplit#availableSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Доступно"; l10n:originalData "Available"].
 
