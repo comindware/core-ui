@@ -139,6 +139,17 @@ export default Marionette.CollectionView.extend({
         return events;
     },
 
+    onBeforeRenderChildren() {
+        this.activeElement = this.el.contains(document.activeElement) ? document.activeElement : null;
+    },
+
+    onRenderChildren() {
+        if (this.activeElement) {
+            this.activeElement.focus();
+            delete this.activeElement;
+        }
+    },
+
     __handleDragStart(event: { originalEvent: DragEvent }) {
         const checkedModels = this.collection.getCheckedModels();
 
@@ -313,12 +324,22 @@ export default Marionette.CollectionView.extend({
                 return !handle;
             case keyCode.LEFT:
                 if (handle) {
-                    this.collection.trigger('move:left');
+                    if (isEditable) {
+                        this.collection.trigger('move:left');
+                    } else {
+                        const model = this.collection.at(this.__getIndexSelectedModel());
+                        model.collapse();
+                    }
                 }
                 return !handle;
             case keyCode.RIGHT:
                 if (handle) {
-                    this.collection.trigger('move:right');
+                    if (isEditable) {
+                        this.collection.trigger('move:right');
+                    } else {
+                        const model = this.collection.at(this.__getIndexSelectedModel());
+                        model.expand();
+                    }
                 }
                 return !handle;
             case keyCode.TAB:

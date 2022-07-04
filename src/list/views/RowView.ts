@@ -613,7 +613,7 @@ export default Marionette.View.extend({
                 this.__insertReadonlyCell({ column, index: this.lastPointedIndex });
             }
             const lastPointedEl = this.__getCellByColumnIndex(this.lastPointedIndex);
-            lastPointedEl.classList.remove(classes.cellFocused);
+            lastPointedEl?.classList.remove(classes.cellFocused);
             delete this.lastPointedIndex;
             delete this.lastFocusEditor;
         }
@@ -644,10 +644,10 @@ export default Marionette.View.extend({
         this.gridEventAggregator.pointedCell = columnIndex;
         const pointedEl = this.__getCellByColumnIndex(columnIndex);
         if (!focusEditor || !isColumnEditable) {
-            pointedEl.focus();
+            pointedEl?.focus();
         }
         if (this.gridEventAggregator.isEditable) {
-            pointedEl.classList.add(classes.cellFocused);
+            pointedEl?.classList.add(classes.cellFocused);
         }
         this.lastPointedIndex = columnIndex;
         this.lastFocusEditor = focusEditor;
