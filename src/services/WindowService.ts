@@ -31,11 +31,13 @@ export default {
      * @param {Marionette.View} view A Marionette.View instance to show.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showPopup(view) {
+    showPopup(view, options) {
+        const { showGlobalFadingPanel } = options;
         return this.__popupStackView.showPopup(view, {
             fadeBackground: true,
             transient: false,
-            hostEl: null
+            hostEl: null,
+            showGlobalFadingPanel
         });
     },
 

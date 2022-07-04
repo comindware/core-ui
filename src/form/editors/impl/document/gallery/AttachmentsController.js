@@ -23,7 +23,7 @@ export default Marionette.MnObject.extend({
                 model
             });
 
-            this.__popupId = Core.services.WindowService.showPopup(this.view);
+            this.__popupId = Core.services.WindowService.showPopup(this.view, { showGlobalFadingPanel: false });
             return true;
         }
         return false;

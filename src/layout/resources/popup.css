@@ -174,7 +174,7 @@
 }
 
 .gallery-window.presented-modal-window {
-    background: none;
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .presented-modal-window .popout-menu__i:hover {

@@ -24,7 +24,7 @@ export default Marionette.View.extend({
     },
 
     showPopup(view, options) {
-        const { fadeBackground, transient, hostEl } = options;
+        const { fadeBackground, transient, hostEl, showGlobalFadingPanel = true } = options;
 
         if (!transient) {
             this.__removeTransientPopups();
@@ -81,7 +81,7 @@ export default Marionette.View.extend({
             if (lastIndex !== -1) {
                 this.__stack[lastIndex].regionEl.classList.remove(classes.POPUP_FADE);
             } else {
-                this.__toggleFadedBackground(true);
+                showGlobalFadingPanel & this.__toggleFadedBackground(true);
             }
             regionEl.classList.add(classes.POPUP_FADE);
             this.topPopupId = popupId;
