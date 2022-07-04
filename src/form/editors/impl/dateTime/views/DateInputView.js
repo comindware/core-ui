@@ -9,7 +9,7 @@ export default TextEditorView.extend({
             ...this.options,
             type: 'text',
             size: this.__getInputSize(),
-            showIcon: !this.readonly || this.value
+            showIcon: !this.readonly
         };
     },
 
