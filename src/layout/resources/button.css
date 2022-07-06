@@ -425,7 +425,6 @@
 
 /* Toolabar ajustable buttons */
 
-.toolbar-panel_container .toolbar-btn,
 .toolbar-buttons_container__adjust .toolbar-btn {
     color: var(--theme-colors__btn);
 }

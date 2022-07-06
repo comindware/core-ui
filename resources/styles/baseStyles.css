@@ -152,7 +152,8 @@
 
 .dropdown__wrp {
     border-radius: var(--border-radius);
-    /*transform: translateY(-50px);*/
+
+    /* transform: translateY(-50px); */
     opacity: 0;
     transition: transform 0.1s linear, opacity 0.1s linear;
 }
