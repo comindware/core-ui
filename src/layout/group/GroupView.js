@@ -98,9 +98,8 @@ export default Marionette.View.extend({
     },
 
     onClickToggleButton(e) {
-        if (this.ui.toggleCollapseButtons.get(0) === e.currentTarget) {
-            this.toggleCollapse();
-        }
+        e.stopPropagation();
+        this.toggleCollapse();
     },
 
     toggleCollapse(collapse = !this.model.get('collapsed')) {

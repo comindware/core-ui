@@ -139,16 +139,16 @@ export default () => {
         {
             key: 'documentCell',
             type: 'Datalist',
-            dataType: 'Document',
+            dataType: Core.meta.objectPropertyTypes.DOCUMENT,
             format: 'document',
-            title: 'Document',
+            title: Core.meta.objectPropertyTypes.DOCUMENT,
             editable: true,
             autocommit: true
         },
         {
             key: 'referenceCell',
             type: 'Datalist',
-            dataType: 'Instance',
+            dataType: Core.meta.objectPropertyTypes.INSTANCE,
             title: 'Reference Cell',
             required: true,
             controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({
@@ -165,7 +165,7 @@ export default () => {
         {
             key: 'userCell',
             type: 'Datalist',
-            dataType: 'Account',
+            dataType: Core.meta.objectPropertyTypes.ACCOUNT,
             title: 'User Cell',
             required: true,
             controller: new Core.form.editors.reference.controllers.DemoReferenceEditorController({

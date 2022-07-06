@@ -66,13 +66,13 @@ export default function () {
         },
         {
             key: 'referenceCell',
-            type: 'Instance',
+            type: Core.meta.objectPropertyTypes.INSTANCE,
             title: 'Reference Cell',
             width: 100
         },
         {
             key: 'documentCell',
-            type: 'Document',
+            type: Core.meta.objectPropertyTypes.DOCUMENT,
             title: 'Document Cell',
             width: 100
         }
@@ -84,6 +84,7 @@ export default function () {
             columns,
             selectableBehavior: 'multi',
             isTree: true,
+            showSearch: true,
             childrenAttribute: 'children'
         },
         collection: data

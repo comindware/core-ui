@@ -84,7 +84,7 @@ class CellViewFactory implements ICellViewFactory {
             case objectPropertyTypes.EXTENDED_STRING:
                 return this.__createContextString({ values, column: columnWithExtension, model });
             case objectPropertyTypes.ENUM:
-            case objectPropertyTypes.ORGANIZATION_UNIT:
+            case objectPropertyTypes.ORGANIZATIONAL_UNIT:
             case objectPropertyTypes.ROLE:
             case objectPropertyTypes.INSTANCE:
                 return this.__getReferenceCell({ values, column: columnWithExtension, model });

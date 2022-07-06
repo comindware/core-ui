@@ -50,12 +50,12 @@ export default function() {
         // },
         // {
         //     key: 'referenceCell',
-        //     type: 'Instance',
+        //     type: Core.meta.objectPropertyTypes.INSTANCE,
         //     title: 'Reference Cell'
         // },
         // {
         //     key: 'documentCell',
-        //     type: 'Document',
+        //     type: Core.meta.objectPropertyTypes.DOCUMENT,
         //     title: 'Document Cell'
         // }
     ];

@@ -1,59 +1,7 @@
-import { objectPropertyTypes } from '../Meta';
-
 export const contextTypes = {
     void: 'void',
     any: 'any',
     one: 'one'
-};
-
-export const queryBuilderActions = {
-    sort: 'sort',
-    group: 'group',
-    filter: 'filters',
-    aggregation: 'aggregation'
-};
-
-export const sortDirection = {
-    ascending: 'Asc',
-    descending: 'Desc'
-};
-
-export const columnTypes = {
-    STRING: 'string',
-    NUMBER: 'number',
-    BOOLEAN: 'boolean',
-    DATETIME: 'dateTime',
-    HTML: 'html',
-    DOCUMENT: 'document',
-    decimal: 'Decimal',
-    integer: 'Integer',
-    datetime: 'DateTime',
-    duration: 'Duration',
-    string: 'String',
-    boolean: 'Boolean',
-    users: 'AccountProperty',
-    role: 'RoleProperty',
-    reference: 'InstanceProperty',
-    enumerable: 'EnumProperty',
-    document: 'DocumentProperty',
-    id: 'id'
-};
-
-export const columnType = columnTypes;
-
-export const columnWidthByType = {
-    [objectPropertyTypes.ACCOUNT]: 120,
-    [objectPropertyTypes.BOOLEAN]: 120,
-    [objectPropertyTypes.DATETIME]: 120,
-    [objectPropertyTypes.DECIMAL]: 120,
-    [objectPropertyTypes.DOCUMENT]: 120,
-    [objectPropertyTypes.DOUBLE]: 120,
-    [objectPropertyTypes.DURATION]: 120,
-    [objectPropertyTypes.ENUM]: 120,
-    [objectPropertyTypes.EXTENDED_STRING]: 120,
-    [objectPropertyTypes.INSTANCE]: 120,
-    [objectPropertyTypes.INTEGER]: 120,
-    [objectPropertyTypes.STRING]: 120
 };
 
 export const getDefaultActions = () => [
@@ -117,21 +65,6 @@ export const pageSize = {
     1000000000: 'ALL'
 };
 
-export const enabledFilterEditor = model => {
-    const operator = model.get('operator');
-    return ![filterPredicates.set, filterPredicates.notSet].includes(operator);
-};
-
-export const pagingControlsTypes = {
-    firstPage: 'fp',
-    previousPage: 'pp',
-    twoPagesBefore: 'tpb',
-    currentPage: 'cp',
-    nextPage: 'np',
-    twoPagesNext: 'tpn',
-    lastPage: 'lp'
-};
-
 export const configurationConstants = {
     VISIBLE_COLLECTION_RESERVE: 2,
     VISIBLE_COLLECTION_RESERVE_HALF: 1,
@@ -174,7 +107,6 @@ export const classes = {
 export default {
     pageSize,
     contextTypes,
-    columnTypes,
     getDefaultActions,
     classes,
     configurationConstants
