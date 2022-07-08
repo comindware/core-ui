@@ -42,8 +42,8 @@
     display: flex;
     align-items: center;
     flex: none;
-    color: var(--theme-colors__secondary-txt);
-    background-color: var(--theme-colors__secondary);
+    color: var(--theme-colors__group-header-txt);
+    background-color: var(--theme-colors__group-header);
     border-bottom: 1px solid var(--menu-items-clor-border);
     border-radius: 4px 4px 0 0;
     font-size: 18px;
@@ -52,7 +52,7 @@
 
 .group-collapsed .layout-group__head{
     border-radius: 4px;
-    border-bottom-color: var(--theme-colors__main_fadest);
+    border-bottom-color: transparent;
 }
 
 .layout-group_squashed-tabs  > .layout-group-wrp > .layout-group__head {

@@ -26,6 +26,12 @@
     --theme-colors__text_fadest: #999999;
     --theme-colors__text_strong: #404040;
 
+    /*** Link ***/
+    --theme-colors__link: #0575bd;
+    --theme-colors__link_fade: #0694ef;
+    --theme-colors__link_fadest: #2faaf9;
+    --theme-colors__link_strong: #04568b;
+
     /*** Highlight ***/
     --theme-colors__highlight: #e8f6ff; /* highlight */
     --theme-colors__highlight-txt: var(--theme-colors__text); /* text highlight */
@@ -207,6 +213,12 @@
     --popup-content-padding: 10px;
     --popup-header-btn-font-size_equate: 22px;
     --system-message-font-size: 15px;
+
+    /* group */
+    --theme-colors__group-header: #f5f5f5;
+    --theme-colors__group-header_fade: #ffffff;
+    --theme-colors__group-header_strong: #dcdcdc;
+    --theme-colors__group-header-txt: #5a5a5a;
 
     /* buttons severity */
     --theme-colors__cancel-btn: #9d9d9d;

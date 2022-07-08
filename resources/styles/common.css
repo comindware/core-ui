@@ -143,14 +143,14 @@ sup {
 }
 
 a {
-    color: var(--theme-colors__primary);
+    color: var(--theme-colors__link);
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
-    color: var(--theme-colors__primary_fade);
+    color: var(--theme-colors__link_fade);
     text-decoration: underline;
 }
 
