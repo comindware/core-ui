@@ -201,7 +201,7 @@ export default Marionette.View.extend({
             return false;
         }
 
-        return this.lastPointedIndex !== index;
+        return this.lastPointedIndex !== index || !this.__isColumnEditable(index);
     },
 
     __hasCellErrors(column: Column) {

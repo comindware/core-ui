@@ -95,7 +95,7 @@ const defaultOptions = (options: optionsType): optionsType => ({
     showAdditionalList: false,
     subtextProperty: '',
     showIcons: true,
-    iconProperty: '',
+    iconProperty: 'type',
     metaIcons: Core.meta.contextIconType,
 
     listItemView: ReferenceListItemView,
@@ -774,7 +774,7 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     },
 
     __adjustValue(value: any, isLoadIfNeeded = false): Object | Array<Object> | null {
-        if (this.isEmptyValue(value)) {
+        if (this.isEmptyValue(value ?? null)) {
             return this.options.maxQuantitySelected === 1 ? null : [];
         }
         const result = this.valueTypeId ? this.__adjustValueForIdMode(value, isLoadIfNeeded) : value;

@@ -10,7 +10,7 @@ export default ReferenceListItemView.extend({
         const options = this.options.subTextOptions;
         const iconPropertyValue = this.model.get(options.iconProperty);
         // wtf to lower case ?
-        const type = iconPropertyValue ? iconPropertyValue.toLocaleLowerCase() : '';
+        const type = iconPropertyValue ? _.unCapitalize(iconPropertyValue) : '';
         const iconType = options.metaIcons[type] || options.metaIcons[iconPropertyValue] || null;
         const iconLink = options.metaIcons.goTo;
         return {

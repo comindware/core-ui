@@ -231,7 +231,7 @@ export default Marionette.View.extend({
         }
         // show first tab, other tabs was hidden before
         if (isShow && this.hasNoVisibleTabs) {
-            tab.set('selected', true);
+            this.selectTab(tab.id);
             selectedtab = tab;
             this.__setNoTabsState(false);
 
