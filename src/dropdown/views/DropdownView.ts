@@ -130,6 +130,8 @@ export default class DropdownView {
         this.__observedEntities = [];
         this.maxWidth = options.panelViewOptions && options.panelViewOptions.maxWidth ? options.panelViewOptions.maxWidth : 0;
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
+        this.__onBlur = this.__onBlur.bind(this)
+        Object.assign(this, Backbone.Events);
 
         this.button = new this.options.buttonView(
             Object.assign(
@@ -387,8 +389,8 @@ export default class DropdownView {
         this.panelView.on('change:content', () => this.__adjustPosition());
         this.__listenToElementMoveOnce(this.button.el, this.close);
 
-        GlobalEventService.on('window:mousedown:captured', this.__handleGlobalMousedown.bind(this));
-        WindowService.on('popup:close', this.__onWindowServicePopupClose.bind(this));
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
+        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
@@ -412,13 +414,9 @@ export default class DropdownView {
 
         this.button.el.classList.remove(classes.OPEN);
 
-        GlobalEventService.off('window:keydown:captured', (document, event) => this.__keyAction(event));
-        GlobalEventService.off('window:mousedown:captured', this.__handleGlobalMousedown);
+        this.stopListening(GlobalEventService);
+        this.stopListening(WindowService);
         document.removeEventListener('scroll', this.__checkElements);
-        GlobalEventService.off('window:mouseup:captured', this.__checkElements);
-        GlobalEventService.off('window:keydown:captured', this.__checkElements);
-
-        WindowService.off('popup:close', this.__onWindowServicePopupClose.bind(this));
         this.panelView.off();
 
         WindowService.closePopup(this.popupId);
@@ -450,6 +448,7 @@ export default class DropdownView {
         if (!this.options.openOnMouseenter) {
             return;
         }
+        this.button.el.focus();
         this.open();
     }
 
@@ -517,7 +516,7 @@ export default class DropdownView {
         if (!focusedEl) {
             this.__getFocusableEl().focus();
         } else if (document.activeElement) {
-            document.activeElement.addEventListener('blur', this.__onBlur.bind(this));
+            document.activeElement.addEventListener('blur', this.__onBlur);
         }
         this.isFocused = true;
     }
@@ -528,7 +527,7 @@ export default class DropdownView {
             this.__handleBlur();
         });
         if (document.activeElement) {
-            document.activeElement.removeEventListener('blur', this.__onBlur.bind(this));
+            document.activeElement.removeEventListener('blur', this.__onBlur);
         }
     }
 
@@ -541,8 +540,8 @@ export default class DropdownView {
     __listenToElementMoveOnce(el, callback) {
         if (this.__observedEntities.length === 0) {
             document.addEventListener('scroll', this.__checkElements, true);
-            GlobalEventService.on('window:mouseup:captured', this.__checkElements);
-            GlobalEventService.on('window:keydown:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:mouseup:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:keydown:captured', this.__checkElements);
         }
 
         // saving el position relative to the viewport for further check
