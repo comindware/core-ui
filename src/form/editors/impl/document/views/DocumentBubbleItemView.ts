@@ -31,6 +31,7 @@ export default Marionette.View.extend({
         this.reqres = controller.reqres;
         this.readonly = this.options.readonly;
         this.allowDelete = this.options.allowDelete;
+        this.showRevision = this.options.showRevision;
         this.attachmentsController = options.attachmentsController;
         this.listenTo(this.model, 'attachments:download', this.__download);
     },
@@ -104,7 +105,8 @@ export default Marionette.View.extend({
                 reqres: this.reqres,
                 model: this.model,
                 readonly: this.readonly,
-                allowDelete: this.allowDelete
+                allowDelete: this.allowDelete,
+                editorHasHistory: this.showRevision
             },
             panelOffsetLeft: -171,
             panelMinWidth: '180px',
