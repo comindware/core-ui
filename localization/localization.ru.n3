@@ -300,11 +300,13 @@
 
 <http://comindware.com/text/core/form/editors/textEditor#indexRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{6})"; l10n:originalData "([0-9]{6})"].
 
+<http://comindware.com/text/core/form/editors/textEditor#individualINNRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{12})"; l10n:originalData "([0-9]{12})"].
+
 <http://comindware.com/text/core/form/editors/textEditor#innMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите ИНН в формате 000000000099"; l10n:originalData "Enter INN in the format 0000000000000"].
 
 <http://comindware.com/text/core/form/editors/textEditor#innPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "000000000099"; l10n:originalData "000000000099"].
 
-<http://comindware.com/text/core/form/editors/textEditor#innRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "(([0-9]{12})|([0-9]{10}))"; l10n:originalData "(([0-9]{12})|([0-9]{10}))\r\n"].
+<http://comindware.com/text/core/form/editors/textEditor#innRegexp> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "([0-9]{10})"; l10n:originalData "(([0-9]{12})|([0-9]{10}))"].
 
 <http://comindware.com/text/core/form/editors/textEditor#licensePlateErrorMessageExpression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите номер машины в формате А999АА 099"; l10n:originalData "Enter car number in the format *@*.*"].
 
