@@ -18,6 +18,7 @@ const serverMaskTypes = {
     PASSPORT: 'PassportRuMask',
     INDEX: 'IndexRuMask',
     INN: 'INNMask',
+    INDIVIDUAL_INN_MASK: 'IndividualINNMask',
     OGRN: 'OGRNMask',
     CUSTOM: 'CustomMask',
     EMAIL: 'EmailMask',
@@ -211,6 +212,9 @@ export default formRepository.editors.Text = BaseEditorView.extend({
                 break;
             case serverMaskTypes.INN:
                 this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INNREGEXP');
+                break;
+            case serverMaskTypes.INDIVIDUAL_INN_MASK:
+                this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.INDIVIDUALINNREGEXP');
                 break;
             case serverMaskTypes.OGRN:
                 this.validationMaskRegex = this.validationMaskRegex || Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.OGRNREGEXP');
