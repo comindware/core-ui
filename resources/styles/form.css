@@ -1011,25 +1011,6 @@ input[type="color"],
     display: none;
 }
 
-.dev-revision-container {
-    margin: 5px;
-}
-
-.dev-revision-container tr th {
-    padding: 5px 10px;
-    font-weight: 600;
-}
-
-.dev-revision-container tr td {
-    padding: 5px 10px;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.dev-revision-container thead {
-    border-bottom: 1px solid;
-}
-
 .audio-editor-container {
     width: 100%;
 }
