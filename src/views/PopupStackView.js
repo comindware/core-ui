@@ -151,6 +151,16 @@ export default Marionette.View.extend({
         return popupId;
     },
 
+    closeAllPopups() {
+        this.__stack
+            .reverse()
+            .concat()
+            .forEach(popupDef => {
+                this.__removePopup(popupDef, true);
+            });
+        this.fadeBackground(false);
+    },
+
     closePopup(popupId = null, immediate = false) {
         if (this.__stack.length === 0) {
             return;

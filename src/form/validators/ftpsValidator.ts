@@ -9,7 +9,7 @@ export default () =>
 
         const err = {
             type: 'uri',
-            message: LocalizationService.get('CORE.FORM.EDITORS.URIEDITOR.MSGVALIDATORFTP')
+            message: LocalizationService.get('CORE.FORM.EDITORS.URIEDITOR.MSGVALIDATORFTPS')
         };
         if (!/^ftps:\/\//.test(value)) {
             return err;

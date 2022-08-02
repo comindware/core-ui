@@ -144,7 +144,7 @@ export default {
                 routingArgs[index] = componentQuery[0];
             }
         }
-        WindowService.closePopup();
+        WindowService.closeAllPopups();
 
         const movingOut = this.__destroyPreviousModuleIfMovingOut({ context, config });
 

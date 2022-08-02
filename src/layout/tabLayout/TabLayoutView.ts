@@ -329,17 +329,16 @@ export default Marionette.View.extend({
         const region = this.addRegion(`${tabModel.id}TabRegion`, {
             el: regionEl
         });
-        isLoadingNeeded && this.setLoading(true);
         const __view = this.tabsViewById[tabModel.id];
         const view = typeof __view === 'function' ? __view(tabModel) : __view;
         if (helpers.isPromise(view)) {
+            isLoadingNeeded && this.setLoading(true);
             view.then((_view: Backbone.View) => {
                 this.showTab({ view: _view, tabModel, region, regionEl });
                 isLoadingNeeded && this.setLoading(false);
             });
         } else {
             this.showTab({ view, tabModel, region, regionEl });
-            isLoadingNeeded && this.setLoading(false);
         }
     },
 

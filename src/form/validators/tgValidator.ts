@@ -11,7 +11,7 @@ export default () =>
             type: 'uri',
             message: LocalizationService.get('CORE.FORM.EDITORS.URIEDITOR.MSGVALIDATORTELEGRAM')
         };
-        if (!/^tg:\/\//.test(value)) {
+        if (!/^https:\/\/t.me\//.test(value)) {
             return err;
         }
     };

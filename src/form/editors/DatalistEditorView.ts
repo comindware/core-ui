@@ -490,8 +490,8 @@ export default (formRepository.editors.Datalist = BaseEditorView.extend({
     template: Handlebars.compile(template),
 
     setValue(value, { triggerChange = false, isLoadIfNeeded = true } = {}): void {
-        if(this.options.isAutocompleteMode) {
-            this.dropdownView.setInputValue(value);
+        if (this.options.isAutocompleteMode) {
+            this.dropdownView.setValue(value);
         }
         this.__value(value, { triggerChange, isLoadIfNeeded });
     },

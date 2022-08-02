@@ -12,6 +12,7 @@ import Https from './validators/httpsValidator';
 import Telegram from './validators/tgValidator';
 import MailTo from './validators/mailtoValidator';
 import Ftp from './validators/ftpValidator';
+import Ftps from './validators/ftpsValidator';
 import Git from './validators/gitValidator';
 import Ssh from './validators/sshValidator';
 
@@ -33,7 +34,8 @@ export default {
         mailto: MailTo,
         git: Git,
         ssh: Ssh,
-        ftp: Ftp
+        ftp: Ftp,
+        ftps: Ftps
     },
     getValidator(validator: string | Function) {
         const validators = this.validators;

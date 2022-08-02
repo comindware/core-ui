@@ -57,11 +57,18 @@ export default {
     },
 
     /**
+     * Closes all popups or does nothing if there is none.
+     * */
+    closeAllPopups() {
+        this.__popupStackView?.closeAllPopups();
+    },
+
+    /**
      * Closes the top-level popup or does nothing if there is none.
      * @param {string} [popupId=null]
      * */
     closePopup(popupId = null, immediate?: boolean) {
-        this.__popupStackView && this.__popupStackView.closePopup(popupId, immediate);
+        this.__popupStackView?.closePopup(popupId, immediate);
     },
 
     /**
@@ -69,7 +76,7 @@ export default {
      * @param {string} [popupId=null]
      * */
     closeElPopup(popupId = null, immediate?: boolean) {
-        this.__popupStackView && this.__popupStackView.closeElPopup(popupId, immediate);
+        this.__popupStackView?.closeElPopup(popupId, immediate);
     },
 
     /**
