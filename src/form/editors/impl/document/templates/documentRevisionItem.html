@@ -1,9 +1,10 @@
-<td>{{version}}</td>
-<td>{{creationDate}}</td>
-<td>{{creator}}</td>
+<td class="revision-table__version revision-table--center">{{version}}</td>
 <td>
-    <a href="{{url}}" target="_blank" class="document-revision__download">
-        <i class="{{iconPrefixer 'cloud-download'}}"></i>
-        <div class="document-revision-download__text">{{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}</div>
+    <div class="revision-table__author">{{creator}}</div>
+    {{creationDate}}
+</td>
+<td>
+    <a href="{{url}}" target="_blank">
+        {{localize 'CORE.FORM.EDITORS.DOCUMENT.DOWNLOAD'}}
     </a>
 </td>

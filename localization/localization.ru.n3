@@ -144,6 +144,8 @@
 
 <http://comindware.com/text/core/form/editors/document/documentRevision#creationDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата создания"; l10n:originalData "Creation date"].
 
+<http://comindware.com/text/core/form/editors/document/documentRevision#file> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Исходный файл"; l10n:originalData "Source file"].
+
 <http://comindware.com/text/core/form/editors/document/documentRevision#version> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Версия"; l10n:originalData "Version"].
 
 <http://comindware.com/text/core/form/editors/document/gallery#close> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Закрыть"; l10n:originalData "Close"].

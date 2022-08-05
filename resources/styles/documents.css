@@ -206,11 +206,37 @@
     background-color: var(--selected-background-color);
 }
 
-.document-revision__download {
-    display: flex;
-    align-items: center;
+/* Revision Table */
+
+.revision-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.document-revision-download__text {
-    padding-left: 5px;
+.revision-table__head th {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-bottom: 1px solid;
+}
+
+.revision-table__body td {
+    padding: 5px 10px;
+    vertical-align: middle;
+}
+
+.revision-table__version {
+    font-weight: 600;
+}
+
+.revision-table__author {
+    max-width: 120px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: 600;
+}
+
+.revision-table--center {
+    text-align: center;
 }

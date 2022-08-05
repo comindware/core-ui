@@ -37,8 +37,7 @@ export default Marionette.View.extend({
                 panelView: RevisionPanelView,
                 panelViewOptions: { collection: this.revisionCollection },
                 popoutFlow: 'right',
-                autoOpen: true,
-                panelMinWidth: 'none'
+                panelMinWidth: 360
             });
             this.showChildView('reviseRegion', this.documentRevisionPopout);
         }
@@ -48,7 +47,7 @@ export default Marionette.View.extend({
         this.isRevisionButtonClicked = true;
         this.reqres.request('document:revise', this.model.id).then((revisionList: Array<any>) => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
-            this.documentRevisionPopout.open();
+            this.documentRevisionPopout.adjustPosition();
         });
     },
 
