@@ -84,6 +84,7 @@ export default (formRepository.editors.Complex = BaseEditorView.extend({
         }
         _.defaults(this.options.valueEditorOptions, {
             enabled: this.options.enabled,
+            readonly: this.options.readonly,
             key: this.key
         });
 
