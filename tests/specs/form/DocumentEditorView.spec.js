@@ -163,7 +163,7 @@ describe('Editors', () => {
 
             view.$('.l-list__item').trigger('mouseenter');
             view.$('.document-item__tooltip-btn').click();
-            document.querySelector('.js-revise-button-region').click();
+            document.querySelector('.js-revise-button-region').firstChild.click();
 
             setTimeout(() => {
                 expect(document.querySelector('.js-revision-list')).toBeTruthy();
