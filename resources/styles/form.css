@@ -504,6 +504,16 @@ td > .icon-true {
     height: 100%;
 }
 
+.editor_date-time,
+.editor_duration > .input_duration__wrapper {
+    height: var(--input-height);
+}
+
+.editor_duration > .input_duration__wrapper > .input_duration {
+    height: 100%;
+    align-items: center;
+}
+
 .editor_readonly .input_duration__wrapper {
     border-color: transparent;
 }
